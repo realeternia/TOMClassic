@@ -1,0 +1,1 @@
+Packager.exe "../PicResource" "../bin/Debug/PicResource.vfs" 

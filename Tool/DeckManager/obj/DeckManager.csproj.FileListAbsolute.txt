@@ -1,0 +1,42 @@
+D:\My Documents\Visual Studio 2005\Projects\DeckManager\DeckManager\bin\Debug\DeckManager.exe
+D:\My Documents\Visual Studio 2005\Projects\DeckManager\DeckManager\bin\Debug\DeckManager.pdb
+D:\My Documents\Visual Studio 2005\Projects\DeckManager\DeckManager\bin\Debug\PicResource.dll
+D:\My Documents\Visual Studio 2005\Projects\DeckManager\DeckManager\bin\Debug\PicResource.pdb
+D:\My Documents\Visual Studio 2005\Projects\DeckManager\DeckManager\obj\Debug\ResolveAssemblyReference.cache
+D:\My Documents\Visual Studio 2005\Projects\DeckManager\DeckManager\obj\Debug\DeckManager.Form1.resources
+D:\My Documents\Visual Studio 2005\Projects\DeckManager\DeckManager\obj\Debug\DeckManager.Properties.Resources.resources
+D:\My Documents\Visual Studio 2005\Projects\DeckManager\DeckManager\obj\Debug\DeckManager.csproj.GenerateResource.Cache
+D:\My Documents\Visual Studio 2005\Projects\DeckManager\DeckManager\obj\Debug\DeckManager.exe
+D:\My Documents\Visual Studio 2005\Projects\DeckManager\DeckManager\obj\Debug\DeckManager.pdb
+M:\Program\DeckManager\DeckManager\obj\Debug\DeckManager.exe
+M:\Program\DeckManager\DeckManager\obj\Debug\DeckManager.pdb
+M:\Program\DeckManager\DeckManager\bin\Debug\DeckManager.exe
+M:\Program\DeckManager\DeckManager\bin\Debug\DeckManager.pdb
+M:\Program\DeckManager\DeckManager\obj\Debug\ResolveAssemblyReference.cache
+M:\Program\DeckManager\DeckManager\obj\Debug\DeckManager.Form1.resources
+M:\Program\DeckManager\DeckManager\obj\Debug\DeckManager.Properties.Resources.resources
+M:\Program\DeckManager\DeckManager\obj\Debug\DeckManager.csproj.GenerateResource.Cache
+J:\Program\DeckManager\bin\debug\DeckManager.exe
+J:\Program\DeckManager\bin\debug\DeckManager.pdb
+J:\Program\DeckManager\DeckManager\obj\Debug\ResolveAssemblyReference.cache
+J:\Program\DeckManager\DeckManager\obj\Debug\DeckManager.Form1.resources
+J:\Program\DeckManager\DeckManager\obj\Debug\DeckManager.Properties.Resources.resources
+J:\Program\DeckManager\DeckManager\obj\Debug\DeckManager.csproj.GenerateResource.Cache
+J:\Program\DeckManager\DeckManager\obj\Debug\DeckManager.exe
+J:\Program\DeckManager\DeckManager\obj\Debug\DeckManager.pdb
+F:\FishBack\Program\DeckManager\bin\debug\DeckManager.exe
+F:\FishBack\Program\DeckManager\bin\debug\DeckManager.pdb
+F:\FishBack\Program\DeckManager\DeckManager\obj\Debug\ResolveAssemblyReference.cache
+F:\FishBack\Program\DeckManager\DeckManager\obj\Debug\DeckManager.Form1.resources
+F:\FishBack\Program\DeckManager\DeckManager\obj\Debug\DeckManager.Properties.Resources.resources
+F:\FishBack\Program\DeckManager\DeckManager\obj\Debug\DeckManager.csproj.GenerateResource.Cache
+F:\FishBack\Program\DeckManager\DeckManager\obj\Debug\DeckManager.exe
+F:\FishBack\Program\DeckManager\DeckManager\obj\Debug\DeckManager.pdb
+G:\Program\DeckManager\bin\debug\DeckManager.exe
+G:\Program\DeckManager\bin\debug\DeckManager.pdb
+G:\Program\DeckManager\DeckManager\obj\Debug\ResolveAssemblyReference.cache
+G:\Program\DeckManager\DeckManager\obj\Debug\DeckManager.Form1.resources
+G:\Program\DeckManager\DeckManager\obj\Debug\DeckManager.Properties.Resources.resources
+G:\Program\DeckManager\DeckManager\obj\Debug\DeckManager.csproj.GenerateResource.Cache
+G:\Program\DeckManager\DeckManager\obj\Debug\DeckManager.exe
+G:\Program\DeckManager\DeckManager\obj\Debug\DeckManager.pdb

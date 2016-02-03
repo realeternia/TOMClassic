@@ -1,0 +1,12 @@
+F:\TOMClassic\Trunk\DataResource\bin\Debug\DataResource.dll
+F:\TOMClassic\Trunk\DataResource\bin\Debug\DataResource.pdb
+F:\TOMClassic\Trunk\DataResource\obj\Debug\DataResource.dll
+F:\TOMClassic\Trunk\DataResource\obj\Debug\DataResource.pdb
+E:\fish\Trunk\DataResource\bin\Debug\DataResource.dll
+E:\fish\Trunk\DataResource\bin\Debug\DataResource.pdb
+E:\fish\Trunk\DataResource\obj\Debug\DataResource.dll
+E:\fish\Trunk\DataResource\obj\Debug\DataResource.pdb
+E:\code\百度云同步盘\Trunk\DataResource\bin\Debug\DataResource.dll
+E:\code\百度云同步盘\Trunk\DataResource\bin\Debug\DataResource.pdb
+E:\code\百度云同步盘\Trunk\DataResource\obj\Debug\DataResource.dll
+E:\code\百度云同步盘\Trunk\DataResource\obj\Debug\DataResource.pdb

@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLVFS", "NLVFS\NLVFS.csproj", "{5FB7DAC4-E257-4182-A5CF-2FDC7D8B5ED8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Packager", "Packager\Packager.csproj", "{F2767354-BD71-49C6-91D4-B2DF2D998AD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VFSViewer", "VFSViewer\VFSViewer.csproj", "{6F03F491-BAEF-411B-BE4C-98C5FB56D3BC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5FB7DAC4-E257-4182-A5CF-2FDC7D8B5ED8}.Debug|x86.ActiveCfg = Debug|x86
+		{5FB7DAC4-E257-4182-A5CF-2FDC7D8B5ED8}.Debug|x86.Build.0 = Debug|x86
+		{5FB7DAC4-E257-4182-A5CF-2FDC7D8B5ED8}.Release|x86.ActiveCfg = Release|x86
+		{5FB7DAC4-E257-4182-A5CF-2FDC7D8B5ED8}.Release|x86.Build.0 = Release|x86
+		{F2767354-BD71-49C6-91D4-B2DF2D998AD9}.Debug|x86.ActiveCfg = Debug|x86
+		{F2767354-BD71-49C6-91D4-B2DF2D998AD9}.Debug|x86.Build.0 = Debug|x86
+		{F2767354-BD71-49C6-91D4-B2DF2D998AD9}.Release|x86.ActiveCfg = Release|x86
+		{F2767354-BD71-49C6-91D4-B2DF2D998AD9}.Release|x86.Build.0 = Release|x86
+		{6F03F491-BAEF-411B-BE4C-98C5FB56D3BC}.Debug|x86.ActiveCfg = Debug|x86
+		{6F03F491-BAEF-411B-BE4C-98C5FB56D3BC}.Debug|x86.Build.0 = Debug|x86
+		{6F03F491-BAEF-411B-BE4C-98C5FB56D3BC}.Release|x86.ActiveCfg = Release|x86
+		{6F03F491-BAEF-411B-BE4C-98C5FB56D3BC}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

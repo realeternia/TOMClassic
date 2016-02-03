@@ -1,0 +1,477 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B0A31F62-AE2B-4F0B-8EAB-6E646D422BC9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataResource</RootNamespace>
+    <AssemblyName>DataResource</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\aisiter.dek" />
+    <EmbeddedResource Include="Deck\aolai.dek" />
+    <EmbeddedResource Include="Deck\baludi.dek" />
+    <EmbeddedResource Include="Deck\beilukai.dek" />
+    <EmbeddedResource Include="Deck\cheng.dek" />
+    <EmbeddedResource Include="Deck\dragons.dek" />
+    <EmbeddedResource Include="Deck\gailu.dek" />
+    <EmbeddedResource Include="Deck\haima.dek" />
+    <EmbeddedResource Include="Deck\jiangshi.dek" />
+    <EmbeddedResource Include="Deck\kedi.dek" />
+    <EmbeddedResource Include="Deck\kulou.dek" />
+    <EmbeddedResource Include="Deck\kuloufashi.dek" />
+    <EmbeddedResource Include="Deck\lang.dek" />
+    <EmbeddedResource Include="Deck\laoshu.dek" />
+    <EmbeddedResource Include="Deck\leiluo.dek" />
+    <EmbeddedResource Include="Deck\luka.dek" />
+    <EmbeddedResource Include="Deck\machines.dek" />
+    <EmbeddedResource Include="Deck\milanda.dek" />
+    <EmbeddedResource Include="Deck\neifuni.dek" />
+    <EmbeddedResource Include="Deck\plants.dek" />
+    <EmbeddedResource Include="Deck\powderwar.dek" />
+    <EmbeddedResource Include="Deck\rand.dek" />
+    <EmbeddedResource Include="Deck\saen.dek" />
+    <EmbeddedResource Include="Deck\saibasi.dek" />
+    <EmbeddedResource Include="Deck\sainisi.dek" />
+    <EmbeddedResource Include="Deck\self.dek" />
+    <EmbeddedResource Include="Deck\tanisi.dek" />
+    <EmbeddedResource Include="Deck\weia.dek" />
+    <EmbeddedResource Include="Deck\wuya.dek" />
+    <EmbeddedResource Include="Deck\youqi.dek" />
+    <EmbeddedResource Include="Deck\zombies.dek" />
+    <EmbeddedResource Include="Deck\zombiesv2.dek" />
+    <EmbeddedResource Include="Effect\arrow.eff" />
+    <EmbeddedResource Include="Effect\aurora.eff" />
+    <EmbeddedResource Include="Effect\awaylight.eff" />
+    <EmbeddedResource Include="Effect\badblood.eff" />
+    <EmbeddedResource Include="Effect\bandattack.eff" />
+    <EmbeddedResource Include="Effect\bite.eff" />
+    <EmbeddedResource Include="Effect\bleedglow.eff" />
+    <EmbeddedResource Include="Effect\bluebubble.eff" />
+    <EmbeddedResource Include="Effect\blueflash.eff" />
+    <EmbeddedResource Include="Effect\bluepea.eff" />
+    <EmbeddedResource Include="Effect\bluering.eff" />
+    <EmbeddedResource Include="Effect\bluesword.eff" />
+    <EmbeddedResource Include="Effect\bluewing.eff" />
+    <EmbeddedResource Include="Effect\bullet.eff" />
+    <EmbeddedResource Include="Effect\colorsplash.eff" />
+    <EmbeddedResource Include="Effect\crashhit.eff" />
+    <EmbeddedResource Include="Effect\curseoff.eff" />
+    <EmbeddedResource Include="Effect\darkball.eff" />
+    <EmbeddedResource Include="Effect\darkinvasion.eff" />
+    <EmbeddedResource Include="Effect\darkwheel.eff" />
+    <EmbeddedResource Include="Effect\deathmist.eff" />
+    <EmbeddedResource Include="Effect\dimlight.eff" />
+    <EmbeddedResource Include="Effect\doubleswordhit.eff" />
+    <EmbeddedResource Include="Effect\dragonball.eff" />
+    <EmbeddedResource Include="Effect\drain.eff" />
+    <EmbeddedResource Include="Effect\electball.eff" />
+    <EmbeddedResource Include="Effect\electhit.eff" />
+    <EmbeddedResource Include="Effect\etwave.eff" />
+    <EmbeddedResource Include="Effect\evilface.eff" />
+    <EmbeddedResource Include="Effect\faintlight.eff" />
+    <EmbeddedResource Include="Effect\farsummon.eff" />
+    <EmbeddedResource Include="Effect\firearrow.eff" />
+    <EmbeddedResource Include="Effect\fireball.eff" />
+    <EmbeddedResource Include="Effect\firehit.eff" />
+    <EmbeddedResource Include="Effect\fisthit.eff" />
+    <EmbeddedResource Include="Effect\flowerline.eff" />
+    <EmbeddedResource Include="Effect\giant.eff" />
+    <EmbeddedResource Include="Effect\greenbubble.eff" />
+    <EmbeddedResource Include="Effect\greengrass.eff" />
+    <EmbeddedResource Include="Effect\greenpea.eff" />
+    <EmbeddedResource Include="Effect\heart.eff" />
+    <EmbeddedResource Include="Effect\hit1.eff" />
+    <EmbeddedResource Include="Effect\hit2.eff" />
+    <EmbeddedResource Include="Effect\holy1.eff" />
+    <EmbeddedResource Include="Effect\holy10.eff" />
+    <EmbeddedResource Include="Effect\holy2.eff" />
+    <EmbeddedResource Include="Effect\holy3.eff" />
+    <EmbeddedResource Include="Effect\holy6.eff" />
+    <EmbeddedResource Include="Effect\holybolt.eff" />
+    <EmbeddedResource Include="Effect\iceball.eff" />
+    <EmbeddedResource Include="Effect\iceball2.eff" />
+    <EmbeddedResource Include="Effect\icesharp.eff" />
+    <EmbeddedResource Include="Effect\icestorm.eff" />
+    <EmbeddedResource Include="Effect\inferno.eff" />
+    <EmbeddedResource Include="Effect\judge.eff" />
+    <EmbeddedResource Include="Effect\landlight.eff" />
+    <EmbeddedResource Include="Effect\laser2.eff" />
+    <EmbeddedResource Include="Effect\leafarrow.eff" />
+    <EmbeddedResource Include="Effect\longly.eff" />
+    <EmbeddedResource Include="Effect\magicbolt.eff" />
+    <EmbeddedResource Include="Effect\moon.eff" />
+    <EmbeddedResource Include="Effect\null.eff" />
+    <EmbeddedResource Include="Effect\peace.eff" />
+    <EmbeddedResource Include="Effect\protect.eff" />
+    <EmbeddedResource Include="Effect\purplebubble.eff" />
+    <EmbeddedResource Include="Effect\purpleline.eff" />
+    <EmbeddedResource Include="Effect\purplewave.eff" />
+    <EmbeddedResource Include="Effect\question.eff" />
+    <EmbeddedResource Include="Effect\electballred.eff" />
+    <EmbeddedResource Include="Effect\redring.eff" />
+    <EmbeddedResource Include="Effect\redwing.eff" />
+    <EmbeddedResource Include="Effect\rockball.eff" />
+    <EmbeddedResource Include="Effect\rocket.eff" />
+    <EmbeddedResource Include="Effect\rootattack.eff" />
+    <EmbeddedResource Include="Effect\rust.eff" />
+    <EmbeddedResource Include="Effect\scourge.eff" />
+    <EmbeddedResource Include="Effect\shrink.eff" />
+    <EmbeddedResource Include="Effect\sleep.eff" />
+    <EmbeddedResource Include="Effect\sotis.eff" />
+    <EmbeddedResource Include="Effect\soulget.eff" />
+    <EmbeddedResource Include="Effect\spear.eff" />
+    <EmbeddedResource Include="Effect\stonelight.eff" />
+    <EmbeddedResource Include="Effect\strong.eff" />
+    <EmbeddedResource Include="Effect\stun.eff" />
+    <EmbeddedResource Include="Effect\swarm.eff" />
+    <EmbeddedResource Include="Effect\swordhit.eff" />
+    <EmbeddedResource Include="Effect\tornado.eff" />
+    <EmbeddedResource Include="Effect\transmit.eff" />
+    <EmbeddedResource Include="Effect\venom.eff" />
+    <EmbeddedResource Include="Effect\waterball.eff" />
+    <EmbeddedResource Include="Effect\waterball2.eff" />
+    <EmbeddedResource Include="Effect\waterbolt.eff" />
+    <EmbeddedResource Include="Effect\windhit.eff" />
+    <EmbeddedResource Include="Effect\windsharp.eff" />
+    <EmbeddedResource Include="Effect\wine.eff" />
+    <EmbeddedResource Include="Effect\wirledwind.eff" />
+    <EmbeddedResource Include="Effect\yellowflash.eff" />
+    <EmbeddedResource Include="Effect\yellowrounds.eff" />
+    <EmbeddedResource Include="Effect\yellowsplash.eff" />
+    <EmbeddedResource Include="Effect\yellowstar.eff" />
+    <EmbeddedResource Include="Maze\darkforest.maz" />
+    <EmbeddedResource Include="Maze\hightower.maz" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\rookie.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Maze\mountaininner.maz" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Maze\oldcity.maz" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\nanami.dek" />
+    <EmbeddedResource Include="Deck\node.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\yuexiuya.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\masha.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\feichong.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\artrom.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\zeno.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\firestorm.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\lakar.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\youling.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\shuishashou.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Maze\door.maz" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\mogu.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\xiezi.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\element1.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\element2.dek" />
+    <EmbeddedResource Include="Deck\element3.dek" />
+    <EmbeddedResource Include="Deck\element4.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\chick.dek" />
+    <EmbeddedResource Include="Deck\frog.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\honglang.dek" />
+    <EmbeddedResource Include="Deck\shijiu.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\goblin.dek" />
+    <EmbeddedResource Include="Deck\shujin.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\honglong.dek" />
+    <EmbeddedResource Include="Deck\shita.dek" />
+    <EmbeddedResource Include="Deck\xixuegui.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\lanlong.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\zilong.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\fdemon.dek" />
+    <EmbeddedResource Include="Deck\hydra.dek" />
+    <EmbeddedResource Include="Deck\soul.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\langren.dek" />
+    <EmbeddedResource Include="Deck\laohu.dek" />
+    <EmbeddedResource Include="Deck\qingting.dek" />
+    <EmbeddedResource Include="Deck\xiyiren.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Maze\ruin.maz" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\narsas.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\narlon.dek" />
+    <EmbeddedResource Include="Deck\viga.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\frik.dek" />
+    <EmbeddedResource Include="Deck\viktor.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\cai.dek" />
+    <EmbeddedResource Include="Deck\clab.dek" />
+    <EmbeddedResource Include="Deck\lock.dek" />
+    <EmbeddedResource Include="Deck\shera.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\eclipse.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\gravity.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\aistear.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\test.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\bluesword2.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\pinkball.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\batcrowd.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\smallstars.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\silverlight.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\cyantriangle.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\strongarm.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\cardfly.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\eye.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\cardbreak.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\goldshield.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\biteblue.eff" />
+    <EmbeddedResource Include="Effect\bitegreen.eff" />
+    <EmbeddedResource Include="Effect\fisthitstatue.eff" />
+    <EmbeddedResource Include="Effect\hit2blue.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\colorball.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\colorring.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\lockon.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\arrowlight.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\arrowred.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\darkfire.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\watertile.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\kings.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\redflash.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\transmitred.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\cover1.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\cover2.eff" />
+    <EmbeddedResource Include="Effect\cover3.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\blank.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Map\default.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Map\nighttown.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Map\house.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Map\forest.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Map\hole.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Map\temple.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Map\valley.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Map\river.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Map\snow.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\ling.dek" />
+    <EmbeddedResource Include="Deck\yaslani.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\test.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\test2e.dek" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\covershield.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\coverstar.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\coverauro.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\covertrans.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\coveraoe.eff" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

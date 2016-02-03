@@ -1,0 +1,1028 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{65E35A87-EE43-42E7-AD01-743008B6EAFE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TaleofMonsters</RootNamespace>
+    <AssemblyName>TaleofMonsters2</AssemblyName>
+    <ApplicationIcon>icon2.ico</ApplicationIcon>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>http://localhost/TaleofMonsters2/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AltSerialize">
+      <HintPath>Lib\AltSerialize.dll</HintPath>
+    </Reference>
+    <Reference Include="ConfigData, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\ConfigData.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.WMPLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Interop.WMPLib.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="NLVFS">
+      <HintPath>Lib\NLVFS.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\Config.cs" />
+    <Compile Include="Controler\Battle\AIStrategy.cs">
+    </Compile>
+    <Compile Include="Controler\Battle\Components\CardSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controler\Battle\Components\CardSelector.Designer.cs">
+      <DependentUpon>CardSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controler\Battle\Tool\BattleManager.cs" />
+    <Compile Include="Controler\Battle\Data\MemEffect\BaseEffect.cs" />
+    <Compile Include="Controler\Battle\Data\MemEffect\FlyEffect.cs" />
+    <Compile Include="Controler\Battle\Data\MemFlow\FlowExpInfo.cs" />
+    <Compile Include="Controler\Battle\Data\MemFlow\FlowManaInfo.cs" />
+    <Compile Include="Controler\Battle\Data\MemMonster\BuffManager.cs" />
+    <Compile Include="Controler\Battle\Data\MemMonster\HpBar.cs" />
+    <Compile Include="Controler\Battle\Data\MemMonster\SkillManager.cs" />
+    <Compile Include="Controler\Battle\Data\MemSpell\Trap.cs" />
+    <Compile Include="Controler\Battle\Data\MonsterAuro.cs" />
+    <Compile Include="Controler\Battle\Data\MemCard\ActiveCard.cs" />
+    <Compile Include="Controler\Battle\Data\MemFlow\FlowItemInfo.cs" />
+    <Compile Include="Controler\Battle\Data\MemFlow\FlowErrInfo.cs" />
+    <Compile Include="Controler\Battle\Data\MemMap\MemMapPoint.cs" />
+    <Compile Include="Controler\Battle\Data\MemMap\MemRowColumnMap.cs" />
+    <Compile Include="Controler\Battle\Data\MemSpell\MemBaseSpell.cs" />
+    <Compile Include="Controler\Battle\Data\MemMonster\MonsterIdSpeed.cs" />
+    <Compile Include="Controler\Battle\Data\Players\EnergyGenerator.cs" />
+    <Compile Include="Controler\Battle\Data\Players\Frag\CardManager.cs" />
+    <Compile Include="Controler\Battle\Data\Players\MirrorPlayer.cs" />
+    <Compile Include="Controler\Battle\Data\Players\PlayerAttr.cs" />
+    <Compile Include="Controler\Battle\Data\Players\IdlePlayer.cs" />
+    <Compile Include="Controler\Battle\CardFastBattle.cs">
+    </Compile>
+    <Compile Include="Controler\Battle\Data\MemBaseSkill.cs" />
+    <Compile Include="Controler\Battle\DataTent\PlayerManager.cs" />
+    <Compile Include="Controler\Battle\Tool\BattleLocationManager.cs" />
+    <Compile Include="Controler\Battle\Tool\BattleTargetManager.cs" />
+    <Compile Include="Controler\Battle\Data\MagicRegion.cs" />
+    <Compile Include="Controler\Battle\DataTent\EffectQueue.cs" />
+    <Compile Include="Controler\Battle\DataTent\FlowWordQueue.cs" />
+    <Compile Include="Controler\Battle\DataTent\MonsterQueue.cs" />
+    <Compile Include="Controler\Battle\DataTent\BattleInfo.cs" />
+    <Compile Include="Controler\Battle\FastBattle.cs" />
+    <Compile Include="Controler\GM\GMCommand.cs" />
+    <Compile Include="Controler\GM\GmScript.cs" />
+    <Compile Include="Controler\Resource\ImageItem.cs" />
+    <Compile Include="Controler\Resource\ImageManager.cs" />
+    <Compile Include="Controler\World\TimeManager.cs" />
+    <Compile Include="Controler\World\WorldInfoManager.cs" />
+    <Compile Include="DataType\CustomTypes.cs" />
+    <Compile Include="DataType\Equips\Equip.cs" />
+    <Compile Include="DataType\HeroSkills\HeroSkillBook.cs" />
+    <Compile Include="DataType\Items\CdGroup.cs" />
+    <Compile Include="Config\CardConfigManager.cs" />
+    <Compile Include="Core\DbSerializer.cs" />
+    <Compile Include="Core\HSImageAttributes.cs" />
+    <Compile Include="Core\Interface\IRegionDecorator.cs" />
+    <Compile Include="Core\IntPair.cs" />
+    <Compile Include="Core\SoundManager.cs" />
+    <Compile Include="Core\SysConstants.cs" />
+    <Compile Include="Core\HSErrorTypes.cs" />
+    <Compile Include="DataType\Buffs\BuffIds.cs" />
+    <Compile Include="DataType\CardPieces\CardPieceRate.cs" />
+    <Compile Include="DataType\Effects\CoverEffect.cs" />
+    <Compile Include="DataType\Items\Consumer.cs" />
+    <Compile Include="DataType\Others\FarmState.cs" />
+    <Compile Include="DataType\Formulas\FormulaBook.cs" />
+    <Compile Include="DataType\HeroSkills\HeroSkillAttrBook.cs" />
+    <Compile Include="DataType\Others\GameResourceBook.cs" />
+    <Compile Include="DataType\Others\LevelInfoBook.cs" />
+    <Compile Include="DataType\Tasks\TaskState.cs" />
+    <Compile Include="DataType\User\InfoAchieve.cs" />
+    <Compile Include="DataType\User\InfoBag.cs" />
+    <Compile Include="DataType\User\InfoBasic.cs" />
+    <Compile Include="DataType\User\InfoCard.cs" />
+    <Compile Include="DataType\User\InfoEquip.cs" />
+    <Compile Include="DataType\User\InfoFarm.cs" />
+    <Compile Include="DataType\User\InfoMaze.cs" />
+    <Compile Include="DataType\User\InfoMinigame.cs" />
+    <Compile Include="DataType\User\InfoRecord.cs" />
+    <Compile Include="DataType\User\InfoRival.cs" />
+    <Compile Include="DataType\User\InfoSkill.cs" />
+    <Compile Include="DataType\User\InfoTask.cs" />
+    <Compile Include="DataType\User\Mem\MemMergeData.cs" />
+    <Compile Include="DataType\User\Mem\MemNpcPieceData.cs" />
+    <Compile Include="DataType\Others\Question.cs" />
+    <Compile Include="DataType\Others\QuestionBook.cs" />
+    <Compile Include="Forms\CalendarForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\CalendarForm.Designer.cs">
+      <DependentUpon>CalendarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Items\DeckCardRegion.cs" />
+    <Compile Include="Forms\Items\DeckSelectCardRegion.cs" />
+    <Compile Include="Forms\FarmForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\FarmForm.Designer.cs">
+      <DependentUpon>FarmForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Items\MiniItemViewItem.cs" />
+    <Compile Include="Forms\Items\PieceItem.cs">
+    </Compile>
+    <Compile Include="Forms\Items\Core\RiverFlow.cs" />
+    <Compile Include="Forms\BuyPieceForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\BuyPieceForm.Designer.cs">
+      <DependentUpon>BuyPieceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ExpBottleForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\ExpBottleForm.Designer.cs">
+      <DependentUpon>ExpBottleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Items\HeroSkillAttrItem.cs" />
+    <Compile Include="Forms\Items\GameShopItem.cs" />
+    <Compile Include="Forms\Items\CardShopItem.cs" />
+    <Compile Include="Forms\Items\Regions\ButtonRegion.cs" />
+    <Compile Include="Forms\Items\AchieveItem.cs" />
+    <Compile Include="Forms\Items\LevelInfoItem.cs" />
+    <Compile Include="Forms\Items\Regions\Decorators\RegionTextDecorator.cs" />
+    <Compile Include="Forms\Items\Regions\Decorators\RegionBorderDecorator.cs" />
+    <Compile Include="Forms\Items\Regions\PictureAnimRegion.cs" />
+    <Compile Include="Forms\Items\Regions\VirtualRegionCellType.cs" />
+    <Compile Include="Forms\Items\Regions\ItemUseRegion.cs" />
+    <Compile Include="Forms\Items\Regions\SwitchButtonRegion.cs" />
+    <Compile Include="Forms\MiniGame\MGThreeBody.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MiniGame\MGThreeBody.Designer.cs">
+      <DependentUpon>MGThreeBody.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MiniGame\MGSeven.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MiniGame\MGSeven.Designer.cs">
+      <DependentUpon>MGSeven.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Pops\PopSelectCard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Pops\PopSelectCard.Designer.cs">
+      <DependentUpon>PopSelectCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\QuestionForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\QuestionForm.Designer.cs">
+      <DependentUpon>QuestionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TreasureWheelForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\TreasureWheelForm.Designer.cs">
+      <DependentUpon>TreasureWheelForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\HeroSkillAttrForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\HeroSkillAttrForm.Designer.cs">
+      <DependentUpon>HeroSkillAttrForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\LevelInfoForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\LevelInfoForm.Designer.cs">
+      <DependentUpon>LevelInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SelectJobForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\SelectJobForm.Designer.cs">
+      <DependentUpon>SelectJobForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CardBagForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\CardBagForm.Designer.cs">
+      <DependentUpon>CardBagForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainItem\MainTipData.cs" />
+    <Compile Include="DataType\Achieves\AchieveBook.cs" />
+    <Compile Include="DataType\Cards\CardMouseState.cs" />
+    <Compile Include="DataType\User\Mem\MemDeckData.cs" />
+    <Compile Include="DataType\Decks\DeckBook.cs" />
+    <Compile Include="DataType\Decks\DeckCard.cs" />
+    <Compile Include="DataType\CardPieces\CardPieceBook.cs" />
+    <Compile Include="Controler\Battle\Data\MemFlow\FlowSkillInfo.cs" />
+    <Compile Include="Controler\Battle\Data\MemFlow\FlowResourceInfo.cs" />
+    <Compile Include="DataType\Equips\Addons\EAddonBook.cs" />
+    <Compile Include="DataType\Items\HItemAssistant.cs" />
+    <Compile Include="DataType\Others\JobBook.cs" />
+    <Compile Include="DataType\Maps\BattleMap.cs" />
+    <Compile Include="DataType\Maps\BattleMapBook.cs" />
+    <Compile Include="DataType\Mazes\MazeItem.cs" />
+    <Compile Include="DataType\User\Mem\MemTournamentData.cs" />
+    <Compile Include="DataType\User\Mem\MemRankData.cs" />
+    <Compile Include="DataType\User\Mem\MemChangeCardData.cs" />
+    <Compile Include="DataType\User\InfoWorld.cs" />
+    <Compile Include="DataType\Peoples\DropResource.cs" />
+    <Compile Include="Controler\Battle\Data\MemBaseBuff.cs" />
+    <Compile Include="DataType\Shops\CardProduct.cs" />
+    <Compile Include="DataType\Skills\MonsterSkill.cs" />
+    <Compile Include="DataType\Tournaments\TournamentBook.cs" />
+    <Compile Include="DataType\Cards\Weapons\Weapon.cs" />
+    <Compile Include="Forms\Items\Core\BorderPainter.cs" />
+    <Compile Include="Forms\Items\ShopItem.cs">
+    </Compile>
+    <Compile Include="Forms\Items\ChangeCardItem.cs">
+    </Compile>
+    <Compile Include="Forms\Items\Regions\SubVirtualRegion.cs" />
+    <Compile Include="Forms\Items\Regions\VirtualRegion.cs" />
+    <Compile Include="Forms\Items\Core\ColorWordRegion.cs" />
+    <Compile Include="Forms\Items\Regions\PictureRegion.cs" />
+    <Compile Include="Forms\MagicBook\MagicBookViewForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MagicBook\MagicBookViewForm.Designer.cs">
+      <DependentUpon>MagicBookViewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MagicBook\PeopleDeckViewForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MagicBook\PeopleDeckViewForm.Designer.cs">
+      <DependentUpon>PeopleDeckViewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MagicBook\PeopleDropViewForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MagicBook\PeopleDropViewForm.Designer.cs">
+      <DependentUpon>PeopleDropViewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MagicBook\DropItemViewerForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MagicBook\DropItemViewerForm.Designer.cs">
+      <DependentUpon>DropItemViewerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MagicBook\ItemDetail.cs">
+    </Compile>
+    <Compile Include="Forms\MazeWindow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MazeWindow.Designer.cs">
+      <DependentUpon>MazeWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MiniGame\MGIconsCatch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MiniGame\MGIconsCatch.Designer.cs">
+      <DependentUpon>MGIconsCatch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MiniGame\MGUpToNumber.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MiniGame\MGUpToNumber.Designer.cs">
+      <DependentUpon>MGUpToNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\BasePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MiniGame\MGBattleRobot.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MiniGame\MGBattleRobot.Designer.cs">
+      <DependentUpon>MGBattleRobot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Pops\PopDeckChangeName.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Pops\PopDeckChangeName.Designer.cs">
+      <DependentUpon>PopDeckChangeName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Pops\PopDeckChoose.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Pops\PopDeckChoose.Designer.cs">
+      <DependentUpon>PopDeckChoose.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NpcShopForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\NpcShopForm.Designer.cs">
+      <DependentUpon>NpcShopForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataType\Mazes\Maze.cs" />
+    <Compile Include="DataType\Mazes\MazeBook.cs" />
+    <Compile Include="DataType\Peoples\RivalState.cs" />
+    <Compile Include="Forms\EquipmentForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\EquipmentForm.Designer.cs">
+      <DependentUpon>EquipmentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataType\Equips\EquipBook.cs" />
+    <Compile Include="Forms\CardShopViewForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\CardShopViewForm.Designer.cs">
+      <DependentUpon>CardShopViewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controler\Battle\Data\MemCard\ActiveCards.cs" />
+    <Compile Include="DataType\Cards\CardAssistant.cs" />
+    <Compile Include="DataType\Cards\Spells\SpellCard.cs" />
+    <Compile Include="Forms\CreatePlayerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CreatePlayerForm.Designer.cs">
+      <DependentUpon>CreatePlayerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controler\Battle\Data\MemEffect\ActiveEffect.cs" />
+    <Compile Include="Controler\Battle\Components\CardList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controler\Battle\Components\CardList.Designer.cs">
+      <DependentUpon>CardList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controler\Battle\Components\CardSlot.cs" />
+    <Compile Include="DataType\Cards\Weapons\WeaponCard.cs" />
+    <Compile Include="Controler\Battle\BattleForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controler\Battle\BattleForm.Designer.cs">
+      <DependentUpon>BattleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataType\Effects\EffectFrame.cs" />
+    <Compile Include="DataType\Effects\EffectFrameUnit.cs" />
+    <Compile Include="DataType\Others\ExpTree.cs" />
+    <Compile Include="DataType\Others\GameResource.cs" />
+    <Compile Include="DataType\Items\HItemBook.cs" />
+    <Compile Include="Forms\MagicBook\MonsterSkillViewForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MagicBook\MonsterSkillViewForm.Designer.cs">
+      <DependentUpon>MonsterSkillViewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Items\MiniItemView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Items\MiniItemView.Designer.cs">
+      <DependentUpon>MiniItemView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\GameShopViewForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\GameShopViewForm.Designer.cs">
+      <DependentUpon>GameShopViewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ConnectForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\ConnectForm.Designer.cs">
+      <DependentUpon>ConnectForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MergeWeaponForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MergeWeaponForm.Designer.cs">
+      <DependentUpon>MergeWeaponForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Pops\PopBuyProduct.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Pops\PopBuyProduct.Designer.cs">
+      <DependentUpon>PopBuyProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TourGame\MatchManager.cs" />
+    <Compile Include="Forms\TourGame\MatchResult.cs" />
+    <Compile Include="Forms\TourGame\TourCup8.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\TourGame\TourCup8.Designer.cs">
+      <DependentUpon>TourCup8.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TourGame\TourLeague4.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\TourGame\TourLeague4.Designer.cs">
+      <DependentUpon>TourLeague4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TourGame\TourCup16.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\TourGame\TourCup16.Designer.cs">
+      <DependentUpon>TourCup16.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TourGame\TourRankList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\TourGame\TourRankList.Designer.cs">
+      <DependentUpon>TourRankList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\WorldMapViewForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\WorldMapViewForm.Designer.cs">
+      <DependentUpon>WorldMapViewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NpcTaskBeginForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\NpcTaskBeginForm.Designer.cs">
+      <DependentUpon>NpcTaskBeginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CommandForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CommandForm.Designer.cs">
+      <DependentUpon>CommandForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AchieveViewForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\AchieveViewForm.Designer.cs">
+      <DependentUpon>AchieveViewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ChangeCardForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\ChangeCardForm.Designer.cs">
+      <DependentUpon>ChangeCardForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TournamentViewForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\TournamentViewForm.Designer.cs">
+      <DependentUpon>TournamentViewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\IEForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\IEForm.Designer.cs">
+      <DependentUpon>IEForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\BlackWallForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\BlackWallForm.Designer.cs">
+      <DependentUpon>BlackWallForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\LevelUpForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\LevelUpForm.Designer.cs">
+      <DependentUpon>LevelUpForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Interface\ICardList.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainItem\MainTipManager.cs" />
+    <Compile Include="DataType\Scenes\SceneObjects\SceneNPC.cs" />
+    <Compile Include="DataType\Scenes\SceneObjects\SceneObject.cs" />
+    <Compile Include="DataType\Scenes\SceneObjects\SceneWarp.cs" />
+    <Compile Include="MainItem\PanelManager.cs" />
+    <Compile Include="MainItem\PopMenuDeck.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainItem\PopMenuDeck.Designer.cs">
+      <DependentUpon>PopMenuDeck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainItem\Scene.cs" />
+    <Compile Include="MainItem\SystemMenu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainItem\SystemMenu.Designer.cs">
+      <DependentUpon>SystemMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataType\NPCs\NPCBook.cs" />
+    <Compile Include="DataType\NPCs\TalkWord.cs" />
+    <Compile Include="DataType\Peoples\PeopleBook.cs" />
+    <Compile Include="DataType\Peoples\PeopleDrop.cs" />
+    <Compile Include="Controler\Battle\Data\Players\AIPlayer.cs" />
+    <Compile Include="Controler\Battle\Data\Players\HumanPlayer.cs" />
+    <Compile Include="Controler\Battle\Data\Players\PlayerState.cs" />
+    <Compile Include="DataType\User\Profile.cs" />
+    <Compile Include="Controler\Battle\Data\Players\RandomPlayer.cs" />
+    <Compile Include="DataType\Scenes\SceneBook.cs" />
+    <Compile Include="DataType\Buffs\Buff.cs" />
+    <Compile Include="DataType\Cards\Card.cs" />
+    <Compile Include="Forms\MagicBook\CardDetail.cs">
+    </Compile>
+    <Compile Include="Controler\Battle\Components\CardsArray.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controler\Battle\Components\CardsArray.Designer.cs">
+      <DependentUpon>CardsArray.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controler\Battle\Data\MemFlow\FlowWord.cs" />
+    <Compile Include="Forms\MagicBook\CardViewForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MagicBook\CardViewForm.Designer.cs">
+      <DependentUpon>CardViewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controler\Battle\Components\LifeClock.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controler\Battle\Components\LifeClock.Designer.cs">
+      <DependentUpon>LifeClock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controler\Battle\Data\MemMonster\LiveMonster.cs" />
+    <Compile Include="DataType\Cards\Monsters\Monster.cs" />
+    <Compile Include="DataType\Cards\Monsters\MonsterBook.cs" />
+    <Compile Include="DataType\Cards\Monsters\MonsterCard.cs" />
+    <Compile Include="DataType\Skills\Skill.cs" />
+    <Compile Include="Core\PaintTool.cs" />
+    <Compile Include="Core\HSCursor.cs" />
+    <Compile Include="Core\HSIcons.cs" />
+    <Compile Include="Core\HSTypes.cs" />
+    <Compile Include="Controler\Loader\PicLoader.cs" />
+    <Compile Include="Controler\Battle\Data\Players\Player.cs" />
+    <Compile Include="MainItem\SystemMenuManager.cs" />
+    <Compile Include="MainItem\SystemToolTip.cs" />
+    <Compile Include="MainItem\ToolBarItemTypes.cs" />
+    <Compile Include="MainItem\PopMenuBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainItem\PopMenuBase.Designer.cs">
+      <DependentUpon>PopMenuBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainItem\PopMenuEquip.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainItem\PopMenuEquip.Designer.cs">
+      <DependentUpon>PopMenuEquip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainItem\PopMenuItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainItem\PopMenuItem.Designer.cs">
+      <DependentUpon>PopMenuItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controler\Battle\Components\CardSelector.resx">
+      <DependentUpon>CardSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BasePanel.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>BasePanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EquipmentForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>EquipmentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CardShopViewForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>CardShopViewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controler\Battle\Components\CardList.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>CardList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controler\Battle\Components\CardsArray.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>CardsArray.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MagicBook\MagicBookViewForm.resx">
+      <DependentUpon>MagicBookViewForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MagicBook\CardViewForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>CardViewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controler\Battle\BattleForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>BattleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CreatePlayerForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>CreatePlayerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controler\Battle\Components\LifeClock.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>LifeClock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MagicBook\PeopleDeckViewForm.resx">
+      <DependentUpon>PeopleDeckViewForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MagicBook\PeopleDropViewForm.resx">
+      <DependentUpon>PeopleDropViewForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MagicBook\DropItemViewerForm.resx">
+      <DependentUpon>DropItemViewerForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MazeWindow.resx">
+      <DependentUpon>MazeWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ExpBottleForm.resx">
+      <DependentUpon>ExpBottleForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MiniGame\MGIconsCatch.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MGIconsCatch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MiniGame\MGUpToNumber.resx">
+      <DependentUpon>MGUpToNumber.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MiniGame\MGBattleRobot.resx">
+      <DependentUpon>MGBattleRobot.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MiniGame\MGThreeBody.resx">
+      <DependentUpon>MGThreeBody.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MiniGame\MGSeven.resx">
+      <DependentUpon>MGSeven.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Pops\PopDeckChangeName.resx">
+      <DependentUpon>PopDeckChangeName.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Pops\PopDeckChoose.resx">
+      <DependentUpon>PopDeckChoose.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NpcShopForm.resx">
+      <DependentUpon>NpcShopForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MagicBook\MonsterSkillViewForm.resx">
+      <DependentUpon>MonsterSkillViewForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Items\MiniItemView.resx">
+      <DependentUpon>MiniItemView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GameShopViewForm.resx">
+      <DependentUpon>GameShopViewForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ConnectForm.resx">
+      <DependentUpon>ConnectForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MergeWeaponForm.resx">
+      <DependentUpon>MergeWeaponForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Pops\PopBuyProduct.resx">
+      <DependentUpon>PopBuyProduct.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Pops\PopSelectCard.resx">
+      <DependentUpon>PopSelectCard.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TourGame\TourCup8.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>TourCup8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TourGame\TourLeague4.resx">
+      <DependentUpon>TourLeague4.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TourGame\TourCup16.resx">
+      <DependentUpon>TourCup16.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TourGame\TourRankList.resx">
+      <DependentUpon>TourRankList.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\WorldMapViewForm.resx">
+      <DependentUpon>WorldMapViewForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NpcTaskBeginForm.resx">
+      <DependentUpon>NpcTaskBeginForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CommandForm.resx">
+      <DependentUpon>CommandForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AchieveViewForm.resx">
+      <DependentUpon>AchieveViewForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ChangeCardForm.resx">
+      <DependentUpon>ChangeCardForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TournamentViewForm.resx">
+      <DependentUpon>TournamentViewForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\IEForm.resx">
+      <DependentUpon>IEForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BlackWallForm.resx">
+      <DependentUpon>BlackWallForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LevelUpForm.resx">
+      <DependentUpon>LevelUpForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CalendarForm.resx">
+      <DependentUpon>CalendarForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FarmForm.resx">
+      <DependentUpon>FarmForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BuyPieceForm.resx">
+      <DependentUpon>BuyPieceForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\QuestionForm.resx">
+      <DependentUpon>QuestionForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TreasureWheelForm.resx">
+      <DependentUpon>TreasureWheelForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\HeroSkillAttrForm.resx">
+      <DependentUpon>HeroSkillAttrForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LevelInfoForm.resx">
+      <DependentUpon>LevelInfoForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SelectJobForm.resx">
+      <DependentUpon>SelectJobForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CardBagForm.resx">
+      <DependentUpon>CardBagForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainItem\PopMenuDeck.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PopMenuDeck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainItem\SystemMenu.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SystemMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainItem\PopMenuBase.resx">
+      <DependentUpon>PopMenuBase.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainItem\PopMenuEquip.resx">
+      <DependentUpon>PopMenuEquip.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainItem\PopMenuItem.resx">
+      <DependentUpon>PopMenuItem.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NpcTalkForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>NpcTalkForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TaskForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>TaskForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controler\Battle\Components\TimeViewer.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>TimeViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DeckViewForm.resx">
+      <DependentUpon>DeckViewForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PeopleViewForm.resx">
+      <DependentUpon>PeopleViewForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ItemForm.resx">
+      <DependentUpon>ItemForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controler\Battle\BattleResultForm.resx">
+      <DependentUpon>BattleResultForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NpcDigForm.resx">
+      <DependentUpon>NpcDigForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TaskResultForm.resx">
+      <DependentUpon>TaskResultForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="DataType\Skills\SkillAssistant.cs" />
+    <Compile Include="DataType\Cards\SpecialCard.cs" />
+    <Compile Include="DataType\Effects\Effect.cs" />
+    <Compile Include="DataType\Effects\EffectBook.cs" />
+    <Compile Include="DataType\Skills\SkillBook.cs" />
+    <Compile Include="DataType\Buffs\BuffBook.cs" />
+    <Compile Include="DataType\Cards\Spells\Spell.cs" />
+    <Compile Include="DataType\Cards\Spells\SpellBook.cs" />
+    <Compile Include="DataType\Cards\Spells\SpellAssistant.cs" />
+    <Compile Include="Forms\NpcTalkForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\NpcTalkForm.Designer.cs">
+      <DependentUpon>NpcTalkForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TaskForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\TaskForm.Designer.cs">
+      <DependentUpon>TaskForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataType\Tasks\TaskBook.cs" />
+    <Compile Include="DataType\Others\TileBook.cs" />
+    <Compile Include="Controler\Battle\Components\TimeViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controler\Battle\Components\TimeViewer.Designer.cs">
+      <DependentUpon>TimeViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataType\User\UserProfile.cs" />
+    <Compile Include="DataType\Cards\Weapons\TrueWeapon.cs" />
+    <Compile Include="DataType\Cards\Weapons\WeaponBook.cs" />
+    <Compile Include="DataType\Cards\Weapons\WeaponAssistant.cs" />
+    <Compile Include="Forms\DeckViewForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\DeckViewForm.Designer.cs">
+      <DependentUpon>DeckViewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controler\Loader\DataLoader.cs" />
+    <Compile Include="Forms\PeopleViewForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\PeopleViewForm.Designer.cs">
+      <DependentUpon>PeopleViewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ItemForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\ItemForm.Designer.cs">
+      <DependentUpon>ItemForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controler\Battle\BattleResultForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controler\Battle\BattleResultForm.Designer.cs">
+      <DependentUpon>BattleResultForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NpcDigForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\NpcDigForm.Designer.cs">
+      <DependentUpon>NpcDigForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TaskResultForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\TaskResultForm.Designer.cs">
+      <DependentUpon>TaskResultForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainItem\ToolBarItemData.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BaseType\BaseType.csproj">
+      <Project>{A155D12F-B9E0-425F-A840-959CB8ABE826}</Project>
+      <Name>BaseType</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ControlPlus\ControlPlus.csproj">
+      <Project>{476BDC7E-6825-43D6-A9DB-DE5C5263515F}</Project>
+      <Name>ControlPlus</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataResource\DataResource.csproj">
+      <Project>{B0A31F62-AE2B-4F0B-8EAB-6E646D422BC9}</Project>
+      <Name>DataResource</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NarlonLib\NarlonLib.csproj">
+      <Project>{90968C56-07C1-4AB6-9C00-FDBB49031F25}</Project>
+      <Name>NarlonLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icon2.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

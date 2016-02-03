@@ -1,0 +1,10 @@
+obj\Debug\DeckManager.exe
+obj\Debug\DeckManager.pdb
+bin\Debug\DeckManager.exe
+bin\Debug\DeckManager.pdb
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\DeckManager.Form1.resources
+obj\Debug\DeckManager.Properties.Resources.resources
+obj\Debug\DeckManager.csproj.GenerateResource.Cache
+..\bin\debug\DeckManager.exe
+..\bin\debug\DeckManager.pdb

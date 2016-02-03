@@ -1,0 +1,10 @@
+F:\TOMClassic\Trunk\Tool\ExcelToCsv\bin\Debug\ExcelToCsv.exe
+F:\TOMClassic\Trunk\Tool\ExcelToCsv\bin\Debug\ExcelToCsv.pdb
+F:\TOMClassic\Trunk\Tool\ExcelToCsv\obj\Debug\ExcelToCsv.exe
+F:\TOMClassic\Trunk\Tool\ExcelToCsv\obj\Debug\ExcelToCsv.pdb
+F:\TOMClassic\Trunk\Tool\ExcelToCsv\obj\Debug\ExcelToCsv.csprojResolveAssemblyReference.cache
+E:\fish\Trunk\Tool\ExcelToCsv\obj\Debug\ExcelToCsv.exe
+E:\fish\Trunk\Tool\ExcelToCsv\obj\Debug\ExcelToCsv.pdb
+E:\fish\Trunk\Tool\ExcelToCsv\bin\Debug\ExcelToCsv.exe
+E:\fish\Trunk\Tool\ExcelToCsv\bin\Debug\ExcelToCsv.pdb
+E:\fish\Trunk\Tool\ExcelToCsv\obj\Debug\ExcelToCsv.csprojResolveAssemblyReference.cache
