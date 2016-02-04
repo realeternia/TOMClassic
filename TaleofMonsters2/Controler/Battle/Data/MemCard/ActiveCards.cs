@@ -19,21 +19,35 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
 
         internal ActiveCards(DeckCard[] itsCards)
         {
-            ActiveCard[] tcards = new ActiveCard[SysConstants.DeckCardCount];
-            for (int i = 0; i < SysConstants.DeckCardCount; i++)
+            ActiveCard[] tcards = new ActiveCard[GameConstants.DeckCardCount];
+            for (int i = 0; i < GameConstants.DeckCardCount; i++)
             {
                 tcards[i] = new ActiveCard(itsCards[i]);
             }
             for (int i = 0; i < 100; i++)
             {
-                int x = MathTool.GetRandom(SysConstants.DeckCardCount);
-                int y = MathTool.GetRandom(SysConstants.DeckCardCount);
+                int x = MathTool.GetRandom(GameConstants.DeckCardCount);
+                int y = MathTool.GetRandom(GameConstants.DeckCardCount);
                 ActiveCard temp = tcards[x];
                 tcards[x] = tcards[y];
                 tcards[y] = temp;
             }
             cards = new List<ActiveCard>(tcards);
             index = 0;
+        }
+
+        public int GetAvgLevel()
+        {
+            if (cards == null)
+            {
+                return 0;
+            }
+            int cardLvTotal = 0;
+            foreach (var activeCard in cards)
+            {
+                cardLvTotal += activeCard.Level;
+            }
+            return cardLvTotal/cards.Count;
         }
 
         internal ActiveCards GetCopy()

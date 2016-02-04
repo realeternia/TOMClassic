@@ -22,9 +22,14 @@ namespace TaleofMonsters.DataType.Cards.Monsters
         public int Luk { get; set; }
         public int Hp { get; set; }
 
+        public int Level { get; set; }
+
+        public string Name { get; set; }
+
         public Monster(int id)
         {
             MonsterConfig = ConfigData.GetMonsterConfig(id);
+            Name = MonsterConfig.Name;
             UpgradeToLevel1();
         }
 
@@ -82,7 +87,9 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             Dhit = standardValue * (100 + MonsterConfig.DhitP) / 100; //100
             Spd = standardValue * (100 + MonsterConfig.SpdP) / 100; //100
             Luk = standardValue * (100 + MonsterConfig.LukP) / 100;//无用属性
-            Hp = standardValue * (100 + MonsterConfig.VitP) / 100 * 9; //200
+            Hp = standardValue * (100 + MonsterConfig.VitP) / 100 * 5; //200
+
+            Level = level;
         }
     }
 }

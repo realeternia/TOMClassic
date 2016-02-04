@@ -21,8 +21,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             PeopleId = 0;
             Level = UserProfile.InfoBasic.Level;
             
-            DeckCard[] cd = new DeckCard[SysConstants.DeckCardCount];
-            for (int i = 0; i < SysConstants.DeckCardCount; i++)
+            DeckCard[] cd = new DeckCard[GameConstants.DeckCardCount];
+            for (int i = 0; i < GameConstants.DeckCardCount; i++)
             {
                 int id = UserProfile.InfoCard.SelectedDeck.GetCardAt(i);
                 cd[i] = UserProfile.InfoCard.GetDeckCardById(id);
@@ -35,8 +35,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             EnergyGenerator.SetRate(energyRate);
 
             HeroData = new Monster(MonsterConfig.Indexer.HeroCardId);
-            HeroData.MonsterConfig.Name = UserProfile.Profile.Name;
-            HeroData.UpgradeToLevel(Level);
+            HeroData.Name = UserProfile.Profile.Name;
+            HeroData.UpgradeToLevel(Cards.GetAvgLevel());
             attr.ModifyMonsterData(HeroData);
             JobConfig jobConfig = ConfigDatas.ConfigData.GetJobConfig( UserProfile.Profile.InfoBasic.Job);
             HeroImage = PicLoader.Read("Hero", string.Format("{0}.JPG", jobConfig.ProtoImage));
@@ -60,13 +60,10 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public override void InitialCards()
         {
-            for (int i = 0; i < 4; i++)
-            {
-                CardManager.GetNextCard();
-            }
+            base.InitialCards();
 
 #if DEBUG
-            CardManager.AddCard(new ActiveCard(10029, 1, 0));
+        //    CardManager.AddCard(new ActiveCard(10029, 1, 0));
 #endif
         }
 

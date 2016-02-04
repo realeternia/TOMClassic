@@ -10,17 +10,19 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         public int Tile { get; set; }
         public int SideIndex { get; private set; }
         public int Owner { get; private set; }
+        public bool IsLeft { get; private set; }
 
         public MemMapPoint(int xid, int x, int y, int total, int tile)
         {
             this.xid = xid;
+            IsLeft = xid <= total/2;
             X = x;
             Y = y;
-            if (xid <= 4)
+            if (xid <= total/2)
             {
                 SideIndex = xid;
             }
-            else if (xid > total - 5)
+            else if (xid > total - total/2-1)
             {
                 SideIndex = total - xid - 1;
             }
@@ -31,12 +33,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             Tile = tile;
             Owner = 0;
         }
-        
-        public bool IsLeft
-        {
-            get { return xid <= 4; }
-        }
-        
+
         public void UpdateOwner(int id)
         {
             Owner = id;

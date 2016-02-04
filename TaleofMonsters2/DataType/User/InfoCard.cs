@@ -22,7 +22,7 @@ namespace TaleofMonsters.DataType.User
 
         public InfoCard()
         {
-            Decks = new MemDeckData[SysConstants.PlayDeckCount];
+            Decks = new MemDeckData[GameConstants.PlayDeckCount];
             for (int i = 0; i < Decks.Length; i++)
             {
                 Decks[i] = new MemDeckData(i + 1);
@@ -62,7 +62,7 @@ namespace TaleofMonsters.DataType.User
         {
             DeckCard card = new DeckCard(cid, 1, 0);
             var cardData = CardConfigManager.GetCardConfig(cid);
-            if (GetCardCount(cid) >= SysConstants.CardLimit)
+            if (GetCardCount(cid) >= GameConstants.CardLimit)
             {
                 var myCard = GetDeckCardById(cid);
                 myCard.AddExp(1);//多余的卡转化为经验值

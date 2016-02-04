@@ -195,7 +195,7 @@ namespace TaleofMonsters.DataType.User
         {
             UserProfile.InfoBasic.DigCount = 0;
             UserProfile.Profile.InfoMinigame.Clear();
-            UserProfile.Profile.InfoBasic.Ap = SysConstants.NewDayAP;
+            UserProfile.Profile.InfoBasic.Ap = GameConstants.NewDayAP;
 
             int inter = TimeTool.DateTimeToUnixTime(DateTime.Now) - InfoBasic.LastLoginTime;
             InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalOnline, inter / 60);

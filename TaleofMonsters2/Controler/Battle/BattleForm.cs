@@ -220,19 +220,19 @@ namespace TaleofMonsters.Controler.Battle
                         hitMonsterId =BattleManager.Instance.MonsterQueue.NextAction(); //1回合
                         if (hitMonsterId > 0)
                         {
-                            hitRound = SysConstants.BattleAttackRoundWait;
+                            hitRound = GameConstants.BattleAttackRoundWait;
                         }
                     }
                 }
                 
                 if (roundMark%4 == 0) //200ms
                 {
-                    float pastTime = (float) 200/SysConstants.RoundTime;
+                    float pastTime = (float) 200/GameConstants.RoundTime;
                     BattleManager.Instance.PlayerManager.Update(false, pastTime, BattleManager.Instance.BattleInfo.Round);
                     if (timeViewer1.TimeGo(pastTime))
                         BattleManager.Instance.PlayerManager.CheckRoundCard(); //1回合
                 }
-                BattleManager.Instance.BattleInfo.Round = roundMark * 50 / SysConstants.RoundTime + 1;//50ms
+                BattleManager.Instance.BattleInfo.Round = roundMark * 50 / GameConstants.RoundTime + 1;//50ms
                 if (roundMark%10 == 0)
                 {
                     AIStrategy.AIProc(BattleManager.Instance.PlayerManager.RightPlayer, isGamePaused);
@@ -338,6 +338,7 @@ namespace TaleofMonsters.Controler.Battle
             if (isGamePaused)
                 return;
 
+            int cardSize = BattleManager.Instance.MemMap.CardSize;
             if (e.Button == MouseButtons.Left)
             {
                 if (leftSelectCard != null && (myCursor.Name == "summon" || myCursor.Name == "equip" || myCursor.Name == "cast"))
@@ -363,8 +364,8 @@ namespace TaleofMonsters.Controler.Battle
                         var mon = new Monster(leftSelectCard.CardId);
                         mon.UpgradeToLevel(leftSelectCard.Level);
                         BattleManager.Instance.PlayerManager.LeftPlayer.OnSummon(mon);
-                        
-                        LiveMonster newMon = new LiveMonster(leftSelectCard.Id, leftSelectCard.Level, mon, new Point(mouseX / 100 * 100, mouseY / 100 * 100), true);
+
+                        LiveMonster newMon = new LiveMonster(leftSelectCard.Id, leftSelectCard.Level, mon, new Point(mouseX / cardSize * cardSize, mouseY / cardSize * cardSize), true);
                        BattleManager.Instance.MonsterQueue.Add(newMon);
 
                         BattleManager.Instance.PlayerManager.RightPlayer.CheckTrapOnSummon(newMon, BattleManager.Instance.PlayerManager.RightPlayer, BattleManager.Instance.PlayerManager.LeftPlayer);
@@ -436,7 +437,8 @@ namespace TaleofMonsters.Controler.Battle
             {
                 if (leftSelectCard.CardType == CardTypes.Monster)
                 {
-                    if (lm == null && mouseX>100&&mouseX<400)
+                    int cardSize = BattleManager.Instance.MemMap.CardSize;
+                    if (lm == null && mouseX > cardSize && mouseX < cardSize * (BattleManager.Instance.MemMap.ColumnCount/2))
                     {
                         cursorname = "summon";
                     }

@@ -135,7 +135,7 @@
     <Compile Include="Core\Interface\IRegionDecorator.cs" />
     <Compile Include="Core\IntPair.cs" />
     <Compile Include="Core\SoundManager.cs" />
-    <Compile Include="Core\SysConstants.cs" />
+    <Compile Include="Core\GameConstants.cs" />
     <Compile Include="Core\HSErrorTypes.cs" />
     <Compile Include="DataType\Buffs\BuffIds.cs" />
     <Compile Include="DataType\CardPieces\CardPieceRate.cs" />

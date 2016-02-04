@@ -1,8 +1,6 @@
 ﻿using System;
 using NarlonLib.Math;
-using TaleofMonsters.Controler.Battle.Data;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
-using TaleofMonsters.Controler.Battle.DataTent;
 using System.Drawing;
 using TaleofMonsters.Controler.Battle.Data.MemMap;
 using TaleofMonsters.DataType;
@@ -14,10 +12,11 @@ namespace TaleofMonsters.Controler.Battle.Tool
         public static Point GetMonsterPoint(bool isLeft)
         {
             int size = BattleManager.Instance.MemMap.CardSize;
+            var sideCell = BattleManager.Instance.MemMap.ColumnCount/2;
             while (true)
             {
-                int x = isLeft ? MathTool.GetRandom(1, 4) : MathTool.GetRandom(5, 8);
-                int y = MathTool.GetRandom(0, 4);
+                int x = isLeft ? MathTool.GetRandom(1, sideCell) : MathTool.GetRandom(sideCell + 1, BattleManager.Instance.MemMap.ColumnCount-1);
+                int y = MathTool.GetRandom(0, BattleManager.Instance.MemMap.RowCount);
                 if (BattleManager.Instance.MemMap.Cells[x, y].Owner == 0)
                 {
                     return new Point(x * size, y * size);
@@ -30,7 +29,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
             int size = BattleManager.Instance.MemMap.CardSize;
             while (true)
             {
-                int x = isLeft ? 0 : 8;
+                int x = isLeft ? 0 : BattleManager.Instance.MemMap.ColumnCount-1;
                 int y = 0;
                 if (BattleManager.Instance.MemMap.Cells[x, y].Owner == 0)
                 {
@@ -62,14 +61,16 @@ namespace TaleofMonsters.Controler.Battle.Tool
 
         public static bool IsPlaceBlank(int tx, int ty)
         {
+            var sideCell = BattleManager.Instance.MemMap.ColumnCount / 2;
             MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
-            return point.Owner <= 0 && point.SideIndex > 0 && point.SideIndex < 4;
+            return point.Owner <= 0 && point.SideIndex > 0 && point.SideIndex < sideCell;
         }
 
         public static bool IsPlaceTombSide(int tx, int ty)
         {
+            var sideCell = BattleManager.Instance.MemMap.ColumnCount / 2;
             MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
-            return point.Owner < 0 && point.SideIndex > 0 && point.SideIndex < 4;
+            return point.Owner < 0 && point.SideIndex > 0 && point.SideIndex < sideCell;
         }
 
         public static Point GetMonsterNearPoint(Point pos, string type, bool goLeft)

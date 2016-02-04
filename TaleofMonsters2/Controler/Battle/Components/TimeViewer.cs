@@ -52,8 +52,8 @@ namespace TaleofMonsters.Controler.Battle.Components
             //}
 
             var roundEnd = false;
-            round += pastTime*10;
-            if (round > 10)
+            round += pastTime;
+            if (round >= 1)
             {
                 round = 0;
                 roundEnd = true;
@@ -66,7 +66,7 @@ namespace TaleofMonsters.Controler.Battle.Components
         private void TimeViewer_Paint(object sender, PaintEventArgs e)
         {
             LinearGradientBrush b1 = new LinearGradientBrush(new Rectangle(0, 0, Width, Height), Color.LightGreen, Color.Green, LinearGradientMode.Vertical);
-            e.Graphics.FillRectangle(b1, 0, 0, round * Width / 20, 30);
+            e.Graphics.FillRectangle(b1, 0, 0, round * Width, 30);
             b1.Dispose();
 
             Font font = new Font("Arial", 20*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);

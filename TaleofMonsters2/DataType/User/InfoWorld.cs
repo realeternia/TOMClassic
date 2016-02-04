@@ -49,14 +49,14 @@ namespace TaleofMonsters.DataType.User
         public List<MemChangeCardData> GetChangeCardData()
         {
             int time = TimeTool.DateTimeToUnixTime(DateTime.Now);
-            if (Cards != null && UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastCardChangeTime) < time - SysConstants.ChangeCardDura)
+            if (Cards != null && UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastCardChangeTime) < time - GameConstants.ChangeCardDura)
             {
                 Cards.Clear();
                 for (int i = 0; i < 5; i++)
                 {
                     Cards.Add(CreateMethod(i));
                 }
-                UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastCardChangeTime, TimeManager.GetTimeOnNextInterval(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastCardChangeTime), time, SysConstants.ChangeCardDura));
+                UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastCardChangeTime, TimeManager.GetTimeOnNextInterval(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastCardChangeTime), time, GameConstants.ChangeCardDura));
             }
             return Cards;
         }
@@ -118,14 +118,14 @@ namespace TaleofMonsters.DataType.User
         public List<MemNpcPieceData> GetPieceData()
         {
             int time = TimeTool.DateTimeToUnixTime(DateTime.Now);
-            if (Cards != null && UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastNpcPieceTime) < time - SysConstants.NpcPieceDura)
+            if (Cards != null && UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastNpcPieceTime) < time - GameConstants.NpcPieceDura)
             {
                 Pieces.Clear();
                 for (int i = 0; i < 5; i++)
                 {
                     Pieces.Add(CreatePieceMethod(i));
                 }
-                UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastNpcPieceTime, TimeManager.GetTimeOnNextInterval(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastNpcPieceTime), time, SysConstants.NpcPieceDura));
+                UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastNpcPieceTime, TimeManager.GetTimeOnNextInterval(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastNpcPieceTime), time, GameConstants.NpcPieceDura));
             }
             return Pieces;
         }
@@ -178,11 +178,11 @@ namespace TaleofMonsters.DataType.User
         internal CardProduct[] GetCardProductsByType(CardTypes type)
         {
             int time = TimeTool.DateTimeToUnixTime(DateTime.Now);
-            if (CardProducts == null || UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastCardShopTime) < time - SysConstants.CardShopDura)
+            if (CardProducts == null || UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastCardShopTime) < time - GameConstants.CardShopDura)
             {
                 CardProducts = new List<CardProduct>();
                 ReinstallCardProducts();
-                UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastCardShopTime, TimeManager.GetTimeOnNextInterval(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastCardShopTime), time, SysConstants.CardShopDura));
+                UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastCardShopTime, TimeManager.GetTimeOnNextInterval(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastCardShopTime), time, GameConstants.CardShopDura));
             }
 
             List<CardProduct> pros = new List<CardProduct>();
@@ -370,7 +370,7 @@ namespace TaleofMonsters.DataType.User
         public MemMergeData[] GetAllMergeData()
         {
             int time = TimeTool.DateTimeToUnixTime(DateTime.Now);
-            if (MergeMethods == null || UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastMergeTime) < time - SysConstants.MergeWeaponDura)
+            if (MergeMethods == null || UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastMergeTime) < time - GameConstants.MergeWeaponDura)
             {
                 int[] ids = EquipBook.GetCanMergeId();
                 List<int> newids = RandomShuffle.Process(ids);
@@ -379,7 +379,7 @@ namespace TaleofMonsters.DataType.User
                 {
                     MergeMethods.Add(CreateMergeMethod(newids[i]));
                 }
-                UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastMergeTime, TimeManager.GetTimeOnNextInterval(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastMergeTime), time, SysConstants.MergeWeaponDura));
+                UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastMergeTime, TimeManager.GetTimeOnNextInterval(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastMergeTime), time, GameConstants.MergeWeaponDura));
             }
 
             return MergeMethods.ToArray();

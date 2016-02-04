@@ -33,7 +33,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             self = lm;
             Avatar = wpn;
             Level = level;
-            Life = wpn.WeaponConfig.Dura;
+            Life = wpn.Dura;
         }
 
         public void OnHit()

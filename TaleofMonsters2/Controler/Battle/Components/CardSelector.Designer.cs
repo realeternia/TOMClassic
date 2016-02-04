@@ -57,7 +57,6 @@
             this.DoubleBuffered = true;
             this.Name = "CardSelector";
             this.Size = new System.Drawing.Size(613, 252);
-            this.Click += new System.EventHandler(this.CardSelector_Click);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.CardSelector_Paint);
             this.ResumeLayout(false);
 

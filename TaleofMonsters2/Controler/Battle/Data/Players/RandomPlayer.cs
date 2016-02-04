@@ -10,7 +10,7 @@ using TaleofMonsters.DataType.Decks;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
 {
-    class RandomPlayer : Player
+    internal class RandomPlayer : Player
     {
         public RandomPlayer(int id, bool isLeft, bool isplayerControl)
             : base(isplayerControl, isLeft)
@@ -22,8 +22,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
             EnergyGenerator.SetRateNpc(peopleConfig);
 
-            DeckCard[] cd = new DeckCard[SysConstants.DeckCardCount];
-            for (int i = 0; i < SysConstants.DeckCardCount; i++)
+            DeckCard[] cd = new DeckCard[GameConstants.DeckCardCount];
+            for (int i = 0; i < GameConstants.DeckCardCount; i++)
             {
                 switch (MathTool.GetRandom(7))
                 {
@@ -44,7 +44,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
             Cards = new ActiveCards(cd);
             HeroData = new Monster(peopleConfig.KingCard);//todo 用attr构造
-            HeroData.UpgradeToLevel(Level);
+            HeroData.UpgradeToLevel(Cards.GetAvgLevel());
             HeroImage = PicLoader.Read("Monsters", string.Format("{0}.JPG", HeroData.MonsterConfig.Icon));
             InitBase();
         }

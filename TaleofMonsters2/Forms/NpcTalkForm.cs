@@ -117,12 +117,12 @@ namespace TaleofMonsters.Forms
                             MainForm.Instance.DealPanel(sw);
                             break;
                         case "Maz":
-                            if (UserProfile.InfoBasic.Ap < SysConstants.MazeAPCost)
+                            if (UserProfile.InfoBasic.Ap < GameConstants.MazeAPCost)
                             {
                                 MainForm.Instance.AddTip("体力不足", "Red");
                                 return;
                             }
-                            UserProfile.InfoBasic.Ap -= SysConstants.MazeAPCost;
+                            UserProfile.InfoBasic.Ap -= GameConstants.MazeAPCost;
                             MazeWindow mw = new MazeWindow();
                             mw.NpcId = npcId;
                             mw.MazeId = actionData;

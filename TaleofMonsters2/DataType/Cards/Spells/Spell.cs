@@ -70,8 +70,8 @@ namespace TaleofMonsters.DataType.Cards.Spells
             Level = level;
 
             int standardValue = (30 + SpellConfig.Star*10)*(level*8 + 92)/100*(100 + SpellConfig.Modify)/100;
-            Damage = standardValue * (SpellConfig.Damage) / 100 * 9;
-            Cure = standardValue * (SpellConfig.Cure) / 100 * 9;
+            Damage = standardValue * (SpellConfig.Damage) / 100 * 5;
+            Cure = standardValue * (SpellConfig.Cure) / 100 * 5;
             if (Addon > 0 || Addon < 0)
             {
                 Damage = (int)(Damage * (1 + Addon));

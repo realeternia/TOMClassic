@@ -5,7 +5,6 @@ using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
-using TaleofMonsters.Controler.Battle.DataTent;
 using TaleofMonsters.Core.Interface;
 using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.Core;
@@ -114,18 +113,18 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             Lp = 1;
             Mp = 1;
             Pp = 1;
-            EnergyGenerator.Next();
+            EnergyGenerator.Next(0);
         }
 
         public void Update(bool isFast, float timePast, int round)
         {
-            recoverTime += timePast * Math.Min(SysConstants.RoundRecoverLimit, SysConstants.RoundRecoverAddon*(round+5)/5);
-            var need = isFast ? SysConstants.DrawManaTimeFast : SysConstants.DrawManaTime;
+            recoverTime += timePast * GameConstants.RoundRecoverAddon * ((round >= GameConstants.RoundRecoverDoubleRound) ? 2 : 1);
+            var need = isFast ? GameConstants.DrawManaTimeFast : GameConstants.DrawManaTime;
             if (recoverTime >= need)
             {
                 recoverTime -= need;
                 AddManaData(EnergyGenerator.NextAimMana, 1);
-                EnergyGenerator.Next();
+                EnergyGenerator.Next(round);
             }
             if (ManaChanged != null)//todo 先ws下
             {
@@ -152,12 +151,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public float GetRoundRate()
         {
-            return recoverTime / SysConstants.DrawManaTime;
+            return recoverTime / GameConstants.DrawManaTime;
         }
 
         public virtual void InitialCards()
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < GameConstants.BattleInitialCardCount; i++)
             {
                 CardManager.GetNextCard();
             }
@@ -168,9 +167,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             if (HeroData != null)
             {
                 var id = World.WorldInfoManager.GetCardFakeId();
-                LiveMonster lm = new LiveMonster(id, Level, HeroData, BattleLocationManager.GetHeroPoint(IsLeft, id), IsLeft);
+                LiveMonster lm = new LiveMonster(id, HeroData.Level, HeroData, BattleLocationManager.GetHeroPoint(IsLeft, id), IsLeft);
                 lm.IsHero = true;
-               BattleManager.Instance.MonsterQueue.Add(lm);
+                BattleManager.Instance.MonsterQueue.Add(lm);
                 Hero = lm;
             }
         }
@@ -207,15 +206,15 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         private void AddManaData(PlayerManaTypes type, int num)
         {
-            if (type == PlayerManaTypes.Mana)
+            if (type == PlayerManaTypes.Mana || type == PlayerManaTypes.All)
             {
                 Mp = Math.Min(Mp + num, 10);
             }
-            if (type == PlayerManaTypes.LeaderShip)
+            if (type == PlayerManaTypes.LeaderShip || type == PlayerManaTypes.All)
             {
                 Lp = Math.Min(Lp + num, 10);
             }
-            if (type == PlayerManaTypes.Power)
+            if (type == PlayerManaTypes.Power || type == PlayerManaTypes.All)
             {
                 Pp = Math.Min(Pp + num, 10);
             }

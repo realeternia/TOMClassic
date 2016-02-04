@@ -165,8 +165,8 @@ namespace TaleofMonsters.Forms
         {
             DeckCard[] dcards = null;
             MemDeckData dk = UserProfile.InfoCard.SelectedDeck;
-            dcards = new DeckCard[SysConstants.DeckCardCount];
-            for (int i = 0; i < SysConstants.DeckCardCount; i++)
+            dcards = new DeckCard[GameConstants.DeckCardCount];
+            for (int i = 0; i < GameConstants.DeckCardCount; i++)
             {
                 int cid = dk.GetCardAt(i);
                 dcards[i] = UserProfile.InfoCard.GetDeckCardById(cid);
@@ -310,13 +310,13 @@ namespace TaleofMonsters.Forms
         private void UpdateDeckButtonState()
         {
             bitmapButtonPreD.Enabled = UserProfile.InfoCard.DeckId > 0;
-            bitmapButtonNextD.Enabled = UserProfile.InfoCard.DeckId + 1 < SysConstants.PlayDeckCount;
+            bitmapButtonNextD.Enabled = UserProfile.InfoCard.DeckId + 1 < GameConstants.PlayDeckCount;
         }
 
         private void buttonNextD_Click(object sender, EventArgs e)
         {
             int tmp = UserProfile.InfoCard.DeckId + 1;
-            if (tmp >= SysConstants.PlayDeckCount)
+            if (tmp >= GameConstants.PlayDeckCount)
             {
                 return;
             }
@@ -345,7 +345,7 @@ namespace TaleofMonsters.Forms
         {
             if (MessageBoxEx2.Show("确定要清除卡组内所有卡片？") == DialogResult.OK)
             {
-                for (int i = 0; i < SysConstants.DeckCardCount; i++)
+                for (int i = 0; i < GameConstants.DeckCardCount; i++)
                 {
                     UserProfile.InfoCard.SelectedDeck.SetCardAt(i, -1);
                 }

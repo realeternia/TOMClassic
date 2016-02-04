@@ -25,7 +25,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
         public Weapon(int id)
         {
             WeaponConfig = ConfigData.GetWeaponConfig(id);
-            Dura = WeaponConfig.Dura*3;
+            Dura = (int)(WeaponConfig.Dura*1.67);
             UpgradeToLevel1();
         }
 
@@ -110,7 +110,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
         public void UpgradeToLevel(int level)
         {
             int standardValue = (30 + WeaponConfig.Star * 10) * (level*8 + 92) / 100 * (100 + WeaponConfig.Modify) / 100;
-            standardValue = (int)((float)standardValue*4/Dura*(1+(Dura-4)*0.1));//耐久低的武器总值削减
+            standardValue = (int)((float)standardValue * 4 / WeaponConfig.Dura * (1 + (WeaponConfig.Dura - 4) * 0.1));//耐久低的武器总值削减
             Atk = standardValue * (WeaponConfig.Atk) / 100;
             Def = standardValue * ( WeaponConfig.Def) / 100;
             Mag = standardValue * ( WeaponConfig.Mag) / 100;

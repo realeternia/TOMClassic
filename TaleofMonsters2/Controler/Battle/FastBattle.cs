@@ -41,13 +41,13 @@ namespace TaleofMonsters.Controler.Battle
 
             using (CardList cl = new CardList())
             {
-                cl.MaxCards = SysConstants.CardSlotMaxCount;
+                cl.MaxCards = GameConstants.CardSlotMaxCount;
                 BattleManager.Instance.PlayerManager.LeftPlayer.CardsDesk = cl;
                 BattleManager.Instance.PlayerManager.LeftPlayer.InitialCards();
             }
             using (CardList cl = new CardList())
             {
-                cl.MaxCards = SysConstants.CardSlotMaxCount;
+                cl.MaxCards = GameConstants.CardSlotMaxCount;
                 BattleManager.Instance.PlayerManager.RightPlayer.CardsDesk = cl;
                 BattleManager.Instance.PlayerManager.RightPlayer.InitialCards();
             }
@@ -74,7 +74,7 @@ namespace TaleofMonsters.Controler.Battle
                 }
                 if (roundMark % 4 == 0)
                 {
-                    float pastTime = (float)200 / SysConstants.RoundTime;
+                    float pastTime = (float)200 / GameConstants.RoundTime;
                     BattleManager.Instance.PlayerManager.Update(false, pastTime, BattleManager.Instance.BattleInfo.Round);
                     if (roundMark % 250 == 0)
                     {
@@ -86,7 +86,7 @@ namespace TaleofMonsters.Controler.Battle
                     AIStrategy.AIProc(BattleManager.Instance.PlayerManager.RightPlayer, false);
                     AIStrategy.AIProc(BattleManager.Instance.PlayerManager.LeftPlayer, false);
                 }
-                BattleManager.Instance.BattleInfo.Round = roundMark * 50 / SysConstants.RoundTime + 1;//50ms
+                BattleManager.Instance.BattleInfo.Round = roundMark * 50 / GameConstants.RoundTime + 1;//50ms
             }
         }
 

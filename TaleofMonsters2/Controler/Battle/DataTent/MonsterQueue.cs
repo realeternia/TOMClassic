@@ -121,6 +121,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
         {
             leftCount = 0;
             rightCount = 0;
+            int cardSize = BattleManager.Instance.MemMap.CardSize;
             List<int> removeMids = new List<int>();            
             foreach (LiveMonster mon in monsters)
             {
@@ -141,7 +142,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                     else
                     {
                         mon.GhostTime++;
-                        if (mon.GhostTime>=300) //300 is ghost time 3round
+                        if (mon.GhostTime>=100) //100 is ghost time 1round
                         {
                             removeMids.Add(mon.Id);
                         }
@@ -196,7 +197,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                         LiveMonster target = GetMonsterByUniqueId(eid);
                         if (target != null)
                         {
-                            roundMonster.TargetPosition = new Point(target.IsLeft ? target.Position.X + 100 : target.Position.X - 70, target.Position.Y + 15);
+                            roundMonster.TargetPosition = new Point(target.IsLeft ? target.Position.X + cardSize : target.Position.X - (int)(cardSize * 0.7), target.Position.Y + (int)(cardSize * 0.3)/2);
                             BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(roundMonster.Arrow), target, false));
 
                             SkillAssistant.CheckBurst(roundMonster, target);

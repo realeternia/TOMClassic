@@ -4,7 +4,7 @@ using TaleofMonsters.Controler.Resource;
 
 namespace TaleofMonsters.Core
 {
-    static class HSIcons
+    internal static class HSIcons
     {
         static public Image GetIconsByEName(string name)
         {

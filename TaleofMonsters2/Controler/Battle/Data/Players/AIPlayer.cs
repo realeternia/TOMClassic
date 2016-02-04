@@ -6,7 +6,7 @@ using TaleofMonsters.DataType.Decks;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
 {
-    class AIPlayer : Player
+    internal class AIPlayer : Player
     {
         public AIPlayer(int id, string deck, bool isLeft, int rlevel, bool isPlayerControl)
             : base(isPlayerControl, isLeft)
@@ -26,8 +26,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             {
              //   EAddonBook.UpdateMasterData(State.Masterskills.Keys(), State.Masterskills.Values());
                 HeroData = new Monster(MonsterConfig.Indexer.HeroCardId);
-                HeroData.MonsterConfig.Name = peopleConfig.Name;
-                HeroData.UpgradeToLevel(Level);
+                HeroData.Name = peopleConfig.Name;
+                HeroData.UpgradeToLevel(Cards.GetAvgLevel());
 
                 JobConfig jobConfig = ConfigDatas.ConfigData.GetJobConfig(peopleConfig.Job);
                 HeroImage = PicLoader.Read("Hero", string.Format("{0}.JPG", jobConfig.ProtoImage));
@@ -35,7 +35,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             else
             {
                 HeroData = new Monster(peopleConfig.KingCard);
-                HeroData.UpgradeToLevel(Level);
+                HeroData.UpgradeToLevel(Cards.GetAvgLevel());
                 HeroImage = PicLoader.Read("Monsters", string.Format("{0}.JPG", HeroData.MonsterConfig.Icon));
             }
             attr.ModifyMonsterData(HeroData);
@@ -46,7 +46,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         {
             base.InitialCards();
 #if DEBUG
-            CardManager.AddCard(new ActiveCard(20001, 1, 0));
+        //    CardManager.AddCard(new ActiveCard(20001, 1, 0));
 #endif
         }
     }

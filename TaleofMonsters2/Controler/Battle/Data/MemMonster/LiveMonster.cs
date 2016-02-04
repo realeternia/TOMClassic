@@ -201,7 +201,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             oldLife = life;
             Position = point;
             IsLeft = isLeft;
-            Ats = SysConstants.InitialAts;
+            Ats = GameConstants.RoundAts;
             action = 0;
             RoundMark = 0;
             SkillManager = new SkillManager(this);
@@ -352,14 +352,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             if (BuffManager.HasBuff(BuffEffectTypes.NoAttack))
                 return false;
-            action += Ats;
-            if (action >= 1000)
+            action += Ats;//200ms + 30
+            if (action >= GameConstants.LimitAts)
             {
                 if (hasAttack)//有人攻击了
                 {
                     return false;
                 }
-                action = action - 1000 + MathTool.GetRandom(Avatar.Spd);
+                action = action - GameConstants.LimitAts + MathTool.GetRandom(Avatar.Spd);
                 return true;
             }
             return false;
@@ -468,7 +468,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 hpBar.Draw(g);
 
                 g.FillPie(Brushes.Gray, 75, 15, 20, 20, 0, 360);
-                g.FillPie(CanAttack? Brushes.Yellow:Brushes.LightGray, 75, 15, 20, 20, 0, action * 9 / 25);
+                g.FillPie(CanAttack? Brushes.Yellow:Brushes.LightGray, 75, 15, 20, 20, 0, action*360 / GameConstants.LimitAts);
 
                 const string stars = "★★★★★★★★★★";
                 g.DrawString(stars.Substring(10 - Avatar.MonsterConfig.Star), font2, Brushes.Yellow, 0, 0);
@@ -496,14 +496,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 img.Dispose();
 
                 g.FillRectangle(Brushes.Red, 0, 2, 100, 5);
-                g.FillRectangle(Brushes.Cyan, 0, 2, Math.Min(GhostTime/3, 100), 5);
+                g.FillRectangle(Brushes.Cyan, 0, 2, Math.Min(GhostTime, 100), 5);
             }
 
             g.Dispose();
             int size = BattleManager.Instance.MemMap.CardSize;
             if (TargetPosition.X >= 0 && TargetPosition.Y >= 0)//攻击中
             {
-                g2.DrawImage(image, new Rectangle(TargetPosition.X, TargetPosition.Y, 70, 70), 0, 0, 100, 100, GraphicsUnit.Pixel);
+                g2.DrawImage(image, new Rectangle(TargetPosition.X, TargetPosition.Y, (int)(size * 0.7), (int)(size * 0.7)), 0, 0, 100, 100, GraphicsUnit.Pixel);
             }
             else
             {
@@ -535,8 +535,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             var cardQual = Config.CardConfigManager.GetCardConfig(CardId).Quality;
-            var name = string.Format("Lv{1}{0}({2}属性{3})", Avatar.MonsterConfig.Name, Level, HSTypes.I2Attr(Avatar.MonsterConfig.Attr), HSTypes.I2CardTypeSub(Avatar.MonsterConfig.Type));
+            var name = string.Format("{0}(Lv{1})", Avatar.Name, Level);
             tipData.AddTextNewLine(name, HSTypes.I2QualityColor(cardQual), 20);
+            tipData.AddImage(HSIcons.GetIconsByEName("atr" + Avatar.MonsterConfig.Attr), 16, 16);
+            tipData.AddImage(HSIcons.GetIconsByEName("rac" + Avatar.MonsterConfig.Type), 16, 16);
             tipData.AddLine();
             AddText(tipData,"物攻", (int)Atk.Source,RealAtk,!IsMagicAtk && CanAttack ? "White" : "DarkGray", true);
             AddText(tipData, "物防", (int)Def.Source, RealDef, "White", false);
@@ -566,7 +568,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             {
                 tipData.AddImageNewLine(TWeapon.GetImage(16, 16));
 
-                string tp = string.Format("{0}({1}/{2}):{3}", TWeapon.Avatar.WeaponConfig.Name, TWeapon.Life, TWeapon.Avatar.WeaponConfig.Dura, TWeapon.Avatar);
+                string tp = string.Format("{0}({1}/{2}):{3}", TWeapon.Avatar.WeaponConfig.Name, TWeapon.Life, TWeapon.Avatar.Dura, TWeapon.Avatar);
                 tipData.AddText(tp, "White");
             }
 
@@ -705,7 +707,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void AddActionRate(double value)
         {
-            Action += (int)(SysConstants.BattleActionLimit*value);
+            Action += (int)(GameConstants.BattleActionLimit*value);
         }
 
         public void StealWeapon(IMonster target)
@@ -916,8 +918,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             List<Point> posLis = new List<Point>();
             if (type == 1)//上下各一个
             {
-                posLis.Add(new Point(Position.X, Position.Y - 100));
-                posLis.Add(new Point(Position.X, Position.Y + 100));
+                int size = BattleManager.Instance.MemMap.CardSize;
+                posLis.Add(new Point(Position.X, Position.Y - size));
+                posLis.Add(new Point(Position.X, Position.Y + size));
             }
             else if (type == 2)//4格随机位置
             {

@@ -15,23 +15,13 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
 {
     internal class MemRowColumnMap:IMap
     {
-        private const int stageWidth = 900;
+        private const int stageWidth = 880;
         private const int stageHeight = 400;
-        private const int cardSize = 100;
-        private const int rowCount = stageHeight/cardSize;
-        private const int columnCount = stageWidth / cardSize;
-        private MemMapPoint[,] cells;
         private AutoDictionary<int, int> tiles;
 
-        public int CardSize
-        {
-            get { return cardSize; }
-        }
-
-        public int RowCount
-        {
-            get { return rowCount; }
-        }
+        public int CardSize { get; private set; }
+        public int ColumnCount { get; private set; }
+        public int RowCount { get; private set; }
 
         public int StageWidth
         {
@@ -43,11 +33,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             get { return stageHeight; }
         }
 
-        public MemMapPoint[,] Cells
-        {
-            get { return cells; }
-            set { cells = value; }
-        }
+        public MemMapPoint[,] Cells { get; set; }
 
         private bool isDirty;
         private Image cachImage;
@@ -55,18 +41,21 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         public MemRowColumnMap(string map, int tile)
         {
             BattleMap bMap = BattleMapBook.GetMap(map);
-            cells = new MemMapPoint[columnCount, rowCount];
+            CardSize = stageWidth/bMap.XCount;
+            RowCount = bMap.YCount;
+            ColumnCount = bMap.XCount;
+            Cells = new MemMapPoint[ColumnCount, RowCount];
             tiles = new AutoDictionary<int, int>();
-            for (int i = 0; i < columnCount; i++)
+            for (int i = 0; i < ColumnCount; i++)
             {
-                for (int j = 0; j < rowCount; j++)
+                for (int j = 0; j < RowCount; j++)
                 {
-                    int tarTile = bMap.cells[i, j];
+                    int tarTile = bMap.Cells[i, j];
                     if (tarTile == 0)
                     {
                         tarTile = tile == 0 ? 9 : tile;
                     }
-                    cells[i, j] = new MemMapPoint(i, i * cardSize, j * cardSize, columnCount, tarTile);
+                    Cells[i, j] = new MemMapPoint(i, i * CardSize, j * CardSize, ColumnCount, tarTile);
                     tiles[tarTile == 9 ? 0 : tarTile]++;
                 }
             }
@@ -75,21 +64,22 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
 
         public MemMapPoint GetCell(int x, int y)
         {
-            return cells[x, y];
+            return Cells[x, y];
         }
 
         public MemMapPoint GetMouseCell(int x, int y)
         {
-            return cells[x / cardSize, y / cardSize];
+            return Cells[x / CardSize, y / CardSize];
         }
 
         public bool IsMousePositionCanSummon(int x, int y)
         {
-            if (x < cardSize || (x >= cardSize*4 && x < cardSize*5) || x >= cardSize*8)
+            var sideCount = ColumnCount/2;
+            if (x < CardSize || (x >= CardSize * sideCount && x < CardSize * (sideCount + 1)) || x >= CardSize * (ColumnCount-1))
             {
                 return false;
             }
-            if (y < 0 || y >= cardSize*4)
+            if (y < 0 || y >= CardSize * sideCount)
             {
                 return false;
             }
@@ -99,27 +89,27 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         public int GetEnemyId(int mid, bool isLeft, int y, bool isShooter) //pos方位
         {
             int[] xOrder;
-            int rowid = y/cardSize;
+            int rowid = y/CardSize;
             if (isLeft)
             {
                 if (isShooter)
                 {
-                    xOrder = new int[] {8, 7, 6, 5};
+                    xOrder = new int[] {10, 9, 8, 7, 6};
                 }
                 else
                 {
-                    xOrder = new int[] {5, 6, 7, 8};
+                    xOrder = new int[] {6, 7, 8, 9 ,10};//todo 先这样
                 }
             }
             else
             {
                 if (isShooter)
                 {
-                    xOrder = new int[] { 0,1,2,3 };
+                    xOrder = new int[] { 0,1,2,3,4 };
                 }
                 else
                 {
-                    xOrder = new int[] { 3,2,1,0 };
+                    xOrder = new int[] { 4,3,2,1,0 };
                 }
             }
 
@@ -127,9 +117,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             {
                 foreach (var i in xOrder)
                 {
-                    if (cells[i, j].Owner > 0 && cells[i, j].Owner != mid)
+                    if (Cells[i, j].Owner > 0 && Cells[i, j].Owner != mid)
                     {
-                        return cells[i, j].Owner;
+                        return Cells[i, j].Owner;
                     }
                 }
             }
@@ -140,7 +130,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         public void SetTile(int itype, Point point, int dis, int tile)
         {
             RegionTypes type = (RegionTypes)itype;
-            foreach (MemMapPoint memMapPoint in cells)
+            foreach (MemMapPoint memMapPoint in Cells)
             {
                 if (BattleLocationManager.IsPointInRegionType(type, point.X, point.Y, memMapPoint.ToPoint(), dis))
                 {
@@ -148,7 +138,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                 }
             }
             tiles.Clear();
-            foreach (MemMapPoint memMapPoint in cells)
+            foreach (MemMapPoint memMapPoint in Cells)
             {
                 tiles[memMapPoint.Tile == 9 ? 0 : memMapPoint.Tile]++;
             }
@@ -162,11 +152,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
 
             RandomMaker rm = new RandomMaker();
             int count = 0;
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < RowCount; i++)
             {
                 int xoff = i > 1 ? 0 : i * 2 - 1;
                 int yoff = i < 2 ? 0 : i * 2 - 5;
-                Point pa = new Point(target.Position.X + xoff * cardSize, target.Position.Y + yoff * cardSize);
+                Point pa = new Point(target.Position.X + xoff * CardSize, target.Position.Y + yoff * CardSize);
                 LiveMonster lm = BattleLocationManager.GetPlaceMonster(pa.X, pa.Y);
                 if (lm != null && !lm.IsHero)
                 {
@@ -189,16 +179,16 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         public void DragRandomUnitNear(Point mouse)
         {
             MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(mouse.X, mouse.Y);
-            if (point.SideIndex < 1 || point.SideIndex > 3)//不能传
+            if (point.SideIndex < 1 || point.SideIndex > ColumnCount/2-1)//不能传
                 return;
 
             RandomMaker rm = new RandomMaker();
             int count = 0;
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < RowCount; i++)
             {
                 int xoff = i > 1 ? 0 : i * 2 - 1;
                 int yoff = i < 2 ? 0 : i * 2 - 5;
-                Point pa = new Point(mouse.X + xoff * cardSize, mouse.Y + yoff * cardSize);
+                Point pa = new Point(mouse.X + xoff * CardSize, mouse.Y + yoff * CardSize);
                 LiveMonster lm = BattleLocationManager.GetPlaceMonster(pa.X, pa.Y);
                 if (lm != null && !lm.IsHero)
                 {
@@ -217,9 +207,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
 
         public void SetRowUnitPosition(int y, bool isLeft, string type)
         {
-            for (int i = 1; i < 8; i++)
+            for (int i = 1; i < ColumnCount-1; i++)
             {
-                LiveMonster lm = BattleLocationManager.GetPlaceMonster(i * 100, y);
+                LiveMonster lm = BattleLocationManager.GetPlaceMonster(i * CardSize, y);
                 if (lm == null)
                     continue;
 
@@ -305,21 +295,21 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                 cachImage = new Bitmap(stageWidth, stageHeight);
                 Graphics cg = Graphics.FromImage(cachImage);
 
-                foreach (var memMapPoint in cells)
+                foreach (var memMapPoint in Cells)
                 {
                     if (memMapPoint.SideIndex > 0 || memMapPoint.Y == 0)
                     {
-                        cg.DrawImage(TileBook.GetTileImage(memMapPoint.Tile, cardSize, cardSize), memMapPoint.X, memMapPoint.Y, cardSize, cardSize);
+                        cg.DrawImage(TileBook.GetTileImage(memMapPoint.Tile, CardSize, CardSize), memMapPoint.X, memMapPoint.Y, CardSize, CardSize);
                     }
-                    Pen pen = new Pen(Brushes.DarkRed, 3);
-                    if (memMapPoint.SideIndex == 0 || memMapPoint.SideIndex == 4)
+                    Pen pen = new Pen(Brushes.DarkRed, 2);
+                    if (memMapPoint.SideIndex == 0 || memMapPoint.SideIndex == ColumnCount/2)
                     {
-                        cg.DrawLine(pen, memMapPoint.X, memMapPoint.Y, memMapPoint.X, memMapPoint.Y + cardSize);
-                        cg.DrawLine(pen, memMapPoint.X + cardSize, memMapPoint.Y, memMapPoint.X + cardSize, memMapPoint.Y + cardSize);
+                        cg.DrawLine(pen, memMapPoint.X, memMapPoint.Y, memMapPoint.X, memMapPoint.Y + CardSize);
+                        cg.DrawLine(pen, memMapPoint.X + CardSize, memMapPoint.Y, memMapPoint.X + CardSize, memMapPoint.Y + CardSize);
                     }
                     else
                     {
-                        cg.DrawRectangle(pen, memMapPoint.X, memMapPoint.Y, cardSize - 1, cardSize);
+                        cg.DrawRectangle(pen, memMapPoint.X, memMapPoint.Y, CardSize - 1, CardSize);
                     }
 #if DEBUG
                     Font font = new Font("Arial", 7*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);

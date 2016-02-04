@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
-using NarlonLib.Core;
 using TaleofMonsters.Controler.Battle.Data.Players;
+using TaleofMonsters.Core;
 using TaleofMonsters.Core.Interface;
 using TaleofMonsters.Forms.Items.Regions;
 
@@ -18,7 +17,7 @@ namespace TaleofMonsters.Controler.Battle.Components
         private Player player;
 
         private VirtualRegion region;
-        private bool[] keepCard={true,true,true,true}; //是否保留本卡
+        private bool[] keepCard={true,true,true}; //是否保留本卡
 
         private bool isButtonFirstClick = true;
 
@@ -28,9 +27,8 @@ namespace TaleofMonsters.Controler.Battle.Components
 
             region = new VirtualRegion(this);
             region.AddRegion(new SwitchButtonRegion(1, 0, 0, 120, 120, 1, "ErrorButton.PNG", ""));
-            region.AddRegion(new SwitchButtonRegion(2, 155, 0, 120, 120, 2, "ErrorButton.PNG", ""));
-            region.AddRegion(new SwitchButtonRegion(3, 310, 0, 120, 120, 3, "ErrorButton.PNG", ""));
-            region.AddRegion(new SwitchButtonRegion(4, 465, 0, 120, 120, 4, "ErrorButton.PNG", ""));
+            region.AddRegion(new SwitchButtonRegion(2, 200, 0, 120, 120, 2, "ErrorButton.PNG", ""));
+            region.AddRegion(new SwitchButtonRegion(3, 400, 0, 120, 120, 3, "ErrorButton.PNG", ""));
             region.RegionClicked+=region_RegionClicked;
         }
 
@@ -49,18 +47,18 @@ namespace TaleofMonsters.Controler.Battle.Components
             player = p;
             cardList = player.CardsDesk;//hold住cardlist
 
-            cards = new CardSlot[4];
+            cards = new CardSlot[GameConstants.BattleInitialCardCount];
             InstallCards();
         }
 
         private void InstallCards()
         {
             var deckCards = cardList.GetAllCard();
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < GameConstants.BattleInitialCardCount; i++)
             {
                 var card = new CardSlot();
                 card.SetSlotCard(deckCards[i]);
-                card.Location = new Point(155 * i, 0);
+                card.Location = new Point(200 * i, 0);
                 card.Size = new Size(120, 120);
                 card.BgColor = Color.Black;
 
@@ -72,7 +70,7 @@ namespace TaleofMonsters.Controler.Battle.Components
         {
             if (isButtonFirstClick)
             {
-                for (int i = 3; i >= 0; i--)
+                for (int i = GameConstants.BattleInitialCardCount-1; i >= 0; i--)
                 {
                     if (!keepCard[i])
                     {
@@ -95,16 +93,6 @@ namespace TaleofMonsters.Controler.Battle.Components
             }
         }
 
-        IEnumerator DelayClick()
-        {
-            yield return new NLWaitForSeconds(3);
-
-            if (StartClicked != null)
-            {
-                StartClicked();
-            }
-        }
-
         private void CardSelector_Paint(object sender, PaintEventArgs e)
         {
             if (cards == null)
@@ -124,11 +112,6 @@ namespace TaleofMonsters.Controler.Battle.Components
             {
                 region.Draw(e.Graphics);
             }
-        }
-
-        private void CardSelector_Click(object sender, System.EventArgs e)
-        {
-
         }
     }
 }

@@ -22,8 +22,8 @@ namespace TaleofMonsters.DataType.User.Mem
 
         public MemDeckData(int index)
         {
-            CardIds = new int[SysConstants.DeckCardCount];
-            for (int i = 0; i < SysConstants.DeckCardCount; i++)
+            CardIds = new int[GameConstants.DeckCardCount];
+            for (int i = 0; i < GameConstants.DeckCardCount; i++)
             {
                 CardIds[i] = -1;
             }
@@ -42,7 +42,7 @@ namespace TaleofMonsters.DataType.User.Mem
 
         public void SetCardAt(int index, int card)
         {
-            if (index >= 0 && index < SysConstants.DeckCardCount)
+            if (index >= 0 && index < GameConstants.DeckCardCount)
             {
                 CardIds[index] = card;
                 Recalculate();
@@ -53,7 +53,7 @@ namespace TaleofMonsters.DataType.User.Mem
         {
             int firstBlank = -1;
             int count = 0;
-            for (int i = 0; i < SysConstants.DeckCardCount; i++)
+            for (int i = 0; i < GameConstants.DeckCardCount; i++)
             {
                 var dcard = CardIds[i];
 
@@ -69,7 +69,7 @@ namespace TaleofMonsters.DataType.User.Mem
                 }
             }
 
-            if (count >= SysConstants.CardLimit)
+            if (count >= GameConstants.CardLimit)
             {
                 return HSErrorTypes.DeckCardTypeLimit;
             }
@@ -84,7 +84,7 @@ namespace TaleofMonsters.DataType.User.Mem
 
         public void RemoveCardById(int id)
         {
-            for (int i = 0; i < SysConstants.DeckCardCount; i++)
+            for (int i = 0; i < GameConstants.DeckCardCount; i++)
             {
                 if (CardIds[i] == id)
                 {
@@ -97,7 +97,7 @@ namespace TaleofMonsters.DataType.User.Mem
 
         public bool HasCard(int id)
         {
-            for (int i = 0; i < SysConstants.DeckCardCount; i++)
+            for (int i = 0; i < GameConstants.DeckCardCount; i++)
             {
                 if (CardIds[i] == id)
                 {
@@ -111,7 +111,7 @@ namespace TaleofMonsters.DataType.User.Mem
         {
             Mcount = 0;
             Wcount = 0;
-            for (int i = 0; i < SysConstants.DeckCardCount; i++)
+            for (int i = 0; i < GameConstants.DeckCardCount; i++)
             {
                 if (CardIds[i] != -1)
                 {

@@ -22,16 +22,19 @@ namespace TaleofMonsters.DataType.Maps
         {
             StreamReader sr = new StreamReader(DataLoader.Read("Map", name));
             BattleMap map = new BattleMap();
-            map.cells = new int[9,4];
-            for (int i = 0; i < 4; i++)
+            var datas = sr.ReadLine().Split('\t');
+            map.XCount = int.Parse(datas[0]);
+            map.YCount = int.Parse(datas[1]);
+            map.Cells = new int[map.XCount, map.YCount];
+            for (int i = 0; i < map.YCount; i++)
             {
                 string line = sr.ReadLine();
                 if (line != null)
                 {
                     string[] mapinfos = line.Split('\t');
-                    for (int j = 0; j < 9; j++)
+                    for (int j = 0; j < map.XCount; j++)
                     {
-                        map.cells[j, i] = int.Parse(mapinfos[j]);
+                        map.Cells[j, i] = int.Parse(mapinfos[j]);
                     }
                 }
             }
@@ -48,7 +51,7 @@ namespace TaleofMonsters.DataType.Maps
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    Brush sBrush = new SolidBrush(Color.FromName(ConfigDatas.ConfigData.GetTileConfig(mapInfo.cells[i,j]).Color));
+                    Brush sBrush = new SolidBrush(Color.FromName(ConfigDatas.ConfigData.GetTileConfig(mapInfo.Cells[i,j]).Color));
                     g.FillRectangle(sBrush, i * 11+1, j * 11 + 23+1, 9, 9);
                     sBrush.Dispose();
                 }

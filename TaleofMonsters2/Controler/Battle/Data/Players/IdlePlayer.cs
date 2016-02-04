@@ -3,7 +3,7 @@ using TaleofMonsters.DataType.Decks;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
 {
-    class IdlePlayer : Player
+    internal class IdlePlayer : Player
     {
         public IdlePlayer(bool isLeft)
             :base(false, isLeft)

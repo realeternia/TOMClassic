@@ -1,5 +1,6 @@
 ﻿using ConfigDatas;
 using NarlonLib.Math;
+using TaleofMonsters.Core;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
 {
@@ -44,8 +45,14 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
         }
 
-        public void Next()
+        public void Next(int round)
         {
+            if (round > 0 && (round % GameConstants.RoundRecoverAllRound) == 0)
+            {
+                NextAimMana = PlayerManaTypes.All;
+                return;
+            }
+
             var roll = MathTool.GetRandom(100);
             if (roll < rateLp)
             {

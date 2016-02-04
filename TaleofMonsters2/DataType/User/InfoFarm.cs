@@ -14,7 +14,7 @@ namespace TaleofMonsters.DataType.User
 
         public InfoFarm()
         {
-            FarmState = new FarmState[SysConstants.PlayFarmCount];
+            FarmState = new FarmState[GameConstants.PlayFarmCount];
             FarmState[0] = new FarmState(0, 0);
             for (int i = 1; i < FarmState.Length; i++)
             {

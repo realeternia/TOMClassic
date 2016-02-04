@@ -42,7 +42,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
 
         public override string Name
         {
-            get { return monster.MonsterConfig.Name; }
+            get { return monster.Name; }
         }
 
         public override string ENameShort
@@ -111,7 +111,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
 
             Font fontblack = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             Font fontsong = new Font("宋体", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            g.DrawString(monster.MonsterConfig.Name, fontblack, Brushes.White, offX + 10, basel + 2);
+            g.DrawString(monster.Name, fontblack, Brushes.White, offX + 10, basel + 2);
             g.DrawImage(HSIcons.GetIconsByEName("rac" + monster.MonsterConfig.Type), 60 + offX, basel - 40, 24, 24);
             g.DrawImage(HSIcons.GetIconsByEName("atr" + monster.MonsterConfig.Attr), 88 + offX, basel - 40, 24, 24);
             g.DrawString(string.Format("Lv{0:00}", card.Level), fontsong, Brushes.Indigo, 13 + offX, basel + 22);
@@ -205,7 +205,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
         {
             const string stars = "★★★★★★★★★★";
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
-            tipData.AddTextNewLine(monster.MonsterConfig.Name, "White", 20);
+            tipData.AddTextNewLine(monster.Name, "White", 20);
             tipData.AddText(string.Format("({0})",monster.MonsterConfig.Ename), "MediumAquamarine");
             tipData.AddTextNewLine(stars.Substring(10 - monster.MonsterConfig.Star), "Yellow", 20);
             tipData.AddLine();

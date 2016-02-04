@@ -113,18 +113,18 @@ namespace TaleofMonsters.DataType.Peoples
                 return;
             }
 
-            if (UserProfile.InfoCard.SelectedDeck.Count < SysConstants.DeckCardCount)
+            if (UserProfile.InfoCard.SelectedDeck.Count < GameConstants.DeckCardCount)
             {
                 MainForm.Instance.AddTip("卡组内卡片数不足", "Red");
                 return;
             }
 
-            if (UserProfile.InfoBasic.Ap < SysConstants.FightAPCost)
+            if (UserProfile.InfoBasic.Ap < GameConstants.FightAPCost)
             {
                 MainForm.Instance.AddTip("体力不足", "Red");
                 return;
             }
-            UserProfile.InfoBasic.Ap -= SysConstants.FightAPCost;
+            UserProfile.InfoBasic.Ap -= GameConstants.FightAPCost;
 
             BattleForm bf = new BattleForm();
             bf.BattleWin = winEvent;

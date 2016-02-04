@@ -50,7 +50,7 @@ namespace TaleofMonsters.Forms.Items
         private void RefreshDict()
         {
             cardAttr.Clear();
-            for (int i = 0; i < SysConstants.DeckCardCount; i++)
+            for (int i = 0; i < GameConstants.DeckCardCount; i++)
             {
                 AddCardAttr(UserProfile.InfoCard.SelectedDeck.GetCardAt(i), "D");
             }

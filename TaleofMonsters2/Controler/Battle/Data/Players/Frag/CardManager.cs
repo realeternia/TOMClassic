@@ -12,18 +12,18 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
     internal class CardManager
     {
         private Player self;
-        private ActiveCard[] cards = new ActiveCard[SysConstants.CardSlotMaxCount];
+        private ActiveCard[] cards = new ActiveCard[GameConstants.CardSlotMaxCount];
 
         public CardManager(Player p)
         {
             self = p;
-            for (int i = 0; i < SysConstants.CardSlotMaxCount; i++)
+            for (int i = 0; i < GameConstants.CardSlotMaxCount; i++)
                 cards[i] = ActiveCards.NoneCard;
         }
 
         public void GetNextCard()
         {
-            if (GetCardNumber() < SysConstants.CardSlotMaxCount)
+            if (GetCardNumber() < GameConstants.CardSlotMaxCount)
             {
                 ActiveCard next = self.Cards.GetNextCard();
                 if (next != ActiveCards.NoneCard)
@@ -58,7 +58,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 card.PpCostChange = self.PpCost;
             }
             int count = GetCardNumber();
-            if (count < SysConstants.CardSlotMaxCount)
+            if (count < GameConstants.CardSlotMaxCount)
             {
                 cards[count] = card;
             }
@@ -80,7 +80,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public ActiveCard GetDeckCardAt(int index)
         {
-            if (index > SysConstants.CardSlotMaxCount || index <= 0)
+            if (index > GameConstants.CardSlotMaxCount || index <= 0)
                 return ActiveCards.NoneCard;
 
             return cards[index - 1];
@@ -94,7 +94,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
 
             cards[index - 1] = ActiveCards.NoneCard;
-            for (int i = 0; i < SysConstants.CardSlotMaxCount - 1; i++)
+            for (int i = 0; i < GameConstants.CardSlotMaxCount - 1; i++)
             {
                 if (cards[i].Id == 0 && cards[i + 1].Id > 0)
                 {
@@ -170,7 +170,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public void CopyRandomNCard(int n, int spellid)
         {
             List<int> indexs = new List<int>();
-            for (int i = 0; i < SysConstants.CardSlotMaxCount; i++)
+            for (int i = 0; i < GameConstants.CardSlotMaxCount; i++)
             {
                 if (cards[i].CardId != 0 && (cards[i].CardId != spellid || cards[i].CardType != CardTypes.Spell))
                     indexs.Add(i);
@@ -184,7 +184,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void DeleteAllCard()
         {
-            for (int i = 0; i < SysConstants.CardSlotMaxCount; i++)
+            for (int i = 0; i < GameConstants.CardSlotMaxCount; i++)
             {
                 cards[i] = ActiveCards.NoneCard;
             }
@@ -197,7 +197,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public int GetCardNumber()
         {
             int count = 0;
-            for (int i = 0; i < SysConstants.CardSlotMaxCount; i++)
+            for (int i = 0; i < GameConstants.CardSlotMaxCount; i++)
             {
                 if (cards[i].Id != 0)
                     count++;
@@ -232,9 +232,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 {
                     activeCard.Level = 1;
                 }
-                else if (activeCard.Level > SysConstants.CardMaxLevel)
+                else if (activeCard.Level > GameConstants.CardMaxLevel)
                 {
-                    activeCard.Level = SysConstants.CardMaxLevel;
+                    activeCard.Level = GameConstants.CardMaxLevel;
                 }
             }
 
