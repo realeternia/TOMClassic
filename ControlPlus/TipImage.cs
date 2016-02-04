@@ -51,6 +51,13 @@ namespace ControlPlus
             datas[datas.Count - 1].Objects.Add(new LineImage(img, wid));
         }
 
+        public void AddImage(Image img, int wid, int het)
+        {
+            var lineImg = new LineImage(img, wid);
+            lineImg.Height = het;
+            datas[datas.Count - 1].Objects.Add(lineImg);
+        }
+
         public void AddImage(Image img)
         {
             AddImage(img, datas[datas.Count - 1].Height);
@@ -58,16 +65,18 @@ namespace ControlPlus
 
         public void AddImageXY(Image img,int sx, int sy, int swidth, int sheight, int x,int y, int width, int height)
         {
-            ImageInfo info = new ImageInfo();
-            info.Img = img;
-            info.Sx = sx;
-            info.Sy = sy;
-            info.Swidth = swidth;
-            info.Sheight = sheight;
-            info.X = x;
-            info.Y = y;
-            info.Width = width;
-            info.Height = height;
+            ImageInfo info = new ImageInfo
+                {
+                    Img = img,
+                    Sx = sx,
+                    Sy = sy,
+                    Swidth = swidth,
+                    Sheight = sheight,
+                    X = x,
+                    Y = y,
+                    Width = width,
+                    Height = height
+                };
             imgs.Add(info);
         }
 
@@ -255,6 +264,8 @@ namespace ControlPlus
         private int wid;
         public int Off { get; set; }
 
+        public int Height { get; set; }//可选
+
         public LineImage(Image img, int wid)
         {
             this.img = img;
@@ -273,7 +284,14 @@ namespace ControlPlus
 
         public void Draw(Graphics g, int id, ref int x, int y, int twid, int height)
         {
-            g.DrawImage(img, x, y-1, wid, height);
+            if (Height > 0)
+            {
+                g.DrawImage(img, x, y - 1+(height-Height)/2, wid, Height);
+            }
+            else
+            {
+                g.DrawImage(img, x, y - 1, wid, height);    
+            }
         }
 
         #endregion

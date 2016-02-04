@@ -229,5 +229,6 @@ namespace ConfigDatas
         Mana = 1,//魔力
         Power = 2,//力量
         LeaderShip = 3,//领导
+        All = 4,//1+2+3
     }
 }
