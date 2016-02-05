@@ -73,8 +73,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             var addon = EquipBook.GetVirtualEquips(equipList);
             attr.AddAttrs(PlayerAttrs.Atk, addon.Atk);
             attr.AddAttrs(PlayerAttrs.Def, addon.Def);
-            attr.AddAttrs(PlayerAttrs.Hit, addon.Hit);
-            attr.AddAttrs(PlayerAttrs.DHit, addon.Dhit);
             attr.AddAttrs(PlayerAttrs.Mag, addon.Mag);
             attr.AddAttrs(PlayerAttrs.Spd, addon.Spd);
             attr.AddAttrs(PlayerAttrs.Hp, addon.Hp);

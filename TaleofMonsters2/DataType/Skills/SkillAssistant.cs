@@ -16,7 +16,7 @@ namespace TaleofMonsters.DataType.Skills
 
         public static int GetHit(LiveMonster src, LiveMonster dest)
         {
-            int rhit = (int)FormulaBook.GetHitRate(src.RealHit, dest.RealDhit);
+            int rhit = 100;//Ä¬ÈÏ100%ÃüÖÐ
             if (!src.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
             {
                 src.SkillManager.CheckHit(src, dest, ref rhit);

@@ -39,8 +39,6 @@ namespace ConfigDatas
 		
         AttrModifyData Atk{get;set;}
         AttrModifyData Def{get;set;}	
-        AttrModifyData Hit{get;set;}	
-        AttrModifyData DHit{get;set;}	
         AttrModifyData Spd{get;set;}
         AttrModifyData Mag{get;set;}
         AttrModifyData Luk{get;set;}

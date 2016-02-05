@@ -8,8 +8,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         private int atk;
         private int def;
         private int mag;
-        private int hit;
-        private int dhit;
         private int luk;
         private int spd;
         private int hp;
@@ -24,8 +22,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 case PlayerAttrs.Luk: luk += value; break;
                 case PlayerAttrs.Spd: spd += value; break;
                 case PlayerAttrs.Hp: hp += value; break;
-                case PlayerAttrs.Hit: hit += value; break;
-                case PlayerAttrs.DHit: dhit += value; break;
             }
         }
 
@@ -34,8 +30,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             mon.Atk += atk;
             mon.Def += def;
             mon.Mag += mag;
-            mon.Hit += hit;
-            mon.Dhit += dhit;
             mon.Spd += spd;
             mon.Hp += hp;
         }

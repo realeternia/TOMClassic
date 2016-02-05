@@ -218,8 +218,6 @@ namespace ConfigDatas
 
     public enum SkillMarks
     {
-        HitHigh = 1,
-        HitLow = 2,
         AtkDefBonus = 3,
     }
 

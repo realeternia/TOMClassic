@@ -119,10 +119,10 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             PaintTool.DrawValueLine(g, weapon.Def / 2, 70 + offX, basel + 77, 115, 10);
             g.DrawString(string.Format("魔力 {0,3:D}", weapon.Mag), fontsong, sb, 10 + offX, basel + 91);
             PaintTool.DrawValueLine(g, weapon.Mag / 2, 70 + offX, basel + 92, 115, 10);
-            g.DrawString(string.Format("命中 {0,3:D}", weapon.Hit), fontsong, sb, 10 + offX, basel + 106);
-            PaintTool.DrawValueLine(g, weapon.Hit / 2, 70 + offX, basel + 107, 115, 10);
-            g.DrawString(string.Format("回避 {0,3:D}", weapon.Dhit), fontsong, sb, 10 + offX, basel + 121);
-            PaintTool.DrawValueLine(g, weapon.Dhit, 70 + offX, basel + 122, 115, 10);
+            //g.DrawString(string.Format("命中 {0,3:D}", weapon.Hit), fontsong, sb, 10 + offX, basel + 106);
+            //PaintTool.DrawValueLine(g, weapon.Hit / 2, 70 + offX, basel + 107, 115, 10);
+            //g.DrawString(string.Format("回避 {0,3:D}", weapon.Dhit), fontsong, sb, 10 + offX, basel + 121);
+            //PaintTool.DrawValueLine(g, weapon.Dhit, 70 + offX, basel + 122, 115, 10);
             g.DrawString(string.Format("幸运 {0,3:D}", weapon.Luk), fontsong, sb, 10 + offX, basel + 136);
             PaintTool.DrawValueLine(g, weapon.Luk / 2, 70 + offX, basel + 137, 115, 10);
             g.DrawString(string.Format("速度 {0,3:D}", weapon.Spd), fontsong, sb, 10 + offX, basel + 151);
@@ -150,23 +150,18 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             g.DrawImage(HSIcons.GetIconsByEName("abl11"), 100, 0);
             g.DrawString(weapon.Mag.ToString().PadLeft(3, ' '), fontsong, sb, 122, 4);
 
-            g.DrawImage(HSIcons.GetIconsByEName("abl4"), 150, 0);
-            g.DrawString(weapon.Hit.ToString().PadLeft(3, ' '), fontsong, sb, 172, 4);
-            g.DrawImage(HSIcons.GetIconsByEName("abl6"), 200, 0);
-            g.DrawString(weapon.Dhit.ToString().PadLeft(3, ' '), fontsong, sb, 222, 4);
+            g.DrawImage(HSIcons.GetIconsByEName("abl5"), 150, 0);
+            g.DrawString(weapon.Luk.ToString().PadLeft(3, ' '), fontsong, sb, 172, 4);
+            g.DrawImage(HSIcons.GetIconsByEName("abl3"), 200, 0);
+            g.DrawString(weapon.Spd.ToString().PadLeft(3, ' '), fontsong, sb, 222, 4);
 
-            g.DrawImage(HSIcons.GetIconsByEName("abl5"), 250, 0);
-            g.DrawString(weapon.Luk.ToString().PadLeft(3, ' '), fontsong, sb, 272, 4);
-            g.DrawImage(HSIcons.GetIconsByEName("abl3"), 300, 0);
-            g.DrawString(weapon.Spd.ToString().PadLeft(3, ' '), fontsong, sb, 322, 4);
-
-            g.DrawImage(HSIcons.GetIconsByEName("abl8"), 350, 0);
-            g.DrawString(weapon.Dura.ToString().PadLeft(3, ' '), fontsong, sb, 372, 4);
+            g.DrawImage(HSIcons.GetIconsByEName("abl8"), 250, 0);
+            g.DrawString(weapon.Dura.ToString().PadLeft(3, ' '), fontsong, sb, 272, 4);
 
             if (weapon.WeaponConfig.SkillId > 0)
             {
-                g.DrawImage(HSIcons.GetIconsByEName("abl9"), 400, 0);
-                g.DrawString(ConfigDatas.ConfigData.GetSkillConfig(weapon.WeaponConfig.SkillId).Name, fontsong, sg, 422, 4);
+                g.DrawImage(HSIcons.GetIconsByEName("abl9"), 300, 0);
+                g.DrawString(ConfigDatas.ConfigData.GetSkillConfig(weapon.WeaponConfig.SkillId).Name, fontsong, sg, 322, 4);
             }
             fontsong.Dispose();
             sb.Dispose();

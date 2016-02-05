@@ -225,8 +225,6 @@
     {
         Atk,
         Def,
-        Hit,
-        DHit,
         Mag,
         Spd,
         Luk,

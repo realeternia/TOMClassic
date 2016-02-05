@@ -65,8 +65,8 @@ namespace TaleofMonsters.DataType.Equips.Addons
                     case 501: if (weapon.Avatar.WeaponConfig.Type == (int)CardTypeSub.Weapon) weapon.Avatar.AddStrengthLevel(skillvalue[i]); break;
                     case 502: if (weapon.Avatar.WeaponConfig.Type == (int)CardTypeSub.Armor) weapon.Avatar.AddStrengthLevel(skillvalue[i]); break;
                     case 503: if (weapon.Avatar.WeaponConfig.Type == (int)CardTypeSub.Scroll) weapon.Avatar.AddStrengthLevel(skillvalue[i]); break;
-                    case 504: if (weapon.Avatar.WeaponConfig.Type == (int)CardTypeSub.Weapon) weapon.Avatar.AddHit(skillvalue[i]); break;
-                    case 505: if (weapon.Avatar.WeaponConfig.Type == (int)CardTypeSub.Armor) weapon.Avatar.AddDhit(skillvalue[i]); break;
+                  //  case 504: if (weapon.Avatar.WeaponConfig.Type == (int)CardTypeSub.Weapon) weapon.Avatar.AddHit(skillvalue[i]); break;
+                 //   case 505: if (weapon.Avatar.WeaponConfig.Type == (int)CardTypeSub.Armor) weapon.Avatar.AddDhit(skillvalue[i]); break;
                     case 506: weapon.Avatar.RemoveNegaPoint(); break;
                 }
             }

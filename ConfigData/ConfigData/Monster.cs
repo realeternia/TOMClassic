@@ -13,13 +13,13 @@ namespace ConfigDatas
 		public int AtkP;
 		public int DefP;
 		public int MagP;
-		public int HitP;
-		public int DhitP;
 		public int LukP;
 		public int SpdP;
 		public int VitP;
 		public int Sum;
 		public int Modify;
+		public int Range;
+		public int Mov;
 		public string Arrow;
 		public string Cover;
 		public RLVector3List Skills;
@@ -32,7 +32,7 @@ namespace ConfigDatas
 		public double VsMark;
 		public string Remark;
 		public MonsterConfig(){}
-		public MonsterConfig(int Id,string Name,string Ename,string EnameShort,int Star,int Type,int Attr,int Cost,int AtkP,int DefP,int MagP,int HitP,int DhitP,int LukP,int SpdP,int VitP,int Sum,int Modify,string Arrow,string Cover,RLVector3List Skills,double[] AttrAtk,double[] AttrDef,int Res,int Icon,int IsSpecial,int IsNew,double VsMark,string Remark)
+		public MonsterConfig(int Id,string Name,string Ename,string EnameShort,int Star,int Type,int Attr,int Cost,int AtkP,int DefP,int MagP,int LukP,int SpdP,int VitP,int Sum,int Modify,int Range,int Mov,string Arrow,string Cover,RLVector3List Skills,double[] AttrAtk,double[] AttrDef,int Res,int Icon,int IsSpecial,int IsNew,double VsMark,string Remark)
 		{
 			this.Id= Id;
 			this.Name= Name;
@@ -45,13 +45,13 @@ namespace ConfigDatas
 			this.AtkP= AtkP;
 			this.DefP= DefP;
 			this.MagP= MagP;
-			this.HitP= HitP;
-			this.DhitP= DhitP;
 			this.LukP= LukP;
 			this.SpdP= SpdP;
 			this.VitP= VitP;
 			this.Sum= Sum;
 			this.Modify= Modify;
+			this.Range= Range;
+			this.Mov= Mov;
 			this.Arrow= Arrow;
 			this.Cover= Cover;
 			this.Skills= Skills;

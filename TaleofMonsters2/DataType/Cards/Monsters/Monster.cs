@@ -15,8 +15,6 @@ namespace TaleofMonsters.DataType.Cards.Monsters
 
         public int Atk { get; set; }
         public int Def { get; set; }
-        public int Hit { get; set; }
-        public int Dhit { get; set; }
         public int Spd { get; set; }
         public int Mag { get; set; }
         public int Luk { get; set; }
@@ -40,8 +38,6 @@ namespace TaleofMonsters.DataType.Cards.Monsters
                 case PlayerAttrs.Atk: return Atk;
                 case PlayerAttrs.Def: return Def;
                 case PlayerAttrs.Mag: return Mag;
-                case PlayerAttrs.Hit: return Hit;
-                case PlayerAttrs.DHit: return Dhit;
                 case PlayerAttrs.Luk: return Luk;
                 case PlayerAttrs.Spd: return Spd;
                 case PlayerAttrs.Hp: return Hp;
@@ -83,8 +79,6 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             Atk = standardValue*(100 + MonsterConfig.AtkP)/100; //200
             Def = standardValue * (100 + MonsterConfig.DefP) / 100; //200
             Mag = standardValue * (100 + MonsterConfig.MagP) / 100; //200
-            Hit = standardValue * (100 + MonsterConfig.HitP) / 100; //100
-            Dhit = standardValue * (100 + MonsterConfig.DhitP) / 100; //100
             Spd = standardValue * (100 + MonsterConfig.SpdP) / 100; //100
             Luk = standardValue * (100 + MonsterConfig.LukP) / 100;//无用属性
             Hp = standardValue * (100 + MonsterConfig.VitP) / 100 * 5; //200

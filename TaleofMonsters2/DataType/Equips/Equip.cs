@@ -14,8 +14,6 @@ namespace TaleofMonsters.DataType.Equips
         public int Atk;//实际的攻击力
         public int Def;
         public int Mag;
-        public int Hit;
-        public int Dhit;
         public int Spd;
         public int Hp;
 
@@ -37,8 +35,6 @@ namespace TaleofMonsters.DataType.Equips
                 case PlayerAttrs.Atk: return Atk;
                 case PlayerAttrs.Def: return Def;
                 case PlayerAttrs.Mag: return Mag;
-                case PlayerAttrs.Hit: return Hit;
-                case PlayerAttrs.DHit: return Dhit;
                 case PlayerAttrs.Luk: return 0;
                 case PlayerAttrs.Spd: return Spd;
                 case PlayerAttrs.Hp: return Hp;
@@ -57,10 +53,6 @@ namespace TaleofMonsters.DataType.Equips
                 Def = standardValue * (100 + equipConfig.DefP) / 100; //200
             if (equipConfig.MagP > 0)
                 Mag = standardValue * (100 + equipConfig.MagP) / 100; //200
-            if (equipConfig.HitP > 0)
-                Hit = standardValue * (100 + equipConfig.HitP) / 100; //100
-            if (equipConfig.DhitP > 0)
-                Dhit = standardValue * (100 + equipConfig.DhitP) / 100; //100
             if (equipConfig.SpdP > 0)
                 Spd = standardValue * (100 + equipConfig.SpdP) / 100; //100
             if (equipConfig.VitP > 0)
@@ -90,16 +82,6 @@ namespace TaleofMonsters.DataType.Equips
             {
                 EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(PlayerAttrs.Mag + 1));
                 tipData.AddTextNewLine(string.Format(eAddon.Format, Mag), HSTypes.I2EaddonColor(eAddon.Rare));
-            }
-            if (Hit > 0)
-            {
-                EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(PlayerAttrs.Hit + 1));
-                tipData.AddTextNewLine(string.Format(eAddon.Format, Hit), HSTypes.I2EaddonColor(eAddon.Rare));
-            }
-            if (Dhit > 0)
-            {
-                EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(PlayerAttrs.DHit + 1));
-                tipData.AddTextNewLine(string.Format(eAddon.Format, Dhit), HSTypes.I2EaddonColor(eAddon.Rare));
             }
             if (Spd > 0)
             {

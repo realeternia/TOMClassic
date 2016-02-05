@@ -67,8 +67,6 @@ namespace TaleofMonsters.DataType.Equips
                 vEquip.Atk += equip.Atk;
                 vEquip.Def += equip.Def;
                 vEquip.Mag += equip.Mag;
-                vEquip.Hit += equip.Hit;
-                vEquip.Dhit += equip.Dhit;
                 vEquip.Spd += equip.Spd;
                 vEquip.Hp += equip.Hp;
             }

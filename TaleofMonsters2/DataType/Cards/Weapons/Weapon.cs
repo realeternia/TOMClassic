@@ -15,8 +15,6 @@ namespace TaleofMonsters.DataType.Cards.Weapons
 
         public int Atk { get; set; }
         public int Def { get; set; }
-        public int Hit { get; set; }
-        public int Dhit { get; set; }
         public int Spd { get; set; }
         public int Mag { get; set; }
         public int Luk { get; set; }
@@ -37,16 +35,6 @@ namespace TaleofMonsters.DataType.Cards.Weapons
         public void AddDef(int addon)
         {
             Def += addon;
-        }
-
-        public void AddHit(int addon)
-        {
-            Hit += addon;
-        }
-
-        public void AddDhit(int addon)
-        {
-            Dhit += addon;
         }
 
         public void AddStrengthLevel(int value)
@@ -72,8 +60,6 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             if (Atk != 0) s += string.Format("物攻+{0} ", Atk);
             if (Def != 0) s += string.Format("物防+{0} ", Def);
             if (Mag != 0) s += string.Format("魔力+{0} ", Mag);
-            if (Hit != 0) s += string.Format("命中+{0} ", Hit);
-            if (Dhit != 0) s += string.Format("回避+{0} ", Dhit);
             if (WeaponConfig.SkillId != 0)
                 s += string.Format("技能-{0}{1} ", ConfigData.GetSkillConfig(WeaponConfig.SkillId).Name, WeaponConfig.Percent == 100 ? "" : "(" + WeaponConfig.Percent + "%发动)");
             return s.Replace("+-", "-");
@@ -114,8 +100,6 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             Atk = standardValue * (WeaponConfig.Atk) / 100;
             Def = standardValue * ( WeaponConfig.Def) / 100;
             Mag = standardValue * ( WeaponConfig.Mag) / 100;
-            Hit = standardValue * ( WeaponConfig.Hit) / 100;
-            Dhit = standardValue * ( WeaponConfig.Dhit) / 100;
             Spd = standardValue * ( WeaponConfig.Spd) / 100;
             Luk = standardValue * ( WeaponConfig.Luk) / 100;
         }

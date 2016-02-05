@@ -12,8 +12,6 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             src.Atk += weapon.Avatar.Atk*symbol;
             src.Def += weapon.Avatar.Def * symbol;
             src.Mag += weapon.Avatar.Mag * symbol;
-            src.Hit += weapon.Avatar.Hit * symbol;
-            src.DHit += weapon.Avatar.Dhit * symbol;
             if (weaponConfig.Type == (int)CardTypeSub.Scroll)
             {
                 if (symbol == 1)

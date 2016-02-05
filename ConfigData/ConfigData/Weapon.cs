@@ -13,8 +13,6 @@ namespace ConfigDatas
 		public int Atk;
 		public int Def;
 		public int Mag;
-		public int Hit;
-		public int Dhit;
 		public int Luk;
 		public int Spd;
 		public int SkillMark;
@@ -30,7 +28,7 @@ namespace ConfigDatas
 		public int IsNew;
 		public string Remark;
 		public WeaponConfig(){}
-		public WeaponConfig(int Id,string Name,string Ename,string EnameShort,int Star,int Type,int Attr,int Cost,int Atk,int Def,int Mag,int Hit,int Dhit,int Luk,int Spd,int SkillMark,int Sum,int Modify,int Dura,int SkillId,int Percent,string Arrow,int Res,string Icon,int IsSpecial,int IsNew,string Remark)
+		public WeaponConfig(int Id,string Name,string Ename,string EnameShort,int Star,int Type,int Attr,int Cost,int Atk,int Def,int Mag,int Luk,int Spd,int SkillMark,int Sum,int Modify,int Dura,int SkillId,int Percent,string Arrow,int Res,string Icon,int IsSpecial,int IsNew,string Remark)
 		{
 			this.Id= Id;
 			this.Name= Name;
@@ -43,8 +41,6 @@ namespace ConfigDatas
 			this.Atk= Atk;
 			this.Def= Def;
 			this.Mag= Mag;
-			this.Hit= Hit;
-			this.Dhit= Dhit;
 			this.Luk= Luk;
 			this.Spd= Spd;
 			this.SkillMark= SkillMark;

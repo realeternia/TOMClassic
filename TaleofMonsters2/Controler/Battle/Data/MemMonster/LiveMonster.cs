@@ -120,32 +120,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
         }
 
-        public int RealHit
-        {
-            get
-            {
-                int hit = (int) Math.Max((Hit.Source + Hit.Adder)*(1 + Hit.Multiter), 0);
-                int dhit = RealDhit;
-                if (SkillManager.HasSpecialMark(SkillMarks.HitHigh) && dhit > hit)
-                {
-                    return dhit;
-                }
-                if (SkillManager.HasSpecialMark(SkillMarks.HitLow) && dhit < hit)
-                {
-                    return dhit;
-                }
-                return hit;
-            }
-        }
-
-        public int RealDhit
-        {
-            get
-            {
-                return (int)Math.Max((DHit.Source + DHit.Adder) * (1 + DHit.Multiter), 0);
-            }
-        }
-
         public int RealLuk
         {
             get { return (int)((Luk.Source + Luk.Adder) * (1 + Luk.Multiter)); }
@@ -188,12 +162,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public int Range
         {
-            get { return 2; }
+            get { return Avatar.MonsterConfig.Range; }
         }
 
         public int Mov
         {
-            get { return 1; }
+            get { return Avatar.MonsterConfig.Mov; }
         }
         
         #endregion
@@ -260,8 +234,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             Atk = new AttrModifyData(Avatar.Atk);
             Def = new AttrModifyData(Avatar.Def);
             Mag = new AttrModifyData(Avatar.Mag);
-            Hit = new AttrModifyData(Avatar.Hit);
-            DHit = new AttrModifyData(Avatar.Dhit);
             Spd = new AttrModifyData(Avatar.Spd);
             Luk = new AttrModifyData(Avatar.Luk);
 
@@ -566,8 +538,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             AddText(tipData,"物攻", (int)Atk.Source,RealAtk,!IsMagicAtk && CanAttack ? "White" : "DarkGray", true);
             AddText(tipData, "物防", (int)Def.Source, RealDef, "White", false);
             AddText(tipData, "魔力", (int)Mag.Source, RealMag, !IsMagicAtk || !CanAttack ? "DarkGray" : "White", true);
-            AddText(tipData, "命中", (int)Hit.Source, RealHit, "White", true);
-            AddText(tipData, "回避", (int)DHit.Source, RealDhit, "White", false);
+            //AddText(tipData, "命中", (int)Hit.Source, RealHit, "White", true);
+            //AddText(tipData, "回避", (int)DHit.Source, RealDhit, "White", false);
             AddText(tipData, "速度", (int)Spd.Source, RealSpd, "White", true);
             AddText(tipData, "幸运", (int)Luk.Source, RealLuk, "White", false);
             tipData.AddTextNewLine(string.Format("生命值 {0} / {1}", Life, Avatar.Hp), "Lime");
@@ -786,11 +758,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public AttrModifyData Atk { get; set; }
 
-        public AttrModifyData DHit { get; set; }
+        public AttrModifyData DHit { get; set; }//todo 需要删除
 
         public AttrModifyData Def { get; set; }
 
-        public AttrModifyData Hit { get; set; }
+        public AttrModifyData Hit { get; set; }//todo 需要删除
 
         public AttrModifyData Spd { get; set; }
 
