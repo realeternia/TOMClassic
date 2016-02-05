@@ -470,7 +470,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 			MaxHp=Avatar.Hp + 3 * basedata / 10;
 		}
 
-        public void Draw(Graphics g2, Color uponColor)
+        public void DrawOnBattle(Graphics g2, Color uponColor)
         {
             Bitmap image = new Bitmap(100, 100);
             Graphics g = Graphics.FromImage(image);
@@ -491,34 +491,32 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 }
                 Pen pen;
                 pen = new Pen(!IsLeft ? Brushes.Blue : Brushes.Red, 3);
-                Font font = new Font("Arial", 7*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-                Font font2 = new Font("Arial", 6*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-                Font fontLevel = new Font("Arial", 10*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+                Font font2 = new Font("Arial", 14*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+                Font fontLevel = new Font("Arial", 20*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
                 g.DrawRectangle(pen, 1, 1, 98, 98);
                 pen.Dispose();
 
                 hpBar.Draw(g);
 
-                g.FillPie(Brushes.Gray, 75, 15, 20, 20, 0, 360);
-                g.FillPie(CanAttack? Brushes.Yellow:Brushes.LightGray, 75, 15, 20, 20, 0, action*360 / GameConstants.LimitAts);
+                g.FillPie(Brushes.Gray, 65, 65, 30, 30, 0, 360);
+                g.FillPie(CanAttack? Brushes.Yellow:Brushes.LightGray, 65, 65, 30, 30, 0, action*360 / GameConstants.LimitAts);
 
-                const string stars = "★★★★★★★★★★";
-                g.DrawString(stars.Substring(10 - Avatar.MonsterConfig.Star), font2, Brushes.Yellow, 0, 0);
-#if DEBUG
-                g.DrawString(Id.ToString(), font, Brushes.White, 0, 20);
-#endif
-                g.DrawString("AT", font, Brushes.Red, 0, 81);
-                g.FillRectangle(Brushes.Red, 15, 84, Avatar.Atk / 8, 5);
-                g.DrawString("DF", font, Brushes.Blue, 0, 88);
-                g.FillRectangle(Brushes.Blue, 15, 91, Avatar.Def / 8, 5);
-                g.DrawString(Level.ToString(), fontLevel, Brushes.DarkBlue, Level < 10 ? 81 : 77, 18);
-                g.DrawString(Level.ToString(), fontLevel, Brushes.LightPink, Level<10? 80:76,17);
-                font.Dispose();
+                var starIcon = HSIcons.GetIconsByEName("sysstar");
+                for (int i = 0; i < Avatar.MonsterConfig.Star; i++)
+                {
+                    g.DrawImage(starIcon, i*12, 8, 16, 16);
+                }
+
+                g.DrawString(Level.ToString(), fontLevel, Brushes.Wheat, Level < 10 ? 71 : 67, 68);
+                g.DrawString(Level.ToString(), fontLevel, Brushes.DarkBlue, Level < 10 ? 70 : 66, 67);
                 font2.Dispose();
                 fontLevel.Dispose();
 
-                if (TWeapon.CardId>0)
-                    g.DrawImage(TWeapon.GetImage(16, 16), 5, 30, 16, 16);
+                if (TWeapon.CardId > 0)
+                {
+                    g.DrawImage(TWeapon.GetImage(32, 32), 5, 60, 32, 32);
+                    g.DrawRectangle(Pens.Lime, 5, 60, 32, 32);
+                }
                 BuffManager.DrawBuff(g);
             }
             else

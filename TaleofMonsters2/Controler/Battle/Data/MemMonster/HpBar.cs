@@ -31,11 +31,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void Draw(Graphics g)
         {
-            g.FillRectangle(Brushes.Lime, 0, 2, 100, 5);
-            g.FillRectangle(Brushes.Red, Math.Max(rate, 0), 2, Math.Min(100 - rate, 100), 5);
+            g.FillRectangle(Brushes.Lime, 0, 2, 100, 8);
+            g.FillRectangle(Brushes.Red, Math.Max(rate, 0), 2, Math.Min(100 - rate, 100), 8);
             if (rate<lastRate)
             {
-                g.FillRectangle(Brushes.Yellow, rate, 2, lastRate - rate, 5);
+                g.FillRectangle(Brushes.Yellow, rate, 2, lastRate - rate, 8);
             }            
         }
     }

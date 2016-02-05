@@ -30,7 +30,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
             while (true)
             {
                 int x = isLeft ? 0 : BattleManager.Instance.MemMap.ColumnCount-1;
-                int y = 0;
+                int y = BattleManager.Instance.MemMap.RowCount/2;
                 if (BattleManager.Instance.MemMap.Cells[x, y].Owner == 0)
                 {
                     return new Point(x * size, y * size);

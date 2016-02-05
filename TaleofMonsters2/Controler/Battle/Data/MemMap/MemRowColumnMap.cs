@@ -320,10 +320,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
 
                 foreach (var memMapPoint in Cells)
                 {
-                    if (memMapPoint.SideIndex > 0 || memMapPoint.Y == 0)
-                    {
-                        cg.DrawImage(TileBook.GetTileImage(memMapPoint.Tile, CardSize, CardSize), memMapPoint.X, memMapPoint.Y, CardSize, CardSize);
-                    }
+                    cg.DrawImage(TileBook.GetTileImage(memMapPoint.Tile, CardSize, CardSize), memMapPoint.X, memMapPoint.Y, CardSize, CardSize);
                     Pen pen = new Pen(Brushes.DarkRed, 2);
                     if (memMapPoint.SideIndex == 0 || memMapPoint.SideIndex == ColumnCount/2)
                     {

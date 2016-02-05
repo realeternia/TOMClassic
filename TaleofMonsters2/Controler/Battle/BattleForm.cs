@@ -268,7 +268,7 @@ namespace TaleofMonsters.Controler.Battle
                         Color color = Color.White;
                         if (isMouseIn)
                             color = magicRegion.GetColor(monster, mouseX, mouseY);
-                        monster.Draw(g, color);
+                        monster.DrawOnBattle(g, color);
                     }
 
                     for (int i = 0; i < BattleManager.Instance.EffectQueue.Count; i++)
