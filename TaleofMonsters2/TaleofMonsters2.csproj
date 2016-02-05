@@ -85,6 +85,7 @@
     <Compile Include="Controler\Battle\Components\CardSelector.Designer.cs">
       <DependentUpon>CardSelector.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controler\Battle\Data\MemMonster\MonsterAi.cs" />
     <Compile Include="Controler\Battle\Tool\BattleManager.cs" />
     <Compile Include="Controler\Battle\Data\MemEffect\BaseEffect.cs" />
     <Compile Include="Controler\Battle\Data\MemEffect\FlyEffect.cs" />

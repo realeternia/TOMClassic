@@ -283,6 +283,29 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             BattleLocationManager.UpdateCellOwner(mouse.X, mouse.Y, ownerId);
         }
 
+        public LiveMonster GetNearestMonster(bool isLeft, string target, Point mouse)
+        {
+            LiveMonster monster  = null;
+            int dis = int.MaxValue;
+            foreach (LiveMonster mon in BattleManager.Instance.MonsterQueue.Enumerator)
+            {
+                if (mon.IsGhost)
+                    continue;
+
+                if ((BattleTargetManager.IsSpellEnemyMonster(target[0]) && isLeft != mon.Owner.IsLeft)
+                    || (BattleTargetManager.IsSpellFriendMonster(target[0]) && isLeft == mon.Owner.IsLeft))
+                {
+                    var tpDis = MathTool.GetDistance(mon.Position, mouse);
+                    if (tpDis < dis)
+                    {
+                        dis = tpDis;
+                        monster = mon;
+                    }
+                }
+            }
+            return monster;
+        }
+
         public void Draw(Graphics g)
         {
             if (isDirty)

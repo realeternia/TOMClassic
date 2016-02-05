@@ -24,6 +24,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
     internal class LiveMonster : IMonster
     {
         private int action;
+        private MonsterAi aiController;
 
         private int life;
         private int oldLife;
@@ -219,6 +220,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             CanAttack = true;
             
             BuffManager = new BuffManager(this);
+            aiController = new MonsterAi(this);
 
             SetBasicData();
             CheckCover();
@@ -371,20 +373,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                     return;
                 }
 
-                int eid = BattleManager.Instance.MemMap.GetEnemyId(Id, isLeft, Position.Y, IsShooter);
-                if (eid != 0)
-                {
-                    LiveMonster target = BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(eid);
-                    if (target != null)
-                    {
-                        BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(Arrow), target, false));
-
-                        SkillAssistant.CheckBurst(this, target);
-                        bool isMiss = !target.BeHited(this);
-                        if (isMiss)
-                            BattleManager.Instance.FlowWordQueue.Add(new FlowWord("Miss!", new Point(Position.X + 40, Position.Y + 40), 0, "red", -10, 0), false);
-                    }
-                }
+                aiController.CheckAction();
             }
         }
 
@@ -399,6 +388,20 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 return true;
             }
             return false;
+        }
+
+        public void HitTarget(int eid)
+        {
+            LiveMonster target = BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(eid);
+            if (target != null)
+            {
+                BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(Arrow), target, false));
+
+                SkillAssistant.CheckBurst(this, target);
+                bool isMiss = !target.BeHited(this);
+                if (isMiss)
+                    BattleManager.Instance.FlowWordQueue.Add(new FlowWord("Miss!", new Point(Position.X + 40, Position.Y + 40), 0, "red", -10, 0), false);
+            }
         }
 
         public void CheckMagicDamage(HitDamage damage)
