@@ -43,7 +43,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public Monster Avatar { get; private set; }
         public int HpReg { get; set; }
         public int GhostTime { get; set; }
-        public Point TargetPosition { get; set; }
         public Point Position { get; set; }
         public bool IsHero { get; set; }
         public IMap Map { get { return BattleManager.Instance.MemMap; } }
@@ -185,6 +184,16 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             get { return GhostTime > 0; }
         }
+
+        public int Range
+        {
+            get { return 2; }
+        }
+
+        public int Mov
+        {
+            get { return 1; }
+        }
         
         #endregion
 
@@ -209,7 +218,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             AttackType = (int)CardElements.None;
             CanAttack = true;
             
-            TargetPosition = new Point(-1, -1);//清除位置标记
             BuffManager = new BuffManager(this);
 
             SetBasicData();
@@ -289,7 +297,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public void OnDie()
         {
             GhostTime = 1;
-            TargetPosition = new Point(-1, -1);
             BattleManager.Instance.MemMap.GetMouseCell(Position.X,Position.Y).UpdateOwner(-Id);
             if (Avatar.MonsterConfig.Type == (int)CardTypeSub.Hero)
             {
@@ -346,19 +353,48 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 Life += HpReg;
             }
             BuffManager.BuffCount();
+
+            bool isLeft = IsLeft;
+            if (BuffManager.HasBuff(BuffEffectTypes.Rebel))//控制
+            {
+                isLeft = !isLeft;
+            }
+            if (AddAts())
+            {
+                if (SkillManager.CheckSpecial())
+                {
+                    return;//特殊技能触发
+                }
+
+                if (!CanAttack)
+                {
+                    return;
+                }
+
+                int eid = BattleManager.Instance.MemMap.GetEnemyId(Id, isLeft, Position.Y, IsShooter);
+                if (eid != 0)
+                {
+                    LiveMonster target = BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(eid);
+                    if (target != null)
+                    {
+                        BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(Arrow), target, false));
+
+                        SkillAssistant.CheckBurst(this, target);
+                        bool isMiss = !target.BeHited(this);
+                        if (isMiss)
+                            BattleManager.Instance.FlowWordQueue.Add(new FlowWord("Miss!", new Point(Position.X + 40, Position.Y + 40), 0, "red", -10, 0), false);
+                    }
+                }
+            }
         }
 
-        public bool AddAts(bool hasAttack)
+        public bool AddAts()
         {
             if (BuffManager.HasBuff(BuffEffectTypes.NoAttack))
                 return false;
             action += Ats;//200ms + 30
             if (action >= GameConstants.LimitAts)
             {
-                if (hasAttack)//有人攻击了
-                {
-                    return false;
-                }
                 action = action - GameConstants.LimitAts + MathTool.GetRandom(Avatar.Spd);
                 return true;
             }
@@ -451,14 +487,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                     brush.Dispose();
                 }
                 Pen pen;
-                if (TargetPosition.X >= 0 && TargetPosition.Y >= 0)//攻击中
-                {
-                    pen = new Pen(Brushes.Gold, 3);
-                }
-                else
-                {
-                    pen = new Pen(!IsLeft ? Brushes.Blue : Brushes.Red, 3);
-                }
+                pen = new Pen(!IsLeft ? Brushes.Blue : Brushes.Red, 3);
                 Font font = new Font("Arial", 7*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
                 Font font2 = new Font("Arial", 6*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
                 Font fontLevel = new Font("Arial", 10*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
@@ -501,14 +530,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
             g.Dispose();
             int size = BattleManager.Instance.MemMap.CardSize;
-            if (TargetPosition.X >= 0 && TargetPosition.Y >= 0)//攻击中
-            {
-                g2.DrawImage(image, new Rectangle(TargetPosition.X, TargetPosition.Y, (int)(size * 0.7), (int)(size * 0.7)), 0, 0, 100, 100, GraphicsUnit.Pixel);
-            }
-            else
-            {
-                g2.DrawImage(image, new Rectangle(Position.X, Position.Y, size, size), 0, 0, 100, 100, GraphicsUnit.Pixel);
-            }
+            g2.DrawImage(image, new Rectangle(Position.X, Position.Y, size, size), 0, 0, 100, 100, GraphicsUnit.Pixel);
             image.Dispose();
         }
 

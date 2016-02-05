@@ -68,8 +68,6 @@ namespace TaleofMonsters.Controler.Battle
         private int defaultTile;
 
         private long lastMouseMoveTime;
-        private int hitRound;
-        private int hitMonsterId;
 
         private int itemCount;
         private VirtualRegion vRegion;
@@ -209,20 +207,9 @@ namespace TaleofMonsters.Controler.Battle
                     return;
                 }
 
-                if (hitRound >= 0) //战斗动画播放中
+                if (roundMark % 4 == 0)
                 {
-                    hitRound--;
-                }
-                else
-                {
-                    if (roundMark % 4 == 0)
-                    {
-                        hitMonsterId =BattleManager.Instance.MonsterQueue.NextAction(); //1回合
-                        if (hitMonsterId > 0)
-                        {
-                            hitRound = GameConstants.BattleAttackRoundWait;
-                        }
-                    }
+                    BattleManager.Instance.MonsterQueue.NextAction(); //1回合
                 }
                 
                 if (roundMark%4 == 0) //200ms
@@ -278,23 +265,12 @@ namespace TaleofMonsters.Controler.Battle
                     for (int i = 0; i <BattleManager.Instance.MonsterQueue.Count; i++)
                     {
                         LiveMonster monster =BattleManager.Instance.MonsterQueue[i];
-                        if (monster.Id == hitMonsterId)
-                        {
-                            continue;
-                        }
                         Color color = Color.White;
                         if (isMouseIn)
                             color = magicRegion.GetColor(monster, mouseX, mouseY);
                         monster.Draw(g, color);
                     }
-                    if (hitMonsterId > 0)
-                    {
-                        LiveMonster monster =BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(hitMonsterId);
-                        Color color = Color.White;
-                        if (isMouseIn)
-                            color = magicRegion.GetColor(monster, mouseX, mouseY);
-                        monster.Draw(g, color);
-                    }
+
                     for (int i = 0; i < BattleManager.Instance.EffectQueue.Count; i++)
                         BattleManager.Instance.EffectQueue[i].Draw(g);
                     for (int i = 0; i < BattleManager.Instance.FlowWordQueue.Count; i++)

@@ -1,14 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
-using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Effects;
 using TaleofMonsters.DataType.Others;
-using TaleofMonsters.DataType.Skills;
 
 namespace TaleofMonsters.Controler.Battle.DataTent
 {
@@ -117,11 +113,10 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             return null;
         }
 
-        public int NextAction()
+        public void NextAction()
         {
             leftCount = 0;
             rightCount = 0;
-            int cardSize = BattleManager.Instance.MemMap.CardSize;
             List<int> removeMids = new List<int>();            
             foreach (LiveMonster mon in monsters)
             {
@@ -162,51 +157,16 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 Remove(mid);
             }
 
-            int hitMonsterId = 0;//每回合仅有一个单位可以发起攻击
+
             foreach (LiveMonster roundMonster in monsters)
             {
                 if (roundMonster.IsGhost) 
                     continue;
 
-                roundMonster.TargetPosition = new Point(-1, -1);//清除位置标记
-
                 int tile = BattleManager.Instance.MemMap.GetMouseCell(roundMonster.Position.X, roundMonster.Position.Y).Tile;
                 TileMatchResult match = TileBook.MatchTile(tile,roundMonster.Avatar.MonsterConfig.Type);
                 roundMonster.Next(match);
-                bool isLeft = roundMonster.IsLeft;
-                if (roundMonster.BuffManager.HasBuff(BuffEffectTypes.Rebel))//控制
-                {
-                    isLeft = !isLeft;
-                }
-                if (roundMonster.AddAts(hitMonsterId > 0))
-                {
-                    if (roundMonster.SkillManager.CheckSpecial())
-                    {
-                        continue;//特殊技能触发
-                    }
-
-                    if (!roundMonster.CanAttack)
-                    {
-                        continue;
-                    }
-
-                    int eid = BattleManager.Instance.MemMap.GetEnemyId(roundMonster.Id, isLeft, roundMonster.Position.Y, roundMonster.IsShooter);
-                    if (eid != 0)
-                    {
-                        hitMonsterId = roundMonster.Id;
-                        LiveMonster target = GetMonsterByUniqueId(eid);
-                        if (target != null)
-                        {
-                            roundMonster.TargetPosition = new Point(target.IsLeft ? target.Position.X + cardSize : target.Position.X - (int)(cardSize * 0.7), target.Position.Y + (int)(cardSize * 0.3)/2);
-                            BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(roundMonster.Arrow), target, false));
-
-                            SkillAssistant.CheckBurst(roundMonster, target);
-                            bool isMiss = !target.BeHited(roundMonster);
-                            if (isMiss)
-                                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("Miss!", new Point(roundMonster.TargetPosition.X + 40, roundMonster.TargetPosition.Y + 40), 0, "red", -10, 0), false);
-                        }
-                    }
-                }
+               
             }
 
             foreach (var lm in toAdd)
@@ -214,8 +174,6 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 Add(lm);
             }
             toAdd.Clear();
-
-            return hitMonsterId;
         }
 
         public void Clear()
