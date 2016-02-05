@@ -26,7 +26,6 @@ namespace TaleofMonsters.Core
 
         public const int BattleInitialCardCount = 3; //战斗开始时的卡牌数
         public const int RoundTime = 8000;//一个回合多少ms，一个回合给一张卡
-        public const int BattleActionLimit = 200;//200即可攻击
         public const float RoundRecoverAddon = 1.5f; //回合的回复倍率
         public const int RoundRecoverDoubleRound = 10; //第几个回合开始恢复加倍
         public const int RoundRecoverAllRound = 4; //每多少回合回复一次所有能量点

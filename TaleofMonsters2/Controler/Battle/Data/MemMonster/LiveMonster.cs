@@ -356,7 +356,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             action += Ats;//200ms + 30
             if (action >= GameConstants.LimitAts)
             {
-                action = action - GameConstants.LimitAts + MathTool.GetRandom(Avatar.Spd);
+                action = action - GameConstants.LimitAts;
                 return true;
             }
             return false;
@@ -538,10 +538,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             AddText(tipData,"物攻", (int)Atk.Source,RealAtk,!IsMagicAtk && CanAttack ? "White" : "DarkGray", true);
             AddText(tipData, "物防", (int)Def.Source, RealDef, "White", false);
             AddText(tipData, "魔力", (int)Mag.Source, RealMag, !IsMagicAtk || !CanAttack ? "DarkGray" : "White", true);
-            //AddText(tipData, "命中", (int)Hit.Source, RealHit, "White", true);
-            //AddText(tipData, "回避", (int)DHit.Source, RealDhit, "White", false);
-            AddText(tipData, "速度", (int)Spd.Source, RealSpd, "White", true);
-            AddText(tipData, "幸运", (int)Luk.Source, RealLuk, "White", false);
+            AddText(tipData, "速度", (int)Spd.Source, RealSpd, "White", false);
+            AddText(tipData, "移动", (int)Mov, Mov, "White", true);
+            AddText(tipData, "射程", (int)Range, Range, "White", false);
             tipData.AddTextNewLine(string.Format("生命值 {0} / {1}", Life, Avatar.Hp), "Lime");
 
             foreach (var memBaseSkill in SkillManager.Skills)
@@ -702,7 +701,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void AddActionRate(double value)
         {
-            Action += (int)(GameConstants.BattleActionLimit*value);
+            Action += (int)(GameConstants.LimitAts*value);
         }
 
         public void StealWeapon(IMonster target)

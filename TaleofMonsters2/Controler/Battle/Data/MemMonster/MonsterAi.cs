@@ -27,7 +27,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 }
                 else
                 {
-                    var moveDis = monster.Mov*BattleManager.Instance.MemMap.CardSize;
+                    var moveDis = BattleManager.Instance.MemMap.CardSize;
                     if (nearestEnemy.Position.X != monster.Position.X)
                     {
                         var x = monster.Position.X + (nearestEnemy.Position.X > monster.Position.X ? moveDis : -moveDis);
@@ -38,6 +38,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                         var y = monster.Position.Y + (nearestEnemy.Position.Y > monster.Position.Y ? moveDis : -moveDis);
                         BattleLocationManager.SetToPosition(monster, new Point(monster.Position.X, y));
                     }
+
+                    if (monster.Mov>10)//会返回一些ats
+                    {
+                        monster.AddActionRate((float)(monster.Mov-10)/monster.Mov);
+                    }
                 }
             }
         }
@@ -45,7 +50,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         private bool CanAttack(LiveMonster target)
         {
             var dis = MathTool.GetDistance(target.Position, monster.Position);
-            return dis <= monster.Range * BattleManager.Instance.MemMap.CardSize;
+            return dis <= monster.Range * BattleManager.Instance.MemMap.CardSize/10;//射程也是十倍的
         }
     }
 }
