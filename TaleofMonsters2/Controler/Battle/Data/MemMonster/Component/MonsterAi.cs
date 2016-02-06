@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Tool;
+using TaleofMonsters.Core;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 {
@@ -23,7 +24,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             {
                 if (CanAttack(nearestEnemy))
                 {
-                    monster.HitTarget(nearestEnemy.Id);
+                    if (monster.Range <= GameConstants.MaxMeleeAtkRange)
+                    {
+                        monster.HitTarget(nearestEnemy.Id);//近战
+                    }
+                    else
+                    {
+                        
+                    }
 
                     if (monster.RealSpd > 10)//会返回一些ats
                     {

@@ -28,11 +28,11 @@ namespace TaleofMonsters.Controler.Battle.Components
             isShow = true;
         }
 
-        internal bool TimeGo(float pastTime) //每一个回合返回true
+        internal void TimeGo(float roundT)
         {
             float oldTime = time;
-            time += pastTime*10;
-            if (time > 96) time = 0;
+            //time += pastTime*10;//todo
+            //if (time > 96) time = 0;
             BattleManager.Instance.IsNight = (time < 24 || time >= 72);
             daytime = BattleManager.Instance.IsNight ? 2 : 1;
             if (oldTime < 24 && time>=24)
@@ -51,16 +51,8 @@ namespace TaleofMonsters.Controler.Battle.Components
             //        special = MathTool.GetRandom(2);
             //}
 
-            var roundEnd = false;
-            round += pastTime;
-            if (round >= 1)
-            {
-                round = 0;
-                roundEnd = true;
-            }
+            round = roundT;
             Invalidate();
-
-            return roundEnd;
         }
 
         private void TimeViewer_Paint(object sender, PaintEventArgs e)

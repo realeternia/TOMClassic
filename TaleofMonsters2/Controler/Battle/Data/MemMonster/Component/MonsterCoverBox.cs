@@ -12,8 +12,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public MonsterCoverBox(LiveMonster liveMonster)
         {
-            CheckCover();
             this.liveMonster = liveMonster;
+            CheckCover();
         }
 
         public void CheckCover()

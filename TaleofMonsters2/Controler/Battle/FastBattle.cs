@@ -83,8 +83,8 @@ namespace TaleofMonsters.Controler.Battle
                 }
                 if (roundMark % 10 == 0)
                 {
-                    AIStrategy.AIProc(BattleManager.Instance.PlayerManager.RightPlayer, false);
-                    AIStrategy.AIProc(BattleManager.Instance.PlayerManager.LeftPlayer, false);
+                    AIStrategy.AIProc(BattleManager.Instance.PlayerManager.RightPlayer);
+                    AIStrategy.AIProc(BattleManager.Instance.PlayerManager.LeftPlayer);
                 }
                 BattleManager.Instance.BattleInfo.Round = roundMark * 50 / GameConstants.RoundTime + 1;//50ms
             }

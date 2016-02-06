@@ -28,11 +28,8 @@ namespace TaleofMonsters.Controler.Battle
             }
         }
 
-        internal static void AIProc(Player player, bool isGamePaused)
+        internal static void AIProc(Player player)
         {            
-            if (isGamePaused)
-                return;
-
             if (player.GetCardNumber() <= 0)
                 return;
 

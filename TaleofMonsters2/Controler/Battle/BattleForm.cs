@@ -52,7 +52,6 @@ namespace TaleofMonsters.Controler.Battle
         private bool isGamePaused = true;
         private bool gameEnd;
         private bool isMouseIn;
-        private int roundMark;//目前一个roundmark代表0.05s
         private int mouseX, mouseY;
         private int showPlayerState;
         private bool onTurn;
@@ -69,7 +68,6 @@ namespace TaleofMonsters.Controler.Battle
 
         private long lastMouseMoveTime;
 
-        private int itemCount;
         private VirtualRegion vRegion;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
         private MagicRegion magicRegion = new MagicRegion();
@@ -159,7 +157,6 @@ namespace TaleofMonsters.Controler.Battle
             BattleManager.Instance.PlayerManager.RightPlayer.AddHeroUnit();
             AIStrategy.OnInit(BattleManager.Instance.PlayerManager.RightPlayer);
 
-            roundMark = 0;
             BattleManager.Instance.BattleInfo.StartTime = DateTime.Now;
             BattleManager.Instance.BattleInfo.EndTime = DateTime.Now;
 
@@ -173,6 +170,7 @@ namespace TaleofMonsters.Controler.Battle
             isGamePaused = true;
         }
 
+
         internal override void OnFrame(int tick)
         {
             base.OnFrame(tick);
@@ -184,45 +182,24 @@ namespace TaleofMonsters.Controler.Battle
             try
             {
                 panelBattle.Invalidate();
-                if (BattleManager.Instance.BattleInfo.Items != null && itemCount != BattleManager.Instance.BattleInfo.Items.Count) //获得新物品
-                {
-                    itemCount = BattleManager.Instance.BattleInfo.Items.Count;
-                }
 
                 if (BattleManager.Instance.PlayerManager.LeftPlayer == null || BattleManager.Instance.PlayerManager.RightPlayer == null)
                     return;
-
-                BattleManager.Instance.FlowWordQueue.Next();
-                BattleManager.Instance.EffectQueue.Next();
+                
                 if (IsGamePaused)
                     return;
 
-                CheckCursor();
-                miniItemView1.NewTick();
-                roundMark++;
                 if (!BattleManager.Instance.PlayerManager.LeftPlayer.Hero.IsAlive || !BattleManager.Instance.PlayerManager.RightPlayer.Hero.IsAlive)
                 {
                     EndGame();
                     return;
                 }
 
-                if (roundMark % 4 == 0)
-                {
-                    BattleManager.Instance.MonsterQueue.NextAction(); //1回合
-                }
-                
-                if (roundMark%4 == 0) //200ms
-                {
-                    float pastTime = (float) 200/GameConstants.RoundTime;
-                    BattleManager.Instance.PlayerManager.Update(false, pastTime, BattleManager.Instance.BattleInfo.Round);
-                    if (timeViewer1.TimeGo(pastTime))
-                        BattleManager.Instance.PlayerManager.CheckRoundCard(); //1回合
-                }
-                BattleManager.Instance.BattleInfo.Round = roundMark * 50 / GameConstants.RoundTime + 1;//50ms
-                if (roundMark%10 == 0)
-                {
-                    AIStrategy.AIProc(BattleManager.Instance.PlayerManager.RightPlayer, isGamePaused);
-                }
+                CheckCursor();
+                miniItemView1.NewTick();
+                timeViewer1.TimeGo(BattleManager.Instance.Round);
+
+                BattleManager.Instance.Next();
             }
             catch(Exception e)
             {
@@ -260,7 +237,7 @@ namespace TaleofMonsters.Controler.Battle
                     BattleManager.Instance.MemMap.Draw(g);
 
                     if (magicRegion.Type != RegionTypes.None && isMouseIn)
-                        magicRegion.Draw(g, roundMark, mouseX, mouseY);
+                        magicRegion.Draw(g, BattleManager.Instance.RoundMark, mouseX, mouseY);
                     for (int i = 0; i <BattleManager.Instance.MonsterQueue.Count; i++)
                     {
                         LiveMonster monster =BattleManager.Instance.MonsterQueue[i];
