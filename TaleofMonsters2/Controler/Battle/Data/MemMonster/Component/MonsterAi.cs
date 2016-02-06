@@ -2,7 +2,7 @@
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Tool;
 
-namespace TaleofMonsters.Controler.Battle.Data.MemMonster
+namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 {
     internal class MonsterAi
     {

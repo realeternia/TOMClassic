@@ -86,15 +86,15 @@
       <DependentUpon>CardSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="Controler\Battle\Data\MemMonster\LiveMonsterToolTip.cs" />
-    <Compile Include="Controler\Battle\Data\MemMonster\MonsterAi.cs" />
+    <Compile Include="Controler\Battle\Data\MemMonster\Component\MonsterAi.cs" />
     <Compile Include="Controler\Battle\Tool\BattleManager.cs" />
     <Compile Include="Controler\Battle\Data\MemEffect\BaseEffect.cs" />
     <Compile Include="Controler\Battle\Data\MemEffect\FlyEffect.cs" />
     <Compile Include="Controler\Battle\Data\MemFlow\FlowExpInfo.cs" />
     <Compile Include="Controler\Battle\Data\MemFlow\FlowManaInfo.cs" />
-    <Compile Include="Controler\Battle\Data\MemMonster\BuffManager.cs" />
-    <Compile Include="Controler\Battle\Data\MemMonster\HpBar.cs" />
-    <Compile Include="Controler\Battle\Data\MemMonster\SkillManager.cs" />
+    <Compile Include="Controler\Battle\Data\MemMonster\Component\BuffManager.cs" />
+    <Compile Include="Controler\Battle\Data\MemMonster\Component\HpBar.cs" />
+    <Compile Include="Controler\Battle\Data\MemMonster\Component\SkillManager.cs" />
     <Compile Include="Controler\Battle\Data\MemSpell\Trap.cs" />
     <Compile Include="Controler\Battle\Data\MonsterAuro.cs" />
     <Compile Include="Controler\Battle\Data\MemCard\ActiveCard.cs" />

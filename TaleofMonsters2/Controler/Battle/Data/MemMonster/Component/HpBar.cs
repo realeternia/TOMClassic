@@ -1,7 +1,7 @@
 using System;
 using System.Drawing;
 
-namespace TaleofMonsters.Controler.Battle.Data.MemMonster
+namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 {
     internal class HpBar
     {

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Core;
 using TaleofMonsters.Controler.Battle.Data.MemEffect;
@@ -8,7 +7,7 @@ using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Effects;
 using TaleofMonsters.DataType.Skills;
 
-namespace TaleofMonsters.Controler.Battle.Data.MemMonster
+namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 {
     internal class SkillManager
     {

@@ -5,7 +5,7 @@ using ControlPlus;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Buffs;
 
-namespace TaleofMonsters.Controler.Battle.Data.MemMonster
+namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 {
     internal class BuffManager
     {
