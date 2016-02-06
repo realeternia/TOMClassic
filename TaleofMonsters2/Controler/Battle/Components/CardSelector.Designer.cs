@@ -28,42 +28,42 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonStart = new System.Windows.Forms.Button();
+            this.bitmapButton1 = new NarlonLib.Control.BitmapButton();
             this.SuspendLayout();
             // 
-            // buttonStart
+            // bitmapButton1
             // 
-            this.buttonStart.BackColor = System.Drawing.Color.White;
-            this.buttonStart.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonStart.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonStart.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.buttonStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonStart.Font = new System.Drawing.Font("宋体", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonStart.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonStart.Location = new System.Drawing.Point(184, 164);
-            this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(230, 58);
-            this.buttonStart.TabIndex = 2;
-            this.buttonStart.Text = "换卡";
-            this.buttonStart.UseVisualStyleBackColor = false;
-            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
+            this.bitmapButton1.BorderColor = System.Drawing.Color.Black;
+            this.bitmapButton1.Font = new System.Drawing.Font("SimSun", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
+            this.bitmapButton1.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.bitmapButton1.IconImage = null;
+            this.bitmapButton1.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButton1.IconXY = new System.Drawing.Point(0, 0);
+            this.bitmapButton1.ImageNormal = null;
+            this.bitmapButton1.Location = new System.Drawing.Point(225, 172);
+            this.bitmapButton1.Name = "bitmapButton1";
+            this.bitmapButton1.NoUseDrawNine = false;
+            this.bitmapButton1.Size = new System.Drawing.Size(110, 43);
+            this.bitmapButton1.TabIndex = 3;
+            this.bitmapButton1.Text = "换卡";
+            this.bitmapButton1.TextOffX = 0;
+            this.bitmapButton1.UseVisualStyleBackColor = true;
+            this.bitmapButton1.Click += new System.EventHandler(this.buttonStart_Click);
             // 
             // CardSelector
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
-            this.Controls.Add(this.buttonStart);
+            this.Controls.Add(this.bitmapButton1);
             this.DoubleBuffered = true;
             this.Name = "CardSelector";
-            this.Size = new System.Drawing.Size(613, 252);
+            this.Size = new System.Drawing.Size(613, 220);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.CardSelector_Paint);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button buttonStart;
+        private NarlonLib.Control.BitmapButton bitmapButton1;
     }
 }
