@@ -14,11 +14,17 @@ namespace TaleofMonsters.DataType.Cards.Monsters
         }
 
         public int Atk { get; set; }
+        public int Hp { get; set; }//成长属性
+
         public int Def { get; set; }
         public int Spd { get; set; }
         public int Mag { get; set; }
         public int Luk { get; set; }
-        public int Hp { get; set; }
+        public int Hit { get; set; }
+        public int Dhit { get; set; }
+        public int Crt { get; set; }
+        public int Mov { get; set; }
+        public int Range { get; set; }
 
         public int Level { get; set; }
 
@@ -27,6 +33,16 @@ namespace TaleofMonsters.DataType.Cards.Monsters
         public Monster(int id)
         {
             MonsterConfig = ConfigData.GetMonsterConfig(id);
+            Def = MonsterConfig.Def;
+            Spd = MonsterConfig.Spd;
+            Mag = MonsterConfig.Mag;
+            Luk = MonsterConfig.Luk;
+            Hit = MonsterConfig.Hit;
+            Dhit = MonsterConfig.Dhit;
+            Crt = MonsterConfig.Crt;
+            Mov = MonsterConfig.Mov;
+            Range = MonsterConfig.Range;
+
             Name = MonsterConfig.Name;
             UpgradeToLevel1();
         }
@@ -36,10 +52,6 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             switch (attr)
             {
                 case PlayerAttrs.Atk: return Atk;
-                case PlayerAttrs.Def: return Def;
-                case PlayerAttrs.Mag: return Mag;
-                case PlayerAttrs.Luk: return Luk;
-                case PlayerAttrs.Spd: return Spd;
                 case PlayerAttrs.Hp: return Hp;
             }
             return 0;
@@ -77,10 +89,6 @@ namespace TaleofMonsters.DataType.Cards.Monsters
         {
             int standardValue = (30 + MonsterConfig.Star * 10) * (level*8 + 92) / 100 * (100 + MonsterConfig.Modify) / 100;
             Atk = standardValue*(100 + MonsterConfig.AtkP)/100; //200
-            Def = standardValue * (100 + MonsterConfig.DefP) / 100; //200
-            Mag = standardValue * (100 + MonsterConfig.MagP) / 100; //200
-            Spd = standardValue * (100 + MonsterConfig.SpdP) / 100; //100
-            Luk = standardValue * (100 + MonsterConfig.LukP) / 100;//无用属性
             Hp = standardValue * (100 + MonsterConfig.VitP) / 100 * 5; //200
 
             Level = level;

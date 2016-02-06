@@ -38,12 +38,7 @@ namespace ConfigDatas
         int GetMonsterCountByType(int type);		
 		
         AttrModifyData Atk{get;set;}
-        AttrModifyData Def{get;set;}	
-        AttrModifyData Spd{get;set;}
-        AttrModifyData Mag{get;set;}
-        AttrModifyData Luk{get;set;}
 
-        int Ats{get;set;}		
         bool IsTileMatching { get; }
         bool CanAttack { get; set; }
         bool IsElement(string ele);

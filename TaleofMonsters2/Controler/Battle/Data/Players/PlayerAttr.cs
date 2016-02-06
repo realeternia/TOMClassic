@@ -17,10 +17,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             switch (attr)
             {
                 case PlayerAttrs.Atk: atk += value; break;
-                case PlayerAttrs.Def: def += value; break;
-                case PlayerAttrs.Mag: mag += value; break;
-                case PlayerAttrs.Luk: luk += value; break;
-                case PlayerAttrs.Spd: spd += value; break;
                 case PlayerAttrs.Hp: hp += value; break;
             }
         }

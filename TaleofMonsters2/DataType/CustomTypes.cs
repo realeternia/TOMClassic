@@ -224,10 +224,6 @@
     internal enum PlayerAttrs
     {
         Atk,
-        Def,
-        Mag,
-        Spd,
-        Luk,
         Hp,
     }
 

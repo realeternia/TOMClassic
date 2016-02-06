@@ -157,10 +157,10 @@ namespace TaleofMonsters.Config
             foreach (MonsterConfig monsterConfig in ConfigDatas.ConfigData.MonsterDict.Values)
             {
                 List<CardAttr> attrList = new List<CardAttr>();
-                if (monsterConfig.DefP == 0)
-                {
-                    attrList.Add(CardAttr.Atk); //todo 这是个例子
-                }
+                //if (monsterConfig.DefP == 0)
+                //{
+                //    attrList.Add(CardAttr.Atk); //todo 这是个例子
+                //}
                 cardAttrDict[monsterConfig.Id] = attrList;
             }
         }

@@ -72,9 +72,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             var equipList = EquipBook.GetEquipsList(equipids);
             var addon = EquipBook.GetVirtualEquips(equipList);
             attr.AddAttrs(PlayerAttrs.Atk, addon.Atk);
-            attr.AddAttrs(PlayerAttrs.Def, addon.Def);
-            attr.AddAttrs(PlayerAttrs.Mag, addon.Mag);
-            attr.AddAttrs(PlayerAttrs.Spd, addon.Spd);
             attr.AddAttrs(PlayerAttrs.Hp, addon.Hp);
             foreach (var equip in equipList)
             {

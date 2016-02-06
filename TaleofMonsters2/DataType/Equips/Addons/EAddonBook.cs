@@ -14,10 +14,10 @@ namespace TaleofMonsters.DataType.Equips.Addons
                 switch (skillid[i])
                 {
                     case 101: mon.Atk += skillvalue[i]; break;
-                    case 102: mon.Def += skillvalue[i]; break;
-                    case 103: mon.Mag += skillvalue[i]; break;
-                    case 104: mon.Hit += skillvalue[i]; break;
-                    case 105: mon.DHit += skillvalue[i]; break;
+                    //case 102: mon.Def += skillvalue[i]; break;
+                    //case 103: mon.Mag += skillvalue[i]; break;
+                    //case 104: mon.Hit += skillvalue[i]; break;
+                    //case 105: mon.DHit += skillvalue[i]; break;
                     case 106: mon.MaxHp += skillvalue[i]; break;
                     case 107: mon.HpReg += skillvalue[i]; break;
                  //   case 108: mon.MagicRatePlus += skillvalue[i]; break;
@@ -48,10 +48,10 @@ namespace TaleofMonsters.DataType.Equips.Addons
                     case 134: if (mon.Avatar.MonsterConfig.Type == (int)CardTypeSub.Plant) mon.AddStrengthLevel(skillvalue[i]); break;
                     case 201: mon.SkillManager.RemoveSkill(233); break;
                     case 202: if (mon.Avatar.MonsterConfig.Star < 3) mon.SkillManager.AddSkill(SkillConfig.Indexer.FightQuick, 1, 100, SkillSourceTypes.Equip); break;
-                    case 302: mon.Def *= (double)skillvalue[i] / 100; break;
-                    case 304: mon.Spd *= (double)skillvalue[i] / 100; break;
-                    case 305: mon.Hit *= (double)skillvalue[i] / 100; break;
-                    case 306: mon.DHit *= (double)skillvalue[i] / 100; break;
+                    //case 302: mon.Def *= (double)skillvalue[i] / 100; break;
+                    //case 304: mon.Spd *= (double)skillvalue[i] / 100; break;
+                    //case 305: mon.Hit *= (double)skillvalue[i] / 100; break;
+                    //case 306: mon.DHit *= (double)skillvalue[i] / 100; break;
                 }
             }
         }

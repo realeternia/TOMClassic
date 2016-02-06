@@ -65,9 +65,6 @@ namespace TaleofMonsters.DataType.Equips
             foreach (var equip in equipList)
             {
                 vEquip.Atk += equip.Atk;
-                vEquip.Def += equip.Def;
-                vEquip.Mag += equip.Mag;
-                vEquip.Spd += equip.Spd;
                 vEquip.Hp += equip.Hp;
             }
             return vEquip;

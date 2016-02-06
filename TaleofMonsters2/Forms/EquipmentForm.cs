@@ -313,10 +313,10 @@ namespace TaleofMonsters.Forms
 
             var vEquip = EquipBook.GetVirtualEquips(equipDataList);
             DrawAttr(e.Graphics, font, heroData.Atk, vEquip.Atk, 147,136);
-            DrawAttr(e.Graphics, font, heroData.Def, vEquip.Def, 147 + 53, 136);
+            //DrawAttr(e.Graphics, font, heroData.Def, vEquip.Def, 147 + 53, 136);
 
-            DrawAttr(e.Graphics, font, heroData.Mag, vEquip.Mag, 147, 199);
-            DrawAttr(e.Graphics, font, heroData.Spd, vEquip.Spd, 147 + 53, 199);
+            //DrawAttr(e.Graphics, font, heroData.Mag, vEquip.Mag, 147, 199);
+            //DrawAttr(e.Graphics, font, heroData.Spd, vEquip.Spd, 147 + 53, 199);
             DrawAttr(e.Graphics, font, heroData.Luk, 0, 147 + 53 * 2, 199);
             DrawAttr(e.Graphics, font, heroData.Hp, vEquip.Hp, 147 + 53 * 3, 199);
 

@@ -12,9 +12,6 @@ namespace TaleofMonsters.DataType.Equips
         private const int AttrFactor = 20;//相当于装备属性是怪属性的20%
 
         public int Atk;//实际的攻击力
-        public int Def;
-        public int Mag;
-        public int Spd;
         public int Hp;
 
         public Equip()
@@ -33,10 +30,6 @@ namespace TaleofMonsters.DataType.Equips
             switch (attr)
             {
                 case PlayerAttrs.Atk: return Atk;
-                case PlayerAttrs.Def: return Def;
-                case PlayerAttrs.Mag: return Mag;
-                case PlayerAttrs.Luk: return 0;
-                case PlayerAttrs.Spd: return Spd;
                 case PlayerAttrs.Hp: return Hp;
             }
             return 0;
@@ -49,12 +42,6 @@ namespace TaleofMonsters.DataType.Equips
             int standardValue = (35 + qual * 5) * (equipConfig.Level + 9) / 10 * AttrFactor / 100;
             if (equipConfig.AtkP > 0)
                 Atk = standardValue * (100 + equipConfig.AtkP) / 100; //200
-            if (equipConfig.DefP > 0)
-                Def = standardValue * (100 + equipConfig.DefP) / 100; //200
-            if (equipConfig.MagP > 0)
-                Mag = standardValue * (100 + equipConfig.MagP) / 100; //200
-            if (equipConfig.SpdP > 0)
-                Spd = standardValue * (100 + equipConfig.SpdP) / 100; //100
             if (equipConfig.VitP > 0)
                 Hp = standardValue * (100 + equipConfig.VitP) / 100 * 3; //200
         }
@@ -72,21 +59,6 @@ namespace TaleofMonsters.DataType.Equips
             {
                 EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int) (PlayerAttrs.Atk+ 1));
                 tipData.AddTextNewLine(string.Format(eAddon.Format, Atk), HSTypes.I2EaddonColor(eAddon.Rare));
-            }
-            if (Def > 0)
-            {
-                EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(PlayerAttrs.Def + 1));
-                tipData.AddTextNewLine(string.Format(eAddon.Format, Def), HSTypes.I2EaddonColor(eAddon.Rare));
-            }
-            if (Mag > 0)
-            {
-                EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(PlayerAttrs.Mag + 1));
-                tipData.AddTextNewLine(string.Format(eAddon.Format, Mag), HSTypes.I2EaddonColor(eAddon.Rare));
-            }
-            if (Spd > 0)
-            {
-                EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(PlayerAttrs.Spd + 1));
-                tipData.AddTextNewLine(string.Format(eAddon.Format, Spd), HSTypes.I2EaddonColor(eAddon.Rare));
             }
             if (Hp > 0)
             {

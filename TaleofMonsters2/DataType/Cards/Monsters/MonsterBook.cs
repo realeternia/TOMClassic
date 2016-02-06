@@ -79,7 +79,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
                 case "type": return Core.HSTypes.I2Attr(monsterConfig.Attr);
                 case "star": return monsterConfig.Star.ToString();
                 case "atk": return monsterConfig.AtkP.ToString();
-                case "def": return monsterConfig.DefP.ToString();
+           //     case "def": return monsterConfig.DefP.ToString();
             }
             return "";
         }

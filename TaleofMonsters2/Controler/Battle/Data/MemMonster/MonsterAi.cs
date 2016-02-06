@@ -24,6 +24,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 if (CanAttack(nearestEnemy))
                 {
                     monster.HitTarget(nearestEnemy.Id);
+
+                    if (monster.RealSpd > 10)//会返回一些ats
+                    {
+                        monster.AddActionRate((float)(monster.RealSpd - 10) / monster.RealSpd);
+                    }
                 }
                 else
                 {

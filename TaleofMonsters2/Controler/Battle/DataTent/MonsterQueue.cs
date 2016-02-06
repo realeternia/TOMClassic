@@ -82,25 +82,6 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             }
         }
 
-        public void AddInitialAction()
-        {
-            List<MonsterIdSpeed> lives = new List<MonsterIdSpeed>();
-            foreach (LiveMonster mon in monsters)
-            {
-                MonsterIdSpeed spd = new MonsterIdSpeed();
-                spd.id = mon.Id;
-                spd.speed = mon.Avatar.Spd;
-                spd.mark = mon.Level;
-                lives.Add(spd);
-            }
-            lives.Sort(new CompareBySpeed());
-            for (int i = 0; i < lives.Count; i++)
-            {
-                LiveMonster tar = GetMonsterByUniqueId(lives[i].id);
-                tar.Action += (11 - i)*75;
-            }
-        }
-
         public LiveMonster GetMonsterByUniqueId(int id)
         {
             for (int i = 0; i < monsters.Count; i++)

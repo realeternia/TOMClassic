@@ -155,7 +155,6 @@ namespace TaleofMonsters.Controler.Battle
         private void StartGame()//初始化游戏
         {
             BattleManager.Instance.MemMap = new MemRowColumnMap(mapName, defaultTile);
-            BattleManager.Instance.MonsterQueue.AddInitialAction();
             BattleManager.Instance.PlayerManager.LeftPlayer.AddHeroUnit();
             BattleManager.Instance.PlayerManager.RightPlayer.AddHeroUnit();
             AIStrategy.OnInit(BattleManager.Instance.PlayerManager.RightPlayer);
@@ -279,7 +278,7 @@ namespace TaleofMonsters.Controler.Battle
                     LiveMonster target = BattleLocationManager.GetPlaceMonster(mouseX, mouseY);
                     if (target != null && isMouseIn && magicRegion.Type == RegionTypes.None)
                     {
-                        target.DrawCardToolTips(g);
+                        target.LiveMonsterToolTip.DrawCardToolTips(g);
                     }
                     if (showPlayerState == 1)
                         BattleManager.Instance.PlayerManager.LeftPlayer.DrawToolTips(g);

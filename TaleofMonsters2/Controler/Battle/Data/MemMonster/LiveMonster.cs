@@ -36,6 +36,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         private readonly HpBar hpBar;
         private bool canAttack;//雕像会设成false
+        private readonly LiveMonsterToolTip liveMonsterToolTip;
 
         #region 属性
 
@@ -56,6 +57,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public bool IsMagicAtk { get; set; }//只有武器可以改变，技能不行
         public int AttackType { get; set; }//只有武器可以改变，技能不行
+        public AttrModifyData Atk { get; set; }
 
         public int Life
         {
@@ -101,33 +103,22 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public int RealDef
         {
-            get
-            {
-                double diff = (Def.Source + Def.Adder) * (1 + Def.Multiter) - Def.Source;
-                if (SkillManager.HasSpecialMark(SkillMarks.AtkDefBonus))
-                {
-                    diff = diff * 3 / 2;
-                }
-                return Math.Max((int)(Def.Source + diff), 0);
-            }
+            get { return Avatar.Def; }
         }
 
         public int RealMag
         {
-            get
-            {
-                return (int)Math.Max((Mag.Source + Mag.Adder) * (1 + Mag.Multiter), 0);
-            }
+            get { return Avatar.Mag; }
         }
 
         public int RealLuk
         {
-            get { return (int)((Luk.Source + Luk.Adder) * (1 + Luk.Multiter)); }
+            get { return Avatar.Luk; }
         }
 
         public int RealSpd
         {
-            get { return (int)((Spd.Source + Spd.Adder) * (1 + Spd.Multiter)); }
+            get { return Avatar.Spd; }
         }
 
         public string Arrow
@@ -185,7 +176,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             oldLife = life;
             Position = point;
             IsLeft = isLeft;
-            Ats = GameConstants.RoundAts;
             action = 0;
             RoundMark = 0;
             SkillManager = new SkillManager(this);
@@ -198,6 +188,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
             SetBasicData();
             CheckCover();
+            liveMonsterToolTip = new LiveMonsterToolTip(this);
         }
 
         private void CheckCover()
@@ -232,10 +223,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             antiMagic = new int[9];//8个属性，+1圣属性
 
             Atk = new AttrModifyData(Avatar.Atk);
-            Def = new AttrModifyData(Avatar.Def);
-            Mag = new AttrModifyData(Avatar.Mag);
-            Spd = new AttrModifyData(Avatar.Spd);
-            Luk = new AttrModifyData(Avatar.Luk);
 
             if (Avatar.MonsterConfig.Type != (int)CardTypeSub.Hero)
                 EAddonBook.UpdateMonsterData(this, OwnerPlayer.State.Monsterskills.Keys(), OwnerPlayer.State.Monsterskills.Values());
@@ -353,7 +340,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             if (BuffManager.HasBuff(BuffEffectTypes.NoAttack))
                 return false;
-            action += Ats;//200ms + 30
+            action += GameConstants.RoundAts;//200ms + 30
             if (action >= GameConstants.LimitAts)
             {
                 action = action - GameConstants.LimitAts;
@@ -438,7 +425,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 		{
 			int basedata = value * MathTool.GetSqrtMulti10(Avatar.MonsterConfig.Star);
 		    Atk += (double) basedata/10;
-		    Def += (double) basedata/10;
+//		    Def += (double) basedata/10;
 			MaxHp=Avatar.Hp + 3 * basedata / 10;
 		}
 
@@ -505,95 +492,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             int size = BattleManager.Instance.MemMap.CardSize;
             g2.DrawImage(image, new Rectangle(Position.X, Position.Y, size, size), 0, 0, 100, 100, GraphicsUnit.Pixel);
             image.Dispose();
-        }
-
-        /// <summary>
-        /// 模拟tooltip实现卡片的点击说明
-        /// </summary>
-        public void DrawCardToolTips(Graphics g)
-        {
-            var img = GetMonsterImage();
-            int size = BattleManager.Instance.MemMap.CardSize;
-            int stagewid = BattleManager.Instance.MemMap.StageWidth;
-            int stageheg = BattleManager.Instance.MemMap.StageHeight;
-            int x = Position.X + size;
-            int y = Position.Y;
-            if (x + img.Width > stagewid)
-                x = Position.X - img.Width;
-            if (y + img.Height > stageheg)
-                y = stageheg - img.Height - 1;
-            g.DrawImage(img, x, y, img.Width, img.Height);
-            img.Dispose();
-        }
-
-        private Image GetMonsterImage()
-        {
-            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
-            var cardQual = Config.CardConfigManager.GetCardConfig(CardId).Quality;
-            var name = string.Format("{0}(Lv{1})", Avatar.Name, Level);
-            tipData.AddTextNewLine(name, HSTypes.I2QualityColor(cardQual), 20);
-            tipData.AddImage(HSIcons.GetIconsByEName("atr" + Avatar.MonsterConfig.Attr), 16, 16);
-            tipData.AddImage(HSIcons.GetIconsByEName("rac" + Avatar.MonsterConfig.Type), 16, 16);
-            tipData.AddLine();
-            AddText(tipData,"物攻", (int)Atk.Source,RealAtk,!IsMagicAtk && CanAttack ? "White" : "DarkGray", true);
-            AddText(tipData, "物防", (int)Def.Source, RealDef, "White", false);
-            AddText(tipData, "魔力", (int)Mag.Source, RealMag, !IsMagicAtk || !CanAttack ? "DarkGray" : "White", true);
-            AddText(tipData, "速度", (int)Spd.Source, RealSpd, "White", false);
-            AddText(tipData, "移动", (int)Mov, Mov, "White", true);
-            AddText(tipData, "射程", (int)Range, Range, "White", false);
-            tipData.AddTextNewLine(string.Format("生命值 {0} / {1}", Life, Avatar.Hp), "Lime");
-
-            foreach (var memBaseSkill in SkillManager.Skills)
-            {
-                tipData.AddImageNewLine(SkillBook.GetSkillImage(memBaseSkill.SkillId));
-
-                string tp = string.Format("{0}:{1}{2}", memBaseSkill.SkillInfo.Name, memBaseSkill.SkillInfo.Descript, memBaseSkill.Percent == 100 ? "" : string.Format("({0}%)", memBaseSkill.Percent));
-                if (tp.Length > 20)
-                {
-                    tipData.AddText(tp.Substring(0, 19), "White");
-                    tipData.AddTextNewLine(tp.Substring(19), "White");
-                }
-                else
-                {
-                    tipData.AddText(tp, "White");
-                }
-            }
-            if (TWeapon.CardId > 0)
-            {
-                tipData.AddImageNewLine(TWeapon.GetImage(16, 16));
-
-                string tp = string.Format("{0}({1}/{2}):{3}", TWeapon.Avatar.WeaponConfig.Name, TWeapon.Life, TWeapon.Avatar.Dura, TWeapon.Avatar);
-                tipData.AddText(tp, "White");
-            }
-
-            if (!IsGhost)//鬼不显示buff
-            {
-                BuffManager.DrawBuffToolTip(tipData);
-            }
-
-            return tipData.Image;
-        }
-
-        private void AddText(ControlPlus.TipImage tipData, string title, int source, int real, string color, bool isLeft)
-        {
-            if (isLeft)
-            {
-                tipData.AddTextNewLine(string.Format("{0} {1,3:D}", title, source), color);
-            }
-            else
-            {
-                tipData.AddTextOff(string.Format("{0} {1,3:D}", title, source), color, 90);
-            }
-
-            int temp = real - source;
-            if (temp > 0)
-            {
-                tipData.AddText(string.Format("+{0,2:D}", temp), "Lime");
-            }
-            else if (temp < 0)
-            {
-                tipData.AddText(string.Format("{0,2:D}", temp), "Red");
-            }
         }
 
         #region IMonster 成员
@@ -755,21 +653,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             return OwnerPlayer.State.GetMonsterCountByType((MonsterCountTypes)(type+10));
         }
 
-        public AttrModifyData Atk { get; set; }
-
-        public AttrModifyData DHit { get; set; }//todo 需要删除
-
-        public AttrModifyData Def { get; set; }
-
-        public AttrModifyData Hit { get; set; }//todo 需要删除
-
-        public AttrModifyData Spd { get; set; }
-
-        public int Ats { get; set; }
-
-        public AttrModifyData Mag { get; set; }
-
-        public AttrModifyData Luk { get; set; }
 
         public int Star
         {
@@ -867,6 +750,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public int SkillParm { get; set; }
 
         public bool DropAdd { get; set; }
+
+        public LiveMonsterToolTip LiveMonsterToolTip
+        {
+            get { return liveMonsterToolTip; }
+        }
 
         public void AddBuff(int buffId, int blevel, double dura)
         {
