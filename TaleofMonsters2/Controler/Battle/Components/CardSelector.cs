@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using TaleofMonsters.Controler.Battle.Data.Players;
+using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Interface;
 using TaleofMonsters.Forms.Items.Regions;
@@ -44,6 +45,8 @@ namespace TaleofMonsters.Controler.Battle.Components
 
         public void Init(Player p)
         {
+            bitmapButton1.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+
             player = p;
             cardList = player.CardsDesk;//hold住cardlist
 
@@ -80,8 +83,8 @@ namespace TaleofMonsters.Controler.Battle.Components
                 InstallCards();
                 region = null;
                 isButtonFirstClick = false;
-                buttonStart.ForeColor = Color.Red;
-                buttonStart.Text = "进入游戏";
+                bitmapButton1.ForeColor = Color.Red;
+                bitmapButton1.Text = "进入游戏";
                 Invalidate();
             }
             else

@@ -41,7 +41,7 @@
             this.button1.BackColor = System.Drawing.Color.Black;
             this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold);
+            this.button1.Font = new System.Drawing.Font("SimSun", 13.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Location = new System.Drawing.Point(164, 179);
             this.button1.Name = "button1";
@@ -56,7 +56,7 @@
             this.button2.BackColor = System.Drawing.Color.Black;
             this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold);
+            this.button2.Font = new System.Drawing.Font("SimSun", 13.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.button2.ForeColor = System.Drawing.Color.White;
             this.button2.Location = new System.Drawing.Point(59, 179);
             this.button2.Name = "button2";
@@ -69,6 +69,7 @@
             // textBoxCount
             // 
             this.textBoxCount.BackColor = System.Drawing.Color.Black;
+            this.textBoxCount.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
             this.textBoxCount.ForeColor = System.Drawing.Color.White;
             this.textBoxCount.Location = new System.Drawing.Point(145, 106);
             this.textBoxCount.MaxLength = 4;
@@ -83,6 +84,7 @@
             // textBoxTotal
             // 
             this.textBoxTotal.BackColor = System.Drawing.Color.Black;
+            this.textBoxTotal.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
             this.textBoxTotal.ForeColor = System.Drawing.Color.White;
             this.textBoxTotal.Location = new System.Drawing.Point(145, 138);
             this.textBoxTotal.Name = "textBoxTotal";
@@ -97,7 +99,7 @@
             this.buttonAdd.BackColor = System.Drawing.Color.Black;
             this.buttonAdd.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAdd.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold);
+            this.buttonAdd.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.buttonAdd.ForeColor = System.Drawing.Color.White;
             this.buttonAdd.Location = new System.Drawing.Point(208, 106);
             this.buttonAdd.Name = "buttonAdd";
@@ -112,7 +114,7 @@
             this.buttonMinus.BackColor = System.Drawing.Color.Black;
             this.buttonMinus.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonMinus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonMinus.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold);
+            this.buttonMinus.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.buttonMinus.ForeColor = System.Drawing.Color.White;
             this.buttonMinus.Location = new System.Drawing.Point(125, 106);
             this.buttonMinus.Name = "buttonMinus";
@@ -124,7 +126,6 @@
             // 
             // PopBuyProduct
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(299, 231);
             this.Controls.Add(this.buttonMinus);
