@@ -24,21 +24,22 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 {
     internal class LiveMonster : IMonster
     {
-        private int action;
-        private MonsterAi aiController;
+        private readonly MonsterAi aiController;
+        private readonly HpBar hpBar;
+        private readonly LiveMonsterToolTip liveMonsterToolTip;
+        private readonly MonsterCoverBox coverBox;
+        public SkillManager SkillManager { get; private set; }
+        public BuffManager BuffManager { get; private set; }
 
         private int life;
         private int oldLife;
         private int lastDamagerId;
 
-        private List<ActiveEffect> coverEffectList = new List<ActiveEffect>();//变身时需要重算
         private List<MonsterAuro> auroList;//光环
         private int[] antiMagic;//魔法抗性
-
-        private readonly HpBar hpBar;
         private bool canAttack;//雕像会设成false
-        private readonly LiveMonsterToolTip liveMonsterToolTip;
-
+        private int roundMark;
+        
         #region 属性
 
         public int Id { get; private set; }
@@ -50,12 +51,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public bool IsHero { get; set; }
         public IMap Map { get { return BattleManager.Instance.MemMap; } }
         public bool IsLeft { get; set; }
-
+        public int Action { get; set; }
         public TrueWeapon TWeapon { get; set; }
-        public SkillManager SkillManager { get; private set; }
-        public BuffManager BuffManager { get; private set; }
-        public int RoundMark { get; private set; }
-
+        
         public bool IsMagicAtk { get; set; }//只有武器可以改变，技能不行
         public int AttackType { get; set; }//只有武器可以改变，技能不行
         public AttrModifyData Atk { get; set; }
@@ -76,12 +74,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public Point CenterPosition
         {
             get { return new Point(Position.X + 40, Position.Y + 40); }
-        }
-
-        public int Action
-        {
-            get { return action; }
-            set { action = Math.Max(value, 0); }
         }
 
         public bool IsAlive
@@ -177,8 +169,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             oldLife = life;
             Position = point;
             IsLeft = isLeft;
-            action = 0;
-            RoundMark = 0;
+            Action = 0;
+            roundMark = 0;
             SkillManager = new SkillManager(this);
             TWeapon = new TrueWeapon();
             AttackType = (int)CardElements.None;
@@ -186,33 +178,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             
             BuffManager = new BuffManager(this);
             aiController = new MonsterAi(this);
+            liveMonsterToolTip = new LiveMonsterToolTip(this);
 
             SetBasicData();
-            CheckCover();
-            liveMonsterToolTip = new LiveMonsterToolTip(this);
-        }
-
-        private void CheckCover()
-        {
-            string cover = Avatar.MonsterConfig.Cover;
-            if (!string.IsNullOrEmpty(cover))
-            {
-                ActiveEffect ef = new ActiveEffect(EffectBook.GetEffect(cover), this, true);
-                ef.Repeat = true;
-                BattleManager.Instance.EffectQueue.Add(ef);
-                coverEffectList.Add(ef);
-            }
-
-            SkillManager.CheckCover(coverEffectList);
-        }
-
-        private void RemoveAllCover()
-        {
-            foreach (var activeEffect in coverEffectList)
-            {
-                activeEffect.IsFinished = RunState.Finished;
-            }
-            coverEffectList.Clear();
+            coverBox = new MonsterCoverBox(this);
         }
 
         private void SetBasicData()
@@ -304,23 +273,23 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void Next(TileMatchResult tileMatching)//附带判断地形因素
         {
-            RoundMark++;
+            roundMark++;
             hpBar.Update();
-            if ((RoundMark % 4) == 3)
+            if ((roundMark % 4) == 3)
             {
                 SkillAssistant.CheckAuroState(this, tileMatching);
             }
-            if ((RoundMark % 100) == 0)//一回合
+            if ((roundMark % 100) == 0)//一回合
             {
                 Life += HpReg;
             }
             BuffManager.BuffCount();
 
-            bool isLeft = IsLeft;
-            if (BuffManager.HasBuff(BuffEffectTypes.Rebel))//控制
-            {
-                isLeft = !isLeft;
-            }
+            //bool isLeft = IsLeft;
+            //if (BuffManager.HasBuff(BuffEffectTypes.Rebel))//控制
+            //{
+            //    isLeft = !isLeft;
+            //}
             if (AddAts())
             {
                 if (SkillManager.CheckSpecial())
@@ -341,10 +310,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             if (BuffManager.HasBuff(BuffEffectTypes.NoAttack))
                 return false;
-            action += GameConstants.RoundAts;//200ms + 30
-            if (action >= GameConstants.LimitAts)
+            Action += GameConstants.RoundAts;//200ms + 30
+            if (Action >= GameConstants.LimitAts)
             {
-                action = action - GameConstants.LimitAts;
+                Action = Action - GameConstants.LimitAts;
                 return true;
             }
             return false;
@@ -459,7 +428,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 hpBar.Draw(g);
 
                 g.FillPie(Brushes.Gray, 65, 65, 30, 30, 0, 360);
-                g.FillPie(CanAttack? Brushes.Yellow:Brushes.LightGray, 65, 65, 30, 30, 0, action*360 / GameConstants.LimitAts);
+                g.FillPie(CanAttack? Brushes.Yellow:Brushes.LightGray, 65, 65, 30, 30, 0, Action*360 / GameConstants.LimitAts);
 
                 var starIcon = HSIcons.GetIconsByEName("sysstar");
                 for (int i = 0; i < Avatar.MonsterConfig.Star; i++)
@@ -477,7 +446,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                     g.DrawImage(TWeapon.GetImage(32, 32), 5, 60, 32, 32);
                     g.DrawRectangle(Pens.Lime, 5, 60, 32, 32);
                 }
-                BuffManager.DrawBuff(g);
+                BuffManager.DrawBuff(g, roundMark / 20);
             }
             else
             {
@@ -568,14 +537,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             var savedWeapon = TWeapon.GetCopy();
             DeleteWeapon();
             int lifp = Life * 100 / Avatar.Hp;
-            RemoveAllCover();
+            coverBox.RemoveAllCover();
             SkillManager.CheckRemoveEffect();
             OwnerPlayer.State.CheckMonsterEvent(false, Avatar);
             Avatar = new Monster(monId);
             Avatar.UpgradeToLevel(Level);
             OwnerPlayer.State.CheckMonsterEvent(true, Avatar);
             SetBasicData();
-            CheckCover();
+            coverBox.CheckCover();
             SkillManager.CheckInitialEffect();
             if (cardId > 0)
             {
@@ -755,6 +724,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public LiveMonsterToolTip LiveMonsterToolTip
         {
             get { return liveMonsterToolTip; }
+        }
+
+        public MonsterCoverBox MonsterCoverBox
+        {
+            get { return coverBox; }
         }
 
         public void AddBuff(int buffId, int blevel, double dura)

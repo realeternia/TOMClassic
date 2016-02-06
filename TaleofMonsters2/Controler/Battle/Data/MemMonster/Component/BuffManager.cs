@@ -150,11 +150,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             }
         }
 
-        public void DrawBuff(Graphics g)
+        public void DrawBuff(Graphics g, int roundKey)
         {
             MemBaseBuff[] copybuffs = new MemBaseBuff[buffDict.Count];
             buffDict.Values.CopyTo(copybuffs, 0);
-            if (copybuffs.Length>= 1 && (self.RoundMark / 20) % 2 == 0)
+            if (copybuffs.Length >= 1 && roundKey % 2 == 0)
             {
                 int index = 0;
                 int wid = 100/copybuffs.Length;

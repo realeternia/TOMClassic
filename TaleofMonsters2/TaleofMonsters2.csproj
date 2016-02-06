@@ -87,6 +87,7 @@
     </Compile>
     <Compile Include="Controler\Battle\Data\MemMonster\LiveMonsterToolTip.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\Component\MonsterAi.cs" />
+    <Compile Include="Controler\Battle\Data\MemMonster\Component\MonsterCoverBox.cs" />
     <Compile Include="Controler\Battle\Tool\BattleManager.cs" />
     <Compile Include="Controler\Battle\Data\MemEffect\BaseEffect.cs" />
     <Compile Include="Controler\Battle\Data\MemEffect\FlyEffect.cs" />
