@@ -553,12 +553,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             Life = Avatar.Hp * lifp / 100;
         }
 
+        [Obsolete("to remove")]
         public void AddCardRate(int monId, int rate)
         {
-            if (OwnerPlayer is HumanPlayer)
-            {
-                BattleManager.Instance.BattleInfo.AddCardRate(monId, rate);
-            }
+            
         }
 
         public void AddResource(int type, int count)

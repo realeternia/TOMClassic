@@ -85,6 +85,7 @@
     <Compile Include="Controler\Battle\Components\CardSelector.Designer.cs">
       <DependentUpon>CardSelector.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controler\Battle\DataTent\MissileQueue.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\LiveMonsterToolTip.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\Component\MonsterAi.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\Component\MonsterCoverBox.cs" />

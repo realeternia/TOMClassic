@@ -4,7 +4,7 @@ using TaleofMonsters.DataType.Effects;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemEffect
 {
-    internal class BaseEffect
+    internal abstract class BaseEffect
     {
         protected Effect effect;
         protected int frameId;

@@ -1,6 +1,10 @@
-﻿using TaleofMonsters.Controler.Battle.Data.MemMap;
+﻿using System.Drawing;
+using TaleofMonsters.Controler.Battle.Data;
+using TaleofMonsters.Controler.Battle.Data.MemMap;
+using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.DataTent;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType;
 
 namespace TaleofMonsters.Controler.Battle.Tool
 {
@@ -24,6 +28,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
         public MonsterQueue MonsterQueue;
         public BattleInfo BattleInfo;
         public PlayerManager PlayerManager;
+        public MissileQueue MissileQueue;
         public MemRowColumnMap MemMap;
 
         public bool IsNight;
@@ -42,6 +47,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
             MonsterQueue = new MonsterQueue();
             BattleInfo = new BattleInfo();
             PlayerManager = new PlayerManager();
+            MissileQueue = new MissileQueue();
             IsNight = false;
         }
 
@@ -51,6 +57,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
 
             FlowWordQueue.Next();
             EffectQueue.Next();
+            MissileQueue.Next();
 
             if (RoundMark % 4 == 0)
             {
@@ -74,6 +81,31 @@ namespace TaleofMonsters.Controler.Battle.Tool
             {
                 AIStrategy.AIProc(PlayerManager.RightPlayer);
             }
+        }
+
+        public void Draw(Graphics g, MagicRegion magicRegion, int mouseX, int mouseY, bool isMouseIn)
+        {
+            MemMap.Draw(g);
+
+            if (magicRegion.Type != RegionTypes.None && isMouseIn)
+                magicRegion.Draw(g, RoundMark, mouseX, mouseY);
+            for (int i = 0; i < MonsterQueue.Count; i++)
+            {
+                LiveMonster monster = MonsterQueue[i];
+                Color color = Color.White;
+                if (isMouseIn)
+                    color = magicRegion.GetColor(monster, mouseX, mouseY);
+                monster.DrawOnBattle(g, color);
+            }
+
+            for (int i = 0; i < MissileQueue.Count; i++)
+                MissileQueue[i].Draw(g);
+
+            for (int i = 0; i < EffectQueue.Count; i++)
+                EffectQueue[i].Draw(g);
+            for (int i = 0; i < FlowWordQueue.Count; i++)
+                FlowWordQueue[i].Draw(g);
+
         }
     }
 }

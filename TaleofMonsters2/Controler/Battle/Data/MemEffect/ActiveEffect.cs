@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
-using TaleofMonsters.Controler.Battle.DataTent;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType.Effects;
 

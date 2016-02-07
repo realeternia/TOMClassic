@@ -12,8 +12,8 @@ namespace TaleofMonsters.Controler.Battle.DataTent
     {
         private List<LiveMonster> monsters = new List<LiveMonster>();
         private List<LiveMonster> toAdd = new List<LiveMonster>();
-        private int leftCount;
-        private int rightCount;
+        public int LeftCount { get; private set; }
+        public int RightCount { get; private set; }
 
         public List<LiveMonster> Enumerator
         {
@@ -31,15 +31,6 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             get { return monsters.Count; }
         }
 
-        public int LeftCount
-        {
-            get { return leftCount; }
-        }
-
-        public int RightCount
-        {
-            get { return rightCount; }
-        }
 
         public void Add(LiveMonster mon)
         {
@@ -49,11 +40,11 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             mon.SkillManager.CheckInitialEffect();
             if (mon.IsLeft)
             {
-                leftCount++;
+                LeftCount++;
             }
             else
             {
-                rightCount++;
+                RightCount++;
             }
         }
 
@@ -96,8 +87,8 @@ namespace TaleofMonsters.Controler.Battle.DataTent
 
         public void NextAction()
         {
-            leftCount = 0;
-            rightCount = 0;
+            LeftCount = 0;
+            RightCount = 0;
             List<int> removeMids = new List<int>();            
             foreach (LiveMonster mon in monsters)
             {
@@ -126,8 +117,8 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 }
                 else
                 {
-                    if (!mon.IsLeft) rightCount = RightCount + 1;
-                    else leftCount = LeftCount + 1;
+                    if (!mon.IsLeft) RightCount = RightCount + 1;
+                    else LeftCount = LeftCount + 1;
                 }
             }
             BattleManager.Instance.PlayerManager.LeftPlayer.DirectDamage = 0;//伤害清除

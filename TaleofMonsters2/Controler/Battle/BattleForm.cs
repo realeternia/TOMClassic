@@ -234,24 +234,8 @@ namespace TaleofMonsters.Controler.Battle
             {
                 if (showGround)
                 {
-                    BattleManager.Instance.MemMap.Draw(g);
-
-                    if (magicRegion.Type != RegionTypes.None && isMouseIn)
-                        magicRegion.Draw(g, BattleManager.Instance.RoundMark, mouseX, mouseY);
-                    for (int i = 0; i <BattleManager.Instance.MonsterQueue.Count; i++)
-                    {
-                        LiveMonster monster =BattleManager.Instance.MonsterQueue[i];
-                        Color color = Color.White;
-                        if (isMouseIn)
-                            color = magicRegion.GetColor(monster, mouseX, mouseY);
-                        monster.DrawOnBattle(g, color);
-                    }
-
-                    for (int i = 0; i < BattleManager.Instance.EffectQueue.Count; i++)
-                        BattleManager.Instance.EffectQueue[i].Draw(g);
-                    for (int i = 0; i < BattleManager.Instance.FlowWordQueue.Count; i++)
-                        BattleManager.Instance.FlowWordQueue[i].Draw(g);
-
+                    BattleManager.Instance.Draw(g, magicRegion, mouseX, mouseY, isMouseIn);
+                    
                     LiveMonster target = BattleLocationManager.GetPlaceMonster(mouseX, mouseY);
                     if (target != null && isMouseIn && magicRegion.Type == RegionTypes.None)
                     {
@@ -261,7 +245,6 @@ namespace TaleofMonsters.Controler.Battle
                         BattleManager.Instance.PlayerManager.LeftPlayer.DrawToolTips(g);
                     else if (showPlayerState == 2)
                         BattleManager.Instance.PlayerManager.RightPlayer.DrawToolTips(g);
-
 #if !DEBUG
                 if (IsGamePaused)
                 {
@@ -281,6 +264,7 @@ namespace TaleofMonsters.Controler.Battle
             g.Dispose();
             bmp.Dispose();
         }
+
 
         private void panelBattle_MouseClick(object sender, MouseEventArgs e)
         {

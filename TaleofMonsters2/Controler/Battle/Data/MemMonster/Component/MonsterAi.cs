@@ -1,7 +1,10 @@
 ﻿using System.Drawing;
 using NarlonLib.Math;
+using TaleofMonsters.Controler.Battle.Data.MemEffect;
+using TaleofMonsters.Controler.Battle.DataTent;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType.Effects;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 {
@@ -30,7 +33,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                     }
                     else
                     {
-                        
+                        var effect = EffectBook.GetEffect(monster.Arrow);
+                        Missile mi = new Missile(new FlyEffect(effect, monster.Position, nearestEnemy.Position, 99, true));
+                        BattleManager.Instance.MissileQueue.Add(mi);
                     }
 
                     if (monster.RealSpd > 10)//会返回一些ats

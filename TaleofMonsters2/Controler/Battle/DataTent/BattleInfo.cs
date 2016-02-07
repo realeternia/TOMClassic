@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using TaleofMonsters.Core;
 
 namespace TaleofMonsters.Controler.Battle.DataTent
 {
@@ -11,7 +10,6 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             Left = new BattleInfoPlayer();
             Right = new BattleInfoPlayer();
             Items = new List<int>();
-            CardRatePlus = new List<IntPair>();
         }
 
         public DateTime StartTime { get; set; }
@@ -23,8 +21,6 @@ namespace TaleofMonsters.Controler.Battle.DataTent
         public int GoldRatePlus { get; set; }
 
         public List<int> Items { get; private set; }
-
-        public List<IntPair> CardRatePlus { get; private set; }
 
 
         public int FastWin
@@ -53,28 +49,6 @@ namespace TaleofMonsters.Controler.Battle.DataTent
         }
 
         public bool PlayerWin { get; set; }
-
-        public void AddCardRate(int cid, int value)
-        {
-            int val = 0;
-            for (int i = 0; i < CardRatePlus.Count; i++)
-            {
-                if (CardRatePlus[i].Type == cid)
-                {
-                    val = CardRatePlus[i].Value;
-                    CardRatePlus.RemoveAt(i);
-                    break;
-                }
-            }
-            val += value;
-            if (val != 0)
-            {
-                IntPair pair = new IntPair();
-                pair.Type = cid;
-                pair.Value = Math.Min(val, 30);
-                CardRatePlus.Add(pair);
-            }
-        }
 
         public void AddItemGet(int id)
         {
