@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using NarlonLib.Core;
+using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemEffect;
+using TaleofMonsters.Controler.Battle.Data.MemMonster;
 
 namespace TaleofMonsters.Controler.Battle.DataTent
 {
@@ -82,16 +85,49 @@ namespace TaleofMonsters.Controler.Battle.DataTent
     /// </summary>
     internal class Missile
     {
-        private BaseEffect effect;
+        private MissileEffect effect;
+        private LiveMonster target;//目标
+        private LiveMonster parent;//母体
 
-        public Missile(BaseEffect eff)
+        private float speed = 2;//像素速度
+
+        public Missile( MissileEffect eff, LiveMonster self, LiveMonster mon)
         {
             effect = eff;
+            parent = self;
+            target = mon;
+            effect.Position = new NLPointF(self.Position.X, self.Position.Y);
         }
 
         public void Next()
         {
+            if (target == null || !target.IsAlive || parent == null || !parent.IsAlive)
+            {
+                if (effect != null)
+                {
+                    effect.Die();
+                }
+                return;
+            }
+
             effect.Next();
+            
+            if (MathTool.GetDistance(target.Position, effect.Position.ToPoint()) < 10)//todo 10是一个估算值
+            {
+                parent.HitTarget(target.Id);
+                effect.Die();
+                return;
+            }
+
+            var posDiff = new NLPointF(target.Position.X - effect.Position.X, target.Position.Y - effect.Position.Y);
+            posDiff = posDiff.Normalize()*speed;
+            effect.Position = effect.Position + posDiff;
+
+            if (MathTool.GetDistance(target.Position, effect.Position.ToPoint()) < 10)//todo 10是一个估算值
+            {
+                parent.HitTarget(target.Id);
+                effect.Die();
+            }
         }
 
         public RunState IsFinished

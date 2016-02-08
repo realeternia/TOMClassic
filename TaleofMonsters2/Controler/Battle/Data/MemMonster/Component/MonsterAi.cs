@@ -34,7 +34,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                     else
                     {
                         var effect = EffectBook.GetEffect(monster.Arrow);
-                        Missile mi = new Missile(new FlyEffect(effect, monster.Position, nearestEnemy.Position, 99, true));
+                        Missile mi = new Missile(new MissileEffect(effect, true), monster,nearestEnemy);
                         BattleManager.Instance.MissileQueue.Add(mi);
                     }
 
