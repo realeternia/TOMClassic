@@ -70,7 +70,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                     {
                         var effect = queue[i];
                         effect.Next();
-                        if (effect.IsFinished == RunState.Finished)
+                        if (effect.IsFinished)
                         {
                             queue.RemoveAt(i);
                         }
@@ -85,59 +85,52 @@ namespace TaleofMonsters.Controler.Battle.DataTent
     /// </summary>
     internal class Missile
     {
-        private MissileEffect effect;
+        private int effectImgId;
         private LiveMonster target;//目标
         private LiveMonster parent;//母体
 
         private float speed = 2;//像素速度
 
-        public Missile( MissileEffect eff, LiveMonster self, LiveMonster mon)
+        public NLPointF Position { get; set; }
+
+        public Missile( int effId, LiveMonster self, LiveMonster mon)
         {
-            effect = eff;
             parent = self;
             target = mon;
-            effect.Position = new NLPointF(self.Position.X, self.Position.Y);
+            Position = new NLPointF(self.Position.X, self.Position.Y);
         }
 
         public void Next()
         {
             if (target == null || !target.IsAlive || parent == null || !parent.IsAlive)
             {
-                if (effect != null)
-                {
-                    effect.Die();
-                }
+                IsFinished = true;
                 return;
             }
-
-            effect.Next();
             
-            if (MathTool.GetDistance(target.Position, effect.Position.ToPoint()) < 10)//todo 10是一个估算值
+            if (MathTool.GetDistance(target.Position, Position.ToPoint()) < 10)//todo 10是一个估算值
             {
                 parent.HitTarget(target.Id);
-                effect.Die();
+                IsFinished = true;
                 return;
             }
 
-            var posDiff = new NLPointF(target.Position.X - effect.Position.X, target.Position.Y - effect.Position.Y);
+            var posDiff = new NLPointF(target.Position.X - Position.X, target.Position.Y - Position.Y);
             posDiff = posDiff.Normalize()*speed;
-            effect.Position = effect.Position + posDiff;
+            Position = Position + posDiff;
 
-            if (MathTool.GetDistance(target.Position, effect.Position.ToPoint()) < 10)//todo 10是一个估算值
+            if (MathTool.GetDistance(target.Position, Position.ToPoint()) < 10)//todo 10是一个估算值
             {
                 parent.HitTarget(target.Id);
-                effect.Die();
+                IsFinished = true;
             }
         }
 
-        public RunState IsFinished
-        {
-            get { return effect.IsFinished; }
-        }
+        public bool IsFinished { get; set; }
 
         public void Draw(Graphics g)
         {
-            effect.Draw(g);
+           // effect.Draw(g); todo 绘制
         }
     }
 }

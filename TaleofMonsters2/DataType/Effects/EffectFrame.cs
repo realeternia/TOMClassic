@@ -4,19 +4,13 @@ namespace TaleofMonsters.DataType.Effects
 {
     internal class EffectFrame
     {
-        private EffectFrameUnit[] units;
-
-        public EffectFrameUnit[] Units
-        {
-            get { return units; }
-            set { units = value; }
-        }
+        public EffectFrameUnit[] Units { get; set; }
 
         public void Draw(Graphics g, int x, int y, int wp, int hp)
         {
-            for (int i = 0; i < units.Length; i++)
+            for (int i = 0; i < Units.Length; i++)
             {
-                EffectFrameUnit efu = units[i];
+                EffectFrameUnit efu = Units[i];
                 int ewid = efu.width*wp/100;
                 int eheg = efu.height*hp/100;
                 var img = EffectBook.GetEffectImage(efu.frameid.ToString(), efu.effect, false);
