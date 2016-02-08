@@ -16,5 +16,6 @@ namespace NarlonLib.Core
             Value1 = d1;
             Value2 = d2;
         }
+
     }
 }

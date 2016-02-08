@@ -1,10 +1,8 @@
 ﻿using System.Drawing;
 using NarlonLib.Math;
-using TaleofMonsters.Controler.Battle.Data.MemEffect;
-using TaleofMonsters.Controler.Battle.DataTent;
+using TaleofMonsters.Controler.Battle.Data.MemMissile;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Effects;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 {
@@ -33,8 +31,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                     }
                     else
                     {
-                        var effect = EffectBook.GetEffect(monster.Arrow);
-                        Missile mi = new Missile(123, monster,nearestEnemy);//todo
+                        Missile mi = new Missile(monster.Arrow, monster, nearestEnemy);//todo
                         BattleManager.Instance.MissileQueue.Add(mi);
                     }
 

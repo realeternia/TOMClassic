@@ -108,6 +108,7 @@
     </Compile>
     <Compile Include="Core\NLPair.cs" />
     <Compile Include="Core\NLCoroutine.cs" />
+    <Compile Include="Core\NLPointF.cs" />
     <Compile Include="Core\StringTool.cs" />
     <Compile Include="Core\SimpleSet.cs" />
     <Compile Include="Core\NLPriorityQueue.cs" />

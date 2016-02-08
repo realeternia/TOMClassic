@@ -10,16 +10,13 @@ namespace ConfigDatas
 		public int LvNeed;
 		public int Value;
 		public int AtkP;
-		public int DefP;
-		public int MagP;
-		public int SpdP;
 		public int VitP;
 		public int Job;
 		public int[] EnergyRate;
 		public int SpecialSkill;
 		public string Url;
 		public EquipConfig(){}
-		public EquipConfig(int Id,string Name,int Quality,int Level,int Position,int LvNeed,int Value,int AtkP,int DefP,int MagP,int SpdP,int VitP,int Job,int[] EnergyRate,int SpecialSkill,string Url)
+		public EquipConfig(int Id,string Name,int Quality,int Level,int Position,int LvNeed,int Value,int AtkP,int VitP,int Job,int[] EnergyRate,int SpecialSkill,string Url)
 		{
 			this.Id= Id;
 			this.Name= Name;
@@ -29,9 +26,6 @@ namespace ConfigDatas
 			this.LvNeed= LvNeed;
 			this.Value= Value;
 			this.AtkP= AtkP;
-			this.DefP= DefP;
-			this.MagP= MagP;
-			this.SpdP= SpdP;
 			this.VitP= VitP;
 			this.Job= Job;
 			this.EnergyRate= EnergyRate;
