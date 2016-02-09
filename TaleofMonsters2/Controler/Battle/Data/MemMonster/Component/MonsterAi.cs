@@ -40,7 +40,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                         monster.AddActionRate((float)(monster.RealSpd - 10) / monster.RealSpd);
                     }
                 }
-                else
+                else if (monster.Mov>0)//判定是否需要移到
                 {
                     var moveDis = BattleManager.Instance.MemMap.CardSize;
                     if (nearestEnemy.Position.X != monster.Position.X)
