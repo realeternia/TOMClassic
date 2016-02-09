@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using ConfigDatas;
 using NarlonLib.Core;
 using NarlonLib.Drawing;
 using NarlonLib.Math;
@@ -18,8 +19,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
         private LiveMonster target;//目标
         private LiveMonster parent;//母体
 
-        private float speed = 2;//像素速度
-
+        private MissileConfig config;
         public NLPointF Position { get; set; }
 
         public Missile(string effName, LiveMonster self, LiveMonster mon)
@@ -28,7 +28,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
             target = mon;
             Position = new NLPointF(self.Position.X, self.Position.Y);
             sourceImg = MissileBook.GetImage(effName);
-         //   effectImg = sourceImg;
+            config = MissileBook.GetConfig(effName);
         }
 
         public void Next()
@@ -47,7 +47,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
             }
 
             var posDiff = new NLPointF(target.Position.X - Position.X, target.Position.Y - Position.Y);
-            posDiff = posDiff.Normalize() * speed;
+            posDiff = posDiff.Normalize() * (float)config.Speed;
             Position = Position + posDiff;
             var angle = Math.Atan(-posDiff.Y / posDiff.X) / Math.PI * 180;
 
