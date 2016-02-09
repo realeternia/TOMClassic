@@ -14,20 +14,21 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
     /// </summary>
     internal class Missile
     {
-        private Image sourceImg;
-        private Image effectImg;
+        private Image effectImg;//旋转后的图片，每次都从初始图片开始旋转
         private LiveMonster target;//目标
         private LiveMonster parent;//母体
 
         private MissileConfig config;
         public NLPointF Position { get; set; }
+        private int frameOffset;//第几针，影响动画播放
+
+        public bool IsFinished { get; set; }
 
         public Missile(string effName, LiveMonster self, LiveMonster mon)
         {
             parent = self;
             target = mon;
             Position = new NLPointF(self.Position.X, self.Position.Y);
-            sourceImg = MissileBook.GetImage(effName);
             config = MissileBook.GetConfig(effName);
         }
 
@@ -51,7 +52,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
             Position = Position + posDiff;
             var angle = Math.Atan(-posDiff.Y / posDiff.X) / Math.PI * 180;
 
-            effectImg = DrawTool.Rotate(sourceImg, posDiff.X >= 0 ? (int)angle : (int)angle + 180);
+            frameOffset++;
+            GenerateImg(posDiff.X >= 0 ? (int)angle : (int)angle + 180);
 
             if (MathTool.GetDistance(target.Position, Position.ToPoint()) < 10)//todo 10是一个估算值
             {
@@ -60,8 +62,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
             }
         }
 
-        public bool IsFinished { get; set; }
-
+        private void GenerateImg(int angle)
+        {
+            var img = MissileBook.GetImage(config.Image + (frameOffset / config.FrameTime)% config.FrameCount);
+            effectImg = DrawTool.Rotate(img, angle);
+        }
+        
         public void Draw(Graphics g)
         {
             if (effectImg != null)

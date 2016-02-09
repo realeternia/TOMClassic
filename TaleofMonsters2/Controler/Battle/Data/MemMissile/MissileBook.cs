@@ -10,20 +10,18 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
         static Dictionary<int, Image> effectType = new Dictionary<int, Image>();
         static Dictionary<string, MissileConfig> cachedConfigDict;
 
-        static public Image GetImage(string name)
+        static public Image GetImage(int id)
         {
-            var config = GetConfig(name);
-
-            if (!effectType.ContainsKey(config.Image))
+            if (!effectType.ContainsKey(id))
             {
-                var img = PicLoader.Read("Missile", string.Format("{0}.PNG", name));
+                var img = PicLoader.Read("Missile", string.Format("{0}.PNG", id));
                 if (img == null)
                 {
                     img = PicLoader.Read("Missile", "0.PNG");
                 }
-                effectType.Add(config.Image, img);
+                effectType.Add(id, img);
             }
-            return effectType[config.Image];
+            return effectType[id];
         }
 
         static public MissileConfig GetConfig(string name)
