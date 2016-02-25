@@ -124,6 +124,16 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
         }
 
+        public int Range
+        {
+            get
+            {
+                if (TWeapon.CardId == 0 || TWeapon.Avatar.WeaponConfig.Range == 0)
+                    return Avatar.MonsterConfig.Range;
+                return TWeapon.Avatar.WeaponConfig.Range;
+            }
+        }
+
         public Player OwnerPlayer
         {
             get { return IsLeft ? BattleManager.Instance.PlayerManager.LeftPlayer : BattleManager.Instance.PlayerManager.RightPlayer; }
@@ -142,11 +152,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public bool IsGhost
         {
             get { return GhostTime > 0; }
-        }
-
-        public int Range
-        {
-            get { return Avatar.MonsterConfig.Range; }
         }
 
         public int Mov
