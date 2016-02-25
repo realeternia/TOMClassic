@@ -125,10 +125,10 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             PaintTool.DrawValueLine(g, monster.Def/2, 70 + offX, basel + 77, 115, 10);
             g.DrawString(string.Format("魔力 {0,3:D}", monster.Mag), fontsong, sb, 10 + offX, basel + 91);
             PaintTool.DrawValueLine(g, monster.Mag / 2, 70 + offX, basel + 92, 115, 10);
-            g.DrawString(string.Format("移动 {0,3:D}", monster.MonsterConfig.Mov), fontsong, sb, 10 + offX, basel + 106);
-            PaintTool.DrawValueLine(g, monster.MonsterConfig.Mov / 2, 70 + offX, basel + 107, 115, 10);
-            g.DrawString(string.Format("射程 {0,3:D}", monster.MonsterConfig.Range), fontsong, sb, 10 + offX, basel + 121);
-            PaintTool.DrawValueLine(g, monster.MonsterConfig.Range / 2, 70 + offX, basel + 122, 115, 10);
+            g.DrawString(string.Format("移动 {0,3:D}", monster.Mov), fontsong, sb, 10 + offX, basel + 106);
+            PaintTool.DrawValueLine(g, monster.Mov / 2, 70 + offX, basel + 107, 115, 10);
+            g.DrawString(string.Format("射程 {0,3:D}", monster.Range), fontsong, sb, 10 + offX, basel + 121);
+            PaintTool.DrawValueLine(g, monster.Range / 2, 70 + offX, basel + 122, 115, 10);
             g.DrawString(string.Format("幸运 {0,3:D}", monster.Luk), fontsong, sb, 10 + offX, basel + 136);
             PaintTool.DrawValueLine(g, monster.Luk / 2, 70 + offX, basel + 137, 115, 10);
             g.DrawString(string.Format("速度 {0,3:D}", monster.Spd), fontsong, sb, 10 + offX, basel + 151);
@@ -173,9 +173,9 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             g.DrawString(monster.Mag.ToString().PadLeft(3, ' '), fontsong, sb, 122, 4);
 
             g.DrawImage(HSIcons.GetIconsByEName("abl4"), 150, 0);
-            g.DrawString(monster.MonsterConfig.Mov.ToString().PadLeft(3, ' '), fontsong, sb, 172, 4);
+            g.DrawString(monster.Mov.ToString().PadLeft(3, ' '), fontsong, sb, 172, 4);
             g.DrawImage(HSIcons.GetIconsByEName("abl6"), 200, 0);
-            g.DrawString(monster.MonsterConfig.Range.ToString().PadLeft(3, ' '), fontsong, sb, 222, 4);
+            g.DrawString(monster.Range.ToString().PadLeft(3, ' '), fontsong, sb, 222, 4);
 
             g.DrawImage(HSIcons.GetIconsByEName("abl5"), 250, 0);
             g.DrawString(monster.Luk.ToString().PadLeft(3, ' '), fontsong, sb, 272, 4);
@@ -214,7 +214,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             tipData.AddImage(HSIcons.GetIconsByEName("atr" + monster.MonsterConfig.Attr));
             tipData.AddTextNewLine(string.Format("物攻 {0,3:D}  物防 {1,3:D}", monster.Atk, monster.Def), "Lime");
             tipData.AddTextNewLine(string.Format("魔力 {0,3:D}  速度 {1,3:D}", monster.Mag, monster.Spd), "Lime");
-            tipData.AddTextNewLine(string.Format("移动 {0,3:D}  射程 {1,3:D}", monster.MonsterConfig.Mov, monster.MonsterConfig.Range), "Lime");
+            tipData.AddTextNewLine(string.Format("移动 {0,3:D}  射程 {1,3:D}", monster.Mov, monster.Range), "Lime");
             tipData.AddTextNewLine(string.Format("生命 {0,3:D}", monster.Hp), "Lime");
             tipData.AddLine();
             tipData.AddTextNewLine("技能", "White");

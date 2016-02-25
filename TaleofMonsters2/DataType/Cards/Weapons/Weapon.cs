@@ -16,11 +16,14 @@ namespace TaleofMonsters.DataType.Cards.Weapons
         public int Atk { get; set; }
         public int Def { get; set; }
         public int Dura { get; set; }
+        public int Range { get; set; }
 
         public Weapon(int id)
         {
             WeaponConfig = ConfigData.GetWeaponConfig(id);
             Dura = (int)(WeaponConfig.Dura*1.67);
+            Range = WeaponConfig.Range;
+
             UpgradeToLevel1();
         }
 
@@ -56,6 +59,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             string s = "";
             if (Atk != 0) s += string.Format("物攻+{0} ", Atk);
             if (Def != 0) s += string.Format("物防+{0} ", Def);
+            if (Range != 0) s += string.Format("射程={0} ", Range);
             if (WeaponConfig.SkillId != 0)
                 s += string.Format("技能-{0}{1} ", ConfigData.GetSkillConfig(WeaponConfig.SkillId).Name, WeaponConfig.Percent == 100 ? "" : "(" + WeaponConfig.Percent + "%发动)");
             return s.Replace("+-", "-");
@@ -95,6 +99,11 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             standardValue = (int)((float)standardValue * 4 / WeaponConfig.Dura * (1 + (WeaponConfig.Dura - 4) * 0.1));//耐久低的武器总值削减
             Atk = standardValue * (WeaponConfig.Atk) / 100;
             Def = standardValue * ( WeaponConfig.Def) / 100;
+
+            if (Range > 10)
+            {
+                Atk = (int)(Atk * CardAssistant.GetCardFactorOnRange(Range));
+            }
         }
     }
 }

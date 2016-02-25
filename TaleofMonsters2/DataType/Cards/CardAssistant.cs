@@ -80,5 +80,17 @@ namespace TaleofMonsters.DataType.Cards
             }
             return CardTypes.Null;
         }
+
+        private static float[] rangePunish = new float[] { 1, 1, 0.75f, 0.68f, 0.62f, 0.56f, 0.52f, 0.48f, 0.44f, 0.42f, 0.4f };
+        public static float GetCardFactorOnRange(int range)
+        {
+            return rangePunish[range / 10];
+        }
+
+        private static float[] movPunish = new float[] { 1, 1, 1, 0.92f, 0.86f, 0.82f, 0.79f, 0.77f, 0.75f, 0.74f, 0.73f };
+        public static float GetCardFactorOnMove(int mov)
+        {
+            return movPunish[mov / 5];
+        }
     }
 }

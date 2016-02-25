@@ -86,18 +86,20 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             UpgradeToLevel(1);
         }
 
-        private static float[] rangeAtkPunish = new float[]{1,1,0.75f,0.68f,0.62f,0.56f,0.52f,0.48f,0.44f,0.42f,0.4f};
-        private static float[] rangeHpPunish = new float[] { 1, 1, 0.8f, 0.75f, 0.7f, 0.65f, 0.57f, 0.54f, 0.52f, 0.5f, 0.48f };
-
         public void UpgradeToLevel(int level)
         {
             int standardValue = (30 + MonsterConfig.Star * 10) * (level*8 + 92) / 100 * (100 + MonsterConfig.Modify) / 100;
             Atk = standardValue * (100 + MonsterConfig.AtkP) / 100; //200
             Hp = standardValue * (100 + MonsterConfig.VitP) / 100 * 5; //200
-            if (MonsterConfig.Range>10)
+            if (Range>10)
             {
-                Atk = (int)(Atk * rangeAtkPunish[MonsterConfig.Range / 10]);
-                Hp = (int)(Hp * rangeHpPunish[MonsterConfig.Range / 10]);
+                Atk = (int)(Atk * CardAssistant.GetCardFactorOnRange(Range));
+                Hp = (int)(Hp * CardAssistant.GetCardFactorOnRange(Range));
+            }
+            if (Mov > 10)
+            {
+                Atk = (int)(Atk * CardAssistant.GetCardFactorOnMove(Range));
+                Hp = (int)(Hp * CardAssistant.GetCardFactorOnMove(Range));
             }
 
             Level = level;

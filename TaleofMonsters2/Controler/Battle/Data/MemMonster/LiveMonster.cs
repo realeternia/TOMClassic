@@ -128,9 +128,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             get
             {
-                if (TWeapon.CardId == 0 || TWeapon.Avatar.WeaponConfig.Range == 0)
-                    return Avatar.MonsterConfig.Range;
-                return TWeapon.Avatar.WeaponConfig.Range;
+                if (TWeapon.CardId == 0 || TWeapon.Avatar.Range == 0)
+                    return Avatar.Range;
+                return TWeapon.Avatar.Range;
             }
         }
 
