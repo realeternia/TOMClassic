@@ -14,15 +14,32 @@ namespace TaleofMonsters.DataType.Cards.Weapons
         }
 
         public int Atk { get; set; }
-        public int Def { get; set; }
+        public int Hp { get; set; }
+
+
         public int Dura { get; set; }
         public int Range { get; set; }
+
+        public int Spd { get; set; }
+        public int Def { get; set; }
+        public int Mag { get; set; }
+        public int Luk { get; set; }
+        public int Hit { get; set; }
+        public int Dhit { get; set; }
+        public int Crt { get; set; }
 
         public Weapon(int id)
         {
             WeaponConfig = ConfigData.GetWeaponConfig(id);
             Dura = (int)(WeaponConfig.Dura*1.67);
             Range = WeaponConfig.Range;
+            Def = WeaponConfig.Def;
+            Spd = WeaponConfig.Spd;
+            Mag = WeaponConfig.Mag;
+            Luk = WeaponConfig.Luk;
+            Hit = WeaponConfig.Hit;
+            Dhit = WeaponConfig.Dhit;
+            Crt = WeaponConfig.Crt;
 
             UpgradeToLevel1();
         }
@@ -58,7 +75,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
         {
             string s = "";
             if (Atk != 0) s += string.Format("物攻+{0} ", Atk);
-            if (Def != 0) s += string.Format("物防+{0} ", Def);
+            if (Hp != 0) s += string.Format("生命+{0} ", Hp);
             if (Range != 0) s += string.Format("射程={0} ", Range);
             if (WeaponConfig.SkillId != 0)
                 s += string.Format("技能-{0}{1} ", ConfigData.GetSkillConfig(WeaponConfig.SkillId).Name, WeaponConfig.Percent == 100 ? "" : "(" + WeaponConfig.Percent + "%发动)");
@@ -98,12 +115,14 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             int standardValue = (30 + WeaponConfig.Star * 10) * (level*8 + 92) / 100 * (100 + WeaponConfig.Modify) / 100;
             standardValue = (int)((float)standardValue * 4 / WeaponConfig.Dura * (1 + (WeaponConfig.Dura - 4) * 0.1));//耐久低的武器总值削减
             Atk = standardValue * (WeaponConfig.Atk) / 100;
-            Def = standardValue * ( WeaponConfig.Def) / 100;
+            Hp = standardValue * (WeaponConfig.Vit) / 100*5;
 
             if (Range > 10)
             {
                 Atk = (int)(Atk * CardAssistant.GetCardFactorOnRange(Range));
+                Hp = (int)(Hp * CardAssistant.GetCardFactorOnRange(Range));
             }
+
         }
     }
 }

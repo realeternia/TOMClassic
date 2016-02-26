@@ -73,7 +73,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         
         public Point CenterPosition
         {
-            get { return new Point(Position.X + 40, Position.Y + 40); }
+            get { return new Point(Position.X + BattleManager.Instance.MemMap.CardSize / 2, 
+                Position.Y + BattleManager.Instance.MemMap.CardSize / 2); }
         }
 
         public bool IsAlive
@@ -112,6 +113,16 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public int RealSpd
         {
             get { return Avatar.Spd; }
+        }
+
+        public int RealHit
+        {
+            get { return Avatar.Hit; }
+        }
+
+        public int RealDHit
+        {
+            get { return Avatar.Dhit; }
         }
 
         public string Arrow

@@ -1,5 +1,6 @@
 using System;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Buffs;
 using TaleofMonsters.DataType.Formulas;
 using ConfigDatas;
@@ -16,7 +17,7 @@ namespace TaleofMonsters.DataType.Skills
 
         public static int GetHit(LiveMonster src, LiveMonster dest)
         {
-            int rhit = 100;//Ä¬ÈÏ100%ÃüÖÐ
+            int rhit = GameConstants.DefaultHitRate + src.RealHit - dest.RealDHit;
             if (!src.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
             {
                 src.SkillManager.CheckHit(src, dest, ref rhit);

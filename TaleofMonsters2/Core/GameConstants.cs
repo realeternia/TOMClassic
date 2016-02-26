@@ -33,6 +33,7 @@ namespace TaleofMonsters.Core
         public const int LimitAts = 600; //超过这个值就会进行攻击，LimitAts/RoundAts/5=攻击间隔时间
 
         public const int MaxMeleeAtkRange = 20; //近战的最大距离
+        public const int DefaultHitRate = 90;//默认的命中
 
     }
 }
