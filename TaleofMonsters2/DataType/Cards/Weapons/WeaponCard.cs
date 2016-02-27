@@ -177,21 +177,57 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             Font fontsong = new Font("宋体", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             SolidBrush sb = new SolidBrush(Color.FromArgb(255, 255, 255));
             SolidBrush sg = new SolidBrush(Color.FromArgb(0, 255, 150));
-            g.DrawImage(HSIcons.GetIconsByEName("abl1"), 0, 0);
-            g.DrawString(weapon.Atk.ToString().PadLeft(3,' '), fontsong, sb, 22, 4);
-            g.DrawImage(HSIcons.GetIconsByEName("abl2"), 50, 0);
-            g.DrawString(weapon.Def.ToString().PadLeft(3, ' '), fontsong, sb, 72, 4);
+            Adder adder = new Adder(0, 50);
+            g.DrawImage(HSIcons.GetIconsByEName("abl1"), adder.Next, 0);
+            g.DrawString(weapon.Atk.ToString().PadLeft(3, ' '), fontsong, sb, adder.Now + 22, 4);
+            g.DrawImage(HSIcons.GetIconsByEName("abl8"), adder.Next, 0);
+            g.DrawString(weapon.Hp.ToString().PadLeft(3, ' '), fontsong, sb, adder.Now + 22, 4);
 
-            g.DrawImage(HSIcons.GetIconsByEName("abl4"), 100, 0);
-            g.DrawString(weapon.Range.ToString().PadLeft(3, ' '), fontsong, sb, 122, 4);
+            g.DrawImage(HSIcons.GetIconsByEName("abl4"), adder.Next, 0);
+            g.DrawString(weapon.Range.ToString().PadLeft(3, ' '), fontsong, sb, adder.Now + 22, 4);
+            g.DrawImage(HSIcons.GetIconsByEName("abl3"), adder.Next, 0);
+            g.DrawString(weapon.Mov.ToString().PadLeft(3, ' '), fontsong, sb, adder.Now + 22, 4);
 
-            g.DrawImage(HSIcons.GetIconsByEName("abl8"), 150, 0);
-            g.DrawString(weapon.Dura.ToString().PadLeft(3, ' '), fontsong, sb, 172, 4);
+            if (weapon.Def > 0)
+            {
+                g.DrawImage(HSIcons.GetIconsByEName("abl2"), adder.Next, 0);
+                g.DrawString("+" + weapon.Def.ToString().PadLeft(2, ' '), fontsong, sb, adder.Now + 22, 4);
+            }
+            if (weapon.Mag > 0)
+            {
+                g.DrawImage(HSIcons.GetIconsByEName("abl11"), adder.Next, 0);
+                g.DrawString("+" + weapon.Mag.ToString().PadLeft(2, ' '), fontsong, sb, adder.Now + 22, 4);
+            }
+            if (weapon.Spd > 0)
+            {
+                g.DrawImage(HSIcons.GetIconsByEName("abl10"), adder.Next, 0);
+                g.DrawString("+" + weapon.Spd.ToString().PadLeft(2, ' '), fontsong, sb, adder.Now + 22, 4);
+            }
+            if (weapon.Hit > 0)
+            {
+                g.DrawImage(HSIcons.GetIconsByEName("abl5"), adder.Next, 0);
+                g.DrawString("+" + weapon.Hit.ToString().PadLeft(2, ' '), fontsong, sb, adder.Now + 22, 4);
+            }
+            if (weapon.Dhit > 0)
+            {
+                g.DrawImage(HSIcons.GetIconsByEName("abl12"), adder.Next, 0);
+                g.DrawString("+" + weapon.Dhit.ToString().PadLeft(2, ' '), fontsong, sb, adder.Now + 22, 4);
+            }
+            if (weapon.Crt > 0)
+            {
+                g.DrawImage(HSIcons.GetIconsByEName("abl13"), adder.Next, 0);
+                g.DrawString("+" + weapon.Crt.ToString().PadLeft(2, ' '), fontsong, sb, adder.Now + 22, 4);
+            }
+            if (weapon.Luk > 0)
+            {
+                g.DrawImage(HSIcons.GetIconsByEName("abl6"), adder.Next, 0);
+                g.DrawString("+" + weapon.Luk.ToString().PadLeft(2, ' '), fontsong, sb, adder.Now + 22, 4);
+            }
 
             if (weapon.WeaponConfig.SkillId > 0)
             {
-                g.DrawImage(HSIcons.GetIconsByEName("abl9"), 200, 0);
-                g.DrawString(ConfigDatas.ConfigData.GetSkillConfig(weapon.WeaponConfig.SkillId).Name, fontsong, sg, 222, 4);
+                g.DrawImage(HSIcons.GetIconsByEName("abl9"), adder.Next, 0);
+                g.DrawString(ConfigDatas.ConfigData.GetSkillConfig(weapon.WeaponConfig.SkillId).Name, fontsong, sg, adder.Now, 4);
             }
             fontsong.Dispose();
             sb.Dispose();

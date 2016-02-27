@@ -195,35 +195,62 @@ namespace TaleofMonsters.DataType.Cards.Monsters
         {
             Font fontsong = new Font("宋体", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             SolidBrush sb = new SolidBrush(Color.FromArgb(255, 255, 255));
-            g.DrawImage(HSIcons.GetIconsByEName("abl1"), 0, 0);
-            g.DrawString(monster.Atk.ToString().PadLeft(3, ' '), fontsong, sb, 22, 4);
-            g.DrawImage(HSIcons.GetIconsByEName("abl2"), 50, 0);
-            g.DrawString(monster.Def.ToString().PadLeft(3, ' '), fontsong, sb, 72, 4);
+            Adder adder = new Adder(0,50);
+            g.DrawImage(HSIcons.GetIconsByEName("abl1"), adder.Next, 0);
+            g.DrawString(monster.Atk.ToString().PadLeft(3, ' '), fontsong, sb, adder.Now+22, 4);
+            g.DrawImage(HSIcons.GetIconsByEName("abl8"), adder.Next, 0);
+            g.DrawString(monster.Hp.ToString().PadLeft(3, ' '), fontsong, sb, adder.Now + 22, 4);
 
-            g.DrawImage(HSIcons.GetIconsByEName("abl11"), 100, 0);
-            g.DrawString(monster.Mag.ToString().PadLeft(3, ' '), fontsong, sb, 122, 4);
+            g.DrawImage(HSIcons.GetIconsByEName("abl4"), adder.Next, 0);
+            g.DrawString(monster.Range.ToString().PadLeft(3, ' '), fontsong, sb, adder.Now + 22, 4);
+            g.DrawImage(HSIcons.GetIconsByEName("abl3"), adder.Next, 0);
+            g.DrawString(monster.Mov.ToString().PadLeft(3, ' '), fontsong, sb, adder.Now + 22, 4);
 
-            g.DrawImage(HSIcons.GetIconsByEName("abl4"), 150, 0);
-            g.DrawString(monster.Mov.ToString().PadLeft(3, ' '), fontsong, sb, 172, 4);
-            g.DrawImage(HSIcons.GetIconsByEName("abl6"), 200, 0);
-            g.DrawString(monster.Range.ToString().PadLeft(3, ' '), fontsong, sb, 222, 4);
-
-            g.DrawImage(HSIcons.GetIconsByEName("abl5"), 250, 0);
-            g.DrawString(monster.Luk.ToString().PadLeft(3, ' '), fontsong, sb, 272, 4);
-            g.DrawImage(HSIcons.GetIconsByEName("abl3"), 300, 0);
-            g.DrawString(monster.Spd.ToString().PadLeft(3, ' '), fontsong, sb, 322, 4);
-
-            g.DrawImage(HSIcons.GetIconsByEName("abl8"), 350, 0);
-            g.DrawString(monster.Hp.ToString().PadLeft(3, ' '), fontsong, sb, 372, 4);
+            if (monster.Def > 0)
+            {
+                g.DrawImage(HSIcons.GetIconsByEName("abl2"), adder.Next, 0);
+                g.DrawString("+"+monster.Def.ToString().PadLeft(2, ' '), fontsong, sb, adder.Now + 22, 4);
+            }
+            if (monster.Mag > 0)
+            {
+                g.DrawImage(HSIcons.GetIconsByEName("abl11"), adder.Next, 0);
+                g.DrawString("+" + monster.Mag.ToString().PadLeft(2, ' '), fontsong, sb, adder.Now + 22, 4);
+            }
+            if (monster.Spd > 0)
+            {
+                g.DrawImage(HSIcons.GetIconsByEName("abl10"), adder.Next, 0);
+                g.DrawString("+" + monster.Spd.ToString().PadLeft(2, ' '), fontsong, sb, adder.Now + 22, 4);
+            }
+            if (monster.Hit > 0)
+            {
+                g.DrawImage(HSIcons.GetIconsByEName("abl5"), adder.Next, 0);
+                g.DrawString("+" + monster.Hit.ToString().PadLeft(2, ' '), fontsong, sb, adder.Now + 22, 4);
+            }
+            if (monster.Dhit > 0)
+            {
+                g.DrawImage(HSIcons.GetIconsByEName("abl12"), adder.Next, 0);
+                g.DrawString("+" + monster.Dhit.ToString().PadLeft(2, ' '), fontsong, sb, adder.Now + 22, 4);
+            }
+            if (monster.Crt > 0)
+            {
+                g.DrawImage(HSIcons.GetIconsByEName("abl13"), adder.Next, 0);
+                g.DrawString("+" + monster.Crt.ToString().PadLeft(2, ' '), fontsong, sb, adder.Now + 22, 4);
+            }
+            if (monster.Luk > 0)
+            {
+                g.DrawImage(HSIcons.GetIconsByEName("abl6"), adder.Next, 0);
+                g.DrawString("+" + monster.Luk.ToString().PadLeft(2, ' '), fontsong, sb, adder.Now + 22, 4);
+            }
             int offx = 0;
             if (monster.MonsterConfig.Skills.Count > 0)
             {
-                g.DrawImage(HSIcons.GetIconsByEName("abl9"), 400, 0);
+                g.DrawImage(HSIcons.GetIconsByEName("abl9"), adder.Next, 0);
                 for (int i = 0; i < monster.MonsterConfig.Skills.Count; i++)
                 {
                     int skillId = monster.MonsterConfig.Skills[i].X;
                     SkillConfig skillConfig = ConfigData.GetSkillConfig(skillId);
-                    g.DrawString(skillConfig.Name, fontsong, SkillBook.IsBasicSkill(skillId) ? Brushes.LightGreen : Brushes.Gold, 422 + offx, 4);
+                    g.DrawString(skillConfig.Name, fontsong, SkillBook.IsBasicSkill(skillId) ?
+                        Brushes.LightGreen : Brushes.Gold, adder.Now+22 + offx, 4);
                     offx += (int)g.MeasureString(skillConfig.Name, fontsong).Width + 5;
                 }
             }

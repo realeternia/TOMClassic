@@ -5,6 +5,7 @@
         private int start;
         private int addon;
         private int value;
+        private bool firstRun = true;
 
         public Adder(int st, int ao)
         {
@@ -21,9 +22,10 @@
         {
             get
             {
-                if (value == 0)
+                if (firstRun)
                 {
                     value = start;
+                    firstRun = false;
                 }
                 else
                 {
