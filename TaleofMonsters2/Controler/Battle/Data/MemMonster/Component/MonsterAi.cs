@@ -25,7 +25,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             {
                 if (CanAttack(nearestEnemy))
                 {
-                    if (monster.Range <= GameConstants.MaxMeleeAtkRange)
+                    if (monster.RealRange <= GameConstants.MaxMeleeAtkRange)
                     {
                         monster.HitTarget(nearestEnemy.Id);//近战
                     }
@@ -40,7 +40,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                         monster.AddActionRate((float)(monster.RealSpd - 10) / monster.RealSpd);
                     }
                 }
-                else if (monster.Mov>0)//判定是否需要移到
+                else if (monster.ReadMov>0)//判定是否需要移到
                 {
                     var moveDis = BattleManager.Instance.MemMap.CardSize;
                     if (nearestEnemy.Position.X != monster.Position.X)
@@ -54,9 +54,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                         BattleLocationManager.SetToPosition(monster, new Point(monster.Position.X, y));
                     }
 
-                    if (monster.Mov>10)//会返回一些ats
+                    if (monster.ReadMov>10)//会返回一些ats
                     {
-                        monster.AddActionRate((float)(monster.Mov-10)/monster.Mov);
+                        monster.AddActionRate((float)(monster.ReadMov-10)/monster.ReadMov);
                     }
                 }
             }
@@ -65,7 +65,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         private bool CanAttack(LiveMonster target)
         {
             var dis = MathTool.GetDistance(target.Position, monster.Position);
-            return dis <= monster.Range * BattleManager.Instance.MemMap.CardSize/10;//射程也是十倍的
+            return dis <= monster.RealRange * BattleManager.Instance.MemMap.CardSize/10;//射程也是十倍的
         }
     }
 }

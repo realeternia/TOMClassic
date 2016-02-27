@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Math;
 
@@ -6,6 +7,7 @@ namespace TaleofMonsters.DataType.Formulas
 {
     internal static class FormulaBook
     {
+        [Obsolete("已经废弃")]
         static public double GetPhysicalDamage(int atk, int def)
         {
             Dictionary<string, string> rules = new Dictionary<string, string>();
@@ -14,6 +16,7 @@ namespace TaleofMonsters.DataType.Formulas
             return MathTool.GetFormulaResult(ConfigData.GetFormulaConfig(FormulaConfig.Indexer.Pdamage).Rule, rules);
         }
 
+        [Obsolete("已经废弃")]
         static public double GetMagicDamage(int atk, int def)
         {
             Dictionary<string, string> rules = new Dictionary<string, string>();
@@ -22,6 +25,7 @@ namespace TaleofMonsters.DataType.Formulas
             return MathTool.GetFormulaResult(ConfigData.GetFormulaConfig(FormulaConfig.Indexer.Mdamage).Rule, rules);
         }
 
+        [Obsolete("已经废弃")]
         static public double GetHitRate(int hit, int dhit)
         {
             Dictionary<string, string> rules = new Dictionary<string, string>();

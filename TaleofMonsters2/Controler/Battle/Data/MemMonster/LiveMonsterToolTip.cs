@@ -29,7 +29,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 x = liveMonster.Position.X - img.Width;
             if (y + img.Height > stageheg)
                 y = stageheg - img.Height - 1;
-            g.DrawImage((Image) img, x, y, (int) img.Width, (int) img.Height);
+            g.DrawImage(img, x, y, img.Width, img.Height);
             img.Dispose();
         }
 
@@ -42,13 +42,47 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             tipData.AddImage(HSIcons.GetIconsByEName("atr" + liveMonster.Avatar.MonsterConfig.Attr), 16, 16);
             tipData.AddImage(HSIcons.GetIconsByEName("rac" + liveMonster.Avatar.MonsterConfig.Type), 16, 16);
             tipData.AddLine();
+
+            tipData.AddTextNewLine(string.Format("生命 {0}/{1}", liveMonster.Life, liveMonster.Avatar.Hp), "Lime");
+            AddText(tipData, "射程", liveMonster.RealRange, liveMonster.RealRange, "White", true); 
+            AddText(tipData, "移动", liveMonster.ReadMov, liveMonster.ReadMov, "White", false);
             AddText(tipData, "攻击", (int)liveMonster.Atk.Source, liveMonster.RealAtk, !liveMonster.IsMagicAtk && liveMonster.CanAttack ? "White" : "DarkGray", true);
-            AddText(tipData, "防御", (int) liveMonster.RealDef, liveMonster.RealDef, "White", false);
-            AddText(tipData, "魔力", (int)liveMonster.RealMag, liveMonster.RealMag, !liveMonster.IsMagicAtk || !liveMonster.CanAttack ? "DarkGray" : "White", true);
-            AddText(tipData, "速度", (int) liveMonster.RealSpd, liveMonster.RealSpd, "White", false);
-            AddText(tipData, "移动", (int) liveMonster.Mov, liveMonster.Mov, "White", true);
-            AddText(tipData, "射程", (int) liveMonster.Range, liveMonster.Range, "White", false);
-            tipData.AddTextNewLine(string.Format("生命值 {0} / {1}", liveMonster.Life, liveMonster.Avatar.Hp), "Lime");
+            bool isLeft = false;
+            if (liveMonster.RealDef > 0)
+            {
+                AddText(tipData, "防御", liveMonster.Avatar.Def, liveMonster.RealDef, "White", isLeft);
+                isLeft = !isLeft;
+            }
+            if (liveMonster.RealMag > 0)
+            {
+                AddText(tipData, "魔力", liveMonster.Avatar.Mag, liveMonster.RealMag, "White", isLeft);
+                isLeft = !isLeft;
+            }
+            if (liveMonster.RealSpd > 0)
+            {
+                AddText(tipData, "攻速", liveMonster.Avatar.Spd, liveMonster.RealSpd, "White", isLeft);
+                isLeft = !isLeft;
+            }
+            if (liveMonster.RealHit > 0)
+            {
+                AddText(tipData, "命中", liveMonster.Avatar.Hit, liveMonster.RealHit, "White", isLeft);
+                isLeft = !isLeft;
+            }
+            if (liveMonster.RealDHit > 0)
+            {
+                AddText(tipData, "回避", liveMonster.Avatar.Dhit, liveMonster.RealDHit, "White", isLeft);
+                isLeft = !isLeft;
+            }
+            if (liveMonster.RealCrt > 0)
+            {
+                AddText(tipData, "暴击", liveMonster.Avatar.Crt, liveMonster.RealCrt, "White", isLeft);
+                isLeft = !isLeft;
+            }
+            if (liveMonster.RealLuk > 0)
+            {
+                AddText(tipData, "幸运", liveMonster.Avatar.Luk, liveMonster.RealLuk, "White", isLeft);
+                isLeft = !isLeft;
+            }
 
             foreach (var memBaseSkill in liveMonster.SkillManager.Skills)
             {

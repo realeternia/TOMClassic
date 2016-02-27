@@ -1,4 +1,5 @@
 using System;
+using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Buffs;
@@ -42,14 +43,22 @@ namespace TaleofMonsters.DataType.Skills
                 attrRateOn -= dest.Avatar.MonsterConfig.AttrDef[src.AttackType];
             }
 
+            if (src.RealCrt > 0)//´æÔÚ±©»÷ÂÊ
+            {
+                if (MathTool.GetRandom(100) < src.RealCrt * GameConstants.CrtToRate)
+                {
+                    attrRateOn *= GameConstants.DefaultCrtDamage;
+                }
+            }
+
             if (!src.IsMagicAtk)
             {
-                var damvalue = (int)(FormulaBook.GetPhysicalDamage(src.RealAtk, dest.RealDef)* attrRateOn);
+                var damvalue = (int)(src.RealAtk*(100-dest.RealDef*GameConstants.DefToRate)/100f * attrRateOn);
                 damage = new HitDamage(damvalue, 0, DamageTypes.Physical);
             }
             else
             {
-                var damvalue = (int)(FormulaBook.GetMagicDamage(src.RealMag, dest.RealMag) * attrRateOn);
+                var damvalue = (int)(src.RealAtk * (100 - src.RealMag * GameConstants.MagToRate) / 100f * attrRateOn);
                 damage = new HitDamage(damvalue, src.AttackType, DamageTypes.Magic);
                 dest.CheckMagicDamage(damage);
             }

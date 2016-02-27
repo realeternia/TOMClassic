@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Decks;
@@ -117,16 +118,17 @@ namespace TaleofMonsters.DataType.Cards.Spells
             g.DrawImage(HSIcons.GetIconsByEName("oth10"), 56 + offX, basel + 22, 14, 14);
             g.DrawString(string.Format("({0}/{1})", card.Exp, ExpTree.GetNextRequiredCard(card.Level)), fontsong, Brushes.RoyalBlue, 70 + offX, basel + 22);
             g.DrawString("数据", fontblack, Brushes.White, offX + 10, basel + 42);
-            g.DrawString(string.Format("伤害 {0,3:D}", spell.Damage), fontsong, sb, offX + 10, basel + 61);
-            PaintTool.DrawValueLine(g, spell.Damage / 5, 70 + offX, basel + 62, 115, 10);
-            g.DrawString(string.Format("治疗 {0,3:D}", spell.Cure), fontsong, sb, offX + 10, basel + 76);
-            PaintTool.DrawValueLine(g, spell.Cure / 5, 70 + offX, basel + 77, 115, 10);
-            g.DrawString(string.Format("持续 {0,3:D}", (int)spell.Time), fontsong, sb, 10 + offX, basel + 91);
-            PaintTool.DrawValueLine(g, (int)(spell.Time*10) , 70 + offX, basel + 92, 115, 10);
-            g.DrawString(string.Format("辅助 {0,3:D}", (int)spell.Help), fontsong, sb, 10 + offX, basel + 106);
-            PaintTool.DrawValueLine(g, (int)(spell.Help * 10), 70 + offX, basel + 107, 115, 10);
-            g.DrawString(string.Format("几率 {0,3:D}", (int)spell.Rate), fontsong, sb, 10 + offX, basel + 121);
-            PaintTool.DrawValueLine(g, (int)spell.Rate, 70 + offX, basel + 122, 115, 10);
+            Adder add = new Adder(basel + 61, 15);
+            g.DrawString(string.Format("伤害 {0,3:D}", spell.Damage), fontsong, sb, offX + 10, add.Next);
+            PaintTool.DrawValueLine(g, spell.Damage / 5, 70 + offX, add.Now+1, 115, 10);
+            g.DrawString(string.Format("治疗 {0,3:D}", spell.Cure), fontsong, sb, offX + 10, add.Next);
+            PaintTool.DrawValueLine(g, spell.Cure / 5, 70 + offX, add.Now + 1, 115, 10);
+            g.DrawString(string.Format("持续 {0,3:D}", (int)spell.Time), fontsong, sb, 10 + offX, add.Next);
+            PaintTool.DrawValueLine(g, (int)(spell.Time * 10), 70 + offX, add.Now + 1, 115, 10);
+            g.DrawString(string.Format("辅助 {0,3:D}", (int)spell.Help), fontsong, sb, 10 + offX, add.Next);
+            PaintTool.DrawValueLine(g, (int)(spell.Help * 10), 70 + offX, add.Now + 1, 115, 10);
+            g.DrawString(string.Format("几率 {0,3:D}", (int)spell.Rate), fontsong, sb, 10 + offX, add.Next);
+            PaintTool.DrawValueLine(g, (int)spell.Rate, 70 + offX, add.Now + 1, 115, 10);
             g.DrawString("效果", fontblack, Brushes.White, offX + 10, basel + 137);
             string des = spell.Descript;
             if (des.Length < 13)

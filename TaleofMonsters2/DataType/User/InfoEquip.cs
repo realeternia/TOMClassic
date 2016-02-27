@@ -94,7 +94,7 @@ namespace TaleofMonsters.DataType.User
             EquipConfig equipConfig = ConfigData.GetEquipConfig(id);
             if (equipConfig.Job > 0)
             {
-                UserProfile.InfoBasic.Job = 0;//变成职业新手！
+                UserProfile.InfoBasic.Job = JobConfig.Indexer.NewBie;//变成职业新手！
             }
         }
     }

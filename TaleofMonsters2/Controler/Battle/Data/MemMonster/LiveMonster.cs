@@ -97,32 +97,72 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public int RealDef
         {
-            get { return Avatar.Def; }
+            get
+            {
+                if (TWeapon.CardId == 0 || TWeapon.Avatar.Def == 0)
+                    return Avatar.Def;
+                return TWeapon.Avatar.Def + Avatar.Def;
+            }
         }
 
         public int RealMag
         {
-            get { return Avatar.Mag; }
+            get
+            {
+                if (TWeapon.CardId == 0 || TWeapon.Avatar.Mag == 0)
+                    return Avatar.Mag;
+                return TWeapon.Avatar.Mag + Avatar.Mag;
+            }
         }
 
         public int RealLuk
         {
-            get { return Avatar.Luk; }
+            get
+            {
+                if (TWeapon.CardId == 0 || TWeapon.Avatar.Luk == 0)
+                    return Avatar.Luk;
+                return TWeapon.Avatar.Luk + Avatar.Luk;
+            }
         }
 
         public int RealSpd
         {
-            get { return Avatar.Spd; }
+            get
+            {
+                if (TWeapon.CardId == 0 || TWeapon.Avatar.Spd == 0)
+                    return Avatar.Spd;
+                return TWeapon.Avatar.Spd + Avatar.Spd;
+            }
         }
 
         public int RealHit
         {
-            get { return Avatar.Hit; }
+            get
+            {
+                if (TWeapon.CardId == 0 || TWeapon.Avatar.Hit == 0)
+                    return Avatar.Hit;
+                return TWeapon.Avatar.Hit + Avatar.Hit;
+            }
         }
 
         public int RealDHit
         {
-            get { return Avatar.Dhit; }
+            get
+            {
+                if (TWeapon.CardId == 0 || TWeapon.Avatar.Dhit == 0)
+                    return Avatar.Dhit;
+                return TWeapon.Avatar.Dhit + Avatar.Dhit;
+            }
+        }
+
+        public int RealCrt
+        {
+            get
+            {
+                if (TWeapon.CardId == 0 || TWeapon.Avatar.Crt == 0)
+                    return Avatar.Crt;
+                return TWeapon.Avatar.Crt + Avatar.Crt;
+            }
         }
 
         public string Arrow
@@ -135,7 +175,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
         }
 
-        public int Range
+        public int RealRange
         {
             get
             {
@@ -145,7 +185,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
         }
 
-        public int Mov
+        public int ReadMov
         {
             get
             {
