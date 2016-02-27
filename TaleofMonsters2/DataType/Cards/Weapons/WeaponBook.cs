@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
+using NarlonLib.Log;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
@@ -62,6 +63,21 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             if (!ImageManager.HasImage(fname))
             {
                 Image image = PicLoader.Read("Weapon", string.Format("{0}.JPG", weaponConfig.Icon));
+                if (image == null)
+                {
+                    NLog.Error(string.Format("GetWeaponImage {0} {1} not found", id, fname));
+                    return null;
+                }
+#if DEBUG
+                if (weaponConfig.Remark.Contains("未完成"))
+                {
+                    Graphics g = Graphics.FromImage(image);
+                    var icon = PicLoader.Read("System", "NotFinish.PNG");
+                    g.DrawImage(icon, 0, 0, 180, 180);
+                    g.Save();
+                }
+#endif
+
                 if (image.Width != width || image.Height != height)
                 {
                     image = image.GetThumbnailImage(width, height, null, new IntPtr(0));

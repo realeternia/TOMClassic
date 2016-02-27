@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using NarlonLib.Log;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
@@ -40,10 +41,25 @@ namespace TaleofMonsters.DataType.Cards.Spells
 
         static public Image GetSpellImage(int id, int width, int height)
         {
-            string fname = string.Format("Spell/{0}{1}x{2}", ConfigData.SpellDict[id].Icon, width, height);
+            SpellConfig spellConfig = ConfigData.GetSpellConfig(id);
+            string fname = string.Format("Spell/{0}{1}x{2}", spellConfig.Icon, width, height);
             if (!ImageManager.HasImage(fname))
             {
-                Image image = PicLoader.Read("Spell", string.Format("{0}.JPG", ConfigData.SpellDict[id].Icon));
+                Image image = PicLoader.Read("Spell", string.Format("{0}.JPG", spellConfig.Icon));
+                if (image == null)
+                {
+                    NLog.Error(string.Format("GetWeaponImage {0} {1} not found", id, fname));
+                    return null;
+                }
+#if DEBUG
+                if (spellConfig.Remark.Contains("未完成"))
+                {
+                    Graphics g = Graphics.FromImage(image);
+                    var icon = PicLoader.Read("System", "NotFinish.PNG");
+                    g.DrawImage(icon, 0, 0, 180, 180);
+                    g.Save();
+                }
+#endif
                 if (image.Width != width || image.Height != height)
                 {
                     image = image.GetThumbnailImage(width, height, null, new IntPtr(0));
