@@ -42,8 +42,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             tipData.AddImage(HSIcons.GetIconsByEName("atr" + liveMonster.Avatar.MonsterConfig.Attr), 16, 16);
             tipData.AddImage(HSIcons.GetIconsByEName("rac" + liveMonster.Avatar.MonsterConfig.Type), 16, 16);
             tipData.AddLine();
-            AddText(tipData, "物攻", (int)liveMonster.Atk.Source, liveMonster.RealAtk, !liveMonster.IsMagicAtk && liveMonster.CanAttack ? "White" : "DarkGray", true);
-            AddText(tipData, "物防", (int) liveMonster.RealDef, liveMonster.RealDef, "White", false);
+            AddText(tipData, "攻击", (int)liveMonster.Atk.Source, liveMonster.RealAtk, !liveMonster.IsMagicAtk && liveMonster.CanAttack ? "White" : "DarkGray", true);
+            AddText(tipData, "防御", (int) liveMonster.RealDef, liveMonster.RealDef, "White", false);
             AddText(tipData, "魔力", (int)liveMonster.RealMag, liveMonster.RealMag, !liveMonster.IsMagicAtk || !liveMonster.CanAttack ? "DarkGray" : "White", true);
             AddText(tipData, "速度", (int) liveMonster.RealSpd, liveMonster.RealSpd, "White", false);
             AddText(tipData, "移动", (int) liveMonster.Mov, liveMonster.Mov, "White", true);

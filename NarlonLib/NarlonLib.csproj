@@ -118,6 +118,7 @@
     <Compile Include="Drawing\ImagePixelTool.cs" />
     <Compile Include="File\CsvDataReader.cs" />
     <Compile Include="Log\NLog.cs" />
+    <Compile Include="Math\Adder.cs" />
     <Compile Include="Math\Calculator.cs" />
     <Compile Include="Math\NLRandom.cs" />
     <Compile Include="Math\RandomShuffle.cs" />

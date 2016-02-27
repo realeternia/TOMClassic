@@ -117,8 +117,8 @@
 
         public static string I2HeroAttrTip(int id)
         {
-            string[] rt = { "物攻:提升物理伤害", 
-                "物防:降低物理伤害", 
+            string[] rt = { "攻击:提升物理伤害", 
+                "防御:降低物理伤害", 
                 "命中:提升攻击命中", 
                 "回避:提升攻击回避", 
                 "魔力:提升魔法伤害", 

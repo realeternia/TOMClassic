@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using ConfigDatas;
+using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.Skills;
@@ -118,23 +119,53 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             g.DrawImage(HSIcons.GetIconsByEName("oth10"), 56 + offX, basel + 22, 14, 14);
             g.DrawString(string.Format("({0}/{1})", card.Exp, ExpTree.GetNextRequiredCard(card.Level)), fontsong, Brushes.RoyalBlue, 70 + offX, basel + 22);
             g.DrawString("数据", fontblack, Brushes.White, 10 + offX, basel + 42);
+            Adder add = new Adder(basel + 61, 15);
             SolidBrush sb = new SolidBrush(Color.FromArgb(100, 50, 0));
-            g.DrawString(string.Format("物攻 {0,3:D}", monster.Atk), fontsong, sb, 10 + offX, basel + 61);
-            PaintTool.DrawValueLine(g, monster.Atk/2, 70 + offX, basel + 62, 115, 10);
-            g.DrawString(string.Format("物防 {0,3:D}", monster.Def), fontsong, sb, 10 + offX, basel + 76);
-            PaintTool.DrawValueLine(g, monster.Def/2, 70 + offX, basel + 77, 115, 10);
-            g.DrawString(string.Format("魔力 {0,3:D}", monster.Mag), fontsong, sb, 10 + offX, basel + 91);
-            PaintTool.DrawValueLine(g, monster.Mag / 2, 70 + offX, basel + 92, 115, 10);
-            g.DrawString(string.Format("移动 {0,3:D}", monster.Mov), fontsong, sb, 10 + offX, basel + 106);
-            PaintTool.DrawValueLine(g, monster.Mov / 2, 70 + offX, basel + 107, 115, 10);
-            g.DrawString(string.Format("射程 {0,3:D}", monster.Range), fontsong, sb, 10 + offX, basel + 121);
-            PaintTool.DrawValueLine(g, monster.Range / 2, 70 + offX, basel + 122, 115, 10);
-            g.DrawString(string.Format("幸运 {0,3:D}", monster.Luk), fontsong, sb, 10 + offX, basel + 136);
-            PaintTool.DrawValueLine(g, monster.Luk / 2, 70 + offX, basel + 137, 115, 10);
-            g.DrawString(string.Format("速度 {0,3:D}", monster.Spd), fontsong, sb, 10 + offX, basel + 151);
-            PaintTool.DrawValueLine(g, monster.Spd / 2, 70 + offX, basel + 152, 115, 10);
-            g.DrawString(string.Format("生命 {0,3:D}", monster.Hp), fontsong, sb, 10 + offX, basel + 166);
-            PaintTool.DrawValueLine(g, monster.Hp / 5, 70 + offX, basel + 167, 115, 10);
+            g.DrawString(string.Format("攻击 {0,3:D}", monster.Atk), fontsong, sb, 10 + offX, add.Next);
+            PaintTool.DrawValueLine(g, monster.Atk / 2, 70 + offX, add.Now+1, 115, 10);
+            g.DrawString(string.Format("生命 {0,3:D}", monster.Hp), fontsong, sb, 10 + offX, add.Next);
+            PaintTool.DrawValueLine(g, monster.Hp / 10, 70 + offX, add.Now + 1, 115, 10);
+            g.DrawString(string.Format("射程 {0,3:D}", monster.Range), fontsong, sb, 10 + offX, add.Next);
+            PaintTool.DrawValueLine(g, monster.Range * 2, 70 + offX, add.Now + 1, 115, 10);
+            g.DrawString(string.Format("移动 {0,3:D}", monster.Mov), fontsong, sb, 10 + offX, add.Next);
+            PaintTool.DrawValueLine(g, monster.Mov * 2, 70 + offX, add.Now + 1, 115, 10);
+            sb.Dispose();
+            sb = new SolidBrush(Color.FromArgb(50, 0, 100));
+            if (monster.Def > 0)
+            {
+                g.DrawString(string.Format("防御 +{0,2:D}", monster.Def), fontsong, sb, 10 + offX, add.Next);
+                PaintTool.DrawValueLine(g, monster.Def *20, 70 + offX, add.Now + 1, 115, 10);
+            }
+            if (monster.Mag > 0)
+            {
+                g.DrawString(string.Format("魔力 +{0,2:D}", monster.Mag), fontsong, sb, 10 + offX, add.Next);
+                PaintTool.DrawValueLine(g, monster.Mag * 20, 70 + offX, add.Now + 1, 115, 10);
+            }
+            if (monster.Spd > 0)
+            {
+                g.DrawString(string.Format("攻速 +{0,2:D}", monster.Spd), fontsong, sb, 10 + offX, add.Next);
+                PaintTool.DrawValueLine(g, monster.Spd * 20, 70 + offX, add.Now + 1, 115, 10);
+            }
+            if (monster.Hit > 0)
+            {
+                g.DrawString(string.Format("命中 +{0,2:D}", monster.Hit), fontsong, sb, 10 + offX, add.Next);
+                PaintTool.DrawValueLine(g, monster.Hit * 20, 70 + offX, add.Now + 1, 115, 10);
+            }
+            if (monster.Dhit > 0)
+            {
+                g.DrawString(string.Format("回避 +{0,2:D}", monster.Dhit), fontsong, sb, 10 + offX, add.Next);
+                PaintTool.DrawValueLine(g, monster.Dhit * 20, 70 + offX, add.Now + 1, 115, 10);
+            }
+            if (monster.Crt > 0)
+            {
+                g.DrawString(string.Format("暴击 +{0,2:D}", monster.Crt), fontsong, sb, 10 + offX, add.Next);
+                PaintTool.DrawValueLine(g, monster.Crt * 20, 70 + offX, add.Now + 1, 115, 10);
+            }
+            if (monster.Luk > 0)
+            {
+                g.DrawString(string.Format("幸运 +{0,2:D}", monster.Luk), fontsong, sb, 10 + offX, add.Next);
+                PaintTool.DrawValueLine(g, monster.Luk * 20, 70 + offX, add.Now + 1, 115, 10);
+            }
 
             g.DrawString("技能", fontblack, Brushes.White, 10 + offX, basel + 202);
             int skillindex = 0;
@@ -243,24 +274,27 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             {
                 tipData.AddTextNewLine(string.Format("幸运 +{0}", monster.Luk), "Lime");
             }
-
-            tipData.AddLine();
-            tipData.AddTextNewLine("技能", "White");
-            for (int i = 0; i < monster.MonsterConfig.Skills.Count; i++)
+         
+            if (monster.MonsterConfig.Skills.Count > 0)
             {
-                int skillId = monster.MonsterConfig.Skills[i].X;
-                if (!SkillBook.IsBasicSkill(skillId))
+                tipData.AddLine();
+                for (int i = 0; i < monster.MonsterConfig.Skills.Count; i++)
                 {
-                    tipData.AddTextNewLine("", "Red");
-                    tipData.AddImage(SkillBook.GetSkillImage(skillId));
+                    int skillId = monster.MonsterConfig.Skills[i].X;
+                    if (!SkillBook.IsBasicSkill(skillId))
+                    {
+                        tipData.AddTextNewLine("", "Red");
+                        tipData.AddImage(SkillBook.GetSkillImage(skillId));
 
-                    var skillConfig = ConfigData.GetSkillConfig(skillId);
-                    string des = skillConfig.GetDescript(card.Level);
-                    if (skillConfig.DescriptBuffId > 0)
-                        des += ConfigData.GetBuffConfig(skillConfig.DescriptBuffId).GetDescript(card.Level);
-                    tipData.AddTextLines(des, "Cyan", 15, false);
+                        var skillConfig = ConfigData.GetSkillConfig(skillId);
+                        string des = skillConfig.GetDescript(card.Level);
+                        if (skillConfig.DescriptBuffId > 0)
+                            des += ConfigData.GetBuffConfig(skillConfig.DescriptBuffId).GetDescript(card.Level);
+                        tipData.AddTextLines(des, "Cyan", 15, false);
+                    }
                 }
             }
+           
             if (type == CardPreviewType.Shop)
             {
                 tipData.AddLine();
