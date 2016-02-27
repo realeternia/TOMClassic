@@ -149,15 +149,7 @@ namespace TaleofMonsters.DataType.Items
             }
             tipData.AddTextNewLine(string.Format("       等级:{0}", hItemConfig.Level), "White");
             tipData.AddTextNewLine("", "White");
-
-            string des = hItemConfig.Descript;
-            while (true)
-            {
-                tipData.AddTextNewLine(des.Substring(0, Math.Min(des.Length, 20)), "White");
-                if (des.Length <= 20)
-                    break;
-                des = des.Substring(20);
-            }
+            tipData.AddTextLines(hItemConfig.Descript, "White",20,true);
             tipData.AddTextNewLine(string.Format("出售价格:{0}", hItemConfig.Value), "Yellow");
             tipData.AddImage(HSIcons.GetIconsByEName("res1"));
             tipData.AddImageXY(GetHItemImage(id), 8, 8, 48, 48, 7, 24, 32, 32);

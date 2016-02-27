@@ -145,6 +145,16 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
         }
 
+        public int Mov
+        {
+            get
+            {
+                if (TWeapon.CardId == 0 || TWeapon.Avatar.Mov == 0)
+                    return Avatar.Mov;
+                return TWeapon.Avatar.Mov;
+            }
+        }
+
         public Player OwnerPlayer
         {
             get { return IsLeft ? BattleManager.Instance.PlayerManager.LeftPlayer : BattleManager.Instance.PlayerManager.RightPlayer; }
@@ -165,11 +175,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             get { return GhostTime > 0; }
         }
 
-        public int Mov
-        {
-            get { return Avatar.MonsterConfig.Mov; }
-        }
-        
         #endregion
 
         public LiveMonster(int id, int level, Monster mon, Point point, bool isLeft)

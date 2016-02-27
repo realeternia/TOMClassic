@@ -13,7 +13,7 @@ namespace ControlPlus
         public void AddTextNewLine(string data, string color, int height)
         {
             LineInfo info = new LineInfo(datas.Count, height);
-            info.Objects.Add(new LineText(data, color));
+            info.Objects.Add(new LineText(data, Color.FromName(color)));
             datas.Add(info);
         }
 
@@ -24,17 +24,34 @@ namespace ControlPlus
 
         public void AddText(string data, string color)
         {
-            datas[datas.Count-1].Objects.Add(new LineText(data, color));
+            AddText(data, Color.FromName(color));
         }
 
         public void AddText(string data, Color color)
         {
             datas[datas.Count - 1].Objects.Add(new LineText(data, color));
         }
+        
+        public void AddTextLines(string data, string color, int wordPerLine, bool firstNewLine)
+        {
+            if (firstNewLine)
+            {
+                AddTextNewLine(data.Substring(0, Math.Min(data.Length, wordPerLine)), color);
+            }
+            else
+            {
+                AddText(data.Substring(0, Math.Min(data.Length, wordPerLine)), color);
+            }
+            while (data.Length > wordPerLine)
+            {
+                data = data.Substring(wordPerLine);
+                AddTextNewLine(data.Substring(0, Math.Min(data.Length, wordPerLine)), color);
+            }
+        }
 
         public void AddTextOff(string data, string color, int off)
         {
-            var lineText = new LineText(data, color);
+            var lineText = new LineText(data, Color.FromName(color));
             lineText.Off = off;
             datas[datas.Count - 1].Objects.Add(lineText);
         }
@@ -214,12 +231,6 @@ namespace ControlPlus
         private Color color;
         private int wid;
         public int Off { get; set; }
-
-        public LineText(string txt, string cor)
-        {
-            text = txt;
-            color = Color.FromName(cor);
-        }
 
         public LineText(string txt, Color cor)
         {

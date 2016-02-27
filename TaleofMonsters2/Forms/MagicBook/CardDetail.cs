@@ -233,27 +233,18 @@ namespace TaleofMonsters.Forms.MagicBook
 
         private Image GetSkillDesImage(int sid, int rate)
         {
-            Skill luk = new Skill(sid);
-            luk.UpgradeToLevel(level);
+            Skill skillData = new Skill(sid);
+            skillData.UpgradeToLevel(level);
 
-            string headtext = luk.Name;
+            string headtext = skillData.Name;
             if (rate != 100)
-                headtext = string.Format("{0}({1}%发动)", luk.Name, rate);
-            string desc = luk.Descript;
+                headtext = string.Format("{0}({1}%发动)", skillData.Name, rate);
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine(headtext, "LightBlue", 20);
             tipData.AddLine();
-            if (desc.Length>18)
-            {
-                tipData.AddTextNewLine(desc.Substring(0,17), "White");
-                tipData.AddTextNewLine(desc.Substring(17), "White");
-            }
-            else
-            {
-                tipData.AddTextNewLine(desc, "White");    
-            }
+            tipData.AddTextLines(skillData.Descript, "White", 18, true);
             tipData.AddLine();
-            tipData.AddTextNewLine("评分:"+((int)(luk.SkillConfig.Mark*rate/100)).ToString(), "Yellow");
+            tipData.AddTextNewLine("评分:"+((int)(skillData.SkillConfig.Mark*rate/100)).ToString(), "Yellow");
             return tipData.Image;
         }
 

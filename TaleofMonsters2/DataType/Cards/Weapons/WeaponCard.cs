@@ -167,14 +167,59 @@ namespace TaleofMonsters.DataType.Cards.Weapons
         {
             const string stars = "★★★★★★★★★★";
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
-            tipData.AddTextNewLine(weapon.WeaponConfig.Name, "White", 20);
+            var cardQual = Config.CardConfigManager.GetCardConfig(CardId).Quality;
+            tipData.AddTextNewLine(weapon.WeaponConfig.Name, HSTypes.I2QualityColor(cardQual), 20);
             tipData.AddText(string.Format("({0})",weapon.WeaponConfig.Ename), "MediumAquamarine");
             tipData.AddTextNewLine(stars.Substring(10 - weapon.WeaponConfig.Star), "Yellow", 20);
             tipData.AddLine();
-            tipData.AddTextNewLine("类型/属性", "White");
+            tipData.AddTextNewLine("类型/属性", "Gray");
             tipData.AddImage(HSIcons.GetIconsByEName("wep" + (weapon.WeaponConfig.Type - 100+1)));
             tipData.AddImage(HSIcons.GetIconsByEName("atr" + weapon.WeaponConfig.Attr));
-            tipData.AddTextNewLine(weapon.ToString(), "Lime");
+            if (weapon.Atk > 0)
+            {
+                tipData.AddTextNewLine(string.Format("攻击 +{0}", weapon.Atk), "White");
+            }
+            if (weapon.Hp > 0)
+            {
+                tipData.AddTextNewLine(string.Format("生命 +{0}", weapon.Hp), "White");
+            }
+            if (weapon.Range > 0)
+            {
+                tipData.AddTextNewLine(string.Format("射程 ={0}", weapon.Range), "White");
+            }
+            if (weapon.Mov > 0)
+            {
+                tipData.AddTextNewLine(string.Format("移动 ={0}", weapon.Mov), "White");
+            }
+
+            if (weapon.Def > 0)
+            {
+                tipData.AddTextNewLine(string.Format("防御 +{0}", weapon.Def), "Lime");
+            }
+            if (weapon.Mag > 0)
+            {
+                tipData.AddTextNewLine(string.Format("魔力 +{0}", weapon.Mag), "Lime");
+            }
+            if (weapon.Spd > 0)
+            {
+                tipData.AddTextNewLine(string.Format("攻速 +{0}", weapon.Spd), "Lime");
+            }
+            if (weapon.Hit > 0)
+            {
+                tipData.AddTextNewLine(string.Format("命中 +{0}", weapon.Hit), "Lime");
+            }
+            if (weapon.Dhit > 0)
+            {
+                tipData.AddTextNewLine(string.Format("回避 +{0}", weapon.Dhit), "Lime");
+            }
+            if (weapon.Crt > 0)
+            {
+                tipData.AddTextNewLine(string.Format("暴击 +{0}", weapon.Crt), "Lime");
+            }
+            if (weapon.Luk > 0)
+            {
+                tipData.AddTextNewLine(string.Format("幸运 +{0}", weapon.Luk), "Lime");
+            }
             tipData.AddTextNewLine(string.Format("耐久 {0}", weapon.Dura), "Lime");
             if (weapon.WeaponConfig.SkillId > 0)
             {
@@ -186,14 +231,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
                 string des = skillConfig.GetDescript(card.Level);
                 if (skillConfig.DescriptBuffId > 0)
                     des += ConfigData.GetBuffConfig(skillConfig.DescriptBuffId).GetDescript(card.Level);
-                tipData.AddText(des.Substring(0, Math.Min(des.Length, 15)), "White");
-                while (true)
-                {
-                    if (des.Length <= 15)
-                        break;
-                    des = des.Substring(15);
-                    tipData.AddTextNewLine(des.Substring(0, Math.Min(des.Length, 15)), "White");
-                }
+                tipData.AddTextLines(des,"Cyan",15,false);
             }
             if (type == CardPreviewType.Shop)
             {

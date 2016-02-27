@@ -49,7 +49,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             {
                 case "attr": return Core.HSTypes.I2Attr(weaponConfig.Attr);
                 case "star": return weaponConfig.Star.ToString();
-                case "atf": return string.Format("{0}/{1}", weaponConfig.Atk, weaponConfig.Def);
+                case "atf": return string.Format("{0}/{1}", weaponConfig.AtkP, weaponConfig.Def);
                 case "skill": return weaponConfig.SkillId == 0 ? "无" : ConfigData.GetSkillConfig(weaponConfig.SkillId).Name;
             }
             return "";

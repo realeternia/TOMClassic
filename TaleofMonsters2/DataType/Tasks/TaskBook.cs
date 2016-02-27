@@ -248,24 +248,10 @@ namespace TaleofMonsters.DataType.Tasks
 
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine(taskConfig.Name, "White", 20);
-            string des = taskConfig.Descript;
-            while (true)
-            {
-                tipData.AddTextNewLine(des.Substring(0, Math.Min(des.Length, 20)), "Gray");
-                if (des.Length <= 20)
-                    break;
-                des = des.Substring(20);
-            }
+            tipData.AddTextLines(taskConfig.Descript, "Gray", 20, true);
             tipData.AddLine();
             tipData.AddTextNewLine("任务指导", "White");
-            des = taskConfig.Hint;
-            while (true)
-            {
-                tipData.AddTextNewLine(des.Substring(0, Math.Min(des.Length, 20)), "Lime");
-                if (des.Length <= 20)
-                    break;
-                des = des.Substring(20);
-            }
+            tipData.AddTextLines(taskConfig.Hint, "Gray", 20, true);
             if (UserProfile.InfoTask.GetTaskStateById(id) == 1)
             {
                 int addon = UserProfile.InfoTask.GetTaskAddonById(id);

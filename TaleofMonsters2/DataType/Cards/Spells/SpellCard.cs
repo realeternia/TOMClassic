@@ -162,21 +162,16 @@ namespace TaleofMonsters.DataType.Cards.Spells
         {
             const string stars = "★★★★★★★★★★";
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
-            tipData.AddTextNewLine(spell.SpellConfig.Name, "White", 20);
+            var cardQual = Config.CardConfigManager.GetCardConfig(CardId).Quality;
+            tipData.AddTextNewLine(spell.SpellConfig.Name, HSTypes.I2QualityColor(cardQual), 20);
             tipData.AddText(string.Format("({0})",spell.SpellConfig.Ename), "MediumAquamarine");
             tipData.AddTextNewLine(stars.Substring(10 - spell.SpellConfig.Star), "Yellow", 20);
             tipData.AddLine();
-            tipData.AddTextNewLine("类型/属性", "White");
+            tipData.AddTextNewLine("类型/属性", "Gray");
             tipData.AddImage(HSIcons.GetIconsByEName("wep" + (spell.SpellConfig.Type - 200+1)));
             tipData.AddImage(HSIcons.GetIconsByEName("atr" + spell.SpellConfig.Attr));
             string des = spell.Descript;
-            while (true)
-            {
-                tipData.AddTextNewLine(des.Substring(0, Math.Min(des.Length, 15)), "Lime");
-                if (des.Length <= 15)
-                    break;
-                des = des.Substring(15);
-            }
+            tipData.AddTextLines(des, "Cyan", 15, true);
 
             if (type == CardPreviewType.Shop)
             {

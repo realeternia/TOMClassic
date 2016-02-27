@@ -33,14 +33,7 @@ namespace TaleofMonsters.DataType.HeroSkills
             tipData.AddTextNewLine(heroSkillConfig.Name, "White", 20);
             tipData.AddLine();
             tipData.AddTextNewLine("英雄技能", "Red");
-            string des = heroSkillConfig.Des;
-            while (true)
-            {
-                tipData.AddTextNewLine(des.Substring(0, Math.Min(des.Length, 15)), "Lime");
-                if (des.Length <= 15)
-                    break;
-                des = des.Substring(15);
-            }
+            tipData.AddTextLines(heroSkillConfig.Des, "Lime",15,true);
             tipData.AddLine();
             var cost = CardConfigManager.GetCardConfig(heroSkillConfig.CardId).Cost;
             tipData.AddTextNewLine("消耗：", "White");
