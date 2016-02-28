@@ -662,16 +662,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             SkillManager.AddSkill(SkillBook.GetRandSkillId(), Level / 2, 100, SkillSourceTypes.Skill);
         }
 
-        public void AddImmune(int buffId)
-        {
-            BuffManager.AddImmuneRate(buffId, 1);
-        }
-
-        public void AddImmuneRate(int buffId, double rate)
-        {
-            BuffManager.AddImmuneRate(buffId, rate);
-        }
-
         public int GetMonsterCountByRace(int rid)
         {
             return OwnerPlayer.State.GetMonsterCountByType((MonsterCountTypes)(rid + 20));

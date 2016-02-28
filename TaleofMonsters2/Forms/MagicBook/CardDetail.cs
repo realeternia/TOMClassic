@@ -249,14 +249,14 @@ namespace TaleofMonsters.Forms.MagicBook
         }
 
         private Image GetTerrainImage(int monType, double[] attrAtk, double[] attrDef)
-        {
+        {//todo
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine("属性："+HSTypes.I2Attr(monType), "White", 20);
             for (int i = 0; i <= 8; i++)
             {
                 tipData.AddTextNewLine("Vs", "Yellow", 16);
                 tipData.AddImageXY(HSIcons.GetIconsByEName("atr" + i),0,0,32,32,23,20+i*16+1,14,14);
-                tipData.AddText(string.Format("    AT={0}%",100+attrAtk[i]*100), attrAtk[i]==0?"White": attrAtk[i]>0?"Lime": "Red");
+              //  tipData.AddText(string.Format("    AT={0}%",100+attrAtk[i]*100), attrAtk[i]==0?"White": attrAtk[i]>0?"Lime": "Red");
                 tipData.AddText(string.Format("DF={0}%", 100 + attrDef[i] * 100), attrDef[i] == 0 ? "White" : attrDef[i] > 0 ? "Lime" : "Red");
             }
             return tipData.Image;
@@ -285,7 +285,7 @@ namespace TaleofMonsters.Forms.MagicBook
                 }
                 else
                 {
-                    Image image = GetTerrainImage(monsterConfig.Attr, monsterConfig.AttrAtk, monsterConfig.AttrDef);
+                    Image image = GetTerrainImage(monsterConfig.Attr, monsterConfig.BuffImmune, monsterConfig.AttrDef);
                     tooltip.Show(image, parent, x, y);
                 }
             }

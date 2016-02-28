@@ -3,7 +3,6 @@ using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Buffs;
-using TaleofMonsters.DataType.Formulas;
 using ConfigDatas;
 
 namespace TaleofMonsters.DataType.Skills
@@ -34,10 +33,6 @@ namespace TaleofMonsters.DataType.Skills
         {
             HitDamage damage;
             double attrRateOn = 1; //属性相克的伤害修正
-            if (src.Avatar.MonsterConfig.AttrAtk != null)//目前英雄可能为null
-            {
-                attrRateOn += src.Avatar.MonsterConfig.AttrAtk[dest.Avatar.MonsterConfig.Attr];
-            }
             if (dest.Avatar.MonsterConfig.AttrDef != null)
             {
                 attrRateOn -= dest.Avatar.MonsterConfig.AttrDef[src.AttackType];

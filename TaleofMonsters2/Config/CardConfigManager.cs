@@ -52,14 +52,7 @@ namespace TaleofMonsters.Config
                         RLVector3 skill = monsterConfig.Skills[i];
                         modify += (float)ConfigData.GetSkillConfig(skill.X).Mark*skill.Y/10000;
                     }//技能修正下modify
-                    foreach (var attatk in monsterConfig.AttrAtk)//属性克制的加成
-                    {
-                        if (attatk != 0)
-                        {
-                            modify += (float)attatk*220/10000;
-                        }
-                    }
-                    foreach (var attdef in monsterConfig.AttrDef)
+                    foreach (var attdef in monsterConfig.AttrDef)//属性克制的加成
                     {
                         if (attdef != 0)
                         {

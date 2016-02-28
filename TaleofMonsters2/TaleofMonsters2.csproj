@@ -131,6 +131,7 @@
     <Compile Include="Controler\Resource\ImageManager.cs" />
     <Compile Include="Controler\World\TimeManager.cs" />
     <Compile Include="Controler\World\WorldInfoManager.cs" />
+    <Compile Include="DataType\Buffs\BuffImmuneGroup.cs" />
     <Compile Include="DataType\CustomTypes.cs" />
     <Compile Include="DataType\Equips\Equip.cs" />
     <Compile Include="DataType\HeroSkills\HeroSkillBook.cs" />

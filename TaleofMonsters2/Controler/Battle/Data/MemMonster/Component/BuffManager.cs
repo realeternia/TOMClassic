@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using ConfigDatas;
 using ControlPlus;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Buffs;
@@ -11,7 +12,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
     {
         private LiveMonster self;
         private Dictionary<int, MemBaseBuff> buffDict;
-        private Dictionary<int, double> immuneBuffDict;
 
         public BuffManager(LiveMonster liveMonster)
         {
@@ -21,7 +21,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         public void Reload()
         {
             buffDict = new Dictionary<int, MemBaseBuff>();
-            immuneBuffDict = new Dictionary<int, double>();
         }
 
         public bool IsTileMatching
@@ -31,28 +30,34 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void AddBuff(int buffId, int blevel, double dura)
         {
-            double buffRate;
-            if (immuneBuffDict.TryGetValue(buffId, out buffRate))
+            BuffConfig buffConfig = ConfigData.GetBuffConfig(buffId);
+            if (buffConfig.Group>0 && buffConfig.Group < self.Avatar.MonsterConfig.BuffImmune.Length)
             {
-                if (buffRate >= 1)
+                var immumeRate = self.Avatar.MonsterConfig.BuffImmune[buffConfig.Group];
+                if (immumeRate >= 1)//免疫了
                 {
                     return;
                 }
-                dura *= buffRate;
+                if (immumeRate > 0)
+                {
+                    dura *= (1 - immumeRate); 
+                }
+             
             }
 
-            if (buffDict.ContainsKey(buffId))
+            MemBaseBuff buffdata;
+            if (buffDict.TryGetValue(buffId, out buffdata))
             {
-                buffDict[buffId].TimeLeft = Math.Max(buffDict[buffId].TimeLeft, dura);
+                buffdata.TimeLeft = Math.Max(buffdata.TimeLeft, dura);
             }
             else
             {
-                Buff buffdata = new Buff(buffId);
-                buffdata.UpgradeToLevel(blevel);
-                MemBaseBuff buff = new MemBaseBuff(buffdata, dura);
+                Buff buff = new Buff(buffId);
+                buff.UpgradeToLevel(blevel);
+                buffdata = new MemBaseBuff(buff, dura);
                 //buff.CheckBuffEffect(this, 1);
-                buff.OnAddBuff(self);
-                buffDict.Add(buffId, buff);
+                buffdata.OnAddBuff(self);
+                buffDict.Add(buffId, buffdata);
             }
         }
 
@@ -177,11 +182,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                     index++;
                 } 
             }
-        }
-
-        public void AddImmuneRate(int buffId, double rate)
-        {
-            immuneBuffDict[buffId] = rate;
         }
 
         public void CheckRecoverOnHit()
