@@ -56,7 +56,14 @@ namespace TaleofMonsters.Config
                     {
                         if (attdef != 0)
                         {
-                            modify += (float)attdef * 220 / 10000;
+                            modify += (float)attdef * 440 / 10000;
+                        }
+                    }
+                    foreach (var buffRate in monsterConfig.BuffImmune)//属性克制的加成
+                    {
+                        if (buffRate != 0)
+                        {
+                            modify += (float)buffRate * 250 / 10000; 
                         }
                     }
                     card.Quality = GetCardQual(modify);
