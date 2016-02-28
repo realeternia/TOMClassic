@@ -18,7 +18,7 @@ namespace TaleofMonsters.DataType.Skills
 
         public static int GetHit(LiveMonster src, LiveMonster dest)
         {
-            int rhit = GameConstants.DefaultHitRate + src.RealHit - dest.RealDHit;
+            int rhit = GameConstants.DefaultHitRate + (src.RealHit - dest.RealDHit)*GameConstants.HitToRate;
             if (!src.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
             {
                 src.SkillManager.CheckHit(src, dest, ref rhit);

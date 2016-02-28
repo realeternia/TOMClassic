@@ -35,9 +35,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                         BattleManager.Instance.MissileQueue.Add(mi);
                     }
 
-                    if (monster.RealSpd > 10)//会返回一些ats
+                    if (monster.RealSpd != 0)//会返回一些ats
                     {
-                        monster.AddActionRate((float)(monster.RealSpd - 10) / monster.RealSpd);
+                        monster.AddActionRate((float)(monster.RealSpd ) * GameConstants.SpdToRate/100);
                     }
                 }
                 else if (monster.ReadMov>0)//判定是否需要移到
