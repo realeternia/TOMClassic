@@ -31,8 +31,6 @@ namespace ConfigDatas
         void BreakWeapon();
         void WeaponReturn(int type);
         void AddRandSkill();
-        void AddImmune(int buffId);
-        void AddImmuneRate(int buffId, double rate);
         void AddSpecialMark(SkillMarks mark);
         int GetMonsterCountByRace(int rid);
         int GetMonsterCountByType(int type);		

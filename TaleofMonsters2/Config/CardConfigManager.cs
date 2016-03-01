@@ -46,27 +46,7 @@ namespace TaleofMonsters.Config
                     card.Cost = monsterConfig.Cost;
                     card.Star = monsterConfig.Star;
                     card.Name = monsterConfig.Name;
-                    float modify = monsterConfig.Modify;
-                    for (int i = 0; i < monsterConfig.Skills.Count;i++ )
-                    {
-                        RLVector3 skill = monsterConfig.Skills[i];
-                        modify += (float)ConfigData.GetSkillConfig(skill.X).Mark*skill.Y/10000;
-                    }//技能修正下modify
-                    foreach (var attdef in monsterConfig.AttrDef)//属性克制的加成
-                    {
-                        if (attdef != 0)
-                        {
-                            modify += (float)attdef * 440 / 10000;
-                        }
-                    }
-                    foreach (var buffRate in monsterConfig.BuffImmune)//属性克制的加成
-                    {
-                        if (buffRate != 0)
-                        {
-                            modify += (float)buffRate * 250 / 10000; 
-                        }
-                    }
-                    card.Quality = GetCardQual(modify);
+                    card.Quality = GetCardQual((float)monsterConfig.Sum);
                     cardConfigDataDict.Add(monsterConfig.Id, card);
                 }
                 foreach (WeaponConfig weaponConfig in ConfigDatas.ConfigData.WeaponDict.Values)
