@@ -8,3 +8,8 @@ E:\fish\Trunk\Tool\ExcelToCsv\obj\Debug\ExcelToCsv.pdb
 E:\fish\Trunk\Tool\ExcelToCsv\bin\Debug\ExcelToCsv.exe
 E:\fish\Trunk\Tool\ExcelToCsv\bin\Debug\ExcelToCsv.pdb
 E:\fish\Trunk\Tool\ExcelToCsv\obj\Debug\ExcelToCsv.csprojResolveAssemblyReference.cache
+F:\TOMClassicGit\Tool\ExcelToCsv\obj\Debug\ExcelToCsv.exe
+F:\TOMClassicGit\Tool\ExcelToCsv\obj\Debug\ExcelToCsv.pdb
+F:\TOMClassicGit\Tool\ExcelToCsv\bin\Debug\ExcelToCsv.exe
+F:\TOMClassicGit\Tool\ExcelToCsv\bin\Debug\ExcelToCsv.pdb
+F:\TOMClassicGit\Tool\ExcelToCsv\obj\Debug\ExcelToCsv.csprojResolveAssemblyReference.cache

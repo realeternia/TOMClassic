@@ -106,7 +106,7 @@ namespace ExcelToCsv
                     }
                   
                     swTotal.WriteLine(string.Format("\t\t\t{0}Dict.Add({1}, new {0}Config({1}{2}));", keyname,
-                       mainId, GetString(tb.Rows[i].ItemArray, tb.Rows[1].ItemArray)));
+                       mainId, GetString(tb.Rows[i].ItemArray, tb.Rows[1].ItemArray, tb.Rows[2].ItemArray)));
                 }
             }
 
@@ -126,19 +126,24 @@ namespace ExcelToCsv
             sw.WriteLine("{");
             sw.WriteLine("\tpublic class " + keyname + "Config");
             sw.WriteLine("\t{");
-            string[] infoStr;
-            infoStr = new string[infos.Length];
+            List<string> infoStr = new List<string>();
             for (int i = 0; i < infos.Length; i++)
             {
+                if (infos[i].ToString()[0] == '~')
+                    continue;
+
                 sw.WriteLine("\t\tpublic {0} {1};", ConvertType(types[i]), infos[i]);
-                infoStr[i] = ConvertType(types[i]) + " " + infos[i];
+                infoStr.Add( ConvertType(types[i]) + " " + infos[i]);
             }
             sw.WriteLine("\t\tpublic " + keyname + "Config(){}");
 
-            sw.WriteLine("\t\tpublic " + keyname + "Config(" + string.Join(",", infoStr) + ")");
+            sw.WriteLine("\t\tpublic " + keyname + "Config(" + string.Join(",", infoStr.ToArray()) + ")");
             sw.WriteLine("\t\t{");
             for (int i = 0; i < infos.Length; i++)
             {
+                if (infos[i].ToString()[0] == '~')
+                    continue;
+
                 sw.WriteLine("\t\t\tthis.{0}= {0};", infos[i]);
             }
             sw.WriteLine("\t\t}");
@@ -179,37 +184,44 @@ namespace ExcelToCsv
             return false;
         }
 
-        private static string GetString(object[] datas,object[] types)
+        private static string GetString(object[] datas, object[] types, object[] names)
         {
-            string[] strs=new string[datas.Length];
+            List<string> strs=new List<string>();
             for (int i = 1; i < datas.Length; i++)
             {
+                var nameStr = names[i].ToString();
+                if (nameStr[0] == '~')
+                {
+                    continue;
+                }
+
                 var typeStr = types[i].ToString();
+                string result;
                 if (NeedParse(typeStr))
                 {
-                    strs[i] = string.Format("{0}.Parse(\"{1}\")", types[i], datas[i]);
+                    result = string.Format("{0}.Parse(\"{1}\")", types[i], datas[i]);
                 }
                 else if (typeStr == "BuffEffectDelegate")
                 {
-                    strs[i] = datas[i].ToString() == ""
+                    result = datas[i].ToString() == ""
                                   ? "null"
                                   : string.Format("delegate(IMonster o){{{0}}}", datas[i]);
                 }
                 else if (typeStr == "SkillInitialEffectDelegate")
                 {
-                    strs[i] = datas[i].ToString() == ""
+                    result = datas[i].ToString() == ""
                                   ? "null"
                                   : string.Format("delegate(IMonster s,int lv){{{0}}}", datas[i]);
                 }
                 else if (typeStr == "SkillHitEffectDelegate")
                 {
-                    strs[i] = datas[i].ToString() == ""
+                    result = datas[i].ToString() == ""
                                   ? "null"
                                   : string.Format("delegate(IMonster s,IMonster d,ref int hit,int lv){{{0}}}", datas[i]);
                 }
                 else if (typeStr == "SkillDamageEffectDelegate")
                 {
-                    strs[i] = datas[i].ToString() == ""
+                    result = datas[i].ToString() == ""
                                   ? "null"
                                   : string.Format(
                                       "delegate(IMonster s,IMonster d,bool isActive,HitDamage damage, ref int minDamage, ref bool deathHit,int lv){{{0}}}",
@@ -217,7 +229,7 @@ namespace ExcelToCsv
                 }
                 else if (typeStr == "SkillAfterHitEffectDelegate")
                 {
-                    strs[i] = datas[i].ToString() == ""
+                    result = datas[i].ToString() == ""
                                   ? "null"
                                   : string.Format(
                                       "delegate(IMonster s,IMonster d,HitDamage damage, bool deadHit,int lv){{{0}}}",
@@ -225,7 +237,7 @@ namespace ExcelToCsv
                 }
                 else if (typeStr == "SkillBurstCheckDelegate")
                 {
-                    strs[i] = datas[i].ToString() == ""
+                    result = datas[i].ToString() == ""
                                   ? "null"
                                   : string.Format(
                                       "delegate(IMonster s,IMonster d,bool isActive){{if({0})return true;return false;}}",
@@ -233,13 +245,13 @@ namespace ExcelToCsv
                 }
                 else if (typeStr == "SkillTimelyEffectDelegate")
                 {
-                    strs[i] = datas[i].ToString() == ""
+                    result = datas[i].ToString() == ""
                                   ? "null"
                                   : string.Format("delegate(IMonster s,int lv, ref bool skip){{{0}}}", datas[i]);
                 }
                 else if (typeStr == "SpellEffectDelegate")
                 {
-                    strs[i] = datas[i].ToString() == ""
+                    result = datas[i].ToString() == ""
                                   ? "null"
                                   : string.Format(
                                       "delegate(ISpell s, IMap m, IPlayer p, IPlayer r, IMonster t,System.Drawing.Point mouse,int lv){{{0}}}",
@@ -247,7 +259,7 @@ namespace ExcelToCsv
                 }
                 else if (typeStr == "SpellTrapAddCardDelegate")
                 {
-                    strs[i] = datas[i].ToString() == ""
+                    result = datas[i].ToString() == ""
                                   ? "null"
                                   : string.Format(
                                       "delegate(IPlayer p, IPlayer r, ITrap t, int cid, int id, int type){{{0}}}",
@@ -255,7 +267,7 @@ namespace ExcelToCsv
                 }
                 else if (typeStr == "SpellTrapSummonDelegate")
                 {
-                    strs[i] = datas[i].ToString() == ""
+                    result = datas[i].ToString() == ""
                                   ? "null"
                                   : string.Format(
                                       "delegate(IPlayer p, IPlayer r, ITrap t, IMonster m,int lv){{{0}}}",
@@ -265,11 +277,11 @@ namespace ExcelToCsv
                 {
                     if (datas[i].ToString() == "")
                     {
-                        strs[i] = "";
+                        result = "";
                     }
                     else
                     {
-                        strs[i] = datas[i].ToString();
+                        result = datas[i].ToString();
                         Regex regex = new Regex(@"{.*?}");
                         MatchCollection mc = regex.Matches(datas[i].ToString());
                         int index = 0;
@@ -281,50 +293,51 @@ namespace ExcelToCsv
                             {
                                 datas2[index] = match.Value.Substring(1, match.Value.Length - 2);
 
-                                int pindex = strs[i].IndexOf(match.Value);
-                                strs[i] = strs[i].Substring(0, pindex) + "{" + index++ + ":0}" +
-                                          strs[i].Substring(pindex + match.Value.Length);
+                                int pindex = result.IndexOf(match.Value);
+                                result = result.Substring(0, pindex) + "{" + index++ + ":0}" +
+                                          result.Substring(pindex + match.Value.Length);
                             }
-                            strs[i] = string.Format("{0},{1}", strs[i], string.Join(",", datas2));
+                            result = string.Format("{0},{1}", result, string.Join(",", datas2));
                         }
                         else
                         {
-                            strs[i] = "\"" + strs[i] + "\"";
+                            result = "\"" + result + "\"";
                         }
                     }
-                    strs[i] = string.Format("delegate(int lv){{ return string.Format({0});}}", strs[i]);
+                    result = string.Format("delegate(int lv){{ return string.Format({0});}}", result);
                 }
                 else if (typeStr == "string[]") //数组
                 {
                     string[] infos = datas[i].ToString().Split(';');
-                    strs[i] = datas[i].ToString() == ""
+                    result = datas[i].ToString() == ""
                                   ? string.Format("new {0}{{}}", types[i])
                                   : string.Format("new {0}{{\"{1}\"}}", types[i], string.Join("\",\"", infos));
                 }
                 else if (typeStr.Contains("[]")) //数组
                 {
                     string[] infos = datas[i].ToString().Split(';');
-                    strs[i] = datas[i].ToString() == ""
+                    result = datas[i].ToString() == ""
                                   ? string.Format("new {0}{{}}", types[i])
                                   : string.Format("new {0}{{{1}}}", types[i], string.Join(",", infos));
                 }
                 else if (typeStr == "Color")
                 {
                     string[] infos = datas[i].ToString().Split(';');
-                    strs[i] = datas[i].ToString() == ""
+                    result = datas[i].ToString() == ""
                                   ? string.Format("new {0}{{}}", types[i])
                                   : string.Format("new {0}{{{1}}}", types[i], string.Join(",", infos));
                 }
                 else if (typeStr == "string")
                 {
-                    strs[i] = "\"" + datas[i] + "\"";
+                    result = "\"" + datas[i] + "\"";
                 }
                 else//primitive type
                 {
-                    strs[i] = datas[i].ToString() == "" ? "0": datas[i].ToString();
+                    result = datas[i].ToString() == "" ? "0" : datas[i].ToString();
                 }
+                strs.Add(result);
             }
-            return string.Join(",", strs);
+            return ","+ string.Join(",", strs.ToArray());
         }
 
         public static DataSet GetExcelToDataTableBySheet(string fileFullPath)
