@@ -46,7 +46,7 @@ namespace TaleofMonsters.Config
                     card.Cost = monsterConfig.Cost;
                     card.Star = monsterConfig.Star;
                     card.Name = monsterConfig.Name;
-                    card.Quality = GetCardQual((float)monsterConfig.Sum);
+                    card.Quality = monsterConfig.Quality;
                     cardConfigDataDict.Add(monsterConfig.Id, card);
                 }
                 foreach (WeaponConfig weaponConfig in ConfigDatas.ConfigData.WeaponDict.Values)
@@ -59,7 +59,7 @@ namespace TaleofMonsters.Config
                     card.Cost = weaponConfig.Cost;
                     card.Star = weaponConfig.Star;
                     card.Name = weaponConfig.Name;
-                    card.Quality = GetCardQual(weaponConfig.Modify);
+                    card.Quality = weaponConfig.Quality;
                     cardConfigDataDict.Add(weaponConfig.Id, card);
                 }
                 foreach (SpellConfig spellConfig in ConfigDatas.ConfigData.SpellDict.Values)
@@ -72,7 +72,7 @@ namespace TaleofMonsters.Config
                     card.Cost = spellConfig.Cost;
                     card.Star = spellConfig.Star;
                     card.Name = spellConfig.Name;
-                    card.Quality = GetCardQual(((float)spellConfig.Mark-2000)/20 + spellConfig.Modify);
+                    card.Quality = spellConfig.Quality;
                     cardConfigDataDict.Add(spellConfig.Id, card);
                 }
             }
@@ -82,35 +82,6 @@ namespace TaleofMonsters.Config
                 return outData;
             }
             return new CardConfigData();
-        }
-
-        private static int GetCardQual(float modify)
-        {
-            if (modify > 10)
-            {
-                return CardQualityTypes.God;
-            }
-            if (modify >4)
-            {
-                return CardQualityTypes.Legend;
-            }
-            if (modify > 2)
-            {
-                return CardQualityTypes.Epic;
-            }
-            if (modify > 0)
-            {
-                return CardQualityTypes.Excel;
-            }
-            if (modify > -2.5)
-            {
-                return CardQualityTypes.Good;
-            }
-            if (modify > -10)
-            {
-                return CardQualityTypes.Common;
-            }
-            return CardQualityTypes.Trash;
         }
 
         private static Dictionary<int, List<CardAttr>> cardAttrDict = null;
