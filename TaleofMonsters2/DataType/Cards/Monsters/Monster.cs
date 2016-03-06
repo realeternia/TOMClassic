@@ -88,15 +88,15 @@ namespace TaleofMonsters.DataType.Cards.Monsters
 
         public void UpgradeToLevel(int level)
         {
-            int standardValue = (30 + MonsterConfig.Star * 10) * (level*8 + 92) / 100 * (100 + MonsterConfig.Modify) / 100;
+            int standardValue = (30 + MonsterConfig.Star * 10) * (level*8 + 92) / 100 * (200 + MonsterConfig.Modify) / 200;
             Atk = standardValue * (100 + MonsterConfig.AtkP) / 100; //200
             Hp = standardValue * (100 + MonsterConfig.VitP) / 100 * 5; //200
-            if (Range>10)
+            if (Range!=10)
             {
                 Atk = (int)(Atk * CardAssistant.GetCardFactorOnRange(Range));
                 Hp = (int)(Hp * CardAssistant.GetCardFactorOnRange(Range));
             }
-            if (Mov > 10)
+            if (Mov != 10)
             {
                 Atk = (int)(Atk * CardAssistant.GetCardFactorOnMove(Range));
                 Hp = (int)(Hp * CardAssistant.GetCardFactorOnMove(Range));
