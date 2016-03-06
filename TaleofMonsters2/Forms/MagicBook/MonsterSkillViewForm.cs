@@ -250,7 +250,12 @@ namespace TaleofMonsters.Forms.MagicBook
                     Graphics g = Graphics.FromImage(tempImage);
                     for (int i = former - 1; i < former + cardLimit - 1; i++)
                     {
-                        g.DrawImage(SkillBook.GetSkillImage(skills[i]), (i % xCount) * cardWidth, ((i / xCount) % yCount) * cardHeight, cardWidth, cardHeight);
+                        var cardImg = SkillBook.GetSkillImage(skills[i]);
+                        if (cardImg == null)
+                        {
+                            continue;
+                        }
+                        g.DrawImage(cardImg, (i % xCount) * cardWidth, ((i / xCount) % yCount) * cardHeight, cardWidth, cardHeight);
                     }
                     g.Dispose();
                     isDirty = false;

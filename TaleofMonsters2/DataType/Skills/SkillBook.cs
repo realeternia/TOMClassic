@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using NarlonLib.Log;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
@@ -51,15 +52,7 @@ namespace TaleofMonsters.DataType.Skills
 
         static public Image GetSkillImage(int id)
         {
-            SkillConfig skillConfig = ConfigData.GetSkillConfig(id);
-
-            string fname = string.Format("Skill/{0}", skillConfig.Icon);
-            if (!ImageManager.HasImage(fname))
-            {
-                Image image = PicLoader.Read("Skill", string.Format("{0}.JPG", skillConfig.Icon));
-                ImageManager.AddImage(fname, image);
-            }
-            return ImageManager.GetImage(fname);
+            return GetSkillImage(id,64,64);
         }
 
         static public Image GetSkillImage(int id, int width, int height)
@@ -70,6 +63,23 @@ namespace TaleofMonsters.DataType.Skills
             if (!ImageManager.HasImage(fname))
             {
                 Image image = PicLoader.Read("Skill", string.Format("{0}.JPG", skillConfig.Icon));
+                if (image == null)
+                {
+                    NLog.Error(string.Format("GetSkillImage {0} {1} not found", id, fname));
+                    return null;
+                }
+
+#if DEBUG
+                if (skillConfig.Remark.Contains("未完成"))
+                {
+                    Graphics g = Graphics.FromImage(image);
+                    var icon = PicLoader.Read("System", "NotFinish2.PNG");
+                    g.DrawImage(icon, 0, 0, 64, 64);
+                    g.Save();
+                    g.Dispose();
+                }
+#endif
+
                 if (image.Width != width || image.Height != height)
                 {
                     image = image.GetThumbnailImage(width, height, null, new IntPtr(0));
