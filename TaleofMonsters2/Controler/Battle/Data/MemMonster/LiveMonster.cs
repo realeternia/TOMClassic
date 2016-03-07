@@ -715,11 +715,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             set { canAttack = value; }
         }
 
-        public bool IsShooter
-        {
-            get { return HasSkill(SkillConfig.Indexer.ShootSkill); }
-        }
-
         public bool IsElement(string ele)
         {
             return (int) Enum.Parse(typeof (CardElements), ele) == Avatar.MonsterConfig.Type;
