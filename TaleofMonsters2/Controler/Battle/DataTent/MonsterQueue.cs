@@ -85,6 +85,19 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             return null;
         }
 
+        public LiveMonster GetKingTower(bool isLeft)
+        {
+            for (int i = 0; i < monsters.Count; i++)
+            {
+                var lm = monsters[i];
+                if (lm.IsLeft == isLeft && lm.Type == (int)CardTypeSub.Hero)
+                {
+                    return lm;
+                }
+            }
+            return null;
+        }
+
         public void NextAction()
         {
             LeftCount = 0;

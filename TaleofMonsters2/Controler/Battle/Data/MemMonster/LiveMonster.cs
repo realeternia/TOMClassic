@@ -322,6 +322,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                         UserProfile.Profile.OnKillMonster(Avatar.MonsterConfig.Star, Avatar.MonsterConfig.Type, Avatar.MonsterConfig.Type);
                     }
                 }
+                if (Avatar.Id == MonsterConfig.Indexer.ArrowTowerId)
+                {
+                    var tower = BattleManager.Instance.MonsterQueue.GetKingTower(IsLeft);
+                    if (tower != null)
+                    {
+                        tower.CanAttack = true;
+                    }
+                }
                 BattleManager.Instance.BattleInfo.GetPlayer(!IsLeft).Kill++;
             }
 
@@ -347,25 +355,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
             BuffManager.BuffCount();
 
-            //bool isLeft = IsLeft;
-            //if (BuffManager.HasBuff(BuffEffectTypes.Rebel))//控制
+            //if (SkillManager.CheckSpecial())
             //{
-            //    isLeft = !isLeft;
+            //    return;//特殊技能触发
             //}
-            if (AddAts())
-            {
-                if (SkillManager.CheckSpecial())
-                {
-                    return;//特殊技能触发
-                }
 
-                if (!CanAttack)
-                {
-                    return;
-                }
-
-                aiController.CheckAction();
-            }
+            aiController.CheckAction();
         }
 
         public bool AddAts()
@@ -706,15 +701,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             get { return BuffManager.IsTileMatching; }
         }
 
-        public bool CanAttack
-        {
-            get { 
-                if (!IsHero) 
-                return canAttack;
-                return WeaponId != 0 && TWeapon.IsAttackWeapon;//英雄只有拿武器才能攻击
-            }
-            set { canAttack = value; }
-        }
+        public bool CanAttack { get; set; }
 
         public bool IsElement(string ele)
         {

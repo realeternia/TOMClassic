@@ -23,40 +23,46 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             var nearestEnemy = BattleManager.Instance.MemMap.GetNearestMonster(monster.IsLeft, "E", monster.Position);
             if (nearestEnemy != null)
             {
-                if (CanAttack(nearestEnemy))
+                if (monster.CanAttack && CanAttack(nearestEnemy))
                 {
-                    if (monster.RealRange <= GameConstants.MaxMeleeAtkRange)
+                    if (monster.AddAts())
                     {
-                        monster.HitTarget(nearestEnemy.Id);//近战
-                    }
-                    else
-                    {
-                        Missile mi = new Missile(monster.Arrow, monster, nearestEnemy);//todo
-                        BattleManager.Instance.MissileQueue.Add(mi);
-                    }
+                        if (monster.RealRange <= GameConstants.MaxMeleeAtkRange)
+                        {
+                            monster.HitTarget(nearestEnemy.Id);//近战
+                        }
+                        else
+                        {
+                            Missile mi = new Missile(monster.Arrow, monster, nearestEnemy);//todo
+                            BattleManager.Instance.MissileQueue.Add(mi);
+                        }
 
-                    if (monster.RealSpd != 0)//会返回一些ats
-                    {
-                        monster.AddActionRate((float)(monster.RealSpd ) * GameConstants.SpdToRate/100);
+                        if (monster.RealSpd != 0)//会返回一些ats
+                        {
+                            monster.AddActionRate((float)(monster.RealSpd) * GameConstants.SpdToRate / 100);
+                        }
                     }
                 }
                 else if (monster.ReadMov>0)//判定是否需要移到
                 {
-                    var moveDis = BattleManager.Instance.MemMap.CardSize;
-                    if (nearestEnemy.Position.X != monster.Position.X)
+                    if (monster.AddAts())
                     {
-                        var x = monster.Position.X + (nearestEnemy.Position.X > monster.Position.X ? moveDis : -moveDis);
-                        BattleLocationManager.SetToPosition(monster, new Point(x, monster.Position.Y));
-                    }
-                    else
-                    {
-                        var y = monster.Position.Y + (nearestEnemy.Position.Y > monster.Position.Y ? moveDis : -moveDis);
-                        BattleLocationManager.SetToPosition(monster, new Point(monster.Position.X, y));
-                    }
+                        var moveDis = BattleManager.Instance.MemMap.CardSize;
+                        if (nearestEnemy.Position.X != monster.Position.X)
+                        {
+                            var x = monster.Position.X + (nearestEnemy.Position.X > monster.Position.X ? moveDis : -moveDis);
+                            BattleLocationManager.SetToPosition(monster, new Point(x, monster.Position.Y));
+                        }
+                        else
+                        {
+                            var y = monster.Position.Y + (nearestEnemy.Position.Y > monster.Position.Y ? moveDis : -moveDis);
+                            BattleLocationManager.SetToPosition(monster, new Point(monster.Position.X, y));
+                        }
 
-                    if (monster.ReadMov>10)//会返回一些ats
-                    {
-                        monster.AddActionRate((float)(monster.ReadMov-10)/monster.ReadMov);
+                        if (monster.ReadMov > 10)//会返回一些ats
+                        {
+                            monster.AddActionRate((float)(monster.ReadMov - 10) / monster.ReadMov);
+                        }
                     }
                 }
             }

@@ -167,6 +167,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             var id = World.WorldInfoManager.GetCardFakeId();
             var heroData = new Monster(MonsterConfig.Indexer.KingTowerId);
             LiveMonster lm = new LiveMonster(id, heroData.Level, heroData, new Point(x*size,y*size), IsLeft);
+            lm.CanAttack = false;
             BattleManager.Instance.MonsterQueue.Add(lm);
 
             id = World.WorldInfoManager.GetCardFakeId();
