@@ -16,7 +16,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
     internal class MemRowColumnMap:IMap
     {
         private const int stageWidth = 880;
-        private const int stageHeight = 400;
+        private const int stageHeight = 396;
         private AutoDictionary<int, int> tiles;
 
         public int CardSize { get; private set; }

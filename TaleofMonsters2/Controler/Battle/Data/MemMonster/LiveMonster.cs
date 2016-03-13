@@ -48,7 +48,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public int HpReg { get; set; }
         public int GhostTime { get; set; }
         public Point Position { get; set; }
-        public bool IsHero { get; set; }
+        public bool IsHero { get { return Avatar.MonsterConfig.Type == (int) CardTypeSub.Hero; } }
         public IMap Map { get { return BattleManager.Instance.MemMap; } }
         public bool IsLeft { get; set; }
         public int Action { get; set; }
@@ -300,6 +300,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                     }
                 }
                 BattleManager.Instance.BattleInfo.GetPlayer(!IsLeft).HeroKill++;
+                OwnerPlayer.IsAlive = false;
             }
             else
             {
@@ -467,7 +468,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
             if (!IsGhost)
             {
-                var monImg = Avatar.MonsterConfig.Type == (int)CardTypeSub.Hero ? OwnerPlayer.HeroImage : MonsterBook.GetMonsterImage(Avatar.Id, 100, 100);
+                var monImg = MonsterBook.GetMonsterImage(Avatar.Id, 100, 100);
                 if (monImg != null)
                 {
                     g.DrawImage(monImg, 0, 0, 100, 100);

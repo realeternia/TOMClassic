@@ -21,24 +21,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
             DeckCard[] cds = DeckBook.GetDeckByName(deck, Level);
             Cards = new ActiveCards(cds);
-            PlayerAttr attr = new PlayerAttr();
-            if (peopleConfig.Job != 0)
-            {
-             //   EAddonBook.UpdateMasterData(State.Masterskills.Keys(), State.Masterskills.Values());
-                HeroData = new Monster(MonsterConfig.Indexer.HeroCardId);
-                HeroData.Name = peopleConfig.Name;
-                HeroData.UpgradeToLevel(Cards.GetAvgLevel());
-
-                JobConfig jobConfig = ConfigDatas.ConfigData.GetJobConfig(peopleConfig.Job);
-                HeroImage = PicLoader.Read("Hero", string.Format("{0}.JPG", jobConfig.ProtoImage));
-            }
-            else
-            {
-                HeroData = new Monster(peopleConfig.KingCard);
-                HeroData.UpgradeToLevel(Cards.GetAvgLevel());
-                HeroImage = PicLoader.Read("Monsters", string.Format("{0}.JPG", HeroData.MonsterConfig.Icon));
-            }
-            attr.ModifyMonsterData(HeroData);
+          //  PlayerAttr attr = new PlayerAttr();
+          //  attr.ModifyMonsterData(HeroData);
             InitBase();
         }
         

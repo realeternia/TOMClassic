@@ -103,7 +103,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             {
                 tipData.AddImageNewLine(liveMonster.TWeapon.GetImage(16, 16));
 
-                string tp = string.Format("{0}({1}/{2}):{3}", liveMonster.TWeapon.Avatar.WeaponConfig.Name, liveMonster.TWeapon.Life, liveMonster.TWeapon.Avatar.Dura, liveMonster.TWeapon.Avatar);
+                string tp = string.Format("{0}({1}/{2})", liveMonster.TWeapon.Avatar.WeaponConfig.Name, liveMonster.TWeapon.Life, liveMonster.TWeapon.Avatar.Dura);
+                //todo weapon效果没有
                 tipData.AddText(tp, "White");
             }
 

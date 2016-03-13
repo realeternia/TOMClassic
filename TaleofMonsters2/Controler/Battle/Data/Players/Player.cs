@@ -38,6 +38,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         private bool isPlayerControl; //是否玩家控制
 
         public List<int> HeroSkillList = new List<int>();
+        public bool IsAlive { get; set; }//是否活着
 
         #region 属性
 
@@ -62,12 +63,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         {
             get { return CardsDesk.GetSelectId(); }
         }
-
-        public Monster HeroData { get; protected set; }
-
-        public LiveMonster Hero { get; set; }
-
-        public Image HeroImage { get; protected set; }
 
         public PlayerState State { get; protected set; }
 
@@ -102,6 +97,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public Player(bool playerControl, bool isLeft)
         {
             IsLeft = isLeft;
+            IsAlive = true;
             isPlayerControl = playerControl;
             CardManager = new CardManager(this);
             EnergyGenerator = new EnergyGenerator();
@@ -164,14 +160,24 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void AddHeroUnit()
         {
-            if (HeroData != null)
-            {
-                var id = World.WorldInfoManager.GetCardFakeId();
-                LiveMonster lm = new LiveMonster(id, HeroData.Level, HeroData, BattleLocationManager.GetHeroPoint(IsLeft, id), IsLeft);
-                lm.IsHero = true;
-                BattleManager.Instance.MonsterQueue.Add(lm);
-                Hero = lm;
-            }
+            int x = IsLeft ? 0 : BattleManager.Instance.MemMap.ColumnCount - 1;
+            int y = BattleManager.Instance.MemMap.RowCount / 2;
+            int size = BattleManager.Instance.MemMap.CardSize;
+
+            var id = World.WorldInfoManager.GetCardFakeId();
+            var heroData = new Monster(MonsterConfig.Indexer.KingTowerId);
+            LiveMonster lm = new LiveMonster(id, heroData.Level, heroData, new Point(x*size,y*size), IsLeft);
+            BattleManager.Instance.MonsterQueue.Add(lm);
+
+            id = World.WorldInfoManager.GetCardFakeId();
+            var arrowData = new Monster(MonsterConfig.Indexer.ArrowTowerId);
+            lm = new LiveMonster(id, heroData.Level, arrowData, new Point((IsLeft ? (x + 2) : (x - 2)) * size, (y - 3) * size), IsLeft);
+            BattleManager.Instance.MonsterQueue.Add(lm);
+
+            id = World.WorldInfoManager.GetCardFakeId();
+            arrowData = new Monster(MonsterConfig.Indexer.ArrowTowerId);
+            lm = new LiveMonster(id, heroData.Level, arrowData, new Point((IsLeft ? (x + 2) : (x - 2)) * size, (y + 3) * size), IsLeft);
+            BattleManager.Instance.MonsterQueue.Add(lm);
         }
         
         public void AddMana(IMonster mon, int type, double addon)

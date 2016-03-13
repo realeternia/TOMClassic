@@ -1,9 +1,7 @@
 ﻿using System;
 using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.Decks;
 using System.Drawing;
@@ -34,12 +32,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             CalculateEquipAndSkill(UserProfile.InfoEquip.Equipon, attr, energyRate);
             EnergyGenerator.SetRate(energyRate);
 
-            HeroData = new Monster(MonsterConfig.Indexer.HeroCardId);
-            HeroData.Name = UserProfile.Profile.Name;
-            HeroData.UpgradeToLevel(Cards.GetAvgLevel());
-            attr.ModifyMonsterData(HeroData);
-            JobConfig jobConfig = ConfigDatas.ConfigData.GetJobConfig( UserProfile.Profile.InfoBasic.Job);
-            HeroImage = PicLoader.Read("Hero", string.Format("{0}.JPG", jobConfig.ProtoImage));
             InitBase();
         }
 

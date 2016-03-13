@@ -19,9 +19,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
             PlayerAttr attr = new PlayerAttr();
             Cards = cpcards.GetCopy();
-            HeroData = new Monster(peopleConfig.KingCard);//todo 用attr构造
-            HeroData.UpgradeToLevel(Cards.GetAvgLevel());
-            HeroImage = PicLoader.Read("Monsters", string.Format("{0}.JPG", HeroData.MonsterConfig.Icon));
             InitBase();
         }
     }

@@ -24,20 +24,6 @@ namespace TaleofMonsters.Controler.Battle.Tool
             }
         }
 
-        public static Point GetHeroPoint(bool isLeft, int id) //初始化使用
-        {
-            int size = BattleManager.Instance.MemMap.CardSize;
-            while (true)
-            {
-                int x = isLeft ? 0 : BattleManager.Instance.MemMap.ColumnCount-1;
-                int y = BattleManager.Instance.MemMap.RowCount/2;
-                if (BattleManager.Instance.MemMap.Cells[x, y].Owner == 0)
-                {
-                    return new Point(x * size, y * size);
-                }
-            }
-        }
-
         public static LiveMonster GetPlaceMonster(int x, int y)
         {
             if (x < 0 || y < 0 || x >= BattleManager.Instance.MemMap.StageWidth || y >= BattleManager.Instance.MemMap.StageHeight)

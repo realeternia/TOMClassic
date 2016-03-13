@@ -189,7 +189,7 @@ namespace TaleofMonsters.Controler.Battle
                 if (IsGamePaused)
                     return;
 
-                if (!BattleManager.Instance.PlayerManager.LeftPlayer.Hero.IsAlive || !BattleManager.Instance.PlayerManager.RightPlayer.Hero.IsAlive)
+                if (!BattleManager.Instance.PlayerManager.LeftPlayer.IsAlive || !BattleManager.Instance.PlayerManager.RightPlayer.IsAlive)
                 {
                     EndGame();
                     return;
@@ -219,7 +219,7 @@ namespace TaleofMonsters.Controler.Battle
                 StopGame();
                 lifeClock1.Invalidate();
                 lifeClock2.Invalidate();
-                BattleManager.Instance.BattleInfo.PlayerWin = !BattleManager.Instance.PlayerManager.RightPlayer.Hero.IsAlive;
+                BattleManager.Instance.BattleInfo.PlayerWin = !BattleManager.Instance.PlayerManager.RightPlayer.IsAlive;
                 BattleManager.Instance.BattleInfo.EndTime = DateTime.Now;
                 CloseForm();
             }
