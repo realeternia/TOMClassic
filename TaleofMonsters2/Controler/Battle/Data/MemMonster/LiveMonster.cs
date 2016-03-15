@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
+using NarlonLib.Log;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
@@ -37,7 +38,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         private List<MonsterAuro> auroList;//光环
         private int[] antiMagic;//魔法抗性
-        private bool canAttack;//雕像会设成false
         private int roundMark;
         
         #region 属性
@@ -397,9 +397,20 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 damage.SetDamage(DamageTypes.Magic,Math.Max(damage.Value*(100 - antiMagic[damage.Element - 1])/100,0));
             }
         }
+
+        public bool CanAddWeapon()
+        {
+            return !Avatar.MonsterConfig.IsBuilding && !IsGhost;
+        }
         
         public void AddWeapon(TrueWeapon tw)
         {
+            if (Avatar.MonsterConfig.IsBuilding)
+            {
+                NLog.Warn(string.Format("AddWeapon to building {0}", Avatar.Id));
+                return;
+            }
+
             if (TWeapon.CardId > 0)
                 WeaponAssistant.CheckWeaponEffect(this, TWeapon, -1);
             TWeapon = tw;

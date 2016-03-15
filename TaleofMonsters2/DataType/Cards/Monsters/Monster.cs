@@ -98,8 +98,8 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             }
             if (Mov != 10)
             {
-                Atk = (int)(Atk * CardAssistant.GetCardFactorOnMove(Range));
-                Hp = (int)(Hp * CardAssistant.GetCardFactorOnMove(Range));
+                Atk = (int)(Atk * CardAssistant.GetCardFactorOnMove(Mov));
+                Hp = (int)(Hp * CardAssistant.GetCardFactorOnMove(Mov));
             }
 
             Level = level;

@@ -381,7 +381,7 @@ namespace TaleofMonsters.Controler.Battle
                 }
                 else if (leftSelectCard.CardType == CardTypes.Weapon)
                 {
-                    if (lm != null && !lm.IsGhost && lm.IsLeft)
+                    if (lm != null && lm.CanAddWeapon() && lm.IsLeft)
                     {
                         cursorname = "equip";
                     }

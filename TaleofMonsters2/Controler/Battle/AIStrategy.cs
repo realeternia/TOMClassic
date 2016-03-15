@@ -58,6 +58,9 @@ namespace TaleofMonsters.Controler.Battle
                         LiveMonster monster =BattleManager.Instance.MonsterQueue[i];
                         if (!monster.IsGhost && monster.IsLeft == isLeft && monster.TWeapon.CardId == 0 && monster.Life > monster.MaxHp / 2)
                         {
+                            if (!monster.CanAddWeapon())//建筑无法使用武器
+                                continue;
+
                             if (tar == -1 || monster.Avatar.MonsterConfig.Star >BattleManager.Instance.MonsterQueue[tar].Avatar.MonsterConfig.Star)
                                 tar = i;
                         }
