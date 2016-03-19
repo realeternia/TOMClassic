@@ -38,8 +38,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         private List<MonsterAuro> auroList;//光环
         private int[] antiMagic;//魔法抗性
-        private int roundMark;
-        
+        private int roundPast; //经过的调用数，每次调用大约200ms
+        private float pastRoundTotal; //消耗的时间片，累计到1清理一次
+
         #region 属性
 
         public int Id { get; private set; }
@@ -231,7 +232,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             Position = point;
             IsLeft = isLeft;
             Action = 0;
-            roundMark = 0;
+            roundPast = 0;
             SkillManager = new SkillManager(this);
             TWeapon = new TrueWeapon();
             AttackType = (int)CardElements.None;
@@ -341,18 +342,28 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
         }
 
-        public void Next(TileMatchResult tileMatching)//附带判断地形因素
+        public void Next(float pastRound, TileMatchResult tileMatching)//附带判断地形因素
         {
-            roundMark++;
+            roundPast++;
+            pastRoundTotal += pastRound;
+
             hpBar.Update();
-            if ((roundMark % 4) == 3)
+            SkillAssistant.CheckAuroState(this, tileMatching);
+
+            if (pastRoundTotal >= 1)
             {
-                SkillAssistant.CheckAuroState(this, tileMatching);
+                pastRoundTotal -= 1;
+                if (HpReg > 0)
+                {
+                    Life += HpReg;
+                }
+
+                if (Avatar.MonsterConfig.LifeTime > 0)
+                {
+                    Life -= MaxHp * (GameConstants.RoundTime/1000) / Avatar.MonsterConfig.LifeTime;
+                }
             }
-            if ((roundMark % 100) == 0)//一回合
-            {
-                Life += HpReg;
-            }
+
             BuffManager.BuffCount();
 
             //if (SkillManager.CheckSpecial())
@@ -514,7 +525,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                     g.DrawImage(TWeapon.GetImage(32, 32), 5, 60, 32, 32);
                     g.DrawRectangle(Pens.Lime, 5, 60, 32, 32);
                 }
-                BuffManager.DrawBuff(g, roundMark / 20);
+                BuffManager.DrawBuff(g, roundPast / 20);
             }
             else
             {

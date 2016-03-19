@@ -59,17 +59,15 @@ namespace TaleofMonsters.Controler.Battle.Tool
             EffectQueue.Next();
             MissileQueue.Next();
 
-            if (RoundMark % 4 == 0)
-            {
-                MonsterQueue.NextAction(); //1回合
-            }
-
             if (RoundMark % 4 == 0) //200ms
             {
-                float pastTime = (float)200 / GameConstants.RoundTime;
-                PlayerManager.Update(false, pastTime, BattleInfo.Round);
+                float pastRound = (float)200 / GameConstants.RoundTime;
 
-                Round += pastTime;
+                MonsterQueue.NextAction(pastRound); //1回合
+
+                PlayerManager.Update(false, pastRound, BattleInfo.Round);
+
+                Round += pastRound;
                 if (Round >= 1)
                 {
                     Round = 0;

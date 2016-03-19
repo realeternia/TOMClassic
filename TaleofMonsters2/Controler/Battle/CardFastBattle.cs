@@ -59,7 +59,7 @@ namespace TaleofMonsters.Controler.Battle
             while (true)
             {
                 roundMark++;
-               BattleManager.Instance.MonsterQueue.NextAction();
+                BattleManager.Instance.MonsterQueue.NextAction(0.01f);
                
                 if (BattleManager.Instance.MonsterQueue.LeftCount == 0 ||BattleManager.Instance.MonsterQueue.RightCount == 0)
                 {

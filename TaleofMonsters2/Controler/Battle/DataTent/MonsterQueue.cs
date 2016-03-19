@@ -98,7 +98,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             return null;
         }
 
-        public void NextAction()
+        public void NextAction(float pastRound)
         {
             LeftCount = 0;
             RightCount = 0;
@@ -150,8 +150,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
 
                 int tile = BattleManager.Instance.MemMap.GetMouseCell(roundMonster.Position.X, roundMonster.Position.Y).Tile;
                 TileMatchResult match = TileBook.MatchTile(tile,roundMonster.Avatar.MonsterConfig.Type);
-                roundMonster.Next(match);
-               
+                roundMonster.Next(pastRound, match);
             }
 
             foreach (var lm in toAdd)

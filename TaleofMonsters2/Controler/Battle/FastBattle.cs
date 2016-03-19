@@ -65,7 +65,7 @@ namespace TaleofMonsters.Controler.Battle
                 roundMark++;
                 if (roundMark % 2 == 0)
                 {
-                   BattleManager.Instance.MonsterQueue.NextAction();
+                   BattleManager.Instance.MonsterQueue.NextAction(0.01f);
                     if (BattleManager.Instance.MonsterQueue.LeftCount == 0 ||BattleManager.Instance.MonsterQueue.RightCount == 0)
                     {
                         EndGame();

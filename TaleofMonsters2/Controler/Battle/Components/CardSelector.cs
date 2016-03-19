@@ -84,7 +84,7 @@ namespace TaleofMonsters.Controler.Battle.Components
                 region = null;
                 isButtonFirstClick = false;
                 bitmapButton1.ForeColor = Color.Red;
-                bitmapButton1.Text = "进入游戏";
+                bitmapButton1.Text = @"进入游戏";
                 Invalidate();
             }
             else
