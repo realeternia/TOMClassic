@@ -366,10 +366,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
             BuffManager.BuffCount();
 
-            //if (SkillManager.CheckSpecial())
-            //{
-            //    return;//特殊技能触发
-            //}
+            if (SkillManager.CheckSpecial())
+            {
+                return;//特殊技能触发
+            }
 
             aiController.CheckAction();
         }

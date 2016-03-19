@@ -8,7 +8,7 @@ namespace ConfigDatas
     public delegate void SkillHitEffectDelegate(IMonster src, IMonster dest, ref int hit, int level);
     public delegate void SkillDamageEffectDelegate(IMonster src, IMonster dest, bool isActive, HitDamage damage, ref int minDamage, ref bool deathHit, int level);
     public delegate void SkillAfterHitEffectDelegate(IMonster src, IMonster dest, HitDamage damage, bool deadHit, int level);
-    public delegate void SkillTimelyEffectDelegate(IMonster src, int level, ref bool skipRound);
+    public delegate void SkillTimelyEffectDelegate(IMonster src, int level);
 
     public delegate void SpellEffectDelegate(ISpell spell,IMap map, IPlayer player, IPlayer rival, IMonster target, System.Drawing.Point mouse, int level);
 

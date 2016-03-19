@@ -247,7 +247,7 @@ namespace ExcelToCsv
                 {
                     result = datas[i].ToString() == ""
                                   ? "null"
-                                  : string.Format("delegate(IMonster s,int lv, ref bool skip){{{0}}}", datas[i]);
+                                  : string.Format("delegate(IMonster s,int lv){{{0}}}", datas[i]);
                 }
                 else if (typeStr == "SpellEffectDelegate")
                 {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
@@ -6,7 +7,9 @@ using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.DataType.Effects;
 using TaleofMonsters.DataType.Skills;
 using ConfigDatas;
+using NarlonLib.Core;
 using TaleofMonsters.Controler.Battle.Tool;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 
 namespace TaleofMonsters.Controler.Battle.Data
@@ -15,6 +18,8 @@ namespace TaleofMonsters.Controler.Battle.Data
     {
         private readonly Dictionary<int, bool> burst;
         private bool onAddTriggered;
+
+        private int lastCastSpecialTime; //上次施放special技能的时间
 
         public SkillSourceTypes Type { get; set; } //技能来源，天生/武器
         public int SkillId { get; private set; }
@@ -27,6 +32,7 @@ namespace TaleofMonsters.Controler.Battle.Data
             SkillId = skill.Id;
             Percent = per;
             burst= new Dictionary<int, bool>();
+            lastCastSpecialTime = TimeTool.DateTimeToUnixTime(DateTime.Now);
         }
 
         public LiveMonster Self { get; set; }
@@ -135,14 +141,21 @@ namespace TaleofMonsters.Controler.Battle.Data
                     return false;
                 }
 
-                bool skipRound = false;
-                SkillInfo.SkillConfig.CheckSpecial(Self, Level, ref skipRound);
+                int nowTime = TimeTool.DateTimeToUnixTime(DateTime.Now);
+                if (nowTime - lastCastSpecialTime < SkillInfo.SkillConfig.SpecialCd* GameConstants.RoundTime/1000)
+                {//in cd 
+                    return false;
+                }
+
+                lastCastSpecialTime = TimeTool.DateTimeToUnixTime(DateTime.Now);
+
+                SkillInfo.SkillConfig.CheckSpecial(Self, Level);
                 SendEffect();
                 if (SkillInfo.SkillConfig.Effect!="")
                 {
                     BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
                 }
-                return skipRound;
+                return true;
             }
             return false;
         }
