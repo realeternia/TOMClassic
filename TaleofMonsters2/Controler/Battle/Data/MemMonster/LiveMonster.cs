@@ -288,7 +288,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void OnDie()
         {
-            GhostTime = 1;
+            GhostTime = 1;//一回合ghost
             BattleManager.Instance.MemMap.GetMouseCell(Position.X,Position.Y).UpdateOwner(-Id);
             if (Avatar.MonsterConfig.Type == (int)CardTypeSub.Hero)
             {
