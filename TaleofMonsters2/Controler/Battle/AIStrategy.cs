@@ -97,7 +97,7 @@ namespace TaleofMonsters.Controler.Battle
 
                 if (card.CardType == CardTypes.Monster)
                 {
-                    Point monPos = BattleLocationManager.GetMonsterPoint(false);
+                    Point monPos = GetMonsterPoint(false);
                     var mon = new Monster(card.CardId);
                     mon.UpgradeToLevel(card.Level);
                     player.OnSummon(mon);
@@ -139,6 +139,21 @@ namespace TaleofMonsters.Controler.Battle
                 }
 
                 player.CardManager.DeleteCardAt(player.SelectId);
+            }
+        }
+
+        private static Point GetMonsterPoint(bool isLeft)
+        {
+            int size = BattleManager.Instance.MemMap.CardSize;
+            var sideCell = BattleManager.Instance.MemMap.ColumnCount / 2;
+            while (true)
+            {
+                int x = isLeft ? MathTool.GetRandom(0, sideCell) : MathTool.GetRandom(sideCell + 1, BattleManager.Instance.MemMap.ColumnCount - 1);
+                int y = MathTool.GetRandom(0, BattleManager.Instance.MemMap.RowCount);
+                if (BattleManager.Instance.MemMap.Cells[x, y].Owner == 0)
+                {
+                    return new Point(x * size, y * size);
+                }
             }
         }
     }

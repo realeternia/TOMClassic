@@ -374,7 +374,7 @@ namespace TaleofMonsters.Controler.Battle
                 if (leftSelectCard.CardType == CardTypes.Monster)
                 {
                     int cardSize = BattleManager.Instance.MemMap.CardSize;
-                    if (lm == null && mouseX > cardSize && mouseX < cardSize * (BattleManager.Instance.MemMap.ColumnCount/2))
+                    if (lm == null && mouseX > 0 && mouseX < cardSize * (BattleManager.Instance.MemMap.ColumnCount/2))
                     {
                         cursorname = "summon";
                     }

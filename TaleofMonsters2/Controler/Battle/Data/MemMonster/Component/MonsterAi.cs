@@ -8,7 +8,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 {
     internal class MonsterAi
     {
-        private LiveMonster monster;
+        private readonly LiveMonster monster;
 
         public MonsterAi(LiveMonster mon)
         {
@@ -27,44 +27,62 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 {
                     if (monster.AddAts())
                     {
-                        if (monster.RealRange <= GameConstants.MaxMeleeAtkRange)
-                        {
-                            monster.HitTarget(nearestEnemy.Id);//近战
-                        }
-                        else
-                        {
-                            Missile mi = new Missile(monster.Arrow, monster, nearestEnemy);//todo
-                            BattleManager.Instance.MissileQueue.Add(mi);
-                        }
-
-                        if (monster.RealSpd != 0)//会返回一些ats
-                        {
-                            monster.AddActionRate((float)(monster.RealSpd) * GameConstants.SpdToRate / 100);
-                        }
+                        CheckFight(nearestEnemy);
                     }
                 }
-                else if (monster.ReadMov>0)//判定是否需要移到
+                else if (monster.ReadMov>0)//判定是否需要移动
                 {
                     if (monster.AddAts())
                     {
-                        var moveDis = BattleManager.Instance.MemMap.CardSize;
-                        if (nearestEnemy.Position.X != monster.Position.X)
-                        {
-                            var x = monster.Position.X + (nearestEnemy.Position.X > monster.Position.X ? moveDis : -moveDis);
-                            BattleLocationManager.SetToPosition(monster, new Point(x, monster.Position.Y));
-                        }
-                        else
-                        {
-                            var y = monster.Position.Y + (nearestEnemy.Position.Y > monster.Position.Y ? moveDis : -moveDis);
-                            BattleLocationManager.SetToPosition(monster, new Point(monster.Position.X, y));
-                        }
-
-                        if (monster.ReadMov > 10)//会返回一些ats
-                        {
-                            monster.AddActionRate((float)(monster.ReadMov - 10) / monster.ReadMov);
-                        }
+                        CheckMove(nearestEnemy);
                     }
                 }
+            }
+        }
+
+        private void CheckFight(LiveMonster nearestEnemy)
+        {
+            if (monster.RealRange <= GameConstants.MaxMeleeAtkRange)
+            {
+                monster.HitTarget(nearestEnemy.Id); //近战
+            }
+            else
+            {
+                Missile mi = new Missile(monster.Arrow, monster, nearestEnemy); //todo
+                BattleManager.Instance.MissileQueue.Add(mi);
+            }
+
+            if (monster.RealSpd != 0) //会返回一些ats
+            {
+                monster.AddActionRate((float) (monster.RealSpd)*GameConstants.SpdToRate/100);
+            }
+        }
+
+        private void CheckMove(LiveMonster nearestEnemy)
+        {
+            var moveDis = BattleManager.Instance.MemMap.CardSize;
+            Point aimPos; //决定想去的目标点
+            if (nearestEnemy.Position.X != monster.Position.X)
+            {
+                var x = monster.Position.X + (nearestEnemy.Position.X > monster.Position.X ? moveDis : -moveDis);
+                aimPos = new Point(x, monster.Position.Y);
+            }
+            else
+            {
+                var y = monster.Position.Y + (nearestEnemy.Position.Y > monster.Position.Y ? moveDis : -moveDis);
+                aimPos = new Point(monster.Position.X, y);
+            }
+
+            var targetMonster = BattleLocationManager.GetPlaceMonster(aimPos.X, aimPos.Y);//找到目标点的怪
+            if (targetMonster != null && targetMonster.ReadMov == 0) //如果前方是一个静止单位，就绕行
+            {
+                aimPos = BattleLocationManager.GetMonsterNearPoint(monster.Position, "side", !monster.IsLeft);
+            }
+            BattleLocationManager.SetToPosition(monster, aimPos);
+
+            if (monster.ReadMov > 10) //会返回一些ats
+            {
+                monster.AddActionRate((float) (monster.ReadMov - 10)/monster.ReadMov);
             }
         }
 

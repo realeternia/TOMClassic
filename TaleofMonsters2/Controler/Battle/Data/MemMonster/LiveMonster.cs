@@ -27,8 +27,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
     {
         private readonly MonsterAi aiController;
         private readonly HpBar hpBar;
-        private readonly LiveMonsterToolTip liveMonsterToolTip;
-        private readonly MonsterCoverBox coverBox;
         public SkillManager SkillManager { get; private set; }
         public BuffManager BuffManager { get; private set; }
 
@@ -240,10 +238,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             
             BuffManager = new BuffManager(this);
             aiController = new MonsterAi(this);
-            liveMonsterToolTip = new LiveMonsterToolTip(this);
+            LiveMonsterToolTip = new LiveMonsterToolTip(this);
 
             SetBasicData();
-            coverBox = new MonsterCoverBox(this);
+            MonsterCoverBox = new MonsterCoverBox(this);
         }
 
         private void SetBasicData()
@@ -497,8 +495,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                     g.FillRectangle(brush, 0, 0, 100, 100);
                     brush.Dispose();
                 }
-                Pen pen;
-                pen = new Pen(!IsLeft ? Brushes.Blue : Brushes.Red, 3);
+                var pen = new Pen(!IsLeft ? Brushes.Blue : Brushes.Red, 3);
                 Font font2 = new Font("Arial", 14*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
                 Font fontLevel = new Font("Arial", 20*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
                 g.DrawRectangle(pen, 1, 1, 98, 98);
@@ -616,14 +613,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             var savedWeapon = TWeapon.GetCopy();
             DeleteWeapon();
             int lifp = Life * 100 / Avatar.Hp;
-            coverBox.RemoveAllCover();
+            MonsterCoverBox.RemoveAllCover();
             SkillManager.CheckRemoveEffect();
             OwnerPlayer.State.CheckMonsterEvent(false, Avatar);
             Avatar = new Monster(monId);
             Avatar.UpgradeToLevel(Level);
             OwnerPlayer.State.CheckMonsterEvent(true, Avatar);
             SetBasicData();
-            coverBox.CheckCover();
+            MonsterCoverBox.CheckCover();
             SkillManager.CheckInitialEffect();
             if (cardId > 0)
             {
@@ -775,15 +772,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public bool DropAdd { get; set; }
 
-        public LiveMonsterToolTip LiveMonsterToolTip
-        {
-            get { return liveMonsterToolTip; }
-        }
+        public LiveMonsterToolTip LiveMonsterToolTip { get; }
 
-        public MonsterCoverBox MonsterCoverBox
-        {
-            get { return coverBox; }
-        }
+        public MonsterCoverBox MonsterCoverBox { get; }
 
         public void AddBuff(int buffId, int blevel, double dura)
         {
@@ -837,22 +828,27 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             {
                 posLis.Add(BattleLocationManager.GetMonsterNearPoint(Position, "around", IsLeft));
             }
+            else if (type == 3)//后面
+            {
+                posLis.Add(BattleLocationManager.GetMonsterNearPoint(Position, "come", IsLeft));
+            }
+            else if (type == 4)//前面
+            {
+                posLis.Add(BattleLocationManager.GetMonsterNearPoint(Position, "back", IsLeft));
+            }
 
-            foreach (Point pos in posLis)
+            foreach (var pos in posLis)
             {
                 if (BattleManager.Instance.MemMap.IsMousePositionCanSummon(pos.X, pos.Y))
                 {
                     var mon = new Monster(id);
                     mon.UpgradeToLevel(Level);
                     LiveMonster newMon = new LiveMonster(World.WorldInfoManager.GetCardFakeId(), Level, mon, pos, IsLeft);
-                   BattleManager.Instance.MonsterQueue.AddDelay(newMon);
+                    BattleManager.Instance.MonsterQueue.AddDelay(newMon);
                 }
             }
         }
 
         #endregion
-
-
-
     }
 }

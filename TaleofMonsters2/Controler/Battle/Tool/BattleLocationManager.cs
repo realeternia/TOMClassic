@@ -9,21 +9,6 @@ namespace TaleofMonsters.Controler.Battle.Tool
 {
     static class BattleLocationManager
     {
-        public static Point GetMonsterPoint(bool isLeft)
-        {
-            int size = BattleManager.Instance.MemMap.CardSize;
-            var sideCell = BattleManager.Instance.MemMap.ColumnCount/2;
-            while (true)
-            {
-                int x = isLeft ? MathTool.GetRandom(1, sideCell) : MathTool.GetRandom(sideCell + 1, BattleManager.Instance.MemMap.ColumnCount-1);
-                int y = MathTool.GetRandom(0, BattleManager.Instance.MemMap.RowCount);
-                if (BattleManager.Instance.MemMap.Cells[x, y].Owner == 0)
-                {
-                    return new Point(x * size, y * size);
-                }
-            }
-        }
-
         public static LiveMonster GetPlaceMonster(int x, int y)
         {
             if (x < 0 || y < 0 || x >= BattleManager.Instance.MemMap.StageWidth || y >= BattleManager.Instance.MemMap.StageHeight)
