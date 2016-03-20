@@ -252,32 +252,19 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             return HSErrorTypes.OK;
         }
 
-        public void OnUseCard(ActiveCard selectCard)
+        public bool CheckUseCard(ActiveCard selectCard)
         {
             AddMp(-selectCard.Mp);
             AddLp(-selectCard.Lp);
             AddPp(-selectCard.Pp);
-        }
 
-        public void OnSummon(Monster mon)
-        {
-            //todo 通过heroskillcard修改
+            var rival = IsLeft ? BattleManager.Instance.PlayerManager.RightPlayer : BattleManager.Instance.PlayerManager.LeftPlayer;
+            if (rival.CheckTrapOnUseCard(selectCard, rival, this))
+            {
+                return false;
+            }
 
-            BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).MonsterAdd++;
-        }
-
-        public void OnUseWeapon(Weapon wpn)
-        {
-            //todo 通过heroskillcard修改
-
-            BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).WeaponAdd++;
-        }
-
-        public void OnDoSpell(Spell spl)
-        {
-            //todo 通过heroskillcard修改
-
-            BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).SpellAdd++;
+            return true;
         }
 
         public virtual void AddResource(GameResourceType type, int number)
@@ -292,6 +279,59 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public virtual void OnKillMonster(int killerId, int dieLevel, int dieStar, Point position)
         {
 
+        }
+        public void UseMonster(ActiveCard card, Point location)
+        {
+            if (!CheckUseCard(card))
+            {
+                return;
+            }
+
+            var mon = new Monster(card.CardId);
+            mon.UpgradeToLevel(card.Level);
+            BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).MonsterAdd++;
+
+            LiveMonster newMon = new LiveMonster(card.Id, card.Level, mon, location, IsLeft);
+            BattleManager.Instance.MonsterQueue.Add(newMon);
+
+            var rival = IsLeft ? BattleManager.Instance.PlayerManager.RightPlayer : BattleManager.Instance.PlayerManager.LeftPlayer;
+            rival.CheckTrapOnSummon(newMon, rival, this);
+
+            CardManager.DeleteCardAt(SelectId);
+        }
+
+        public void UseWeapon(LiveMonster lm, ActiveCard card)
+        {
+            if (!CheckUseCard(card))
+            {
+                return;
+            }
+
+            Weapon wpn = new Weapon(card.CardId);
+            wpn.UpgradeToLevel(card.Level);
+            BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).WeaponAdd++;
+
+            var tWeapon = new TrueWeapon(lm, card.Level, wpn);
+            lm.AddWeapon(tWeapon);
+
+            CardManager.DeleteCardAt(SelectId);
+        }
+
+        public void DoSpell(LiveMonster target, ActiveCard card, Point location)
+        {
+            if (!CheckUseCard(card))
+            {
+                return;
+            }
+
+            Spell spell = new Spell(card.CardId);
+            spell.Addon = SpellEffectAddon;
+            spell.UpgradeToLevel(card.Level);
+            BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).SpellAdd++;
+
+            SpellAssistant.CheckSpellEffect(spell, true, target, location);
+
+            CardManager.DeleteCardAt(SelectId);
         }
 
         #region 陷阱

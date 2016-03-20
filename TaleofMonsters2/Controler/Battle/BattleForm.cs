@@ -13,14 +13,11 @@ using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Cards;
-using TaleofMonsters.DataType.Cards.Monsters;
-using TaleofMonsters.DataType.Cards.Spells;
 using TaleofMonsters.DataType.HeroSkills;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Data.MemMap;
 using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards.Weapons;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms;
 using TaleofMonsters.Forms.Items.Regions;
@@ -286,49 +283,24 @@ namespace TaleofMonsters.Controler.Battle
                         return;
                     }
 
-                    //可能有触发/状态等
-                    BattleManager.Instance.PlayerManager.LeftPlayer.OnUseCard(leftSelectCard);
-
-                    if (BattleManager.Instance.PlayerManager.RightPlayer.CheckTrapOnUseCard(leftSelectCard, BattleManager.Instance.PlayerManager.RightPlayer, BattleManager.Instance.PlayerManager.LeftPlayer))
-                    {
-                        return;
-                    }
-
                     LiveMonster lm = BattleLocationManager.GetPlaceMonster(mouseX, mouseY);
                     if (myCursor.Name == "summon" && lm == null)
                     {
-                        var mon = new Monster(leftSelectCard.CardId);
-                        mon.UpgradeToLevel(leftSelectCard.Level);
-                        BattleManager.Instance.PlayerManager.LeftPlayer.OnSummon(mon);
-
-                        LiveMonster newMon = new LiveMonster(leftSelectCard.Id, leftSelectCard.Level, mon, new Point(mouseX / cardSize * cardSize, mouseY / cardSize * cardSize), true);
-                       BattleManager.Instance.MonsterQueue.Add(newMon);
-
-                        BattleManager.Instance.PlayerManager.RightPlayer.CheckTrapOnSummon(newMon, BattleManager.Instance.PlayerManager.RightPlayer, BattleManager.Instance.PlayerManager.LeftPlayer);
+                        var pos = new Point(mouseX/cardSize*cardSize, mouseY/cardSize*cardSize);
+                        BattleManager.Instance.PlayerManager.LeftPlayer.UseMonster(leftSelectCard, pos);
                     }
                     else if (myCursor.Name == "equip" && lm != null)
                     {
-                        Weapon wpn = new Weapon(leftSelectCard.CardId);
-                        wpn.UpgradeToLevel(leftSelectCard.Level);
-                        BattleManager.Instance.PlayerManager.LeftPlayer.OnUseWeapon(wpn);
-                        
-                        var tWeapon = new TrueWeapon(lm, leftSelectCard.Level, wpn);
-                        lm.AddWeapon(tWeapon);
+                        BattleManager.Instance.PlayerManager.LeftPlayer.UseWeapon(lm, leftSelectCard);
                     }
                     else if (myCursor.Name == "cast")
                     {
-                        Spell spell = new Spell(leftSelectCard.CardId);
-                        spell.Addon = BattleManager.Instance.PlayerManager.LeftPlayer.SpellEffectAddon;
-                        spell.UpgradeToLevel(leftSelectCard.Level);
-                        BattleManager.Instance.PlayerManager.LeftPlayer.OnDoSpell(spell);
-                        
-                        SpellAssistant.CheckSpellEffect(spell, true, lm, e.Location);
+                        BattleManager.Instance.PlayerManager.LeftPlayer.DoSpell(lm, leftSelectCard, e.Location);
                     }
 
                     var cardData = CardConfigManager.GetCardConfig(leftSelectCard.CardId);
                     UserProfile.Profile.OnUseCard(cardData.Star, 0, cardData.TypeSub);
 
-                    BattleManager.Instance.PlayerManager.LeftPlayer.CardManager.DeleteCardAt(BattleManager.Instance.PlayerManager.LeftPlayer.SelectId);
                     cardsArray1.DisSelectCard();
                 }
             }

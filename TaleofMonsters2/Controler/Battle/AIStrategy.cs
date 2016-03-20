@@ -5,11 +5,8 @@ using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Cards.Monsters;
-using TaleofMonsters.DataType.Cards.Spells;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards.Weapons;
 
 namespace TaleofMonsters.Controler.Battle
 {
@@ -87,58 +84,33 @@ namespace TaleofMonsters.Controler.Battle
                     }
                 }
 
-                //可能有触发/状态等
-                player.OnUseCard(player.CardsDesk.GetSelectCard());
-
-                if (rival.CheckTrapOnUseCard(card, rival, player))
-                {
-                    return;
-                }
-
                 if (card.CardType == CardTypes.Monster)
                 {
                     Point monPos = GetMonsterPoint(false);
-                    var mon = new Monster(card.CardId);
-                    mon.UpgradeToLevel(card.Level);
-                    player.OnSummon(mon);
-                    
-                    LiveMonster newMon = new LiveMonster(card.Id, card.Level, mon, monPos, false);
-                   BattleManager.Instance.MonsterQueue.Add(newMon);
-                    
-                    rival.CheckTrapOnSummon(newMon, rival, player);
+                    player.UseMonster(card, monPos);
                 }
                 else if (card.CardType == CardTypes.Weapon)
                 {
-                    Weapon wpn = new Weapon(card.CardId);
-                    wpn.UpgradeToLevel(card.Level);
-                    player.OnUseWeapon(wpn);
-                   
                     var lm =BattleManager.Instance.MonsterQueue[tar];
-                    var tWeapon = new TrueWeapon(lm, card.Level, wpn);
-                    lm.AddWeapon(tWeapon);
+                    player.UseWeapon(lm, card);
                 }
                 else if (card.CardType == CardTypes.Spell)
                 {
                     SpellConfig spellConfig = ConfigData.GetSpellConfig(card.CardId);
-                    Spell spell = new Spell(card.CardId);
-                    spell.Addon = player.SpellEffectAddon;
-                    spell.UpgradeToLevel(card.Level);
-                    player.OnDoSpell(spell);
-
+                    Point targetPos = Point.Empty;
+                    LiveMonster targetMonster = null;
                     if (BattleTargetManager.IsSpellNullTarget(spellConfig.Target))
                     {
-                        Point targetPoint = new Point(isLeft ? MathTool.GetRandom(200, 300) : MathTool.GetRandom(600, 700), MathTool.GetRandom(size * 3 / 10, row * size - size * 3 / 10));
-                        SpellAssistant.CheckSpellEffect(spell, isLeft, null, targetPoint);
-
+                        targetPos = new Point(isLeft ? MathTool.GetRandom(200, 300) : MathTool.GetRandom(600, 700), MathTool.GetRandom(size * 3 / 10, row * size - size * 3 / 10));
                     }
                     else if (BattleTargetManager.IsSpellUnitTarget(spellConfig.Target))
                     {
-                        Point targetPoint =BattleManager.Instance.MonsterQueue[tar].CenterPosition;
-                        SpellAssistant.CheckSpellEffect(spell, isLeft,BattleManager.Instance.MonsterQueue[tar], targetPoint);
+                        targetMonster = BattleManager.Instance.MonsterQueue[tar];
+                        targetPos = targetMonster.CenterPosition;
                     }
-                }
 
-                player.CardManager.DeleteCardAt(player.SelectId);
+                    player.DoSpell(targetMonster, card, targetPos);
+                }
             }
         }
 
