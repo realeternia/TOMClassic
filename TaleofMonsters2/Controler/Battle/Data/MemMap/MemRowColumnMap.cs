@@ -53,10 +53,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                     int tarTile = bMap.Cells[i, j];
                     if (tarTile == 0)
                     {
-                        tarTile = tile == 0 ? 9 : tile;
+                        tarTile = tile == 0 ? TileConfig.Indexer.DefaultTile : tile;
                     }
                     Cells[i, j] = new MemMapPoint(i, i * CardSize, j * CardSize, ColumnCount, tarTile);
-                    tiles[tarTile == 9 ? 0 : tarTile]++;
+                    tiles[tarTile == TileConfig.Indexer.DefaultTile ? 0 : tarTile]++;
                 }
             }
             isDirty = true;

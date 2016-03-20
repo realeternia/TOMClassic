@@ -43,10 +43,10 @@ namespace TaleofMonsters.Controler.GM
                     case "dmd": if (data.Length == 2) UserProfile.InfoBag.AddDiamond(int.Parse(data[1])); break;
                     case "tsk": if (data.Length == 2) UserProfile.InfoTask.BeginTask(int.Parse(data[1])); break;
                     case "acv": if (data.Length == 2) UserProfile.Profile.InfoAchieve.SetAchieve(int.Parse(data[1])); break;
-                    case "view": if (data.Length == 3) PeopleBook.ViewMatch(int.Parse(data[1]), int.Parse(data[2]), "default", 9); break;
+                    case "view": if (data.Length == 3) PeopleBook.ViewMatch(int.Parse(data[1]), int.Parse(data[2]), "default", TileConfig.Indexer.DefaultTile); break;
                     case "fbat": if (data.Length == 3)
                         {
-                            FastBattle.Instance.StartGame(int.Parse(data[1]), int.Parse(data[2]), "default", 9);
+                            FastBattle.Instance.StartGame(int.Parse(data[1]), int.Parse(data[2]), "default", TileConfig.Indexer.DefaultTile);
                             MainForm.Instance.AddTip(string.Format("{0} {1}合", FastBattle.Instance.LeftWin ? "左胜" : "右胜", BattleManager.Instance.BattleInfo.Round), "White");
                         } break;
                     case "cbat":

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
 
@@ -29,7 +30,7 @@ namespace TaleofMonsters.DataType.Others
             string fname = string.Format("Tiles/{0}{1}x{2}", id, width, height);
             if (!ImageManager.HasImage(fname))
             {
-                Image image = PicLoader.Read("Tiles", string.Format("{0}.JPG", id));
+                Image image = PicLoader.Read("Tiles", string.Format("{0}.JPG", ConfigData.GetTileConfig(id).Icon));
                 if (image.Width != width || image.Height != height)
                 {
                     image = image.GetThumbnailImage(width, height, null, new IntPtr(0));

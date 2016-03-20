@@ -345,7 +345,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             trapList.RemoveAll(s => s.Id == id);
         }
 
-        public bool CheckTrapOnUseCard(ActiveCard selectCard, Player left, Player right)
+        private bool CheckTrapOnUseCard(ActiveCard selectCard, Player left, Player right)
         {
             foreach (var trap in trapList)
             {
@@ -365,7 +365,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             return false;
         }
 
-        public void CheckTrapOnSummon(LiveMonster mon, Player left, Player right)
+        private void CheckTrapOnSummon(LiveMonster mon, Player left, Player right)
         {
             foreach (var trap in trapList)
             {

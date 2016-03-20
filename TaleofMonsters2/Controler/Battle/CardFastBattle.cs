@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemMap;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players;
@@ -31,7 +32,7 @@ namespace TaleofMonsters.Controler.Battle
             BattleManager.Instance.FlowWordQueue.SetFast();
             BattleManager.Instance.PlayerManager.LeftPlayer = new IdlePlayer(true);
             BattleManager.Instance.PlayerManager.RightPlayer = new IdlePlayer(false);
-            BattleManager.Instance.MemMap =new MemRowColumnMap("default", 9);
+            BattleManager.Instance.MemMap =new MemRowColumnMap("default", TileConfig.Indexer.DefaultTile);
 
             roundMark = 0;
             int size = BattleManager.Instance.MemMap.CardSize;
