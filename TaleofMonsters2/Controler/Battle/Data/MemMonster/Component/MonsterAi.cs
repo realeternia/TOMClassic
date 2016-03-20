@@ -73,11 +73,19 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 aimPos = new Point(monster.Position.X, y);
             }
 
-            var targetMonster = BattleLocationManager.GetPlaceMonster(aimPos.X, aimPos.Y);//找到目标点的怪
-            if (targetMonster != null && targetMonster.ReadMov == 0) //如果前方是一个静止单位，就绕行
-            {
+            if (!BattleLocationManager.IsPlaceCanMove(aimPos.X, aimPos.Y))
+            {//绕过不可行走区域
                 aimPos = BattleLocationManager.GetMonsterNearPoint(monster.Position, "side", !monster.IsLeft);
             }
+            else
+            {
+                var targetMonster = BattleLocationManager.GetPlaceMonster(aimPos.X, aimPos.Y);//找到目标点的怪
+                if (targetMonster != null && targetMonster.ReadMov == 0) //如果前方是一个静止单位，就绕行
+                {
+                    aimPos = BattleLocationManager.GetMonsterNearPoint(monster.Position, "side", !monster.IsLeft);
+                }
+            }
+
             BattleLocationManager.SetToPosition(monster, aimPos);
 
             if (monster.ReadMov > 10) //会返回一些ats

@@ -22,12 +22,19 @@ namespace TaleofMonsters.Controler.Battle.Tool
         public static void SetToPosition(LiveMonster lm, Point dest)
         {
             MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(dest.X, dest.Y);
-            if (point.Owner <= 0)
+            if (!point.CanMove) //todo 暂时不考虑飞行单位
             {
-                UpdateCellOwner(lm.Position.X, lm.Position.Y, 0);
-                lm.Position = new Point(point.X, point.Y);
-                UpdateCellOwner(point.X, point.Y, lm.Id);
+                return;
             }
+
+            if (point.Owner > 0)
+            {
+                return;
+            }
+
+            UpdateCellOwner(lm.Position.X, lm.Position.Y, 0);
+            lm.Position = new Point(point.X, point.Y);
+            UpdateCellOwner(point.X, point.Y, lm.Id);
         }
 
         public static bool IsPlaceBlank(int tx, int ty)
@@ -35,6 +42,12 @@ namespace TaleofMonsters.Controler.Battle.Tool
             var sideCell = BattleManager.Instance.MemMap.ColumnCount / 2;
             MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
             return point.Owner <= 0 && point.SideIndex > 0 && point.SideIndex < sideCell;
+        }
+
+        public static bool IsPlaceCanMove(int tx, int ty)
+        {
+            MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
+            return point.CanMove;
         }
 
         public static bool IsPlaceTombSide(int tx, int ty)

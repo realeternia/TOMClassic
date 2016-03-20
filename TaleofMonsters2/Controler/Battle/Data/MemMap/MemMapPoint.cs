@@ -1,4 +1,5 @@
 using System.Drawing;
+using ConfigDatas;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMap
 {
@@ -11,6 +12,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         public int SideIndex { get; private set; }
         public int Owner { get; private set; }
         public bool IsLeft { get; private set; }
+
+        public bool CanMove
+        {
+            get { return ConfigData.GetTileConfig(Tile).CanMove; }
+        }
 
         public MemMapPoint(int xid, int x, int y, int total, int tile)
         {
