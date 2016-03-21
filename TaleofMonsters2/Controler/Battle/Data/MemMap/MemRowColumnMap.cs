@@ -117,9 +117,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             {
                 foreach (var i in xOrder)
                 {
-                    if (Cells[i, j].Owner > 0 && Cells[i, j].Owner != mid)
+                    var cell = Cells[i, j];
+                    if (cell.Owner > 0 && cell.Owner != mid)
                     {
-                        return Cells[i, j].Owner;
+                        return cell.Owner;
                     }
                 }
             }
@@ -130,7 +131,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         public void SetTile(int itype, Point point, int dis, int tile)
         {
             RegionTypes type = (RegionTypes)itype;
-            foreach (MemMapPoint memMapPoint in Cells)
+            foreach (var memMapPoint in Cells)
             {
                 if (BattleLocationManager.IsPointInRegionType(type, point.X, point.Y, memMapPoint.ToPoint(), dis))
                 {
@@ -138,7 +139,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                 }
             }
             tiles.Clear();
-            foreach (MemMapPoint memMapPoint in Cells)
+            foreach (var memMapPoint in Cells)
             {
                 tiles[memMapPoint.Tile == 9 ? 0 : memMapPoint.Tile]++;
             }
@@ -240,7 +241,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         {
             List<IMonster> monsters = new List<IMonster>();
             RegionTypes rt = BattleTargetManager.GetRegionType(shape[0]);
-            foreach (LiveMonster mon in BattleManager.Instance.MonsterQueue.Enumerator)
+            foreach (var mon in BattleManager.Instance.MonsterQueue.Enumerator)
             {
                 if (mon.IsGhost)
                     continue;
@@ -255,11 +256,13 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                 }
             }
 
-            foreach (MemMapPoint memMapPoint in BattleManager.Instance.MemMap.Cells)
+            foreach (var memMapPoint in BattleManager.Instance.MemMap.Cells)
             {
-                if (BattleLocationManager.IsPointInRegionType(rt, mouse.X, mouse.Y, memMapPoint.ToPoint(), range))
+                var pointData = memMapPoint.ToPoint();
+                if (BattleLocationManager.IsPointInRegionType(rt, mouse.X, mouse.Y, pointData, range))
                 {
-                    BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(effect), memMapPoint.ToPoint() + new Size(50, 50), false));
+                    var effectData = new ActiveEffect(EffectBook.GetEffect(effect), pointData + new Size(CardSize / 2, CardSize / 2), false);
+                    BattleManager.Instance.EffectQueue.Add(effectData);
                 }
             }
 
@@ -287,7 +290,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         {
             LiveMonster monster  = null;
             int dis = int.MaxValue;
-            foreach (LiveMonster mon in BattleManager.Instance.MonsterQueue.Enumerator)
+            foreach (var mon in BattleManager.Instance.MonsterQueue.Enumerator)
             {
                 if (mon.IsGhost)
                     continue;
