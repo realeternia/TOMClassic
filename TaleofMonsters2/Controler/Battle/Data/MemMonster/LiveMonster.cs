@@ -772,9 +772,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public bool DropAdd { get; set; }
 
-        public LiveMonsterToolTip LiveMonsterToolTip { get; }
+        public LiveMonsterToolTip LiveMonsterToolTip { get; private set; }
 
-        public MonsterCoverBox MonsterCoverBox { get; }
+        public MonsterCoverBox MonsterCoverBox { get; private set; }
 
         public void AddBuff(int buffId, int blevel, double dura)
         {
