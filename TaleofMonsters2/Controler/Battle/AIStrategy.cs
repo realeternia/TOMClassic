@@ -122,9 +122,11 @@ namespace TaleofMonsters.Controler.Battle
             {
                 int x = isLeft ? MathTool.GetRandom(0, sideCell) : MathTool.GetRandom(sideCell + 1, BattleManager.Instance.MemMap.ColumnCount - 1);
                 int y = MathTool.GetRandom(0, BattleManager.Instance.MemMap.RowCount);
-                if (BattleManager.Instance.MemMap.Cells[x, y].Owner == 0)
+                x *= size;
+                y *= size;
+                if (BattleLocationManager.IsPlaceCanSummon(x,y,false))
                 {
-                    return new Point(x * size, y * size);
+                    return new Point(x, y);
                 }
             }
         }

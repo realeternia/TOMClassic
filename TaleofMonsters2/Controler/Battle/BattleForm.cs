@@ -13,6 +13,7 @@ using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Cards;
+using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.HeroSkills;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
@@ -339,20 +340,24 @@ namespace TaleofMonsters.Controler.Battle
         {
             string cursorname = "default";
             magicRegion.Type = RegionTypes.None;
-            LiveMonster lm = BattleLocationManager.GetPlaceMonster(mouseX, mouseY);
-
+          
             if (leftSelectCard != null)
             {
                 if (leftSelectCard.CardType == CardTypes.Monster)
                 {
-                    int cardSize = BattleManager.Instance.MemMap.CardSize;
-                    if (lm == null && mouseX > 0 && mouseX < cardSize * (BattleManager.Instance.MemMap.ColumnCount/2))
+                    if (BattleLocationManager.IsPlaceCanSummon(mouseX, mouseY, true))
                     {
                         cursorname = "summon";
+                        var skillConfig = MonsterBook.GetRangeSkillConfig(leftSelectCard.CardId);
+                        if (skillConfig != null)
+                        {
+                            magicRegion.Update(skillConfig);
+                        }
                     }
                 }
                 else if (leftSelectCard.CardType == CardTypes.Weapon)
                 {
+                    LiveMonster lm = BattleLocationManager.GetPlaceMonster(mouseX, mouseY);
                     if (lm != null && lm.CanAddWeapon() && lm.IsLeft)
                     {
                         cursorname = "equip";

@@ -14,11 +14,23 @@ namespace TaleofMonsters.Controler.Battle.Data
 
         internal RegionTypes Type { get; set; }
 
+        internal void Update(SkillConfig skillConfig)
+        {
+            Type = BattleTargetManager.GetRegionType(skillConfig.Target[2]);
+            range = skillConfig.Range;
+            CheckColor(skillConfig.Target[1]);
+        }
+
         internal void Update(SpellConfig spellConfig)
         {
             Type = BattleTargetManager.GetRegionType(spellConfig.Target[2]);
             range = spellConfig.Range;
-            switch (spellConfig.Target[1])
+            CheckColor(spellConfig.Target[1]);
+        }
+
+        private void CheckColor(char side)
+        {
+            switch (side)
             {
                 case 'E':
                     color = Color.Red;
@@ -54,10 +66,10 @@ namespace TaleofMonsters.Controler.Battle.Data
         internal void Draw(Graphics g, int round, int mouseX, int mouseY)
         {
             int size = BattleManager.Instance.MemMap.CardSize;
-            SolidBrush fillBrush = new SolidBrush(Color.FromArgb(60, color));
-            Pen borderPen = new Pen(color, 3);
+            SolidBrush fillBrush = new SolidBrush(Color.FromArgb(50, color));
+            Pen borderPen = new Pen(color, 2);
 
-            int roundoff = ((round/5)%3)*3 + 8;
+            int roundoff = ((round/12)%2)*1 + 2;
 
             foreach (MemMapPoint memMapPoint in BattleManager.Instance.MemMap.Cells)
             {

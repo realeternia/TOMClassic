@@ -114,5 +114,19 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             }
             return ImageManager.GetImage(fname);
         }
+
+       public static SkillConfig GetRangeSkillConfig(int mid)
+       {
+           var monsterConfig = ConfigData.GetMonsterConfig(mid);
+           for (int i = 0; i < monsterConfig.Skills.Count; i++)
+           {
+               var skilConfig = ConfigData.GetSkillConfig(monsterConfig.Skills[i].X);
+               if (skilConfig.Target != "")
+               {
+                   return skilConfig;
+               }
+           }
+           return null;
+       }
     }
 }

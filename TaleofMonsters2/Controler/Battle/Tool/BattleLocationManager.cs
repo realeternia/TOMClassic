@@ -39,9 +39,20 @@ namespace TaleofMonsters.Controler.Battle.Tool
 
         public static bool IsPlaceBlank(int tx, int ty)
         {
-            var sideCell = BattleManager.Instance.MemMap.ColumnCount / 2;
             MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
-            return point.Owner <= 0 && point.SideIndex > 0 && point.SideIndex < sideCell;
+            return point.Owner <= 0;
+        }
+
+        public static bool IsPlaceCanSummon(int tx, int ty, bool isLeft)
+        {
+            if (!IsPlaceBlank(tx, ty))
+            {
+                return false;
+            }
+
+            MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
+            var sideCell = BattleManager.Instance.MemMap.ColumnCount / 2;
+            return point.IsLeft ==isLeft && point.SideIndex >= 0 && point.SideIndex < sideCell && point.CanMove;
         }
 
         public static bool IsPlaceCanMove(int tx, int ty)
@@ -156,8 +167,8 @@ namespace TaleofMonsters.Controler.Battle.Tool
             if (BattleTargetManager.IsSpellNullTarget(target))
                 return true;
 
-            if (BattleTargetManager.IsSpellGridTarget(target))
-                return IsPlaceBlank(tx, ty);
+            //if (BattleTargetManager.IsSpellGridTarget(target))
+            //    return IsPlaceBlank(tx, ty);
 
             if (BattleTargetManager.IsSpellTombTarget(target))
                 return IsPlaceTombSide(tx, ty);
