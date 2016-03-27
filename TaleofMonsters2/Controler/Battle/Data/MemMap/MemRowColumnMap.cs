@@ -237,7 +237,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             return new MonsterCollection(monsters, mouse);
         }
 
-        public MonsterCollection GetRangeMonster(bool isLeft, string target, string shape, int range, Point mouse, string effect)
+        public MonsterCollection GetRangeMonster(bool isLeft, string target, string shape, int range, Point mouse)
         {
             List<IMonster> monsters = new List<IMonster>();
             RegionTypes rt = BattleTargetManager.GetRegionType(shape[0]);
@@ -253,16 +253,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                         continue;
 
                     monsters.Add(mon);
-                }
-            }
-
-            foreach (var memMapPoint in BattleManager.Instance.MemMap.Cells)
-            {
-                var pointData = memMapPoint.ToPoint();
-                if (BattleLocationManager.IsPointInRegionType(rt, mouse.X, mouse.Y, pointData, range))
-                {
-                    var effectData = new ActiveEffect(EffectBook.GetEffect(effect), pointData + new Size(CardSize / 2, CardSize / 2), false);
-                    BattleManager.Instance.EffectQueue.Add(effectData);
                 }
             }
 

@@ -29,6 +29,21 @@ namespace TaleofMonsters.DataType.Cards.Spells
             UpgradeToLevel1();
         }
 
+        public string Target
+        {
+            get { return SpellConfig.Target.Substring(1,1); }
+        }
+
+        public string Shape
+        {
+            get { return SpellConfig.Target.Substring(2, 1); }
+        }
+
+        public int Range
+        {
+            get { return SpellConfig.Range; }
+        }
+
         public string Descript
         {
             get

@@ -1,9 +1,12 @@
 ﻿using System.Drawing;
 using ConfigDatas;
+using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
+using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards.Spells;
+using TaleofMonsters.DataType.Effects;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemSpell
 {
@@ -33,7 +36,21 @@ namespace TaleofMonsters.Controler.Battle.Data.MemSpell
             {
                 Player p1 = isLeft ? BattleManager.Instance.PlayerManager.LeftPlayer : BattleManager.Instance.PlayerManager.RightPlayer;
                 Player p2 = !isLeft ? BattleManager.Instance.PlayerManager.LeftPlayer : BattleManager.Instance.PlayerManager.RightPlayer;
+
                 spellInfo.SpellConfig.Effect(spellInfo, BattleManager.Instance.MemMap, p1, p2, target, mouse, Level);
+
+                //播放特效
+                RegionTypes rt = BattleTargetManager.GetRegionType(spellInfo.SpellConfig.Target[2]);
+                var cardSize = BattleManager.Instance.MemMap.CardSize;
+                foreach (var memMapPoint in BattleManager.Instance.MemMap.Cells)
+                {
+                    var pointData = memMapPoint.ToPoint();
+                    if (BattleLocationManager.IsPointInRegionType(rt, mouse.X, mouse.Y, pointData, spellInfo.SpellConfig.Range))
+                    {
+                        var effectData = new ActiveEffect(EffectBook.GetEffect(spellInfo.SpellConfig.AreaEffect), pointData + new Size(cardSize / 2, cardSize / 2), false);
+                        BattleManager.Instance.EffectQueue.Add(effectData);
+                    }
+                }
             }
         }
     }

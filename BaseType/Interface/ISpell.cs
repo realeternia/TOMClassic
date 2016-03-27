@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ConfigDatas
 {
-    public interface ISpell
+    public interface ISpell : ITargetMeasurable
     {
         int Id { get; }
         int Level { get; }

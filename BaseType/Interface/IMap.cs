@@ -10,6 +10,6 @@ namespace ConfigDatas
         void ReviveUnit(System.Drawing.Point mouse, int addHp);
 
         MonsterCollection GetAllMonster(System.Drawing.Point mouse);
-        MonsterCollection GetRangeMonster(bool isLeft, string target, string shape, int range, System.Drawing.Point mouse, string effect);	
+        MonsterCollection GetRangeMonster(bool isLeft, string target, string shape, int range, System.Drawing.Point mouse);	
     }
 }

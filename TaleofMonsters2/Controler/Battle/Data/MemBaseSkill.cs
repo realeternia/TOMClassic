@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
@@ -87,11 +88,15 @@ namespace TaleofMonsters.Controler.Battle.Data
                 if (CheckRate())
                 {
                     onAddTriggered = true;
-                    SkillInfo.SkillConfig.OnAdd(Self, Level);
-                    SendEffect();
+                    SkillInfo.SkillConfig.OnAdd(SkillInfo, Self, Level);
+                    SendSkillIcon();
                     if (SkillInfo.SkillConfig.Effect != "")
                     {
                         BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
+                    }
+                    if (SkillInfo.SkillConfig.EffectArea != "")
+                    {
+                        SendAreaEffect(Self.Position);
                     }
                 }
             }
@@ -101,7 +106,7 @@ namespace TaleofMonsters.Controler.Battle.Data
         {
             if (onAddTriggered && SkillInfo.SkillConfig.OnRemove != null)
             {
-                SkillInfo.SkillConfig.OnRemove(Self, Level);
+                SkillInfo.SkillConfig.OnRemove(SkillInfo, Self, Level);
             }
         }
 
@@ -110,7 +115,7 @@ namespace TaleofMonsters.Controler.Battle.Data
             if (SkillInfo.SkillConfig.CheckHit!=null)
             {
                 SkillInfo.SkillConfig.CheckHit(src, dest, ref hit, Level);
-                SendEffect();
+                SendSkillIcon();
             }
         }
 
@@ -119,7 +124,7 @@ namespace TaleofMonsters.Controler.Battle.Data
             if (SkillInfo.SkillConfig.CheckDamage != null)
             {
                 SkillInfo.SkillConfig.CheckDamage(src, dest, isActive, damage, ref minDamage, ref deathHit, Level);
-                SendEffect();
+                SendSkillIcon();
             }
         }
 
@@ -127,8 +132,12 @@ namespace TaleofMonsters.Controler.Battle.Data
         {
             if (SkillInfo.SkillConfig.AfterHit != null)
             {
-                SkillInfo.SkillConfig.AfterHit(src, dest, damage, !dest.IsAlive, Level);
-                SendEffect();
+                SkillInfo.SkillConfig.AfterHit(SkillInfo, src, dest, damage, !dest.IsAlive, Level);
+                SendSkillIcon();
+                if (SkillInfo.SkillConfig.EffectArea != "")
+                {
+                    SendAreaEffect(SkillInfo.SkillConfig.PointSelf ? Self.Position : dest.Position);
+                }
             }
         }
 
@@ -149,18 +158,22 @@ namespace TaleofMonsters.Controler.Battle.Data
 
                 lastCastSpecialTime = TimeTool.DateTimeToUnixTime(DateTime.Now);
 
-                SkillInfo.SkillConfig.CheckSpecial(Self, Level);
-                SendEffect();
+                SkillInfo.SkillConfig.CheckSpecial(SkillInfo, Self, Level);
+                SendSkillIcon();
                 if (SkillInfo.SkillConfig.Effect!="")
                 {
                     BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
+                }
+                if (SkillInfo.SkillConfig.EffectArea != "")
+                {
+                    SendAreaEffect(Self.Position);
                 }
                 return true;
             }
             return false;
         }
 
-        private void SendEffect(int key, string exp)
+        private void SendSkillIcon(int key, string exp)
         {
             if (Self != null && SkillId < 10000 && key != 0)
             {
@@ -168,10 +181,27 @@ namespace TaleofMonsters.Controler.Battle.Data
             }
         }
 
-        private void SendEffect()
+        private void SendSkillIcon()
         {
-            SendEffect(-1, "");
-        }        
+            SendSkillIcon(-1, "");
+        }
+
+        private void SendAreaEffect(Point pos)
+        {
+            //播放特效
+            RegionTypes rt = BattleTargetManager.GetRegionType(SkillInfo.SkillConfig.Target[2]);
+            var cardSize = BattleManager.Instance.MemMap.CardSize;
+            foreach (var memMapPoint in BattleManager.Instance.MemMap.Cells)
+            {
+                var pointData = memMapPoint.ToPoint();
+                if (BattleLocationManager.IsPointInRegionType(rt, pos.X, pos.Y, pointData, SkillInfo.SkillConfig.Range))
+                {
+                    var effectData = new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.EffectArea), pointData + new Size(cardSize / 2, cardSize / 2), false);
+                    BattleManager.Instance.EffectQueue.Add(effectData);
+                }
+            }
+        }
+
 
     }
 }

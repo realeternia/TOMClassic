@@ -46,6 +46,7 @@
     <Compile Include="Interface\IMap.cs" />
     <Compile Include="Interface\IPlayer.cs" />
     <Compile Include="Interface\ISpell.cs" />
+    <Compile Include="Interface\ITargetMeasurable.cs" />
     <Compile Include="MonsterCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CustomDelegates.cs" />

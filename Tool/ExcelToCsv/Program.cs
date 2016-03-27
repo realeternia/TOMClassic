@@ -331,6 +331,10 @@ namespace ExcelToCsv
                 {
                     result = "\"" + datas[i] + "\"";
                 }
+                else if (typeStr == "bool")
+                {
+                    result = datas[i].ToString() == "" ? "false" : datas[i].ToString();
+                }
                 else//primitive type
                 {
                     result = datas[i].ToString() == "" ? "0" : datas[i].ToString();
