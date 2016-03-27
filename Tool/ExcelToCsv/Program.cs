@@ -211,7 +211,7 @@ namespace ExcelToCsv
                 {
                     result = datas[i].ToString() == ""
                                   ? "null"
-                                  : string.Format("delegate(IMonster s,int lv){{{0}}}", datas[i]);
+                                  : string.Format("delegate(ITargetMeasurable sp,IMonster s,int lv){{{0}}}", datas[i]);
                 }
                 else if (typeStr == "SkillHitEffectDelegate")
                 {
@@ -232,7 +232,7 @@ namespace ExcelToCsv
                     result = datas[i].ToString() == ""
                                   ? "null"
                                   : string.Format(
-                                      "delegate(IMonster s,IMonster d,HitDamage damage, bool deadHit,int lv){{{0}}}",
+                                      "delegate(ITargetMeasurable sp,IMonster s,IMonster d,HitDamage damage, bool deadHit,int lv){{{0}}}",
                                       datas[i]);
                 }
                 else if (typeStr == "SkillBurstCheckDelegate")
@@ -247,7 +247,7 @@ namespace ExcelToCsv
                 {
                     result = datas[i].ToString() == ""
                                   ? "null"
-                                  : string.Format("delegate(IMonster s,int lv){{{0}}}", datas[i]);
+                                  : string.Format("delegate(ITargetMeasurable sp,IMonster s,int lv){{{0}}}", datas[i]);
                 }
                 else if (typeStr == "SpellEffectDelegate")
                 {
