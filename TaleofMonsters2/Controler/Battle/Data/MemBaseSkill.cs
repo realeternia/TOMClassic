@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemEffect;
@@ -8,9 +7,7 @@ using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.DataType.Effects;
 using TaleofMonsters.DataType.Skills;
 using ConfigDatas;
-using NarlonLib.Core;
 using TaleofMonsters.Controler.Battle.Tool;
-using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 
 namespace TaleofMonsters.Controler.Battle.Data
@@ -20,7 +17,7 @@ namespace TaleofMonsters.Controler.Battle.Data
         private readonly Dictionary<int, bool> burst;
         private bool onAddTriggered;
 
-        private int lastCastSpecialTime; //上次施放special技能的时间
+        private float lastCastRound; //上次施放special技能的时间
 
         public SkillSourceTypes Type { get; set; } //技能来源，天生/武器
         public int SkillId { get; private set; }
@@ -33,7 +30,6 @@ namespace TaleofMonsters.Controler.Battle.Data
             SkillId = skill.Id;
             Percent = per;
             burst= new Dictionary<int, bool>();
-            lastCastSpecialTime = TimeTool.DateTimeToUnixTime(DateTime.Now);
         }
 
         public LiveMonster Self { get; set; }
@@ -141,7 +137,7 @@ namespace TaleofMonsters.Controler.Battle.Data
             }
         }
 
-        public bool CheckSpecial()
+        public bool CheckSpecial(float pastRound)
         {
             if (SkillInfo.SkillConfig.CheckSpecial != null && CheckRate())
             {
@@ -150,13 +146,13 @@ namespace TaleofMonsters.Controler.Battle.Data
                     return false;
                 }
 
-                int nowTime = TimeTool.DateTimeToUnixTime(DateTime.Now);
-                if (nowTime - lastCastSpecialTime < SkillInfo.SkillConfig.SpecialCd* GameConstants.RoundTime/1000)
+                lastCastRound += pastRound;
+                if (lastCastRound < SkillInfo.SkillConfig.SpecialCd)
                 {//in cd 
                     return false;
                 }
 
-                lastCastSpecialTime = TimeTool.DateTimeToUnixTime(DateTime.Now);
+                lastCastRound = (float)(lastCastRound- SkillInfo.SkillConfig.SpecialCd);
 
                 SkillInfo.SkillConfig.CheckSpecial(SkillInfo, Self, Level);
                 SendSkillIcon();
@@ -175,7 +171,7 @@ namespace TaleofMonsters.Controler.Battle.Data
 
         private void SendSkillIcon(int key, string exp)
         {
-            if (Self != null && SkillId < 10000 && key != 0)
+            if (Self != null && key != 0)
             {
                 BattleManager.Instance.FlowWordQueue.Add(new FlowSkillInfo(SkillId, Self.Position, 0, "lime", 20, 50, exp.Replace("+-", "-")), true);
             }

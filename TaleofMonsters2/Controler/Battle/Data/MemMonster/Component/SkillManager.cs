@@ -133,7 +133,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             }
         }
 
-        public bool CheckSpecial()
+        public bool CheckSpecial(float pastRound)
         {
             if (self.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
             {
@@ -142,7 +142,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
             foreach (MemBaseSkill skill in Skills.ToArray())
             {
-                if (skill.CheckSpecial())
+                if (skill.CheckSpecial(pastRound))
                     return true;
             }
             return false;
