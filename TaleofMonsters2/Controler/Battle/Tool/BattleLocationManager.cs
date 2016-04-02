@@ -50,6 +50,9 @@ namespace TaleofMonsters.Controler.Battle.Tool
                 return false;
             }
 
+            if (tx < 0 || ty < 0 || tx >= BattleManager.Instance.MemMap.StageWidth || ty >= BattleManager.Instance.MemMap.StageHeight)
+                return false;
+
             MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
             var sideCell = BattleManager.Instance.MemMap.ColumnCount / 2;
             return point.IsLeft ==isLeft && point.SideIndex >= 0 && point.SideIndex < sideCell && point.CanMove;

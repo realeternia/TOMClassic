@@ -836,6 +836,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             {
                 posLis.Add(BattleLocationManager.GetMonsterNearPoint(Position, "back", IsLeft));
             }
+            else if (type == 5)//4格位置
+            {
+                int size = BattleManager.Instance.MemMap.CardSize;
+                posLis.Add(new Point(Position.X, Position.Y - size));
+                posLis.Add(new Point(Position.X, Position.Y + size));
+                posLis.Add(new Point(Position.X - size, Position.Y));
+                posLis.Add(new Point(Position.X + size, Position.Y));
+            }
 
             foreach (var pos in posLis)
             {
