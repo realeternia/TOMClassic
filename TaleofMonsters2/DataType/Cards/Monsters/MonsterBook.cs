@@ -121,7 +121,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
            for (int i = 0; i < monsterConfig.Skills.Count; i++)
            {
                var skilConfig = ConfigData.GetSkillConfig(monsterConfig.Skills[i].X);
-               if (skilConfig.Target != "")
+               if (skilConfig.Target != "" && skilConfig.OnAdd != null)
                {
                    return skilConfig;
                }
