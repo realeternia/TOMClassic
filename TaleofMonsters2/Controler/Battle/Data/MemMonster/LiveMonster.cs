@@ -356,9 +356,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                     Life += HpReg;
                 }
 
-                if (Avatar.MonsterConfig.LifeTime > 0)
+                if (Avatar.MonsterConfig.LifeRound > 0)
                 {
-                    Life -= MaxHp * (GameConstants.RoundTime/1000) / Avatar.MonsterConfig.LifeTime;
+                    Life -= (int)(MaxHp / Avatar.MonsterConfig.LifeRound);
                 }
             }
 
