@@ -11,9 +11,8 @@ namespace ConfigDatas
         void AddPp(double addon);
         void AddMana(IMonster mon, int type, double addon);//skill使用
 
-        int LpCost { get; set; }
-        int MpCost { get; set; }
-        int PpCost { get; set; }
+        void AddSpike(int id);
+        void RemoveSpike(int id);
 
         int RoundCardPlus { get; set; }//每回合抽卡加成，默认为0
 

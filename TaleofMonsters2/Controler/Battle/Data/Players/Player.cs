@@ -29,9 +29,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public CardManager CardManager { get; private set; }
 
-        private int lpCost;//额外的anger消耗
-        private int mpCost;//额外的mana消耗
-        private int ppCost;//额外的mana消耗
         public double SpellEffectAddon { get; set; }//法术牌效果加成
 
         private List<Trap> trapList = new List<Trap>();
@@ -39,6 +36,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public List<int> HeroSkillList = new List<int>();
         public bool IsAlive { get; set; }//是否活着
+        private List<int> spikeList = new List<int>();
 
         #region 属性
 
@@ -72,22 +70,37 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public int DirectDamage { get; set; }
 
-        public int LpCost
+        public int LpCost { get; set; }
+
+        public int MpCost { get; set; }
+
+        public int PpCost { get; set; }
+
+        public void AddSpike(int id)
         {
-            get { return lpCost; }
-            set { lpCost = value;  CardManager.UpdateCardCost(); }
-        }
-        
-        public int MpCost
-        {
-            get { return mpCost; }
-            set { mpCost = value; CardManager.UpdateCardCost(); }
+            spikeList.Add(id);
+            ReCheckSpike();
         }
 
-        public int PpCost
+        public void RemoveSpike(int id)
         {
-            get { return ppCost; }
-            set { ppCost = value; CardManager.UpdateCardCost(); }
+            spikeList.Remove(id);
+            ReCheckSpike();
+        }
+
+        private void ReCheckSpike()
+        {
+            LpCost = 0;
+            PpCost = 0;
+            MpCost = 0;
+            foreach (var spikeId in spikeList)
+            {
+                var spikeConfig = ConfigData.GetSpikeConfig(spikeId);
+                LpCost += spikeConfig.LpCostChange;
+                PpCost += spikeConfig.PpCostChange;
+                MpCost += spikeConfig.MpCostChange;
+            }
+            CardManager.UpdateCardCost();
         }
 
         public int RoundCardPlus { get; set; }
