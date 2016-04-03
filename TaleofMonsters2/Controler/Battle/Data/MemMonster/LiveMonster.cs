@@ -801,7 +801,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             Point dest = BattleLocationManager.GetMonsterNearPoint(Position, type, !IsLeft);
             if (dest.X != -1 && dest.Y != -1)
             {
-                BattleLocationManager.SetToPosition(this, dest);
+                if (!Avatar.MonsterConfig.IsBuilding)
+                {
+                    BattleLocationManager.SetToPosition(this, dest);
+                }
             }
         }
 
