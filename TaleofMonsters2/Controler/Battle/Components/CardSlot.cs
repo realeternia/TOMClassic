@@ -96,8 +96,14 @@ namespace TaleofMonsters.Controler.Battle.Components
             foreach (var manaType in ACard.CostList)
             {
                 var imgIcon = HSIcons.GetIconsByEName("mix" + (int)manaType);
-                g.DrawImage(imgIcon, x + index * 10, y+1,16,16);
+                g.DrawImage(imgIcon, x + index * 10, y + 1, 16, 16);
                 index++;
+            }
+            if (index == 0)//无消耗
+            {
+                font = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+                g.DrawString("无消耗", font, Brushes.White, x + index * 10+2, y + 1+2);
+                font.Dispose();
             }
         }
 

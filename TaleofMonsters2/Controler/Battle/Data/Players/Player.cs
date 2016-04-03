@@ -36,7 +36,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public List<int> HeroSkillList = new List<int>();
         public bool IsAlive { get; set; }//是否活着
-        private List<int> spikeList = new List<int>();
+        private List<Spike> spikeList = new List<Spike>();
 
         #region 属性
 
@@ -78,13 +78,26 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void AddSpike(int id)
         {
-            spikeList.Add(id);
+            Spike spike = new Spike();
+            spike.Id = id;
+            var configData = ConfigData.GetSpikeConfig(id);
+            spike.RemoveOnUseMonster = configData.RemoveOnUseMonster;
+            spike.RemoveOnUseSpell = configData.RemoveOnUseSpell;
+            spike.RemoveOnUseWeapon = configData.RemoveOnUseWeapon;
+            spikeList.Add(spike);
             ReCheckSpike();
         }
 
         public void RemoveSpike(int id)
         {
-            spikeList.Remove(id);
+            for (int i = 0; i < spikeList.Count; i++)
+            {
+                if (spikeList[i].Id == id)
+                {
+                    spikeList.RemoveAt(i);
+                    break;
+                }
+            }
             ReCheckSpike();
         }
 
@@ -93,9 +106,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             LpCost = 0;
             PpCost = 0;
             MpCost = 0;
-            foreach (var spikeId in spikeList)
+            foreach (var spikeData in spikeList)
             {
-                var spikeConfig = ConfigData.GetSpikeConfig(spikeId);
+                var spikeConfig = ConfigData.GetSpikeConfig(spikeData.Id);
                 LpCost += spikeConfig.LpCostChange;
                 PpCost += spikeConfig.PpCostChange;
                 MpCost += spikeConfig.MpCostChange;
@@ -275,6 +288,27 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             if (rival.CheckTrapOnUseCard(selectCard, rival, this))
             {
                 return false;
+            }
+
+            List<Spike> toRemove = null;
+            if (selectCard.CardType == CardTypes.Monster)
+            {
+                toRemove = spikeList.FindAll(a => a.RemoveOnUseMonster);
+            }
+            else if (selectCard.CardType == CardTypes.Spell)
+            {
+                toRemove = spikeList.FindAll(a => a.RemoveOnUseSpell);
+            }
+            else if (selectCard.CardType == CardTypes.Weapon)
+            {
+                toRemove = spikeList.FindAll(a => a.RemoveOnUseWeapon);
+            }
+            if (toRemove != null)
+            {
+                foreach (var spike in toRemove)
+                {
+                    RemoveSpike(spike.Id);
+                }
             }
 
             return true;
