@@ -2,9 +2,7 @@
 using System.Drawing;
 using NarlonLib.Core;
 using NarlonLib.Math;
-using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
-using TaleofMonsters.DataType.Effects;
 using TaleofMonsters.DataType.Maps;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType.Others;
@@ -79,7 +77,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             {
                 return false;
             }
-            if (y < 0 || y >= CardSize * sideCount)
+            if (y < 0 || y >= CardSize * RowCount)
             {
                 return false;
             }
@@ -92,25 +90,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             int rowid = y/CardSize;
             if (isLeft)
             {
-                if (isShooter)
-                {
-                    xOrder = new int[] {10, 9, 8, 7, 6};
-                }
-                else
-                {
-                    xOrder = new int[] {6, 7, 8, 9 ,10};//todo 先这样
-                }
+                xOrder = isShooter ? new int[] {10, 9, 8, 7, 6} : new int[] {6, 7, 8, 9 ,10};
             }
             else
             {
-                if (isShooter)
-                {
-                    xOrder = new int[] { 0,1,2,3,4 };
-                }
-                else
-                {
-                    xOrder = new int[] { 4,3,2,1,0 };
-                }
+                xOrder = isShooter ? new int[] { 0,1,2,3,4 } : new int[] { 4,3,2,1,0 };
             }
 
             for (int j = rowid; j >= 0; j--)

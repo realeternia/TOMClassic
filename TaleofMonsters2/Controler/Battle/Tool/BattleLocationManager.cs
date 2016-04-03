@@ -45,14 +45,14 @@ namespace TaleofMonsters.Controler.Battle.Tool
 
         public static bool IsPlaceCanSummon(int tx, int ty, bool isLeft)
         {
+            if (tx < 0 || ty < 0 || tx >= BattleManager.Instance.MemMap.StageWidth || ty >= BattleManager.Instance.MemMap.StageHeight)
+                return false;
+
             if (!IsPlaceBlank(tx, ty))
             {
                 return false;
             }
-
-            if (tx < 0 || ty < 0 || tx >= BattleManager.Instance.MemMap.StageWidth || ty >= BattleManager.Instance.MemMap.StageHeight)
-                return false;
-
+            
             MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
             var sideCell = BattleManager.Instance.MemMap.ColumnCount / 2;
             return point.IsLeft ==isLeft && point.SideIndex >= 0 && point.SideIndex < sideCell && point.CanMove;
@@ -160,6 +160,17 @@ namespace TaleofMonsters.Controler.Battle.Tool
                 {
                     int sel = rm.Process(1)[0];
                     return new Point(pos.X + (sel > 1 ? 0 : sel * 2 - 1) * size, pos.Y + (sel < 2 ? 0 : sel * 2 - 5) * size);
+                }
+            }
+            if (type == "rand") //随机
+            {
+                int xoff = MathTool.GetRandom(BattleManager.Instance.MemMap.Cells.GetLength(0));
+                int yoff = MathTool.GetRandom(BattleManager.Instance.MemMap.Cells.GetLength(1));
+                Point pa = new Point(xoff * size, yoff * size);
+                bool paavail = BattleManager.Instance.MemMap.IsMousePositionCanSummon(pa.X, pa.Y);
+                if (paavail)
+                {
+                    return pa;
                 }
             }
             return new Point(-1, -1);
