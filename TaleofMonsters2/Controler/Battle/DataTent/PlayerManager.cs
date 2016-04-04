@@ -40,10 +40,10 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             RightPlayer = null;
         }
 
-        public void Update(bool isFast, float timePast, int round)
+        public void Update(bool isFast, float pastRound, int round)
         {
-            LeftPlayer.Update(isFast, timePast, round);
-            RightPlayer.Update(isFast, timePast, round);
+            LeftPlayer.Update(isFast, pastRound, round);
+            RightPlayer.Update(isFast, pastRound, round);
         }
 
         public void CheckRoundCard()

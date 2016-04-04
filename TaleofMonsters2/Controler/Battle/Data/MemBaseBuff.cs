@@ -57,7 +57,7 @@ namespace TaleofMonsters.Controler.Battle.Data
 
         public void OnRoundEffect(LiveMonster src)
         {
-            TimeLeft -= 0.01;
+            TimeLeft -= 0.025;
             RoundMark++;
 
             if (RoundMark%100==50)//每0.5回合触发

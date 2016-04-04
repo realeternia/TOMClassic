@@ -84,6 +84,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             spike.RemoveOnUseMonster = configData.RemoveOnUseMonster;
             spike.RemoveOnUseSpell = configData.RemoveOnUseSpell;
             spike.RemoveOnUseWeapon = configData.RemoveOnUseWeapon;
+            spike.RoundLeft = configData.Round;
+            spike.CanTimeOut = configData.Round > 0; 
             spikeList.Add(spike);
             ReCheckSpike();
         }
@@ -138,9 +140,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             EnergyGenerator.Next(0);
         }
 
-        public void Update(bool isFast, float timePast, int round)
+        public void Update(bool isFast, float pastRound, int round)
         {
-            recoverTime += timePast * GameConstants.RoundRecoverAddon * ((round >= GameConstants.RoundRecoverDoubleRound) ? 2 : 1);
+            recoverTime += pastRound * GameConstants.RoundRecoverAddon * ((round >= GameConstants.RoundRecoverDoubleRound) ? 2 : 1);
             var need = isFast ? GameConstants.DrawManaTimeFast : GameConstants.DrawManaTime;
             if (recoverTime >= need)
             {
@@ -151,6 +153,18 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             if (ManaChanged != null)//todo 先ws下
             {
                 ManaChanged();
+            }
+            foreach (var spike in spikeList)
+            {
+                if (spike.CanTimeOut)
+                {
+                    spike.RoundLeft -= pastRound;
+                }
+            }
+            var toRemove = spikeList.FindAll(a => a.CanTimeOut && a.RoundLeft<=0);
+            foreach (var spike in toRemove)
+            {
+                RemoveSpike(spike.Id);
             }
         }
 

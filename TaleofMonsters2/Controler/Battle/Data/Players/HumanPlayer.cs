@@ -55,7 +55,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             base.InitialCards();
 
 #if DEBUG
-            CardManager.AddCard(new ActiveCard(51000199, 1, 0));
+            CardManager.AddCard(new ActiveCard(53000078, 1, 0));
+            CardManager.AddCard(new ActiveCard(51000311, 1, 0));
 #endif
         }
 
