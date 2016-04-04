@@ -26,10 +26,8 @@ namespace TaleofMonsters.DataType.Equips.Addons
                     case 112: if (mon.Avatar.MonsterConfig.Attr == (int)CardElements.Wind) mon.AddStrengthLevel(skillvalue[i]); break;
                     case 113: if (mon.Avatar.MonsterConfig.Attr == (int)CardElements.Fire) mon.AddStrengthLevel(skillvalue[i]); break;
                     case 114: if (mon.Avatar.MonsterConfig.Attr == (int)CardElements.Earth) mon.AddStrengthLevel(skillvalue[i]); break;
-                    case 115: if (mon.Avatar.MonsterConfig.Attr == (int)CardElements.Ice) mon.AddStrengthLevel(skillvalue[i]); break;
-                    case 116: if (mon.Avatar.MonsterConfig.Attr == (int)CardElements.Thunder) mon.AddStrengthLevel(skillvalue[i]); break;
-                    case 117: if (mon.Avatar.MonsterConfig.Attr == (int)CardElements.Light) mon.AddStrengthLevel(skillvalue[i]); break;
-                    case 118: if (mon.Avatar.MonsterConfig.Attr == (int)CardElements.Dark) mon.AddStrengthLevel(skillvalue[i]); break;
+                    case 115: if (mon.Avatar.MonsterConfig.Attr == (int)CardElements.Light) mon.AddStrengthLevel(skillvalue[i]); break;
+                    case 116: if (mon.Avatar.MonsterConfig.Attr == (int)CardElements.Dark) mon.AddStrengthLevel(skillvalue[i]); break;
                     case 119: if (mon.Avatar.MonsterConfig.Attr == (int)CardElements.None) mon.AddStrengthLevel(skillvalue[i]); break;
                     case 120: if (mon.Avatar.MonsterConfig.Type == (int)CardTypeSub.Goblin) mon.AddStrengthLevel(skillvalue[i]); break;
                     case 121: if (mon.Avatar.MonsterConfig.Type == (int)CardTypeSub.Devil) mon.AddStrengthLevel(skillvalue[i]); break;

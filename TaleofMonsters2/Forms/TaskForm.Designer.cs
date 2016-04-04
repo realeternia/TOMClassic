@@ -66,8 +66,6 @@ namespace TaleofMonsters.Forms
             "风",
             "火",
             "地",
-            "冰",
-            "雷",
             "光",
             "暗",
             "武器",

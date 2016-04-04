@@ -50,7 +50,7 @@ namespace TaleofMonsters.Forms
             headId = 1;
             pictureBoxHead.Image = PicLoader.Read("Player", "1.PNG");
             constellation = MathTool.GetRandom(12);
-            type = MathTool.GetRandom(7);
+            type = MathTool.GetRandom(5);
             res = MathTool.GetRandom(6);
             myCursor.ChangeCursor("default");
         }
@@ -115,7 +115,8 @@ namespace TaleofMonsters.Forms
 
         private void buttonType_Click(object sender, EventArgs e)
         {
-            type = (type + 1)%7;
+            type = (type + 1)%5;
+
             Invalidate();
         }
 

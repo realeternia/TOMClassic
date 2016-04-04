@@ -15,10 +15,8 @@
         Wind = 2,
         Fire = 3,
         Earth = 4,
-        Ice = 5,
-        Thunder = 6,
-        Light = 7,
-        Dark = 8,
+        Light = 5,
+        Dark = 6,
     }
 
     internal enum CardTypeSub
@@ -181,10 +179,8 @@
         TypeWind = 12,
         TypeFire = 13,
         TypeEarth = 14,
-        TypeIce = 15,
-        TypeThunder = 16,
-        TypeLight = 17,
-        TypeDark = 18,
+        TypeLight = 15,
+        TypeDark = 16,
 
         RaceGoblin = 20,
         RaceDevil = 21,

@@ -100,8 +100,6 @@ namespace TaleofMonsters.Forms.MagicBook
             "风",
             "火",
             "地",
-            "冰",
-            "雷",
             "光",
             "暗"});
             this.comboBoxType.Location = new System.Drawing.Point(128, 47);

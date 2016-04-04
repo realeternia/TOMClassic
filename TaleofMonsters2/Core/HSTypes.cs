@@ -6,13 +6,13 @@
     {
         public static string I2Attr(int aid)
         {
-            string[] rt = { "无", "水", "风", "火", "地", "冰", "雷", "光", "暗"};
+            string[] rt = { "无", "水", "风", "火", "地", "光", "暗"};
             return rt[aid];
         }
 
         public static int Attr2I(string name)
         {
-            string[] rt = { "无", "水", "风", "火", "地", "冰", "雷", "光", "暗" };
+            string[] rt = { "无", "水", "风", "火", "地", "光", "暗" };
             for (int i = 0; i < rt.Length; i++)
             {
                 if (rt[i] == name)
@@ -135,9 +135,7 @@
                               "水属性$-怪物强化回复",
                               "风属性$-怪物强化速度",
                               "火属性$-怪物强化攻击",
-                              "地属性$-怪物强化防御",
-                              "冰属性$-怪物强化生命",
-                              "雷属性$-怪物强化命中"
+                              "地属性$-怪物强化防御"
                           };
             return rt[aid];
         }
