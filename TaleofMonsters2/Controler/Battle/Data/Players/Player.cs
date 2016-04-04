@@ -5,6 +5,7 @@ using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
+using TaleofMonsters.Controler.Battle.Data.Players.Frag;
 using TaleofMonsters.Core.Interface;
 using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.Core;
@@ -26,7 +27,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         private float recoverTime;
 
         public EnergyGenerator EnergyGenerator { get; set; }
-
+        public SpikeManager SpikeManager { get; set; }
         public CardManager CardManager { get; private set; }
 
         public double SpellEffectAddon { get; set; }//法术牌效果加成
@@ -36,7 +37,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public List<int> HeroSkillList = new List<int>();
         public bool IsAlive { get; set; }//是否活着
-        private List<Spike> spikeList = new List<Spike>();
 
         #region 属性
 
@@ -70,52 +70,15 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public int DirectDamage { get; set; }
 
-        public int LpCost { get; set; }
-
-        public int MpCost { get; set; }
-
-        public int PpCost { get; set; }
 
         public void AddSpike(int id)
         {
-            Spike spike = new Spike();
-            spike.Id = id;
-            var configData = ConfigData.GetSpikeConfig(id);
-            spike.RemoveOnUseMonster = configData.RemoveOnUseMonster;
-            spike.RemoveOnUseSpell = configData.RemoveOnUseSpell;
-            spike.RemoveOnUseWeapon = configData.RemoveOnUseWeapon;
-            spike.RoundLeft = configData.Round;
-            spike.CanTimeOut = configData.Round > 0; 
-            spikeList.Add(spike);
-            ReCheckSpike();
+            SpikeManager.AddSpike(id);
         }
 
         public void RemoveSpike(int id)
         {
-            for (int i = 0; i < spikeList.Count; i++)
-            {
-                if (spikeList[i].Id == id)
-                {
-                    spikeList.RemoveAt(i);
-                    break;
-                }
-            }
-            ReCheckSpike();
-        }
-
-        private void ReCheckSpike()
-        {
-            LpCost = 0;
-            PpCost = 0;
-            MpCost = 0;
-            foreach (var spikeData in spikeList)
-            {
-                var spikeConfig = ConfigData.GetSpikeConfig(spikeData.Id);
-                LpCost += spikeConfig.LpCostChange;
-                PpCost += spikeConfig.PpCostChange;
-                MpCost += spikeConfig.MpCostChange;
-            }
-            CardManager.UpdateCardCost();
+            SpikeManager.RemoveSpike(id);
         }
 
         public int RoundCardPlus { get; set; }
@@ -129,6 +92,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             isPlayerControl = playerControl;
             CardManager = new CardManager(this);
             EnergyGenerator = new EnergyGenerator();
+            SpikeManager = new SpikeManager(this);
             State = new PlayerState();
         }
 
@@ -154,18 +118,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             {
                 ManaChanged();
             }
-            foreach (var spike in spikeList)
-            {
-                if (spike.CanTimeOut)
-                {
-                    spike.RoundLeft -= pastRound;
-                }
-            }
-            var toRemove = spikeList.FindAll(a => a.CanTimeOut && a.RoundLeft<=0);
-            foreach (var spike in toRemove)
-            {
-                RemoveSpike(spike.Id);
-            }
+            SpikeManager.OnRound(pastRound);
         }
 
         private void AddRandomMana(int killerId, int count)
@@ -304,26 +257,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 return false;
             }
 
-            List<Spike> toRemove = null;
-            if (selectCard.CardType == CardTypes.Monster)
-            {
-                toRemove = spikeList.FindAll(a => a.RemoveOnUseMonster);
-            }
-            else if (selectCard.CardType == CardTypes.Spell)
-            {
-                toRemove = spikeList.FindAll(a => a.RemoveOnUseSpell);
-            }
-            else if (selectCard.CardType == CardTypes.Weapon)
-            {
-                toRemove = spikeList.FindAll(a => a.RemoveOnUseWeapon);
-            }
-            if (toRemove != null)
-            {
-                foreach (var spike in toRemove)
-                {
-                    RemoveSpike(spike.Id);
-                }
-            }
+            SpikeManager.OnUseCard(selectCard.CardType);
 
             return true;
         }

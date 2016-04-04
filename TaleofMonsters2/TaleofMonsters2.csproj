@@ -91,7 +91,8 @@
     <Compile Include="Controler\Battle\Data\MemMonster\LiveMonsterToolTip.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\Component\MonsterAi.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\Component\MonsterCoverBox.cs" />
-    <Compile Include="Controler\Battle\Data\MemSpell\Spike.cs" />
+    <Compile Include="Controler\Battle\Data\Players\Frag\Spike.cs" />
+    <Compile Include="Controler\Battle\Data\Players\Frag\SpikeManager.cs" />
     <Compile Include="Controler\Battle\Tool\BattleManager.cs" />
     <Compile Include="Controler\Battle\Data\MemEffect\BaseEffect.cs" />
     <Compile Include="Controler\Battle\Data\MemEffect\FlyEffect.cs" />
@@ -109,7 +110,7 @@
     <Compile Include="Controler\Battle\Data\MemMap\MemRowColumnMap.cs" />
     <Compile Include="Controler\Battle\Data\MemSpell\MemBaseSpell.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\MonsterIdSpeed.cs" />
-    <Compile Include="Controler\Battle\Data\Players\EnergyGenerator.cs" />
+    <Compile Include="Controler\Battle\Data\Players\Frag\EnergyGenerator.cs" />
     <Compile Include="Controler\Battle\Data\Players\Frag\CardManager.cs" />
     <Compile Include="Controler\Battle\Data\Players\MirrorPlayer.cs" />
     <Compile Include="Controler\Battle\Data\Players\PlayerAttr.cs" />

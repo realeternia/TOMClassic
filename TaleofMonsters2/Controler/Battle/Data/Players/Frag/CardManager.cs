@@ -7,7 +7,7 @@ using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards;
 
-namespace TaleofMonsters.Controler.Battle.Data.Players
+namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 {
     internal class CardManager
     {
@@ -45,17 +45,18 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void AddCard(ActiveCard card)
         {
-            if (card.CardType == CardTypes.Spell && self.MpCost != 0)
+            var spike = self.SpikeManager;
+            if (card.CardType == CardTypes.Spell && spike.MpCost != 0)
             {
-                card.MpCostChange = self.MpCost;
+                card.MpCostChange = spike.MpCost;
             }
-            else if (card.CardType == CardTypes.Monster && self.LpCost != 0)
+            else if (card.CardType == CardTypes.Monster && spike.LpCost != 0)
             {
-                card.LpCostChange = self.LpCost;
+                card.LpCostChange = spike.LpCost;
             }
-            else if (card.CardType == CardTypes.Weapon && self.PpCost != 0)
+            else if (card.CardType == CardTypes.Weapon && spike.PpCost != 0)
             {
-                card.PpCostChange = self.PpCost;
+                card.PpCostChange = spike.PpCost;
             }
             int count = GetCardNumber();
             if (count < GameConstants.CardSlotMaxCount)
@@ -68,11 +69,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void UpdateCardCost()
         {
+            var spikeManager = self.SpikeManager;
             foreach (ActiveCard activeCard in cards)
             {
-                activeCard.LpCostChange = self.LpCost;
-                activeCard.MpCostChange = self.MpCost;
-                activeCard.PpCostChange = self.PpCost;
+                activeCard.LpCostChange = spikeManager.LpCost;
+                activeCard.MpCostChange = spikeManager.MpCost;
+                activeCard.PpCostChange = spikeManager.PpCost;
             }
             if (self.CardsDesk != null)
                 self.CardsDesk.UpdateSlot(cards);

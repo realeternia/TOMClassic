@@ -1,6 +1,4 @@
-﻿using ConfigDatas;
-
-namespace TaleofMonsters.Controler.Battle.Data.MemSpell
+﻿namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 {
     internal class Spike
     {

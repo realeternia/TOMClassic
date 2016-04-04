@@ -2,7 +2,7 @@
 using NarlonLib.Math;
 using TaleofMonsters.Core;
 
-namespace TaleofMonsters.Controler.Battle.Data.Players
+namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 {
     internal class EnergyGenerator
     {
