@@ -25,21 +25,36 @@
 
         public static string I2CardTypeSub(int rid)
         {
-            if (rid < 100)
+            switch (rid)
             {
-                string[] rt = { "地精", "恶魔", "机械", "精灵", "昆虫", "龙", "鸟", "爬行", "人类", "兽人", "亡灵", "野兽", "鱼", "元素", "植物", "英雄" };
-                return rt[rid];
+                case 1: return "恶魔";
+                case 2: return "机械";
+                case 3: return "精灵";
+                case 4: return "昆虫";
+                case 5: return "龙";
+                case 6: return "鸟";
+                case 7: return "爬行";
+                case 8: return "人类";
+                case 9: return "兽人";
+                case 10: return "亡灵";
+                case 11: return "野兽";
+                case 12: return "鱼";
+                case 13: return "元素";
+                case 14: return "植物";
+                case 15: return "地精";
+                case 35: return "英雄";
+
+                case 100: return "武器";
+                case 101: return "卷轴";
+                case 102: return "防具";
+                case 103: return "饰品";
+
+                case 200: return "单体法术";
+                case 201: return "群体法术";
+                case 202: return "基本法术";
+                case 203: return "地形变化";
             }
-            if (rid < 200)
-            {
-                string[] rt = { "武器", "卷轴", "防具", "饰品" };
-                return rt[rid-100];
-            } 
-            if (rid < 300)
-            {
-                string[] rt = { "单体法术", "群体法术", "基本法术", "地形变化" };
-                return rt[rid - 200];
-            }
+
             return "";
         }
 

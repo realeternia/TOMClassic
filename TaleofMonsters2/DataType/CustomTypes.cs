@@ -21,7 +21,6 @@
 
     internal enum CardTypeSub
     {
-        Goblin = 0,
         Devil = 1,
         Machine = 2,
         Spirit = 3,
@@ -36,7 +35,8 @@
         Fish = 12,
         Element = 13,
         Plant = 14,
-        Hero = 15,
+        Goblin = 15,
+        Hero = 35,
 
         Weapon = 100,
         Scroll = 101,
