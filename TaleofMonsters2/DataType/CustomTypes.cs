@@ -36,6 +36,7 @@
         Element = 13,
         Plant = 14,
         Goblin = 15,
+        Totem=16,
         Hero = 35,
 
         Weapon = 100,

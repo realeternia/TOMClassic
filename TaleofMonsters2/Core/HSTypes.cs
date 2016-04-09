@@ -42,6 +42,7 @@
                 case 13: return "元素";
                 case 14: return "植物";
                 case 15: return "地精";
+                case 16: return "石像";
                 case 35: return "英雄";
 
                 case 100: return "武器";
