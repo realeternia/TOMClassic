@@ -36,7 +36,7 @@ namespace TaleofMonsters.Forms.Pops
         {
             PopDeckChoose mb = new PopDeckChoose();
             mb.tile = tile;
-            mb.img = BattleMapBook.GetMapImage(map);
+            mb.img = BattleMapBook.GetMapImage(map, tile);
             foreach (string s in datas)
                 mb.comboBox1.Items.Add(s);
             mb.comboBox1.SelectedIndex = UserProfile.InfoCard.DeckId;

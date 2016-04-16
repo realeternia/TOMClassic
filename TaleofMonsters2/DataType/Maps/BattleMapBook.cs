@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
 using System.Drawing;
 
@@ -54,17 +55,26 @@ namespace TaleofMonsters.DataType.Maps
             return map;
         }
 
-        static public Image GetMapImage(string name)
+        static public Image GetMapImage(string name, int nowtile)
         {
             Image img = new Bitmap(100, 100);
             BattleMap mapInfo = GetMap(name);
             Graphics g = Graphics.FromImage(img);
-            for(int i=0;i<9;i++)
+
+            int cellSize = 100/mapInfo.XCount;
+            int yOff = (100 - cellSize*mapInfo.YCount)/2;
+            for (int i = 0; i < mapInfo.XCount; i++)
             {
-                for (int j = 0; j < 4; j++)
+                for (int j = 0; j < mapInfo.YCount; j++)
                 {
-                    Brush sBrush = new SolidBrush(Color.FromName(ConfigDatas.ConfigData.GetTileConfig(mapInfo.Cells[i,j]).Color));
-                    g.FillRectangle(sBrush, i * 11+1, j * 11 + 23+1, 9, 9);
+                    var tile = mapInfo.Cells[i, j];
+                    if (tile == 0)
+                    {
+                        tile = nowtile == 0 ? TileConfig.Indexer.DefaultTile : nowtile;
+                    }
+                    Brush sBrush = new SolidBrush(Color.FromName(ConfigData.GetTileConfig(tile).Color));
+                    g.FillRectangle(sBrush, i * cellSize + 1, j * cellSize + yOff + 1, cellSize, cellSize);
+                    g.DrawRectangle(Pens.White, i * cellSize + 1, j * cellSize + yOff + 1, cellSize, cellSize);
                     sBrush.Dispose();
                 }
             }

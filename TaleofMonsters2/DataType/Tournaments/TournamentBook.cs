@@ -69,7 +69,7 @@ namespace TaleofMonsters.DataType.Tournaments
             //     g.DrawString(string.Format("{0}-{1}", HSTime.GetByDate(begin_date).ToShortString(), HSTime.GetByDate(end_date).ToShortString()), fontsong, Brushes.LightGreen, 66, y);
             y += 16;
             g.DrawString("比赛地图", fontsongB, Brushes.LightGray, 3, y);
-            Image mapback = BattleMapBook.GetMapImage(tournamentConfig.Map);
+            Image mapback = BattleMapBook.GetMapImage(tournamentConfig.Map, TileConfig.Indexer.DefaultTile);
             g.DrawImage(mapback, new Rectangle(70, y, 100, 50), new Rectangle(0, 25, 100, 50), GraphicsUnit.Pixel);
             mapback.Dispose();
             y += 50;
