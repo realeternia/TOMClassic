@@ -33,7 +33,8 @@ namespace ConfigDatas
         void AddRandSkill();
         void AddSpecialMark(SkillMarks mark);
         int GetMonsterCountByRace(int rid);
-        int GetMonsterCountByType(int type);		
+        int GetMonsterCountByType(int type);
+        void AddMissile(IMonster target, string arrow);
 		
         AttrModifyData Atk{get;set;}
 

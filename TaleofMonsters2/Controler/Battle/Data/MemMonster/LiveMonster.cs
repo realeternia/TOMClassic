@@ -5,6 +5,7 @@ using ConfigDatas;
 using NarlonLib.Log;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
+using TaleofMonsters.Controler.Battle.Data.MemMissile;
 using TaleofMonsters.Controler.Battle.Data.MemMonster.Component;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
@@ -682,6 +683,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             return OwnerPlayer.State.GetMonsterCountByType((MonsterCountTypes)(type+10));
         }
 
+        public void AddMissile(IMonster target, string arrow)
+        {
+            BasicMissileControler controler = new TraceMissileControler(this, target as LiveMonster);
+            Missile mi = new Missile(arrow, Position.X, Position.Y, controler);
+            BattleManager.Instance.MissileQueue.Add(mi);
+        }
 
         public int Star
         {
