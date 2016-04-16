@@ -3,6 +3,7 @@ using System.Drawing;
 using NarlonLib.Core;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
+using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Maps;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType.Others;
@@ -35,14 +36,23 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
 
         private bool isDirty;
         private Image cachImage;
+        private BattleMap bMap;
 
         public MemRowColumnMap(string map, int tile)
         {
-            BattleMap bMap = BattleMapBook.GetMap(map);
+            bMap = BattleMapBook.GetMap(map);
             CardSize = stageWidth/bMap.XCount;
             RowCount = bMap.YCount;
             ColumnCount = bMap.XCount;
-            Cells = new MemMapPoint[ColumnCount, RowCount];
+            
+            InitCells(tile);
+
+            isDirty = true;
+        }
+
+        private void InitCells(int tile)
+        {
+            Cells = new MemMapPoint[ColumnCount,RowCount];
             tiles = new AutoDictionary<int, int>();
             for (int i = 0; i < ColumnCount; i++)
             {
@@ -53,11 +63,24 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                     {
                         tarTile = tile == 0 ? TileConfig.Indexer.DefaultTile : tile;
                     }
-                    Cells[i, j] = new MemMapPoint(i, i * CardSize, j * CardSize, ColumnCount, tarTile);
+                    Cells[i, j] = new MemMapPoint(i, i*CardSize, j*CardSize, ColumnCount, tarTile);
                     tiles[tarTile == TileConfig.Indexer.DefaultTile ? 0 : tarTile]++;
                 }
             }
-            isDirty = true;
+        }
+
+        public void InitUnit(IPlayer player)
+        {
+            int x = player.IsLeft ? 0 : ColumnCount - 1;
+            int y = RowCount / 2;
+
+            foreach (var unitInfo in bMap.Info)
+            {
+                var id = World.WorldInfoManager.GetCardFakeId();
+                var heroData = new Monster(unitInfo.UnitId);
+                LiveMonster lm = new LiveMonster(id, heroData.Level, heroData, new Point((x + (player.IsLeft ? unitInfo.X : (-unitInfo.X))) * CardSize, (y + unitInfo.Y) * CardSize), player.IsLeft);
+                BattleManager.Instance.MonsterQueue.Add(lm);
+            }
         }
 
         public MemMapPoint GetCell(int x, int y)

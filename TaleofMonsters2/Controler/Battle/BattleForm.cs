@@ -151,8 +151,8 @@ namespace TaleofMonsters.Controler.Battle
         private void StartGame()//初始化游戏
         {
             BattleManager.Instance.MemMap = new MemRowColumnMap(mapName, defaultTile);
-            BattleManager.Instance.PlayerManager.LeftPlayer.AddHeroUnit();
-            BattleManager.Instance.PlayerManager.RightPlayer.AddHeroUnit();
+             BattleManager.Instance.MemMap.InitUnit(BattleManager.Instance.PlayerManager.LeftPlayer);
+             BattleManager.Instance.MemMap.InitUnit(BattleManager.Instance.PlayerManager.RightPlayer);
             AIStrategy.OnInit(BattleManager.Instance.PlayerManager.RightPlayer);
 
             BattleManager.Instance.BattleInfo.StartTime = DateTime.Now;

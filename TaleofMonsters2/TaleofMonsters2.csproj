@@ -86,6 +86,7 @@
       <DependentUpon>CardSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="Controler\Battle\DataTent\MissileQueue.cs" />
+    <Compile Include="Controler\Battle\Data\MemMissile\IMissileControler.cs" />
     <Compile Include="Controler\Battle\Data\MemMissile\Missile.cs" />
     <Compile Include="Controler\Battle\Data\MemMissile\MissileBook.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\LiveMonsterToolTip.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="DataType\CardPieces\CardPieceRate.cs" />
     <Compile Include="DataType\Effects\CoverEffect.cs" />
     <Compile Include="DataType\Items\Consumer.cs" />
+    <Compile Include="DataType\Maps\BattleMapUnitInfo.cs" />
     <Compile Include="DataType\Others\FarmState.cs" />
     <Compile Include="DataType\Formulas\FormulaBook.cs" />
     <Compile Include="DataType\HeroSkills\HeroSkillAttrBook.cs" />

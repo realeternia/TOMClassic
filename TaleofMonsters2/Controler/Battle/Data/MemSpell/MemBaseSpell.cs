@@ -39,17 +39,20 @@ namespace TaleofMonsters.Controler.Battle.Data.MemSpell
 
                 spellInfo.SpellConfig.Effect(spellInfo, BattleManager.Instance.MemMap, p1, p2, target, mouse, Level);
 
-                //播放特效
-                RegionTypes rt = BattleTargetManager.GetRegionType(spellInfo.SpellConfig.Target[2]);
-                var cardSize = BattleManager.Instance.MemMap.CardSize;
-                foreach (var memMapPoint in BattleManager.Instance.MemMap.Cells)
+                if (!string.IsNullOrEmpty(spellInfo.SpellConfig.AreaEffect))
                 {
-                    var pointData = memMapPoint.ToPoint();
-                    if (BattleLocationManager.IsPointInRegionType(rt, mouse.X, mouse.Y, pointData, spellInfo.SpellConfig.Range))
+                    //播放特效
+                    RegionTypes rt = BattleTargetManager.GetRegionType(spellInfo.SpellConfig.Target[2]);
+                    var cardSize = BattleManager.Instance.MemMap.CardSize;
+                    foreach (var memMapPoint in BattleManager.Instance.MemMap.Cells)
                     {
-                        var effectData = new ActiveEffect(EffectBook.GetEffect(spellInfo.SpellConfig.AreaEffect), pointData + new Size(cardSize / 2, cardSize / 2), false);
-                        BattleManager.Instance.EffectQueue.Add(effectData);
-                    }
+                        var pointData = memMapPoint.ToPoint();
+                        if (BattleLocationManager.IsPointInRegionType(rt, mouse.X, mouse.Y, pointData, spellInfo.SpellConfig.Range))
+                        {
+                            var effectData = new ActiveEffect(EffectBook.GetEffect(spellInfo.SpellConfig.AreaEffect), pointData + new Size(cardSize / 2, cardSize / 2), false);
+                            BattleManager.Instance.EffectQueue.Add(effectData);
+                        }
+                    } 
                 }
             }
         }

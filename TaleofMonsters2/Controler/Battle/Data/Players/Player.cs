@@ -150,29 +150,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 CardManager.GetNextCard();
             }
         }
-
-        public void AddHeroUnit()
-        {
-            int x = IsLeft ? 0 : BattleManager.Instance.MemMap.ColumnCount - 1;
-            int y = BattleManager.Instance.MemMap.RowCount / 2;
-            int size = BattleManager.Instance.MemMap.CardSize;
-
-            var id = World.WorldInfoManager.GetCardFakeId();
-            var heroData = new Monster(MonsterConfig.Indexer.KingTowerId);
-            LiveMonster lm = new LiveMonster(id, heroData.Level, heroData, new Point(x*size,y*size), IsLeft);
-            lm.CanAttack = false;
-            BattleManager.Instance.MonsterQueue.Add(lm);
-
-            id = World.WorldInfoManager.GetCardFakeId();
-            var arrowData = new Monster(MonsterConfig.Indexer.ArrowTowerId);
-            lm = new LiveMonster(id, heroData.Level, arrowData, new Point((IsLeft ? (x + 2) : (x - 2)) * size, (y - 3) * size), IsLeft);
-            BattleManager.Instance.MonsterQueue.Add(lm);
-
-            id = World.WorldInfoManager.GetCardFakeId();
-            arrowData = new Monster(MonsterConfig.Indexer.ArrowTowerId);
-            lm = new LiveMonster(id, heroData.Level, arrowData, new Point((IsLeft ? (x + 2) : (x - 2)) * size, (y + 3) * size), IsLeft);
-            BattleManager.Instance.MonsterQueue.Add(lm);
-        }
         
         public void AddMana(IMonster mon, int type, double addon)
         {

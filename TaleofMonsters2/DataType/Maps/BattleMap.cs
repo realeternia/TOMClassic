@@ -1,9 +1,10 @@
 namespace TaleofMonsters.DataType.Maps
 {
-    struct BattleMap
+    internal struct BattleMap
     {
         public int XCount;
         public int YCount;
-        public int[,] Cells;        
+        public int[,] Cells;
+        public BattleMapUnitInfo[] Info;
     }
 }

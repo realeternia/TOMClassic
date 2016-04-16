@@ -385,13 +385,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             return false;
         }
 
-        public void HitTarget(int eid)
+        public void HitTarget(LiveMonster target)
         {
-            LiveMonster target = BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(eid);
             if (target != null)
             {
-                BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(Arrow), target, false));
-
                 SkillAssistant.CheckBurst(this, target);
                 bool isMiss = !target.BeHited(this);
                 if (isMiss)
