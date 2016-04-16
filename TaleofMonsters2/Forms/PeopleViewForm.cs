@@ -86,7 +86,7 @@ namespace TaleofMonsters.Forms
                 return;
             }
 
-            PeopleBook.Fight(people[realTar].Pid, "default", -1, peopleConfig.Level, null, null);
+            PeopleBook.Fight(peopleConfig.Id, peopleConfig.BattleMap, -1, peopleConfig.Level, null, null);
         }
 
         private int[] GetPeopleAvailTypes()

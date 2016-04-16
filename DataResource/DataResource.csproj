@@ -398,31 +398,7 @@
     <EmbeddedResource Include="Deck\blank.dek" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Map\default.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Map\nighttown.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Map\house.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Map\forest.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Map\hole.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Map\temple.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Map\valley.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Map\river.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Map\snow.map" />
+    <EmbeddedResource Include="Map\doublec.map" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Deck\ling.dek" />
@@ -465,6 +441,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Effect\coveraoe.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Map\oneline.map" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

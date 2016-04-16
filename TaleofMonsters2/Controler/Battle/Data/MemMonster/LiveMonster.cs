@@ -12,7 +12,6 @@ using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType.CardPieces;
 using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Cards.Weapons;
-using TaleofMonsters.DataType.Effects;
 using TaleofMonsters.DataType.Equips.Addons;
 using TaleofMonsters.DataType.Skills;
 using TaleofMonsters.DataType.User;
