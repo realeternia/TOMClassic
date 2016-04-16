@@ -26,6 +26,8 @@ namespace TaleofMonsters.DataType.User
         public int Ap;
          [FieldIndex(Index = 21)]
         public int DigCount;
+         [FieldIndex(Index = 22)]
+         public int LastRival;//上一个peopleview的对手id
 
         public void AddExp(int ex)
         {

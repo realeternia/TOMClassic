@@ -4,7 +4,6 @@ using System.Drawing;
 using ConfigDatas;
 using NarlonLib.Log;
 using NarlonLib.Math;
-using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMonster.Component;
 using TaleofMonsters.Controler.Battle.Data.Players;

@@ -72,6 +72,11 @@ namespace TaleofMonsters.Forms
 
             SoundManager.PlayBGM("TOM002.MP3");
             IsChangeBgm = true;
+
+            if (UserProfile.InfoBasic.LastRival > 0)
+            {
+                FastBind(UserProfile.InfoBasic.LastRival);
+            }
         }
 
         private void Fight()
@@ -167,6 +172,7 @@ namespace TaleofMonsters.Forms
                     {
                         realTar = tar;
                         virtualRegion.SetRegionInfo(1, people[realTar].Pid);
+                        UserProfile.InfoBasic.LastRival = people[realTar].Pid;
                         Invalidate();
                     }
                 }
@@ -182,6 +188,13 @@ namespace TaleofMonsters.Forms
                 }
             }
 
+        }
+
+        private void FastBind(int id)
+        {
+            PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(id);
+            Bind(peopleConfig.Type);
+            virtualRegion.SetRegionInfo(1, id);
         }
 
         private void bitmapButtonFight_Click(object sender, EventArgs e)
