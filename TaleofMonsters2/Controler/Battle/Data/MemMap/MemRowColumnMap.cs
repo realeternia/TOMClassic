@@ -265,10 +265,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
 
                 if (isLeft != mon.Owner.IsLeft)
                 {
-                    if (isLeft && mon.Position.X < mouse.X || !isLeft && mon.Position.X > mouse.X) //不管身后的敌人
-                        continue;
-
                     var tpDis = MathTool.GetDistance(mon.Position, mouse);
+                    if (tpDis/CardSize*10 > mon.RealRange && (isLeft && mon.Position.X < mouse.X || !isLeft && mon.Position.X > mouse.X)) //不管身后的敌人
+                        continue;
+                    
                     if (tpDis < dis)
                     {
                         dis = tpDis;
