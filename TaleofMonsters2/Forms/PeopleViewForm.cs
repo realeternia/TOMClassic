@@ -195,6 +195,14 @@ namespace TaleofMonsters.Forms
             PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(id);
             Bind(peopleConfig.Type);
             virtualRegion.SetRegionInfo(1, id);
+            for (int i = 0; i < people.Count; i++)
+            {
+                if (people[i].Pid == id)
+                {
+                    realTar = i;
+                    break;
+                }
+            }
         }
 
         private void bitmapButtonFight_Click(object sender, EventArgs e)

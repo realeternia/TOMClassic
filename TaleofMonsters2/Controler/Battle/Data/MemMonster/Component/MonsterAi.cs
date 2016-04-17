@@ -22,7 +22,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         /// </summary>
         public void CheckAction()
         {
-            var nearestEnemy = BattleManager.Instance.MemMap.GetNearestMonster(monster.IsLeft, "E", monster.Position);
+            var nearestEnemy = BattleManager.Instance.MemMap.GetNearestEnemy(monster.IsLeft, monster.Position);
             if (nearestEnemy != null)
             {
                 if (monster.CanAttack && CanAttack(nearestEnemy))
@@ -66,31 +66,43 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         {
             var moveDis = BattleManager.Instance.MemMap.CardSize;
             Point aimPos; //决定想去的目标点
+            bool goX;
             if (nearestEnemy.Position.X != monster.Position.X)
             {
                 var x = monster.Position.X + (nearestEnemy.Position.X > monster.Position.X ? moveDis : -moveDis);
                 aimPos = new Point(x, monster.Position.Y);
+                goX = true;
             }
             else
             {
                 var y = monster.Position.Y + (nearestEnemy.Position.Y > monster.Position.Y ? moveDis : -moveDis);
                 aimPos = new Point(monster.Position.X, y);
+                goX = false;
             }
 
             if (!BattleLocationManager.IsPlaceCanMove(aimPos.X, aimPos.Y))
-            {//绕过不可行走区域
-                aimPos = BattleLocationManager.GetMonsterNearPoint(monster.Position, "side", !monster.IsLeft);
+            {
+                if (goX)//绕过不可行走区域
+                    aimPos = BattleLocationManager.GetMonsterNearPoint(monster.Position, "side", !monster.IsLeft);
+                else//往前走
+                    aimPos= BattleLocationManager.GetMonsterNearPoint(monster.Position, "come", !monster.IsLeft);
             }
             else
             {
                 var targetMonster = BattleLocationManager.GetPlaceMonster(aimPos.X, aimPos.Y);//找到目标点的怪
-                if (targetMonster != null && targetMonster.ReadMov == 0) //如果前方是一个静止单位，就绕行
+                if (targetMonster != null && targetMonster.IsAlive) //如果前方是一个单位，就绕行
                 {
-                    aimPos = BattleLocationManager.GetMonsterNearPoint(monster.Position, "side", !monster.IsLeft);
+                    if (goX)
+                        aimPos = BattleLocationManager.GetMonsterNearPoint(monster.Position, "side", !monster.IsLeft);
+                    else
+                        aimPos = BattleLocationManager.GetMonsterNearPoint(monster.Position, "come", !monster.IsLeft);
                 }
             }
 
-            BattleLocationManager.SetToPosition(monster, aimPos);
+            if (aimPos.X >=0&& aimPos.Y >=0)
+            {
+                BattleLocationManager.SetToPosition(monster, aimPos);
+            }
 
             if (monster.ReadMov > 10) //会返回一些ats
             {

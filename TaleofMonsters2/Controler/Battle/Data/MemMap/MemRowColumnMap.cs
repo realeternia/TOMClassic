@@ -254,7 +254,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             BattleLocationManager.UpdateCellOwner(mouse.X, mouse.Y, ownerId);
         }
 
-        public LiveMonster GetNearestMonster(bool isLeft, string target, Point mouse)
+        public LiveMonster GetNearestEnemy(bool isLeft, Point mouse)
         {
             LiveMonster monster  = null;
             int dis = int.MaxValue;
@@ -263,9 +263,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                 if (mon.IsGhost)
                     continue;
 
-                if ((BattleTargetManager.IsSpellEnemyMonster(target[0]) && isLeft != mon.Owner.IsLeft)
-                    || (BattleTargetManager.IsSpellFriendMonster(target[0]) && isLeft == mon.Owner.IsLeft))
+                if (isLeft != mon.Owner.IsLeft)
                 {
+                    if (isLeft && mon.Position.X < mouse.X || !isLeft && mon.Position.X > mouse.X) //不管身后的敌人
+                        continue;
+
                     var tpDis = MathTool.GetDistance(mon.Position, mouse);
                     if (tpDis < dis)
                     {
