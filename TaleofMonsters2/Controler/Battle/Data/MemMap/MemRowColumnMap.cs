@@ -96,7 +96,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         public bool IsMousePositionCanSummon(int x, int y)
         {
             var sideCount = ColumnCount/2;
-            if (x < CardSize || (x >= CardSize * sideCount && x < CardSize * (sideCount + 1)) || x >= CardSize * (ColumnCount-1))
+            if (x < 0 || (x >= CardSize * sideCount && x < CardSize * (sideCount + 1)) || x >= CardSize * ColumnCount)
             {
                 return false;
             }
