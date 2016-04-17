@@ -62,7 +62,7 @@ namespace TaleofMonsters.Controler.Battle.Data
             {
                 if (mon.IsGhost || mon.Id == self.Id)
                     continue;
-                if ((BattleTargetManager.IsSpellEnemyMonster(target[0]) && self.IsLeft != mon.IsLeft) || (BattleTargetManager.IsSpellFriendMonster(target[0]) && self.IsLeft == mon.IsLeft))
+                if (target[0] != 'A' && ((BattleTargetManager.IsSpellEnemyMonster(target[0]) && self.IsLeft != mon.IsLeft) || (BattleTargetManager.IsSpellFriendMonster(target[0]) && self.IsLeft == mon.IsLeft)))
                     continue;
                 if (targetMonsterId != 0 && mon.Avatar.Id != targetMonsterId)
                     continue;
