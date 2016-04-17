@@ -12,13 +12,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
     internal class SkillManager
     {
         public List<MemBaseSkill> Skills { get; private set; }
-        private SimpleSet<SkillMarks> specialMarks;
         private LiveMonster self;
 
         public SkillManager(LiveMonster lm)
         {
             Skills = new List<MemBaseSkill>();
-            specialMarks = new SimpleSet<SkillMarks>();
             self = lm;
         }
 
@@ -35,7 +33,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         public void Reload()
         {
             Skills = GetMemSkillDataForMonster();
-            specialMarks = new SimpleSet<SkillMarks>();
         }
 
         private List<MemBaseSkill> GetMemSkillDataForMonster()
@@ -85,17 +82,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                     break;
                 }
             }
-        }
-        
-        public void AddSpecialMark(SkillMarks mark)
-        {
-            if (!HasSpecialMark(mark))
-                specialMarks.Add(mark);
-        }
-
-        public bool HasSpecialMark(SkillMarks mark)
-        {
-            return specialMarks.Has(mark);
         }
 
         public void Forget()

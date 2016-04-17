@@ -93,6 +93,7 @@
         NoTile = 3,
         NoAuro = 4,
         NoSkill = 5,
+        NoMove = 6,
 
         Tile = 101,
         Rebel = 102,

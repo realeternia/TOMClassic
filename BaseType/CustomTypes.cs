@@ -216,11 +216,6 @@ namespace ConfigDatas
         }
     }
 
-    public enum SkillMarks
-    {
-        AtkDefBonus = 3,
-    }
-
     public enum PlayerManaTypes
     {
         None,

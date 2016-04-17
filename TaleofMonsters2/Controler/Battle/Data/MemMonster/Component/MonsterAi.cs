@@ -32,7 +32,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                         CheckFight(nearestEnemy);
                     }
                 }
-                else if (monster.ReadMov>0)//判定是否需要移动
+                else if (monster.ReadMov>0 && monster.CanMove)//判定是否需要移动
                 {
                     if (monster.AddAts())
                     {

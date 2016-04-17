@@ -24,14 +24,11 @@ namespace ConfigDatas
         void AddBuff(int buffId, int blevel, double dura);
         void AddItem(int itemId);//战斗中
         void Transform(int monId);
-        void AddCardRate(int monId, int rate);
-        void AddResource(int type,int count);
         void AddActionRate(double value);
         void StealWeapon(IMonster target);
         void BreakWeapon();
         void WeaponReturn(int type);
         void AddRandSkill();
-        void AddSpecialMark(SkillMarks mark);
         int GetMonsterCountByRace(int rid);
         int GetMonsterCountByType(int type);
         void AddMissile(IMonster target, string arrow);
@@ -50,7 +47,6 @@ namespace ConfigDatas
         int Type { get; } //分类
 
         int SkillParm{get;set;}
-        bool DropAdd{get;set;}
  		
         bool IsNight{get;}
         bool HasScroll { get; }//是否拿着卷轴

@@ -85,10 +85,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             get
             {
                 double diff = (Atk.Source + Atk.Adder) * (1 + Atk.Multiter) - Atk.Source;
-                if (SkillManager.HasSpecialMark(SkillMarks.AtkDefBonus))
-                {
-                    diff = diff * 3 / 2;
-                }
                 return Math.Max((int)(Atk.Source + diff), 0);
             }
         }
@@ -307,10 +303,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                     if (Rival is HumanPlayer)
                     {
                         int itemId = CardPieceBook.CheckPiece(Avatar.Id);
-                        if (itemId == 0 && DropAdd)
-                        {
-                            itemId = CardPieceBook.CheckPiece(Avatar.Id);
-                        }
                         if (itemId > 0)
                         {
                             BattleManager.Instance.BattleInfo.AddItemGet(itemId);
@@ -318,14 +310,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                             BattleManager.Instance.FlowWordQueue.Add(new FlowItemInfo(itemId, Position, 20, 50), true);
                         }
                         UserProfile.Profile.OnKillMonster(Avatar.MonsterConfig.Star, Avatar.MonsterConfig.Type, Avatar.MonsterConfig.Type);
-                    }
-                }
-                if (Avatar.Id == MonsterConfig.Indexer.ArrowTowerId)
-                {
-                    var tower = BattleManager.Instance.MonsterQueue.GetKingTower(IsLeft);
-                    if (tower != null)
-                    {
-                        tower.CanAttack = true;
                     }
                 }
                 BattleManager.Instance.BattleInfo.GetPlayer(!IsLeft).Kill++;
@@ -457,11 +441,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             Life++;
 
             SkillManager.CheckInitialEffect();
-        }
-
-        public void AddSpecialMark(SkillMarks mark)
-        {
-            SkillManager.AddSpecialMark(mark);
         }
 
 		public void AddStrengthLevel(int value)
@@ -625,18 +604,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             Life = Avatar.Hp * lifp / 100;
         }
 
-        [Obsolete("to remove")]
-        public void AddCardRate(int monId, int rate)
-        {
-            
-        }
-
-        public void AddResource(int type, int count)
-        {
-            OwnerPlayer.AddResource((GameResourceType)type, count);
-            BattleManager.Instance.FlowWordQueue.Add(new FlowResourceInfo(type + 1, count, Position, 20, 50), false);
-        }
-
         public void AddActionRate(double value)
         {
             Action += (int)(GameConstants.LimitAts*value);
@@ -724,6 +691,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public bool CanAttack { get; set; }
 
+        public bool CanMove
+        {
+            get { return !BuffManager.HasBuff(BuffEffectTypes.NoMove); }
+        }
+
         public bool IsElement(string ele)
         {
             return (int) Enum.Parse(typeof (CardElements), ele) == Avatar.MonsterConfig.Type;
@@ -771,8 +743,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public int Type { get { return Avatar.MonsterConfig.Type; } }
 
         public int SkillParm { get; set; }
-
-        public bool DropAdd { get; set; }
 
         public LiveMonsterToolTip LiveMonsterToolTip { get; private set; }
 
