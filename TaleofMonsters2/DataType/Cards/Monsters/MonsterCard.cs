@@ -46,11 +46,6 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             get { return monster.Name; }
         }
 
-        public override string ENameShort
-        {
-            get { return monster.MonsterConfig.EnameShort; }
-        }
-
         public Monster GetMonster()
         {
             return monster;

@@ -11,8 +11,6 @@ namespace TaleofMonsters.DataType.Cards
         public abstract int Cost { get; }
         public abstract int Type { get; }
         public abstract string Name { get; }
-        public abstract string ENameShort { get; }
-
         public abstract Image GetCardImage(int width, int height);
         public abstract void DrawOnCardDetail(Graphics g, int offX, int offY);
         public abstract void DrawOnStateBar(Graphics g);

@@ -45,12 +45,6 @@ namespace TaleofMonsters.DataType.Cards.Weapons
         {
             get { return weapon.WeaponConfig.Name; }
         }
-
-        public override string ENameShort
-        {
-            get { return weapon.WeaponConfig.EnameShort; }
-        }
-
         public override Image GetCardImage(int width, int height)
         {
             return WeaponBook.GetWeaponImage(weapon.Id, width , height);

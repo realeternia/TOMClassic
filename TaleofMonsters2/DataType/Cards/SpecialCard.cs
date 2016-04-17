@@ -41,11 +41,6 @@ namespace TaleofMonsters.DataType.Cards
             get { return ""; }
         }
 
-        public override string ENameShort
-        {
-            get { return ""; }
-        }
-
         public override Image GetCardImage(int width, int height)
         {
             return cardImg;

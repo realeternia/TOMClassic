@@ -45,11 +45,6 @@ namespace TaleofMonsters.DataType.Cards.Spells
             get { return spell.SpellConfig.Name; }
         }
 
-        public override string ENameShort
-        {
-            get { return spell.SpellConfig.EnameShort; }
-        }
-
         public override Image GetCardImage(int width, int height)
         {
             return SpellBook.GetSpellImage(spell.Id, width, height);
