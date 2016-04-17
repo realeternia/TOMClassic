@@ -4,6 +4,7 @@ using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
+using TaleofMonsters.Controler.Battle.Data.MemMissile;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players.Frag;
 using TaleofMonsters.Core.Interface;
@@ -356,6 +357,13 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         }
 
         #endregion
+
+        public void AddSpellMissile(IMonster target, ISpell spell, Point mouse, string effect)
+        {
+            BasicMissileControler controler = new SpellTraceMissileControler((LiveMonster)target, spell);
+            Missile mi = new Missile(effect, mouse.X, mouse.Y, controler);
+            BattleManager.Instance.MissileQueue.Add(mi);
+        }
 
         public void DeleteRandomCardFor(IPlayer p, int levelChange)
         {

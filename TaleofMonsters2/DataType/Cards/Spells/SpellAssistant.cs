@@ -22,10 +22,13 @@ namespace TaleofMonsters.DataType.Cards.Spells
             SpellConfig spellConfig = spell.SpellConfig;
             if (spl.HintWord!="")
                 BattleManager.Instance.FlowWordQueue.Add(new FlowWord(spl.HintWord, mouse, 0, "Cyan", 26, 0, 0, 0, 15), false);
-            if (BattleTargetManager.PlayEffectOnMonster(spellConfig.Target))
-                BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(spellConfig.UnitEffect), target, false));
-            if (BattleTargetManager.PlayEffectOnMouse(spellConfig.Target))
-                BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(spellConfig.UnitEffect), mouse, false));
+            if (!string.IsNullOrEmpty(spellConfig.UnitEffect))
+            {
+                if (BattleTargetManager.PlayEffectOnMonster(spellConfig.Target))
+                    BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(spellConfig.UnitEffect), target, false));
+                if (BattleTargetManager.PlayEffectOnMouse(spellConfig.Target))
+                    BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(spellConfig.UnitEffect), mouse, false));
+            }
         }
     }
 }

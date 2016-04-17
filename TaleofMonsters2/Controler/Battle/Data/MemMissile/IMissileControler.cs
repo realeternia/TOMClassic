@@ -25,7 +25,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
             return false;
         }
 
-        protected void HitTarget(LiveMonster target)
+        protected virtual void HitTarget(LiveMonster target)
         {
             parent.HitTarget(target);
             BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(parent.Arrow), target, false));
@@ -103,6 +103,38 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
                 {
                     HitTarget(mon);
                 }
+                return false;
+            }
+            return true;
+        }
+    }
+
+    internal class SpellTraceMissileControler : BasicMissileControler
+    {
+        private ISpell spell;
+        private LiveMonster target;//目标
+
+        public SpellTraceMissileControler(LiveMonster mon, ISpell spl)
+        {
+            spell = spl;
+            target = mon;
+        }
+
+        protected override void HitTarget(LiveMonster target)
+        {
+            target.OnMagicDamage(spell.Damage, ConfigData.GetSpellConfig(spell.Id).Attr);
+        }
+
+        public override bool CheckFly(ref NLPointF position, ref int angle)
+        {
+            if (target == null || !target.IsAlive)
+            {
+                return false;
+            }
+
+            if (!FlyProc(target.Position, ref position, ref angle))
+            {
+                HitTarget(target);
                 return false;
             }
             return true;

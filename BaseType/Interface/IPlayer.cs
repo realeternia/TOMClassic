@@ -30,6 +30,7 @@ namespace ConfigDatas
 		
         void AddResource(int type, int number);
         void AddTrap(int id, int lv, double rate, int dam);
+        void AddSpellMissile(IMonster target, ISpell spell, System.Drawing.Point mouse, string effect);
 
         void AddSpellEffect(double rate);
     }

@@ -149,7 +149,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                     continue;
 
                 int tile = BattleManager.Instance.MemMap.GetMouseCell(roundMonster.Position.X, roundMonster.Position.Y).Tile;
-                TileMatchResult match = TileBook.MatchTile(tile,roundMonster.Avatar.MonsterConfig.Type);
+                TileMatchResult match = TileBook.MatchTile(tile,roundMonster.Avatar.MonsterConfig.Attr);
                 roundMonster.Next(pastRound, match);
             }
 
