@@ -146,7 +146,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         {
             foreach (MemBaseSkill skill in Skills.ToArray())
             {
-                if (skill.IsBurst(src.Id + dest.Id))
+                if (skill.IsBurst(src.Id, dest.Id))
                 {
                     skill.CheckHit(src, dest, ref rhit);
                 }
@@ -157,7 +157,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         {
             foreach (var skill in Skills.ToArray())
             {
-                if (skill.IsBurst(src.Id + dest.Id))
+                if (skill.IsBurst(src.Id, dest.Id))
                 {
                     skill.CheckDamage(src, dest, true, damage, ref minDamage, ref deathHit);
                 }
@@ -168,7 +168,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         {
             foreach (MemBaseSkill skill in Skills.ToArray())
             {
-                if (skill.IsBurst(src.Id + dest.Id))
+                if (skill.IsBurst(src.Id, dest.Id))
                 {
                     skill.CheckHitEffectAfter(src, dest, damage);
                 }

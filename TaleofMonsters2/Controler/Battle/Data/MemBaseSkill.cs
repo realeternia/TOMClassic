@@ -34,13 +34,14 @@ namespace TaleofMonsters.Controler.Battle.Data
 
         public LiveMonster Self { get; set; }
 
-        public bool IsBurst(int keyid)
+        public bool IsBurst(int srcId, int destId)
         {
-            if (!burst.ContainsKey(keyid))
+            var resultId = srcId*-1 + destId;
+            if (!burst.ContainsKey(resultId))
             {
                 return false;
             }
-            return burst[keyid];
+            return burst[resultId];
         }
 
         public Skill SkillInfo { get; private set; }
@@ -73,7 +74,7 @@ namespace TaleofMonsters.Controler.Battle.Data
                 isBurst = false;
             }
 
-            int key = src.Id + dest.Id;
+            int key = src.Id * -1 + dest.Id;
             burst[key] = isBurst;
         }
 
