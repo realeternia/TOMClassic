@@ -12,7 +12,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
 {
     internal abstract class BasicMissileControler
     {
-        protected LiveMonster parent;//母体
         protected MissileConfig config;
 
         public void SetConfig(MissileConfig configData)
@@ -23,12 +22,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
         public virtual bool CheckFly(ref NLPointF point, ref int angle)
         {
             return false;
-        }
-
-        protected virtual void HitTarget(LiveMonster target)
-        {
-            parent.HitTarget(target);
-            BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(parent.Arrow), target, false));
         }
 
         protected bool FlyProc(Point targetPosition, ref NLPointF position, ref int angle)
@@ -55,6 +48,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
 
     internal class TraceMissileControler : BasicMissileControler
     {
+        protected LiveMonster parent;//母体
         private LiveMonster target;//目标
 
         public TraceMissileControler(LiveMonster self, LiveMonster mon)
@@ -72,7 +66,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
 
             if (!FlyProc(target.Position,ref position, ref angle))
             {
-                HitTarget(target);
+                parent.HitTarget(target);
+                BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(parent.Arrow), target, false));
                 return false;
             }
             return true;
@@ -81,6 +76,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
 
     internal class LandMissileControler : BasicMissileControler
     {
+        protected LiveMonster parent;//母体
         private Point targetPos;
 
         public LandMissileControler(LiveMonster self, Point pos)
@@ -101,7 +97,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
                 var mon = BattleLocationManager.GetPlaceMonster(targetPos.X, targetPos.Y);
                 if (mon != null)
                 {
-                    HitTarget(mon);
+                    parent.HitTarget(mon);
+                    BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(parent.Arrow), mon, false));
                 }
                 return false;
             }
@@ -120,11 +117,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
             target = mon;
         }
 
-        protected override void HitTarget(LiveMonster target)
-        {
-            target.OnMagicDamage(spell.Damage, ConfigData.GetSpellConfig(spell.Id).Attr);
-        }
-
         public override bool CheckFly(ref NLPointF position, ref int angle)
         {
             if (target == null || !target.IsAlive)
@@ -134,7 +126,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
 
             if (!FlyProc(target.Position, ref position, ref angle))
             {
-                HitTarget(target);
+                target.OnMagicDamage(spell.Damage, ConfigData.GetSpellConfig(spell.Id).Attr);
                 return false;
             }
             return true;
