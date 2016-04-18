@@ -58,6 +58,7 @@ namespace ConfigDatas
         void SetToPosition(string type);
         void OnMagicDamage(int damage, int element);
         void SuddenDeath();
+        void Rebel();//‘Ï∑¥
 
         void Summon(int type, int id);
     }

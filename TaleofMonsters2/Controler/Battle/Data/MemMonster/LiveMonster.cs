@@ -790,6 +790,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             Life = 0;
         }
 
+        public void Rebel()
+        {
+            if (!Avatar.MonsterConfig.IsBuilding)//建筑无法策反
+            {
+                IsLeft = !IsLeft;
+            }
+        }
+
         public void Summon(int type, int id)
         {
             List<Point> posLis = new List<Point>();
