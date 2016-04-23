@@ -12,6 +12,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
     {
         private readonly LiveMonster monster;
 
+        private int lastTarget; //上一个攻击目标
+
         public MonsterAi(LiveMonster mon)
         {
             monster = mon;
@@ -22,24 +24,71 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         /// </summary>
         public void CheckAction()
         {
-            var nearestEnemy = BattleManager.Instance.MemMap.GetNearestEnemy(monster.IsLeft, monster.Position);
-            if (nearestEnemy != null)
+            LiveMonster targetEnemy = null;
+            if (lastTarget > 0)
+            {//先找上次攻击的目标
+                targetEnemy = BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(lastTarget);
+                if (targetEnemy != null)
+                {
+                    if (targetEnemy.IsAlive && CanAttack(targetEnemy))
+                    {
+                        if (monster.AddAts())
+                        {
+                            CheckFight(targetEnemy);
+                            return;
+                        }
+                    }
+                }
+            }
+
+            targetEnemy = GetNearestEnemy(monster.IsLeft, monster.Position);//没有就找最近的目标
+            if (targetEnemy != null)
             {
-                if (monster.CanAttack && CanAttack(nearestEnemy))
+                if (monster.CanAttack && CanAttack(targetEnemy))
                 {
                     if (monster.AddAts())
                     {
-                        CheckFight(nearestEnemy);
+                        CheckFight(targetEnemy);
+                        lastTarget = targetEnemy.Id;
                     }
                 }
                 else if (monster.ReadMov>0 && monster.CanMove)//判定是否需要移动
                 {
                     if (monster.AddAts())
                     {
-                        CheckMove(nearestEnemy);
+                        CheckMove(targetEnemy);
                     }
                 }
             }
+        }
+
+        private LiveMonster GetNearestEnemy(bool isLeft, Point mouse)
+        {
+            LiveMonster target = null;
+            int dis = int.MaxValue;
+            int rate = 0;
+
+            foreach (var mon in BattleManager.Instance.MonsterQueue.Enumerator)
+            {
+                if (mon.IsGhost)
+                    continue;
+
+                if (isLeft != mon.Owner.IsLeft)
+                {
+                    var tpDis = MathTool.GetDistance(mon.Position, mouse);
+                    if (tpDis / BattleManager.Instance.MemMap.CardSize * 10 > mon.RealRange && (isLeft && mon.Position.X < mouse.X || !isLeft && mon.Position.X > mouse.X)) //不管身后的敌人
+                        continue;
+
+                    var targetRate = GetMonsterRate(mon);
+                    if (tpDis < dis || tpDis == dis && targetRate > rate)
+                    {
+                        dis = tpDis;
+                        target = mon;
+                        rate = targetRate;
+                    }
+                }
+            }
+            return target;
         }
 
         private void CheckFight(LiveMonster nearestEnemy)
@@ -114,6 +163,13 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         {
             var dis = MathTool.GetDistance(target.Position, monster.Position);
             return dis <= monster.RealRange * BattleManager.Instance.MemMap.CardSize/10;//射程也是十倍的
+        }
+
+        private int GetMonsterRate(LiveMonster mon)
+        {
+            int val = mon.Hp;
+            val += mon.RealRange*10;//优先打远程单位
+            return val;
         }
     }
 }

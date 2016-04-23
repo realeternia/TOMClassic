@@ -254,31 +254,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             BattleLocationManager.UpdateCellOwner(mouse.X, mouse.Y, ownerId);
         }
 
-        public LiveMonster GetNearestEnemy(bool isLeft, Point mouse)
-        {
-            LiveMonster monster  = null;
-            int dis = int.MaxValue;
-            foreach (var mon in BattleManager.Instance.MonsterQueue.Enumerator)
-            {
-                if (mon.IsGhost)
-                    continue;
-
-                if (isLeft != mon.Owner.IsLeft)
-                {
-                    var tpDis = MathTool.GetDistance(mon.Position, mouse);
-                    if (tpDis/CardSize*10 > mon.RealRange && (isLeft && mon.Position.X < mouse.X || !isLeft && mon.Position.X > mouse.X)) //不管身后的敌人
-                        continue;
-                    
-                    if (tpDis < dis)
-                    {
-                        dis = tpDis;
-                        monster = mon;
-                    }
-                }
-            }
-            return monster;
-        }
-
         public void Draw(Graphics g)
         {
             if (isDirty)
