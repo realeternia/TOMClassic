@@ -14,7 +14,7 @@ namespace TaleofMonsters.Controler.Battle.Data
 {
     internal class MemBaseSkill
     {
-        private readonly Dictionary<int, bool> burst;
+        private readonly Dictionary<int, BurstStage> burst;
         private bool onAddTriggered;
 
         private float lastCastRound; //上次施放special技能的时间
@@ -29,19 +29,23 @@ namespace TaleofMonsters.Controler.Battle.Data
             SkillInfo = skill;
             SkillId = skill.Id;
             Percent = per;
-            burst= new Dictionary<int, bool>();
+            burst= new Dictionary<int, BurstStage>();
         }
 
         public LiveMonster Self { get; set; }
 
-        public bool IsBurst(int srcId, int destId)
+        public static int GetBurstKey(int srcId, int destId)
         {
-            var resultId = srcId*-1 + destId;
-            if (!burst.ContainsKey(resultId))
+            return srcId * -1 + destId;
+        }
+
+        public bool IsBurst(int key)
+        {
+            if (!burst.ContainsKey(key))
             {
                 return false;
             }
-            return burst[resultId];
+            return burst[key] != BurstStage.Fail;
         }
 
         public Skill SkillInfo { get; private set; }
@@ -56,25 +60,25 @@ namespace TaleofMonsters.Controler.Battle.Data
             return Percent > MathTool.GetRandom(100);
         }
 
-        public void CheckBurst(LiveMonster src, LiveMonster dest,bool isActive)
+        public void CheckBurst(LiveMonster src, LiveMonster dest)
         {
-            bool isBurst = CheckRate();
-
-            if (Self == src && SkillInfo.SkillConfig.Active == SkillActiveType.Passive)
+            var isActive = src == Self;
+            if (isActive && SkillInfo.SkillConfig.Active == SkillActiveType.Passive)
             {
-                isBurst = false;
+                return;
             }
-            else if (Self == dest && SkillInfo.SkillConfig.Active == SkillActiveType.Active)
+            if (!isActive && SkillInfo.SkillConfig.Active == SkillActiveType.Active)
             {
-                isBurst = false;
+                return;
             }
 
+            BurstStage isBurst = CheckRate() ? BurstStage.Pass : BurstStage.Fail;
             if (SkillInfo.SkillConfig.CanBurst != null && !SkillInfo.SkillConfig.CanBurst(src, dest, isActive))
             {
-                isBurst = false;
+                isBurst = BurstStage.Fail;
             }
 
-            int key = src.Id * -1 + dest.Id;
+            int key = GetBurstKey(src.Id, dest.Id);
             burst[key] = isBurst;
         }
 
@@ -86,7 +90,7 @@ namespace TaleofMonsters.Controler.Battle.Data
                 {
                     onAddTriggered = true;
                     SkillInfo.SkillConfig.OnAdd(SkillInfo, Self, Level);
-                    SendSkillIcon();
+                    SendSkillIcon(0);
                     if (SkillInfo.SkillConfig.Effect != "")
                     {
                         BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
@@ -107,30 +111,30 @@ namespace TaleofMonsters.Controler.Battle.Data
             }
         }
 
-        public void CheckHit(LiveMonster src, LiveMonster dest, ref int hit)
+        public void CheckHit(LiveMonster src, LiveMonster dest, ref int hit, int key)
         {
             if (SkillInfo.SkillConfig.CheckHit!=null)
             {
                 SkillInfo.SkillConfig.CheckHit(src, dest, ref hit, Level);
-                SendSkillIcon();
+                SendSkillIcon(key);
             }
         }
 
-        public void CheckDamage(LiveMonster src, LiveMonster dest, bool isActive, HitDamage damage, ref int minDamage, ref bool deathHit)
+        public void CheckDamage(LiveMonster src, LiveMonster dest, bool isActive, HitDamage damage, ref int minDamage, ref bool deathHit, int key)
         {
             if (SkillInfo.SkillConfig.CheckDamage != null)
             {
                 SkillInfo.SkillConfig.CheckDamage(src, dest, isActive, damage, ref minDamage, ref deathHit, Level);
-                SendSkillIcon();
+                SendSkillIcon(key);
             }
         }
 
-        public void CheckHitEffectAfter(LiveMonster src, LiveMonster dest, HitDamage damage)
+        public void CheckHitEffectAfter(LiveMonster src, LiveMonster dest, HitDamage damage, int key)
         {
             if (SkillInfo.SkillConfig.AfterHit != null)
             {
                 SkillInfo.SkillConfig.AfterHit(SkillInfo, src, dest, damage, !dest.IsAlive, Level);
-                SendSkillIcon();
+                SendSkillIcon(key);
                 if (SkillInfo.SkillConfig.EffectArea != "")
                 {
                     SendAreaEffect(SkillInfo.SkillConfig.PointSelf ? Self.Position : dest.Position);
@@ -156,7 +160,7 @@ namespace TaleofMonsters.Controler.Battle.Data
                 lastCastRound = (float)(lastCastRound- SkillInfo.SkillConfig.SpecialCd);
 
                 SkillInfo.SkillConfig.CheckSpecial(SkillInfo, Self, Level);
-                SendSkillIcon();
+                SendSkillIcon(0);
                 if (SkillInfo.SkillConfig.Effect!="")
                 {
                     BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
@@ -170,17 +174,21 @@ namespace TaleofMonsters.Controler.Battle.Data
             return false;
         }
 
-        private void SendSkillIcon(int key, string exp)
+        private void SendSkillIcon(int key)
         {
-            if (Self != null && key != 0)
+            if (key != 0)
             {
-                BattleManager.Instance.FlowWordQueue.Add(new FlowSkillInfo(SkillId, Self.Position, 0, "lime", 20, 50, exp.Replace("+-", "-")), true);
+                if (burst[key] == BurstStage.Fin)
+                {
+                    return;//保证一次触发只播放一次
+                }
+                burst[key] = BurstStage.Fin;
             }
-        }
 
-        private void SendSkillIcon()
-        {
-            SendSkillIcon(-1, "");
+            if (Self != null)
+            {
+                BattleManager.Instance.FlowWordQueue.Add(new FlowSkillInfo(SkillId, Self.Position, 0, "lime", 20, 50, ""), true);
+            }
         }
 
         private void SendAreaEffect(Point pos)
@@ -200,5 +208,12 @@ namespace TaleofMonsters.Controler.Battle.Data
         }
 
 
+    }
+
+    internal enum BurstStage
+    {
+        Fail,
+        Pass,
+        Fin
     }
 }

@@ -11,8 +11,8 @@ namespace TaleofMonsters.DataType.Skills
     {
         public static void CheckBurst(LiveMonster src, LiveMonster dest)
         {
-            src.SkillManager.CheckBurst(dest, true);
-            dest.SkillManager.CheckBurst(src, false);
+            src.SkillManager.CheckBurst(src, dest);
+            dest.SkillManager.CheckBurst(src, dest);
         }
 
         public static int GetHit(LiveMonster src, LiveMonster dest)

@@ -134,43 +134,72 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             return false;
         }
 
-        public void CheckBurst(LiveMonster target, bool isActive)
+        /// <summary>
+        /// 判定技能释放状态
+        /// </summary>
+        /// <param name="src">攻击者</param>
+        /// <param name="dest">受击者</param>
+        public void CheckBurst(LiveMonster src, LiveMonster dest)
         {
             foreach (MemBaseSkill skill in Skills.ToArray())
             {
-                skill.CheckBurst(self, target, isActive);
+                skill.CheckBurst(src, dest);
             }
         }
 
+        /// <summary>
+        /// 判定hit技能影响
+        /// </summary>
+        /// <param name="src">攻击者</param>
+        /// <param name="dest">受击者</param>
+        /// <param name="rhit">命中</param>
         public void CheckHit(LiveMonster src, LiveMonster dest, ref int rhit)
         {
             foreach (MemBaseSkill skill in Skills.ToArray())
             {
-                if (skill.IsBurst(src.Id, dest.Id))
+                var key = MemBaseSkill.GetBurstKey(src.Id, dest.Id);
+                if (skill.IsBurst(key))
                 {
-                    skill.CheckHit(src, dest, ref rhit);
+                    skill.CheckHit(src, dest, ref rhit, key);
                 }
             }
         }
 
+        /// <summary>
+        /// 判定伤害技能影响
+        /// </summary>
+        /// <param name="src">攻击者</param>
+        /// <param name="dest">受击者</param>
+        /// <param name="isActive">是否主动</param>
+        /// <param name="damage">伤害值</param>
+        /// <param name="minDamage">最小伤害</param>
+        /// <param name="deathHit">致死攻击</param>
         public void CheckDamage(LiveMonster src, LiveMonster dest, bool isActive, HitDamage damage, ref int minDamage, ref bool deathHit)
         {
             foreach (var skill in Skills.ToArray())
             {
-                if (skill.IsBurst(src.Id, dest.Id))
+                var key = MemBaseSkill.GetBurstKey(src.Id, dest.Id);
+                if (skill.IsBurst(key))
                 {
-                    skill.CheckDamage(src, dest, true, damage, ref minDamage, ref deathHit);
+                    skill.CheckDamage(src, dest, isActive, damage, ref minDamage, ref deathHit, key);
                 }
             }
         }
 
+        /// <summary>
+        /// 判定伤害后技能影响
+        /// </summary>
+        /// <param name="src">攻击者</param>
+        /// <param name="dest">受击者</param>
+        /// <param name="damage">伤害值</param>
         public void CheckHitEffectAfter(LiveMonster src, LiveMonster dest, HitDamage damage)
         {
             foreach (MemBaseSkill skill in Skills.ToArray())
             {
-                if (skill.IsBurst(src.Id, dest.Id))
+                var key = MemBaseSkill.GetBurstKey(src.Id, dest.Id);
+                if (skill.IsBurst(key))
                 {
-                    skill.CheckHitEffectAfter(src, dest, damage);
+                    skill.CheckHitEffectAfter(src, dest, damage, key);
                 }
             }
         }
