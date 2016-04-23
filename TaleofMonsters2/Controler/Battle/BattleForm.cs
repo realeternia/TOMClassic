@@ -69,6 +69,7 @@ namespace TaleofMonsters.Controler.Battle
         private VirtualRegion vRegion;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
         private MagicRegion magicRegion = new MagicRegion();
+        private CardVisualRegion visualRegion = new CardVisualRegion(); //怪物选中后的地图效果
 
         public bool IsWin
         {
@@ -232,7 +233,7 @@ namespace TaleofMonsters.Controler.Battle
             {
                 if (showGround)
                 {
-                    BattleManager.Instance.Draw(g, magicRegion, mouseX, mouseY, isMouseIn);
+                    BattleManager.Instance.Draw(g, magicRegion, visualRegion, mouseX, mouseY, isMouseIn);
                     
                     LiveMonster target = BattleLocationManager.GetPlaceMonster(mouseX, mouseY);
                     if (target != null && isMouseIn && magicRegion.Type == RegionTypes.None)
@@ -345,10 +346,10 @@ namespace TaleofMonsters.Controler.Battle
             {
                 if (leftSelectCard.CardType == CardTypes.Monster)
                 {
-                    if (BattleLocationManager.IsPlaceCanSummon(mouseX, mouseY, true))
+                    if (BattleLocationManager.IsPlaceCanSummon(leftSelectCard.CardId, mouseX, mouseY, true))
                     {
                         cursorname = "summon";
-                        var skillConfig = MonsterBook.GetRangeSkillConfig(leftSelectCard.CardId);
+                        var skillConfig = MonsterBook.GetRangeSkill(leftSelectCard.CardId);
                         if (skillConfig != null)
                         {
                             magicRegion.Update(skillConfig);
@@ -412,6 +413,10 @@ namespace TaleofMonsters.Controler.Battle
         private void cardsArray1_SelectionChange(object sender, EventArgs e)
         {
             leftSelectCard = cardsArray1.GetSelectCard();
+            if (leftSelectCard != null && leftSelectCard.CardType == CardTypes.Monster)
+                visualRegion.Update(leftSelectCard.CardId);
+            else
+                visualRegion.Update(0);
             panelState.Invalidate();
         }
 

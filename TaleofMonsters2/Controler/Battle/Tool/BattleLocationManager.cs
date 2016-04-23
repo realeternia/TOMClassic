@@ -4,6 +4,7 @@ using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using System.Drawing;
 using TaleofMonsters.Controler.Battle.Data.MemMap;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Cards.Monsters;
 
 namespace TaleofMonsters.Controler.Battle.Tool
 {
@@ -43,19 +44,25 @@ namespace TaleofMonsters.Controler.Battle.Tool
             return point.Owner <= 0;
         }
 
-        public static bool IsPlaceCanSummon(int tx, int ty, bool isLeft)
+        public static bool IsPlaceCanSummon(int mid, int tx, int ty, bool isLeft)
         {
             if (tx < 0 || ty < 0 || tx >= BattleManager.Instance.MemMap.StageWidth || ty >= BattleManager.Instance.MemMap.StageHeight)
                 return false;
 
             if (!IsPlaceBlank(tx, ty))
-            {
                 return false;
-            }
-            
+
             MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
-            var sideCell = BattleManager.Instance.MemMap.ColumnCount / 2;
-            return point.IsLeft ==isLeft && point.SideIndex >= 0 && point.SideIndex < sideCell && point.CanMove;
+            var canRush = MonsterBook.IsRush(mid);
+            if (canRush)
+            {
+                return point.CanMove;
+            }
+            else
+            {
+                var sideCell = BattleManager.Instance.MemMap.ColumnCount / 2;
+                return point.IsLeft == isLeft && point.SideIndex >= 0 && point.SideIndex < sideCell && point.CanMove;
+            }
         }
 
         public static bool IsPlaceCanMove(int tx, int ty)

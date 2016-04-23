@@ -115,7 +115,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             return ImageManager.GetImage(fname);
         }
 
-       public static SkillConfig GetRangeSkillConfig(int mid)
+       public static SkillConfig GetRangeSkill(int mid)
        {
            var monsterConfig = ConfigData.GetMonsterConfig(mid);
            for (int i = 0; i < monsterConfig.Skills.Count; i++)
@@ -128,5 +128,19 @@ namespace TaleofMonsters.DataType.Cards.Monsters
            }
            return null;
        }
+
+        public static bool IsRush(int mid)
+        {
+            var monsterConfig = ConfigData.GetMonsterConfig(mid);
+            for (int i = 0; i < monsterConfig.Skills.Count; i++)
+            {
+                var skilConfig = ConfigData.GetSkillConfig(monsterConfig.Skills[i].X);
+                if (skilConfig.Tag == "rush")
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

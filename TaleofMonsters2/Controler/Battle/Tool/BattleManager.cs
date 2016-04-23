@@ -81,10 +81,10 @@ namespace TaleofMonsters.Controler.Battle.Tool
             }
         }
 
-        public void Draw(Graphics g, MagicRegion magicRegion, int mouseX, int mouseY, bool isMouseIn)
+        public void Draw(Graphics g, MagicRegion magicRegion, CardVisualRegion visualRegion, int mouseX, int mouseY, bool isMouseIn)
         {
             MemMap.Draw(g);
-
+            visualRegion.Draw(g);
             if (magicRegion.Type != RegionTypes.None && isMouseIn)
                 magicRegion.Draw(g, RoundMark, mouseX, mouseY);
             for (int i = 0; i < MonsterQueue.Count; i++)

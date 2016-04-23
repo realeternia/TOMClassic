@@ -86,6 +86,7 @@
       <DependentUpon>CardSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="Controler\Battle\DataTent\MissileQueue.cs" />
+    <Compile Include="Controler\Battle\Data\CardVisualRegion.cs" />
     <Compile Include="Controler\Battle\Data\MemMissile\IMissileControler.cs" />
     <Compile Include="Controler\Battle\Data\MemMissile\Missile.cs" />
     <Compile Include="Controler\Battle\Data\MemMissile\MissileBook.cs" />

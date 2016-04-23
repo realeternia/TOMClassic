@@ -86,7 +86,7 @@ namespace TaleofMonsters.Controler.Battle
 
                 if (card.CardType == CardTypes.Monster)
                 {
-                    Point monPos = GetMonsterPoint(false);
+                    Point monPos = GetMonsterPoint(card.CardId, false);
                     player.UseMonster(card, monPos);
                 }
                 else if (card.CardType == CardTypes.Weapon)
@@ -114,7 +114,7 @@ namespace TaleofMonsters.Controler.Battle
             }
         }
 
-        private static Point GetMonsterPoint(bool isLeft)
+        private static Point GetMonsterPoint(int mid, bool isLeft)
         {
             int size = BattleManager.Instance.MemMap.CardSize;
             var sideCell = BattleManager.Instance.MemMap.ColumnCount / 2;
@@ -124,7 +124,7 @@ namespace TaleofMonsters.Controler.Battle
                 int y = MathTool.GetRandom(0, BattleManager.Instance.MemMap.RowCount);
                 x *= size;
                 y *= size;
-                if (BattleLocationManager.IsPlaceCanSummon(x,y,false))
+                if (BattleLocationManager.IsPlaceCanSummon(mid,x, y,false))
                 {
                     return new Point(x, y);
                 }
