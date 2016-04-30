@@ -96,6 +96,7 @@
         NoMove = 6,
 
         Tile = 101,
+        Shield = 102,
         Chaos = 103,
     }
     internal class AchieveTypes

@@ -424,6 +424,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 }
             }
 
+            if (BuffManager.HasBuff(BuffEffectTypes.Shield))
+            {
+                dam.SetDamage(DamageTypes.All, 1);
+            }
         }
 
         public void CheckAuroEffect()
