@@ -33,17 +33,13 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
         {
             frameOffset++;
 
-            int oldAngle = angle;
             if (!controler.CheckFly(ref position, ref angle))
             {
                 IsFinished = true;
                 return;
             }
 
-            if (angle != oldAngle)
-            {
-                GenerateImg();
-            }
+            GenerateImg();
         }
 
         private void GenerateImg()
