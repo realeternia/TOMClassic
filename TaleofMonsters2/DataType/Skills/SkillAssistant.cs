@@ -93,7 +93,7 @@ namespace TaleofMonsters.DataType.Skills
                 src.CheckAuroEffect();
             }
 
-            if (tileMatching == TileMatchResult.Enhance && !src.BuffManager.HasBuff(BuffEffectTypes.NoTile))//地形
+            if (tileMatching == TileMatchResult.Enhance)//地形
             {
                 src.AddBuff((int)BuffIds.Tile, 1, 0.05);
             }

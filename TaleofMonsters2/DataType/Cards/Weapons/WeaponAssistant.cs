@@ -10,8 +10,16 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             WeaponConfig weaponConfig = ConfigData.GetWeaponConfig(weapon.CardId);
 
             src.Atk += weapon.Avatar.Atk*symbol;
-         //   src.Def += weapon.Avatar.Def * symbol;
-         //   src.Mag += weapon.Avatar.Mag * symbol;
+            src.MaxHp += weapon.Avatar.Hp * symbol;
+
+            src.Def += weapon.Avatar.Def * symbol;
+            src.Mag += weapon.Avatar.Mag * symbol;
+            src.Hit += weapon.Avatar.Hit * symbol;
+            src.Dhit += weapon.Avatar.Dhit * symbol;
+            src.Crt += weapon.Avatar.Crt * symbol;
+            src.Spd += weapon.Avatar.Spd * symbol;
+            src.Luk += weapon.Avatar.Luk * symbol;
+
             if (weaponConfig.Type == (int)CardTypeSub.Scroll)
             {
                 if (symbol == 1)

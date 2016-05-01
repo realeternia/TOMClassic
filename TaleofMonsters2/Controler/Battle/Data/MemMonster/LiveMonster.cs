@@ -55,6 +55,16 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public bool IsMagicAtk { get; set; }//只有武器可以改变，技能不行
         public int AttackType { get; set; }//只有武器可以改变，技能不行
         public AttrModifyData Atk { get; set; }
+        public AttrModifyData MaxHp { get; set; }
+
+        public AttrModifyData Def { get; set; }
+        public AttrModifyData Mag { get; set; }
+        public AttrModifyData Spd { get; set; }
+        public AttrModifyData Hit { get; set; }
+        public AttrModifyData Dhit { get; set; }
+        public AttrModifyData Crt { get; set; }
+        public AttrModifyData Luk { get; set; }
+
 
         public bool IsSummoned { get; set; } //是否召唤单位
 
@@ -91,13 +101,21 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
         }
 
+        public int RealMaxHp
+        {
+            get
+            {
+                double diff = (MaxHp.Source + MaxHp.Adder) * (1 + MaxHp.Multiter) - MaxHp.Source;
+                return Math.Max((int)(MaxHp.Source + diff), 0);
+            }
+        }
+
         public int RealDef
         {
             get
             {
-                if (TWeapon.CardId == 0 || TWeapon.Avatar.Def == 0)
-                    return Avatar.Def;
-                return TWeapon.Avatar.Def + Avatar.Def;
+                double diff = (Def.Source + Def.Adder) * (1 + Def.Multiter) - Def.Source;
+                return Math.Max((int)(Def.Source + diff), 0);
             }
         }
 
@@ -105,19 +123,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             get
             {
-                if (TWeapon.CardId == 0 || TWeapon.Avatar.Mag == 0)
-                    return Avatar.Mag;
-                return TWeapon.Avatar.Mag + Avatar.Mag;
-            }
-        }
-
-        public int RealLuk
-        {
-            get
-            {
-                if (TWeapon.CardId == 0 || TWeapon.Avatar.Luk == 0)
-                    return Avatar.Luk;
-                return TWeapon.Avatar.Luk + Avatar.Luk;
+                double diff = (Mag.Source + Mag.Adder) * (1 + Mag.Multiter) - Mag.Source;
+                return Math.Max((int)(Mag.Source + diff), 0);
             }
         }
 
@@ -125,9 +132,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             get
             {
-                if (TWeapon.CardId == 0 || TWeapon.Avatar.Spd == 0)
-                    return Avatar.Spd;
-                return TWeapon.Avatar.Spd + Avatar.Spd;
+                double diff = (Spd.Source + Spd.Adder) * (1 + Spd.Multiter) - Spd.Source;
+                return Math.Max((int)(Spd.Source + diff), 0);
             }
         }
 
@@ -135,9 +141,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             get
             {
-                if (TWeapon.CardId == 0 || TWeapon.Avatar.Hit == 0)
-                    return Avatar.Hit;
-                return TWeapon.Avatar.Hit + Avatar.Hit;
+                double diff = (Hit.Source + Hit.Adder) * (1 + Hit.Multiter) - Hit.Source;
+                return Math.Max((int)(Hit.Source + diff), 0);
             }
         }
 
@@ -145,9 +150,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             get
             {
-                if (TWeapon.CardId == 0 || TWeapon.Avatar.Dhit == 0)
-                    return Avatar.Dhit;
-                return TWeapon.Avatar.Dhit + Avatar.Dhit;
+                double diff = (Dhit.Source + Dhit.Adder) * (1 + Dhit.Multiter) - Dhit.Source;
+                return Math.Max((int)(Dhit.Source + diff), 0);
             }
         }
 
@@ -155,9 +159,17 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             get
             {
-                if (TWeapon.CardId == 0 || TWeapon.Avatar.Crt == 0)
-                    return Avatar.Crt;
-                return TWeapon.Avatar.Crt + Avatar.Crt;
+                double diff = (Crt.Source + Crt.Adder) * (1 + Crt.Multiter) - Crt.Source;
+                return Math.Max((int)(Crt.Source + diff), 0);
+            }
+        }
+
+        public int RealLuk
+        {
+            get
+            {
+                double diff = (Luk.Source + Luk.Adder) * (1 + Luk.Multiter) - Luk.Source;
+                return Math.Max((int)(Luk.Source + diff), 0);
             }
         }
 
@@ -250,6 +262,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             antiMagic = new int[9];//8个属性，+1圣属性
 
             Atk = new AttrModifyData(Avatar.Atk);
+            MaxHp = new AttrModifyData(Avatar.Hp);
+            Def = new AttrModifyData(Avatar.Def);
+            Mag = new AttrModifyData(Avatar.Mag);
+            Spd = new AttrModifyData(Avatar.Spd);
+            Hit = new AttrModifyData(Avatar.Hit);
+            Dhit = new AttrModifyData(Avatar.Dhit);
+            Crt = new AttrModifyData(Avatar.Crt);
+            Luk = new AttrModifyData(Avatar.Luk);
 
             if (Avatar.MonsterConfig.Type != (int)CardTypeSub.Hero)
                 EAddonBook.UpdateMonsterData(this, OwnerPlayer.State.Monsterskills.Keys(), OwnerPlayer.State.Monsterskills.Values());
@@ -454,7 +474,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 			int basedata = value * MathTool.GetSqrtMulti10(Avatar.MonsterConfig.Star);
 		    Atk += (double) basedata/10;
 //		    Def += (double) basedata/10;
-			MaxHp=Avatar.Hp + 3 * basedata / 10;
+//			MaxHp=Avatar.Hp + 3 * basedata / 10;
 		}
 
         public void DrawOnBattle(Graphics g2, Color uponColor)
@@ -671,18 +691,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public double HpRate
         {
             get { return (double)life*100/Avatar.Hp; }
-        }
-
-        public int MaxHp
-        {
-            get { return Avatar.Hp; }
-            set
-            {
-                int realvalue = Math.Max(value, 1);
-                int hpper = Life * 100 / Avatar.Hp;
-                Avatar.Hp = realvalue;
-                Life = realvalue * hpper / 100;
-            }
         }
 
         public int Hp

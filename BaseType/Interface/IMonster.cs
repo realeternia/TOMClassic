@@ -9,7 +9,6 @@ namespace ConfigDatas
         void AddHp(double addon);
         void AddHpRate(double value);
         double HpRate{get;}
-        int MaxHp{get;set;}
         int Hp{get;}
         int WeaponId{get;}
         IPlayer Owner{get;}
@@ -34,6 +33,15 @@ namespace ConfigDatas
         void AddMissile(IMonster target, string arrow);
 		
         AttrModifyData Atk{get;set;}
+        AttrModifyData MaxHp { get; set; }
+
+        AttrModifyData Def { get; set; }
+        AttrModifyData Mag { get; set; }
+        AttrModifyData Spd { get; set; }
+        AttrModifyData Hit { get; set; }
+        AttrModifyData Dhit { get; set; }
+        AttrModifyData Crt { get; set; }
+        AttrModifyData Luk { get; set; }
 
         bool IsTileMatching { get; }
         bool CanAttack { get; set; }

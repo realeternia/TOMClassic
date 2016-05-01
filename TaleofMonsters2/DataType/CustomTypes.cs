@@ -90,8 +90,6 @@
     {
         NoCure = 1,
         NoAttack = 2,
-        NoTile = 3,
-        NoAuro = 4,
         NoSkill = 5,
         NoMove = 6,
 

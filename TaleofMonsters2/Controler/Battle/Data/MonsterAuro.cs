@@ -71,10 +71,6 @@ namespace TaleofMonsters.Controler.Battle.Data
                 if (attrList.Count > 0 && !attrList.Contains((CardElements)mon.Avatar.MonsterConfig.Attr))
                     continue;
 
-                BuffConfig buffConfig = ConfigData.GetBuffConfig(buffId);
-                if (mon.BuffManager.HasBuff(BuffEffectTypes.NoAuro) && buffConfig.Type[1] == 'a')//=='a'表示是光环
-                    continue;
-
                 int truedis = MathTool.GetDistance(self.Position, mon.Position);
                 if (range != -1 && range*size/10 <= truedis)
                     continue;
