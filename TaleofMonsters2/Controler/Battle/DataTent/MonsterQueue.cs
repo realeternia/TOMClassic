@@ -153,7 +153,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 roundMonster.Next(pastRound, match);
             }
 
-            foreach (var lm in toAdd)
+            foreach (var lm in toAdd)//添加延时怪
             {
                 Add(lm);
             }

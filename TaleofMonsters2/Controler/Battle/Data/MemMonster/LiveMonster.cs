@@ -56,6 +56,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public int AttackType { get; set; }//只有武器可以改变，技能不行
         public AttrModifyData Atk { get; set; }
 
+        public bool IsSummoned { get; set; } //是否召唤单位
+
         public int Life
         {
             get { return Math.Max(life, 0); }
@@ -804,6 +806,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void Summon(int type, int id)
         {
+            if (IsSummoned)
+            {//召唤生物不能继续召唤，防止无限循环
+                return;
+            }
+
             List<Point> posLis = new List<Point>();
             if (type == 1)//上下各一个
             {
@@ -839,6 +846,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                     var mon = new Monster(id);
                     mon.UpgradeToLevel(Level);
                     LiveMonster newMon = new LiveMonster(World.WorldInfoManager.GetCardFakeId(), Level, mon, pos, IsLeft);
+                    newMon.IsSummoned = true;
                     BattleManager.Instance.MonsterQueue.AddDelay(newMon);
                 }
             }
