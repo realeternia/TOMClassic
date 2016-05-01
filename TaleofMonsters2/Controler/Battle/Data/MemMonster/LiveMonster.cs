@@ -71,8 +71,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public int Life
         {
             get { return Math.Max(life, 0); }
-            set { life = value; if (life > Avatar.Hp) life = Avatar.Hp;
-            hpBar.Rate = life * 100 / Avatar.Hp;                
+            set { life = value; if (life > RealMaxHp) life = RealMaxHp;
+            hpBar.Rate = life * 100 / RealMaxHp;                
             }
         }
 
@@ -234,8 +234,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             Avatar = mon;
             if (Avatar.MonsterConfig.Type != (int)CardTypeSub.Hero)
                 Avatar.UpgradeToLevel(level);          
-            Life = Avatar.Hp;
-            oldLife = life;
+
             Position = point;
             IsLeft = isLeft;
             Action = 0;
@@ -250,6 +249,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             LiveMonsterToolTip = new LiveMonsterToolTip(this);
 
             SetBasicData();
+            Life = Avatar.Hp;
+            oldLife = life;
             MonsterCoverBox = new MonsterCoverBox(this);
         }
 
@@ -362,8 +363,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 }
 
                 if (Avatar.MonsterConfig.LifeRound > 0)
-                {
-                    Life -= (int)(MaxHp / Avatar.MonsterConfig.LifeRound);
+                {//这里使用默认的生命值来扣
+                    Life -= (int)(Avatar.Hp / Avatar.MonsterConfig.LifeRound);
                 }
             }
 
@@ -567,7 +568,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void AddHpRate(double value)
         {
-            Life += (int)(MaxHp * value);
+            Life += (int)(RealMaxHp * value);
         }
 
         public IMonsterAuro AddAuro(int buff, int lv, string tar)

@@ -11,6 +11,10 @@ namespace TaleofMonsters.DataType.Cards.Weapons
 
             src.Atk += weapon.Avatar.Atk*symbol;
             src.MaxHp += weapon.Avatar.Hp * symbol;
+            if (symbol > 0 && weapon.Avatar.Hp > 0)//加buff时候
+            {
+                src.AddHp(weapon.Avatar.Hp);//顺便把hp也加上
+            }
 
             src.Def += weapon.Avatar.Def * symbol;
             src.Mag += weapon.Avatar.Mag * symbol;
