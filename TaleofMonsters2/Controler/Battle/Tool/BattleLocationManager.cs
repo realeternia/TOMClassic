@@ -53,7 +53,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
                 return false;
 
             MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
-            var canRush = MonsterBook.IsRush(mid);
+            var canRush = MonsterBook.HasTag(mid, "rush");
             if (canRush)
             {
                 return point.CanMove;

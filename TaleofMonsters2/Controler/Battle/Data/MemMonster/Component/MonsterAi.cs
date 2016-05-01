@@ -4,6 +4,7 @@ using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemMissile;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Effects;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
@@ -167,9 +168,17 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         private int GetMonsterRate(LiveMonster mon)
         {
-            int val = mon.Hp;
-            val += mon.RealRange*10;//优先打远程单位
-            return val;
+            int score = 10000-mon.Hp;
+            score += mon.RealRange*10;//优先打远程单位
+            if (MonsterBook.HasTag(mon.CardId, "taunt"))
+            {
+                score += 10000;
+            }
+            else if (MonsterBook.HasTag(mon.CardId, "hide"))
+            {
+                score -= 5000;
+            }
+            return score;
         }
     }
 }

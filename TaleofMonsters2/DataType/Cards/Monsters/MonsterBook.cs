@@ -129,13 +129,13 @@ namespace TaleofMonsters.DataType.Cards.Monsters
            return null;
        }
 
-        public static bool IsRush(int mid)
+        public static bool HasTag(int mid, string tag)
         {
             var monsterConfig = ConfigData.GetMonsterConfig(mid);
             for (int i = 0; i < monsterConfig.Skills.Count; i++)
             {
                 var skilConfig = ConfigData.GetSkillConfig(monsterConfig.Skills[i].X);
-                if (skilConfig.Tag == "rush")
+                if (skilConfig.Tag == tag)
                 {
                     return true;
                 }
