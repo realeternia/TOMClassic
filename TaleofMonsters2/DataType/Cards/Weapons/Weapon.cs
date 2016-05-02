@@ -33,7 +33,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
         {
             WeaponConfig = ConfigData.GetWeaponConfig(id);
             Dura = (int)(WeaponConfig.Dura*1.67);
-            Range = WeaponConfig.Range;
+            Range = WeaponConfig.Range; 
             Def = WeaponConfig.Def;
             Spd = WeaponConfig.Spd;
             Mag = WeaponConfig.Mag;

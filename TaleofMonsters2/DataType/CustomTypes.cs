@@ -88,8 +88,7 @@
     }
     internal enum BuffEffectTypes
     {
-        NoCure = 1,
-        NoAttack = 2,
+        NoAction = 2,
         NoSkill = 5,
         NoMove = 6,
 

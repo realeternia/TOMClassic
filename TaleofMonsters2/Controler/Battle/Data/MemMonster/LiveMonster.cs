@@ -380,7 +380,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public bool AddAts()
         {
-            if (BuffManager.HasBuff(BuffEffectTypes.NoAttack))
+            if (BuffManager.HasBuff(BuffEffectTypes.NoAction))
                 return false;
             Action += GameConstants.RoundAts;//200ms + 30
             if (Action >= GameConstants.LimitAts)
@@ -440,7 +440,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             if (dam.Dtype == DamageTypes.Physical)
             {
-                if (BuffManager.HasBuff(BuffEffectTypes.Chaos) && MathTool.GetRandom(100) < 20)
+                if (BuffManager.HasBuff(BuffEffectTypes.Chaos) && MathTool.GetRandom(100) < 25)
                 {
                     src.Life -= dam.Value;
                     dam.SetDamage(DamageTypes.Physical, 0);
@@ -556,13 +556,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void AddHp(double addon)
         {
-            if (addon > 0)//治疗
-            {
-                if (BuffManager.HasBuff(BuffEffectTypes.NoCure))
-                {
-                    return;
-                }
-            }
             Life += (int)addon;
         }
 
