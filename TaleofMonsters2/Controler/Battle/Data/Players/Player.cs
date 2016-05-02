@@ -99,9 +99,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         protected void InitBase()
         {
-            Lp = 1;
-            Mp = 1;
-            Pp = 1;
+            Lp = 3;
+            Mp = 3;
+            Pp = 3;
             EnergyGenerator.Next(0);
         }
 
