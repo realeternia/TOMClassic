@@ -260,7 +260,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             auroList = new List<MonsterAuro>();
             SkillManager.Reload();
             
-            antiMagic = new int[9];//8个属性，+1圣属性
+            antiMagic = new int[6];//6个属性
 
             Atk = new AttrModifyData(Avatar.Atk);
             MaxHp = new AttrModifyData(Avatar.Hp);
