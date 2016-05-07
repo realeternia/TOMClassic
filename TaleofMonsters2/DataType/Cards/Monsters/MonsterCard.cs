@@ -164,21 +164,12 @@ namespace TaleofMonsters.DataType.Cards.Monsters
 
             g.DrawString("技能", fontblack, Brushes.White, 10 + offX, basel + 202);
             int skillindex = 0;
-            int skillbaseindex = 0;
             for (int i = 0; i < ConfigData.GetMonsterConfig(monster.Id).Skills.Count; i++)
             {
                 int skillId = ConfigData.GetMonsterConfig(monster.Id).Skills[i].X;
                 SkillConfig skillConfig = ConfigData.GetSkillConfig(skillId);
-                if (SkillBook.IsBasicSkill(skillId))
-                {
-                    g.DrawString(skillConfig.Name, fontsong, Brushes.SlateBlue, 60 + skillbaseindex*30 + offX, basel + 204);
-                    skillbaseindex++;
-                }
-                else
-                {
-                    g.DrawImage(SkillBook.GetSkillImage(skillId), 10 + 45 * skillindex + offX, basel + 223, 40, 40);
-                    skillindex++;
-                }
+                g.DrawImage(SkillBook.GetSkillImage(skillId), 10 + 45 * skillindex + offX, basel + 223, 40, 40);
+                skillindex++;
             }
 
             fontsong.Dispose();
@@ -244,8 +235,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
                 {
                     int skillId = monster.MonsterConfig.Skills[i].X;
                     SkillConfig skillConfig = ConfigData.GetSkillConfig(skillId);
-                    g.DrawString(skillConfig.Name, fontsong, SkillBook.IsBasicSkill(skillId) ?
-                        Brushes.LightGreen : Brushes.Gold, adder.Now+22 + offx, 4);
+                    g.DrawString(skillConfig.Name, fontsong, Brushes.Gold, adder.Now+22 + offx, 4);
                     offx += (int)g.MeasureString(skillConfig.Name, fontsong).Width + 5;
                 }
             }
@@ -303,17 +293,14 @@ namespace TaleofMonsters.DataType.Cards.Monsters
                 for (int i = 0; i < monster.MonsterConfig.Skills.Count; i++)
                 {
                     int skillId = monster.MonsterConfig.Skills[i].X;
-                    if (!SkillBook.IsBasicSkill(skillId))
-                    {
-                        tipData.AddTextNewLine("", "Red");
-                        tipData.AddImage(SkillBook.GetSkillImage(skillId));
+                    tipData.AddTextNewLine("", "Red");
+                    tipData.AddImage(SkillBook.GetSkillImage(skillId));
 
-                        var skillConfig = ConfigData.GetSkillConfig(skillId);
-                        string des = skillConfig.GetDescript(card.Level);
-                        if (skillConfig.DescriptBuffId > 0)
-                            des += ConfigData.GetBuffConfig(skillConfig.DescriptBuffId).GetDescript(card.Level);
-                        tipData.AddTextLines(des, "Cyan", 15, false);
-                    }
+                    var skillConfig = ConfigData.GetSkillConfig(skillId);
+                    string des = skillConfig.GetDescript(card.Level);
+                    if (skillConfig.DescriptBuffId > 0)
+                        des += ConfigData.GetBuffConfig(skillConfig.DescriptBuffId).GetDescript(card.Level);
+                    tipData.AddTextLines(des, "Cyan", 15, false);
                 }
             }
            

@@ -64,13 +64,10 @@ namespace TaleofMonsters.Forms.Items
                 for (int i = 0; i < monsterConfig.Skills.Count; i++)
                 {
                     int skillId = monsterConfig.Skills[i].X;
-                    if (!SkillBook.IsBasicSkill(skillId))
+                    SkillConfig skillConfig = ConfigData.GetSkillConfig(skillId);
+                    if (skillConfig.Cover != null)
                     {
-                        SkillConfig skillConfig = ConfigData.GetSkillConfig(skillId);
-                        if (skillConfig.Cover != null)
-                        {
-                            effectName = skillConfig.Cover;
-                        }
+                        effectName = skillConfig.Cover;
                     }
                 }
                 if (monsterConfig.Cover != "")

@@ -31,7 +31,6 @@ namespace TaleofMonsters.Forms.MagicBook
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
         private Card card;
         private UserControl parent;
-        private List<MonsterSkill> skillBases;
         private List<MonsterSkill> skills;
         private CoverEffect coverEffect;
 
@@ -61,7 +60,6 @@ namespace TaleofMonsters.Forms.MagicBook
             cid = dcard.BaseId;
             level = dcard.Level;
             lastCell = -1;
-            skillBases = new List<MonsterSkill>();
             skills = new List<MonsterSkill>();
             string effectName = "";
             if (cid > 0)
@@ -112,18 +110,11 @@ namespace TaleofMonsters.Forms.MagicBook
             {
                 int skillId = monsterConfig.Skills[i].X;
                 MonsterSkill monsterSkill = new MonsterSkill(skillId, monsterConfig.Skills[i].Y, 0);
-                if (SkillBook.IsBasicSkill(skillId))
+                skills.Add(monsterSkill);
+                SkillConfig skillConfig = ConfigData.GetSkillConfig(skillId);
+                if (!string.IsNullOrEmpty(skillConfig.Cover))
                 {
-                    skillBases.Add(monsterSkill);
-                }
-                else
-                {
-                    skills.Add(monsterSkill);
-                    SkillConfig skillConfig = ConfigData.GetSkillConfig(skillId);
-                    if (!string.IsNullOrEmpty(skillConfig.Cover))
-                    {
-                        effectPath = skillConfig.Cover; 
-                    }
+                    effectPath = skillConfig.Cover;
                 }
             }
             if (monsterConfig.Cover != "")
@@ -184,21 +175,6 @@ namespace TaleofMonsters.Forms.MagicBook
                         if (thisCell < skills.Count)
                         {
                             Image image = GetSkillDesImage(skills[thisCell].SkillId, skills[thisCell].Percent);
-                            tooltip.Show(image, parent, mousex, mousey);
-                            return;
-                        }
-                    }
-                }
-                else if (MathTool.IsPointInRegion(truex, truey, 58, basel + 204, 238, basel + 219, false))
-                {
-                    int thisCell = truex < 58 ? -1 : (truex - 58)/30;
-                    isIn = true;
-                    if (lastCell != thisCell)
-                    {
-                        lastCell = thisCell;
-                        if (thisCell < skillBases.Count)
-                        {
-                            Image image = GetSkillDesImage(skillBases[thisCell].SkillId, skillBases[thisCell].Percent);
                             tooltip.Show(image, parent, mousex, mousey);
                             return;
                         }

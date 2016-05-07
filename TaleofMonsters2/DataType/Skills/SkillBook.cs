@@ -41,15 +41,6 @@ namespace TaleofMonsters.DataType.Skills
             return "";
         }
 
-        public static bool IsBasicSkill(int id)
-        {
-            if (id == 0)
-            {
-                return false;
-            }
-            return ConfigData.SkillDict[id].Type == "基本"; 
-        }
-
         static public Image GetSkillImage(int id)
         {
             return GetSkillImage(id,64,64);

@@ -89,7 +89,7 @@ namespace TaleofMonsters.Forms.MagicBook
             List<IntPair> things = new List<IntPair>();
             foreach (SkillConfig skill in ConfigData.SkillDict.Values)
             {
-                if ((skill.Type == type || type == "全部种类") && !SkillBook.IsBasicSkill(skill.Id))
+                if ((skill.Type == type || type == "全部种类"))
                 {
                     IntPair mt = new IntPair();
                     mt.Type = skill.Id;
