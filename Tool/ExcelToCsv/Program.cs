@@ -232,7 +232,7 @@ namespace ExcelToCsv
                     result = datas[i].ToString() == ""
                                   ? "null"
                                   : string.Format(
-                                      "delegate(ITargetMeasurable sp,IMonster s,IMonster d,HitDamage damage, bool deadHit,int lv){{{0}}}",
+                                      "delegate(ITargetMeasurable sp,IMonster s,IMonster d,HitDamage damage,int lv){{{0}}}",
                                       datas[i]);
                 }
                 else if (typeStr == "SkillBurstCheckDelegate")

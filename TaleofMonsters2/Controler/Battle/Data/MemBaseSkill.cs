@@ -133,13 +133,24 @@ namespace TaleofMonsters.Controler.Battle.Data
         {
             if (SkillInfo.SkillConfig.AfterHit != null)
             {
-                SkillInfo.SkillConfig.AfterHit(SkillInfo, src, dest, damage, !dest.IsAlive, Level);
+                SkillInfo.SkillConfig.AfterHit(SkillInfo, src, dest, damage, Level);
                 SendSkillIcon(key);
                 if (SkillInfo.SkillConfig.EffectArea != "")
                 {
                     SendAreaEffect(SkillInfo.SkillConfig.PointSelf ? Self.Position : dest.Position);
                 }
             }
+
+            if (SkillInfo.SkillConfig.DeathHit != null && !dest.IsAlive)
+            {
+                SkillInfo.SkillConfig.DeathHit(SkillInfo, src, dest, damage, Level);
+                SendSkillIcon(key);
+                if (SkillInfo.SkillConfig.EffectArea != "")
+                {
+                    SendAreaEffect(SkillInfo.SkillConfig.PointSelf ? Self.Position : dest.Position);
+                }
+            }
+
         }
 
         public bool CheckSpecial(float pastRound)
