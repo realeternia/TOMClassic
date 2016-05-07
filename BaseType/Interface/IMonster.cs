@@ -67,6 +67,7 @@ namespace ConfigDatas
         void OnMagicDamage(int damage, int element);
         void SuddenDeath();
         void Rebel();//‘Ï∑¥
+        void AddMaxHp(double val);
 
         void Summon(int type, int id);
     }

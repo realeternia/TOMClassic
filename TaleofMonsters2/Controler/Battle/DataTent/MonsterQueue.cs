@@ -143,13 +143,13 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             }
 
 
-            foreach (LiveMonster roundMonster in monsters)
+            foreach (var roundMonster in monsters)
             {
                 if (roundMonster.IsGhost) 
                     continue;
 
                 int tile = BattleManager.Instance.MemMap.GetMouseCell(roundMonster.Position.X, roundMonster.Position.Y).Tile;
-                TileMatchResult match = TileBook.MatchTile(tile,roundMonster.Avatar.MonsterConfig.Attr);
+                var match = TileBook.IsTileMatch(tile,roundMonster.Avatar.MonsterConfig.Attr);
                 roundMonster.Next(pastRound, match);
             }
 

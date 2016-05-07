@@ -8,21 +8,21 @@ namespace TaleofMonsters.DataType.Others
 {
     internal static class TileBook
     {
-        public static TileMatchResult MatchTile(int id, int mtype)
+        public static bool IsTileMatch(int id, int mtype)
         {
             int type = ConfigDatas.ConfigData.GetTileConfig(id).Type;
 
             if (type == 0)
             {
-                return TileMatchResult.NotMatch;
+                return false;
             }
 
             if (mtype == type)
             {
-                return TileMatchResult.Enhance;
+                return true;
             }
 
-            return TileMatchResult.NotMatch;
+            return false;
         }
 
         static public Image GetTileImage(int id, int width, int height)

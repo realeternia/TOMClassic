@@ -87,16 +87,19 @@ namespace TaleofMonsters.DataType.Skills
             }
         }
 
-        public static void CheckAuroState(LiveMonster src, TileMatchResult tileMatching)
+        /// <summary>
+        /// 看下光环的影响和地形影响
+        /// </summary>
+        public static void CheckAuroState(LiveMonster src, bool tileMatching)
         {
             if (!src.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
             {
                 src.CheckAuroEffect();
             }
 
-            if (tileMatching == TileMatchResult.Enhance)//地形
+            if (tileMatching || src.HasSkill(GameConstants.SkillTileId))//地形
             {
-                src.AddBuff((int)BuffIds.Tile, 1, 0.05);
+                src.AddBuff(BuffConfig.Indexer.Tile, 1, 0.05);
             }
         }
 

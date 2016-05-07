@@ -222,11 +222,6 @@
         Hp,
     }
 
-    internal enum TileMatchResult
-    {
-        NotMatch,
-        Enhance,
-    }
     internal enum MemPlayerRecordTypes
     {
         TotalWin = 1,

@@ -40,5 +40,7 @@ namespace TaleofMonsters.Core
         public const int MagToRate = 10;//每点mag实际的伤害率
         public const int SpdToRate = 5;//每点攻速实际的提升率
         public const int HitToRate = 5;//每点命中实际的提升率
+
+        public const int SkillTileId = 55610001;
     }
 }

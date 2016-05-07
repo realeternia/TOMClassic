@@ -148,7 +148,6 @@
     <Compile Include="Core\SoundManager.cs" />
     <Compile Include="Core\GameConstants.cs" />
     <Compile Include="Core\HSErrorTypes.cs" />
-    <Compile Include="DataType\Buffs\BuffIds.cs" />
     <Compile Include="DataType\CardPieces\CardPieceRate.cs" />
     <Compile Include="DataType\Effects\CoverEffect.cs" />
     <Compile Include="DataType\Items\Consumer.cs" />

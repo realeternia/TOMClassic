@@ -346,7 +346,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
         }
 
-        public void Next(float pastRound, TileMatchResult tileMatching)//附带判断地形因素
+        public void Next(float pastRound, bool tileMatching)//附带判断地形因素
         {
             roundPast++;
             pastRoundTotal += pastRound;
@@ -803,6 +803,15 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             if (!Avatar.MonsterConfig.IsBuilding)//建筑无法策反
             {
                 IsLeft = !IsLeft;
+            }
+        }
+
+        public void AddMaxHp(double value)
+        {
+            MaxHp.Source += value;
+            if (value > 0)
+            {
+                AddHp(value);//顺便把hp也加上
             }
         }
 
