@@ -48,28 +48,29 @@ namespace TaleofMonsters.DataType.Skills
 
             if (!src.IsMagicAtk)
             {
-                var damvalue = (int)(src.RealAtk*(100-dest.RealDef*GameConstants.DefToRate)/100f * attrRateOn);
-                damage = new HitDamage(damvalue, 0, DamageTypes.Physical);
+                var damValue = (int)(src.RealAtk*(100-dest.RealDef*GameConstants.DefToRate)/100f * attrRateOn);
+                var noDefDamValue = (int)(src.RealAtk * attrRateOn);
+                damage = new HitDamage(damValue, noDefDamValue, 0, DamageTypes.Physical);
             }
             else
             {
-                var damvalue = (int)(src.RealAtk * (100 - src.RealMag * GameConstants.MagToRate) / 100f * attrRateOn);
-                damage = new HitDamage(damvalue, src.AttackType, DamageTypes.Magic);
+                var damValue = (int)(src.RealAtk * (100 - src.RealMag * GameConstants.MagToRate) / 100f * attrRateOn);
+                var noDefDamValue = (int)(src.RealAtk * attrRateOn);
+                damage = new HitDamage(damValue, noDefDamValue, src.AttackType, DamageTypes.Magic);
                 dest.CheckMagicDamage(damage);
             }
 
-            bool deathHit = false; //一击必杀
-            int minDamage = 1; //最小伤害
+            bool nodef = false; //无视防御
             if (!src.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
             {
-                src.SkillManager.CheckDamage(src, dest, true, damage, ref minDamage, ref deathHit);
+                src.SkillManager.CheckDamage(src, dest, true, damage, ref nodef);
             }
             if (!dest.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
             {
-                dest.SkillManager.CheckDamage(src, dest, false, damage, ref minDamage, ref deathHit);
+                dest.SkillManager.CheckDamage(src, dest, false, damage, ref nodef);
             }
 
-            damage.SetDamage(DamageTypes.All, deathHit ? dest.Life : Math.Max(damage.Value, minDamage));
+            damage.SetDamage(DamageTypes.All, damage.Value);
             return damage;
         }
 

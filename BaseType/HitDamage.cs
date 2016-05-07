@@ -2,15 +2,17 @@ namespace ConfigDatas
 {
     public class HitDamage
     {
-        public int Value { get; private set; }
+        public int Value { get; private set; }//伤害值
+        public int NoDefenceValue { get; private set; }//无视防御的伤害值
 
         public int Element { get; private set; }
 
         public DamageTypes Dtype { get; private set; }
 
-        public HitDamage(int damage, int element, DamageTypes type)
+        public HitDamage(int damage, int noDefDamage, int element, DamageTypes type)
         {
             Value = damage;
+            NoDefenceValue = noDefDamage;
             Element = element;
             Dtype = type;
         }

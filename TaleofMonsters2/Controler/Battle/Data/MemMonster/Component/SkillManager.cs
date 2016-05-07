@@ -172,16 +172,15 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         /// <param name="dest">受击者</param>
         /// <param name="isActive">是否主动</param>
         /// <param name="damage">伤害值</param>
-        /// <param name="minDamage">最小伤害</param>
-        /// <param name="deathHit">致死攻击</param>
-        public void CheckDamage(LiveMonster src, LiveMonster dest, bool isActive, HitDamage damage, ref int minDamage, ref bool deathHit)
+        /// <param name="nodef">无视防御</param>
+        public void CheckDamage(LiveMonster src, LiveMonster dest, bool isActive, HitDamage damage, ref bool nodef)
         {
             foreach (var skill in Skills.ToArray())
             {
                 var key = MemBaseSkill.GetBurstKey(src.Id, dest.Id);
                 if (skill.IsBurst(key))
                 {
-                    skill.CheckDamage(src, dest, isActive, damage, ref minDamage, ref deathHit, key);
+                    skill.CheckDamage(src, dest, isActive, damage, ref nodef, key);
                 }
             }
         }

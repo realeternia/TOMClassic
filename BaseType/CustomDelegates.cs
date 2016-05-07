@@ -6,7 +6,7 @@ namespace ConfigDatas
 
     public delegate bool SkillBurstCheckDelegate(IMonster src, IMonster dest, bool isActive);
     public delegate void SkillHitEffectDelegate(IMonster src, IMonster dest, ref int hit, int level);
-    public delegate void SkillDamageEffectDelegate(IMonster src, IMonster dest, bool isActive, HitDamage damage, ref int minDamage, ref bool deathHit, int level);
+    public delegate void SkillDamageEffectDelegate(IMonster src, IMonster dest, bool isActive, HitDamage damage, ref bool noDef, int level);
     public delegate void SkillAfterHitEffectDelegate(ITargetMeasurable sp, IMonster src, IMonster dest, HitDamage damage, bool deadHit, int level);
     public delegate void SkillTimelyEffectDelegate(ITargetMeasurable sp, IMonster src, int level);
 

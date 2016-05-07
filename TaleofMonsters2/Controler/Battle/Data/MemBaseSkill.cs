@@ -120,11 +120,11 @@ namespace TaleofMonsters.Controler.Battle.Data
             }
         }
 
-        public void CheckDamage(LiveMonster src, LiveMonster dest, bool isActive, HitDamage damage, ref int minDamage, ref bool deathHit, int key)
+        public void CheckDamage(LiveMonster src, LiveMonster dest, bool isActive, HitDamage damage, ref bool nodef, int key)
         {
             if (SkillInfo.SkillConfig.CheckDamage != null)
             {
-                SkillInfo.SkillConfig.CheckDamage(src, dest, isActive, damage, ref minDamage, ref deathHit, Level);
+                SkillInfo.SkillConfig.CheckDamage(src, dest, isActive, damage, ref nodef, Level);
                 SendSkillIcon(key);
             }
         }

@@ -790,7 +790,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void OnMagicDamage(int damage, int element)
         {
-            Life -= SkillAssistant.GetMagicDamage(this, new HitDamage(damage, element, DamageTypes.Magic));
+            Life -= SkillAssistant.GetMagicDamage(this, new HitDamage(damage, damage, element, DamageTypes.Magic));
         }
 
         public void SuddenDeath()
