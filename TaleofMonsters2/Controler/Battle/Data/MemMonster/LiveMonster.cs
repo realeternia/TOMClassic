@@ -631,9 +631,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void StealWeapon(IMonster target)
         {
-            if (target is LiveMonster)
+            var monster = target as LiveMonster;
+            if (monster != null)
             {
-                var weapon = (target as LiveMonster).TWeapon;
+                var weapon = monster.TWeapon;
                 AddWeapon(weapon);
                 target.BreakWeapon();
             }
