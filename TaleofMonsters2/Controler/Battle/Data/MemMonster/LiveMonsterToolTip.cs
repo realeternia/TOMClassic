@@ -48,7 +48,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             AddText(tipData, "移动", liveMonster.ReadMov, liveMonster.ReadMov, "White", false);
             AddText(tipData, "攻击", (int)liveMonster.Atk.Source, liveMonster.RealAtk, !liveMonster.IsMagicAtk && liveMonster.CanAttack ? "White" : "DarkGray", true);
             bool isLeft = false;
-            if (liveMonster.RealDef > 0)
+            if (liveMonster.RealDef != 0)
             {
                 AddText(tipData, "防御", (int)liveMonster.Def.Source, liveMonster.RealDef, "White", isLeft);
                 isLeft = !isLeft;
@@ -58,27 +58,27 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 AddText(tipData, "魔力", (int)liveMonster.Mag.Source, liveMonster.RealMag, "White", isLeft);
                 isLeft = !isLeft;
             }
-            if (liveMonster.RealSpd > 0)
+            if (liveMonster.RealSpd != 0)
             {
                 AddText(tipData, "攻速", (int)liveMonster.Spd.Source, liveMonster.RealSpd, "White", isLeft);
                 isLeft = !isLeft;
             }
-            if (liveMonster.RealHit > 0)
+            if (liveMonster.RealHit != 0)
             {
                 AddText(tipData, "命中", (int)liveMonster.Hit.Source, liveMonster.RealHit, "White", isLeft);
                 isLeft = !isLeft;
             }
-            if (liveMonster.RealDHit > 0)
+            if (liveMonster.RealDHit != 0)
             {
                 AddText(tipData, "回避", (int)liveMonster.Dhit.Source, liveMonster.RealDHit, "White", isLeft);
                 isLeft = !isLeft;
             }
-            if (liveMonster.RealCrt > 0)
+            if (liveMonster.RealCrt != 0)
             {
                 AddText(tipData, "暴击", (int)liveMonster.Crt.Source, liveMonster.RealCrt, "White", isLeft);
                 isLeft = !isLeft;
             }
-            if (liveMonster.RealLuk > 0)
+            if (liveMonster.RealLuk != 0)
             {
                 AddText(tipData, "幸运", (int)liveMonster.Luk.Source, liveMonster.RealLuk, "White", isLeft);
                 isLeft = !isLeft;

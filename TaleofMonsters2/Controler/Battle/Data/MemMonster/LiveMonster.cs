@@ -115,7 +115,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             get
             {
                 double diff = (Def.Source + Def.Adder) * (1 + Def.Multiter) - Def.Source;
-                return Math.Max((int)(Def.Source + diff), 0);
+                return (int)(Def.Source + diff);
             }
         }
 
@@ -124,7 +124,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             get
             {
                 double diff = (Mag.Source + Mag.Adder) * (1 + Mag.Multiter) - Mag.Source;
-                return Math.Max((int)(Mag.Source + diff), 0);
+                return (int)(Mag.Source + diff);
             }
         }
 
@@ -133,7 +133,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             get
             {
                 double diff = (Spd.Source + Spd.Adder) * (1 + Spd.Multiter) - Spd.Source;
-                return Math.Max((int)(Spd.Source + diff), 0);
+                return (int)(Spd.Source + diff);
             }
         }
 
@@ -142,7 +142,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             get
             {
                 double diff = (Hit.Source + Hit.Adder) * (1 + Hit.Multiter) - Hit.Source;
-                return Math.Max((int)(Hit.Source + diff), 0);
+                return (int)(Hit.Source + diff);
             }
         }
 
@@ -151,7 +151,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             get
             {
                 double diff = (Dhit.Source + Dhit.Adder) * (1 + Dhit.Multiter) - Dhit.Source;
-                return Math.Max((int)(Dhit.Source + diff), 0);
+                return (int)(Dhit.Source + diff);
             }
         }
 
@@ -160,7 +160,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             get
             {
                 double diff = (Crt.Source + Crt.Adder) * (1 + Crt.Multiter) - Crt.Source;
-                return Math.Max((int)(Crt.Source + diff), 0);
+                return (int)(Crt.Source + diff);
             }
         }
 
@@ -169,7 +169,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             get
             {
                 double diff = (Luk.Source + Luk.Adder) * (1 + Luk.Multiter) - Luk.Source;
-                return Math.Max((int)(Luk.Source + diff), 0);
+                return (int)(Luk.Source + diff);
             }
         }
 

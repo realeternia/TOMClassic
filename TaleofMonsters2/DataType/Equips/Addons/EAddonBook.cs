@@ -45,7 +45,7 @@ namespace TaleofMonsters.DataType.Equips.Addons
                     case 133: if (mon.Avatar.MonsterConfig.Type == (int)CardTypeSub.Element) mon.AddStrengthLevel(skillvalue[i]); break;
                     case 134: if (mon.Avatar.MonsterConfig.Type == (int)CardTypeSub.Plant) mon.AddStrengthLevel(skillvalue[i]); break;
                     case 201: mon.SkillManager.RemoveSkill(233); break;
-                    case 202: if (mon.Avatar.MonsterConfig.Star < 3) mon.SkillManager.AddSkill(SkillConfig.Indexer.FightQuick, 1, 100, SkillSourceTypes.Equip); break;
+                    //case 202: if (mon.Avatar.MonsterConfig.Star < 3) mon.SkillManager.AddSkill(SkillConfig.Indexer.FightQuick, 1, 100, SkillSourceTypes.Equip); break;
                     //case 302: mon.Def *= (double)skillvalue[i] / 100; break;
                     //case 304: mon.Spd *= (double)skillvalue[i] / 100; break;
                     //case 305: mon.Hit *= (double)skillvalue[i] / 100; break;
