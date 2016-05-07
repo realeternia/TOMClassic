@@ -135,12 +135,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             return 0;
         }
 
-        public void SetTile(int itype, Point point, int dis, int tile)
+        public void SetTile(Point point, int dis, int tile)
         {
-            RegionTypes type = (RegionTypes)itype;
             foreach (var memMapPoint in Cells)
             {
-                if (BattleLocationManager.IsPointInRegionType(type, point.X, point.Y, memMapPoint.ToPoint(), dis))
+                if (BattleLocationManager.IsPointInRegionType(RegionTypes.Circle, point.X, point.Y, memMapPoint.ToPoint(), dis))
                 {
                     memMapPoint.Tile = tile;
                 }
