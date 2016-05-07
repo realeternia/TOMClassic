@@ -224,7 +224,7 @@ namespace ExcelToCsv
                     result = datas[i].ToString() == ""
                                   ? "null"
                                   : string.Format(
-                                      "delegate(IMonster s,IMonster d,bool isActive,HitDamage damage, ref int minDamage, ref bool deathHit,int lv){{{0}}}",
+                                      "delegate(IMonster s,IMonster d,bool isActive,HitDamage damage, ref bool nodef,int lv){{{0}}}",
                                       datas[i]);
                 }
                 else if (typeStr == "SkillAfterHitEffectDelegate")
