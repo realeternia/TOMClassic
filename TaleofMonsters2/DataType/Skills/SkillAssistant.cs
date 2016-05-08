@@ -4,6 +4,7 @@ using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Buffs;
 using ConfigDatas;
+using TaleofMonsters.DataType.Cards.Monsters;
 
 namespace TaleofMonsters.DataType.Skills
 {
@@ -46,7 +47,8 @@ namespace TaleofMonsters.DataType.Skills
                 }
             }
 
-            if (!src.IsMagicAtk)
+            var realAttackType = MonsterBook.HasTag(src.CardId, "mattack") ? src.Attr : src.AttackType;
+            if (realAttackType == 0)//ÎïÀí¹¥»÷
             {
                 var damValue = (int)(src.RealAtk*(100-dest.RealDef*GameConstants.DefToRate)/100f * attrRateOn);
                 var noDefDamValue = (int)(src.RealAtk * attrRateOn);
@@ -54,9 +56,8 @@ namespace TaleofMonsters.DataType.Skills
             }
             else
             {
-                var damValue = (int)(src.RealAtk * (100 - src.RealMag * GameConstants.MagToRate) / 100f * attrRateOn);
-                var noDefDamValue = (int)(src.RealAtk * attrRateOn);
-                damage = new HitDamage(damValue, noDefDamValue, src.AttackType, DamageTypes.Magic);
+                var damValue = (int)(src.RealAtk * (100 + src.RealMag * GameConstants.MagToRate) / 100f * attrRateOn);
+                damage = new HitDamage(damValue, damValue, realAttackType, DamageTypes.Magic);
                 dest.CheckMagicDamage(damage);
             }
 

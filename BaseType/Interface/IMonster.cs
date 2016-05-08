@@ -47,7 +47,6 @@ namespace ConfigDatas
         bool CanAttack { get; set; }
         bool IsElement(string ele);
         bool IsRace(string rac);
-        bool IsMagicAtk { get; }
         int AttackType { get; }
         bool HasSkill(int sid);
         void ForgetSkill();

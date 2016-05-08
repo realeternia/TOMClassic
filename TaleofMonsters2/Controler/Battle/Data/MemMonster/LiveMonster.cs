@@ -52,7 +52,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public int Action { get; set; }
         public TrueWeapon TWeapon { get; set; }
         
-        public bool IsMagicAtk { get; set; }//只有武器可以改变，技能不行
         public int AttackType { get; set; }//只有武器可以改变，技能不行
         public AttrModifyData Atk { get; set; }
         public AttrModifyData MaxHp { get; set; }

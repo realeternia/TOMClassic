@@ -29,12 +29,10 @@ namespace TaleofMonsters.DataType.Cards.Weapons
                 if (symbol == 1)
                 {
                     src.AttackType = weaponConfig.Attr;
-                    src.IsMagicAtk = true;
                 }
                 else
                 {
                     src.AttackType = (int) CardElements.None;
-                    src.IsMagicAtk = false;
                 }
 
             }
