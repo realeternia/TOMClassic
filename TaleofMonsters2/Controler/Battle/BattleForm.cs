@@ -276,7 +276,7 @@ namespace TaleofMonsters.Controler.Battle
             int cardSize = BattleManager.Instance.MemMap.CardSize;
             if (e.Button == MouseButtons.Left)
             {
-                if (leftSelectCard != null && (myCursor.Name == "summon" || myCursor.Name == "equip" || myCursor.Name == "cast"))
+                if (leftSelectCard != null && (myCursor.Name == "summon" || myCursor.Name == "equip" || myCursor.Name == "cast" || myCursor.Name == "sidekick"))
                 {
                     int result;
                     if ((result = BattleManager.Instance.PlayerManager.LeftPlayer.CheckUseCard(leftSelectCard, BattleManager.Instance.PlayerManager.LeftPlayer, BattleManager.Instance.PlayerManager.RightPlayer)) != HSErrorTypes.OK)
@@ -294,6 +294,10 @@ namespace TaleofMonsters.Controler.Battle
                     else if (myCursor.Name == "equip" && lm != null)
                     {
                         BattleManager.Instance.PlayerManager.LeftPlayer.UseWeapon(lm, leftSelectCard);
+                    }
+                    else if (myCursor.Name == "sidekick" && lm != null)
+                    {
+                        BattleManager.Instance.PlayerManager.LeftPlayer.UseSideKick(lm, leftSelectCard);
                     }
                     else if (myCursor.Name == "cast")
                     {
@@ -353,6 +357,14 @@ namespace TaleofMonsters.Controler.Battle
                         if (skillConfig != null)
                         {
                             magicRegion.Update(skillConfig);
+                        }
+                    }
+                    else
+                    {
+                        var placeMon = BattleLocationManager.GetPlaceMonster(mouseX, mouseY);
+                        if (placeMon != null) //todo 判断是否可以做sidekick
+                        {
+                            cursorname = "sidekick";
                         }
                     }
                 }

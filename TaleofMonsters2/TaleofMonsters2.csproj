@@ -94,6 +94,7 @@
     <Compile Include="Controler\Battle\Data\MemMonster\Component\MonsterAi.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\Component\MonsterCoverBox.cs" />
     <Compile Include="Controler\Battle\Data\MemWeapon\IBattleWeapon.cs" />
+    <Compile Include="Controler\Battle\Data\MemWeapon\SideKickWeapon.cs" />
     <Compile Include="Controler\Battle\Data\Players\Frag\Spike.cs" />
     <Compile Include="Controler\Battle\Data\Players\Frag\SpikeManager.cs" />
     <Compile Include="Controler\Battle\Tool\BattleManager.cs" />

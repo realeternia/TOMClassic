@@ -291,6 +291,23 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             CardManager.DeleteCardAt(SelectId);
         }
 
+        public void UseSideKick(LiveMonster lm, ActiveCard card)
+        {
+            if (!CheckUseCard(card))
+            {
+                return;
+            }
+
+            Monster mon = new Monster(card.CardId);
+            mon.UpgradeToLevel(card.Level);
+            BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).MonsterAdd++;
+
+            var tWeapon = new SideKickWeapon(lm, card.Level, mon);
+            lm.AddWeapon(tWeapon);
+
+            CardManager.DeleteCardAt(SelectId);
+        }
+
         public void DoSpell(LiveMonster target, ActiveCard card, Point location)
         {
             if (!CheckUseCard(card))
