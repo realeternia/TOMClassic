@@ -362,9 +362,13 @@ namespace TaleofMonsters.Controler.Battle
                     else
                     {
                         var placeMon = BattleLocationManager.GetPlaceMonster(mouseX, mouseY);
-                        if (placeMon != null) //todo 判断是否可以做sidekick
+                        if (placeMon != null && placeMon.IsLeft && !placeMon.Avatar.MonsterConfig.IsBuilding)
                         {
-                            cursorname = "sidekick";
+                            if (MonsterBook.HasTag(leftSelectCard.CardId, "sidekicker") ||
+                                MonsterBook.HasTag(placeMon.CardId, "sidekickee"))
+                            {
+                                cursorname = "sidekick";
+                            }
                         }
                     }
                 }

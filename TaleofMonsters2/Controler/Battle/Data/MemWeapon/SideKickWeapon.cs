@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards.Monsters;
 
@@ -54,8 +55,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
 
         public void CheckWeaponEffect(LiveMonster src, int symbol)
         {
-            src.Atk += avatar.Atk * symbol;
-            src.MaxHp += avatar.Hp * symbol;
+            src.Atk += avatar.Atk * GameConstants.SideKickFactor * symbol;
+            src.MaxHp += avatar.Hp * GameConstants.SideKickFactor * symbol;
             if (symbol > 0 && avatar.Hp > 0)//加buff时候
             {
                 src.AddHp(avatar.Hp);//顺便把hp也加上
