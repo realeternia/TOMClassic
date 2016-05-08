@@ -1,39 +1,42 @@
 ﻿using System.Drawing;
+using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards.Weapons;
-using TaleofMonsters.DataType.Decks;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
 {
-    internal class TrueWeapon
+    internal class TrueWeapon : IBattleWeapon
     {
         private LiveMonster self;
-        public Weapon Avatar { get; private set; }
+        private Weapon avatar;
 
         public int CardId
         {
-            get { return Avatar.Id; }
+            get { return avatar.Id; }
         }
         public int Life { get; private set; }
         public int Level { get; private set; }
+        public string Arrow { get { return avatar.WeaponConfig.Arrow; } }
+        public int Range { get { return avatar.WeaponConfig.Range; } }
+        public int Mov { get { return avatar.WeaponConfig.Mov; } }
 
-        public bool IsAttackWeapon
+        private bool IsAttackWeapon
         {
-            get { return Avatar.WeaponConfig.Type == (int)CardTypeSub.Weapon || Avatar.WeaponConfig.Type == (int)CardTypeSub.Scroll; }
+            get { return avatar.WeaponConfig.Type == (int)CardTypeSub.Weapon || avatar.WeaponConfig.Type == (int)CardTypeSub.Scroll; }
         }
 
         public TrueWeapon()
         {
-            Avatar = new Weapon(0);
+            avatar = new Weapon(0);
         }
         
         public TrueWeapon(LiveMonster lm, int level, Weapon wpn)
         {
             self = lm;
-            Avatar = wpn;
+            avatar = wpn;
             Level = level;
             Life = wpn.Dura;
         }
@@ -68,24 +71,74 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
             }
         }
 
-        public DeckCard Card
+        public CardTypeSub Type
         {
-            get
-            {
-                return new DeckCard(CardId, (byte)Level, 0);
-            }
+            get { return (CardTypeSub)avatar.WeaponConfig.Type; }
         }
 
         public Image GetImage(int width, int height)
         {
-            return WeaponBook.GetWeaponImage(Avatar.Id, width, height);  
+            return WeaponBook.GetWeaponImage(avatar.Id, width, height);  
         }
 
-        public TrueWeapon GetCopy()
+        public IBattleWeapon GetCopy()
         {
-            TrueWeapon newWeapon = new TrueWeapon(self, Level, Avatar);
+            TrueWeapon newWeapon = new TrueWeapon(self, Level, avatar);
             newWeapon.Life = Life;
             return newWeapon;
+        }
+
+        public void CheckWeaponEffect(LiveMonster src, int symbol)
+        {
+            WeaponConfig weaponConfig = ConfigData.GetWeaponConfig(CardId);
+
+            src.Atk += avatar.Atk * symbol;
+            src.MaxHp += avatar.Hp * symbol;
+            if (symbol > 0 && avatar.Hp > 0)//加buff时候
+            {
+                src.AddHp(avatar.Hp);//顺便把hp也加上
+            }
+
+            src.Def += avatar.Def * symbol;
+            src.Mag += avatar.Mag * symbol;
+            src.Hit += avatar.Hit * symbol;
+            src.Dhit += avatar.Dhit * symbol;
+            src.Crt += avatar.Crt * symbol;
+            src.Spd += avatar.Spd * symbol;
+            src.Luk += avatar.Luk * symbol;
+
+            if (weaponConfig.Type == (int)CardTypeSub.Scroll)
+            {
+                if (symbol == 1)
+                {
+                    src.AttackType = weaponConfig.Attr;
+                }
+                else
+                {
+                    src.AttackType = (int)CardElements.None;
+                }
+
+            }
+            if (weaponConfig.SkillId != 0)
+            {
+                if (symbol == 1)
+                {
+                    src.SkillManager.AddSkill(weaponConfig.SkillId, Level, weaponConfig.Percent, SkillSourceTypes.Weapon);
+                }
+                else
+                {
+                    src.SkillManager.RemoveSkill(weaponConfig.SkillId);
+                }
+            }
+        }
+
+        public string Des
+        {
+            get
+            {
+                return string.Format("{0}({1}/{2})", avatar.WeaponConfig.Name,
+                    Life, avatar.Dura);
+            }
         }
     }
 }

@@ -99,13 +99,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                     tipData.AddText(tp, "White");
                 }
             }
-            if (liveMonster.TWeapon.CardId > 0)
+            if (liveMonster.Weapon != null)
             {
-                tipData.AddImageNewLine(liveMonster.TWeapon.GetImage(16, 16));
-
-                string tp = string.Format("{0}({1}/{2})", liveMonster.TWeapon.Avatar.WeaponConfig.Name, liveMonster.TWeapon.Life, liveMonster.TWeapon.Avatar.Dura);
+                tipData.AddImageNewLine(liveMonster.Weapon.GetImage(16, 16));
                 //todo weapon效果没有
-                tipData.AddText(tp, "White");
+                tipData.AddText(liveMonster.Weapon.Des, "White");
             }
 
             if (!liveMonster.IsGhost)//鬼不显示buff

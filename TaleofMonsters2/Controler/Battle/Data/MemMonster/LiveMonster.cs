@@ -11,7 +11,6 @@ using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType.CardPieces;
 using TaleofMonsters.DataType.Cards.Monsters;
-using TaleofMonsters.DataType.Cards.Weapons;
 using TaleofMonsters.DataType.Equips.Addons;
 using TaleofMonsters.DataType.Skills;
 using TaleofMonsters.DataType.User;
@@ -20,6 +19,7 @@ using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Decks;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 {
@@ -51,7 +51,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public IMap Map { get { return BattleManager.Instance.MemMap; } }
         public bool IsLeft { get; set; }
         public int Action { get; set; }
-        public TrueWeapon TWeapon { get; set; }
+        public IBattleWeapon Weapon { get; set; }
         
         public int AttackType { get; set; }//只有武器可以改变，技能不行
         public AttrModifyData Atk { get; set; }
@@ -177,9 +177,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             get
             {
-                if (TWeapon.CardId==0 || TWeapon.Avatar.WeaponConfig.Arrow == "null")
+                if (Weapon == null || Weapon.Arrow == "null")
                     return Avatar.MonsterConfig.Arrow;
-                return TWeapon.Avatar.WeaponConfig.Arrow;
+                return Weapon.Arrow;
             }
         }
 
@@ -187,9 +187,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             get
             {
-                if (TWeapon.CardId == 0 || TWeapon.Avatar.Range == 0)
+                if (Weapon == null || Weapon.Range == 0)
                     return Avatar.Range;
-                return TWeapon.Avatar.Range;
+                return Weapon.Range;
             }
         }
 
@@ -197,9 +197,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             get
             {
-                if (TWeapon.CardId == 0 || TWeapon.Avatar.Mov == 0)
+                if (Weapon == null || Weapon.Mov == 0)
                     return Avatar.Mov;
-                return TWeapon.Avatar.Mov;
+                return Weapon.Mov;
             }
         }
 
@@ -240,7 +240,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             Action = 0;
             roundPast = 0;
             SkillManager = new SkillManager(this);
-            TWeapon = new TrueWeapon();
             AttackType = (int)CardElements.None;
             CanAttack = true;
             
@@ -287,11 +286,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 SkillAssistant.CheckHitEffectAfter(src, this, damage);
                 if (src.WeaponId > 0)
                 {
-                    src.TWeapon.OnHit();
+                    src.Weapon.OnHit();
                 }
                 if (WeaponId > 0)
                 {
-                    TWeapon.OnHited();
+                    Weapon.OnHited();
                 }
                 if (damage.Value > 0)
                 {
@@ -415,7 +414,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             return !Avatar.MonsterConfig.IsBuilding && !IsGhost;
         }
         
-        public void AddWeapon(TrueWeapon tw)
+        public void AddWeapon(IBattleWeapon tw)
         {
             if (Avatar.MonsterConfig.IsBuilding)
             {
@@ -423,17 +422,20 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 return;
             }
 
-            if (TWeapon.CardId > 0)
-                WeaponAssistant.CheckWeaponEffect(this, TWeapon, -1);
-            TWeapon = tw;
-            EAddonBook.UpdateWeaponData(TWeapon, OwnerPlayer.State.Weaponskills.Keys(), OwnerPlayer.State.Weaponskills.Values());
-            WeaponAssistant.CheckWeaponEffect(this, TWeapon, 1);
+            if (Weapon != null)
+                Weapon.CheckWeaponEffect(this, -1);
+            Weapon = tw;
+            //  EAddonBook.UpdateWeaponData(Weapon, OwnerPlayer.State.Weaponskills.Keys(), OwnerPlayer.State.Weaponskills.Values());
+            Weapon.CheckWeaponEffect(this, 1);
         }
 
         public void DeleteWeapon()
         {
-            WeaponAssistant.CheckWeaponEffect(this, TWeapon, -1);
-            TWeapon = new TrueWeapon();
+            if (Weapon != null)
+            {
+                Weapon.CheckWeaponEffect(this, -1);
+                Weapon = null;
+            }
         }
 
         private void CheckDamageBuffEffect(LiveMonster src, HitDamage dam)
@@ -519,9 +521,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 font2.Dispose();
                 fontLevel.Dispose();
 
-                if (TWeapon.CardId > 0)
+                if (Weapon != null)
                 {
-                    g.DrawImage(TWeapon.GetImage(32, 32), 5, 60, 32, 32);
+                    g.DrawImage(Weapon.GetImage(32, 32), 5, 60, 32, 32);
                     g.DrawRectangle(Pens.Lime, 5, 60, 32, 32);
                 }
                 BuffManager.DrawBuff(g, roundPast / 20);
@@ -551,7 +553,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public int WeaponId
         {
-            get { return TWeapon.CardId; }
+            get { return Weapon == null ? 0 : Weapon.CardId; }
         }
 
         public void AddHp(double addon)
@@ -600,12 +602,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             if (IsHero)
             {
-                NarlonLib.Log.NLog.Warn("hero cannot be Transform");
+                NLog.Warn("hero cannot be Transform");
                 return;
             }
 
-            int cardId = TWeapon.CardId;
-            var savedWeapon = TWeapon.GetCopy();
+            int cardId = Weapon.CardId;
+            var savedWeapon = Weapon.GetCopy();
             DeleteWeapon();
             int lifp = Life * 100 / Avatar.Hp;
             MonsterCoverBox.RemoveAllCover();
@@ -634,7 +636,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             var monster = target as LiveMonster;
             if (monster != null)
             {
-                var weapon = monster.TWeapon;
+                var weapon = monster.Weapon;
                 AddWeapon(weapon);
                 target.BreakWeapon();
             }
@@ -642,15 +644,15 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void BreakWeapon()
         {
-            if (TWeapon.CardId > 0)
+            if (Weapon != null)
                 DeleteWeapon();
         }
 
         public void WeaponReturn(int type)
         {
-            if (TWeapon.Avatar.WeaponConfig.Type == type)
+            if ((int)Weapon.Type == type)
             {
-                ActiveCard card = new ActiveCard(TWeapon.Card);
+                ActiveCard card = new ActiveCard(new DeckCard(Weapon.CardId, (byte)Weapon.Level, 0));
                 OwnerPlayer.CardManager.AddCard(card);
                 DeleteWeapon();
             }
@@ -720,11 +722,13 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             get { return BattleManager.Instance.IsNight; }
         }
 
-        public bool HasScroll {
-            get {
-                if (WeaponId != 0)
+        public bool HasScroll
+        {
+            get
+            {
+                if (Weapon != null)
                 {
-                    return TWeapon.Avatar.WeaponConfig.Type == (int)CardTypeSub.Scroll;
+                    return Weapon.Type == CardTypeSub.Scroll;
                 }
                 return false;
             }

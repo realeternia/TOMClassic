@@ -93,6 +93,7 @@
     <Compile Include="Controler\Battle\Data\MemMonster\LiveMonsterToolTip.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\Component\MonsterAi.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\Component\MonsterCoverBox.cs" />
+    <Compile Include="Controler\Battle\Data\MemWeapon\IBattleWeapon.cs" />
     <Compile Include="Controler\Battle\Data\Players\Frag\Spike.cs" />
     <Compile Include="Controler\Battle\Data\Players\Frag\SpikeManager.cs" />
     <Compile Include="Controler\Battle\Tool\BattleManager.cs" />
@@ -950,7 +951,6 @@
     <Compile Include="DataType\User\UserProfile.cs" />
     <Compile Include="Controler\Battle\Data\MemWeapon\TrueWeapon.cs" />
     <Compile Include="DataType\Cards\Weapons\WeaponBook.cs" />
-    <Compile Include="Controler\Battle\Data\MemWeapon\WeaponAssistant.cs" />
     <Compile Include="Forms\DeckViewForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
