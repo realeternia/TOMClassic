@@ -3,12 +3,11 @@ using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
-using TaleofMonsters.Controler.Battle.Data.MemSpell;
-using TaleofMonsters.Controler.Battle.DataTent;
 using TaleofMonsters.Controler.Battle.Tool;
+using TaleofMonsters.DataType.Cards.Spells;
 using TaleofMonsters.DataType.Effects;
 
-namespace TaleofMonsters.DataType.Cards.Spells
+namespace TaleofMonsters.Controler.Battle.Data.MemSpell
 {
     static class SpellAssistant
     {

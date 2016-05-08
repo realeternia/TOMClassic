@@ -17,6 +17,7 @@ using TaleofMonsters.DataType.Skills;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Core;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
+using TaleofMonsters.Controler.Battle.Data.MemWeapon;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType;
 

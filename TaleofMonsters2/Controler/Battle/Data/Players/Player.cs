@@ -14,6 +14,7 @@ using System.Drawing;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Controler.Battle.Data.MemSpell;
 using NarlonLib.Log;
+using TaleofMonsters.Controler.Battle.Data.MemWeapon;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards.Spells;
 using TaleofMonsters.DataType.Cards.Weapons;

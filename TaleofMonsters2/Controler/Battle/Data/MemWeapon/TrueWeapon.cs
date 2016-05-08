@@ -1,10 +1,12 @@
 ﻿using System.Drawing;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
-using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Tool;
+using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Cards.Weapons;
+using TaleofMonsters.DataType.Decks;
 
-namespace TaleofMonsters.DataType.Cards.Weapons
+namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
 {
     internal class TrueWeapon
     {

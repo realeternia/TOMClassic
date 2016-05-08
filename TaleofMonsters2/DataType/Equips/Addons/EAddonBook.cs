@@ -1,5 +1,6 @@
 ﻿using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
+using TaleofMonsters.Controler.Battle.Data.MemWeapon;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType.Cards.Weapons;
 

@@ -1,7 +1,8 @@
-﻿using TaleofMonsters.Controler.Battle.Data.MemMonster;
-using ConfigDatas;
+﻿using ConfigDatas;
+using TaleofMonsters.Controler.Battle.Data.MemMonster;
+using TaleofMonsters.DataType;
 
-namespace TaleofMonsters.DataType.Cards.Weapons
+namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
 {
     internal static class WeaponAssistant
     {

@@ -926,7 +926,7 @@
     <Compile Include="DataType\Buffs\BuffBook.cs" />
     <Compile Include="DataType\Cards\Spells\Spell.cs" />
     <Compile Include="DataType\Cards\Spells\SpellBook.cs" />
-    <Compile Include="DataType\Cards\Spells\SpellAssistant.cs" />
+    <Compile Include="Controler\Battle\Data\MemSpell\SpellAssistant.cs" />
     <Compile Include="Forms\NpcTalkForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -948,9 +948,9 @@
       <DependentUpon>TimeViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="DataType\User\UserProfile.cs" />
-    <Compile Include="DataType\Cards\Weapons\TrueWeapon.cs" />
+    <Compile Include="Controler\Battle\Data\MemWeapon\TrueWeapon.cs" />
     <Compile Include="DataType\Cards\Weapons\WeaponBook.cs" />
-    <Compile Include="DataType\Cards\Weapons\WeaponAssistant.cs" />
+    <Compile Include="Controler\Battle\Data\MemWeapon\WeaponAssistant.cs" />
     <Compile Include="Forms\DeckViewForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
