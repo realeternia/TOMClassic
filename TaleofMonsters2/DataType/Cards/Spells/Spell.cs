@@ -21,6 +21,10 @@ namespace TaleofMonsters.DataType.Cards.Spells
         public double Help { get; set; }
         public double Rate { get; set; }//100表示100%
 
+        public int Attr {
+            get { return SpellConfig.Attr; }
+        }
+
         public double Addon { get; set; }//法术强化造成的效果
 
         public Spell(int sid)

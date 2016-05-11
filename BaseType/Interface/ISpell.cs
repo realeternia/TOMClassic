@@ -8,6 +8,7 @@ namespace ConfigDatas
     {
         int Id { get; }
         int Level { get; }
+        int Attr { get; }
 
         int Damage { get;  }
         int Cure { get;  }
