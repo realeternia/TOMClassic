@@ -50,8 +50,8 @@ namespace ConfigDatas
         int AttackType { get; }
         bool HasSkill(int sid);
         void ForgetSkill();
-        int Attr { get; }
-        int Type { get; } //分类
+        int Attr { get; } //属性
+        int Type { get; } //种族
 
         int SkillParm{get;set;}
  		

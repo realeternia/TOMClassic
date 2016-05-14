@@ -43,6 +43,11 @@ namespace ConfigDatas
             monsterList.RemoveAll(mon => mon.Type != type);
             return this;
         }
+        public MonsterCollection FilterAttr(int attr)
+        {
+            monsterList.RemoveAll(mon => mon.Attr != attr);
+            return this;
+        }
 
         public MonsterCollection FilterStar(int minLv, int maxLv)
         {

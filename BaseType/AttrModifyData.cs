@@ -13,28 +13,39 @@ namespace ConfigDatas
             Source = sourceValue;
         }
 
+        public AttrModifyData(AttrModifyData sourceValue)
+        {
+            Source = sourceValue.Source;
+            Adder = sourceValue.Adder;
+            Multiter = sourceValue.Multiter;
+        }
+
         public static AttrModifyData operator +(AttrModifyData data, double value)
         {
-            data.Adder += (float)value;
-            return data;
+            var rt = new AttrModifyData(data);
+            rt.Adder += (float)value;
+            return rt;
         }
 
         public static AttrModifyData operator -(AttrModifyData data, double value)
         {
-            data.Adder -= (float)value;
-            return data;
+            var rt = new AttrModifyData(data);
+            rt.Adder -= (float)value;
+            return rt;
         }
 
         public static AttrModifyData operator *(AttrModifyData data, double value)
         {
-            data.Multiter += (float)value;
-            return data;
+            var rt = new AttrModifyData(data);
+            rt.Multiter += (float)value;
+            return rt;
         }
 
         public static AttrModifyData operator /(AttrModifyData data, double value)
         {
-            data.Multiter -= (float)value;
-            return data;
+            var rt = new AttrModifyData(data);
+            rt.Multiter -= (float)value;
+            return rt;
         }
 
         public static bool operator <(AttrModifyData x, AttrModifyData y)
