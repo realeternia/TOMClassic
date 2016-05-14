@@ -868,6 +868,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
         }
 
+        public void MadDrug()
+        {
+            if (!Avatar.MonsterConfig.IsBuilding && RealRange > 0)
+            {
+                Atk.Source = MaxHp.Source/5;
+            }
+        }
+
         #endregion
     }
 }

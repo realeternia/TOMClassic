@@ -69,5 +69,6 @@ namespace ConfigDatas
         void AddMaxHp(double val);
 
         void Summon(int type, int id);
+        void MadDrug(); //½»»»¹¥»÷ºÍÑªÁ¿
     }
 }
