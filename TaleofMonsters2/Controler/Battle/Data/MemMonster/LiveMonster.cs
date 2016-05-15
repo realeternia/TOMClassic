@@ -606,8 +606,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 return;
             }
 
-            int cardId = Weapon.CardId;
-            var savedWeapon = Weapon.GetCopy();
+            int cardId = Weapon == null ? 0 : Weapon.CardId;
+            var savedWeapon = Weapon == null ? null : Weapon.GetCopy();
             DeleteWeapon();
             int lifp = Life * 100 / Avatar.Hp;
             MonsterCoverBox.RemoveAllCover();

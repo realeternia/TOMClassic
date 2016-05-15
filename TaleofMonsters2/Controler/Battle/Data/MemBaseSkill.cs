@@ -155,14 +155,19 @@ namespace TaleofMonsters.Controler.Battle.Data
 
         public bool CheckSpecial(float pastRound)
         {
-            if (SkillInfo.SkillConfig.CheckSpecial != null && CheckRate())
+            if (SkillInfo.SkillConfig.CheckSpecial != null)
             {
-                if (SkillInfo.SkillConfig.CanBurst!=null&& !SkillInfo.SkillConfig.CanBurst(Self, null, true))
+                lastCastRound += pastRound;
+                if (CheckRate())
                 {
                     return false;
                 }
 
-                lastCastRound += pastRound;
+                if (SkillInfo.SkillConfig.CanBurst!=null&& !SkillInfo.SkillConfig.CanBurst(Self, null, true))
+                {
+                    return false;
+                }
+             
                 if (lastCastRound < SkillInfo.SkillConfig.SpecialCd)
                 {//in cd 
                     return false;
