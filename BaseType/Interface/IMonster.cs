@@ -26,7 +26,7 @@ namespace ConfigDatas
         void AddActionRate(double value);
         void StealWeapon(IMonster target);
         void BreakWeapon();
-        void WeaponReturn(int type);
+        void WeaponReturn();
         void AddRandSkill();
         int GetMonsterCountByRace(int rid);
         int GetMonsterCountByType(int type);
@@ -63,7 +63,7 @@ namespace ConfigDatas
         void ExtendDebuff(double count);
         bool HasBuff(int id);
         void SetToPosition(string type);
-        void OnMagicDamage(int damage, int element);
+        void OnMagicDamage(double damage, int element);
         void SuddenDeath();
         void Rebel();//‘Ï∑¥
         void AddMaxHp(double val);

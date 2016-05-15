@@ -139,7 +139,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         {
             foreach (var memMapPoint in Cells)
             {
-                if (BattleLocationManager.IsPointInRegionType(RegionTypes.Circle, point.X, point.Y, memMapPoint.ToPoint(), dis))
+                if (BattleLocationManager.IsPointInRegionType(RegionTypes.Circle, point.X, point.Y, memMapPoint.ToPoint(), dis, true))//地形和方向无关，随便填一个
                 {
                     memMapPoint.Tile = tile;
                 }
@@ -226,7 +226,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                 if ((BattleTargetManager.IsSpellEnemyMonster(target[0]) && isLeft != mon.Owner.IsLeft) || (BattleTargetManager.IsSpellFriendMonster(target[0]) && isLeft == mon.Owner.IsLeft))
                 {
                   
-                    if (!BattleLocationManager.IsPointInRegionType(rt, mouse.X, mouse.Y, mon.Position, range))
+                    if (!BattleLocationManager.IsPointInRegionType(rt, mouse.X, mouse.Y, mon.Position, range, isLeft))
                         continue;
 
                     monsters.Add(mon);

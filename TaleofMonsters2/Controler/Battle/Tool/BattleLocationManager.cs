@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using System.Drawing;
@@ -207,7 +208,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
             return false;
         }
 
-        public static bool IsPointInRegionType(RegionTypes type, int mouseX, int mouseY, Point pos, int range)
+        public static bool IsPointInRegionType(RegionTypes type, int mouseX, int mouseY, Point pos, int range, bool forleft)
         {
             if (type == RegionTypes.None)
                 return false;
@@ -226,14 +227,6 @@ namespace TaleofMonsters.Controler.Battle.Tool
                 if (!((mousePoint.X == pos.X && Math.Abs(mousePoint.Y - pos.Y) <= range * size / 10) || (mousePoint.Y == pos.Y && Math.Abs(mousePoint.X - pos.X) <= range * size / 10)))
                     return false;
             }
-            else if (type == RegionTypes.XCross)
-            {
-                if (MathTool.GetDistance(mousePoint.X + size / 2, mousePoint.Y + size / 2, targetX, targetY) > range * size / 10)
-                    return false;
-
-                if (Math.Abs(mousePoint.X - pos.X) != Math.Abs(mousePoint.Y - pos.Y))
-                    return false;
-            }
             else if (type == RegionTypes.Grid)
             {
                 if (mousePoint.Y != pos.Y || mousePoint.X != pos.X)
@@ -244,24 +237,24 @@ namespace TaleofMonsters.Controler.Battle.Tool
                 if (mousePoint.Y != pos.Y || Math.Abs(mousePoint.X - pos.X) > range * size / 10)
                     return false;
             }
-            else if (type == RegionTypes.RowHalf)
+            else if (type == RegionTypes.RowForward)
             {
-                if (mousePoint.Y != pos.Y || (!mousePoint.IsLeft && pos.X <= size * 4) || (mousePoint.IsLeft && pos.X >= size * 4))
+                if (mousePoint.Y != pos.Y )
                     return false;
+                if (forleft)
+                {
+                    if (pos.X - mousePoint.X > range * size / 10 || pos.X <= mousePoint.X)
+                        return false;
+                }
+                else
+                {
+                    if (mousePoint.X  - pos.X > range * size / 10 || pos.X >= mousePoint.X)
+                        return false;
+                }
             }
             else if (type == RegionTypes.Column)
             {
                 if (mousePoint.X != pos.X || Math.Abs(mousePoint.Y - pos.Y) > range * size / 10)
-                    return false;
-            }
-            else if (type == RegionTypes.AllHalf)
-            {
-                if ((!mousePoint.IsLeft && pos.X <= size * 4) || (mousePoint.IsLeft && pos.X >= size * 4))
-                    return false;
-            }
-            else if (type == RegionTypes.AllHalfOther)
-            {
-                if ((!mousePoint.IsLeft && pos.X >= size * 4) || (mousePoint.IsLeft && pos.X <= size * 4))
                     return false;
             }
             return true;

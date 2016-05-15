@@ -648,9 +648,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 DeleteWeapon();
         }
 
-        public void WeaponReturn(int type)
+        public void WeaponReturn()
         {
-            if ((int)Weapon.Type == type)
+            if (Weapon != null && Weapon is TrueWeapon)
             {
                 ActiveCard card = new ActiveCard(new DeckCard(Weapon.CardId, (byte)Weapon.Level, 0));
                 OwnerPlayer.CardManager.AddCard(card);
@@ -793,9 +793,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
         }
 
-        public void OnMagicDamage(int damage, int element)
+        public void OnMagicDamage(double damage, int element)
         {
-            Life -= SkillAssistant.GetMagicDamage(this, new HitDamage(damage, damage, element, DamageTypes.Magic));
+            Life -= SkillAssistant.GetMagicDamage(this, new HitDamage((int)damage, (int)damage, element, DamageTypes.Magic));
         }
 
         public void SuddenDeath()

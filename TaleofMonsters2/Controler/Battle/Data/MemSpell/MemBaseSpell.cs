@@ -47,7 +47,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemSpell
                     foreach (var memMapPoint in BattleManager.Instance.MemMap.Cells)
                     {
                         var pointData = memMapPoint.ToPoint();
-                        if (BattleLocationManager.IsPointInRegionType(rt, mouse.X, mouse.Y, pointData, spellInfo.SpellConfig.Range))
+                        if (BattleLocationManager.IsPointInRegionType(rt, mouse.X, mouse.Y, pointData, spellInfo.SpellConfig.Range, isLeft))
                         {
                             var effectData = new ActiveEffect(EffectBook.GetEffect(spellInfo.SpellConfig.AreaEffect), pointData + new Size(cardSize / 2, cardSize / 2), false);
                             BattleManager.Instance.EffectQueue.Add(effectData);

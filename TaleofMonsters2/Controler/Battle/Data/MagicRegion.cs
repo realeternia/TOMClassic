@@ -55,7 +55,7 @@ namespace TaleofMonsters.Controler.Battle.Data
             if (color == Color.Green && !lm.IsLeft)
                 return Color.White;
 
-            if (!BattleLocationManager.IsPointInRegionType(Type, mouseX, mouseY, lm.Position, range))
+            if (!BattleLocationManager.IsPointInRegionType(Type, mouseX, mouseY, lm.Position, range, true)) //magicregion永远为leftplayer服务
             {
                 return Color.White;
             }
@@ -73,7 +73,7 @@ namespace TaleofMonsters.Controler.Battle.Data
 
             foreach (MemMapPoint memMapPoint in BattleManager.Instance.MemMap.Cells)
             {
-                if (BattleLocationManager.IsPointInRegionType(Type, mouseX, mouseY, memMapPoint.ToPoint(), range))
+                if (BattleLocationManager.IsPointInRegionType(Type, mouseX, mouseY, memMapPoint.ToPoint(), range, true))//magicregion永远为leftplayer服务
                 {
                     g.FillRectangle(fillBrush, memMapPoint.X + roundoff, memMapPoint.Y + roundoff, size - roundoff * 2, size - roundoff * 2);
                     g.DrawRectangle(borderPen, memMapPoint.X + roundoff, memMapPoint.Y + roundoff, size - roundoff * 2, size - roundoff * 2);

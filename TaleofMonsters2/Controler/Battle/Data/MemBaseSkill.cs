@@ -210,7 +210,7 @@ namespace TaleofMonsters.Controler.Battle.Data
             foreach (var memMapPoint in BattleManager.Instance.MemMap.Cells)
             {
                 var pointData = memMapPoint.ToPoint();
-                if (BattleLocationManager.IsPointInRegionType(rt, pos.X, pos.Y, pointData, SkillInfo.SkillConfig.Range))
+                if (BattleLocationManager.IsPointInRegionType(rt, pos.X, pos.Y, pointData, SkillInfo.SkillConfig.Range, Self.IsLeft))
                 {
                     var effectData = new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.EffectArea), pointData + new Size(cardSize / 2, cardSize / 2), false);
                     BattleManager.Instance.EffectQueue.Add(effectData);

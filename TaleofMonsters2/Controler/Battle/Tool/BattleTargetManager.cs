@@ -58,17 +58,14 @@ namespace TaleofMonsters.Controler.Battle.Tool
         {
             switch (tp)
             {
-                case 'H': return RegionTypes.RowHalf;
+                case 'F': return RegionTypes.RowForward;
                 case 'W': return RegionTypes.Row;
                 case 'C':return RegionTypes.Column;
                 case 'R':return RegionTypes.Circle;
                 case 'V':return RegionTypes.Cross;
-                case 'X':return RegionTypes.XCross;
                 case 'G':return RegionTypes.Grid;
                 case 'S': return RegionTypes.Grid;
                 case 'A':return RegionTypes.All;
-                case 'O': return RegionTypes.AllHalfOther;
-                case 'L': return RegionTypes.AllHalf;
                 default:return RegionTypes.None;
             }
         }

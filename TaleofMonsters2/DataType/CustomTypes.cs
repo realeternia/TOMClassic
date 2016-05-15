@@ -142,15 +142,12 @@
     {
         None = 0,
         Row = 1,
-        RowHalf = 2, //对面一半
+        RowForward = 2, //本行前方
         Column = 3,
         Circle = 4,
         Cross = 5,
-        XCross = 6,
         Grid = 7,
         All = 9,
-        AllHalf = 10,
-        AllHalfOther = 11,
     };
 
     internal enum GameResourceType
