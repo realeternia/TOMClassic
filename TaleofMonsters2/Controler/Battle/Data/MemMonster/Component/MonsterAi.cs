@@ -96,7 +96,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         {
             if (monster.RealRange <= GameConstants.MaxMeleeAtkRange)
             {
-                monster.HitTarget(nearestEnemy); //近战
+                monster.HitTarget(nearestEnemy, true); //近战
                 BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(monster.Arrow), nearestEnemy, false));
             }
             else

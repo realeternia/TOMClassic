@@ -2,7 +2,6 @@ using System;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Buffs;
 using ConfigDatas;
 using TaleofMonsters.DataType.Cards.Monsters;
 
@@ -10,10 +9,10 @@ namespace TaleofMonsters.DataType.Skills
 {
     static class SkillAssistant
     {
-        public static void CheckBurst(LiveMonster src, LiveMonster dest)
+        public static void CheckBurst(LiveMonster src, LiveMonster dest, bool isMelee)
         {
-            src.SkillManager.CheckBurst(src, dest);
-            dest.SkillManager.CheckBurst(src, dest);
+            src.SkillManager.CheckBurst(src, dest, isMelee);
+            dest.SkillManager.CheckBurst(src, dest, isMelee);
         }
 
         public static int GetHit(LiveMonster src, LiveMonster dest)

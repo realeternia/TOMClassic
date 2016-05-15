@@ -139,11 +139,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         /// </summary>
         /// <param name="src">攻击者</param>
         /// <param name="dest">受击者</param>
-        public void CheckBurst(LiveMonster src, LiveMonster dest)
+        /// <param name="isMelee">是否是近战攻击（否则远程）</param>
+        public void CheckBurst(LiveMonster src, LiveMonster dest, bool isMelee)
         {
             foreach (MemBaseSkill skill in Skills.ToArray())
             {
-                skill.CheckBurst(src, dest);
+                skill.CheckBurst(src, dest, isMelee);
             }
         }
 

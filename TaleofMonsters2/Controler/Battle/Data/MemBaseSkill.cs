@@ -60,7 +60,7 @@ namespace TaleofMonsters.Controler.Battle.Data
             return Percent > MathTool.GetRandom(100);
         }
 
-        public void CheckBurst(LiveMonster src, LiveMonster dest)
+        public void CheckBurst(LiveMonster src, LiveMonster dest, bool isMelee)
         {
             var isActive = src == Self;
             if (isActive && SkillInfo.SkillConfig.Active == SkillActiveType.Passive)
@@ -73,7 +73,7 @@ namespace TaleofMonsters.Controler.Battle.Data
             }
 
             BurstStage isBurst = CheckRate() ? BurstStage.Pass : BurstStage.Fail;
-            if (SkillInfo.SkillConfig.CanBurst != null && !SkillInfo.SkillConfig.CanBurst(src, dest, isActive))
+            if (SkillInfo.SkillConfig.CanBurst != null && !SkillInfo.SkillConfig.CanBurst(src, dest, isMelee))
             {
                 isBurst = BurstStage.Fail;
             }

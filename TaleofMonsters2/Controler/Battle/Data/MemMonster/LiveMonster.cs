@@ -390,11 +390,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             return false;
         }
 
-        public void HitTarget(LiveMonster target)
+        public void HitTarget(LiveMonster target, bool isMelee)
         {
             if (target != null)
             {
-                SkillAssistant.CheckBurst(this, target);
+                SkillAssistant.CheckBurst(this, target, isMelee);
                 bool isMiss = !target.BeHited(this);
                 if (isMiss)
                     BattleManager.Instance.FlowWordQueue.Add(new FlowWord("Miss!", new Point(Position.X + 40, Position.Y + 40), 0, "red", -10, 0), false);

@@ -66,7 +66,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
 
             if (!FlyProc(target.Position,ref position, ref angle))
             {
-                parent.HitTarget(target);
+                parent.HitTarget(target, false);
                 BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(parent.Arrow), target, false));
                 return false;
             }
@@ -97,7 +97,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
                 var mon = BattleLocationManager.GetPlaceMonster(targetPos.X, targetPos.Y);
                 if (mon != null)
                 {
-                    parent.HitTarget(mon);
+                    parent.HitTarget(mon, false);
                     BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(parent.Arrow), mon, false));
                 }
                 return false;

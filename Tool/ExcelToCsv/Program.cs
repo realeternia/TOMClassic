@@ -240,7 +240,7 @@ namespace ExcelToCsv
                     result = datas[i].ToString() == ""
                                   ? "null"
                                   : string.Format(
-                                      "delegate(IMonster s,IMonster d,bool isActive){{if({0})return true;return false;}}",
+                                      "delegate(IMonster s,IMonster d,bool isMelee){{if({0})return true;return false;}}",
                                       datas[i]);
                 }
                 else if (typeStr == "SkillTimelyEffectDelegate")
