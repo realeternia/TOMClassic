@@ -53,8 +53,6 @@ namespace ConfigDatas
         int Attr { get; } //属性
         int Type { get; } //种族
 
-        int SkillParm{get;set;}
- 		
         bool IsNight{get;}
         bool HasScroll { get; }//是否拿着卷轴
         int CardNumber{get;} 	

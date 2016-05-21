@@ -755,8 +755,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public int Type { get { return Avatar.MonsterConfig.Type; } }
 
-        public int SkillParm { get; set; }
-
         public LiveMonsterToolTip LiveMonsterToolTip { get; private set; }
 
         public MonsterCoverBox MonsterCoverBox { get; private set; }
