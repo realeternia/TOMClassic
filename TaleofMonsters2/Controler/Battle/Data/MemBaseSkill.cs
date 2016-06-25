@@ -158,7 +158,7 @@ namespace TaleofMonsters.Controler.Battle.Data
             if (SkillInfo.SkillConfig.CheckSpecial != null)
             {
                 lastCastRound += pastRound;
-                if (CheckRate())
+                if (!CheckRate())
                 {
                     return false;
                 }
