@@ -31,51 +31,77 @@ namespace TaleofMonsters.Config
     {
         private static Dictionary<int, CardConfigData> cardConfigDataDict = null;
 
-        public static CardConfigData GetCardConfig(int id)
+        public static int MonsterTotal { get; set; }
+        public static int MonsterAvail { get; set; }
+        public static int WeaponTotal { get; set; }
+        public static int WeaponAvail { get; set; }
+        public static int SpellTotal { get; set; }
+        public static int SpellAvail { get; set; }
+
+        static CardConfigManager()
         {
-            if (cardConfigDataDict == null)
+            cardConfigDataDict = new Dictionary<int, CardConfigData>();
+            foreach (MonsterConfig monsterConfig in ConfigDatas.ConfigData.MonsterDict.Values)
             {
-                cardConfigDataDict = new Dictionary<int, CardConfigData>();
-                foreach (MonsterConfig monsterConfig in ConfigDatas.ConfigData.MonsterDict.Values)
+                CardConfigData card = new CardConfigData();
+                card.Id = monsterConfig.Id;
+                card.Type = CardTypes.Monster;
+                card.TypeSub = monsterConfig.Type;
+                card.Attr = monsterConfig.Attr;
+                card.Cost = monsterConfig.Cost;
+                card.Star = monsterConfig.Star;
+                card.Name = monsterConfig.Name;
+                card.Quality = monsterConfig.Quality;
+                cardConfigDataDict.Add(monsterConfig.Id, card);
+
+                MonsterTotal++;
+                if (monsterConfig.Remark != "未完成")
                 {
-                    CardConfigData card = new CardConfigData();
-                    card.Id = monsterConfig.Id;
-                    card.Type = CardTypes.Monster;
-                    card.TypeSub = monsterConfig.Type;
-                    card.Attr = monsterConfig.Attr;
-                    card.Cost = monsterConfig.Cost;
-                    card.Star = monsterConfig.Star;
-                    card.Name = monsterConfig.Name;
-                    card.Quality = monsterConfig.Quality;
-                    cardConfigDataDict.Add(monsterConfig.Id, card);
-                }
-                foreach (WeaponConfig weaponConfig in ConfigDatas.ConfigData.WeaponDict.Values)
-                {
-                    CardConfigData card = new CardConfigData();
-                    card.Id = weaponConfig.Id;
-                    card.Type = CardTypes.Weapon;
-                    card.TypeSub = weaponConfig.Type;
-                    card.Attr = weaponConfig.Attr;
-                    card.Cost = weaponConfig.Cost;
-                    card.Star = weaponConfig.Star;
-                    card.Name = weaponConfig.Name;
-                    card.Quality = weaponConfig.Quality;
-                    cardConfigDataDict.Add(weaponConfig.Id, card);
-                }
-                foreach (SpellConfig spellConfig in ConfigDatas.ConfigData.SpellDict.Values)
-                {
-                    CardConfigData card = new CardConfigData();
-                    card.Id = spellConfig.Id;
-                    card.Type = CardTypes.Spell;
-                    card.TypeSub = spellConfig.Type;
-                    card.Attr = spellConfig.Attr;
-                    card.Cost = spellConfig.Cost;
-                    card.Star = spellConfig.Star;
-                    card.Name = spellConfig.Name;
-                    card.Quality = spellConfig.Quality;
-                    cardConfigDataDict.Add(spellConfig.Id, card);
+                    MonsterAvail++;
                 }
             }
+            foreach (WeaponConfig weaponConfig in ConfigDatas.ConfigData.WeaponDict.Values)
+            {
+                CardConfigData card = new CardConfigData();
+                card.Id = weaponConfig.Id;
+                card.Type = CardTypes.Weapon;
+                card.TypeSub = weaponConfig.Type;
+                card.Attr = weaponConfig.Attr;
+                card.Cost = weaponConfig.Cost;
+                card.Star = weaponConfig.Star;
+                card.Name = weaponConfig.Name;
+                card.Quality = weaponConfig.Quality;
+                cardConfigDataDict.Add(weaponConfig.Id, card);
+
+                WeaponTotal++;
+                if (weaponConfig.Remark != "未完成")
+                {
+                    WeaponAvail++;
+                }
+            }
+            foreach (SpellConfig spellConfig in ConfigDatas.ConfigData.SpellDict.Values)
+            {
+                CardConfigData card = new CardConfigData();
+                card.Id = spellConfig.Id;
+                card.Type = CardTypes.Spell;
+                card.TypeSub = spellConfig.Type;
+                card.Attr = spellConfig.Attr;
+                card.Cost = spellConfig.Cost;
+                card.Star = spellConfig.Star;
+                card.Name = spellConfig.Name;
+                card.Quality = spellConfig.Quality;
+                cardConfigDataDict.Add(spellConfig.Id, card);
+
+                SpellTotal++;
+                if (!spellConfig.Remark.Contains("未完成"))
+                {
+                    SpellAvail++;
+                }
+            }
+        }
+
+        public static CardConfigData GetCardConfig(int id)
+        {
             CardConfigData outData;
             if (cardConfigDataDict.TryGetValue(id, out outData))
             {

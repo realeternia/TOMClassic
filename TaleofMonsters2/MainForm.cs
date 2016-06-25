@@ -14,6 +14,7 @@ using TaleofMonsters.Forms;
 using TaleofMonsters.MainItem;
 using System.Threading;
 using NarlonLib.Log;
+using TaleofMonsters.Config;
 
 namespace TaleofMonsters
 {
@@ -98,25 +99,6 @@ namespace TaleofMonsters
             }
             page = pg;
             viewStack1.SelectedIndex = page;
-        }
-
-        private void MainForm_Paint(object sender, PaintEventArgs e)
-        {
-            try
-            {
-                Scene.Instance.Paint(e.Graphics, timeMinutes);
-#if DEBUG
-                Font font = new Font("微软雅黑", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-                e.Graphics.DrawString(mouseStr, font, Brushes.White, 10, tabPageGame.Height-60);
-                font.Dispose();
-#endif
-                SystemMenuManager.DrawAll(e.Graphics);
-                MainTipManager.DrawAll(e.Graphics);
-            }
-            catch (Exception err)
-            {
-                NLog.Error(err);
-            }
         }
 
         private void buttonLogin_Click(object sender, EventArgs e)
@@ -319,6 +301,38 @@ namespace TaleofMonsters
                     }
                 }
                 Thread.Sleep(50);
+            }
+        }
+
+        private void tabPageLogin_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.DrawImage(HSIcons.GetIconsByEName("rac5"), 10, tabPageLogin.Height - 160, 20, 20);
+            e.Graphics.DrawImage(HSIcons.GetIconsByEName("hatt1"), 10, tabPageLogin.Height - 135, 20, 20);
+            e.Graphics.DrawImage(HSIcons.GetIconsByEName("spl2"), 10, tabPageLogin.Height - 110, 20, 20);
+
+            Font font = new Font("微软雅黑", 12 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            e.Graphics.DrawString(string.Format("{0} / {1}", CardConfigManager.MonsterAvail, CardConfigManager.MonsterTotal), font, Brushes.White, 35, tabPageLogin.Height - 160);
+            e.Graphics.DrawString(string.Format("{0} / {1}", CardConfigManager.WeaponAvail, CardConfigManager.WeaponTotal), font, Brushes.White, 35, tabPageLogin.Height - 135);
+            e.Graphics.DrawString(string.Format("{0} / {1}", CardConfigManager.SpellAvail, CardConfigManager.SpellTotal), font, Brushes.White, 35, tabPageLogin.Height - 110);
+            font.Dispose();
+        }
+
+        private void MainForm_Paint(object sender, PaintEventArgs e)
+        {
+            try
+            {
+                Scene.Instance.Paint(e.Graphics, timeMinutes);
+#if DEBUG
+                Font font = new Font("微软雅黑", 12 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+                e.Graphics.DrawString(mouseStr, font, Brushes.White, 10, tabPageGame.Height - 60);
+                font.Dispose();
+#endif
+                SystemMenuManager.DrawAll(e.Graphics);
+                MainTipManager.DrawAll(e.Graphics);
+            }
+            catch (Exception err)
+            {
+                NLog.Error(err);
             }
         }
     }

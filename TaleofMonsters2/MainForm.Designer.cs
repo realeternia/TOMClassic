@@ -74,6 +74,7 @@ namespace TaleofMonsters
             this.tabPageLogin.TabIndex = 0;
             this.tabPageLogin.Text = "Login";
             this.tabPageLogin.UseVisualStyleBackColor = true;
+            this.tabPageLogin.Paint += new System.Windows.Forms.PaintEventHandler(this.tabPageLogin_Paint);
             // 
             // bitmapButtonExit
             // 
