@@ -53,11 +53,13 @@ namespace TaleofMonsters.Config
                 card.Name = monsterConfig.Name;
                 card.Quality = monsterConfig.Quality;
                 cardConfigDataDict.Add(monsterConfig.Id, card);
-
-                MonsterTotal++;
-                if (monsterConfig.Remark != "未完成")
+                if (monsterConfig.IsSpecial == 0)
                 {
-                    MonsterAvail++;
+                    MonsterTotal++;
+                    if (monsterConfig.Remark != "未完成")
+                    {
+                        MonsterAvail++;
+                    }
                 }
             }
             foreach (WeaponConfig weaponConfig in ConfigDatas.ConfigData.WeaponDict.Values)
@@ -72,11 +74,13 @@ namespace TaleofMonsters.Config
                 card.Name = weaponConfig.Name;
                 card.Quality = weaponConfig.Quality;
                 cardConfigDataDict.Add(weaponConfig.Id, card);
-
-                WeaponTotal++;
-                if (weaponConfig.Remark != "未完成")
+                if (weaponConfig.IsSpecial == 0)
                 {
-                    WeaponAvail++;
+                    WeaponTotal++;
+                    if (weaponConfig.Remark != "未完成")
+                    {
+                        WeaponAvail++;
+                    }
                 }
             }
             foreach (SpellConfig spellConfig in ConfigDatas.ConfigData.SpellDict.Values)
@@ -91,11 +95,13 @@ namespace TaleofMonsters.Config
                 card.Name = spellConfig.Name;
                 card.Quality = spellConfig.Quality;
                 cardConfigDataDict.Add(spellConfig.Id, card);
-
-                SpellTotal++;
-                if (!spellConfig.Remark.Contains("未完成"))
+                if (spellConfig.IsSpecial == 0)
                 {
-                    SpellAvail++;
+                    SpellTotal++;
+                    if (!spellConfig.Remark.Contains("未完成"))
+                    {
+                        SpellAvail++;
+                    }
                 }
             }
         }
