@@ -1,4 +1,6 @@
-﻿namespace ConfigDatas
+﻿using System.Security.Principal;
+
+namespace ConfigDatas
 {
     public interface IMonsterAuro
     {
@@ -6,5 +8,6 @@
         IMonsterAuro AddAttr(string attr);
         IMonsterAuro SetRange(int range);
         IMonsterAuro SetMid(int mid);
+        IMonsterAuro SetStar(int min, int max);
     }
 }

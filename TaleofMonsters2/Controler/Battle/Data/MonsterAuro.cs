@@ -14,9 +14,11 @@ namespace TaleofMonsters.Controler.Battle.Data
         private int buffId; //buff id
         private int level; //buff等级
 
-        private int range = -1;
+        private int range = -1; //范围
         private string target;
         private int targetMonsterId; //特定怪id
+        private int starMin = 0; //最小星级影响
+        private int starMax = 10; //最大星级影响
 
         private List<CardTypeSub> raceList = new List<CardTypeSub>();
         private List<CardElements> attrList = new List<CardElements>();
@@ -41,15 +43,22 @@ namespace TaleofMonsters.Controler.Battle.Data
             return this;
         }
 
-        public IMonsterAuro SetRange(int range)
+        public IMonsterAuro SetRange(int rg)
         {
-            this.range = range;
+            range = rg;
             return this;
         }
 
         public IMonsterAuro SetMid(int mid)
         {
             targetMonsterId = mid;
+            return this;
+        }
+
+        public IMonsterAuro SetStar(int min, int max)
+        {
+            starMin = min;
+            starMax = max;
             return this;
         }
 
@@ -65,6 +74,8 @@ namespace TaleofMonsters.Controler.Battle.Data
                 if (target[0] != 'A' && ((BattleTargetManager.IsSpellEnemyMonster(target[0]) && self.IsLeft != mon.IsLeft) || (BattleTargetManager.IsSpellFriendMonster(target[0]) && self.IsLeft == mon.IsLeft)))
                     continue;
                 if (targetMonsterId != 0 && mon.Avatar.Id != targetMonsterId)
+                    continue;
+                if (mon.Star > starMax || mon.Star < starMin)
                     continue;
                 if (raceList.Count > 0 && !raceList.Contains((CardTypeSub)mon.Avatar.MonsterConfig.Type))
                     continue;
