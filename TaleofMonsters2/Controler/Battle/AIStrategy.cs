@@ -27,7 +27,7 @@ namespace TaleofMonsters.Controler.Battle
 
         internal static void AIProc(Player player)
         {            
-            if (player.GetCardNumber() <= 0)
+            if (player.CardNumber <= 0)
                 return;
 
             if (MathTool.GetRandom(4) != 0)
@@ -38,7 +38,7 @@ namespace TaleofMonsters.Controler.Battle
             bool isLeft = player.IsLeft;
             var rival = (player == BattleManager.Instance.PlayerManager.LeftPlayer) ? BattleManager.Instance.PlayerManager.RightPlayer : BattleManager.Instance.PlayerManager.LeftPlayer;
             
-            player.CardsDesk.SetSelectId(MathTool.GetRandom(player.GetCardNumber()) + 1);
+            player.CardsDesk.SetSelectId(MathTool.GetRandom(player.CardNumber) + 1);
             if (player.SelectCardId != 0)
             {
                 ActiveCard card = player.CardsDesk.GetSelectCard();

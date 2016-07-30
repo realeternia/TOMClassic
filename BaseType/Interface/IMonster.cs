@@ -54,9 +54,7 @@ namespace ConfigDatas
         int Type { get; } //种族
 
         bool IsNight{get;}
-        bool HasScroll { get; }//是否拿着卷轴
-        int CardNumber{get;} 	
- 		
+        bool HasScroll { get; }//是否拿着卷轴 		
         void ClearDebuff();
         void ExtendDebuff(double count);
         bool HasBuff(int id);

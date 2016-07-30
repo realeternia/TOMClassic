@@ -24,7 +24,7 @@ namespace ConfigDatas
         void DeleteAllCard();
         void DeleteSelectCard();
         void RecostSelectCard();
-        int GetCardNumber();
+        int CardNumber { get; }
         void CopyRandomNCard(int n, int spellid);
         void CardLevelUp(int n, int type);
 		

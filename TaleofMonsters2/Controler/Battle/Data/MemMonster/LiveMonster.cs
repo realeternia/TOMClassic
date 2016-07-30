@@ -745,12 +745,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             SkillManager.Forget();
         }
 
-        public int CardNumber
-        {
-            get { return OwnerPlayer.GetCardNumber(); }
-        }
-
-
         public int Attr { get { return Avatar.MonsterConfig.Attr; } }
 
         public int Type { get { return Avatar.MonsterConfig.Type; } }

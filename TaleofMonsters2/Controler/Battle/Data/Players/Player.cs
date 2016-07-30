@@ -433,9 +433,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             AddPp(-selectCard.Pp);
         }
 
-        public int GetCardNumber()
+        public int CardNumber
         {
-            return CardManager.GetCardNumber();
+            get
+            {
+                return CardManager.GetCardNumber();
+            }
         }
 
         public void ConvertCard(int count, int cardId, int levelChange)
