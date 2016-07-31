@@ -211,16 +211,12 @@ namespace TaleofMonsters.Forms
                 font1.Dispose();
 
                 Font fontDes = new Font("宋体", 10 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-                e.Graphics.DrawString("攻击", fontDes, Brushes.White, 180, 175);
-                e.Graphics.DrawString(GetStarText(weaponConfig.AtkP / 10), fontDes, Brushes.Yellow, 210, 175);
-                e.Graphics.DrawString("魔力", fontDes, Brushes.White, 335, 175);
-                //e.Graphics.DrawString(GetStarText(weaponConfig.MagP / 10), fontDes, Brushes.Yellow, 365, 175);
-                //e.Graphics.DrawString("领导", fontDes, Brushes.White, 180, 195);
-                e.Graphics.DrawString(GetStarText(weaponConfig.EnergyRate[0] / 8 + 1), fontDes, Brushes.Gold, 210, 195);
-                e.Graphics.DrawString("力量", fontDes, Brushes.White, 180, 215);
-                e.Graphics.DrawString(GetStarText(weaponConfig.EnergyRate[1] / 8 + 1), fontDes, Brushes.Red, 210, 215);
-                e.Graphics.DrawString("魔力", fontDes, Brushes.White, 180, 235);
-                e.Graphics.DrawString(GetStarText(weaponConfig.EnergyRate[2] / 8 + 1), fontDes, Brushes.Blue, 210, 235);
+                e.Graphics.DrawString("领导", fontDes, Brushes.White, 180, 175);
+                e.Graphics.DrawString(GetStarText(weaponConfig.EnergyRate[0] / 8 + 1), fontDes, Brushes.Gold, 210, 175);
+                e.Graphics.DrawString("力量", fontDes, Brushes.White, 180, 195);
+                e.Graphics.DrawString(GetStarText(weaponConfig.EnergyRate[1] / 8 + 1), fontDes, Brushes.Red, 210, 195);
+                e.Graphics.DrawString("魔力", fontDes, Brushes.White, 180, 215);
+                e.Graphics.DrawString(GetStarText(weaponConfig.EnergyRate[2] / 8 + 1), fontDes, Brushes.Blue, 210, 215);
                 fontDes.Dispose();
             }
 

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+锘縰sing System.Collections.Generic;
 using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Achieves;
@@ -23,7 +23,7 @@ namespace TaleofMonsters.DataType.User
             TaskConfig taskConfig = ConfigData.GetTaskConfig(tid);
             SetTaskStateById(tid, 1);
 
-            MainForm.Instance.AddTip(string.Format("|接受任务-|Lime|{0}", taskConfig.Name), "White");
+            MainForm.Instance.AddTip(string.Format("|鎺ュ彈浠诲姟-|Lime|{0}", taskConfig.Name), "White");
             int give = taskConfig.ItemGive;
             if (give != 0)
             {
@@ -39,7 +39,7 @@ namespace TaleofMonsters.DataType.User
             SetTaskStateById(tid, 3);
 
             AchieveBook.CheckByCheckType("task");
-            MainForm.Instance.AddTip(string.Format("|完成任务-|Lime|{0}", ConfigData.GetTaskConfig(tid).Name), "White");
+            MainForm.Instance.AddTip(string.Format("|瀹屾垚浠诲姟-|Lime|{0}", ConfigData.GetTaskConfig(tid).Name), "White");
         }
 
         public int GetTaskDoneCount()
