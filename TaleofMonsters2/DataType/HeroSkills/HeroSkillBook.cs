@@ -16,7 +16,7 @@ namespace TaleofMonsters.DataType.HeroSkills
         {
             HeroSkillConfig skillConfig = ConfigData.GetHeroSkillConfig(id);
 
-            string fname = string.Format("HeroSkill/{0}", skillConfig.Icon);//todo 路径最好改下
+            string fname = string.Format("HeroSkill/{0}", skillConfig.Icon);
             if (!ImageManager.HasImage(fname))
             {
                 Image image = PicLoader.Read("HeroSkill", string.Format("{0}.JPG", skillConfig.Icon));

@@ -22,6 +22,7 @@ using TaleofMonsters.DataType;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms;
 using TaleofMonsters.Forms.Items.Regions;
+using TaleofMonsters.Forms.Items.Regions.Decorators;
 
 namespace TaleofMonsters.Controler.Battle
 {
@@ -135,6 +136,7 @@ namespace TaleofMonsters.Controler.Battle
             foreach (var skillId in BattleManager.Instance.PlayerManager.LeftPlayer.HeroSkillList)
             {
                 var region = new PictureAnimRegion(index+1, 25, 518+index*45, 40, 40, skillId, VirtualRegionCellType.HeroSkill, skillId);
+                region.AddDecorator(new RegionBorderDecorator(region, Color.Lime));
                 vRegion.AddRegion(region);
                 index++;
             }
@@ -147,19 +149,23 @@ namespace TaleofMonsters.Controler.Battle
             BattleManager.Instance.PlayerManager.RightPlayer.InitialCards();
             cardSelector1.Init(BattleManager.Instance.PlayerManager.LeftPlayer);
             cardsArray1.Visible = false;
+            miniItemView1.Visible = false;
+            vRegion.Visible = false;
         }
 
-        private void StartGame()//初始化游戏
+        private void StartGame() //初始化游戏
         {
             BattleManager.Instance.MemMap = new MemRowColumnMap(mapName, defaultTile);
-             BattleManager.Instance.MemMap.InitUnit(BattleManager.Instance.PlayerManager.LeftPlayer);
-             BattleManager.Instance.MemMap.InitUnit(BattleManager.Instance.PlayerManager.RightPlayer);
+            BattleManager.Instance.MemMap.InitUnit(BattleManager.Instance.PlayerManager.LeftPlayer);
+            BattleManager.Instance.MemMap.InitUnit(BattleManager.Instance.PlayerManager.RightPlayer);
             AIStrategy.OnInit(BattleManager.Instance.PlayerManager.RightPlayer);
 
             BattleManager.Instance.BattleInfo.StartTime = DateTime.Now;
             BattleManager.Instance.BattleInfo.EndTime = DateTime.Now;
 
             cardsArray1.Visible = true;
+            miniItemView1.Visible = true;
+            vRegion.Visible = true;
             IsGamePaused = false;
             showGround = true;
         }
@@ -168,8 +174,7 @@ namespace TaleofMonsters.Controler.Battle
         {
             isGamePaused = true;
         }
-
-
+        
         internal override void OnFrame(int tick)
         {
             base.OnFrame(tick);

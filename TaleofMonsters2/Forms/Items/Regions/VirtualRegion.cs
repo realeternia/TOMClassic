@@ -18,6 +18,8 @@ namespace TaleofMonsters.Forms.Items.Regions
         private readonly Dictionary<int, SubVirtualRegion> subRegions;
         private Control parent;
 
+        public bool Visible { get; set; }
+
         public VirtualRegion(Control parent)
         {
             subRegions = new Dictionary<int, SubVirtualRegion>();
@@ -25,6 +27,7 @@ namespace TaleofMonsters.Forms.Items.Regions
             parent.MouseMove+=new MouseEventHandler(parent_MouseMove);
             parent.MouseClick+=new MouseEventHandler(parent_MouseClick);
             parent.MouseLeave+=new System.EventHandler(parent_MouseLeave);
+            Visible = true;
         }
 
         public void AddRegion(SubVirtualRegion region)
@@ -125,6 +128,10 @@ namespace TaleofMonsters.Forms.Items.Regions
 
         public void Draw(Graphics g)
         {
+            if (!Visible)
+            {
+                return;
+            }
             foreach (SubVirtualRegion subVirtualRegion in subRegions.Values)
             {
                 subVirtualRegion.Draw(g); 
