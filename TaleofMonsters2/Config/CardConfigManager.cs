@@ -14,6 +14,7 @@ namespace TaleofMonsters.Config
         public int Star { get; set; }
         public string Name { get; set; }
         public int Quality { get; set; }
+        public int JobId { get; set; }
 
         public override string ToString()
         {
@@ -52,6 +53,7 @@ namespace TaleofMonsters.Config
                 card.Star = monsterConfig.Star;
                 card.Name = monsterConfig.Name;
                 card.Quality = monsterConfig.Quality;
+                card.JobId = monsterConfig.JobId;
                 cardConfigDataDict.Add(monsterConfig.Id, card);
                 if (monsterConfig.IsSpecial == 0)
                 {
@@ -73,6 +75,7 @@ namespace TaleofMonsters.Config
                 card.Star = weaponConfig.Star;
                 card.Name = weaponConfig.Name;
                 card.Quality = weaponConfig.Quality;
+                card.JobId = weaponConfig.JobId;
                 cardConfigDataDict.Add(weaponConfig.Id, card);
                 if (weaponConfig.IsSpecial == 0)
                 {
@@ -94,6 +97,7 @@ namespace TaleofMonsters.Config
                 card.Star = spellConfig.Star;
                 card.Name = spellConfig.Name;
                 card.Quality = spellConfig.Quality;
+                card.JobId = spellConfig.JobId;
                 cardConfigDataDict.Add(spellConfig.Id, card);
                 if (spellConfig.IsSpecial == 0)
                 {
