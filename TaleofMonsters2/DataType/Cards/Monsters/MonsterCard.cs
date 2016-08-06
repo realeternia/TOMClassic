@@ -253,6 +253,11 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             tipData.AddText(string.Format("({0})",monster.MonsterConfig.Ename), "MediumAquamarine");
             tipData.AddTextNewLine(stars.Substring(10 - monster.MonsterConfig.Star), "Yellow", 20);
             tipData.AddLine();
+            if (monster.MonsterConfig.JobId > 0)
+            {
+                var jobConfig = ConfigData.GetJobConfig(monster.MonsterConfig.JobId);
+                tipData.AddTextNewLine(string.Format("(限定职业：{0})",jobConfig.Name), "Red");
+            }
             tipData.AddTextNewLine("种族/属性", "Gray");
             tipData.AddImage(HSIcons.GetIconsByEName("rac" + monster.MonsterConfig.Type));
             tipData.AddImage(HSIcons.GetIconsByEName("atr" + monster.MonsterConfig.Attr));

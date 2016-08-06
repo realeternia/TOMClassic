@@ -237,6 +237,11 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             tipData.AddText(string.Format("({0})",weapon.WeaponConfig.Ename), "MediumAquamarine");
             tipData.AddTextNewLine(stars.Substring(10 - weapon.WeaponConfig.Star), "Yellow", 20);
             tipData.AddLine();
+            if (weapon.WeaponConfig.JobId > 0)
+            {
+                var jobConfig = ConfigData.GetJobConfig(weapon.WeaponConfig.JobId);
+                tipData.AddTextNewLine(string.Format("(限定职业：{0})", jobConfig.Name), "Red");
+            }
             tipData.AddTextNewLine("类型/属性", "Gray");
             tipData.AddImage(HSIcons.GetIconsByEName("wep" + (weapon.WeaponConfig.Type - 100+1)));
             tipData.AddImage(HSIcons.GetIconsByEName("atr" + weapon.WeaponConfig.Attr));

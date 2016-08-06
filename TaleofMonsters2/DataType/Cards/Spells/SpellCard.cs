@@ -164,6 +164,11 @@ namespace TaleofMonsters.DataType.Cards.Spells
             tipData.AddText(string.Format("({0})",spell.SpellConfig.Ename), "MediumAquamarine");
             tipData.AddTextNewLine(stars.Substring(10 - spell.SpellConfig.Star), "Yellow", 20);
             tipData.AddLine();
+            if (spell.SpellConfig.JobId > 0)
+            {
+                var jobConfig = ConfigData.GetJobConfig(spell.SpellConfig.JobId);
+                tipData.AddTextNewLine(string.Format("(限定职业：{0})", jobConfig.Name), "Red");
+            }
             tipData.AddTextNewLine("类型/属性", "Gray");
             tipData.AddImage(HSIcons.GetIconsByEName("wep" + (spell.SpellConfig.Type - 200+1)));
             tipData.AddImage(HSIcons.GetIconsByEName("atr" + spell.SpellConfig.Attr));

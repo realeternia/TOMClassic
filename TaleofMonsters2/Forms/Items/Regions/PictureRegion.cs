@@ -64,6 +64,17 @@ namespace TaleofMonsters.Forms.Items.Regions
                 {
                     g.DrawImage(HSIcons.GetIconsByEName("gem" + nid), x, y, width, height);
                 }
+                else if (type == VirtualRegionCellType.Job)
+                {
+                    if (nid>0)
+                    {
+                        var jobConfig = ConfigData.GetJobConfig(nid + JobConfig.Indexer.NewBie);
+                        Brush brush = new SolidBrush(Color.FromName(jobConfig.Color));
+                        g.FillRectangle(brush, x, y, width, height);
+                        g.DrawImage(HSIcons.GetIconsByEName("job" + nid), x, y, width, height);
+                        brush.Dispose();
+                    }
+                }
                 else if (type == VirtualRegionCellType.Task)
                 {
                     string sicon = "oth3";

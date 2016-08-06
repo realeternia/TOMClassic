@@ -283,7 +283,7 @@ namespace TaleofMonsters.Forms
             }
 
             JobConfig jobConfig = ConfigDatas.ConfigData.GetJobConfig(UserProfile.InfoBasic.Job);
-            Image body = PicLoader.Read("Hero", string.Format("{0}.JPG", jobConfig.ProtoImage));
+            Image body = PicLoader.Read("Hero", string.Format("{0}.JPG", jobConfig.JobIndex));
             e.Graphics.DrawImage(body, 25, 47, 111, 111);
             body.Dispose();
 

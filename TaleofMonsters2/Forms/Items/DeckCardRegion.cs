@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using ConfigDatas;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
@@ -160,9 +162,15 @@ namespace TaleofMonsters.Forms.Items
             var quality = cardConfigData.Quality + 1;
             g.DrawImage(HSIcons.GetIconsByEName("gem" + quality), x + cardWidth / 2 - 8, y + cardHeight - 20, 16, 16);
 
-
-            //  g.FillPie(Brushes.Gray, x + 5, y + cardHeight - 30, 20, 20, 0, 360);
-            //  g.FillPie(Brushes.GreenYellow, x + 5, y + cardHeight - 30, 20, 20, 0, card.Exp * 360 / ExpTree.GetNextRequiredCard(card.Level));
+            var jobId = cardConfigData.JobId;
+            if (jobId > 0)
+            {
+                var jobConfig = ConfigData.GetJobConfig(jobId);
+                Brush brush = new SolidBrush(Color.FromName(jobConfig.Color));
+                g.FillRectangle(brush, x + cardWidth - 24, y + 4, 20, 20);
+                g.DrawImage(HSIcons.GetIconsByEName("job" + jobConfig.JobIndex), x + cardWidth - 24, y + 4, 20, 20);
+                brush.Dispose();
+            }
 
             if (attr.Contains("D"))
             {

@@ -254,21 +254,15 @@ namespace TaleofMonsters.Forms.MagicBook
             var quality = cardConfigData.Quality + 1;
             g.DrawImage(HSIcons.GetIconsByEName("gem" + quality), x + cardWidth / 2 - 8, y + cardHeight - 20, 16, 16);
 
-//#if DEBUG
-//            int off = 0;
-//            if (DataType.Peoples.PeopleBook.IsPeopleDropCard(cid))
-//            {
-//                g.DrawImage(HSIcons.GetIconsByEName("cad1"), x + 5 + (off++ * 12), y + 30, 24, 24);
-//            }
-//            if (DataType.Tasks.TaskBook.HasCard(cid))
-//            {
-//                g.DrawImage(HSIcons.GetIconsByEName("cad3"), x + 5 + (off++ * 12), y + 30, 24, 24);
-//            }
-//            if (DeckBook.HasCard("rookie", cid) || HItemBook.IsGiftHasCard(cid))
-//            {
-//                g.DrawImage(HSIcons.GetIconsByEName("cad4"), x + 5 + (off * 12), y + 30, 24, 24);
-//            }
-//#endif
+            var jobId = cardConfigData.JobId;
+            if (jobId > 0)
+            {
+                var jobConfig = ConfigData.GetJobConfig(jobId);
+                Brush brush = new SolidBrush(Color.FromName(jobConfig.Color));
+                g.FillRectangle(brush, x + cardWidth - 24, y + 4, 20, 20);
+                g.DrawImage(HSIcons.GetIconsByEName("job" + jobConfig.JobIndex), x + cardWidth - 24, y + 4, 20, 20);
+                brush.Dispose();
+            }
         }
 
         private void CardViewForm_Paint(object sender, PaintEventArgs e)

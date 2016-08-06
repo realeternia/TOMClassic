@@ -51,6 +51,7 @@ namespace TaleofMonsters.Forms.MagicBook
             virtualRegion.AddRegion(new SubVirtualRegion(1, x + 60, y + 170, 24, 24, 1));
             virtualRegion.AddRegion(new SubVirtualRegion(2, x + 88, y + 170, 24, 24, 2));
             virtualRegion.AddRegion(new PictureRegion(3, x + 116, y + 170, 24, 24, 3, VirtualRegionCellType.CardQual, 0));
+            virtualRegion.AddRegion(new PictureRegion(4, x + 146, y + 25, 24, 24, 4, VirtualRegionCellType.Job, 0));
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
@@ -66,6 +67,12 @@ namespace TaleofMonsters.Forms.MagicBook
             {
                 card = CardAssistant.GetCard(cid);
                 virtualRegion.SetRegionInfo(3, CardConfigManager.GetCardConfig(cid).Quality+1);
+                var jobId = CardConfigManager.GetCardConfig(cid).JobId;
+                if (jobId > 0)
+                {
+                    jobId = ConfigData.GetJobConfig(jobId).JobIndex;
+                }
+                virtualRegion.SetRegionInfo(4, jobId);
                 card.SetData(dcard);
                 if (card.GetCardType() == CardTypes.Monster)
                 {
@@ -247,6 +254,15 @@ namespace TaleofMonsters.Forms.MagicBook
             {
                 Image image = DrawTool.GetImageByString("品质：" + HSTypes.I2Quality(key - 1), 100);
                 tooltip.Show(image, parent, x, y);
+                return;
+            }
+            else if (info == 4)
+            {
+                if (key > 0)
+                {
+                    Image image = DrawTool.GetImageByString("职业限定：" + ConfigData.GetJobConfig(key+JobConfig.Indexer.NewBie).Name, 100);
+                    tooltip.Show(image, parent, x, y);
+                }
                 return;
             }
 

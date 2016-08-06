@@ -12,5 +12,6 @@ namespace TaleofMonsters.Forms.Items.Regions
         People,
         Task,
         CardQual,
+        Job
     }
 }
