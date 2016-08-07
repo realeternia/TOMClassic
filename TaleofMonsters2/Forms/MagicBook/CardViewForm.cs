@@ -26,10 +26,11 @@ namespace TaleofMonsters.Forms.MagicBook
         private bool isDirty = true;
         private CardDetail cardDetail;
 
-        private int filterCardCode =-1;
         private int filterLevel=0;
         private int filterQual=-1;
-        private string filterRemark="无";
+        private int filterType = -1;
+        private int filterJob = -1;
+        private string filterRemark = "全部";
 
         public CardViewForm()
         {
@@ -61,10 +62,7 @@ namespace TaleofMonsters.Forms.MagicBook
             base.Init(width, height);
             show = true;
             cards = new List<int>();
-            comboBoxType.SelectedIndex = 0;
-            comboBoxLevel.SelectedIndex = 0;
-            comboBoxQual.SelectedIndex = 0;
-            comboBoxRemark.SelectedIndex = 0;
+            comboBoxCatalog.SelectedIndex = 0;
             cardDetail = new CardDetail(this, cardWidth * xCount + 65, 35, cardHeight * yCount + 70);
             ChangeCards();
         }
@@ -76,11 +74,57 @@ namespace TaleofMonsters.Forms.MagicBook
 
         private void buttonOk_Click(object sender, EventArgs e)
         {
-            filterCardCode = HSTypes.Attr2I(comboBoxType.SelectedItem.ToString());
-            filterLevel = comboBoxLevel.SelectedIndex;
-            filterQual = comboBoxQual.SelectedIndex - 1;
-            filterRemark = comboBoxRemark.SelectedItem.ToString();
+            filterLevel = 0;
+            filterQual = -1;
+            filterType = -1;
+            filterJob = -1;
+            filterRemark = "全部";
+
+            var type = comboBoxCatalog.SelectedItem.ToString();
+            switch (type)
+            {
+                case "分类":
+                    filterType = comboBoxValue.SelectedIndex - 1; break;
+                case "品质":
+                    filterQual = comboBoxValue.SelectedIndex - 1; break;
+                case "星级":
+                    filterLevel = comboBoxValue.SelectedIndex; break;
+                case "职业":
+                    foreach (var configData in ConfigData.JobDict.Values)
+                    {
+                        if (configData.Name == comboBoxValue.SelectedItem.ToString())
+                        {
+                            filterJob = configData.Id;
+                        }
+                    }  break;
+                case "标签":
+                    filterRemark = comboBoxValue.SelectedItem.ToString(); break;
+            }
             ChangeCards();
+        }
+
+        private void comboBoxCatalog_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comboBoxValue.Items.Clear();
+            var type = comboBoxCatalog.SelectedItem.ToString();
+            switch (type)
+            {
+                case "分类":
+                    comboBoxValue.Items.AddRange(new object[] { "全部", "生物", "武器", "法术" }); break;
+                case "品质":
+                    comboBoxValue.Items.AddRange(new object[] { "全部", "普通", "良好", "优秀", "史诗", "传说" }); break;
+                case "星级":
+                    comboBoxValue.Items.AddRange(new object[] { "全部", "1", "2", "3", "4", "5", "6", "7" }); break;
+                case "职业":
+                    comboBoxValue.Items.Add("全部");
+                    foreach (var configData in ConfigData.JobDict.Values)
+                    {
+                        comboBoxValue.Items.Add(configData.Name);
+                    } break;
+                case "标签":
+                    comboBoxValue.Items.AddRange(new object[] { "全部", "基本","魔法","范围" }); break;
+            }
+            comboBoxValue.SelectedIndex = 0;
         }
 
         private void ChangeCards()
@@ -92,53 +136,63 @@ namespace TaleofMonsters.Forms.MagicBook
 
             List<CardConfigData> configData = new List<CardConfigData>();
             #region 数据装载
-            foreach (var monsterConfig in ConfigData.MonsterDict.Values)
+
+            if (filterType == -1 || filterType==0)
             {
-                if (monsterConfig.IsSpecial > 0)
-                    continue;
-                if (filterCardCode != -1 && monsterConfig.Attr != filterCardCode)
-                    continue;
-                if (filterLevel != 0 && monsterConfig.Star != filterLevel)
-                    continue;
-                var cardData = CardConfigManager.GetCardConfig(monsterConfig.Id);
-                int cardQual = cardData.Quality;
-                if (filterQual != -1 && cardQual != filterQual)
-                    continue;
-                if (filterRemark != "无" && (string.IsNullOrEmpty(monsterConfig.Remark) || !monsterConfig.Remark.Contains(filterRemark)))
-                    continue;
-                configData.Add(cardData);
+                foreach (var monsterConfig in ConfigData.MonsterDict.Values)
+                {
+                    if (monsterConfig.IsSpecial > 0)
+                        continue;
+                    if (filterJob != -1 && monsterConfig.JobId != filterJob)
+                        continue;
+                    if (filterLevel != 0 && monsterConfig.Star != filterLevel)
+                        continue;
+                    var cardData = CardConfigManager.GetCardConfig(monsterConfig.Id);
+                    int cardQual = cardData.Quality;
+                    if (filterQual != -1 && cardQual != filterQual)
+                        continue;
+                    if (filterRemark != "全部" && (string.IsNullOrEmpty(monsterConfig.Remark) || !monsterConfig.Remark.Contains(filterRemark)))
+                        continue;
+                    configData.Add(cardData);
+                }
             }
-            foreach (var weaponConfig in ConfigData.WeaponDict.Values)
+            if (filterType == -1 || filterType == 1)
             {
-                if (weaponConfig.IsSpecial > 0)
-                    continue;
-                if (filterCardCode != -1 && weaponConfig.Attr != filterCardCode)
-                    continue;
-                if (filterLevel != 0 && weaponConfig.Star != filterLevel)
-                    continue;
-                var cardData = CardConfigManager.GetCardConfig(weaponConfig.Id);
-                int cardQual = cardData.Quality;
-                if (filterQual != -1 && cardQual != filterQual)
-                    continue;
-                if (filterRemark != "无" && (string.IsNullOrEmpty(weaponConfig.Remark) || !weaponConfig.Remark.Contains(filterRemark)))
-                    continue;
-                configData.Add(cardData);
+                foreach (var weaponConfig in ConfigData.WeaponDict.Values)
+                {
+                    if (weaponConfig.IsSpecial > 0)
+                        continue;
+                    if (filterJob != -1 && weaponConfig.JobId != filterJob)
+                        continue;
+                    if (filterLevel != 0 && weaponConfig.Star != filterLevel)
+                        continue;
+                    var cardData = CardConfigManager.GetCardConfig(weaponConfig.Id);
+                    int cardQual = cardData.Quality;
+                    if (filterQual != -1 && cardQual != filterQual)
+                        continue;
+                    if (filterRemark != "全部" && (string.IsNullOrEmpty(weaponConfig.Remark) || !weaponConfig.Remark.Contains(filterRemark)))
+                        continue;
+                    configData.Add(cardData);
+                }
             }
-            foreach (var spellConfig in ConfigData.SpellDict.Values)
+            if (filterType == -1 || filterType == 2)
             {
-                if (spellConfig.IsSpecial > 0)
-                    continue;
-                if (filterCardCode != -1 && spellConfig.Attr != filterCardCode)
-                    continue;
-                if (filterLevel != 0 && spellConfig.Star != filterLevel)
-                    continue;
-                var cardData = CardConfigManager.GetCardConfig(spellConfig.Id);
-                int cardQual = cardData.Quality;
-                if (filterQual != -1 && cardQual != filterQual)
-                    continue;
-                if (filterRemark != "无" && (string.IsNullOrEmpty(spellConfig.Remark) || !spellConfig.Remark.Contains(filterRemark)))
-                    continue;
-                configData.Add(cardData);
+                foreach (var spellConfig in ConfigData.SpellDict.Values)
+                {
+                    if (spellConfig.IsSpecial > 0)
+                        continue;
+                    if (filterJob != -1 && spellConfig.JobId != filterJob)
+                        continue;
+                    if (filterLevel != 0 && spellConfig.Star != filterLevel)
+                        continue;
+                    var cardData = CardConfigManager.GetCardConfig(spellConfig.Id);
+                    int cardQual = cardData.Quality;
+                    if (filterQual != -1 && cardQual != filterQual)
+                        continue;
+                    if (filterRemark != "全部" && (string.IsNullOrEmpty(spellConfig.Remark) || !spellConfig.Remark.Contains(filterRemark)))
+                        continue;
+                    configData.Add(cardData);
+                }
             }
 
             #endregion
@@ -281,9 +335,7 @@ namespace TaleofMonsters.Forms.MagicBook
 
             font = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             e.Graphics.DrawString("分类", font,Brushes.White ,86,51);
-            e.Graphics.DrawString("星级", font, Brushes.White, 231, 51);
-            e.Graphics.DrawString("品质", font, Brushes.White, 386, 51);
-            e.Graphics.DrawString("过滤", font, Brushes.White, 86, 83);
+            e.Graphics.DrawString("选项", font, Brushes.White, 231, 51);
             font.Dispose();
 
             if (show)
@@ -343,6 +395,7 @@ namespace TaleofMonsters.Forms.MagicBook
 
             #endregion
         }
+
     }
 
 }

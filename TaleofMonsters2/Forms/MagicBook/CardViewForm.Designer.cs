@@ -33,27 +33,25 @@ namespace TaleofMonsters.Forms.MagicBook
             this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
             this.bitmapButtonNext = new NarlonLib.Control.BitmapButton();
             this.bitmapButtonPre = new NarlonLib.Control.BitmapButton();
-            this.comboBoxType = new System.Windows.Forms.ComboBox();
             this.buttonOk = new System.Windows.Forms.Button();
-            this.comboBoxLevel = new System.Windows.Forms.ComboBox();
-            this.comboBoxQual = new System.Windows.Forms.ComboBox();
-            this.comboBoxRemark = new System.Windows.Forms.ComboBox();
+            this.comboBoxCatalog = new System.Windows.Forms.ComboBox();
+            this.comboBoxValue = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // bitmapButtonClose
             // 
             this.bitmapButtonClose.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButtonClose.Image = null;
-            
-            
+            this.bitmapButtonClose.IconImage = null;
+            this.bitmapButtonClose.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonClose.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonClose.ImageNormal = null;
-            
             this.bitmapButtonClose.Location = new System.Drawing.Point(781, 4);
             this.bitmapButtonClose.Name = "bitmapButtonClose";
+            this.bitmapButtonClose.NoUseDrawNine = false;
             this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
             this.bitmapButtonClose.TabIndex = 28;
-            this.bitmapButtonClose.Text = "";
+            this.bitmapButtonClose.TextOffX = 0;
             this.bitmapButtonClose.UseVisualStyleBackColor = true;
             this.bitmapButtonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
@@ -61,13 +59,16 @@ namespace TaleofMonsters.Forms.MagicBook
             // 
             this.bitmapButtonNext.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButtonNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButtonNext.Image = null;
+            this.bitmapButtonNext.IconImage = null;
+            this.bitmapButtonNext.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonNext.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonNext.ImageNormal = null;
             this.bitmapButtonNext.Location = new System.Drawing.Point(20, 86);
             this.bitmapButtonNext.Name = "bitmapButtonNext";
+            this.bitmapButtonNext.NoUseDrawNine = false;
             this.bitmapButtonNext.Size = new System.Drawing.Size(40, 40);
             this.bitmapButtonNext.TabIndex = 33;
-            this.bitmapButtonNext.Text = "";
+            this.bitmapButtonNext.TextOffX = 0;
             this.bitmapButtonNext.UseVisualStyleBackColor = true;
             this.bitmapButtonNext.Click += new System.EventHandler(this.buttonNext_Click);
             // 
@@ -75,37 +76,18 @@ namespace TaleofMonsters.Forms.MagicBook
             // 
             this.bitmapButtonPre.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButtonPre.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButtonPre.Image = null;
+            this.bitmapButtonPre.IconImage = null;
+            this.bitmapButtonPre.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonPre.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonPre.ImageNormal = null;
             this.bitmapButtonPre.Location = new System.Drawing.Point(20, 41);
             this.bitmapButtonPre.Name = "bitmapButtonPre";
+            this.bitmapButtonPre.NoUseDrawNine = false;
             this.bitmapButtonPre.Size = new System.Drawing.Size(40, 40);
             this.bitmapButtonPre.TabIndex = 32;
-            this.bitmapButtonPre.Text = "";
+            this.bitmapButtonPre.TextOffX = 0;
             this.bitmapButtonPre.UseVisualStyleBackColor = true;
             this.bitmapButtonPre.Click += new System.EventHandler(this.buttonPre_Click);
-            // 
-            // comboBoxType
-            // 
-            this.comboBoxType.BackColor = System.Drawing.Color.Black;
-            this.comboBoxType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBoxType.Font = new System.Drawing.Font("宋体", 9F);
-            this.comboBoxType.ForeColor = System.Drawing.SystemColors.Window;
-            this.comboBoxType.FormattingEnabled = true;
-            this.comboBoxType.Items.AddRange(new object[] {
-            "全部",
-            "无",
-            "水",
-            "风",
-            "火",
-            "地",
-            "光",
-            "暗"});
-            this.comboBoxType.Location = new System.Drawing.Point(128, 47);
-            this.comboBoxType.Name = "comboBoxType";
-            this.comboBoxType.Size = new System.Drawing.Size(75, 20);
-            this.comboBoxType.TabIndex = 47;
             // 
             // buttonOk
             // 
@@ -122,73 +104,55 @@ namespace TaleofMonsters.Forms.MagicBook
             this.buttonOk.UseVisualStyleBackColor = false;
             this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
             // 
-            // comboBoxLevel
+            // comboBoxCatalog
             // 
-            this.comboBoxLevel.BackColor = System.Drawing.Color.Black;
-            this.comboBoxLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxLevel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBoxLevel.Font = new System.Drawing.Font("宋体", 9F);
-            this.comboBoxLevel.ForeColor = System.Drawing.SystemColors.Window;
-            this.comboBoxLevel.FormattingEnabled = true;
-            this.comboBoxLevel.Items.AddRange(new object[] {
+            this.comboBoxCatalog.BackColor = System.Drawing.Color.Black;
+            this.comboBoxCatalog.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxCatalog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBoxCatalog.Font = new System.Drawing.Font("宋体", 9F);
+            this.comboBoxCatalog.ForeColor = System.Drawing.SystemColors.Window;
+            this.comboBoxCatalog.FormattingEnabled = true;
+            this.comboBoxCatalog.Items.AddRange(new object[] {
+            "分类",
+            "品质",
+            "星级",
+            "职业",
+            "标签"});
+            this.comboBoxCatalog.Location = new System.Drawing.Point(128, 47);
+            this.comboBoxCatalog.Name = "comboBoxCatalog";
+            this.comboBoxCatalog.Size = new System.Drawing.Size(75, 20);
+            this.comboBoxCatalog.TabIndex = 52;
+            this.comboBoxCatalog.SelectedIndexChanged += new System.EventHandler(this.comboBoxCatalog_SelectedIndexChanged);
+            // 
+            // comboBoxValue
+            // 
+            this.comboBoxValue.BackColor = System.Drawing.Color.Black;
+            this.comboBoxValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxValue.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBoxValue.Font = new System.Drawing.Font("宋体", 9F);
+            this.comboBoxValue.ForeColor = System.Drawing.SystemColors.Window;
+            this.comboBoxValue.FormattingEnabled = true;
+            this.comboBoxValue.Items.AddRange(new object[] {
             "全部",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7"});
-            this.comboBoxLevel.Location = new System.Drawing.Point(270, 47);
-            this.comboBoxLevel.Name = "comboBoxLevel";
-            this.comboBoxLevel.Size = new System.Drawing.Size(75, 20);
-            this.comboBoxLevel.TabIndex = 49;
-            // 
-            // comboBoxQual
-            // 
-            this.comboBoxQual.BackColor = System.Drawing.Color.Black;
-            this.comboBoxQual.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxQual.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBoxQual.Font = new System.Drawing.Font("宋体", 9F);
-            this.comboBoxQual.ForeColor = System.Drawing.SystemColors.Window;
-            this.comboBoxQual.FormattingEnabled = true;
-            this.comboBoxQual.Items.AddRange(new object[] {
-            "全部",
-            "普通",
-            "良好",
-            "优秀",
-            "史诗",
-            "传说"});
-            this.comboBoxQual.Location = new System.Drawing.Point(415, 47);
-            this.comboBoxQual.Name = "comboBoxQual";
-            this.comboBoxQual.Size = new System.Drawing.Size(75, 20);
-            this.comboBoxQual.TabIndex = 50;
-            // 
-            // comboBoxRemark
-            // 
-            this.comboBoxRemark.BackColor = System.Drawing.Color.Black;
-            this.comboBoxRemark.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxRemark.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBoxRemark.Font = new System.Drawing.Font("宋体", 9F);
-            this.comboBoxRemark.ForeColor = System.Drawing.SystemColors.Window;
-            this.comboBoxRemark.FormattingEnabled = true;
-            this.comboBoxRemark.Items.AddRange(new object[] {
             "无",
-            "基本"});
-            this.comboBoxRemark.Location = new System.Drawing.Point(128, 79);
-            this.comboBoxRemark.Name = "comboBoxRemark";
-            this.comboBoxRemark.Size = new System.Drawing.Size(75, 20);
-            this.comboBoxRemark.TabIndex = 51;
+            "水",
+            "风",
+            "火",
+            "地",
+            "光",
+            "暗"});
+            this.comboBoxValue.Location = new System.Drawing.Point(274, 47);
+            this.comboBoxValue.Name = "comboBoxValue";
+            this.comboBoxValue.Size = new System.Drawing.Size(75, 20);
+            this.comboBoxValue.TabIndex = 53;
             // 
             // CardViewForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
-            this.Controls.Add(this.comboBoxRemark);
-            this.Controls.Add(this.comboBoxQual);
-            this.Controls.Add(this.comboBoxLevel);
+            this.Controls.Add(this.comboBoxValue);
+            this.Controls.Add(this.comboBoxCatalog);
             this.Controls.Add(this.buttonOk);
-            this.Controls.Add(this.comboBoxType);
             this.Controls.Add(this.bitmapButtonNext);
             this.Controls.Add(this.bitmapButtonPre);
             this.Controls.Add(this.bitmapButtonClose);
@@ -207,10 +171,8 @@ namespace TaleofMonsters.Forms.MagicBook
         private BitmapButton bitmapButtonClose;
         private BitmapButton bitmapButtonNext;
         private BitmapButton bitmapButtonPre;
-        private System.Windows.Forms.ComboBox comboBoxType;
         private System.Windows.Forms.Button buttonOk;
-        private System.Windows.Forms.ComboBox comboBoxLevel;
-        private System.Windows.Forms.ComboBox comboBoxQual;
-        private System.Windows.Forms.ComboBox comboBoxRemark;
+        private System.Windows.Forms.ComboBox comboBoxCatalog;
+        private System.Windows.Forms.ComboBox comboBoxValue;
     }
 }
