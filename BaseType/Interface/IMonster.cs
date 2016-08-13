@@ -13,7 +13,8 @@ namespace ConfigDatas
         int WeaponId{get;}
         IPlayer Owner{get;}
         IPlayer Rival { get; }
-        bool IsHero{get;}		
+        bool IsHero{get;}
+        bool IsDefence { get; }
         System.Drawing.Point Position{get;set;}
         IMap Map { get; }
         bool IsLeft { get; }
