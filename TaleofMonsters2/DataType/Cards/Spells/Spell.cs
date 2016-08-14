@@ -101,18 +101,11 @@ namespace TaleofMonsters.DataType.Cards.Spells
             Time = SpellConfig.Time*standardValue2;
             Help = SpellConfig.Help * standardValue2;
 
-            if (level >= 10)
+            double standardValue3 = Math.Sqrt(((double)level + 14) / 15) * (100 + SpellConfig.Modify) / 100;
+            Rate = SpellConfig.Rate * standardValue3;
+            if (Rate > 100)
             {
-                double standardValue3 = Math.Sqrt(((double)level + 14) / 15) * (100 + SpellConfig.Modify) / 100;
-                Rate = SpellConfig.Rate * standardValue3;
-                if (Rate > 100)
-                {
-                    Rate = 100;
-                }
-            }
-            else
-            {
-                Rate = SpellConfig.Rate * (100 + SpellConfig.Modify) / 100;
+                Rate = 100;
             }
         }
     }
