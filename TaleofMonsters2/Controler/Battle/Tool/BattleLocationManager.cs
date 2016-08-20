@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using System.Drawing;
@@ -72,11 +71,10 @@ namespace TaleofMonsters.Controler.Battle.Tool
             return point.CanMove;
         }
 
-        public static bool IsPlaceTombSide(int tx, int ty)
+        public static bool IsPlaceTomb(int tx, int ty)
         {
-            var sideCell = BattleManager.Instance.MemMap.ColumnCount / 2;
             MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
-            return point.Owner < 0 && point.SideIndex > 0 && point.SideIndex < sideCell;
+            return point.Owner < 0;
         }
 
         public static Point GetMonsterNearPoint(Point pos, string type, bool goLeft)
@@ -193,7 +191,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
             //    return IsPlaceBlank(tx, ty);
 
             if (BattleTargetManager.IsSpellTombTarget(target))
-                return IsPlaceTombSide(tx, ty);
+                return IsPlaceTomb(tx, ty);
 
             LiveMonster deskMon = GetPlaceMonster(tx, ty);
             if (deskMon != null && !deskMon.IsGhost)
