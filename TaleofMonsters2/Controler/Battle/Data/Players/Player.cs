@@ -255,6 +255,17 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         {
 
         }
+
+        public void AddMonster(int cardId, int level,Point location)
+        {
+            int size = BattleManager.Instance.MemMap.CardSize;
+            var truePos = new Point(location.X/size*size, location.Y/size*size);
+            var mon = new Monster(cardId);
+            mon.UpgradeToLevel(level);
+            LiveMonster newMon = new LiveMonster(World.WorldInfoManager.GetCardFakeId(), level, mon, truePos, IsLeft);
+            BattleManager.Instance.MonsterQueue.Add(newMon);
+        }
+
         public void UseMonster(ActiveCard card, Point location)
         {
             if (!CheckUseCard(card))
@@ -262,15 +273,24 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 return;
             }
 
-            var mon = new Monster(card.CardId);
-            mon.UpgradeToLevel(card.Level);
-            BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).MonsterAdd++;
+            try
+            {
+                var mon = new Monster(card.CardId);
+                mon.UpgradeToLevel(card.Level);
+                BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).MonsterAdd++;
 
-            LiveMonster newMon = new LiveMonster(card.Id, card.Level, mon, location, IsLeft);
-            BattleManager.Instance.MonsterQueue.Add(newMon);
+                LiveMonster newMon = new LiveMonster(card.Id, card.Level, mon, location, IsLeft);
+                BattleManager.Instance.MonsterQueue.Add(newMon);
 
-            var rival = IsLeft ? BattleManager.Instance.PlayerManager.RightPlayer : BattleManager.Instance.PlayerManager.LeftPlayer;
-            rival.CheckTrapOnSummon(newMon, rival, this);
+                var rival = IsLeft ? BattleManager.Instance.PlayerManager.RightPlayer : BattleManager.Instance.PlayerManager.LeftPlayer;
+                rival.CheckTrapOnSummon(newMon, rival, this);
+            }
+            catch (Exception e)
+            {
+                NLog.Warn(e);
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("未知错误", location, 0, "Red", 26, 0, 0, 2, 15), false);
+                return;
+            }
 
             CardManager.DeleteCardAt(SelectId);
         }
@@ -282,12 +302,21 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 return;
             }
 
-            Weapon wpn = new Weapon(card.CardId);
-            wpn.UpgradeToLevel(card.Level);
-            BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).WeaponAdd++;
+            try
+            {
+                Weapon wpn = new Weapon(card.CardId);
+                wpn.UpgradeToLevel(card.Level);
+                BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).WeaponAdd++;
 
-            var tWeapon = new TrueWeapon(lm, card.Level, wpn);
-            lm.AddWeapon(tWeapon);
+                var tWeapon = new TrueWeapon(lm, card.Level, wpn);
+                lm.AddWeapon(tWeapon);
+            }
+            catch (Exception e)
+            {
+                NLog.Warn(e);
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("未知错误", lm.Position, 0, "Red", 26, 0, 0, 2, 15), false);
+                return;
+            }
 
             CardManager.DeleteCardAt(SelectId);
         }
@@ -299,12 +328,21 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 return;
             }
 
-            Monster mon = new Monster(card.CardId);
-            mon.UpgradeToLevel(card.Level);
-            BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).MonsterAdd++;
+            try
+            {
+                Monster mon = new Monster(card.CardId);
+                mon.UpgradeToLevel(card.Level);
+                BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).MonsterAdd++;
 
-            var tWeapon = new SideKickWeapon(lm, card.Level, mon);
-            lm.AddWeapon(tWeapon);
+                var tWeapon = new SideKickWeapon(lm, card.Level, mon);
+                lm.AddWeapon(tWeapon);
+            }
+            catch (Exception e)
+            {
+                NLog.Warn(e);
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("未知错误", lm.Position, 0, "Red", 26, 0, 0, 2, 15), false);
+                return;
+            }
 
             CardManager.DeleteCardAt(SelectId);
         }
@@ -316,13 +354,22 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 return;
             }
 
-            Spell spell = new Spell(card.CardId);
-            spell.Addon = SpellEffectAddon;
-            spell.UpgradeToLevel(card.Level);
-            BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).SpellAdd++;
+            try
+            {
+                Spell spell = new Spell(card.CardId);
+                spell.Addon = SpellEffectAddon;
+                spell.UpgradeToLevel(card.Level);
+                BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).SpellAdd++;
 
-            SpellAssistant.CheckSpellEffect(spell, true, target, location);
-
+                SpellAssistant.CheckSpellEffect(spell, true, target, location);
+            }
+            catch (Exception e)
+            {
+                NLog.Warn(e);
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("未知错误", location, 0, "Red", 26, 0, 0, 2, 15),false);
+                return;
+            }
+            
             CardManager.DeleteCardAt(SelectId);
         }
 

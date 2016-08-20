@@ -49,7 +49,7 @@ namespace TaleofMonsters.Forms
             selectPanel.SelectIndexChanged += selectPanel_SelectedIndexChanged;
             selectPanel.DrawCell += selectPanel_DrawCell;
 
-            this.nlPageSelector1 = new NLPageSelector(this, 10, 291, 150);
+            this.nlPageSelector1 = new NLPageSelector(this, 10, 321, 150);
             nlPageSelector1.PageChange += nlPageSelector1_PageChange;
 
             jobDes = new ColorWordRegion(180, 70, 320, "宋体", 10, Color.White);
@@ -178,7 +178,10 @@ namespace TaleofMonsters.Forms
                     }
                 }
             }
-            tooltip.Show(image, this, x, y);
+            if (image != null)
+            {
+                tooltip.Show(image, this, x, y);    
+            }
         }
 
         private void virtualRegion_RegionLeft()

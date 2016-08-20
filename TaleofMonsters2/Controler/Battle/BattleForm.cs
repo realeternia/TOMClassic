@@ -168,6 +168,7 @@ namespace TaleofMonsters.Controler.Battle
             vRegion.Visible = true;
             IsGamePaused = false;
             showGround = true;
+            Invalidate();
         }
 
         private void StopGame()
@@ -502,7 +503,8 @@ namespace TaleofMonsters.Controler.Battle
             if (info > 0)
             {
                 HeroSkillConfig heroSkillConfig = ConfigDatas.ConfigData.GetHeroSkillConfig(info);
-                leftSelectCard = new ActiveCard(heroSkillConfig.CardId, UserProfile.Profile.InfoBasic.Level, 0);
+                LevelExpConfig levelConfig = ConfigData.GetLevelExpConfig(UserProfile.Profile.InfoBasic.Level);
+                leftSelectCard = new ActiveCard(heroSkillConfig.CardId, (byte)levelConfig.HeroSkillLevel, 0);
                 panelState.Invalidate();
             }
         }
