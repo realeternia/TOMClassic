@@ -445,6 +445,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Map\oneline.map" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\laser.eff" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
