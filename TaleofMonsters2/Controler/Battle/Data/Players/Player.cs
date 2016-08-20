@@ -7,6 +7,7 @@ using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMissile;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players.Frag;
+using TaleofMonsters.Controler.Battle.DataTent;
 using TaleofMonsters.Core.Interface;
 using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.Core;
@@ -381,6 +382,21 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             BasicMissileControler controler = new SpellTraceMissileControler((LiveMonster)target, spell);
             Missile mi = new Missile(effect, mouse.X, mouse.Y, controler);
             BattleManager.Instance.MissileQueue.Add(mi);
+        }
+
+        public void AddSpellRowMissile(ISpell spell, int count, Point mouse, string effect)
+        {
+            int size = BattleManager.Instance.MemMap.CardSize;
+            int ybase = mouse.Y/size*size;
+            int xstart = IsLeft ? 0 : BattleManager.Instance.MemMap.StageWidth - size;
+            for (int i = -count/2; i <= count/2; i++)
+            {
+                int yoff = ybase + i*size;
+                int xend = IsLeft ? xstart + spell.Range / 10 * size : xstart - spell.Range / 10 * size;
+                BasicMissileControler controler = new SpellLandMissileControler(this, new Point(xend, yoff), spell);
+                Missile mi = new Missile(effect, xstart, yoff, controler);
+                BattleManager.Instance.MissileQueue.Add(mi);
+            }
         }
 
         public void DeleteRandomCardFor(IPlayer p, int levelChange)

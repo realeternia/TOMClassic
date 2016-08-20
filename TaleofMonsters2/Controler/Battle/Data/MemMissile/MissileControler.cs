@@ -12,7 +12,15 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
 {
     internal abstract class BasicMissileControler
     {
+        protected enum FlyCheckType
+        {
+            Miss, 
+            ToCheck, 
+            EndPoint
+        }
+
         protected MissileConfig config;
+        protected bool isLocked =true;//锁定式的，可以在路径中就提前攻击其他目标
 
         public void SetConfig(MissileConfig configData)
         {
@@ -24,11 +32,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
             return false;
         }
 
-        protected bool FlyProc(Point targetPosition, ref NLPointF position, ref int angle)
+        protected FlyCheckType FlyProc(Point targetPosition, ref NLPointF position, ref int angle)
         {
             if (MathTool.GetDistance(targetPosition, position.ToPoint()) < 10)//todo 10是一个估算值
             {
-                return false;
+                return FlyCheckType.EndPoint;
             }
 
             var posDiff = new NLPointF(targetPosition.X - position.X, targetPosition.Y - position.Y);
@@ -39,10 +47,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
 
             if (MathTool.GetDistance(targetPosition, position.ToPoint()) < 10)//todo 10是一个估算值
             {
-                return false;
+                return FlyCheckType.EndPoint;
             }
 
-            return true;
+            return isLocked?FlyCheckType.Miss:FlyCheckType.ToCheck;
         }
     }
 
@@ -64,7 +72,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
                 return false;
             }
 
-            if (!FlyProc(target.Position,ref position, ref angle))
+            if (FlyProc(target.Position,ref position, ref angle) == FlyCheckType.EndPoint)
             {
                 parent.HitTarget(target, false);
                 BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(parent.Arrow), target, false));
@@ -92,7 +100,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
                 return false;
             }
 
-            if (!FlyProc(targetPos, ref position, ref angle))
+            if (FlyProc(targetPos, ref position, ref angle) == FlyCheckType.EndPoint)
             {
                 var mon = BattleLocationManager.GetPlaceMonster(targetPos.X, targetPos.Y);
                 if (mon != null)
@@ -124,10 +132,44 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
                 return false;
             }
 
-            if (!FlyProc(target.Position, ref position, ref angle))
+            if (FlyProc(target.Position, ref position, ref angle) == FlyCheckType.EndPoint)
             {
-                target.OnMagicDamage(spell.Damage, ConfigData.GetSpellConfig(spell.Id).Attr);
+                target.OnMagicDamage(spell.Damage, spell.Attr);
                 return false;
+            }
+            return true;
+        }
+    }
+
+    internal class SpellLandMissileControler : BasicMissileControler
+    {
+        private ISpell spell;
+        private Point targetPos;
+        private IPlayer owner;
+
+        public SpellLandMissileControler(IPlayer owner, Point pos, ISpell spl)
+        {
+            this.owner = owner;
+            targetPos = pos;
+            spell = spl;
+            isLocked = false;
+        }
+
+        public override bool CheckFly(ref NLPointF position, ref int angle)
+        {
+            var type = FlyProc(targetPos, ref position, ref angle);
+            if (type == FlyCheckType.EndPoint)
+            {
+                return false;
+            }
+            if (type == FlyCheckType.ToCheck)
+            {
+                var mon = BattleLocationManager.GetPlaceMonster((int)position.X, (int)position.Y);
+                if (mon != null && mon.IsLeft != owner.IsLeft)
+                {
+                    mon.OnMagicDamage(spell.Damage, spell.Attr);
+                    return false;
+                }
             }
             return true;
         }
