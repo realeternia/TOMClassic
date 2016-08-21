@@ -776,6 +776,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void SetToPosition(string type)
         {
+            if (Avatar.MonsterConfig.IsBuilding)
+            {
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", Position, 0, "Gold", 26, 0, 0, 1, 15), false);
+                return;
+            }
+
             Point dest = BattleLocationManager.GetMonsterNearPoint(Position, type, !IsLeft);
             if (dest.X != -1 && dest.Y != -1)
             {
@@ -793,23 +799,41 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void SuddenDeath()
         {
+            if (Avatar.MonsterConfig.IsBuilding)
+            {
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", Position, 0, "Gold", 26, 0, 0, 1, 15), false);
+                return;
+            }
             Life = 0;
         }
 
         public void Rebel()
         {
-            if (!Avatar.MonsterConfig.IsBuilding)//建筑无法策反
+            if (Avatar.MonsterConfig.IsBuilding)
             {
-                IsLeft = !IsLeft;
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", Position, 0, "Gold", 26, 0, 0, 1, 15), false);
+                return;
             }
+            IsLeft = !IsLeft;
         }
 
         public void AddMaxHp(double value)
         {
+            if (Avatar.MonsterConfig.IsBuilding)
+            {
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", Position, 0, "Gold", 26, 0, 0, 1, 15), false);
+                return;
+            }
+
             MaxHp.Source += value;
             if (value > 0)
             {
                 AddHp(value);//顺便把hp也加上
+            }
+            else
+            {
+                var decRate = Life/ MaxHp;
+                AddHp(decRate * value);
             }
         }
 
