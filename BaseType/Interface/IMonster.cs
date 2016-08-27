@@ -67,5 +67,6 @@ namespace ConfigDatas
 
         void Summon(int type, int id);
         void MadDrug(); //½»»»¹¥»÷ºÍÑªÁ¿
+        bool ResistBuffType(int type);
     }
 }

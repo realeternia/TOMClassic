@@ -28,21 +28,29 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             get { return HasBuff(BuffEffectTypes.Tile); }
         }
 
+        /// <summary>
+        /// 免疫目前有2中形式，1，加buff时免疫，按免疫时间缩减buff持续时间。2，对于转换型buff（变羊，变石头），降低几率
+        /// </summary>
+        public double GetBuffImmuneRate(int group)
+        {
+            if (group > 0 && group < self.Avatar.MonsterConfig.BuffImmune.Length)
+            {
+                return self.Avatar.MonsterConfig.BuffImmune[group];
+            }
+            return 0;
+        }
+
         public void AddBuff(int buffId, int blevel, double dura)
         {
             BuffConfig buffConfig = ConfigData.GetBuffConfig(buffId);
-            if (buffConfig.Group>0 && buffConfig.Group < self.Avatar.MonsterConfig.BuffImmune.Length)
+            var immuneRate = GetBuffImmuneRate(buffConfig.Group);
+            if (immuneRate >= 1)//免疫了
             {
-                var immumeRate = self.Avatar.MonsterConfig.BuffImmune[buffConfig.Group];
-                if (immumeRate >= 1)//免疫了
-                {
-                    return;
-                }
-                if (immumeRate > 0)
-                {
-                    dura *= (1 - immumeRate); 
-                }
-             
+                return;
+            }
+            if (immuneRate > 0)
+            {
+                dura *= (1 - immuneRate);
             }
 
             MemBaseBuff buffdata;

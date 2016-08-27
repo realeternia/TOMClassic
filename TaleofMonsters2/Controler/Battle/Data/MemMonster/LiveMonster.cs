@@ -893,6 +893,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
         }
 
+        public bool ResistBuffType(int type)
+        {
+            var rate = BuffManager.GetBuffImmuneRate(type);
+            return MathTool.GetRandom(0.0, 1.0) < rate;
+        }
+
         #endregion
     }
 }
