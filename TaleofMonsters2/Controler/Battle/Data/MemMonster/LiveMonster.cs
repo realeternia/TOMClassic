@@ -47,7 +47,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public Monster Avatar { get; private set; }
         public int HpReg { get; set; }
         public int GhostTime { get; set; }
-        public bool IsDefence { get { return ReadMov == 0; } }
+        public bool IsDefence { get { return ReadMov == 0 && !Avatar.MonsterConfig.IsBuilding; } }
         public Point Position { get; set; }
         public bool IsHero { get { return Avatar.MonsterConfig.Type == (int) CardTypeSub.Hero; } }
         public IMap Map { get { return BattleManager.Instance.MemMap; } }

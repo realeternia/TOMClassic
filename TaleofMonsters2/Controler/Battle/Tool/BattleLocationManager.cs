@@ -187,8 +187,8 @@ namespace TaleofMonsters.Controler.Battle.Tool
             if (BattleTargetManager.IsSpellNullTarget(target))
                 return true;
 
-            //if (BattleTargetManager.IsSpellGridTarget(target))
-            //    return IsPlaceBlank(tx, ty);
+            if (BattleTargetManager.IsSpellGridTarget(target))
+                return IsPlaceBlank(tx, ty);
 
             if (BattleTargetManager.IsSpellTombTarget(target))
                 return IsPlaceTomb(tx, ty);
