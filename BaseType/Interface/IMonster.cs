@@ -25,6 +25,7 @@ namespace ConfigDatas
         void AddItem(int itemId);//Õ½¶·ÖÐ
         void Transform(int monId);
         void AddActionRate(double value);
+        void AddWeapon(int weaponId, int lv);
         void StealWeapon(IMonster target);
         void BreakWeapon();
         void WeaponReturn();

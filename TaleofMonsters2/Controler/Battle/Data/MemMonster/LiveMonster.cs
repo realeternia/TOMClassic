@@ -19,6 +19,7 @@ using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Cards.Weapons;
 using TaleofMonsters.DataType.Decks;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster
@@ -630,6 +631,19 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public void AddActionRate(double value)
         {
             Action += (int)(GameConstants.LimitAts*value);
+        }
+
+        public void AddWeapon(int weaponId, int lv)
+        {
+            if (!CanAddWeapon())
+            {
+                return;
+            }
+
+            Weapon wpn = new Weapon(weaponId);
+            wpn.UpgradeToLevel(lv);
+            var tWeapon = new TrueWeapon(this, lv, wpn);
+            AddWeapon(tWeapon);
         }
 
         public void StealWeapon(IMonster target)
