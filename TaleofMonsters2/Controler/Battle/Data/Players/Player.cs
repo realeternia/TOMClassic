@@ -266,6 +266,17 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             BattleManager.Instance.MonsterQueue.Add(newMon);
         }
 
+        public void ExchangeMonster(IMonster target, int lv)
+        {
+            if ((target as LiveMonster).Avatar.MonsterConfig.IsBuilding)
+            {
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", target.Position, 0, "Gold", 26, 0, 0, 1, 15), false);
+                return;
+            }
+
+            target.Transform(MonsterBook.GetRandMonsterId());
+        }
+
         public void UseMonster(ActiveCard card, Point location)
         {
             if (!CheckUseCard(card))

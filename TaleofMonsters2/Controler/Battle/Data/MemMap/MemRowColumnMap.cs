@@ -152,37 +152,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             isDirty = true;
         }
 
-        public void ChangePositionWithRandom(IMonster target)
-        {
-            if (target.IsHero)
-                return;
-
-            RandomMaker rm = new RandomMaker();
-            int count = 0;
-            for (int i = 0; i < RowCount; i++)
-            {
-                int xoff = i > 1 ? 0 : i * 2 - 1;
-                int yoff = i < 2 ? 0 : i * 2 - 5;
-                Point pa = new Point(target.Position.X + xoff * CardSize, target.Position.Y + yoff * CardSize);
-                LiveMonster lm = BattleLocationManager.GetPlaceMonster(pa.X, pa.Y);
-                if (lm != null && !lm.IsHero)
-                {
-                    rm.Add(lm.Id, 1);
-                    count++;
-                }
-            }
-            if (count >= 1)
-            {
-                int id = rm.Process(1)[0];
-                LiveMonster lm =BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(id);
-                BattleLocationManager.UpdateCellOwner(lm.Position.X, lm.Position.Y, target.Id);
-                BattleLocationManager.UpdateCellOwner(target.Position.X, target.Position.Y, lm.Id);
-                Point temp = lm.Position;
-                lm.Position = target.Position;
-                target.Position = temp;
-            }
-        }
-
         public void SetRowUnitPosition(int y, bool isLeft, string type)
         {
             for (int i = 1; i < ColumnCount-1; i++)

@@ -3,7 +3,6 @@ namespace ConfigDatas
     public interface IMap
     {
         void SetTile(System.Drawing.Point point, int dis, int tile);
-        void ChangePositionWithRandom(IMonster target);
         void SetRowUnitPosition(int y, bool isLeft, string type);
         void UpdateCellOwner(System.Drawing.Point mouse, int ownerId);
         void ReviveUnit(System.Drawing.Point mouse, int addHp);

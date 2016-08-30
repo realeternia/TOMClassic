@@ -29,6 +29,7 @@ namespace ConfigDatas
         void CardLevelUp(int n, int type);
 
         void AddMonster(int cardId, int level, System.Drawing.Point location);
+        void ExchangeMonster(IMonster target, int lv);
         void AddResource(int type, int number);
         void AddTrap(int id, int lv, double rate, int dam);
         void AddSpellMissile(IMonster target, ISpell spell, System.Drawing.Point mouse, string effect);
