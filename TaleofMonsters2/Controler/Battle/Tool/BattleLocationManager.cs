@@ -269,5 +269,20 @@ namespace TaleofMonsters.Controler.Battle.Tool
             }
             BattleManager.Instance.MemMap.Cells[x / cardSize, y / cardSize].UpdateOwner(owner);
         }
+
+        public static Point GetRandomPoint()
+        {
+            bool paavail = false;
+            Point pa = new Point(0);
+            while (!paavail)
+            {
+                int size = BattleManager.Instance.MemMap.CardSize;
+                int xoff = MathTool.GetRandom(BattleManager.Instance.MemMap.Cells.GetLength(0));
+                int yoff = MathTool.GetRandom(BattleManager.Instance.MemMap.Cells.GetLength(1));
+                pa = new Point(xoff * size, yoff * size);
+                paavail = BattleManager.Instance.MemMap.IsMousePositionCanSummon(pa.X, pa.Y);
+            }
+            return pa;
+        }
     }
 }

@@ -222,6 +222,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             BattleLocationManager.UpdateCellOwner(mouse.X, mouse.Y, ownerId);
         }
 
+        public Point GetRandomPoint()
+        {
+            return BattleLocationManager.GetRandomPoint();
+        }
+
         public void Draw(Graphics g)
         {
             if (isDirty)
