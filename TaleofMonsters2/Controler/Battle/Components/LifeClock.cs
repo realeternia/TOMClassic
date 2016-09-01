@@ -110,20 +110,29 @@ namespace TaleofMonsters.Controler.Battle.Components
                 e.Graphics.DrawImage(HSIcons.GetIconsByEName("mix0"), destRegion, 0, 0, 32, 32 * (1-roundRate), GraphicsUnit.Pixel);
                 if (player != null)
                 {
-                    for (int i = 0; i < player.Mp; i++)
+                    for (int i = 0; i < player.EnergyGenerator.LimitMp; i++)
                     {
-                        e.Graphics.FillRectangle(Brushes.Blue, 112 + 24 * i, 10, 22, 8);
-                        e.Graphics.DrawRectangle(Pens.White, 112 + 24 * i, 10, 22, 8);
+                        if (i < player.Mp)
+                        {
+                            e.Graphics.FillRectangle(Brushes.Blue, 112 + 24*i, 10, 22, 8);
+                        }
+                        e.Graphics.DrawRectangle(Pens.Gray, 112 + 24 * i, 10, 22, 8);
                     }
-                    for (int i = 0; i < player.Pp; i++)
+                    for (int i = 0; i < player.EnergyGenerator.LimitPp; i++)
                     {
-                        e.Graphics.FillRectangle(Brushes.Red, 112 + 24 * i, 20, 22, 8);
-                        e.Graphics.DrawRectangle(Pens.White, 112 + 24 * i, 20, 22, 8);
+                        if (i < player.Pp)
+                        {
+                            e.Graphics.FillRectangle(Brushes.Red, 112 + 24*i, 20, 22, 8);
+                        }
+                        e.Graphics.DrawRectangle(Pens.Gray, 112 + 24 * i, 20, 22, 8);
                     }
-                    for (int i = 0; i < player.Lp; i++)
+                    for (int i = 0; i < player.EnergyGenerator.LimitLp; i++)
                     {
-                        e.Graphics.FillRectangle(Brushes.Yellow, 112 + 24 * i, 30, 22, 8);
-                        e.Graphics.DrawRectangle(Pens.White, 112 + 24 * i, 30, 22, 8);
+                        if (i < player.Lp)
+                        {
+                            e.Graphics.FillRectangle(Brushes.Yellow, 112 + 24*i, 30, 22, 8);
+                        }
+                        e.Graphics.DrawRectangle(Pens.Gray, 112 + 24 * i, 30, 22, 8);
                     } 
                 }
             }
@@ -138,20 +147,29 @@ namespace TaleofMonsters.Controler.Battle.Components
 
                 if (player != null)
                 {
-                    for (int i = 0; i < player.Mp; i++)
+                    for (int i = 0; i < player.EnergyGenerator.LimitMp; i++)
                     {
-                        e.Graphics.FillRectangle(Brushes.Blue, Width - 134 - 24 * i, 10, 22, 8);
-                        e.Graphics.DrawRectangle(Pens.White, Width - 134 - 24 * i, 10, 22, 8);
+                        if (i < player.Mp)
+                        {
+                            e.Graphics.FillRectangle(Brushes.Blue, Width - 134 - 24 * i, 10, 22, 8);    
+                        }
+                        e.Graphics.DrawRectangle(Pens.Gray, Width - 134 - 24 * i, 10, 22, 8);
                     }
-                    for (int i = 0; i < player.Pp; i++)
+                    for (int i = 0; i < player.EnergyGenerator.LimitPp; i++)
                     {
-                        e.Graphics.FillRectangle(Brushes.Red, Width - 134 - 24 * i, 20, 22, 8);
-                        e.Graphics.DrawRectangle(Pens.White, Width - 134 - 24 * i, 20, 22, 8);
+                        if (i < player.Pp)
+                        {
+                            e.Graphics.FillRectangle(Brushes.Red, Width - 134 - 24*i, 20, 22, 8);
+                        }
+                        e.Graphics.DrawRectangle(Pens.Gray, Width - 134 - 24 * i, 20, 22, 8);
                     }
-                    for (int i = 0; i < player.Lp; i++)
+                    for (int i = 0; i < player.EnergyGenerator.LimitLp; i++)
                     {
-                        e.Graphics.FillRectangle(Brushes.Yellow, Width - 134 - 24 * i, 30, 22, 8);
-                        e.Graphics.DrawRectangle(Pens.White, Width - 134 - 24 * i, 30, 22, 8);
+                        if (i < player.Lp)
+                        {
+                            e.Graphics.FillRectangle(Brushes.Yellow, Width - 134 - 24*i, 30, 22, 8);
+                        }
+                        e.Graphics.DrawRectangle(Pens.Gray, Width - 134 - 24 * i, 30, 22, 8);
                     }
                 }
             }

@@ -30,7 +30,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             PlayerAttr attr = new PlayerAttr();
             int[] energyRate = {0, 0, 0};
             CalculateEquipAndSkill(UserProfile.InfoEquip.Equipon, attr, energyRate);
-            EnergyGenerator.SetRate(energyRate);
+            EnergyGenerator.SetRate(energyRate, UserProfile.InfoBasic.Job);
 
             InitBase();
         }
@@ -55,8 +55,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             base.InitialCards();
 
 #if DEBUG
-            CardManager.AddCard(new ActiveCard(53000078, 1, 0));
-            CardManager.AddCard(new ActiveCard(52000003, 1, 0));
+            CardManager.AddCard(new ActiveCard(53000035, 1, 0));
 #endif
         }
 

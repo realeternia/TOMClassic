@@ -7,7 +7,6 @@ using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMissile;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players.Frag;
-using TaleofMonsters.Controler.Battle.DataTent;
 using TaleofMonsters.Core.Interface;
 using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.Core;
@@ -188,15 +187,15 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         {
             if (type == PlayerManaTypes.Mana || type == PlayerManaTypes.All)
             {
-                Mp = Math.Min(Mp + num, 10);
+                Mp = Math.Min(Mp + num, EnergyGenerator.LimitMp);
             }
             if (type == PlayerManaTypes.LeaderShip || type == PlayerManaTypes.All)
             {
-                Lp = Math.Min(Lp + num, 10);
+                Lp = Math.Min(Lp + num, EnergyGenerator.LimitLp);
             }
             if (type == PlayerManaTypes.Power || type == PlayerManaTypes.All)
             {
-                Pp = Math.Min(Pp + num, 10);
+                Pp = Math.Min(Pp + num, EnergyGenerator.LimitPp);
             }
 
             if (ManaChanged != null) //todo 先ws下
