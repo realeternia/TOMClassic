@@ -20,8 +20,8 @@ namespace TaleofMonsters.Forms
     {
         private int headId = -1;
         private int type;
-        private int res;
-        private int constellation;
+        private int bldType; //血型
+        private int constellation; //星座
         private HSCursor myCursor;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
         private VirtualRegion virtualRegion;
@@ -51,7 +51,7 @@ namespace TaleofMonsters.Forms
             pictureBoxHead.Image = PicLoader.Read("Player", "1.PNG");
             constellation = MathTool.GetRandom(12);
             type = MathTool.GetRandom(5);
-            res = MathTool.GetRandom(6);
+            bldType = MathTool.GetRandom(4);
             myCursor.ChangeCursor("default");
         }
 
@@ -91,6 +91,7 @@ namespace TaleofMonsters.Forms
             profile.Name = UserProfile.ProfileName;
             profile.InfoBasic.Job = JobConfig.Indexer.NewBie;
             profile.InfoBasic.Constellation = constellation + 1;
+            profile.InfoBasic.BloodType = bldType + 1;
             profile.InfoBasic.Face = headId;
             profile.InfoBasic.Level = 1;
             profile.InfoBasic.MapId = SceneConfig.Indexer.BornMapId;
@@ -115,14 +116,14 @@ namespace TaleofMonsters.Forms
 
         private void buttonType_Click(object sender, EventArgs e)
         {
-            type = (type + 1)%5;
+            type = (type + 1)%7;
 
             Invalidate();
         }
 
         private void buttonRes_Click(object sender, EventArgs e)
         {
-            res = (res + 1) % 6;
+            bldType = (bldType + 1) % 4;
             Invalidate();
         }
 
@@ -136,9 +137,8 @@ namespace TaleofMonsters.Forms
         {
             UserProfile.Profile = CreateProfile();            
             CreateCards();
-            UserProfile.InfoBag.AddItem(HItemConfig.Indexer.NewbieGift, 1);//新手礼包
-            UserProfile.InfoBag.AddItem(HItemConfig.Indexer.NewbieGiftCard + type, 1);//主要卡包
-            UserProfile.InfoBag.AddItem(HItemConfig.Indexer.NewbieGiftRes + res, 1);//资源追加
+            UserProfile.InfoBag.AddItem(GameConstants.NewbieGift, 1);//新手礼包
+            UserProfile.InfoBag.AddItem(GameConstants.NewbieGiftElement + type*10, 10);//属性石
             result = DialogResult.OK;
             Close();
         }
@@ -158,11 +158,11 @@ namespace TaleofMonsters.Forms
             }
             else if (info == 2)
             {
-                image = DrawTool.GetImageByString("", HSTypes.I2InitialAttrTip(type), 100, Color.Gold);
+                image = DrawTool.GetImageByString("", HSTypes.I2InitialAttrTip(type), 140, Color.Gold);
             }
             else if (info == 3)
             {
-                image = DrawTool.GetImageByString(HSTypes.I2Resource(res+1), 100);
+                image = DrawTool.GetImageByString("", HSTypes.I2BloodTypeTip(bldType), 150, Color.LimeGreen);
             }
 
             if (image != null)
@@ -187,7 +187,7 @@ namespace TaleofMonsters.Forms
 
             e.Graphics.DrawImage(HSIcons.GetIconsByEName(string.Format("con{0}", constellation + 1)), 141, 159, 24, 24);
             e.Graphics.DrawImage(HSIcons.GetIconsByEName(string.Format("atr{0}", type)), 141, 192, 24, 24);
-            e.Graphics.DrawImage(HSIcons.GetIconsByEName(string.Format("res{0}", res + 2)), 141, 225, 24, 24);
+            e.Graphics.DrawImage(HSIcons.GetIconsByEName(string.Format("bld{0}", bldType+1)), 141, 225, 24, 24);
         }
     }
 }

@@ -8,6 +8,8 @@ namespace TaleofMonsters.DataType.User
     {
          [FieldIndex(Index = 3)]
         public int Face;
+         [FieldIndex(Index = 4)]
+         public int BloodType;//血型
          [FieldIndex(Index = 5)]
         public int Constellation;//星座
          [FieldIndex(Index =6)]

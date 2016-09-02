@@ -43,5 +43,7 @@ namespace TaleofMonsters.Core
         public const int HitToRate = 5;//每点命中实际的提升率
 
         public const int SkillTileId = 55610001;
+        public const int NewbieGift = 22031001;
+        public const int NewbieGiftElement = 22018001;
     }
 }
