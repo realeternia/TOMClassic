@@ -54,6 +54,8 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             {
                 case TowerAttrs.Atk: return Atk;
                 case TowerAttrs.Hp: return Hp;
+                case TowerAttrs.Spd: return Spd;
+                case TowerAttrs.Range: return Range;
             }
             return 0;
         }

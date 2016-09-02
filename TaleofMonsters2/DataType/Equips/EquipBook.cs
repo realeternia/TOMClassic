@@ -66,6 +66,9 @@ namespace TaleofMonsters.DataType.Equips
             {
                 vEquip.Atk += equip.Atk;
                 vEquip.Hp += equip.Hp;
+                vEquip.MpRate += equip.MpRate;
+                vEquip.PpRate += equip.PpRate;
+                vEquip.LpRate += equip.LpRate;
             }
             return vEquip;
         }

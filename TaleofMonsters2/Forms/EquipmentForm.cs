@@ -34,10 +34,6 @@ namespace TaleofMonsters.Forms
         private List<Equip> equipDataList = new List<Equip>();
         private Equip vEquip; //所有装备的属性
 
-        private int lp;
-        private int pp;
-        private int mp;
-
         public EquipmentForm()
         {
             InitializeComponent();
@@ -265,23 +261,6 @@ namespace TaleofMonsters.Forms
         {
             equipDataList = EquipBook.GetEquipsList(UserProfile.InfoEquip.Equipon);
             vEquip = EquipBook.GetVirtualEquips(equipDataList);
-            mp = lp = pp = 5;
-            foreach (var equip in equipDataList)
-            {
-                var equipConfig = ConfigData.GetEquipConfig(equip.TemplateId);
-                if (equipConfig.EnergyRate[0] > 0)
-                {
-                    lp = equipConfig.EnergyRate[0];
-                }
-                if (equipConfig.EnergyRate[1] > 0)
-                {
-                    pp = equipConfig.EnergyRate[1];
-                }
-                if (equipConfig.EnergyRate[2] > 0)
-                {
-                    mp = equipConfig.EnergyRate[2];
-                }
-            }
         }
 
         private void EquipmentForm_Paint(object sender, PaintEventArgs e)
@@ -333,14 +312,14 @@ namespace TaleofMonsters.Forms
             e.Graphics.FillRectangle(Brushes.DimGray, 31, 178, 80, 2);
             e.Graphics.FillRectangle(Brushes.DodgerBlue, 31, 178, Math.Min(UserProfile.InfoBasic.Exp * 79 / ExpTree.GetNextRequired(UserProfile.InfoBasic.Level) + 1, 80), 2);
 
-            DrawAttr(e.Graphics, font, heroData.Atk + vEquip.Atk, vEquip.Atk, 147, 136);
-            DrawAttr(e.Graphics, font, heroData.Hp + vEquip.Hp, vEquip.Hp, 147 + 53, 136);
-            DrawAttr(e.Graphics, font, heroData.Spd, 0, 147 + 53*2, 136);
-            DrawAttr(e.Graphics, font, heroData.Range, 0, 147 + 53 * 3, 136);
+            DrawAttr(e.Graphics, font, heroData.Atk + vEquip.Atk, 147, 136);
+            DrawAttr(e.Graphics, font, heroData.Hp + vEquip.Hp, 147 + 53, 136);
+            DrawAttr(e.Graphics, font, heroData.Spd, 147 + 53*2, 136);
+            DrawAttr(e.Graphics, font, heroData.Range, 147 + 53 * 3, 136);
 
-            DrawAttr(e.Graphics, font, lp, 0, 147, 199);
-            DrawAttr(e.Graphics, font, pp, 0, 147 + 53, 199);
-            DrawAttr(e.Graphics, font, mp, 0, 147 + 53 * 2, 199);
+            DrawAttr(e.Graphics, font, vEquip.LpRate, 147, 199);
+            DrawAttr(e.Graphics, font, vEquip.PpRate, 147 + 53, 199);
+            DrawAttr(e.Graphics, font, vEquip.MpRate, 147 + 53 * 2, 199);
 
             font.Dispose();
             font2.Dispose();
@@ -362,9 +341,9 @@ namespace TaleofMonsters.Forms
             return tipData.Image;
         }
 
-        private void DrawAttr(Graphics g, Font font, int basicV, int addonV, int x, int y)
+        private void DrawAttr(Graphics g, Font font, int totalV, int x, int y)
         {
-            g.DrawString(basicV.ToString(), font, Brushes.White, GetX(g, (basicV + addonV).ToString(), font, x, 45), y);
+            g.DrawString(totalV.ToString(), font, Brushes.White, GetX(g, totalV.ToString(), font, x, 45), y);
         }
     }
 }

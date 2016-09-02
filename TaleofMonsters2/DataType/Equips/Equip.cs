@@ -14,6 +14,10 @@ namespace TaleofMonsters.DataType.Equips
         public int Atk;//实际的攻击力
         public int Hp;
 
+        public int LpRate;
+        public int PpRate;
+        public int MpRate;
+
         public Equip()
         {
         }
@@ -31,6 +35,9 @@ namespace TaleofMonsters.DataType.Equips
             {
                 case TowerAttrs.Atk: return Atk;
                 case TowerAttrs.Hp: return Hp;
+                case TowerAttrs.Mp: return MpRate;
+                case TowerAttrs.Pp: return PpRate;
+                case TowerAttrs.Lp: return LpRate;
             }
             return 0;
         }
@@ -38,6 +45,9 @@ namespace TaleofMonsters.DataType.Equips
         public void UpgradeToLevel()
         {
             EquipConfig equipConfig = ConfigData.GetEquipConfig(TemplateId);
+            LpRate = equipConfig.EnergyRate[0];
+            PpRate = equipConfig.EnergyRate[1];
+            MpRate = equipConfig.EnergyRate[2];
             int qual = equipConfig.Quality; 
             int standardValue = (35 + qual * 5) * (equipConfig.Level + 9) / 10 * AttrFactor / 100;
             if (equipConfig.AtkP > 0)
