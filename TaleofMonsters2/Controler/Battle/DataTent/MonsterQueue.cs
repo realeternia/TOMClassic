@@ -34,7 +34,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
 
         public void Add(LiveMonster mon)
         {
-            mon.OwnerPlayer.State.CheckMonsterEvent(true, mon.Avatar);
+            mon.OwnerPlayer.State.CheckMonsterEvent(true, mon);
             monsters.Add(mon);
             BattleLocationManager.UpdateCellOwner(mon.Position.X, mon.Position.Y, mon.Id);
             mon.SkillManager.CheckInitialEffect();
@@ -55,7 +55,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
 
         private void Remove(LiveMonster mon)
         {
-            mon.OwnerPlayer.State.CheckMonsterEvent(false, mon.Avatar);
+            mon.OwnerPlayer.State.CheckMonsterEvent(false, mon);
             if (BattleManager.Instance.MemMap.GetMouseCell(mon.Position.X, mon.Position.Y).Owner == -mon.Id)
                 BattleLocationManager.UpdateCellOwner(mon.Position.X, mon.Position.Y, 0);
             monsters.Remove(mon);                                

@@ -32,6 +32,11 @@ namespace TaleofMonsters.Forms
 
         private Monster heroData;
         private List<Equip> equipDataList = new List<Equip>();
+        private Equip vEquip; //所有装备的属性
+
+        private int lp;
+        private int pp;
+        private int mp;
 
         public EquipmentForm()
         {
@@ -58,7 +63,6 @@ namespace TaleofMonsters.Forms
             virtualRegion.AddRegion(new SubVirtualRegion(14, 147, 170, 46, 44, 14));
             virtualRegion.AddRegion(new SubVirtualRegion(15, 200, 170, 46, 44, 15));
             virtualRegion.AddRegion(new SubVirtualRegion(16, 253, 170, 46, 44, 16));
-            virtualRegion.AddRegion(new SubVirtualRegion(17, 306, 170, 46, 44, 17));
 
             for (int i = 0; i < 60; i++)
             {
@@ -84,8 +88,8 @@ namespace TaleofMonsters.Forms
         {
             base.Init(width, height);
 
-            heroData = new Monster(MonsterConfig.Indexer.HeroCardId);
-            heroData.UpgradeToLevel(UserProfile.Profile.InfoBasic.Level);
+            heroData = new Monster(MonsterConfig.Indexer.KingTowerId);
+            heroData.UpgradeToLevel(ConfigData.GetLevelExpConfig(UserProfile.Profile.InfoBasic.Level).TowerLevel);
             RefreshEquip();
             show = true;
         }
@@ -260,6 +264,24 @@ namespace TaleofMonsters.Forms
         private void RefreshEquip()
         {
             equipDataList = EquipBook.GetEquipsList(UserProfile.InfoEquip.Equipon);
+            vEquip = EquipBook.GetVirtualEquips(equipDataList);
+            mp = lp = pp = 5;
+            foreach (var equip in equipDataList)
+            {
+                var equipConfig = ConfigData.GetEquipConfig(equip.TemplateId);
+                if (equipConfig.EnergyRate[0] > 0)
+                {
+                    lp = equipConfig.EnergyRate[0];
+                }
+                if (equipConfig.EnergyRate[1] > 0)
+                {
+                    pp = equipConfig.EnergyRate[1];
+                }
+                if (equipConfig.EnergyRate[2] > 0)
+                {
+                    mp = equipConfig.EnergyRate[2];
+                }
+            }
         }
 
         private void EquipmentForm_Paint(object sender, PaintEventArgs e)
@@ -311,14 +333,14 @@ namespace TaleofMonsters.Forms
             e.Graphics.FillRectangle(Brushes.DimGray, 31, 178, 80, 2);
             e.Graphics.FillRectangle(Brushes.DodgerBlue, 31, 178, Math.Min(UserProfile.InfoBasic.Exp * 79 / ExpTree.GetNextRequired(UserProfile.InfoBasic.Level) + 1, 80), 2);
 
-            var vEquip = EquipBook.GetVirtualEquips(equipDataList);
-            DrawAttr(e.Graphics, font, heroData.Atk, vEquip.Atk, 147,136);
-            //DrawAttr(e.Graphics, font, heroData.Def, vEquip.Def, 147 + 53, 136);
+            DrawAttr(e.Graphics, font, heroData.Atk + vEquip.Atk, vEquip.Atk, 147, 136);
+            DrawAttr(e.Graphics, font, heroData.Hp + vEquip.Hp, vEquip.Hp, 147 + 53, 136);
+            DrawAttr(e.Graphics, font, heroData.Spd, 0, 147 + 53*2, 136);
+            DrawAttr(e.Graphics, font, heroData.Range, 0, 147 + 53 * 3, 136);
 
-            //DrawAttr(e.Graphics, font, heroData.Mag, vEquip.Mag, 147, 199);
-            //DrawAttr(e.Graphics, font, heroData.Spd, vEquip.Spd, 147 + 53, 199);
-            DrawAttr(e.Graphics, font, heroData.Luk, 0, 147 + 53 * 2, 199);
-            DrawAttr(e.Graphics, font, heroData.Hp, vEquip.Hp, 147 + 53 * 3, 199);
+            DrawAttr(e.Graphics, font, lp, 0, 147, 199);
+            DrawAttr(e.Graphics, font, pp, 0, 147 + 53, 199);
+            DrawAttr(e.Graphics, font, mp, 0, 147 + 53 * 2, 199);
 
             font.Dispose();
             font2.Dispose();
@@ -329,9 +351,8 @@ namespace TaleofMonsters.Forms
 
         private Image GetAttrPreview(int index)
         {
-            var vEquip = EquipBook.GetVirtualEquips(equipDataList);
-            var equipAttr = vEquip.GetAttrByIndex((PlayerAttrs)(index));
-            var attr = heroData.GetAttrByIndex((PlayerAttrs)(index)) - equipAttr;
+            var equipAttr = vEquip.GetAttrByIndex((TowerAttrs)(index));
+            var attr = heroData.GetAttrByIndex((TowerAttrs)(index));
 
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine(HSTypes.I2HeroAttrTip(index), "White", 20);

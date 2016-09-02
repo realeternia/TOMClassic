@@ -234,8 +234,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             Id = id;
             Level = level;
             Avatar = mon;
-            if (Avatar.MonsterConfig.Type != (int)CardTypeSub.Hero)
-                Avatar.UpgradeToLevel(level);          
+            Avatar.UpgradeToLevel(level);          
 
             Position = point;
             IsLeft = isLeft;
@@ -272,9 +271,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             Dhit = new AttrModifyData(Avatar.Dhit);
             Crt = new AttrModifyData(Avatar.Crt);
             Luk = new AttrModifyData(Avatar.Luk);
-
-            if (Avatar.MonsterConfig.Type != (int)CardTypeSub.Hero)
-                EAddonBook.UpdateMonsterData(this, OwnerPlayer.State.Monsterskills.Keys(), OwnerPlayer.State.Monsterskills.Values());
         }
 
         public bool BeHited(LiveMonster src)
@@ -614,10 +610,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             int lifp = Life * 100 / Avatar.Hp;
             MonsterCoverBox.RemoveAllCover();
             SkillManager.CheckRemoveEffect();
-            OwnerPlayer.State.CheckMonsterEvent(false, Avatar);
+            OwnerPlayer.State.CheckMonsterEvent(false, this);
             Avatar = new Monster(monId);
             Avatar.UpgradeToLevel(Level);
-            OwnerPlayer.State.CheckMonsterEvent(true, Avatar);
+            OwnerPlayer.State.CheckMonsterEvent(true, this);
             SetBasicData();
             MonsterCoverBox.CheckCover();
             SkillManager.CheckInitialEffect();

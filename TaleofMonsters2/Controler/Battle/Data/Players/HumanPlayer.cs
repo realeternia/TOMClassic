@@ -27,9 +27,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
             Cards = new ActiveCards(cd);
 
-            PlayerAttr attr = new PlayerAttr();
             int[] energyRate = {0, 0, 0};
-            CalculateEquipAndSkill(UserProfile.InfoEquip.Equipon, attr, energyRate);
+            CalculateEquipAndSkill(UserProfile.InfoEquip.Equipon, energyRate);
             EnergyGenerator.SetRate(energyRate, UserProfile.InfoBasic.Job);
 
             InitBase();
@@ -59,12 +58,10 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 #endif
         }
 
-        private void CalculateEquipAndSkill(int[] equipids, PlayerAttr attr, int[] energyData)
+        private void CalculateEquipAndSkill(int[] equipids, int[] energyData)
         {
             var equipList = EquipBook.GetEquipsList(equipids);
             var addon = EquipBook.GetVirtualEquips(equipList);
-            attr.AddAttrs(PlayerAttrs.Atk, addon.Atk);
-            attr.AddAttrs(PlayerAttrs.Hp, addon.Hp);
             foreach (var equip in equipList)
             {
                 EquipConfig equipConfig = ConfigData.GetEquipConfig(equip.TemplateId);
@@ -77,7 +74,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                     HeroSkillList.Add(equipConfig.SpecialSkill);
                 }
             }
-            //  State.UpdateSkills(addons.Keys(), addons.Values());
+            State.UpdateAttr(addon.Atk, addon.Hp);
+            State.UpdateSkills(new int[0], new int[0]);
         }
     }
 }

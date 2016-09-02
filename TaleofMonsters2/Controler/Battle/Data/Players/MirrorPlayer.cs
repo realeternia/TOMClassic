@@ -1,7 +1,5 @@
 ﻿using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
-using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.DataType.Cards.Monsters;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
 {
@@ -17,7 +15,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
             EnergyGenerator.SetRateNpc(peopleConfig);
 
-            PlayerAttr attr = new PlayerAttr();
             Cards = cpcards.GetCopy();
             InitBase();
         }

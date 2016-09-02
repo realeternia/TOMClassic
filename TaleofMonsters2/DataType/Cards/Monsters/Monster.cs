@@ -48,12 +48,12 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             UpgradeToLevel1();
         }
 
-        public int GetAttrByIndex(PlayerAttrs attr)
+        public int GetAttrByIndex(TowerAttrs attr)
         {
             switch (attr)
             {
-                case PlayerAttrs.Atk: return Atk;
-                case PlayerAttrs.Hp: return Hp;
+                case TowerAttrs.Atk: return Atk;
+                case TowerAttrs.Hp: return Hp;
             }
             return 0;
         }

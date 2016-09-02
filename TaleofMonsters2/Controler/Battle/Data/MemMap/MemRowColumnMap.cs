@@ -3,6 +3,7 @@ using System.Drawing;
 using NarlonLib.Core;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
+using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Maps;
 using TaleofMonsters.Controler.Battle.Tool;
@@ -69,7 +70,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             }
         }
 
-        public void InitUnit(IPlayer player)
+        public void InitUnit(Player player)
         {
             int x = player.IsLeft ? 0 : ColumnCount - 1;
             int y = RowCount / 2;
@@ -78,7 +79,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             {
                 var id = World.WorldInfoManager.GetCardFakeId();
                 var heroData = new Monster(unitInfo.UnitId);
-                LiveMonster lm = new LiveMonster(id, heroData.Level, heroData, new Point((x + (player.IsLeft ? unitInfo.X : (-unitInfo.X))) * CardSize, (y + unitInfo.Y) * CardSize), player.IsLeft);
+                var level = ConfigData.GetLevelExpConfig(player.Level).TowerLevel;
+                LiveMonster lm = new LiveMonster(id, level, heroData, new Point((x + (player.IsLeft ? unitInfo.X : (-unitInfo.X))) * CardSize, (y + unitInfo.Y) * CardSize), player.IsLeft);
                 BattleManager.Instance.MonsterQueue.Add(lm);
             }
         }

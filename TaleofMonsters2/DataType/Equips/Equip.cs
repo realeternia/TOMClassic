@@ -25,12 +25,12 @@ namespace TaleofMonsters.DataType.Equips
             UpgradeToLevel();
         }
 
-        public int GetAttrByIndex(PlayerAttrs attr)
+        public int GetAttrByIndex(TowerAttrs attr)
         {
             switch (attr)
             {
-                case PlayerAttrs.Atk: return Atk;
-                case PlayerAttrs.Hp: return Hp;
+                case TowerAttrs.Atk: return Atk;
+                case TowerAttrs.Hp: return Hp;
             }
             return 0;
         }
@@ -57,12 +57,12 @@ namespace TaleofMonsters.DataType.Equips
             tipData.AddTextNewLine("", "White");
             if (Atk > 0)
             {
-                EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int) (PlayerAttrs.Atk+ 1));
+                EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int) (TowerAttrs.Atk+ 1));
                 tipData.AddTextNewLine(string.Format(eAddon.Format, Atk), HSTypes.I2EaddonColor(eAddon.Rare));
             }
             if (Hp > 0)
             {
-                EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(PlayerAttrs.Hp + 1));
+                EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(TowerAttrs.Hp + 1));
                 tipData.AddTextNewLine(string.Format(eAddon.Format, Hp), HSTypes.I2EaddonColor(eAddon.Rare));
             }
           
