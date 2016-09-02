@@ -33,7 +33,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 var sid = sidArray[i];
                 switch (ConfigData.GetEquipAddonConfig(sid).Type)
                 {
-
+                    //todo save the data
                 }
             }
         }
