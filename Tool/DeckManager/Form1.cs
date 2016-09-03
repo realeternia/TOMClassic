@@ -40,12 +40,12 @@ namespace DeckManager
             for (int i = 0; i < 30; i++)
             {
                 int cardId = cd[i].id;
-                if (cardId < 20000)
-                    images[i] = Image.FromFile(String.Format("{0}/Monsters/{1}.JPG", System.Windows.Forms.Application.StartupPath, cd[i].id%10000));
-                else if (cardId < 30000)
-                    images[i] = Image.FromFile(String.Format("{0}/Weapon/{1}.JPG", System.Windows.Forms.Application.StartupPath, cd[i].id % 10000));
+                if (cardId < 52000000)
+                    images[i] = Image.FromFile(String.Format("{0}/Monsters/{1}.JPG", System.Windows.Forms.Application.StartupPath, cd[i].id%1000000));
+                else if (cardId < 53000000)
+                    images[i] = Image.FromFile(String.Format("{0}/Weapon/{1}.JPG", System.Windows.Forms.Application.StartupPath, cd[i].id % 1000000));
                 else
-                    images[i] = Image.FromFile(String.Format("{0}/Spell/{1}.JPG", System.Windows.Forms.Application.StartupPath, cd[i].id % 10000));
+                    images[i] = Image.FromFile(String.Format("{0}/Spell/{1}.JPG", System.Windows.Forms.Application.StartupPath, cd[i].id % 1000000));
             }
         }
         private void panel1_Paint(object sender, PaintEventArgs e)

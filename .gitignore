@@ -71,3 +71,6 @@ obj
 /Tool/ExcelToCsv/bin/Debug/ExcelToCsv.exe
 /Tool/ExcelToCsv/bin/Debug/ExcelToCsv.pdb
 /bin/Debug/Save
+/Tool/DeckManager/bin
+/Tool/DeckManager/obj
+/Tool/ExcelToCsv/obj
