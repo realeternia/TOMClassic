@@ -112,6 +112,31 @@ namespace TaleofMonsters.Forms
                 var dcard = UserProfile.InfoCard.AddCard(cd.BaseId);
                 UserProfile.InfoCard.SelectedDeck.SetCardAt(index++, dcard.BaseId);
             }
+            #region 把所有基础卡牌都给玩家
+            
+            foreach (var cd in ConfigData.MonsterDict.Values)
+            {
+                if (cd.Remark.Contains("基本") && UserProfile.InfoCard.GetCardCount(cd.Id) == 0)
+                {
+                    UserProfile.InfoCard.AddCard(cd.Id);
+                }
+            }
+            foreach (var cd in ConfigData.WeaponDict.Values)
+            {
+                if (cd.Remark.Contains("基本") && UserProfile.InfoCard.GetCardCount(cd.Id) == 0)
+                {
+                    UserProfile.InfoCard.AddCard(cd.Id);
+                }
+            }
+            foreach (var cd in ConfigData.SpellDict.Values)
+            {
+                if (cd.Remark.Contains("基本") && UserProfile.InfoCard.GetCardCount(cd.Id) == 0)
+                {
+                    UserProfile.InfoCard.AddCard(cd.Id);
+                }
+            }
+
+            #endregion
         }
 
         private void buttonType_Click(object sender, EventArgs e)
