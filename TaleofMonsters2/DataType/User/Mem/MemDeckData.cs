@@ -35,6 +35,27 @@ namespace TaleofMonsters.DataType.User.Mem
             get { return Wcount+Mcount; }
         }
 
+        public int JobRequired
+        {
+            get
+            {
+                int jobId = 0;
+                foreach (var cardId in CardIds)
+                {
+                    var card = CardAssistant.GetCard(cardId);
+                    if (card.JobId > 0)
+                    {
+                        if (jobId > 0 && jobId != card.JobId)
+                        {
+                            return -1;
+                        }
+                        jobId = card.JobId;
+                    }
+                }
+                return jobId;
+            }
+        }
+
         public int GetCardAt(int index)
         {
             return CardIds[index];
@@ -79,7 +100,7 @@ namespace TaleofMonsters.DataType.User.Mem
             }
             SetCardAt(firstBlank, card.BaseId);
 
-            return Core.HSErrorTypes.OK;
+            return HSErrorTypes.OK;
         }
 
         public void RemoveCardById(int id)

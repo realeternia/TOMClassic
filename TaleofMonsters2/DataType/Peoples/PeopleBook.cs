@@ -118,6 +118,13 @@ namespace TaleofMonsters.DataType.Peoples
                 return;
             }
 
+            var jobRequired = UserProfile.InfoCard.SelectedDeck.JobRequired;
+            if (jobRequired == -1 || (jobRequired > 0 && jobRequired != UserProfile.Profile.InfoBasic.Job))
+            {
+                MainForm.Instance.AddTip("卡组和职业不符合", "Red");
+                return;
+            }
+
             if (UserProfile.InfoBasic.Ap < GameConstants.FightAPCost)
             {
                 MainForm.Instance.AddTip("体力不足", "Red");

@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace ControlPlus
 {
@@ -13,6 +14,8 @@ namespace ControlPlus
         private int y;
         private int width;
         private Control parent;
+
+        private int selectIndex;
 
         public NLPageSelector(Control uc,int x,int y,int width)
         {
@@ -41,35 +44,49 @@ namespace ControlPlus
                     for (int i = 0; i < totalPage; i++)
                     {
                         Button buttonPage = new Button();
-                        buttonPage.BackColor = System.Drawing.Color.Maroon;
-                        buttonPage.Cursor = System.Windows.Forms.Cursors.Hand;
-                        buttonPage.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-                        buttonPage.Font = new System.Drawing.Font("微软雅黑", 13.5f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
-                        buttonPage.ForeColor = System.Drawing.Color.Gold;
-                        buttonPage.Location = new System.Drawing.Point(width - (totalPage - i) * 20+x, 2+y);
+                        buttonPage.BackColor = Color.Maroon;
+                        buttonPage.Cursor = Cursors.Hand;
+                        buttonPage.FlatStyle = FlatStyle.Popup;
+                        buttonPage.Font = new Font("微软雅黑", 13.5f, FontStyle.Bold, GraphicsUnit.Pixel, ((byte)(134)));
+                        buttonPage.ForeColor = Color.Gold;
+                        buttonPage.Location = new Point(width - (totalPage - i) * 20+x, 2+y);
                         buttonPage.Name = "buttonJob";
                         buttonPage.Tag = i.ToString();
-                        buttonPage.Size = new System.Drawing.Size(18, 24);
+                        buttonPage.Size = new Size(18, 24);
                         buttonPage.Text = (i + 1).ToString();
                         buttonPage.UseVisualStyleBackColor = false;
-                        buttonPage.Click += new System.EventHandler(buttonJob_Click);
+                        buttonPage.Click += buttonTag_Click;
                         parent.Controls.Add(buttonPage);
                         buttons[i] = buttonPage;
                     }
                 }
+
+                ChangeTarget(0);
             }
         }
 
-        void buttonJob_Click(object sender, System.EventArgs e)
+        public void SetTarget(int targetId)
+        {
+            ChangeTarget(targetId);
+        }
+
+        void buttonTag_Click(object sender, System.EventArgs e)
         {
             Control control = sender as Control;
             if (control != null)
             {
-                int page = int.Parse(control.Tag.ToString());
-                if (PageChange != null)
-                {
-                    PageChange(page);
-                }
+                ChangeTarget(int.Parse(control.Tag.ToString()));
+            }
+        }
+
+        private void ChangeTarget(int targetId)
+        {
+            buttons[selectIndex].BackColor = Color.Maroon;
+            selectIndex = targetId;
+            buttons[selectIndex].BackColor = Color.Green;
+            if (PageChange != null)
+            {
+                PageChange(targetId);
             }
         }
     }

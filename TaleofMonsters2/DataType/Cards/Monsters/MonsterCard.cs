@@ -36,6 +36,11 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             get { return monster.MonsterConfig.Type; }
         }
 
+        public override int JobId
+        {
+            get { return monster.MonsterConfig.JobId; }
+        }
+
         public override int Cost
         {
             get { return monster.MonsterConfig.Cost; }

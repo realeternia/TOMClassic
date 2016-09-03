@@ -41,6 +41,11 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             get { return weapon.WeaponConfig.Cost; }
         }
 
+        public override int JobId
+        {
+            get { return weapon.WeaponConfig.JobId; }
+        }
+
         public override string Name
         {
             get { return weapon.WeaponConfig.Name; }

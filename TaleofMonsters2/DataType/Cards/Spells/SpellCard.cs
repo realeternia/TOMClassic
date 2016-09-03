@@ -40,6 +40,11 @@ namespace TaleofMonsters.DataType.Cards.Spells
             get { return spell.SpellConfig.Cost; }
         }
 
+        public override int JobId
+        {
+            get { return spell.SpellConfig.JobId; }
+        }
+
         public override string Name
         {
             get { return spell.SpellConfig.Name; }

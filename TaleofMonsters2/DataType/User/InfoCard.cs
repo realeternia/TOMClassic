@@ -18,7 +18,7 @@ namespace TaleofMonsters.DataType.User
         [FieldIndex(Index = 3)] 
         public MemDeckData[] Decks;
         [FieldIndex(Index = 4)]
-        public int DeckId;
+        public int DeckId; //上次出战的卡组
 
         public InfoCard()
         {

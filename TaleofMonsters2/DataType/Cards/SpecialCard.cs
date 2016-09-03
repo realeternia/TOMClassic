@@ -36,6 +36,11 @@ namespace TaleofMonsters.DataType.Cards
             get { return 0; }
         }
 
+        public override int JobId
+        {
+            get { return 0; }
+        }
+
         public override string Name
         {
             get { return ""; }
