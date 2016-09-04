@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using TaleofMonsters.Config;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Decks;
 
@@ -31,6 +32,10 @@ namespace TaleofMonsters.Forms.Items
 
                 var cardX = CardConfigManager.GetCardConfig(cx.BaseId);
                 var cardY = CardConfigManager.GetCardConfig(cy.BaseId);
+                if (cardX.Type != cardY.Type)
+                {
+                    return cardX.Type.CompareTo(cardY.Type);
+                }
                 if (cardX.Star != cardY.Star)
                 {
                     return cardX.Star.CompareTo(cardY.Star);
@@ -57,6 +62,10 @@ namespace TaleofMonsters.Forms.Items
         private DeckCard[] dcards;
         private const int cellHeight = 16;
 
+        private int monsterCount;
+        private int weaponCount;
+        private int spellCount;
+
         public DeckSelectCardRegion(int x, int y, int width, int height)
         {
             X = x;
@@ -69,6 +78,17 @@ namespace TaleofMonsters.Forms.Items
         {
             dcards = decks;
             Array.Sort(dcards, new CompareDeckCardByStar());
+            monsterCount = weaponCount = spellCount = 0;
+            foreach (var deckCard in decks)
+            {
+                var cardX = CardConfigManager.GetCardConfig(deckCard.BaseId);
+                if (cardX.Type == CardTypes.Monster)
+                    monsterCount++;
+                if (cardX.Type == CardTypes.Weapon)
+                    weaponCount++;
+                if (cardX.Type == CardTypes.Spell)
+                    spellCount++;
+            }
         }
 
         public DeckCard GetTargetCard()
@@ -126,10 +146,11 @@ namespace TaleofMonsters.Forms.Items
             {
                 int yoff = i * cellHeight;
                 if (dcards[i].BaseId <= 0)
-                {//如果没有卡，就画一圈红背景
+                {//如果没有卡
                     eg.DrawRectangle(Pens.DimGray, X, Y + yoff, Width, cellHeight);
                     continue;
                 }
+
                 if (tar == i)
                 {
                     eg.FillRectangle(Brushes.DarkBlue, X, Y + yoff, Width, cellHeight);
@@ -137,7 +158,7 @@ namespace TaleofMonsters.Forms.Items
                 var cardConfigData = CardConfigManager.GetCardConfig(dcards[i].BaseId);
                 var cardImg = CardAssistant.GetCardImage(dcards[i].BaseId, 30, 30);
                 eg.DrawImage(cardImg, new Rectangle(X, Y + yoff, 30, cellHeight), 0, 6, 30, cellHeight, GraphicsUnit.Pixel);
-                eg.DrawString(cardConfigData.Star.ToString(), fontBold, Brushes.Yellow, X-1, Y + yoff);
+                eg.DrawString(cardConfigData.Star.ToString(), fontBold, Brushes.Gold, X-1, Y + yoff);
                 Color color = Color.FromName(HSTypes.I2QualityColor(cardConfigData.Quality));
                 Brush colorBrush = new SolidBrush(color);
                 var cardName = cardConfigData.Name;
@@ -147,6 +168,25 @@ namespace TaleofMonsters.Forms.Items
                 }
                 eg.DrawString(string.Format("{0}({1})", cardName, dcards[i].Level), fontsong, colorBrush, X + 30, Y + yoff);
                 colorBrush.Dispose();
+            }
+
+            if (monsterCount > 0)
+            {
+                Pen p = new Pen(Color.Yellow, 2);
+                eg.DrawRectangle(p, X, Y, Width-2, monsterCount * cellHeight - 2);
+                p.Dispose();
+            }
+            if (weaponCount > 0)
+            {
+                Pen p = new Pen(Color.Red, 2);
+                eg.DrawRectangle(p, X, Y + monsterCount * cellHeight, Width-2,  weaponCount * cellHeight-2);
+                p.Dispose();
+            }
+            if (spellCount > 0)
+            {
+                Pen p = new Pen(Color.Blue, 2);
+                eg.DrawRectangle(p, X, Y + (monsterCount + weaponCount) * cellHeight, Width-2, spellCount * cellHeight-2);
+                p.Dispose();
             }
             fontsong.Dispose();
             fontBold.Dispose();
