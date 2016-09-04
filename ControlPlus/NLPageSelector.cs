@@ -81,6 +81,11 @@ namespace ControlPlus
 
         private void ChangeTarget(int targetId)
         {
+            if (buttons == null)
+            {
+                return;
+            }
+
             buttons[selectIndex].BackColor = Color.Maroon;
             selectIndex = targetId;
             buttons[selectIndex].BackColor = Color.Green;

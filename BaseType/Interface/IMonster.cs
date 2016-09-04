@@ -45,6 +45,8 @@ namespace ConfigDatas
         AttrModifyData Crt { get; set; }
         AttrModifyData Luk { get; set; }
 
+        double CrtDamAddRate { get; set; } //暴击时伤害倍数增加
+
         bool IsTileMatching { get; }
         bool CanAttack { get; set; }
         bool IsElement(string ele);

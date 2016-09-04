@@ -42,7 +42,7 @@ namespace TaleofMonsters.DataType.Skills
             {
                 if (MathTool.GetRandom(100) < src.RealCrt * GameConstants.CrtToRate)
                 {
-                    attrRateOn *= GameConstants.DefaultCrtDamage;
+                    attrRateOn *= (GameConstants.DefaultCrtDamage + src.CrtDamAddRate);
                 }
             }
 
