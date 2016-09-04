@@ -119,7 +119,8 @@ namespace TaleofMonsters.Forms.MagicBook
                     comboBoxValue.Items.Add("全部");
                     foreach (var configData in ConfigData.JobDict.Values)
                     {
-                        comboBoxValue.Items.Add(configData.Name);
+                        if (!configData.isSpecial)
+                            comboBoxValue.Items.Add(configData.Name);
                     } break;
                 case "标签":
                     comboBoxValue.Items.AddRange(new object[] { "全部", "基本","魔法","范围" }); break;
@@ -205,7 +206,7 @@ namespace TaleofMonsters.Forms.MagicBook
             if (cards.Count > 0)
                 cardDetail.SetInfo(cards[0]);
             isDirty = true;
-            Invalidate(new Rectangle(65, 35, cardWidth * xCount + 200, 630));
+            Invalidate(new Rectangle(65, 110, cardWidth * xCount, cardHeight * yCount));
         }
 
         private void UpdateButtonState()
