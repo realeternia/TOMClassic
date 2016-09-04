@@ -50,7 +50,7 @@ namespace TaleofMonsters.Forms
             headId = 1;
             pictureBoxHead.Image = PicLoader.Read("Player", "1.PNG");
             constellation = MathTool.GetRandom(12);
-            type = MathTool.GetRandom(5);
+            type = MathTool.GetRandom(7);
             bldType = MathTool.GetRandom(4);
             myCursor.ChangeCursor("default");
         }
