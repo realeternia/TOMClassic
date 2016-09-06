@@ -67,6 +67,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public AttrModifyData Luk { get; set; }
 
         public double CrtDamAddRate { get; set; }
+        public int MovRound { get; set; }
         
         public bool IsSummoned { get; set; } //是否召唤单位
 

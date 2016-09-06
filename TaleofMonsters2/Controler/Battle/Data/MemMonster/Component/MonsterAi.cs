@@ -110,6 +110,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             {
                 monster.AddActionRate((float) (monster.RealSpd)*GameConstants.SpdToRate/100);
             }
+            monster.MovRound = 0;
         }
 
         private void CheckMove(LiveMonster nearestEnemy)
@@ -158,6 +159,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             {
                 monster.AddActionRate((float) (monster.ReadMov - 10)/monster.ReadMov);
             }
+            monster.MovRound++;
         }
 
         private bool CanAttack(LiveMonster target)

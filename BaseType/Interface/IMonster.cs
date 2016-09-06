@@ -68,6 +68,7 @@ namespace ConfigDatas
         void SuddenDeath();
         void Rebel();//造反
         void AddMaxHp(double val);
+        int MovRound { get; } //连续移动回合数，攻击后清除
 
         void Summon(int type, int id);
         void MadDrug(); //交换攻击和血量
