@@ -73,6 +73,11 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             }
         }
 
+        public void RemoveDirect(int monid)
+        {
+            Remove(monid);
+        }
+
         public LiveMonster GetMonsterByUniqueId(int id)
         {
             for (int i = 0; i < monsters.Count; i++)

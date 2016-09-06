@@ -11,7 +11,6 @@ using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType.CardPieces;
 using TaleofMonsters.DataType.Cards.Monsters;
-using TaleofMonsters.DataType.Equips.Addons;
 using TaleofMonsters.DataType.Skills;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Core;
@@ -630,6 +629,21 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             Action += (int)(GameConstants.LimitAts*value);
         }
 
+        public void Return()
+        {
+            if (Avatar.MonsterConfig.IsBuilding)
+            {
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", Position, 0, "Gold", 26, 0, 0, 1, 15), false);
+                return;
+            }
+
+            BattleManager.Instance.MemMap.GetMouseCell(Position.X, Position.Y).UpdateOwner(0);
+            SkillManager.CheckRemoveEffect();
+            Owner.AddCard(CardId, Level);
+
+            BattleManager.Instance.MonsterQueue.RemoveDirect(Id);
+        }
+
         public void AddWeapon(int weaponId, int lv)
         {
             if (!CanAddWeapon())
@@ -662,7 +676,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void WeaponReturn()
         {
-            if (Weapon != null && Weapon is TrueWeapon)
+            if (Weapon is TrueWeapon)
             {
                 ActiveCard card = new ActiveCard(new DeckCard(Weapon.CardId, (byte)Weapon.Level, 0));
                 OwnerPlayer.CardManager.AddCard(card);
