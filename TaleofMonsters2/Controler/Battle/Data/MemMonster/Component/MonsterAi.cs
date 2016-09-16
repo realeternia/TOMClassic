@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemMissile;
@@ -42,10 +43,18 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 }
             }
 
+            if (monster.RealAtk <= 0)
+            {
+                targetEnemy = BattleManager.Instance.MonsterQueue.GetKingTower(!monster.IsLeft);
+            }
+            else
+            {
+              
+            }
             targetEnemy = GetNearestEnemy(monster.IsLeft, monster.Position);//没有就找最近的目标
             if (targetEnemy != null)
             {
-                if (monster.CanAttack && CanAttack(targetEnemy))
+                if (monster.RealAtk > 0 && monster.CanAttack && CanAttack(targetEnemy))
                 {
                     if (monster.AddAts())
                     {
@@ -57,7 +66,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 {
                     if (monster.AddAts())
                     {
-                        CheckMove(targetEnemy);
+                        var moveTarget = targetEnemy;
+                        if (monster.RealAtk <= 0)
+                            moveTarget = BattleManager.Instance.MonsterQueue.GetKingTower(!monster.IsLeft);
+                        CheckMove(moveTarget);
                     }
                 }
             }
