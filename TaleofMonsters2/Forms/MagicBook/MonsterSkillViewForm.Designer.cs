@@ -42,16 +42,16 @@ namespace TaleofMonsters.Forms.MagicBook
             // 
             this.bitmapButtonClose.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButtonClose.Image = null;
-            
-            
+            this.bitmapButtonClose.IconImage = null;
+            this.bitmapButtonClose.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonClose.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonClose.ImageNormal = null;
-            
             this.bitmapButtonClose.Location = new System.Drawing.Point(741, 4);
             this.bitmapButtonClose.Name = "bitmapButtonClose";
+            this.bitmapButtonClose.NoUseDrawNine = false;
             this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
             this.bitmapButtonClose.TabIndex = 28;
-            this.bitmapButtonClose.Text = "";
+            this.bitmapButtonClose.TextOffX = 0;
             this.bitmapButtonClose.UseVisualStyleBackColor = true;
             this.bitmapButtonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
@@ -59,13 +59,16 @@ namespace TaleofMonsters.Forms.MagicBook
             // 
             this.bitmapButtonNext.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButtonNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButtonNext.Image = null;
+            this.bitmapButtonNext.IconImage = null;
+            this.bitmapButtonNext.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonNext.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonNext.ImageNormal = null;
             this.bitmapButtonNext.Location = new System.Drawing.Point(18, 85);
             this.bitmapButtonNext.Name = "bitmapButtonNext";
+            this.bitmapButtonNext.NoUseDrawNine = false;
             this.bitmapButtonNext.Size = new System.Drawing.Size(40, 40);
             this.bitmapButtonNext.TabIndex = 43;
-            this.bitmapButtonNext.Text = "";
+            this.bitmapButtonNext.TextOffX = 0;
             this.bitmapButtonNext.UseVisualStyleBackColor = true;
             this.bitmapButtonNext.Click += new System.EventHandler(this.buttonNext_Click);
             // 
@@ -73,13 +76,16 @@ namespace TaleofMonsters.Forms.MagicBook
             // 
             this.bitmapButtonPre.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButtonPre.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButtonPre.Image = null;
+            this.bitmapButtonPre.IconImage = null;
+            this.bitmapButtonPre.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonPre.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonPre.ImageNormal = null;
             this.bitmapButtonPre.Location = new System.Drawing.Point(18, 39);
             this.bitmapButtonPre.Name = "bitmapButtonPre";
+            this.bitmapButtonPre.NoUseDrawNine = false;
             this.bitmapButtonPre.Size = new System.Drawing.Size(40, 40);
             this.bitmapButtonPre.TabIndex = 42;
-            this.bitmapButtonPre.Text = "";
+            this.bitmapButtonPre.TextOffX = 0;
             this.bitmapButtonPre.UseVisualStyleBackColor = true;
             this.bitmapButtonPre.Click += new System.EventHandler(this.buttonPre_Click);
             // 
@@ -93,6 +99,7 @@ namespace TaleofMonsters.Forms.MagicBook
             this.comboBoxType.FormattingEnabled = true;
             this.comboBoxType.Items.AddRange(new object[] {
             "全部种类",
+            "常规",
             "攻击",
             "防御",
             "生命",
@@ -100,7 +107,6 @@ namespace TaleofMonsters.Forms.MagicBook
             "魔法",
             "状态",
             "光环",
-            "必杀",
             "地形",
             "成长",
             "范围",
