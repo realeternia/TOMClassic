@@ -523,6 +523,18 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         {
             CardManager.CardLevelUp(n, type);
         }
+
+        public void AddRandomCard(int type, int lv)
+        {
+            int cardId = 0;
+            switch (type)
+            {
+                case 1: cardId = MonsterBook.GetRandMonsterId();break;
+                case 2: cardId = WeaponBook.GetRandWeaponId(); break;
+                case 3: cardId = SpellBook.GetRandSpellId(); break;
+            }
+            AddCard(cardId, lv);
+        }
         
         public void AddSpellEffect(double rate)
         {

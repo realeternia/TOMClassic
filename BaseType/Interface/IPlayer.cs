@@ -27,6 +27,7 @@ namespace ConfigDatas
         int CardNumber { get; }
         void CopyRandomNCard(int n, int spellid);
         void CardLevelUp(int n, int type);
+        void AddRandomCard(int type, int lv);
 
         void AddMonster(int cardId, int level, System.Drawing.Point location);
         void ExchangeMonster(IMonster target, int lv);
