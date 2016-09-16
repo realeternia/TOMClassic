@@ -13,9 +13,6 @@ namespace ConfigDatas
 
         void AddSpike(int id);
         void RemoveSpike(int id);
-
-        int RoundCardPlus { get; set; }//每回合抽卡加成，默认为0
-
         void DeleteRandomCardFor(IPlayer p, int levelChange);
         void CopyRandomCardFor(IPlayer p, int levelChange);
         void GetNextNCard(int n);

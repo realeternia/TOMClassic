@@ -36,6 +36,19 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             ReCheckSpike();
         }
 
+        public bool HasSpike(string name)
+        {
+            foreach (var spike in spikeList)
+            {
+                SpikeConfig spikeConfig = ConfigData.GetSpikeConfig(spike.Id);
+                if (spikeConfig.Tag == name)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public void RemoveSpike(int id)
         {
             for (int i = 0; i < spikeList.Count; i++)

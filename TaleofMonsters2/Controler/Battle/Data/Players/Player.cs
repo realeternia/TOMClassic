@@ -83,8 +83,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             SpikeManager.RemoveSpike(id);
         }
 
-        public int RoundCardPlus { get; set; }
-
         #endregion
 
         public Player(bool playerControl, bool isLeft)
@@ -372,6 +370,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).SpellAdd++;
 
                 SpellAssistant.CheckSpellEffect(spell, true, target, location);
+
+                if (SpikeManager.HasSpike("mirrorspell"))
+                {
+                    var rival = IsLeft ? BattleManager.Instance.PlayerManager.RightPlayer : BattleManager.Instance.PlayerManager.LeftPlayer;
+                    rival.AddCard(card.CardId, card.Level);
+                }
             }
             catch (Exception e)
             {
