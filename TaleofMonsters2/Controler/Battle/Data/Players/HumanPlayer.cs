@@ -18,6 +18,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         {
             PeopleId = 0;
             Level = UserProfile.InfoBasic.Level;
+            Job = UserProfile.InfoBasic.Job;
             
             DeckCard[] cd = new DeckCard[GameConstants.DeckCardCount];
             for (int i = 0; i < GameConstants.DeckCardCount; i++)
@@ -54,7 +55,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             base.InitialCards();
 
 #if DEBUG
-            CardManager.AddCard(new ActiveCard(53000035, 1, 0));
+            CardManager.AddCard(new ActiveCard(51000102, 1, 0));
 #endif
         }
 

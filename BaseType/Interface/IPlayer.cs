@@ -3,6 +3,7 @@ namespace ConfigDatas
     public interface IPlayer
     {
         bool IsLeft{get;}
+        int Job { get; }
         float Mp { get; }
         float Lp { get; }
         float Pp { get; }  
@@ -24,7 +25,8 @@ namespace ConfigDatas
         int CardNumber { get; }
         void CopyRandomNCard(int n, int spellid);
         void CardLevelUp(int n, int type);
-        void AddRandomCard(int type, int lv);
+        void AddRandomCard(int type, int lv); //按类型给一张随机卡牌，怪物，武器
+        void AddRandomCardJob(int jobId, int lv); //按职业给一张随机卡牌
 
         void AddMonster(int cardId, int level, System.Drawing.Point location);
         void ExchangeMonster(IMonster target, int lv);

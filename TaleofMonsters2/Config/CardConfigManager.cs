@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ConfigDatas;
+using NarlonLib.Math;
 using TaleofMonsters.DataType;
 
 namespace TaleofMonsters.Config
@@ -30,7 +31,8 @@ namespace TaleofMonsters.Config
 
     internal class CardConfigManager
     {
-        private static Dictionary<int, CardConfigData> cardConfigDataDict = null;
+        private static readonly Dictionary<int, CardConfigData> cardConfigDataDict;
+        private static readonly Dictionary<int, List<int>> jobCardDict; //职业卡组列表
 
         public static int MonsterTotal { get; set; }
         public static int MonsterAvail { get; set; }
@@ -42,18 +44,20 @@ namespace TaleofMonsters.Config
         static CardConfigManager()
         {
             cardConfigDataDict = new Dictionary<int, CardConfigData>();
-            foreach (MonsterConfig monsterConfig in ConfigDatas.ConfigData.MonsterDict.Values)
+            foreach (var monsterConfig in ConfigData.MonsterDict.Values)
             {
-                CardConfigData card = new CardConfigData();
-                card.Id = monsterConfig.Id;
-                card.Type = CardTypes.Monster;
-                card.TypeSub = monsterConfig.Type;
-                card.Attr = monsterConfig.Attr;
-                card.Cost = monsterConfig.Cost;
-                card.Star = monsterConfig.Star;
-                card.Name = monsterConfig.Name;
-                card.Quality = monsterConfig.Quality;
-                card.JobId = monsterConfig.JobId;
+                CardConfigData card = new CardConfigData
+                {
+                    Id = monsterConfig.Id,
+                    Type = CardTypes.Monster,
+                    TypeSub = monsterConfig.Type,
+                    Attr = monsterConfig.Attr,
+                    Cost = monsterConfig.Cost,
+                    Star = monsterConfig.Star,
+                    Name = monsterConfig.Name,
+                    Quality = monsterConfig.Quality,
+                    JobId = monsterConfig.JobId
+                };
                 cardConfigDataDict.Add(monsterConfig.Id, card);
                 if (monsterConfig.IsSpecial == 0)
                 {
@@ -64,18 +68,20 @@ namespace TaleofMonsters.Config
                     }
                 }
             }
-            foreach (WeaponConfig weaponConfig in ConfigDatas.ConfigData.WeaponDict.Values)
+            foreach (var weaponConfig in ConfigData.WeaponDict.Values)
             {
-                CardConfigData card = new CardConfigData();
-                card.Id = weaponConfig.Id;
-                card.Type = CardTypes.Weapon;
-                card.TypeSub = weaponConfig.Type;
-                card.Attr = weaponConfig.Attr;
-                card.Cost = weaponConfig.Cost;
-                card.Star = weaponConfig.Star;
-                card.Name = weaponConfig.Name;
-                card.Quality = weaponConfig.Quality;
-                card.JobId = weaponConfig.JobId;
+                CardConfigData card = new CardConfigData
+                {
+                    Id = weaponConfig.Id,
+                    Type = CardTypes.Weapon,
+                    TypeSub = weaponConfig.Type,
+                    Attr = weaponConfig.Attr,
+                    Cost = weaponConfig.Cost,
+                    Star = weaponConfig.Star,
+                    Name = weaponConfig.Name,
+                    Quality = weaponConfig.Quality,
+                    JobId = weaponConfig.JobId
+                };
                 cardConfigDataDict.Add(weaponConfig.Id, card);
                 if (weaponConfig.IsSpecial == 0)
                 {
@@ -86,18 +92,20 @@ namespace TaleofMonsters.Config
                     }
                 }
             }
-            foreach (SpellConfig spellConfig in ConfigDatas.ConfigData.SpellDict.Values)
+            foreach (var spellConfig in ConfigData.SpellDict.Values)
             {
-                CardConfigData card = new CardConfigData();
-                card.Id = spellConfig.Id;
-                card.Type = CardTypes.Spell;
-                card.TypeSub = spellConfig.Type;
-                card.Attr = spellConfig.Attr;
-                card.Cost = spellConfig.Cost;
-                card.Star = spellConfig.Star;
-                card.Name = spellConfig.Name;
-                card.Quality = spellConfig.Quality;
-                card.JobId = spellConfig.JobId;
+                CardConfigData card = new CardConfigData
+                {
+                    Id = spellConfig.Id,
+                    Type = CardTypes.Spell,
+                    TypeSub = spellConfig.Type,
+                    Attr = spellConfig.Attr,
+                    Cost = spellConfig.Cost,
+                    Star = spellConfig.Star,
+                    Name = spellConfig.Name,
+                    Quality = spellConfig.Quality,
+                    JobId = spellConfig.JobId
+                };
                 cardConfigDataDict.Add(spellConfig.Id, card);
                 if (spellConfig.IsSpecial == 0)
                 {
@@ -106,6 +114,20 @@ namespace TaleofMonsters.Config
                     {
                         SpellAvail++;
                     }
+                }
+            }
+
+            jobCardDict = new Dictionary<int, List<int>>();
+            foreach (var jobId in ConfigData.JobDict.Keys)
+            {
+                jobCardDict.Add(jobId, new List<int>());
+            }
+
+            foreach (var cardConfigData in cardConfigDataDict.Values)
+            {
+                if (cardConfigData.JobId > 0)
+                {
+                    jobCardDict[cardConfigData.JobId].Add(cardConfigData.Id);
                 }
             }
         }
@@ -120,36 +142,14 @@ namespace TaleofMonsters.Config
             return new CardConfigData();
         }
 
-        private static Dictionary<int, List<CardAttr>> cardAttrDict = null;
-
-        public static bool HasAttr(int cardId, CardAttr attr)
+        public static int GetRandomJobCard(int jobId)
         {
-            if (cardAttrDict == null)
+            List<int> rtData;
+            if (jobCardDict.TryGetValue(jobId, out rtData))
             {
-                cardAttrDict = new Dictionary<int, List<CardAttr>>();
-                InstallCardAttr();
+                return rtData[MathTool.GetRandom(rtData.Count)];
             }
-
-            List<CardAttr> attrs;
-            if (!cardAttrDict.TryGetValue(cardId, out  attrs))
-            {
-                return false;
-            }
-
-            return attrs.Contains(attr);
-        }
-
-        private static void InstallCardAttr()
-        {
-            foreach (MonsterConfig monsterConfig in ConfigDatas.ConfigData.MonsterDict.Values)
-            {
-                List<CardAttr> attrList = new List<CardAttr>();
-                //if (monsterConfig.DefP == 0)
-                //{
-                //    attrList.Add(CardAttr.Atk); //todo 这是个例子
-                //}
-                cardAttrDict[monsterConfig.Id] = attrList;
-            }
+            return 0;
         }
     }
 }

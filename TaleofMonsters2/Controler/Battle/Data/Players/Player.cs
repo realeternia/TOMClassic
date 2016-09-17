@@ -14,6 +14,7 @@ using System.Drawing;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Controler.Battle.Data.MemSpell;
 using NarlonLib.Log;
+using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards.Spells;
@@ -51,6 +52,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public float Pp { get; set; }
 
         public int Level { get; protected set; }
+
+        public int Job { get; protected set; }
 
         public ICardList CardsDesk { get; set; }
 
@@ -539,7 +542,16 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
             AddCard(cardId, lv);
         }
-        
+
+        public void AddRandomCardJob(int job, int lv)
+        {
+            var cardId = CardConfigManager.GetRandomJobCard(job);
+            if (cardId != 0)
+            {
+                AddCard(cardId, lv);
+            }
+        }
+
         public void AddSpellEffect(double rate)
         {
             SpellEffectAddon += rate;

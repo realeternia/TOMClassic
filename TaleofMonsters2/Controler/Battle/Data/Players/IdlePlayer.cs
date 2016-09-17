@@ -9,6 +9,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             :base(false, isLeft)
         {
             Level = 1;
+            Job = ConfigDatas.JobConfig.Indexer.NewBie;
 
             DeckCard[] cds = DeckBook.GetDeckByName("test", Level);
             Cards = new ActiveCards(cds);

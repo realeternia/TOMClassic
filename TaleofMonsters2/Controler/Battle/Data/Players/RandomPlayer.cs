@@ -1,12 +1,12 @@
 ﻿using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Cards.Spells;
 using TaleofMonsters.DataType.Cards.Weapons;
 using TaleofMonsters.DataType.Decks;
+using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
 {
@@ -19,6 +19,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
             PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(id);
             Level = peopleConfig.Level;
+            Job = UserProfile.InfoBasic.Job;
 
             EnergyGenerator.SetRateNpc(peopleConfig);
 
