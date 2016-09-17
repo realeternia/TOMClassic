@@ -13,11 +13,24 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
 
         private readonly DeckCard card;
         public int Mp {
-            get { return card.Mp==0?0: Math.Max(0, card.Mp + MpCostChange); }
+            get
+            {
+                var lpCost = card.Lp == 0 ? 0 : Math.Max(0, card.Lp + LpCostChange);
+                if (Lp2Mp && lpCost > 0)
+                {
+                    return lpCost;
+                }
+                return card.Mp==0?0: Math.Max(0, card.Mp + MpCostChange);
+            }
         }
         public int Lp
         {
-            get { return card.Lp == 0 ? 0 : Math.Max(0,card.Lp + LpCostChange); }
+            get {
+                if (Lp2Mp)
+                {
+                    return 0;
+                }
+                return card.Lp == 0 ? 0 : Math.Max(0,card.Lp + LpCostChange); }
         }
         public int Pp
         {
@@ -47,6 +60,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         public int MpCostChange { get; set; }//可以被技能修改
         public int LpCostChange { get; set; }//可以被技能修改
         public int PpCostChange { get; set; }//可以被技能修改
+        public bool Lp2Mp { get; set; } //可以被技能修改
         public byte Level { get; set; }
 
         public ActiveCard()

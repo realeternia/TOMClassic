@@ -207,17 +207,17 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public int CheckUseCard(ActiveCard selectCard, Player left, Player right)
         {
-            if (selectCard.CardType == CardTypes.Spell && Mp < selectCard.Mp)
+            if (Mp < selectCard.Mp)
             {
                 return HSErrorTypes.BattleLackMp;
             }
 
-            if (selectCard.CardType == CardTypes.Monster && Lp < selectCard.Lp)
+            if (Lp < selectCard.Lp)
             {
                 return HSErrorTypes.BattleLackLp;
             }
 
-            if (selectCard.CardType == CardTypes.Weapon && Pp < selectCard.Pp)
+            if (Pp < selectCard.Pp)
             {
                 return HSErrorTypes.BattleLackPp;
             }

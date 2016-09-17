@@ -45,19 +45,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 
         public void AddCard(ActiveCard card)
         {
-            var spike = self.SpikeManager;
-            if (card.CardType == CardTypes.Spell && spike.MpCost != 0)
-            {
-                card.MpCostChange = spike.MpCost;
-            }
-            else if (card.CardType == CardTypes.Monster && spike.LpCost != 0)
-            {
-                card.LpCostChange = spike.LpCost;
-            }
-            else if (card.CardType == CardTypes.Weapon && spike.PpCost != 0)
-            {
-                card.PpCostChange = spike.PpCost;
-            }
+            var spikeManager = self.SpikeManager;
+            card.MpCostChange = spikeManager.MpCost;
+            card.LpCostChange = spikeManager.LpCost;
+            card.PpCostChange = spikeManager.PpCost;
+            card.Lp2Mp = spikeManager.HasSpike("lp2mp");
             int count = GetCardNumber();
             if (count < GameConstants.CardSlotMaxCount)
             {
@@ -75,6 +67,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                 activeCard.LpCostChange = spikeManager.LpCost;
                 activeCard.MpCostChange = spikeManager.MpCost;
                 activeCard.PpCostChange = spikeManager.PpCost;
+                activeCard.Lp2Mp = spikeManager.HasSpike("lp2mp");
             }
             if (self.CardsDesk != null)
                 self.CardsDesk.UpdateSlot(cards);
