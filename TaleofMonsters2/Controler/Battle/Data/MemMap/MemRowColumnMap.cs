@@ -196,7 +196,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
 
                 if ((BattleTargetManager.IsSpellEnemyMonster(target[0]) && isLeft != mon.Owner.IsLeft) || (BattleTargetManager.IsSpellFriendMonster(target[0]) && isLeft == mon.Owner.IsLeft))
                 {
-                  
                     if (!BattleLocationManager.IsPointInRegionType(rt, mouse.X, mouse.Y, mon.Position, range, isLeft))
                         continue;
 
@@ -207,15 +206,41 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             return new MonsterCollection(monsters, mouse);
         }
 
+        public MonsterCollection GetRangeMonsterGhost(bool isLeft, string target, string shape, int range, Point mouse)
+        {
+            List<IMonster> monsters = new List<IMonster>();
+            RegionTypes rt = BattleTargetManager.GetRegionType(shape[0]);
+            foreach (var mon in BattleManager.Instance.MonsterQueue.Enumerator)
+            {
+                if (!mon.IsGhost)
+                    continue;
+
+                if ((BattleTargetManager.IsSpellEnemyMonster(target[0]) && isLeft != mon.Owner.IsLeft) || (BattleTargetManager.IsSpellFriendMonster(target[0]) && isLeft == mon.Owner.IsLeft))
+                {
+                    if (!BattleLocationManager.IsPointInRegionType(rt, mouse.X, mouse.Y, mon.Position, range, isLeft))
+                        continue;
+
+                    monsters.Add(mon);
+                }
+            }
+
+            return new MonsterCollection(monsters, mouse);
+        }
+
+        public void ReviveUnit(IMonster mon, int addHp)
+        {
+            LiveMonster lm = mon as LiveMonster;
+            lm.Revive();
+            lm.DeleteWeapon();
+            lm.Life += addHp;
+        }
+
         public void ReviveUnit(Point mouse, int addHp)
         {
             int oid = BattleManager.Instance.MemMap.GetMouseCell(mouse.X, mouse.Y).Owner;
             if (oid < 0)
             {
-                LiveMonster lm =BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(-oid);
-                lm.Revive();
-                lm.DeleteWeapon();
-                lm.Life += addHp;
+                ReviveUnit(BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(-oid), addHp);
             }
         }
 
