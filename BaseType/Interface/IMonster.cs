@@ -71,7 +71,10 @@ namespace ConfigDatas
         int MovRound { get; } //连续移动回合数，攻击后清除
 
         void Summon(int type, int id);
+        void SummonRandomAttr(int type, int attr);
         void MadDrug(); //交换攻击和血量
+        void CureRandomAlien(double rate);
         bool ResistBuffType(int type);
+
     }
 }

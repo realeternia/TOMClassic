@@ -33,6 +33,7 @@ namespace TaleofMonsters.Config
     {
         private static readonly Dictionary<int, CardConfigData> cardConfigDataDict;
         private static readonly Dictionary<int, List<int>> jobCardDict; //职业卡组列表
+        private static readonly Dictionary<int, List<int>> attrCardDict; //属性卡组列表
 
         public static int MonsterTotal { get; set; }
         public static int MonsterAvail { get; set; }
@@ -130,6 +131,20 @@ namespace TaleofMonsters.Config
                     jobCardDict[cardConfigData.JobId].Add(cardConfigData.Id);
                 }
             }
+
+            attrCardDict = new Dictionary<int, List<int>>();
+            for (int i = 0; i < 10; i++)
+            {
+                attrCardDict.Add(i, new List<int>());
+            }
+
+            foreach (var cardConfigData in cardConfigDataDict.Values)
+            {
+                if (cardConfigData.Attr > 0)
+                {
+                    attrCardDict[cardConfigData.Attr].Add(cardConfigData.Id);
+                }
+            }
         }
 
         public static CardConfigData GetCardConfig(int id)
@@ -146,6 +161,16 @@ namespace TaleofMonsters.Config
         {
             List<int> rtData;
             if (jobCardDict.TryGetValue(jobId, out rtData))
+            {
+                return rtData[MathTool.GetRandom(rtData.Count)];
+            }
+            return 0;
+        }
+
+        public static int GetRandomAttrCard(int jobId)
+        {
+            List<int> rtData;
+            if (attrCardDict.TryGetValue(jobId, out rtData))
             {
                 return rtData[MathTool.GetRandom(rtData.Count)];
             }

@@ -4,6 +4,8 @@ using System.Drawing;
 using ConfigDatas;
 using NarlonLib.Log;
 using NarlonLib.Math;
+using TaleofMonsters.Config;
+using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMissile;
 using TaleofMonsters.Controler.Battle.Data.MemMonster.Component;
@@ -11,6 +13,7 @@ using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType.CardPieces;
 using TaleofMonsters.DataType.Cards.Monsters;
+using TaleofMonsters.DataType.Effects;
 using TaleofMonsters.DataType.Skills;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Core;
@@ -911,11 +914,43 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
         }
 
+        public void SummonRandomAttr(int type, int attr)
+        {
+            int cardId;
+            while (true)
+            {
+                cardId = CardConfigManager.GetRandomAttrCard(attr);
+                if(CardConfigManager.GetCardConfig(cardId).Type == CardTypes.Monster)
+                    break;
+            }
+            Summon(type, cardId);
+        }
+
         public void MadDrug()
         {
             if (!Avatar.MonsterConfig.IsBuilding && RealRange > 0)
             {
                 Atk.Source = MaxHp.Source/5;
+            }
+        }
+
+        public void CureRandomAlien(double rate)
+        {
+            IMonster target = null;
+            foreach (IMonster o in Map.GetAllMonster(Position))
+            {
+                if (o.IsLeft == IsLeft && o.HpRate < 100 && o.Id != Id)
+                {
+                    if (target == null || target.HpRate>o.HpRate)
+                    {
+                        target = o;
+                    }
+                }
+            }
+            if (target!=null)
+            {
+                target.AddHpRate(rate);
+                BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect("yellowstar"), (LiveMonster)target, false));
             }
         }
 
