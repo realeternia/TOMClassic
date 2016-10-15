@@ -39,6 +39,8 @@ namespace TaleofMonsters.Controler.Battle.Components
             this.Size = new System.Drawing.Size(754, 150);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.CardsArray_Paint);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CardsArray_MouseClick);
+            this.MouseEnter += new System.EventHandler(this.CardsArray_MouseEnter);
+            this.MouseLeave += new System.EventHandler(this.CardsArray_MouseLeave);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CardsArray_MouseMove);
             this.ResumeLayout(false);
 

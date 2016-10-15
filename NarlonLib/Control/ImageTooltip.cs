@@ -22,6 +22,7 @@ namespace NarlonLib.Control
             InitializeComponent();
             base.OwnerDraw = true;
             base.AutoPopDelay = 0;
+            base.UseFading = false;
         }
         public void Show(Image img, IWin32Window window ,int x,int y)
         {

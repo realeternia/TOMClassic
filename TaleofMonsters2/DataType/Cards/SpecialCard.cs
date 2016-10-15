@@ -68,10 +68,6 @@ namespace TaleofMonsters.DataType.Cards
         {
         }
 
-        public override void DrawOnStateBar(Graphics g)
-        {
-        }
-
         public override Image GetPreview(CardPreviewType type, int[] parms)
         {
             return null;

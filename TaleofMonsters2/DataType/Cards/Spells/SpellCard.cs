@@ -151,15 +151,6 @@ namespace TaleofMonsters.DataType.Cards.Spells
             sb.Dispose();
         }
 
-        public override void DrawOnStateBar(Graphics g)
-        {
-            Font fontsong = new Font("宋体", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            SolidBrush sb = new SolidBrush(Color.FromArgb(255, 255, 255));
-            g.DrawString(spell.Descript, fontsong, sb, 4, 4);
-            fontsong.Dispose();
-            sb.Dispose();
-        }
-
         public override Image GetPreview(CardPreviewType type, int[] parms)
         {
             const string stars = "★★★★★★★★★★";

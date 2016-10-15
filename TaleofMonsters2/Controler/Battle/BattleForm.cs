@@ -446,12 +446,7 @@ namespace TaleofMonsters.Controler.Battle
         {
             if (showGround)
             {
-                if (leftSelectCard != null)
-                {
-                    var card = CardAssistant.GetCard(leftSelectCard.CardId);
-                    card.SetData(leftSelectCard);
-                    card.DrawOnStateBar(e.Graphics);
-                }
+                //todo 可以用来画其他东西
             }
         }
 
@@ -526,7 +521,7 @@ namespace TaleofMonsters.Controler.Battle
         private void OnGameOver()
         {
             BattleManager.Instance.EffectQueue.Clear();
-           BattleManager.Instance.MonsterQueue.Clear();
+            BattleManager.Instance.MonsterQueue.Clear();
             BattleManager.Instance.FlowWordQueue.Clear();
 
             ImageManager.Compress();

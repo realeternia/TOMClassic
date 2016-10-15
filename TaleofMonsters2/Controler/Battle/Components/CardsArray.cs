@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using NarlonLib.Control;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Core.Interface;
+using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Cards;
 
 namespace TaleofMonsters.Controler.Battle.Components
 {
@@ -15,6 +18,7 @@ namespace TaleofMonsters.Controler.Battle.Components
         private int mouseIndex = -1;//从1开始
         private int clickIndex = -1;//从1开始
         private int realCardNum = 0;
+        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
 
         public CardsArray()
         {
@@ -182,8 +186,27 @@ namespace TaleofMonsters.Controler.Battle.Components
             if (newIndex != mouseIndex)
             {
                 mouseIndex = newIndex;
+                tooltip.Hide(this);
+                if (mouseIndex != -1 && cards[mouseIndex - 1].ACard.Id != 0)
+                {
+                    var targetCard = cards[mouseIndex - 1];
+                    var card = CardAssistant.GetCard(targetCard.ACard.CardId);
+                    card.SetData(targetCard.ACard);
+                    var image = card.GetPreview(CardPreviewType.Normal, new int[0]);
+                    tooltip.Show(image, this, targetCard.Location.X, targetCard.Location.Y-image.Height-5);
+                }
                 Invalidate();
             }
+        }
+
+        private void CardsArray_MouseLeave(object sender, EventArgs e)
+        {
+            tooltip.Hide(this);
+        }
+
+        private void CardsArray_MouseEnter(object sender, EventArgs e)
+        {
+            mouseIndex = -1;
         }
 
         private void CardsArray_MouseClick(object sender, MouseEventArgs e)
@@ -208,5 +231,7 @@ namespace TaleofMonsters.Controler.Battle.Components
                 }
             }
         }
+
+
     }
 }
