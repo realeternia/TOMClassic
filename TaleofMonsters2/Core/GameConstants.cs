@@ -32,7 +32,7 @@ namespace TaleofMonsters.Core
         public const int RoundAts = 30;//这个高了，怪的hp也要调高，spell的伤害和武器的耐久调整
         public const int LimitAts = 600; //超过这个值就会进行攻击，LimitAts/RoundAts/5=攻击间隔时间
 
-        public const int MaxMeleeAtkRange = 20; //近战的最大距离
+        public const int MaxMeleeAtkRange = 15; //近战的最大距离
         public const float SideKickFactor = 0.6f; //支援的系数
         public const int DefaultHitRate = 85;//默认的命中
         public const int CrtToRate = 10;//每点crt实际的暴击率

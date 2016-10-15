@@ -43,14 +43,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 }
             }
 
-            if (monster.RealAtk <= 0)
-            {
-                targetEnemy = BattleManager.Instance.MonsterQueue.GetKingTower(!monster.IsLeft);
-            }
-            else
-            {
-              
-            }
             targetEnemy = GetNearestEnemy(monster.IsLeft, monster.Position);//没有就找最近的目标
             if (targetEnemy != null)
             {
