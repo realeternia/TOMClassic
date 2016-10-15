@@ -41,7 +41,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
         public static bool IsPlaceBlank(int tx, int ty)
         {
             MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
-            return point.Owner <= 0;
+            return point.Owner == 0;
         }
 
         public static bool IsPlaceCanSummon(int mid, int tx, int ty, bool isLeft)
@@ -68,7 +68,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
         public static bool IsPlaceCanMove(int tx, int ty)
         {
             MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
-            return point.CanMove;
+            return point.CanMove && point.Owner == 0;
         }
 
         public static bool IsPlaceTomb(int tx, int ty)
