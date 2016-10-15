@@ -190,12 +190,24 @@ namespace TaleofMonsters.Controler.Battle.Tool
             if (BattleTargetManager.IsSpellGridTarget(target))
                 return IsPlaceBlank(tx, ty);
 
-            if (BattleTargetManager.IsSpellTombTarget(target))
-                return IsPlaceTomb(tx, ty);
-
             LiveMonster deskMon = GetPlaceMonster(tx, ty);
-            if (deskMon != null && !deskMon.IsGhost)
+            if (deskMon != null)
             {
+                if (BattleTargetManager.IsSpellTombTarget(target))
+                {
+                    if (!IsPlaceTomb(tx, ty) || !deskMon.IsGhost)
+                    {
+                        return false;
+                    }
+                }
+                else if (BattleTargetManager.IsSpellUnitTarget(target))
+                {
+                    if (deskMon.IsGhost)
+                    {
+                        return false;
+                    }
+                }
+
                 if (deskMon.IsLeft && BattleTargetManager.IsPlaceFriendMonster(target))
                     return true;
 

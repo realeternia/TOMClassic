@@ -227,20 +227,24 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             return new MonsterCollection(monsters, mouse);
         }
 
-        public void ReviveUnit(IMonster mon, int addHp)
+        public void ReviveUnit(IPlayer player, IMonster mon, int addHp)
         {
             LiveMonster lm = mon as LiveMonster;
             lm.Revive();
             lm.DeleteWeapon();
             lm.Life += addHp;
+            if (lm.Owner != player)//复活了对方的怪，就招过来了
+            {
+                lm.Rebel();
+            }
         }
 
-        public void ReviveUnit(Point mouse, int addHp)
+        public void ReviveUnit(IPlayer player, Point mouse, int addHp)
         {
             int oid = BattleManager.Instance.MemMap.GetMouseCell(mouse.X, mouse.Y).Owner;
             if (oid < 0)
             {
-                ReviveUnit(BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(-oid), addHp);
+                ReviveUnit(player, BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(-oid), addHp);
             }
         }
 

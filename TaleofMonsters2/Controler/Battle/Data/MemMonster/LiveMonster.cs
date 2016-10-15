@@ -536,6 +536,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 g.DrawImage(img, 19, 11, 63, 78);
                 img.Dispose();
 
+                var pen = new Pen(!IsLeft ? Brushes.Blue : Brushes.Red, 3);
+                g.DrawRectangle(pen, 1, 1, 98, 98);
+                pen.Dispose();
+
                 g.FillRectangle(Brushes.Red, 0, 2, 100, 5);
                 g.FillRectangle(Brushes.Cyan, 0, 2, Math.Min(GhostTime, 100), 5);
             }
