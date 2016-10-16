@@ -799,6 +799,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public MonsterCoverBox MonsterCoverBox { get; private set; }
 
+        private void Disappear()
+        {
+            if (IsGhost)
+            {
+                GhostTime += 10000;//让坟场消失
+            }
+        }
+
         public void AddBuff(int buffId, int blevel, double dura)
         {
             BuffManager.AddBuff(buffId, blevel, dura);
@@ -974,6 +982,13 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             var rate = BuffManager.GetBuffImmuneRate(type);
             return MathTool.GetRandom(0.0, 1.0) < rate;
+        }
+
+        public void EatTomb(IMonster tomb)
+        {
+            Atk.Source *= 1.1;
+            AddMaxHp(MaxHp.Source*0.1);
+            (tomb as LiveMonster).Disappear();
         }
 
         #endregion

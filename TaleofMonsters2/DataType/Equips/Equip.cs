@@ -9,7 +9,7 @@ namespace TaleofMonsters.DataType.Equips
     internal class Equip
     {
         public int TemplateId;//装备的id
-        private const int AttrFactor = 10;//相当于装备属性是怪属性的20%
+        private const int AttrFactor = 10;//相当于装备属性是怪属性的10%
 
         public int Atk;//实际的攻击力
         public int Hp;

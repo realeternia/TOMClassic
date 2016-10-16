@@ -28,7 +28,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
                 return;
             }
 
-            if (point.Owner > 0)
+            if (point.Owner != 0)
             {
                 return;
             }
@@ -274,10 +274,9 @@ namespace TaleofMonsters.Controler.Battle.Tool
         {
             int cardSize = BattleManager.Instance.MemMap.CardSize;
             int mid = BattleManager.Instance.MemMap.Cells[x / cardSize, y / cardSize].Owner;
-            if (mid < 0)
+            if (mid < 0)//小于0，理论上不能走
             {
-                LiveMonster lm =BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(Math.Abs(mid));
-                lm.GhostTime += 10000;//直接回收吧
+                return;
             }
             BattleManager.Instance.MemMap.Cells[x / cardSize, y / cardSize].UpdateOwner(owner);
         }

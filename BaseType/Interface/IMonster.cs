@@ -75,6 +75,7 @@ namespace ConfigDatas
         void MadDrug(); //½»»»¹¥»÷ºÍÑªÁ¿
         void CureRandomAlien(double rate);
         bool ResistBuffType(int type);
+        void EatTomb(IMonster tomb);
 
     }
 }
