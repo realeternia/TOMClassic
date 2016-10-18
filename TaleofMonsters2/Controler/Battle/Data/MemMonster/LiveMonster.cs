@@ -509,7 +509,19 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 hpBar.Draw(g);
 
                 g.FillPie(Brushes.Gray, 65, 65, 30, 30, 0, 360);
-                g.FillPie(CanAttack? Brushes.Yellow:Brushes.LightGray, 65, 65, 30, 30, 0, Action*360 / GameConstants.LimitAts);
+                var skillPercent = SkillManager.GetRoundSkillPercent();
+                if (skillPercent > 0)
+                {                
+                    //画集气槽
+                    g.FillPie(Brushes.Purple, 65, 65, 30, 30, 0, skillPercent * 360 / 100);
+                    //画行动槽
+                    g.FillPie(CanAttack ? Brushes.Yellow : Brushes.LightGray, 70, 70, 20, 20, 0, Action * 360 / GameConstants.LimitAts);
+                }
+                else
+                {
+                    //画行动槽
+                    g.FillPie(CanAttack ? Brushes.Yellow : Brushes.LightGray, 65, 65, 30, 30, 0, Action * 360 / GameConstants.LimitAts);
+                }
 
                 var starIcon = HSIcons.GetIconsByEName("sysstar");
                 for (int i = 0; i < Avatar.MonsterConfig.Star; i++)
@@ -534,6 +546,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 Image img = PicLoader.Read("System", "Rip.PNG");
                 g.DrawImage(img, 19, 11, 63, 78);
                 img.Dispose();
+
+                var pen = new Pen(!IsLeft ? Brushes.Blue : Brushes.Red, 3);
+                g.DrawRectangle(pen, 1, 1, 98, 98);
+                pen.Dispose();
 
                 g.FillRectangle(Brushes.Red, 0, 2, 100, 5);
                 g.FillRectangle(Brushes.Cyan, 0, 2, Math.Min(GhostTime, 100), 5);
@@ -782,6 +798,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public MonsterCoverBox MonsterCoverBox { get; private set; }
 
+        private void Disappear()
+        {
+            if (IsGhost)
+            {
+                GhostTime += 10000;//让坟场消失
+            }
+        }
+
         public void AddBuff(int buffId, int blevel, double dura)
         {
             BuffManager.AddBuff(buffId, blevel, dura);
@@ -959,6 +983,13 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             var rate = BuffManager.GetBuffImmuneRate(type);
             return MathTool.GetRandom(0.0, 1.0) < rate;
+        }
+
+        public void EatTomb(IMonster tomb)
+        {
+            Atk.Source *= 1.1;
+            AddMaxHp(MaxHp.Source*0.1);
+            (tomb as LiveMonster).Disappear();
         }
 
         #endregion

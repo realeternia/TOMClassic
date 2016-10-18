@@ -9,7 +9,7 @@ namespace TaleofMonsters.DataType.Equips
     internal class Equip
     {
         public int TemplateId;//装备的id
-        private const int AttrFactor = 20;//相当于装备属性是怪属性的20%
+        private const int AttrFactor = 10;//相当于装备属性是怪属性的10%
 
         public int Atk;//实际的攻击力
         public int Hp;
@@ -48,12 +48,13 @@ namespace TaleofMonsters.DataType.Equips
             LpRate = equipConfig.EnergyRate[0];
             PpRate = equipConfig.EnergyRate[1];
             MpRate = equipConfig.EnergyRate[2];
-            int qual = equipConfig.Quality; 
-            int standardValue = (35 + qual * 5) * (equipConfig.Level + 9) / 10 * AttrFactor / 100;
+            int qual = equipConfig.Quality;
+            int addonFactor = ConfigData.GetLevelExpConfig(equipConfig.Level).EquipAddon;
+            int standardValue = (35 + qual * 5) * (100+addonFactor) / 100 * AttrFactor / 100;
             if (equipConfig.AtkP > 0)
                 Atk = standardValue * (100 + equipConfig.AtkP) / 100; //200
             if (equipConfig.VitP > 0)
-                Hp = standardValue * (100 + equipConfig.VitP) / 100 * 3; //200
+                Hp = standardValue * (100 + equipConfig.VitP) / 100 * 5; //200
         }
 
         public Image GetPreview()

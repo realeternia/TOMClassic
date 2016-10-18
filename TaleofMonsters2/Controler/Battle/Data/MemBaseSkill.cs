@@ -17,12 +17,13 @@ namespace TaleofMonsters.Controler.Battle.Data
         private readonly Dictionary<int, BurstStage> burst;
         private bool onAddTriggered;
 
-        private float lastCastRound; //上次施放special技能的时间
+        private float castRoundAddon; //累积special技能的时间
 
         public SkillSourceTypes Type { get; set; } //技能来源，天生/武器
         public int SkillId { get; private set; }
         public int Percent { get; private set; }
         public int Level { private get; set; }
+        public LiveMonster Self { get; set; }
 
         public MemBaseSkill(Skill skill, int per)
         {
@@ -31,9 +32,7 @@ namespace TaleofMonsters.Controler.Battle.Data
             Percent = per;
             burst= new Dictionary<int, BurstStage>();
         }
-
-        public LiveMonster Self { get; set; }
-
+        
         public static int GetBurstKey(int srcId, int destId)
         {
             return srcId * -1 + destId;
@@ -46,6 +45,15 @@ namespace TaleofMonsters.Controler.Battle.Data
                 return false;
             }
             return burst[key] != BurstStage.Fail;
+        }
+
+        public int GetPercent()
+        {
+            if (SkillConfig.SpecialCd > 0)
+            {
+                return (int)(castRoundAddon*100/SkillConfig.SpecialCd);
+            }
+            return 0;
         }
 
         public Skill SkillInfo { get; private set; }
@@ -157,7 +165,7 @@ namespace TaleofMonsters.Controler.Battle.Data
         {
             if (SkillInfo.SkillConfig.CheckSpecial != null)
             {
-                lastCastRound += pastRound;
+                castRoundAddon += pastRound;
                 if (!CheckRate())
                 {
                     return false;
@@ -168,12 +176,12 @@ namespace TaleofMonsters.Controler.Battle.Data
                     return false;
                 }
              
-                if (lastCastRound < SkillInfo.SkillConfig.SpecialCd)
+                if (castRoundAddon < SkillInfo.SkillConfig.SpecialCd)
                 {//in cd 
                     return false;
                 }
 
-                lastCastRound = (float)(lastCastRound- SkillInfo.SkillConfig.SpecialCd);
+                castRoundAddon = (float)(castRoundAddon- SkillInfo.SkillConfig.SpecialCd);
 
                 SkillInfo.SkillConfig.CheckSpecial(SkillInfo, Self, Level);
                 SendSkillIcon(0);

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using ConfigDatas;
-using NarlonLib.Core;
 using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType;
@@ -204,5 +203,17 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             }
         }
 
+        public int GetRoundSkillPercent()
+        {
+            foreach (MemBaseSkill skill in Skills.ToArray())
+            {
+                var round = skill.GetPercent();
+                if (round > 0)
+                {
+                    return round;
+                }
+            }
+            return 0;
+        }
     }
 }

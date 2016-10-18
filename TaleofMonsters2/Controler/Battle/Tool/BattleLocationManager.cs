@@ -28,7 +28,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
                 return;
             }
 
-            if (point.Owner > 0)
+            if (point.Owner != 0)
             {
                 return;
             }
@@ -41,7 +41,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
         public static bool IsPlaceBlank(int tx, int ty)
         {
             MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
-            return point.Owner <= 0;
+            return point.Owner == 0;
         }
 
         public static bool IsPlaceCanSummon(int mid, int tx, int ty, bool isLeft)
@@ -68,7 +68,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
         public static bool IsPlaceCanMove(int tx, int ty)
         {
             MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
-            return point.CanMove;
+            return point.CanMove && point.Owner == 0;
         }
 
         public static bool IsPlaceTomb(int tx, int ty)
@@ -190,12 +190,24 @@ namespace TaleofMonsters.Controler.Battle.Tool
             if (BattleTargetManager.IsSpellGridTarget(target))
                 return IsPlaceBlank(tx, ty);
 
-            if (BattleTargetManager.IsSpellTombTarget(target))
-                return IsPlaceTomb(tx, ty);
-
             LiveMonster deskMon = GetPlaceMonster(tx, ty);
-            if (deskMon != null && !deskMon.IsGhost)
+            if (deskMon != null)
             {
+                if (BattleTargetManager.IsSpellTombTarget(target))
+                {
+                    if (!IsPlaceTomb(tx, ty) || !deskMon.IsGhost)
+                    {
+                        return false;
+                    }
+                }
+                else if (BattleTargetManager.IsSpellUnitTarget(target))
+                {
+                    if (deskMon.IsGhost)
+                    {
+                        return false;
+                    }
+                }
+
                 if (deskMon.IsLeft && BattleTargetManager.IsPlaceFriendMonster(target))
                     return true;
 
@@ -262,10 +274,9 @@ namespace TaleofMonsters.Controler.Battle.Tool
         {
             int cardSize = BattleManager.Instance.MemMap.CardSize;
             int mid = BattleManager.Instance.MemMap.Cells[x / cardSize, y / cardSize].Owner;
-            if (mid < 0)
+            if (mid < 0)//小于0，理论上不能走
             {
-                LiveMonster lm =BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(Math.Abs(mid));
-                lm.GhostTime += 10000;//直接回收吧
+                return;
             }
             BattleManager.Instance.MemMap.Cells[x / cardSize, y / cardSize].UpdateOwner(owner);
         }
