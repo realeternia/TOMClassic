@@ -33,6 +33,7 @@ namespace TaleofMonsters.DataType.Skills
         {
             HitDamage damage;
             double attrRateOn = 1; //属性相克的伤害修正
+            bool isCrt = false;
             if (dest.Avatar.MonsterConfig.AttrDef != null)
             {
                 attrRateOn -= dest.Avatar.MonsterConfig.AttrDef[src.AttackType];
@@ -43,6 +44,7 @@ namespace TaleofMonsters.DataType.Skills
                 if (MathTool.GetRandom(100) < src.RealCrt * GameConstants.CrtToRate)
                 {
                     attrRateOn *= (GameConstants.DefaultCrtDamage + src.CrtDamAddRate);
+                    isCrt = true;
                 }
             }
 
@@ -59,6 +61,7 @@ namespace TaleofMonsters.DataType.Skills
                 damage = new HitDamage(damValue, damValue, realAttackType, DamageTypes.Magic);
                 dest.CheckMagicDamage(damage);
             }
+            damage.IsCrt = isCrt;
 
             bool nodef = false; //无视防御
             if (!src.BuffManager.HasBuff(BuffEffectTypes.NoSkill))

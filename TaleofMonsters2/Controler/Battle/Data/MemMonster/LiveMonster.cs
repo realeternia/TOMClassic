@@ -34,7 +34,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public BuffManager BuffManager { get; private set; }
 
         private int life;
-        private int oldLife;
         private int lastDamagerId;
 
         private List<MonsterAuro> auroList;//光环
@@ -80,11 +79,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             set { life = value; if (life > RealMaxHp) life = RealMaxHp;
             hpBar.Rate = life * 100 / RealMaxHp;                
             }
-        }
-
-        public int LossLife
-        {
-            get { int value = oldLife - life; oldLife = life; return value; }
         }
         
         public Point CenterPosition
@@ -254,7 +248,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
             SetBasicData();
             Life = Avatar.Hp;
-            oldLife = life;
             MonsterCoverBox = new MonsterCoverBox(this);
         }
 
@@ -284,7 +277,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             {
                 HitDamage damage = SkillAssistant.GetDamage(src, this);
                 CheckDamageBuffEffect(src, damage);
-                Life -= damage.Value;    
+                Life -= damage.Value;
+                OnDamage(damage);
                 SkillAssistant.CheckHitEffectAfter(src, this, damage);
                 if (src.WeaponId > 0)
                 {
@@ -481,6 +475,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 //		    Def += (double) basedata/10;
 //			MaxHp=Avatar.Hp + 3 * basedata / 10;
 		}
+
+        private void OnDamage(HitDamage damage)
+        {
+            BattleManager.Instance.FlowWordQueue.Add(new FlowDamageInfo(damage, CenterPosition), false);//掉血显示
+        }
 
         public void DrawOnBattle(Graphics g2, Color uponColor)
         {
@@ -823,7 +822,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void OnMagicDamage(double damage, int element)
         {
-            Life -= SkillAssistant.GetMagicDamage(this, new HitDamage((int)damage, (int)damage, element, DamageTypes.Magic));
+            var dam = new HitDamage((int) damage, (int) damage, element, DamageTypes.Magic);
+            Life -= SkillAssistant.GetMagicDamage(this, dam);
+            OnDamage(dam);
         }
 
         public void SuddenDeath()

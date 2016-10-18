@@ -14,10 +14,8 @@ namespace TaleofMonsters.Core
                 case 2: return Brushes.Green;
                 case 3: return Brushes.Red;
                 case 4: return Brushes.Peru;
-                case 5: return Brushes.Blue;
-                case 6: return Brushes.Purple;
-                case 7: return Brushes.Gold;
-                case 8: return Brushes.DimGray;
+                case 5: return Brushes.Gold;
+                case 6: return Brushes.DimGray;
             }
             return Brushes.White;
         }
@@ -37,22 +35,20 @@ namespace TaleofMonsters.Core
             return Brushes.White;
         }
 
-        //static public Color GetColorByAttribute(int attr)
-        //{
-        //    switch (attr)
-        //    {
-        //        case 0: return Color.LightGray;
-        //        case 1: return Color.Aqua;
-        //        case 2: return Color.Green;
-        //        case 3: return Color.Red;
-        //        case 4: return Color.Peru;
-        //        case 5: return Color.Blue;
-        //        case 6: return Color.Purple;
-        //        case 7: return Color.Gold;
-        //        case 8: return Color.DimGray;
-        //    }
-        //    return Color.White;
-        //}
+        static public Color GetColorByAttribute(int attr)
+        {
+            switch (attr)
+            {
+                case 0: return Color.LightGray;
+                case 1: return Color.Aqua;
+                case 2: return Color.Green;
+                case 3: return Color.Red;
+                case 4: return Color.Peru;
+                case 5: return Color.Gold;
+                case 6: return Color.DimGray;
+            }
+            return Color.White;
+        }
 
         public static void DrawValueLine(Graphics g, int value, int x, int y, int width, int height)
         {
