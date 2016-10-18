@@ -113,11 +113,6 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 var rival = mon.Rival as Player;
                 if (rival.DirectDamage > 0)
                     mon.Life -= rival.DirectDamage;
-                int loss = mon.LossLife;
-                if (loss > 0)
-                {
-                    BattleManager.Instance.FlowWordQueue.Add(new FlowWord(loss.ToString(), mon.CenterPosition, 5, "red", 0, -10), false);//掉血显示
-                }
                 if (!mon.IsAlive)
                 {
                     if (!mon.IsGhost)
