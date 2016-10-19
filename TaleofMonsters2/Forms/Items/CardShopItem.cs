@@ -7,11 +7,10 @@ using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards;
+using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Effects;
-using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Shops;
-using TaleofMonsters.DataType.Skills;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Regions;
 
@@ -61,9 +60,9 @@ namespace TaleofMonsters.Forms.Items
             if (card.GetCardType() == CardTypes.Monster)
             {
                 MonsterConfig monsterConfig = ConfigData.GetMonsterConfig(product.Cid);
-                for (int i = 0; i < monsterConfig.Skills.Count; i++)
+                foreach (var skill in MonsterBook.GetSkillList(monsterConfig.Id))
                 {
-                    int skillId = monsterConfig.Skills[i].X;
+                    int skillId = skill.Id;
                     SkillConfig skillConfig = ConfigData.GetSkillConfig(skillId);
                     if (skillConfig.Cover != null)
                     {

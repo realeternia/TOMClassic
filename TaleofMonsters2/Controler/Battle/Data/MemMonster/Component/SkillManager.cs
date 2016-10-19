@@ -3,6 +3,7 @@ using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Effects;
 using TaleofMonsters.DataType.Skills;
 
@@ -37,13 +38,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         private List<MemBaseSkill> GetMemSkillDataForMonster()
         {
             List<MemBaseSkill> skills = new List<MemBaseSkill>();
-            for (int i = 0; i < self.Avatar.MonsterConfig.Skills.Count; i++)
+            foreach (var skill in MonsterBook.GetSkillList(self.Avatar.MonsterConfig.Id))
             {
-                RLVector3 skillData = self.Avatar.MonsterConfig.Skills[i];
-                int lukLevel = skillData.Z != 0 ? skillData.Z : self.Level;
-                Skill luk = new Skill(skillData.X);
+                int lukLevel = self.Level;
+                Skill luk = new Skill(skill.Id);
                 luk.UpgradeToLevel(lukLevel);
-                MemBaseSkill baseSkill = new MemBaseSkill(luk, skillData.Y) { Self = self, Level = lukLevel };
+                MemBaseSkill baseSkill = new MemBaseSkill(luk, skill.Value) { Self = self, Level = lukLevel };
                 skills.Add(baseSkill);
             }
 

@@ -113,10 +113,10 @@ namespace TaleofMonsters.Forms.MagicBook
         private void CheckMonster(MonsterCard monsterCard, ref string effectPath)
         {
             var monsterConfig = monsterCard.GetMonster().MonsterConfig;
-            for (int i = 0; i < monsterConfig.Skills.Count; i++)
+            foreach (var skill in MonsterBook.GetSkillList(monsterConfig.Id))
             {
-                int skillId = monsterConfig.Skills[i].X;
-                MonsterSkill monsterSkill = new MonsterSkill(skillId, monsterConfig.Skills[i].Y, 0);
+                int skillId = skill.Id;
+                MonsterSkill monsterSkill = new MonsterSkill(skillId, skill.Value, 0);
                 skills.Add(monsterSkill);
                 SkillConfig skillConfig = ConfigData.GetSkillConfig(skillId);
                 if (!string.IsNullOrEmpty(skillConfig.Cover))

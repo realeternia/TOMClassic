@@ -169,10 +169,9 @@ namespace TaleofMonsters.DataType.Cards.Monsters
 
             g.DrawString("技能", fontblack, Brushes.White, 10 + offX, basel + 202);
             int skillindex = 0;
-            for (int i = 0; i < ConfigData.GetMonsterConfig(monster.Id).Skills.Count; i++)
+            foreach (var skill in MonsterBook.GetSkillList(monster.Id))
             {
-                int skillId = ConfigData.GetMonsterConfig(monster.Id).Skills[i].X;
-                SkillConfig skillConfig = ConfigData.GetSkillConfig(skillId);
+                int skillId = skill.Id;
                 g.DrawImage(SkillBook.GetSkillImage(skillId), 10 + 45 * skillindex + offX, basel + 223, 40, 40);
                 skillindex++;
             }
@@ -229,13 +228,14 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             {
                 tipData.AddTextNewLine(string.Format("幸运 +{0}", monster.Luk), "Lime");
             }
-         
-            if (monster.MonsterConfig.Skills.Count > 0)
+
+            var skillList = MonsterBook.GetSkillList(monster.MonsterConfig.Id);
+            if (skillList.Count > 0)
             {
                 tipData.AddLine();
-                for (int i = 0; i < monster.MonsterConfig.Skills.Count; i++)
+                foreach (var skill in skillList)
                 {
-                    int skillId = monster.MonsterConfig.Skills[i].X;
+                    int skillId = skill.Id;
                     tipData.AddTextNewLine("", "Red");
                     tipData.AddImage(SkillBook.GetSkillImage(skillId));
 

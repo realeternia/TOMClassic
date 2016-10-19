@@ -57,9 +57,9 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             {
                 if (monsterConfig.IsSpecial > 0)
                     continue;
-                for (int i = 0; i < monsterConfig.Skills.Count; i++)
+                foreach (var skill in GetSkillList(monsterConfig.Id))
                 {
-                    if (monsterConfig.Skills[i].X == sid)
+                    if (skill.Id == sid)
                     {
                         mids.Add(monsterConfig.Id);
                         break;
@@ -117,10 +117,9 @@ namespace TaleofMonsters.DataType.Cards.Monsters
 
        public static SkillConfig GetRangeSkill(int mid)
        {
-           var monsterConfig = ConfigData.GetMonsterConfig(mid);
-           for (int i = 0; i < monsterConfig.Skills.Count; i++)
+           foreach (var skill in GetSkillList(mid))
            {
-               var skilConfig = ConfigData.GetSkillConfig(monsterConfig.Skills[i].X);
+               var skilConfig = ConfigData.GetSkillConfig(skill.Id);
                if (skilConfig.Target != "" && skilConfig.OnAdd != null)
                {
                    return skilConfig;
@@ -131,16 +130,30 @@ namespace TaleofMonsters.DataType.Cards.Monsters
 
         public static bool HasTag(int mid, string tag)
         {
-            var monsterConfig = ConfigData.GetMonsterConfig(mid);
-            for (int i = 0; i < monsterConfig.Skills.Count; i++)
+            foreach (var skill in GetSkillList(mid))
             {
-                var skilConfig = ConfigData.GetSkillConfig(monsterConfig.Skills[i].X);
+                var skilConfig = ConfigData.GetSkillConfig(skill.Id);
                 if (skilConfig.Tag == tag)
                 {
                     return true;
                 }
             }
             return false;
+        }
+
+        public static List<RLIdValue> GetSkillList(int mid)
+        {
+            var monsterConfig = ConfigData.GetMonsterConfig(mid);
+            List<RLIdValue> idValues = new List<RLIdValue>();
+            if (monsterConfig.Skill1 > 0)
+            {
+                idValues.Add(new RLIdValue {Id = monsterConfig.Skill1, Value = monsterConfig.SkillRate1});
+            }
+            if (monsterConfig.Skill2 > 0)
+            {
+                idValues.Add(new RLIdValue {Id = monsterConfig.Skill2, Value = monsterConfig.SkillRate2});
+            }
+            return idValues;
         }
     }
 }
