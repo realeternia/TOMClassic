@@ -178,8 +178,6 @@ namespace TaleofMonsters.Forms.MagicBook
 
         private void MonsterSkillViewForm_MouseMove(object sender, MouseEventArgs e)
         {
-            cardDetail.CheckMouseMove(e.X, e.Y);
-
             int truex = e.X - 65;
             int truey = e.Y - 35 - cardHeight;
             if (truex > 0 && truex < xCount * cardWidth && truey > 0 && truey < yCount * cardHeight)

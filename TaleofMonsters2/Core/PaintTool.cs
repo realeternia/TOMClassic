@@ -76,21 +76,23 @@ namespace TaleofMonsters.Core
             }
         }
 
-        public static int GetStringWidth(string s)
+        public static void DrawStringMultiLine(Graphics g, Font fontsong, Brush sb, int offX, int y, int height, int span, string des)
         {
-            double wid = 0;
-            foreach (char c in s)
+            if (des.Length < span)
             {
-                if (c>='0'&&c<='9')
-                {
-                    wid += 14.20594;
-                }
-                else
-                {
-                    wid += 19.98763;
-                }
+                g.DrawString(des, fontsong, sb, offX, y);
             }
-            return (int)wid;
+            else if (des.Length < span*2)
+            {
+                g.DrawString(des.Substring(0, span), fontsong, sb, offX, y);
+                g.DrawString(des.Substring(span), fontsong, sb, offX, y + height);
+            }
+            else
+            {
+                g.DrawString(des.Substring(0, span), fontsong, sb, offX, y);
+                g.DrawString(des.Substring(span, span), fontsong, sb, offX, y + height);
+                g.DrawString(des.Substring(span*2), fontsong, sb, offX, y + height * 2);
+            }
         }
     }
 }

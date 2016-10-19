@@ -105,6 +105,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
 
             Font fontblack = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             Font fontsong = new Font("宋体", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+                        Font fontsong2 = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             SolidBrush sb = new SolidBrush(Color.FromArgb(100, 50, 0));
             g.DrawString(weapon.WeaponConfig.Name, fontblack, Brushes.White, offX + 10, basel + 2);
             g.DrawImage(HSIcons.GetIconsByEName("wep" + (weapon.WeaponConfig.Type - 100+1)), 60 + offX, basel - 40, 24, 24);
@@ -165,9 +166,20 @@ namespace TaleofMonsters.DataType.Cards.Weapons
 
             g.DrawString("技能", fontblack, Brushes.White, offX + 10, basel + 200);
             if (weapon.WeaponConfig.SkillId != 0)
+            {
+                var skillConfig = ConfigData.GetSkillConfig(weapon.WeaponConfig.SkillId);
                 g.DrawImage(SkillBook.GetSkillImage(weapon.WeaponConfig.SkillId), offX + 10, basel + 221, 40, 40);
+
+                Skill skillData = new Skill(weapon.WeaponConfig.SkillId);
+                skillData.UpgradeToLevel(card.Level);
+                var des = string.Format("{0}:{1}", skillConfig.Name, skillData.Descript);
+                if (weapon.WeaponConfig.Percent < 100)
+                    des = string.Format("{0}-{1}%:{2}", skillConfig.Name, weapon.WeaponConfig.Percent, skillData.Descript);
+                PaintTool.DrawStringMultiLine(g, fontsong2, sb, offX + 10 + 43, basel + 221, 14, 12, des);
+            }
             fontblack.Dispose();
             fontsong.Dispose();
+            fontsong2.Dispose();
             sb.Dispose();
         }
 

@@ -217,8 +217,6 @@ namespace TaleofMonsters.Forms
 
         private void DeckViewForm_MouseMove(object sender, MouseEventArgs e)
         {
-            cardDetail.CheckMouseMove(e.X, e.Y);
-
             cardRegion.CheckMouseMove(e.X, e.Y);
 
             selectRegion.CheckMouseMove(e.X, e.Y);

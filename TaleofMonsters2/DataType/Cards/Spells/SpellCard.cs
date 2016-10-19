@@ -131,21 +131,7 @@ namespace TaleofMonsters.DataType.Cards.Spells
             PaintTool.DrawValueLine(g, (int)spell.Rate, 70 + offX, add.Now + 1, 115, 10);
             g.DrawString("效果", fontblack, Brushes.White, offX + 10, basel + 137);
             string des = spell.Descript;
-            if (des.Length < 13)
-			{
-                g.DrawString(des, fontsong, sb, offX + 10, basel + 61+95);
-			}
-            else if (des.Length < 26) 
-			{
-                g.DrawString(des.Substring(0, 13), fontsong, sb, offX + 10, basel + 61 + 95);
-                g.DrawString(des.Substring(13), fontsong, sb, offX + 10, basel + 76 + 95);
-            }
-            else
-            {
-                g.DrawString(des.Substring(0, 13), fontsong, sb, offX + 10, basel + 61 + 95);
-                g.DrawString(des.Substring(13, 13), fontsong, sb, offX + 10, basel + 76 + 95);
-                g.DrawString(des.Substring(26), fontsong, sb, offX + 10, basel + 91 + 95);
-            }
+            PaintTool.DrawStringMultiLine(g, fontsong, sb, offX + 10, basel + 61 + 95, 15, 13, des);
             fontblack.Dispose();
             fontsong.Dispose();
             sb.Dispose();

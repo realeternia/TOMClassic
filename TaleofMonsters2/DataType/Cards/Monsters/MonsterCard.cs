@@ -106,12 +106,13 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             {
                 g.FillRectangle(lineBack, 10 + offX, basel + 75 + i * 30, 180, 15);
             }
-            g.FillRectangle(headerBack, 10 + offX, basel + 200, 180, 20);
+            g.FillRectangle(headerBack, 10 + offX, basel + 198, 180, 20);
             headerBack.Dispose();
             lineBack.Dispose();
 
             Font fontblack = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             Font fontsong = new Font("宋体", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            Font fontsong2 = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             g.DrawString(monster.Name, fontblack, Brushes.White, offX + 10, basel + 2);
             g.DrawImage(HSIcons.GetIconsByEName("rac" + monster.MonsterConfig.Type), 60 + offX, basel - 40, 24, 24);
             g.DrawImage(HSIcons.GetIconsByEName("atr" + monster.MonsterConfig.Attr), 88 + offX, basel - 40, 24, 24);
@@ -167,16 +168,25 @@ namespace TaleofMonsters.DataType.Cards.Monsters
                 PaintTool.DrawValueLine(g, monster.Luk * 20, 70 + offX, add.Now + 1, 115, 10);
             }
 
-            g.DrawString("技能", fontblack, Brushes.White, 10 + offX, basel + 202);
+            g.DrawString("技能", fontblack, Brushes.White, 10 + offX, basel + 200);
             int skillindex = 0;
             foreach (var skill in MonsterBook.GetSkillList(monster.Id))
             {
                 int skillId = skill.Id;
-                g.DrawImage(SkillBook.GetSkillImage(skillId), 10 + 45 * skillindex + offX, basel + 223, 40, 40);
+                var skillConfig = ConfigData.GetSkillConfig(skillId);
+                g.DrawImage(SkillBook.GetSkillImage(skillId), 10 + offX, basel + 221 + 45 * skillindex, 40, 40);
+
+                Skill skillData = new Skill(skillId);
+                skillData.UpgradeToLevel(card.Level);
+                var des = string.Format("{0}:{1}", skillConfig.Name, skillData.Descript);
+                if (skill.Value < 100)
+                    des = string.Format("{0}-{1}%:{2}", skillConfig.Name, skill.Value, skillData.Descript);
+                PaintTool.DrawStringMultiLine(g, fontsong2, sb, offX + 10 + 43, basel + 221 + 45 * skillindex, 14, 12, des);
                 skillindex++;
             }
 
             fontsong.Dispose();
+            fontsong2.Dispose();
             fontblack.Dispose();
             sb.Dispose();
         }

@@ -84,7 +84,24 @@ namespace TaleofMonsters.Forms
 
         internal void AddFlowCenter(string text, string color)
         {
-            AddFlow(text, color, (Width - Core.PaintTool.GetStringWidth(text))/2, Height/2 - 10);
+            AddFlow(text, color, (Width - GetStringWidth(text))/2, Height/2 - 10);
+        }
+
+        private static int GetStringWidth(string s)
+        {
+            double wid = 0;
+            foreach (char c in s)
+            {
+                if (c >= '0' && c <= '9')
+                {
+                    wid += 14.20594;
+                }
+                else
+                {
+                    wid += 19.98763;
+                }
+            }
+            return (int)wid;
         }
 
         void BasePanel_Paint(object sender, PaintEventArgs e)
