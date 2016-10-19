@@ -33,7 +33,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
                 return;
             }
 
-            UpdateCellOwner(lm.Position.X, lm.Position.Y, 0);
+            ClearCellOwner(lm.Position.X, lm.Position.Y);
             lm.Position = new Point(point.X, point.Y);
             UpdateCellOwner(point.X, point.Y, lm.Id);
         }
@@ -279,6 +279,12 @@ namespace TaleofMonsters.Controler.Battle.Tool
                 return;
             }
             BattleManager.Instance.MemMap.Cells[x / cardSize, y / cardSize].UpdateOwner(owner);
+        }
+
+        public static void ClearCellOwner(int x, int y)
+        {
+            int cardSize = BattleManager.Instance.MemMap.CardSize;
+            BattleManager.Instance.MemMap.Cells[x / cardSize, y / cardSize].UpdateOwner(0);
         }
 
         public static Point GetRandomPoint()

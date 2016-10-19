@@ -57,7 +57,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
         {
             mon.OwnerPlayer.State.CheckMonsterEvent(false, mon);
             if (BattleManager.Instance.MemMap.GetMouseCell(mon.Position.X, mon.Position.Y).Owner == -mon.Id)
-                BattleLocationManager.UpdateCellOwner(mon.Position.X, mon.Position.Y, 0);
+                BattleLocationManager.ClearCellOwner(mon.Position.X, mon.Position.Y);
             monsters.Remove(mon);                                
         }
 
