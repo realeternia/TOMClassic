@@ -54,7 +54,7 @@ namespace ConfigDatas
         bool IsRace(string rac);
         int AttackType { get; }
         bool HasSkill(int sid);
-        void ForgetSkill();
+        void Silent();
         int Attr { get; } // Ù–‘
         int Type { get; } //÷÷◊Â
 

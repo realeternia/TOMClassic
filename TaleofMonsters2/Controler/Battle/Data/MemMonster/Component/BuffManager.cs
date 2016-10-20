@@ -69,18 +69,20 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             }
         }
 
-        public void ClearDebuff()
+        public void ClearBuff(bool debuffOnly)
         {
-            foreach (MemBaseBuff buff in buffDict.Values)
+            foreach (var buff in buffDict.Values)
             {
-                if (buff.Type == "ns")
+                if (debuffOnly && buff.Type == "ns")
+                    buff.TimeLeft = 0;
+                if (!debuffOnly && buff.Type.EndsWith("s"))
                     buff.TimeLeft = 0;
             }
         }
 
         public void ExtendDebuff(double count)
         {
-            foreach (MemBaseBuff buff in buffDict.Values)
+            foreach (var buff in buffDict.Values)
             {
                 if (buff.Type == "ns")
                     buff.TimeLeft += count;
@@ -89,7 +91,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public bool HasBuff(int buffid)
         {
-            foreach (MemBaseBuff buff in buffDict.Values)
+            foreach (var buff in buffDict.Values)
             {
                 if (buff.Id == buffid)
                 {
@@ -102,7 +104,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         public void BuffCount()
         {
             List<int> toDelete = new List<int>();
-            foreach (MemBaseBuff buff in buffDict.Values)
+            foreach (var buff in buffDict.Values)
             {
                 buff.OnRoundEffect(self);
                 if (buff.TimeLeft <= 0)
@@ -122,7 +124,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public bool HasBuff(BuffEffectTypes type)
         {
-            foreach (MemBaseBuff buff in buffDict.Values)
+            foreach (var buff in buffDict.Values)
             {
                 if (BuffBook.HasEffect(buff.Id,type))
                 {
@@ -134,7 +136,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void DelBuff(BuffEffectTypes type)
         {
-            foreach (MemBaseBuff buff in buffDict.Values)
+            foreach (var buff in buffDict.Values)
             {
                 if (BuffBook.HasEffect(buff.Id, type))
                 {
@@ -194,7 +196,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void CheckRecoverOnHit()
         {
-            foreach (MemBaseBuff buff in buffDict.Values)
+            foreach (var buff in buffDict.Values)
             {
                 if (buff.BuffConfig.EndOnHit)
                 {

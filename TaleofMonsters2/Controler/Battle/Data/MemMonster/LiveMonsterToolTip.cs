@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Skills;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster
@@ -88,6 +89,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             {
                 tipData.AddImageNewLine(SkillBook.GetSkillImage(memBaseSkill.SkillId));
 
+                if (liveMonster.SkillManager.InForget && memBaseSkill.Type != SkillSourceTypes.Weapon)
+                {
+                    tipData.AddText(string.Format("{0} X", memBaseSkill.SkillInfo.Name), "Red");
+                    continue;
+                }
                 string tp = string.Format("{0}:{1}{2}", memBaseSkill.SkillInfo.Name, memBaseSkill.SkillInfo.Descript, memBaseSkill.Percent == 100 ? "" : string.Format("({0}%)", memBaseSkill.Percent));
                 if (tp.Length > 20)
                 {

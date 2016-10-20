@@ -13,6 +13,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
     {
         public List<MemBaseSkill> Skills { get; private set; }
         private LiveMonster self;
+        public bool InForget { get; set; }//处于遗忘状态，遗忘除了武器外的技能
 
         public SkillManager(LiveMonster lm)
         {
@@ -85,7 +86,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void Forget()
         {
-            Skills.RemoveAll(skill => skill.Type != SkillSourceTypes.Weapon);
+            InForget = true;
         }
 
         public void CheckCover(List<ActiveEffect> coverEffectList)
@@ -127,6 +128,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
             foreach (MemBaseSkill skill in Skills.ToArray())
             {
+                if (InForget && skill.Type != SkillSourceTypes.Weapon)
+                    continue;
+
                 if (skill.CheckSpecial(pastRound))
                     return true;
             }
@@ -143,6 +147,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         {
             foreach (MemBaseSkill skill in Skills.ToArray())
             {
+                if (InForget && skill.Type != SkillSourceTypes.Weapon)
+                    continue;
+
                 skill.CheckBurst(src, dest, isMelee);
             }
         }

@@ -785,9 +785,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         }
 
         //遗忘所有武器技能除外
-        public void ForgetSkill()
+        public void Silent()
         {
             SkillManager.Forget();
+
+            BuffManager.ClearBuff(false);//清除所有buff
         }
 
         public int Attr { get { return Avatar.MonsterConfig.Attr; } }
@@ -813,7 +815,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void ClearDebuff()
         {
-            BuffManager.ClearDebuff();
+            BuffManager.ClearBuff(true);
         }
 
         public void ExtendDebuff(double count)
