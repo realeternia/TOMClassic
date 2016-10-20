@@ -9,7 +9,7 @@ namespace TaleofMonsters.Core
         {
             switch (attr)
             {
-                case 0: return Brushes.LightGray;
+                case 0: return Brushes.Violet;
                 case 1: return Brushes.Aqua;
                 case 2: return Brushes.Green;
                 case 3: return Brushes.Red;
@@ -30,7 +30,7 @@ namespace TaleofMonsters.Core
                 case 3: return Brushes.White;
                 case 4: return Brushes.Red;
                 case 5: return Brushes.Yellow;
-                case 6: return Brushes.Blue;
+                case 6: return Brushes.DodgerBlue;
             }
             return Brushes.White;
         }
@@ -39,8 +39,8 @@ namespace TaleofMonsters.Core
         {
             switch (attr)
             {
-                case 0: return Color.LightGray;
-                case 1: return Color.Aqua;
+                case 0: return Color.Violet;
+                case 1: return Color.DodgerBlue;
                 case 2: return Color.Green;
                 case 3: return Color.Red;
                 case 4: return Color.Peru;

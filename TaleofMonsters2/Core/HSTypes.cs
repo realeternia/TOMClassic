@@ -1,4 +1,6 @@
-﻿namespace TaleofMonsters.Core
+﻿using System.Drawing;
+
+namespace TaleofMonsters.Core
 {
     public delegate void HsActionCallback();
 
@@ -79,19 +81,19 @@
 
         public static string I2QualityColor(int id)
         {
-            string[] rt = { "White", "Green", "Blue", "Purple", "Orange", "Gray", "Gray", "", "", "Yellow" };
+            string[] rt = { "White", "Green", "DodgerBlue", "Violet", "Orange", "Gray", "Gray", "", "", "Yellow" };
             return rt[id];
         }
 
         public static string I2EaddonColor(int id)
         {
-            string[] rt = { "Gray", "White", "Green", "Blue", "Purple", "Orange", "Red" };
+            string[] rt = { "Gray", "White", "Green", "DodgerBlue", "Violet", "Orange", "Red" };
             return "Cyan";
         }
 
         public static string I2RareColor(int value)
         {
-            string[] rares = { "White", "Cyan", "SkyBlue", "Yellow", "Pink", "Purple", "Orange", "Red" };
+            string[] rares = { "White", "Cyan", "DodgerBlue", "Yellow", "Pink", "Violet", "Orange", "Red" };
             return rares[value];
         }
 
@@ -103,13 +105,13 @@
 
         public static string I2ResourceColor(int id)
         {
-            string[] rt = { "Gold", "DarkGoldenrod", "DarkKhaki", "White", "Red", "Yellow", "Blue" };
+            string[] rt = { "Gold", "DarkGoldenrod", "DarkKhaki", "White", "Red", "Yellow", "DodgerBlue" };
             return rt[id];
         }
 
         public static string I2CardLevelColor(int id)
         {
-            string[] rt = { "", "White", "White", "SkyBlue", "SkyBlue", "Yellow", "Orange", "Red", "Red" };
+            string[] rt = { "", "White", "White", "DodgerBlue", "DodgerBlue", "Yellow", "Orange", "Red", "Red" };
             return rt[id];
         }
 
@@ -121,7 +123,7 @@
 
         public static string I2LevelInfoColor(int id)
         {
-            string[] rt = { "White", "Lime", "Purple" };
+            string[] rt = { "White", "Lime", "Violet" };
             return rt[id];
         }
 
