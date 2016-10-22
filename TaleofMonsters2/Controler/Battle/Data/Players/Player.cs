@@ -40,6 +40,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public List<int> HeroSkillList = new List<int>();
         public bool IsAlive { get; set; }//是否活着
+        public int[] InitialMonster { get; set; } //由peoplebook决定
 
         #region 属性
 
