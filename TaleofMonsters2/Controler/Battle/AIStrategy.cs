@@ -23,6 +23,14 @@ namespace TaleofMonsters.Controler.Battle
                     player.CardManager.GetNextCardAt(i + 1);
                 }
             }
+
+#if DEBUG
+            //int[] cardToGive = new[] { 53000019 };
+            //foreach (var cardId in cardToGive)
+            //{
+            //    player.CardManager.AddCard(new ActiveCard(cardId, 1, 0));
+            //}
+#endif
         }
 
         internal static void AIProc(Player player)

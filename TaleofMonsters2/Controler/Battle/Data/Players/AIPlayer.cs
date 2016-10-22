@@ -1,7 +1,5 @@
 ﻿using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
-using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Decks;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
@@ -30,9 +28,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public override void InitialCards()
         {
             base.InitialCards();
-#if DEBUG
-        //    CardManager.AddCard(new ActiveCard(20001, 1, 0));
-#endif
         }
     }
 }

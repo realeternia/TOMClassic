@@ -372,7 +372,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 spell.UpgradeToLevel(card.Level);
                 BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).SpellAdd++;
 
-                SpellAssistant.CheckSpellEffect(spell, true, target, location);
+                SpellAssistant.CheckSpellEffect(spell, IsLeft, target, location);
 
                 if (SpikeManager.HasSpike("mirrorspell"))
                 {
