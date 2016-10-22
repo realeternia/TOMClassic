@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 
 namespace TaleofMonsters.Controler.World
@@ -7,6 +8,7 @@ namespace TaleofMonsters.Controler.World
         private static int playerid=1;
         private static int cardid = 10000;
         private static int cardfakeid = 100;
+        public static string LastAccountName { get;  set; }
 
         private static string filePath = "./Save/wd.db";
 
@@ -21,6 +23,7 @@ namespace TaleofMonsters.Controler.World
             {
                 sw.WriteLine(playerid);
                 sw.WriteLine(cardid);
+                sw.WriteLine(LastAccountName);
             }
         }
 
@@ -28,11 +31,20 @@ namespace TaleofMonsters.Controler.World
         {
             if (File.Exists(filePath))
             {
-                using (var sr = new StreamReader(filePath))
+                try
                 {
-                    playerid = int.Parse(sr.ReadLine());
-                    cardid = int.Parse(sr.ReadLine());
+                    using (var sr = new StreamReader(filePath))
+                    {
+                        playerid = int.Parse(sr.ReadLine());
+                        cardid = int.Parse(sr.ReadLine());
+                        LastAccountName = sr.ReadLine();
+                    }
                 }
+                catch (Exception e)
+                {
+                    NarlonLib.Log.NLog.Debug("Load " + e.Message);
+                }
+
             }
         }
 

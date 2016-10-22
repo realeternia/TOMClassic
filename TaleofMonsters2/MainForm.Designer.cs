@@ -83,10 +83,12 @@ namespace TaleofMonsters
             this.bitmapButtonExit.Font = new System.Drawing.Font("微软雅黑", 13.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.bitmapButtonExit.ForeColor = System.Drawing.Color.White;
             this.bitmapButtonExit.IconImage = null;
+            this.bitmapButtonExit.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonExit.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonExit.ImageNormal = null;
             this.bitmapButtonExit.Location = new System.Drawing.Point(864, 621);
             this.bitmapButtonExit.Name = "bitmapButtonExit";
+            this.bitmapButtonExit.NoUseDrawNine = false;
             this.bitmapButtonExit.Size = new System.Drawing.Size(111, 29);
             this.bitmapButtonExit.TabIndex = 16;
             this.bitmapButtonExit.Text = "离开游戏";
@@ -101,10 +103,12 @@ namespace TaleofMonsters
             this.bitmapButtonLogin.Font = new System.Drawing.Font("微软雅黑", 13.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.bitmapButtonLogin.ForeColor = System.Drawing.Color.White;
             this.bitmapButtonLogin.IconImage = null;
+            this.bitmapButtonLogin.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonLogin.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonLogin.ImageNormal = null;
             this.bitmapButtonLogin.Location = new System.Drawing.Point(416, 491);
             this.bitmapButtonLogin.Name = "bitmapButtonLogin";
+            this.bitmapButtonLogin.NoUseDrawNine = false;
             this.bitmapButtonLogin.Size = new System.Drawing.Size(111, 29);
             this.bitmapButtonLogin.TabIndex = 15;
             this.bitmapButtonLogin.Text = "进入游戏";
@@ -175,6 +179,7 @@ namespace TaleofMonsters
             this.textBoxPasswd.Enabled = false;
             this.textBoxPasswd.Font = new System.Drawing.Font("宋体", 10F);
             this.textBoxPasswd.Location = new System.Drawing.Point(416, 451);
+            this.textBoxPasswd.MaxLength = 16;
             this.textBoxPasswd.Name = "textBoxPasswd";
             this.textBoxPasswd.Size = new System.Drawing.Size(161, 23);
             this.textBoxPasswd.TabIndex = 8;
@@ -186,6 +191,7 @@ namespace TaleofMonsters
             this.textBoxName.BackColor = System.Drawing.Color.PowderBlue;
             this.textBoxName.Font = new System.Drawing.Font("宋体", 10F);
             this.textBoxName.Location = new System.Drawing.Point(416, 405);
+            this.textBoxName.MaxLength = 16;
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(161, 23);
             this.textBoxName.TabIndex = 7;

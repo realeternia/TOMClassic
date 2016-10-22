@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus; 
@@ -63,6 +64,7 @@ namespace TaleofMonsters
             DbSerializer.Init();
             WorldInfoManager.Load();
 
+            textBoxName.Text = WorldInfoManager.LastAccountName;
             ChangePage(0);
             myCursor.ChangeCursor("default");
             Scene.Instance.Init();
@@ -76,7 +78,6 @@ namespace TaleofMonsters
         {
             if (pg == 0)
             {
-                textBoxName.Text = "narlon1";
                 textBoxPasswd.Text = "";
                 SoundManager.PlayBGM("TOM000.MP3");
             }
@@ -109,6 +110,15 @@ namespace TaleofMonsters
                 return;
             }
 
+            Regex regex = new Regex("[a-zA-Z0-9]+");
+            var match = regex.Match(textBoxName.Text);
+            if (!match.Success || match.Captures[0].Value != textBoxName.Text)
+            {
+                MessageBoxEx.Show("账户名只能包含字母和数字");
+                return;
+            }
+
+            WorldInfoManager.LastAccountName = textBoxName.Text;
             ChangePage(1);
         }
 
