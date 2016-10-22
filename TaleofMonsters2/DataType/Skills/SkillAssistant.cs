@@ -51,7 +51,7 @@ namespace TaleofMonsters.DataType.Skills
             var realAttackType = MonsterBook.HasTag(src.CardId, "mattack") ? src.Attr : src.AttackType;
             if (realAttackType == 0)//物理攻击
             {
-                var damValue = (int)(src.RealAtk*(100-dest.RealDef*GameConstants.DefToRate)/100f * attrRateOn);
+                var damValue = Math.Max(1, (int)(src.RealAtk*(100-dest.RealDef*GameConstants.DefToRate)/100f * attrRateOn));//至少有1点伤害
                 var noDefDamValue = (int)(src.RealAtk * attrRateOn);
                 damage = new HitDamage(damValue, noDefDamValue, 0, DamageTypes.Physical);
             }
