@@ -16,6 +16,7 @@ namespace TaleofMonsters.Config
         public string Name { get; set; }
         public int Quality { get; set; }
         public int JobId { get; set; }
+        public bool IsSpecial { get; set; }
 
         public override string ToString()
         {
@@ -34,6 +35,7 @@ namespace TaleofMonsters.Config
         private static readonly Dictionary<int, CardConfigData> cardConfigDataDict;
         private static readonly Dictionary<int, List<int>> jobCardDict; //职业卡组列表
         private static readonly Dictionary<int, List<int>> attrCardDict; //属性卡组列表
+        private static readonly Dictionary<int, List<int>> raceCardDict; //种族卡组列表
 
         public static int MonsterTotal { get; set; }
         public static int MonsterAvail { get; set; }
@@ -45,6 +47,12 @@ namespace TaleofMonsters.Config
         static CardConfigManager()
         {
             cardConfigDataDict = new Dictionary<int, CardConfigData>();
+            raceCardDict = new Dictionary<int, List<int>>();
+            for (int i = 0; i < 17; i++)
+            {
+                raceCardDict[i] = new List<int>();
+            }
+
             foreach (var monsterConfig in ConfigData.MonsterDict.Values)
             {
                 CardConfigData card = new CardConfigData
@@ -57,7 +65,8 @@ namespace TaleofMonsters.Config
                     Star = monsterConfig.Star,
                     Name = monsterConfig.Name,
                     Quality = monsterConfig.Quality,
-                    JobId = monsterConfig.JobId
+                    JobId = monsterConfig.JobId,
+                    IsSpecial = monsterConfig.IsSpecial == 1
                 };
                 cardConfigDataDict.Add(monsterConfig.Id, card);
                 if (monsterConfig.IsSpecial == 0)
@@ -67,6 +76,7 @@ namespace TaleofMonsters.Config
                     {
                         MonsterAvail++;
                     }
+                    raceCardDict[monsterConfig.Type].Add(card.Id);
                 }
             }
             foreach (var weaponConfig in ConfigData.WeaponDict.Values)
@@ -81,7 +91,8 @@ namespace TaleofMonsters.Config
                     Star = weaponConfig.Star,
                     Name = weaponConfig.Name,
                     Quality = weaponConfig.Quality,
-                    JobId = weaponConfig.JobId
+                    JobId = weaponConfig.JobId,
+                    IsSpecial = weaponConfig.IsSpecial == 1
                 };
                 cardConfigDataDict.Add(weaponConfig.Id, card);
                 if (weaponConfig.IsSpecial == 0)
@@ -105,7 +116,8 @@ namespace TaleofMonsters.Config
                     Star = spellConfig.Star,
                     Name = spellConfig.Name,
                     Quality = spellConfig.Quality,
-                    JobId = spellConfig.JobId
+                    JobId = spellConfig.JobId,
+                    IsSpecial = spellConfig.IsSpecial == 1
                 };
                 cardConfigDataDict.Add(spellConfig.Id, card);
                 if (spellConfig.IsSpecial == 0)
@@ -126,7 +138,7 @@ namespace TaleofMonsters.Config
 
             foreach (var cardConfigData in cardConfigDataDict.Values)
             {
-                if (cardConfigData.JobId > 0)
+                if (cardConfigData.JobId > 0 && !cardConfigData.IsSpecial)
                 {
                     jobCardDict[cardConfigData.JobId].Add(cardConfigData.Id);
                 }
@@ -140,7 +152,7 @@ namespace TaleofMonsters.Config
 
             foreach (var cardConfigData in cardConfigDataDict.Values)
             {
-                if (cardConfigData.Attr > 0)
+                if (cardConfigData.Attr > 0 && !cardConfigData.IsSpecial)
                 {
                     attrCardDict[cardConfigData.Attr].Add(cardConfigData.Id);
                 }
@@ -171,6 +183,16 @@ namespace TaleofMonsters.Config
         {
             List<int> rtData;
             if (attrCardDict.TryGetValue(jobId, out rtData))
+            {
+                return rtData[MathTool.GetRandom(rtData.Count)];
+            }
+            return 0;
+        }
+
+        public static int GetRandomRaceCard(int raceId)
+        {
+            List<int> rtData;
+            if (raceCardDict.TryGetValue(raceId, out rtData))
             {
                 return rtData[MathTool.GetRandom(rtData.Count)];
             }

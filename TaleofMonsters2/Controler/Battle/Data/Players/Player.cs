@@ -553,6 +553,15 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
         }
 
+        public void AddRandomCardRace(int race, int lv)
+        {
+            var cardId = CardConfigManager.GetRandomRaceCard(race);
+            if (cardId != 0)
+            {
+                AddCard(cardId, lv);
+            }
+        }
+
         public void AddSpellEffect(double rate)
         {
             SpellEffectAddon += rate;

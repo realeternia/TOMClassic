@@ -268,7 +268,20 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
 
         public void UpdateCellOwner(Point mouse, int ownerId)
         {
-            BattleLocationManager.UpdateCellOwner(mouse.X, mouse.Y, ownerId);
+            if (ownerId == 0)
+                BattleLocationManager.ClearCellOwner(mouse.X, mouse.Y);
+            else
+                BattleLocationManager.UpdateCellOwner(mouse.X, mouse.Y, ownerId);    
+        }
+
+        public void RemoveTomb(Point mouse)
+        {
+            int oid = BattleManager.Instance.MemMap.GetMouseCell(mouse.X, mouse.Y).Owner;
+            if (oid < 0)
+            {
+                var mon = BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(-oid);
+                mon.Disappear();
+            }
         }
 
         public Point GetRandomPoint()

@@ -152,7 +152,7 @@ namespace TaleofMonsters.DataType.Cards.Spells
                 tipData.AddTextNewLine(string.Format("(限定职业：{0})", jobConfig.Name), "Red");
             }
             tipData.AddTextNewLine("类型/属性", "Gray");
-            tipData.AddImage(HSIcons.GetIconsByEName("wep" + (spell.SpellConfig.Type - 200+1)));
+            tipData.AddImage(HSIcons.GetIconsByEName("spl" + (spell.SpellConfig.Type - 200+1)));
             tipData.AddImage(HSIcons.GetIconsByEName("atr" + spell.SpellConfig.Attr));
             string des = spell.Descript;
             tipData.AddTextLines(des, "Cyan", 15, true);

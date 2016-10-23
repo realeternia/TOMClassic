@@ -800,7 +800,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public MonsterCoverBox MonsterCoverBox { get; private set; }
 
-        private void Disappear()
+        public void Disappear()
         {
             if (IsGhost)
             {

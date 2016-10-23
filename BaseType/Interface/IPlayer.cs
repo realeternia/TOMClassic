@@ -27,6 +27,7 @@ namespace ConfigDatas
         void CardLevelUp(int n, int type);
         void AddRandomCard(int type, int lv); //按类型给一张随机卡牌，怪物，武器
         void AddRandomCardJob(int jobId, int lv); //按职业给一张随机卡牌
+        void AddRandomCardRace(int race, int lv); //按种族给一张随机卡牌
 
         void AddMonster(int cardId, int level, System.Drawing.Point location);
         void ExchangeMonster(IMonster target, int lv);
