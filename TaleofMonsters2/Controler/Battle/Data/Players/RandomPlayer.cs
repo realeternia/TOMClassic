@@ -26,19 +26,16 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             DeckCard[] cd = new DeckCard[GameConstants.DeckCardCount];
             for (int i = 0; i < GameConstants.DeckCardCount; i++)
             {
-                switch (MathTool.GetRandom(7))
+                switch (MathTool.GetRandom(4))
                 {
                     case 0:
                     case 1:
-                    case 2:
-                    case 3:
-                    case 4:
                         cd[i] = new DeckCard( MonsterBook.GetRandMonsterId(), 1, 0);
                         break;
-                    case 5:
+                    case 2:
                         cd[i] = new DeckCard( WeaponBook.GetRandWeaponId(), 1, 0);
                         break;
-                    case 6:
+                    case 3:
                         cd[i] = new DeckCard(SpellBook.GetRandSpellId(), 1, 0);
                         break;
                 }
