@@ -84,7 +84,7 @@ namespace TaleofMonsters.Forms.MagicBook
                     comboBoxValue.Items.AddRange(new object[] { "全部", "生物", "武器", "法术" }); break;
                 case "-细分":
                     comboBoxValue.Items.AddRange(new object[] { "全部", "恶魔","机械","精灵","昆虫","龙","鸟",
-                        "爬行","人类","兽人","亡灵","野兽","鱼","元素","植物","地精","石像","英雄","武器","卷轴","防具",
+                        "爬行","人类","兽人","亡灵","野兽","鱼","元素","植物","地精","石像","武器","卷轴","防具",
                         "饰品","单体法术","群体法术","基本法术","地形变化" }); break;
                 case "品质":
                     comboBoxValue.Items.AddRange(new object[] { "全部", "普通", "良好", "优秀", "史诗", "传说" }); break;
