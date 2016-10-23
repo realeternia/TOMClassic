@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace TaleofMonsters.Core
+﻿namespace TaleofMonsters.Core
 {
     public delegate void HsActionCallback();
 

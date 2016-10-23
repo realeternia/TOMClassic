@@ -96,9 +96,9 @@ namespace TaleofMonsters.Forms.MagicBook
             this.buttonOk.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonOk.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold);
             this.buttonOk.ForeColor = System.Drawing.Color.White;
-            this.buttonOk.Location = new System.Drawing.Point(512, 75);
+            this.buttonOk.Location = new System.Drawing.Point(327, 53);
             this.buttonOk.Name = "buttonOk";
-            this.buttonOk.Size = new System.Drawing.Size(76, 24);
+            this.buttonOk.Size = new System.Drawing.Size(55, 24);
             this.buttonOk.TabIndex = 48;
             this.buttonOk.Text = "查询";
             this.buttonOk.UseVisualStyleBackColor = false;
@@ -114,11 +114,13 @@ namespace TaleofMonsters.Forms.MagicBook
             this.comboBoxCatalog.FormattingEnabled = true;
             this.comboBoxCatalog.Items.AddRange(new object[] {
             "分类",
+            "-细分",
             "品质",
             "星级",
             "职业",
+            "元素",
             "标签"});
-            this.comboBoxCatalog.Location = new System.Drawing.Point(128, 47);
+            this.comboBoxCatalog.Location = new System.Drawing.Point(128, 56);
             this.comboBoxCatalog.Name = "comboBoxCatalog";
             this.comboBoxCatalog.Size = new System.Drawing.Size(75, 20);
             this.comboBoxCatalog.TabIndex = 52;
@@ -141,7 +143,7 @@ namespace TaleofMonsters.Forms.MagicBook
             "地",
             "光",
             "暗"});
-            this.comboBoxValue.Location = new System.Drawing.Point(274, 47);
+            this.comboBoxValue.Location = new System.Drawing.Point(228, 56);
             this.comboBoxValue.Name = "comboBoxValue";
             this.comboBoxValue.Size = new System.Drawing.Size(75, 20);
             this.comboBoxValue.TabIndex = 53;

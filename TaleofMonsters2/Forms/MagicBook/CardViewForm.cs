@@ -29,7 +29,9 @@ namespace TaleofMonsters.Forms.MagicBook
         private int filterLevel=0;
         private int filterQual=-1;
         private int filterType = -1;
+        private string filterTypeSub = "全部";
         private int filterJob = -1;
+        private int filterEle = -1;
         private string filterRemark = "全部";
 
         public CardViewForm()
@@ -72,37 +74,6 @@ namespace TaleofMonsters.Forms.MagicBook
             cardDetail.OnFrame();
         }
 
-        private void buttonOk_Click(object sender, EventArgs e)
-        {
-            filterLevel = 0;
-            filterQual = -1;
-            filterType = -1;
-            filterJob = -1;
-            filterRemark = "全部";
-
-            var type = comboBoxCatalog.SelectedItem.ToString();
-            switch (type)
-            {
-                case "分类":
-                    filterType = comboBoxValue.SelectedIndex - 1; break;
-                case "品质":
-                    filterQual = comboBoxValue.SelectedIndex - 1; break;
-                case "星级":
-                    filterLevel = comboBoxValue.SelectedIndex; break;
-                case "职业":
-                    foreach (var configData in ConfigData.JobDict.Values)
-                    {
-                        if (configData.Name == comboBoxValue.SelectedItem.ToString())
-                        {
-                            filterJob = configData.Id;
-                        }
-                    }  break;
-                case "标签":
-                    filterRemark = comboBoxValue.SelectedItem.ToString(); break;
-            }
-            ChangeCards();
-        }
-
         private void comboBoxCatalog_SelectedIndexChanged(object sender, EventArgs e)
         {
             comboBoxValue.Items.Clear();
@@ -111,6 +82,10 @@ namespace TaleofMonsters.Forms.MagicBook
             {
                 case "分类":
                     comboBoxValue.Items.AddRange(new object[] { "全部", "生物", "武器", "法术" }); break;
+                case "-细分":
+                    comboBoxValue.Items.AddRange(new object[] { "全部", "恶魔","机械","精灵","昆虫","龙","鸟",
+                        "爬行","人类","兽人","亡灵","野兽","鱼","元素","植物","地精","石像","英雄","武器","卷轴","防具",
+                        "饰品","单体法术","群体法术","基本法术","地形变化" }); break;
                 case "品质":
                     comboBoxValue.Items.AddRange(new object[] { "全部", "普通", "良好", "优秀", "史诗", "传说" }); break;
                 case "星级":
@@ -122,10 +97,49 @@ namespace TaleofMonsters.Forms.MagicBook
                         if (!configData.isSpecial)
                             comboBoxValue.Items.Add(configData.Name);
                     } break;
+                case "元素":
+                      comboBoxValue.Items.AddRange(new object[] { "全部", "无", "水", "风", "火", "地", "光", "暗" }); break;
                 case "标签":
                     comboBoxValue.Items.AddRange(new object[] { "全部", "基本","魔法","范围" }); break;
             }
             comboBoxValue.SelectedIndex = 0;
+        }
+
+        private void buttonOk_Click(object sender, EventArgs e)
+        {
+            filterLevel = 0;
+            filterQual = -1;
+            filterType = -1;
+            filterTypeSub = "全部";
+            filterJob = -1;
+            filterEle = -1;
+            filterRemark = "全部";
+
+            var type = comboBoxCatalog.SelectedItem.ToString();
+            switch (type)
+            {
+                case "分类":
+                    filterType = comboBoxValue.SelectedIndex - 1; break;
+                case "-细分":
+                    filterTypeSub = comboBoxValue.SelectedItem.ToString(); break;
+                case "星级":
+                    filterLevel = comboBoxValue.SelectedIndex; break;
+                case "职业":
+                    foreach (var configData in ConfigData.JobDict.Values)
+                    {
+                        if (configData.Name == comboBoxValue.SelectedItem.ToString())
+                        {
+                            filterJob = configData.Id;
+                        }
+                    } break;
+                case "标签":
+                    filterRemark = comboBoxValue.SelectedItem.ToString(); break;
+                case "品质":
+                    filterQual = comboBoxValue.SelectedIndex - 1; break;
+                case "元素":
+                    filterEle = comboBoxValue.SelectedIndex - 1; break;
+            }
+            ChangeCards();
         }
 
         private void ChangeCards()
@@ -148,12 +162,15 @@ namespace TaleofMonsters.Forms.MagicBook
                         continue;
                     if (filterLevel != 0 && monsterConfig.Star != filterLevel)
                         continue;
-                    var cardData = CardConfigManager.GetCardConfig(monsterConfig.Id);
-                    int cardQual = cardData.Quality;
-                    if (filterQual != -1 && cardQual != filterQual)
+                    if (filterQual != -1 && monsterConfig.Quality != filterQual)
+                        continue;
+                    if (filterEle != -1 && monsterConfig.Attr != filterEle)
                         continue;
                     if (filterRemark != "全部" && (string.IsNullOrEmpty(monsterConfig.Remark) || !monsterConfig.Remark.Contains(filterRemark)))
                         continue;
+                    if (filterTypeSub != "全部" && HSTypes.I2CardTypeSub(monsterConfig.Type) != filterTypeSub)
+                        continue;
+                    var cardData = CardConfigManager.GetCardConfig(monsterConfig.Id);
                     configData.Add(cardData);
                 }
             }
@@ -167,12 +184,15 @@ namespace TaleofMonsters.Forms.MagicBook
                         continue;
                     if (filterLevel != 0 && weaponConfig.Star != filterLevel)
                         continue;
-                    var cardData = CardConfigManager.GetCardConfig(weaponConfig.Id);
-                    int cardQual = cardData.Quality;
-                    if (filterQual != -1 && cardQual != filterQual)
+                    if (filterQual != -1 && weaponConfig.Quality != filterQual)
+                        continue;
+                    if (filterEle != -1 && weaponConfig.Attr != filterEle)
                         continue;
                     if (filterRemark != "全部" && (string.IsNullOrEmpty(weaponConfig.Remark) || !weaponConfig.Remark.Contains(filterRemark)))
                         continue;
+                    if (filterTypeSub != "全部" && HSTypes.I2CardTypeSub(weaponConfig.Type) != filterTypeSub)
+                        continue;
+                    var cardData = CardConfigManager.GetCardConfig(weaponConfig.Id);
                     configData.Add(cardData);
                 }
             }
@@ -186,12 +206,15 @@ namespace TaleofMonsters.Forms.MagicBook
                         continue;
                     if (filterLevel != 0 && spellConfig.Star != filterLevel)
                         continue;
-                    var cardData = CardConfigManager.GetCardConfig(spellConfig.Id);
-                    int cardQual = cardData.Quality;
-                    if (filterQual != -1 && cardQual != filterQual)
+                    if (filterQual != -1 && spellConfig.Quality != filterQual)
+                        continue;
+                    if (filterEle != -1 && spellConfig.Attr != filterEle)
                         continue;
                     if (filterRemark != "全部" && (string.IsNullOrEmpty(spellConfig.Remark) || !spellConfig.Remark.Contains(filterRemark)))
                         continue;
+                    if (filterTypeSub != "全部" && HSTypes.I2CardTypeSub(spellConfig.Type) != filterTypeSub)
+                        continue;
+                    var cardData = CardConfigManager.GetCardConfig(spellConfig.Id);
                     configData.Add(cardData);
                 }
             }
@@ -333,8 +356,7 @@ namespace TaleofMonsters.Forms.MagicBook
             img.Dispose();
 
             font = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            e.Graphics.DrawString("分类", font,Brushes.White ,86,51);
-            e.Graphics.DrawString("选项", font, Brushes.White, 231, 51);
+            e.Graphics.DrawString("分类", font, Brushes.White, 86, 61);
             font.Dispose();
 
             if (show)
@@ -374,11 +396,6 @@ namespace TaleofMonsters.Forms.MagicBook
 
             public int Compare(CardConfigData x, CardConfigData y)
             {
-                if (x.Attr != y.Attr)
-                {
-                    return x.Attr.CompareTo(y.Attr);
-                }
-
                 if (x.Star != y.Star)
                 {
                     return x.Star.CompareTo(y.Star);
@@ -388,12 +405,17 @@ namespace TaleofMonsters.Forms.MagicBook
                 {
                     return x.Quality.CompareTo(y.Quality);
                 }
+                if (x.Attr != y.Attr)
+                {
+                    return x.Attr.CompareTo(y.Attr);
+                }
 
                 return x.Id.CompareTo(y.Id);
             }
 
             #endregion
         }
+
 
     }
 
