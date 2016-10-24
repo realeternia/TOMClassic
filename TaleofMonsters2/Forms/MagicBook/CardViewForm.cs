@@ -100,7 +100,7 @@ namespace TaleofMonsters.Forms.MagicBook
                 case "元素":
                       comboBoxValue.Items.AddRange(new object[] { "全部", "无", "水", "风", "火", "地", "光", "暗" }); break;
                 case "标签":
-                    comboBoxValue.Items.AddRange(new object[] { "全部", "基本","魔法","范围" }); break;
+                    comboBoxValue.Items.AddRange(new object[] { "全部", "基本","直伤","范围","状态","治疗","手牌","魔法","属性","召唤" }); break;
             }
             comboBoxValue.SelectedIndex = 0;
         }
