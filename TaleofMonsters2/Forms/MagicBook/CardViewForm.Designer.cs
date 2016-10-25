@@ -1,4 +1,5 @@
-﻿using NarlonLib.Control;
+﻿using ControlPlus;
+using NarlonLib.Control;
 
 namespace TaleofMonsters.Forms.MagicBook
 {
@@ -34,8 +35,8 @@ namespace TaleofMonsters.Forms.MagicBook
             this.bitmapButtonNext = new NarlonLib.Control.BitmapButton();
             this.bitmapButtonPre = new NarlonLib.Control.BitmapButton();
             this.buttonOk = new System.Windows.Forms.Button();
-            this.comboBoxCatalog = new System.Windows.Forms.ComboBox();
-            this.comboBoxValue = new System.Windows.Forms.ComboBox();
+            this.comboBoxCatalog = new NLComboBox();
+            this.comboBoxValue = new NLComboBox();
             this.SuspendLayout();
             // 
             // bitmapButtonClose
@@ -108,7 +109,6 @@ namespace TaleofMonsters.Forms.MagicBook
             // 
             this.comboBoxCatalog.BackColor = System.Drawing.Color.Black;
             this.comboBoxCatalog.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxCatalog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBoxCatalog.Font = new System.Drawing.Font("宋体", 9F);
             this.comboBoxCatalog.ForeColor = System.Drawing.SystemColors.Window;
             this.comboBoxCatalog.FormattingEnabled = true;
@@ -130,7 +130,6 @@ namespace TaleofMonsters.Forms.MagicBook
             // 
             this.comboBoxValue.BackColor = System.Drawing.Color.Black;
             this.comboBoxValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxValue.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBoxValue.Font = new System.Drawing.Font("宋体", 9F);
             this.comboBoxValue.ForeColor = System.Drawing.SystemColors.Window;
             this.comboBoxValue.FormattingEnabled = true;

@@ -1,4 +1,5 @@
-﻿using NarlonLib.Control;
+﻿using ControlPlus;
+using NarlonLib.Control;
 
 namespace TaleofMonsters.Forms
 {
@@ -31,7 +32,7 @@ namespace TaleofMonsters.Forms
         private void InitializeComponent()
         {
             this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
-            this.comboBoxType = new System.Windows.Forms.ComboBox();
+            this.comboBoxType = new NLComboBox();
             this.SuspendLayout();
             // 
             // bitmapButtonClose
@@ -55,7 +56,6 @@ namespace TaleofMonsters.Forms
             // 
             this.comboBoxType.BackColor = System.Drawing.Color.Black;
             this.comboBoxType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBoxType.Font = new System.Drawing.Font("宋体", 9F);
             this.comboBoxType.ForeColor = System.Drawing.SystemColors.Window;
             this.comboBoxType.FormattingEnabled = true;
@@ -99,6 +99,6 @@ namespace TaleofMonsters.Forms
         #endregion
 
         private BitmapButton bitmapButtonClose;
-        private System.Windows.Forms.ComboBox comboBoxType;
+        private NLComboBox comboBoxType;
     }
 }

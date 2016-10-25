@@ -1,4 +1,5 @@
-﻿using NarlonLib.Control;
+﻿using ControlPlus;
+using NarlonLib.Control;
 
 namespace TaleofMonsters.Forms.MagicBook
 {
@@ -33,7 +34,7 @@ namespace TaleofMonsters.Forms.MagicBook
             this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
             this.bitmapButtonNext = new NarlonLib.Control.BitmapButton();
             this.bitmapButtonPre = new NarlonLib.Control.BitmapButton();
-            this.comboBoxType = new System.Windows.Forms.ComboBox();
+            this.comboBoxType = new NLComboBox();
             this.buttonOk = new System.Windows.Forms.Button();
             this.nlClickLabel1 = new ControlPlus.NLClickLabel();
             this.SuspendLayout();
@@ -93,7 +94,6 @@ namespace TaleofMonsters.Forms.MagicBook
             // 
             this.comboBoxType.BackColor = System.Drawing.Color.Black;
             this.comboBoxType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBoxType.Font = new System.Drawing.Font("SimSun", 9F);
             this.comboBoxType.ForeColor = System.Drawing.SystemColors.Window;
             this.comboBoxType.FormattingEnabled = true;
@@ -167,7 +167,7 @@ namespace TaleofMonsters.Forms.MagicBook
         private BitmapButton bitmapButtonClose;
         private BitmapButton bitmapButtonNext;
         private BitmapButton bitmapButtonPre;
-        private System.Windows.Forms.ComboBox comboBoxType;
+        private NLComboBox comboBoxType;
         private System.Windows.Forms.Button buttonOk;
         private ControlPlus.NLClickLabel nlClickLabel1;
     }

@@ -1,4 +1,6 @@
-﻿namespace TaleofMonsters.Forms.Pops
+﻿using ControlPlus;
+
+namespace TaleofMonsters.Forms.Pops
 {
     partial class PopSelectCard
     {
@@ -33,7 +35,7 @@
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.comboBoxType = new System.Windows.Forms.ComboBox();
+            this.comboBoxType = new NLComboBox();
             this.buttonMinus = new System.Windows.Forms.Button();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.buttonRand = new System.Windows.Forms.Button();
@@ -136,7 +138,6 @@
             // 
             this.comboBoxType.BackColor = System.Drawing.Color.Black;
             this.comboBoxType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBoxType.Font = new System.Drawing.Font("宋体", 9.75F);
             this.comboBoxType.ForeColor = System.Drawing.Color.White;
             this.comboBoxType.FormattingEnabled = true;
@@ -230,7 +231,7 @@
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.ComboBox comboBoxType;
+        private NLComboBox comboBoxType;
         private System.Windows.Forms.Button buttonMinus;
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.Button buttonRand;

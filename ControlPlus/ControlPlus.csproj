@@ -75,6 +75,12 @@
     <Compile Include="NLClickLabel.Designer.cs">
       <DependentUpon>NLClickLabel.cs</DependentUpon>
     </Compile>
+    <Compile Include="NLComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="NLComboBox.designer.cs">
+      <DependentUpon>NLComboBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="NLPageSelector.cs">
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

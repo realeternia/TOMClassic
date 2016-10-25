@@ -81,26 +81,27 @@ namespace TaleofMonsters.Forms.MagicBook
             switch (type)
             {
                 case "分类":
-                    comboBoxValue.Items.AddRange(new object[] { "全部", "生物", "武器", "法术" }); break;
+                    comboBoxValue.Items.AddRange(new object[] { "全部", "Yellow|生物", "Red|武器", "DodgerBlue|法术" }); break;
                 case "-细分":
                     comboBoxValue.Items.AddRange(new object[] { "全部", "恶魔","机械","精灵","昆虫","龙","鸟",
-                        "爬行","人类","兽人","亡灵","野兽","鱼","元素","植物","地精","石像","武器","卷轴","防具",
-                        "饰品","单体法术","群体法术","基本法术","地形变化" }); break;
+                        "爬行","人类","兽人","亡灵","野兽","鱼","元素","植物","地精","石像",
+                        "Red|武器","Red|卷轴","Red|防具", "Red|饰品",
+                        "DodgerBlue|单体法术","DodgerBlue|群体法术","DodgerBlue|基本法术","DodgerBlue|地形变化" }); break;
                 case "品质":
-                    comboBoxValue.Items.AddRange(new object[] { "全部", "普通", "良好", "优秀", "史诗", "传说" }); break;
+                    comboBoxValue.Items.AddRange(new object[] { "全部", "普通", "Green|良好", "DodgerBlue|优秀", "Violet|史诗", "Orange|传说" }); break;
                 case "星级":
-                    comboBoxValue.Items.AddRange(new object[] { "全部", "1", "2", "3", "4", "5", "6", "7" }); break;
+                    comboBoxValue.Items.AddRange(new object[] { "全部", "★", "★★", "★★★", "★★★★", "★★★★★", "★★★★★★", "Gold|★x7" }); break;
                 case "职业":
                     comboBoxValue.Items.Add("全部");
                     foreach (var configData in ConfigData.JobDict.Values)
                     {
                         if (!configData.isSpecial)
-                            comboBoxValue.Items.Add(configData.Name);
+                            comboBoxValue.Items.Add(configData.Color +"|"+ configData.Name);
                     } break;
                 case "元素":
-                      comboBoxValue.Items.AddRange(new object[] { "全部", "无", "水", "风", "火", "地", "光", "暗" }); break;
+                      comboBoxValue.Items.AddRange(new object[] { "全部", "无", "Aqua|水", "Green|风", "Red|火", "Peru|地", "Gold|光", "DimGray|暗" }); break;
                 case "标签":
-                    comboBoxValue.Items.AddRange(new object[] { "全部", "基本","直伤","范围","状态","治疗","手牌","魔法","属性","召唤" }); break;
+                    comboBoxValue.Items.AddRange(new object[] { "全部", "基本","Red|直伤","范围","状态","Gold|治疗","手牌","Aqua|魔法","属性","召唤" }); break;
             }
             comboBoxValue.SelectedIndex = 0;
         }
