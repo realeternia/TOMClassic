@@ -122,19 +122,19 @@ namespace TaleofMonsters.Forms.MagicBook
                 case "分类":
                     filterType = comboBoxValue.SelectedIndex - 1; break;
                 case "-细分":
-                    filterTypeSub = comboBoxValue.SelectedItem.ToString(); break;
+                    filterTypeSub = comboBoxValue.TargetText; break;
                 case "星级":
                     filterLevel = comboBoxValue.SelectedIndex; break;
                 case "职业":
                     foreach (var configData in ConfigData.JobDict.Values)
                     {
-                        if (configData.Name == comboBoxValue.SelectedItem.ToString())
+                        if (configData.Name == comboBoxValue.TargetText)
                         {
                             filterJob = configData.Id;
                         }
                     } break;
                 case "标签":
-                    filterRemark = comboBoxValue.SelectedItem.ToString(); break;
+                    filterRemark = comboBoxValue.TargetText; break;
                 case "品质":
                     filterQual = comboBoxValue.SelectedIndex - 1; break;
                 case "元素":

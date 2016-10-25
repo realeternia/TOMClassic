@@ -173,7 +173,7 @@ namespace TaleofMonsters.Forms.MagicBook
         private BitmapButton bitmapButtonNext;
         private BitmapButton bitmapButtonPre;
         private System.Windows.Forms.Button buttonOk;
-        private System.Windows.Forms.ComboBox comboBoxCatalog;
-        private System.Windows.Forms.ComboBox comboBoxValue;
+        private NLComboBox comboBoxCatalog;
+        private NLComboBox comboBoxValue;
     }
 }

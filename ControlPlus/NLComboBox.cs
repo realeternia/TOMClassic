@@ -78,5 +78,16 @@ namespace ControlPlus
             }
 
         }
+
+        public string TargetText
+        {
+            get { var txt = SelectedItem.ToString();
+                if (txt.Contains("|"))
+                {
+                    txt = txt.Split('|')[1];
+                }
+                return txt;
+            }
+        }
     }
 }
