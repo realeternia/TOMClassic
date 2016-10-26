@@ -36,6 +36,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonPreD = new NarlonLib.Control.BitmapButton();
             this.bitmapButtonNext = new NarlonLib.Control.BitmapButton();
             this.bitmapButtonPre = new NarlonLib.Control.BitmapButton();
+            this.bitmapButtonSwitch = new NarlonLib.Control.BitmapButton();
             this.SuspendLayout();
             // 
             // bitmapButtonClose
@@ -140,10 +141,28 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonPre.UseVisualStyleBackColor = true;
             this.bitmapButtonPre.Click += new System.EventHandler(this.buttonPre_Click);
             // 
+            // bitmapButtonSwitch
+            // 
+            this.bitmapButtonSwitch.BorderColor = System.Drawing.Color.DarkBlue;
+            this.bitmapButtonSwitch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bitmapButtonSwitch.IconImage = null;
+            this.bitmapButtonSwitch.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonSwitch.IconXY = new System.Drawing.Point(0, 0);
+            this.bitmapButtonSwitch.ImageNormal = null;
+            this.bitmapButtonSwitch.Location = new System.Drawing.Point(545, 514);
+            this.bitmapButtonSwitch.Name = "bitmapButtonSwitch";
+            this.bitmapButtonSwitch.NoUseDrawNine = false;
+            this.bitmapButtonSwitch.Size = new System.Drawing.Size(50, 24);
+            this.bitmapButtonSwitch.TabIndex = 41;
+            this.bitmapButtonSwitch.TextOffX = 0;
+            this.bitmapButtonSwitch.UseVisualStyleBackColor = true;
+            this.bitmapButtonSwitch.Click += new System.EventHandler(this.bitmapButtonSwitch_Click);
+            // 
             // DeckViewForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.bitmapButtonSwitch);
             this.Controls.Add(this.bitmapButtonDel);
             this.Controls.Add(this.bitmapButtonNextD);
             this.Controls.Add(this.bitmapButtonPreD);
@@ -168,5 +187,6 @@ namespace TaleofMonsters.Forms
         private BitmapButton bitmapButtonPreD;
         private BitmapButton bitmapButtonNext;
         private BitmapButton bitmapButtonPre;
+        private BitmapButton bitmapButtonSwitch;
     }
 }

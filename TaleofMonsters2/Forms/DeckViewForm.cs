@@ -54,7 +54,6 @@ namespace TaleofMonsters.Forms
         }
 
         private VirtualRegion virtualRegion;
-        private ImageToolTip tooltip = SystemToolTip.Instance;
         private DeckCardRegion cardRegion;//卡盒区域
         private DeckSelectCardRegion selectRegion;//卡组区域
         private DeckCard targetCard;
@@ -63,7 +62,10 @@ namespace TaleofMonsters.Forms
         private bool show;
         private int floor;
 
+        private bool isShowStatistic; //默认显示carddetail
+
         private CardDetail cardDetail;
+        private CardDeckStatistic deckStatistic; 
 
         private PopMenuDeck popMenuDeck;
         private PoperContainer popContainer;
@@ -90,6 +92,15 @@ namespace TaleofMonsters.Forms
             bitmapButtonClose.NoUseDrawNine = true;
             this.bitmapButtonNext.ImageNormal = PicLoader.Read("ButtonBitmap", "NextButton.JPG");
             bitmapButtonNext.NoUseDrawNine = true;
+            this.bitmapButtonSwitch.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            bitmapButtonSwitch.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            bitmapButtonSwitch.ForeColor = Color.White;
+            bitmapButtonSwitch.IconImage = PicLoader.Read("Icon", "rot4.PNG");
+            bitmapButtonSwitch.IconSize = new Size(16, 16);
+            bitmapButtonSwitch.IconXY = new Point(4, 4);
+            bitmapButtonSwitch.TextOffX = 8;
+            bitmapButtonSwitch.Text = "切换";
+           // bitmapButtonNext.NoUseDrawNine = true;
             this.bitmapButtonPre.ImageNormal = PicLoader.Read("ButtonBitmap", "PreButton.JPG");
             bitmapButtonPre.NoUseDrawNine = true;
             this.bitmapButtonNextD.ImageNormal = PicLoader.Read("ButtonBitmap", "NextButton.JPG");
@@ -101,6 +112,7 @@ namespace TaleofMonsters.Forms
           
             cardDetail = new CardDetail(this, 605, 35, 505);
             cardDetail.Invalidate += DetailInvalidate;
+            deckStatistic = new CardDeckStatistic(this, 605, 35, 505);
             cardRegion = new DeckCardRegion(5+120, 35 + yoff, 480, 450);
             cardRegion.Invalidate += DeckInvalidate;
             selectRegion = new DeckSelectCardRegion(5, 35, 120, 480);
@@ -304,6 +316,11 @@ namespace TaleofMonsters.Forms
                 UpdateButtonState();
             }
         }
+        private void bitmapButtonSwitch_Click(object sender, EventArgs e)
+        {
+            isShowStatistic = !isShowStatistic;
+            Invalidate(new Rectangle(cardDetail.X, cardDetail.Y, cardDetail.Width, cardDetail.Height));
+        }
 
         private void UpdateDeckButtonState()
         {
@@ -398,7 +415,10 @@ namespace TaleofMonsters.Forms
             {
                 if (show)
                 {
-                    cardDetail.Draw(e.Graphics);
+                    if (!isShowStatistic)
+                        cardDetail.Draw(e.Graphics);
+                    else
+                        deckStatistic.Draw(e.Graphics);
                     cardRegion.Draw(e.Graphics);
                     selectRegion.Draw(e.Graphics);
 
@@ -414,5 +434,6 @@ namespace TaleofMonsters.Forms
                 NLog.Error("DeckViewForm_Paint" + ex);
             }
         }
+
     }
 }

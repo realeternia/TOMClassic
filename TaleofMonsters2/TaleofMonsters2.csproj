@@ -218,6 +218,7 @@
     <Compile Include="Forms\Items\Regions\VirtualRegionCellType.cs" />
     <Compile Include="Forms\Items\Regions\ItemUseRegion.cs" />
     <Compile Include="Forms\Items\Regions\SwitchButtonRegion.cs" />
+    <Compile Include="Forms\MagicBook\CardDeckStatistic.cs" />
     <Compile Include="Forms\MiniGame\MGThreeBody.cs">
       <SubType>UserControl</SubType>
     </Compile>
