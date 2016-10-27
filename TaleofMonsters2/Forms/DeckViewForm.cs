@@ -62,7 +62,7 @@ namespace TaleofMonsters.Forms
         private bool show;
         private int floor;
 
-        private bool isShowStatistic; //默认显示carddetail
+        private bool isShowStatistic = true; //默认显示carddetail
 
         private CardDetail cardDetail;
         private CardDeckStatistic deckStatistic; 
@@ -111,8 +111,9 @@ namespace TaleofMonsters.Forms
             bitmapButtonDel.NoUseDrawNine = true;
           
             cardDetail = new CardDetail(this, 605, 35, 505);
+            cardDetail.Enabled = false;
             cardDetail.Invalidate += DetailInvalidate;
-            deckStatistic = new CardDeckStatistic(this, 605, 35, 505);
+            deckStatistic = new CardDeckStatistic(605, 35, 505);
             cardRegion = new DeckCardRegion(5+120, 35 + yoff, 480, 450);
             cardRegion.Invalidate += DeckInvalidate;
             selectRegion = new DeckSelectCardRegion(5, 35, 120, 480);
@@ -184,7 +185,9 @@ namespace TaleofMonsters.Forms
                 dcards[i] = UserProfile.InfoCard.GetDeckCardById(cid);
             }
 
-            selectRegion.ChangeDeck(dcards); 
+            selectRegion.ChangeDeck(dcards);
+
+            deckStatistic.Update(dcards);
         }
 
         private void ChangeDeck(int type)
@@ -319,6 +322,7 @@ namespace TaleofMonsters.Forms
         private void bitmapButtonSwitch_Click(object sender, EventArgs e)
         {
             isShowStatistic = !isShowStatistic;
+            cardDetail.Enabled = !isShowStatistic;
             Invalidate(new Rectangle(cardDetail.X, cardDetail.Y, cardDetail.Width, cardDetail.Height));
         }
 

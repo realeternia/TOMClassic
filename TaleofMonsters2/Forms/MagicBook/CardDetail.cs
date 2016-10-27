@@ -34,6 +34,7 @@ namespace TaleofMonsters.Forms.MagicBook
         private CoverEffect coverEffect;
         private VirtualRegion virtualRegion;
         public DeckCardRegion.InvalidateRegion Invalidate;
+        public bool Enabled = true;
 
         public CardDetail(UserControl control, int x, int y, int height)
         {
@@ -172,7 +173,7 @@ namespace TaleofMonsters.Forms.MagicBook
 
         private void virtualRegion_RegionEntered(int info, int x, int y, int key)
         {
-            if (cid == -1)
+            if (cid == -1 || !Enabled)
                 return;
 
             if (info == 3)

@@ -73,6 +73,7 @@
     <Compile Include="Control\ColorLabel.Designer.cs">
       <DependentUpon>ColorLabel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Control\GdiChart.cs" />
     <Compile Include="Control\DoubleBufferedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
