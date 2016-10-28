@@ -61,7 +61,7 @@ namespace TaleofMonsters.Forms.Items
 
         private int tar = -1;
         private DeckCard[] dcards;
-        private const int cellHeight = 16;
+        private const int cellHeight = 18;
 
         private int monsterCount;
         private int weaponCount;
@@ -141,8 +141,8 @@ namespace TaleofMonsters.Forms.Items
         {
             eg.DrawRectangle(Pens.White,X,Y,Width,Height);
 
-            Font fontsong = new Font("宋体", 9*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            Font fontBold = new Font("宋体", 10*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+            Font fontsong = new Font("宋体", 11*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            Font fontBold = new Font("宋体", 11*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             for (int i = 0; i < dcards.Length; i++)
             {
                 int yoff = i * cellHeight;
@@ -182,19 +182,19 @@ namespace TaleofMonsters.Forms.Items
             if (monsterCount > 0)
             {
                 Pen p = new Pen(Color.Yellow, 2);
-                eg.DrawRectangle(p, X, Y, Width-2, monsterCount * cellHeight - 1);
+                eg.DrawRectangle(p, X, Y, Width-1, monsterCount * cellHeight - 1);
                 p.Dispose();
             }
             if (weaponCount > 0)
             {
                 Pen p = new Pen(Color.Red, 2);
-                eg.DrawRectangle(p, X, Y + monsterCount * cellHeight, Width-2,  weaponCount * cellHeight-1);
+                eg.DrawRectangle(p, X, Y + monsterCount * cellHeight, Width-1,  weaponCount * cellHeight-1);
                 p.Dispose();
             }
             if (spellCount > 0)
             {
                 Pen p = new Pen(Color.Blue, 2);
-                eg.DrawRectangle(p, X, Y + (monsterCount + weaponCount) * cellHeight, Width-2, spellCount * cellHeight-1);
+                eg.DrawRectangle(p, X, Y + (monsterCount + weaponCount) * cellHeight, Width-1, spellCount * cellHeight-1);
                 p.Dispose();
             }
             fontsong.Dispose();

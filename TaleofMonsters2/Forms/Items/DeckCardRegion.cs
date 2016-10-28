@@ -16,7 +16,7 @@ namespace TaleofMonsters.Forms.Items
         internal delegate void InvalidateRegion();
 
         private const int cardWidth = 68;
-        private const int cardHeight = 88;
+        private const int cardHeight = 84;
         private int xCount, yCount;
         public int CardCount { get; private set; }
         public int CardTotalCount { get; private set; }

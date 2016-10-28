@@ -64,7 +64,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonDel.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonDel.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonDel.ImageNormal = null;
-            this.bitmapButtonDel.Location = new System.Drawing.Point(103, 516);
+            this.bitmapButtonDel.Location = new System.Drawing.Point(103, 576);
             this.bitmapButtonDel.Name = "bitmapButtonDel";
             this.bitmapButtonDel.NoUseDrawNine = false;
             this.bitmapButtonDel.Size = new System.Drawing.Size(24, 24);
@@ -81,7 +81,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonNextD.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonNextD.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonNextD.ImageNormal = null;
-            this.bitmapButtonNextD.Location = new System.Drawing.Point(78, 516);
+            this.bitmapButtonNextD.Location = new System.Drawing.Point(78, 576);
             this.bitmapButtonNextD.Name = "bitmapButtonNextD";
             this.bitmapButtonNextD.NoUseDrawNine = false;
             this.bitmapButtonNextD.Size = new System.Drawing.Size(24, 24);
@@ -98,7 +98,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonPreD.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonPreD.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonPreD.ImageNormal = null;
-            this.bitmapButtonPreD.Location = new System.Drawing.Point(53, 516);
+            this.bitmapButtonPreD.Location = new System.Drawing.Point(53, 576);
             this.bitmapButtonPreD.Name = "bitmapButtonPreD";
             this.bitmapButtonPreD.NoUseDrawNine = false;
             this.bitmapButtonPreD.Size = new System.Drawing.Size(24, 24);
@@ -115,7 +115,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonNext.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonNext.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonNext.ImageNormal = null;
-            this.bitmapButtonNext.Location = new System.Drawing.Point(368, 514);
+            this.bitmapButtonNext.Location = new System.Drawing.Point(368, 574);
             this.bitmapButtonNext.Name = "bitmapButtonNext";
             this.bitmapButtonNext.NoUseDrawNine = false;
             this.bitmapButtonNext.Size = new System.Drawing.Size(48, 24);
@@ -132,7 +132,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonPre.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonPre.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonPre.ImageNormal = null;
-            this.bitmapButtonPre.Location = new System.Drawing.Point(313, 514);
+            this.bitmapButtonPre.Location = new System.Drawing.Point(313, 574);
             this.bitmapButtonPre.Name = "bitmapButtonPre";
             this.bitmapButtonPre.NoUseDrawNine = false;
             this.bitmapButtonPre.Size = new System.Drawing.Size(48, 24);
@@ -149,7 +149,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonSwitch.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonSwitch.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonSwitch.ImageNormal = null;
-            this.bitmapButtonSwitch.Location = new System.Drawing.Point(545, 514);
+            this.bitmapButtonSwitch.Location = new System.Drawing.Point(545, 574);
             this.bitmapButtonSwitch.Name = "bitmapButtonSwitch";
             this.bitmapButtonSwitch.NoUseDrawNine = false;
             this.bitmapButtonSwitch.Size = new System.Drawing.Size(50, 24);
@@ -171,7 +171,7 @@ namespace TaleofMonsters.Forms
             this.Controls.Add(this.bitmapButtonPre);
             this.DoubleBuffered = true;
             this.Name = "DeckViewForm";
-            this.Size = new System.Drawing.Size(810, 545);
+            this.Size = new System.Drawing.Size(810, 605);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.DeckViewForm_Paint);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DeckViewForm_MouseClick);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DeckViewForm_MouseMove);

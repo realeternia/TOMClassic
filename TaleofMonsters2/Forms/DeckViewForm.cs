@@ -110,13 +110,13 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonDel.ImageNormal = PicLoader.Read("ButtonBitmap", "DelButton.JPG");
             bitmapButtonDel.NoUseDrawNine = true;
           
-            cardDetail = new CardDetail(this, 605, 35, 505);
+            cardDetail = new CardDetail(this, 605, 35, 565);
             cardDetail.Enabled = false;
             cardDetail.Invalidate += DetailInvalidate;
-            deckStatistic = new CardDeckStatistic(605, 35, 505);
-            cardRegion = new DeckCardRegion(5+120, 35 + yoff, 480, 450);
+            deckStatistic = new CardDeckStatistic(605, 35, 565);
+            cardRegion = new DeckCardRegion(5+120, 35 + yoff, 480, 510);
             cardRegion.Invalidate += DeckInvalidate;
-            selectRegion = new DeckSelectCardRegion(5, 35, 120, 480);
+            selectRegion = new DeckSelectCardRegion(5, 35, 120, 540);
             selectRegion.Invalidate += SelectDeckInvalidate;
 
             popMenuDeck = new PopMenuDeck();
@@ -429,7 +429,7 @@ namespace TaleofMonsters.Forms
                     virtualRegion.Draw(e.Graphics);
 
                     font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-                    e.Graphics.DrawString(UserProfile.InfoCard.SelectedDeck.Name, font, Brushes.White, 5, 520);
+                    e.Graphics.DrawString(UserProfile.InfoCard.SelectedDeck.Name, font, Brushes.White, 5, 580);
                     font.Dispose();
                 }
             }
