@@ -2,7 +2,9 @@
 using System.Drawing;
 using System.Windows.Forms;
 using ControlPlus;
+using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Maps;
 using TaleofMonsters.DataType.User;
@@ -40,7 +42,17 @@ namespace TaleofMonsters.Forms.Pops
                 {
                     int x = i%6;
                     int y = i/6;
-                    e.Graphics.DrawImage(CardAssistant.GetCardImage(deck.CardIds[i],100,100),x*20+150,y*20+35,20,20);
+
+                    var cardId = deck.CardIds[i];
+                    e.Graphics.DrawImage(CardAssistant.GetCardImage(cardId,100,100),x*20+150,y*20+35,20,20);
+                    var cardJob = CardConfigManager.GetCardConfig(cardId).JobId;
+                    if (cardJob > 0 && cardJob != UserProfile.InfoBasic.Job)
+                    {
+                        var brush = new SolidBrush(Color.FromArgb(150, Color.Red));
+                        e.Graphics.FillRectangle(brush, x * 20 + 150, y * 20 + 35, 20, 20);
+                        brush.Dispose();
+                        e.Graphics.DrawRectangle(Pens.Red, x * 20 + 150, y * 20 + 35, 20, 20);
+                    }
                 }
             }
 
@@ -56,11 +68,29 @@ namespace TaleofMonsters.Forms.Pops
             mb.img = BattleMapBook.GetMapImage(map, tile);
             mb.pageSelector.SetTarget(UserProfile.InfoCard.DeckId);
             mb.ShowDialog();
+
             return mb.comfirm;
         }
 
         private void buttonOk_Click(object sender, EventArgs e)
         {
+            var deck = UserProfile.InfoCard.Decks[selectPage];
+            if (deck.Count < GameConstants.DeckCardCount)
+            {
+                MessageBoxEx2.Show("卡组内卡片数不足");
+                return;
+            }
+            
+            foreach (var cardId in deck.CardIds)
+            {
+                var card = CardAssistant.GetCard(cardId);
+                if (card.JobId > 0 && card.JobId != UserProfile.InfoBasic.Job)
+                {
+                    MessageBoxEx2.Show("部分卡牌职业不匹配");
+                    return;
+                }
+            }
+
             comfirm = true;
             UserProfile.InfoCard.DeckId = selectPage;
             Close();

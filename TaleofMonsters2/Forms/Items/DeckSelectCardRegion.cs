@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using ConfigDatas;
 using TaleofMonsters.Config;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
@@ -158,6 +159,14 @@ namespace TaleofMonsters.Forms.Items
                 var cardConfigData = CardConfigManager.GetCardConfig(dcards[i].BaseId);
                 var cardImg = CardAssistant.GetCardImage(dcards[i].BaseId, 30, 30);
                 eg.DrawImage(cardImg, new Rectangle(X, Y + yoff, 30, cellHeight), 0, 6, 30, cellHeight, GraphicsUnit.Pixel);
+                if (cardConfigData.JobId > 0)
+                {
+                    var jobConfig = ConfigData.GetJobConfig(cardConfigData.JobId);
+                    Brush brush = new SolidBrush(Color.FromName(jobConfig.Color));
+                    eg.FillRectangle(brush, X + Width - cellHeight, Y + yoff, cellHeight, cellHeight);
+                    eg.DrawImage(HSIcons.GetIconsByEName("job" + jobConfig.JobIndex), X+Width-cellHeight, Y + yoff, cellHeight, cellHeight);
+                    brush.Dispose();
+                }
                 eg.DrawString(cardConfigData.Star.ToString(), fontBold, Brushes.Gold, X-1, Y + yoff);
                 Color color = Color.FromName(HSTypes.I2QualityColor(cardConfigData.Quality));
                 Brush colorBrush = new SolidBrush(color);
@@ -173,19 +182,19 @@ namespace TaleofMonsters.Forms.Items
             if (monsterCount > 0)
             {
                 Pen p = new Pen(Color.Yellow, 2);
-                eg.DrawRectangle(p, X, Y, Width-2, monsterCount * cellHeight - 2);
+                eg.DrawRectangle(p, X, Y, Width-2, monsterCount * cellHeight - 1);
                 p.Dispose();
             }
             if (weaponCount > 0)
             {
                 Pen p = new Pen(Color.Red, 2);
-                eg.DrawRectangle(p, X, Y + monsterCount * cellHeight, Width-2,  weaponCount * cellHeight-2);
+                eg.DrawRectangle(p, X, Y + monsterCount * cellHeight, Width-2,  weaponCount * cellHeight-1);
                 p.Dispose();
             }
             if (spellCount > 0)
             {
                 Pen p = new Pen(Color.Blue, 2);
-                eg.DrawRectangle(p, X, Y + (monsterCount + weaponCount) * cellHeight, Width-2, spellCount * cellHeight-2);
+                eg.DrawRectangle(p, X, Y + (monsterCount + weaponCount) * cellHeight, Width-2, spellCount * cellHeight-1);
                 p.Dispose();
             }
             fontsong.Dispose();

@@ -15,6 +15,7 @@ namespace TaleofMonsters.Core
         public const int DeckCardTypeLimit = 1001;
         public const int DeckIsFull = 1002;
         public const int CardExpNotEnough = 1003;
+        public const int CardJobTwice = 1004;
 
         public static string GetDescript(int id)
         {

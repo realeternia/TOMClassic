@@ -1,4 +1,5 @@
-﻿using TaleofMonsters.Core;
+﻿using TaleofMonsters.Config;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Decks;
 
@@ -35,27 +36,6 @@ namespace TaleofMonsters.DataType.User.Mem
             get { return Wcount+Mcount; }
         }
 
-        public int JobRequired
-        {
-            get
-            {
-                int jobId = 0;
-                foreach (var cardId in CardIds)
-                {
-                    var card = CardAssistant.GetCard(cardId);
-                    if (card.JobId > 0)
-                    {
-                        if (jobId > 0 && jobId != card.JobId)
-                        {
-                            return -1;
-                        }
-                        jobId = card.JobId;
-                    }
-                }
-                return jobId;
-            }
-        }
-
         public int GetCardAt(int index)
         {
             return CardIds[index];
@@ -74,6 +54,7 @@ namespace TaleofMonsters.DataType.User.Mem
         {
             int firstBlank = -1;
             int count = 0;
+            int newCardJob = CardConfigManager.GetCardConfig(card.BaseId).JobId;
             for (int i = 0; i < GameConstants.DeckCardCount; i++)
             {
                 var dcard = CardIds[i];
@@ -87,6 +68,10 @@ namespace TaleofMonsters.DataType.User.Mem
                     DeckCard tCard = UserProfile.InfoCard.GetDeckCardById(dcard);
                     if (tCard.BaseId == card.BaseId)
                         return HSErrorTypes.DeckCardAlreadyIn;
+
+                    int cardJob = CardConfigManager.GetCardConfig(tCard.BaseId).JobId;
+                    if (newCardJob > 0 && cardJob > 0 && newCardJob != cardJob)
+                        return HSErrorTypes.CardJobTwice;
                 }
             }
 

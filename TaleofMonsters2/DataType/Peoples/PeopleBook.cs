@@ -106,32 +106,19 @@ namespace TaleofMonsters.DataType.Peoples
 
         public static void Fight(int pid, string map, int tile, int rlevel, HsActionCallback winEvent, HsActionCallback lossEvent)
         {
+            if (UserProfile.InfoBasic.Ap < GameConstants.FightAPCost)
+            {
+                MainForm.Instance.AddTip("体力不足", "Red");
+                return;
+            }
+
             bool rt = PopDeckChoose.Show(map, tile, UserProfile.InfoCard.GetDeckNames());
             if (!rt)
             {
                 return;
             }
 
-            if (UserProfile.InfoCard.SelectedDeck.Count < GameConstants.DeckCardCount)
-            {
-                MainForm.Instance.AddTip("卡组内卡片数不足", "Red");
-                return;
-            }
-
-            var jobRequired = UserProfile.InfoCard.SelectedDeck.JobRequired;
-            if (jobRequired == -1 || (jobRequired > 0 && jobRequired != UserProfile.Profile.InfoBasic.Job))
-            {
-                MainForm.Instance.AddTip("卡组和职业不符合", "Red");
-                return;
-            }
-
-            if (UserProfile.InfoBasic.Ap < GameConstants.FightAPCost)
-            {
-                MainForm.Instance.AddTip("体力不足", "Red");
-                return;
-            }
             UserProfile.InfoBasic.Ap -= GameConstants.FightAPCost;
-
             BattleForm bf = new BattleForm();
             bf.BattleWin = winEvent;
             bf.BattleLose = lossEvent;
