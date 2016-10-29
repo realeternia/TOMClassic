@@ -128,39 +128,39 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             sb.Dispose();
             sb = new SolidBrush(Color.FromArgb(50, 0, 100));
 
-            if (weapon.Def > 0)
+            if (weapon.Def != 0)
             {
-                g.DrawString(string.Format("防御 +{0,2:D}", weapon.Def), fontsong, sb, 10 + offX, add.Next);
+                g.DrawString(string.Format("防御 {0}", GetValueStr(weapon.Def)), fontsong, sb, 10 + offX, add.Next);
                 PaintTool.DrawValueLine(g, weapon.Def * 20, 70 + offX, add.Now + 1, 115, 10);
             }
-            if (weapon.Mag > 0)
+            if (weapon.Mag != 0)
             {
-                g.DrawString(string.Format("魔力 +{0,2:D}", weapon.Mag), fontsong, sb, 10 + offX, add.Next);
+                g.DrawString(string.Format("魔力 {0}", GetValueStr(weapon.Mag)), fontsong, sb, 10 + offX, add.Next);
                 PaintTool.DrawValueLine(g, weapon.Mag * 20, 70 + offX, add.Now + 1, 115, 10);
             }
-            if (weapon.Spd > 0)
+            if (weapon.Spd !=0)
             {
-                g.DrawString(string.Format("攻速 +{0,2:D}", weapon.Spd), fontsong, sb, 10 + offX, add.Next);
+                g.DrawString(string.Format("攻速 {0}", GetValueStr( weapon.Spd)), fontsong, sb, 10 + offX, add.Next);
                 PaintTool.DrawValueLine(g, weapon.Spd * 20, 70 + offX, add.Now + 1, 115, 10);
             }
-            if (weapon.Hit > 0)
+            if (weapon.Hit !=0)
             {
-                g.DrawString(string.Format("命中 +{0,2:D}", weapon.Hit), fontsong, sb, 10 + offX, add.Next);
+                g.DrawString(string.Format("命中 {0}", GetValueStr( weapon.Hit)), fontsong, sb, 10 + offX, add.Next);
                 PaintTool.DrawValueLine(g, weapon.Hit * 20, 70 + offX, add.Now + 1, 115, 10);
             }
-            if (weapon.Dhit > 0)
+            if (weapon.Dhit != 0)
             {
-                g.DrawString(string.Format("回避 +{0,2:D}", weapon.Dhit), fontsong, sb, 10 + offX, add.Next);
+                g.DrawString(string.Format("回避 {0}", GetValueStr( weapon.Dhit)), fontsong, sb, 10 + offX, add.Next);
                 PaintTool.DrawValueLine(g, weapon.Dhit * 20, 70 + offX, add.Now + 1, 115, 10);
             }
-            if (weapon.Crt > 0)
+            if (weapon.Crt != 0)
             {
-                g.DrawString(string.Format("暴击 +{0,2:D}", weapon.Crt), fontsong, sb, 10 + offX, add.Next);
+                g.DrawString(string.Format("暴击 {0}", GetValueStr( weapon.Crt)), fontsong, sb, 10 + offX, add.Next);
                 PaintTool.DrawValueLine(g, weapon.Crt * 20, 70 + offX, add.Now + 1, 115, 10);
             }
-            if (weapon.Luk > 0)
+            if (weapon.Luk != 0)
             {
-                g.DrawString(string.Format("幸运 +{0,2:D}", weapon.Luk), fontsong, sb, 10 + offX, add.Next);
+                g.DrawString(string.Format("幸运 {0}", GetValueStr( weapon.Luk)), fontsong, sb, 10 + offX, add.Next);
                 PaintTool.DrawValueLine(g, weapon.Luk * 20, 70 + offX, add.Now + 1, 115, 10);
             }
 
@@ -181,6 +181,11 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             fontsong.Dispose();
             fontsong2.Dispose();
             sb.Dispose();
+        }
+
+        private string GetValueStr(int val)
+        {
+            return val > 0 ? string.Format("+{0,2:D}", val) : string.Format("-{0,2:D}", Math.Abs(val));
         }
 
         public override Image GetPreview(CardPreviewType type, int[] parms)

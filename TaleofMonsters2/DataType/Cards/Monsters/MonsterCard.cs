@@ -132,39 +132,39 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             PaintTool.DrawValueLine(g, monster.Mov * 2, 70 + offX, add.Now + 1, 115, 10);
             sb.Dispose();
             sb = new SolidBrush(Color.FromArgb(50, 0, 100));
-            if (monster.Def > 0)
+            if (monster.Def != 0)
             {
-                g.DrawString(string.Format("防御 +{0,2:D}", monster.Def), fontsong, sb, 10 + offX, add.Next);
+                g.DrawString(string.Format("防御 {0}", GetValueStr(monster.Def)), fontsong, sb, 10 + offX, add.Next);
                 PaintTool.DrawValueLine(g, monster.Def *20, 70 + offX, add.Now + 1, 115, 10);
             }
-            if (monster.Mag > 0)
+            if (monster.Mag != 0)
             {
-                g.DrawString(string.Format("魔力 +{0,2:D}", monster.Mag), fontsong, sb, 10 + offX, add.Next);
+                g.DrawString(string.Format("魔力 {0}", GetValueStr(monster.Mag)), fontsong, sb, 10 + offX, add.Next);
                 PaintTool.DrawValueLine(g, monster.Mag * 20, 70 + offX, add.Now + 1, 115, 10);
             }
-            if (monster.Spd > 0)
+            if (monster.Spd != 0)
             {
-                g.DrawString(string.Format("攻速 +{0,2:D}", monster.Spd), fontsong, sb, 10 + offX, add.Next);
+                g.DrawString(string.Format("攻速 {0}", GetValueStr(monster.Spd)), fontsong, sb, 10 + offX, add.Next);
                 PaintTool.DrawValueLine(g, monster.Spd * 20, 70 + offX, add.Now + 1, 115, 10);
             }
-            if (monster.Hit > 0)
+            if (monster.Hit != 0)
             {
-                g.DrawString(string.Format("命中 +{0,2:D}", monster.Hit), fontsong, sb, 10 + offX, add.Next);
+                g.DrawString(string.Format("命中 {0}", GetValueStr( monster.Hit)), fontsong, sb, 10 + offX, add.Next);
                 PaintTool.DrawValueLine(g, monster.Hit * 20, 70 + offX, add.Now + 1, 115, 10);
             }
-            if (monster.Dhit > 0)
+            if (monster.Dhit != 0)
             {
-                g.DrawString(string.Format("回避 +{0,2:D}", monster.Dhit), fontsong, sb, 10 + offX, add.Next);
+                g.DrawString(string.Format("回避 {0}", GetValueStr( monster.Dhit)), fontsong, sb, 10 + offX, add.Next);
                 PaintTool.DrawValueLine(g, monster.Dhit * 20, 70 + offX, add.Now + 1, 115, 10);
             }
-            if (monster.Crt > 0)
+            if (monster.Crt != 0)
             {
-                g.DrawString(string.Format("暴击 +{0,2:D}", monster.Crt), fontsong, sb, 10 + offX, add.Next);
+                g.DrawString(string.Format("暴击 {0}", GetValueStr( monster.Crt)), fontsong, sb, 10 + offX, add.Next);
                 PaintTool.DrawValueLine(g, monster.Crt * 20, 70 + offX, add.Now + 1, 115, 10);
             }
-            if (monster.Luk > 0)
+            if (monster.Luk != 0)
             {
-                g.DrawString(string.Format("幸运 +{0,2:D}", monster.Luk), fontsong, sb, 10 + offX, add.Next);
+                g.DrawString(string.Format("幸运 {0}", GetValueStr(monster.Luk)), fontsong, sb, 10 + offX, add.Next);
                 PaintTool.DrawValueLine(g, monster.Luk * 20, 70 + offX, add.Now + 1, 115, 10);
             }
 
@@ -189,6 +189,11 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             fontsong2.Dispose();
             fontblack.Dispose();
             sb.Dispose();
+        }
+
+        private string GetValueStr(int val)
+        {
+            return val > 0 ? string.Format("+{0,2:D}", val) : string.Format("-{0,2:D}", Math.Abs(val));
         }
 
         public override Image GetPreview(CardPreviewType type, int[] parms)
