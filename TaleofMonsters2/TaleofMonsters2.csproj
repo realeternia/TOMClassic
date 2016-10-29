@@ -100,7 +100,7 @@
     <Compile Include="Controler\Battle\Data\Players\Frag\SpikeManager.cs" />
     <Compile Include="Controler\Battle\Tool\BattleManager.cs" />
     <Compile Include="Controler\Battle\Data\MemEffect\BaseEffect.cs" />
-    <Compile Include="Controler\Battle\Data\MemEffect\FlyEffect.cs" />
+    <Compile Include="Controler\Battle\Data\MemEffect\UIEffect.cs" />
     <Compile Include="Controler\Battle\Data\MemFlow\FlowExpInfo.cs" />
     <Compile Include="Controler\Battle\Data\MemFlow\FlowManaInfo.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\Component\BuffManager.cs" />

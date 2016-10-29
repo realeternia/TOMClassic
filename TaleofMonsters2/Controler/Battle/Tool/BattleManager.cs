@@ -83,7 +83,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
 
         public void Draw(Graphics g, MagicRegion magicRegion, CardVisualRegion visualRegion, int mouseX, int mouseY, bool isMouseIn)
         {
-            MemMap.Draw(g);
+            MemMap.Draw(g);//画地图
             visualRegion.Draw(g);
             if (magicRegion.Type != RegionTypes.None && isMouseIn)
                 magicRegion.Draw(g, RoundMark, mouseX, mouseY);
@@ -93,16 +93,16 @@ namespace TaleofMonsters.Controler.Battle.Tool
                 Color color = Color.White;
                 if (isMouseIn)
                     color = magicRegion.GetColor(monster, mouseX, mouseY);
-                monster.DrawOnBattle(g, color);
+                monster.DrawOnBattle(g, color);//画怪物
             }
 
             for (int i = 0; i < MissileQueue.Count; i++)
-                MissileQueue[i].Draw(g);
+                MissileQueue[i].Draw(g);//画导弹
 
             for (int i = 0; i < EffectQueue.Count; i++)
-                EffectQueue[i].Draw(g);
+                EffectQueue[i].Draw(g);//画特效
             for (int i = 0; i < FlowWordQueue.Count; i++)
-                FlowWordQueue[i].Draw(g);
+                FlowWordQueue[i].Draw(g);//画飘字
 
         }
     }

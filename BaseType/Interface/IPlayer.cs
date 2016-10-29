@@ -16,18 +16,18 @@ namespace ConfigDatas
         void RemoveSpike(int id);
         void DeleteRandomCardFor(IPlayer p, int levelChange);
         void CopyRandomCardFor(IPlayer p, int levelChange);
-        void GetNextNCard(int n);
+        void GetNextNCard(IMonster mon, int n);
         void ConvertCard(int count, int cardId, int levelChange);
-        void AddCard(int cardId, int level);
+        void AddCard(IMonster mon, int cardId, int level);
         void DeleteAllCard();
         void DeleteSelectCard();
         void RecostSelectCard();
         int CardNumber { get; }
         void CopyRandomNCard(int n, int spellid);
         void CardLevelUp(int n, int type);
-        void AddRandomCard(int type, int lv); //按类型给一张随机卡牌，怪物，武器
-        void AddRandomCardJob(int jobId, int lv); //按职业给一张随机卡牌
-        void AddRandomCardRace(int race, int lv); //按种族给一张随机卡牌
+        void AddRandomCard(IMonster mon, int type, int lv); //按类型给一张随机卡牌，怪物，武器
+        void AddRandomCardJob(IMonster mon, int jobId, int lv); //按职业给一张随机卡牌
+        void AddRandomCardRace(IMonster mon, int race, int lv); //按种族给一张随机卡牌
 
         void AddMonster(int cardId, int level, System.Drawing.Point location);
         void ExchangeMonster(IMonster target, int lv);

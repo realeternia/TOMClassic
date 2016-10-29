@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
+using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMissile;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
@@ -19,6 +20,7 @@ using TaleofMonsters.Controler.Battle.Data.MemWeapon;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards.Spells;
 using TaleofMonsters.DataType.Cards.Weapons;
+using TaleofMonsters.DataType.Effects;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
 {
@@ -378,7 +380,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 if (SpikeManager.HasSpike("mirrorspell"))
                 {
                     var rival = IsLeft ? BattleManager.Instance.PlayerManager.RightPlayer : BattleManager.Instance.PlayerManager.LeftPlayer;
-                    rival.AddCard(card.CardId, card.Level);
+                    rival.AddCard(null, card.CardId, card.Level);
                 }
             }
             catch (Exception e)
@@ -474,14 +476,20 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             CardManager.CopyRandomCardFor(p, levelChange);
         }
 
-        public void AddCard(int cardId, int level)
+        public void AddCard(IMonster mon, int cardId, int level)
         {
             CardManager.AddCard(cardId, level);
         }
 
-        public void GetNextNCard(int n)
+        public void GetNextNCard(IMonster mon, int n)
         {
-          //  BattleManager.Instance.EffectQueue.Add(new FlyEffect(EffectBook.GetEffect("yellowflash"), pos, new Point(300, 300), 20, true));
+            if (IsLeft)
+            {
+                Point startPoint = new Point(BattleManager.Instance.MemMap.StageWidth / 2, BattleManager.Instance.MemMap.StageHeight / 2);
+                if (mon != null)
+                    startPoint = mon.Position;
+                BattleManager.Instance.EffectQueue.Add(new UIEffect(EffectBook.GetEffect("flycard"), startPoint, new Point(BattleManager.Instance.MemMap.StageWidth / 2, BattleManager.Instance.MemMap.StageHeight), 16, true));
+            }
             CardManager.GetNextNCard(n);
         }
 
@@ -532,7 +540,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             CardManager.CardLevelUp(n, type);
         }
 
-        public void AddRandomCard(int type, int lv)
+        public void AddRandomCard(IMonster mon, int type, int lv)
         {
             int cardId = 0;
             switch (type)
@@ -541,24 +549,24 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 case 2: cardId = WeaponBook.GetRandWeaponId(); break;
                 case 3: cardId = SpellBook.GetRandSpellId(); break;
             }
-            AddCard(cardId, lv);
+            AddCard(mon, cardId, lv);
         }
 
-        public void AddRandomCardJob(int job, int lv)
+        public void AddRandomCardJob(IMonster mon, int job, int lv)
         {
             var cardId = CardConfigManager.GetRandomJobCard(job);
             if (cardId != 0)
             {
-                AddCard(cardId, lv);
+                AddCard(mon, cardId, lv);
             }
         }
 
-        public void AddRandomCardRace(int race, int lv)
+        public void AddRandomCardRace(IMonster mon, int race, int lv)
         {
             var cardId = CardConfigManager.GetRandomRaceCard(race);
             if (cardId != 0)
             {
-                AddCard(cardId, lv);
+                AddCard(mon, cardId, lv);
             }
         }
 
