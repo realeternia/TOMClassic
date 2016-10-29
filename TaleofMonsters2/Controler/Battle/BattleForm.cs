@@ -183,7 +183,7 @@ namespace TaleofMonsters.Controler.Battle
             base.OnFrame(tick);
 
             fpsList.Add(DateTime.Now);//fps计算
-            while (fpsList.Count > 21)
+            while (fpsList.Count > 11)
                 fpsList.RemoveAt(0);
 
             if (onTurn)
@@ -275,7 +275,7 @@ namespace TaleofMonsters.Controler.Battle
             g.Dispose();
             bmp.Dispose();
 
-            if (fpsList.Count >= 20)//fps显示
+            if (fpsList.Count >= 10)//fps显示
             {
                 int fps = (int)Math.Round((fpsList.Count - 1) * 1000 / fpsList[fpsList.Count - 1].Subtract(fpsList[0]).TotalMilliseconds);
                 Font fontFps = new Font("黑体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);

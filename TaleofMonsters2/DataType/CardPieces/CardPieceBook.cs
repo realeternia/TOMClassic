@@ -21,14 +21,10 @@ namespace TaleofMonsters.DataType.CardPieces
             if (!pieces.ContainsKey(id))
             {
                 pieces[id] = new List<CardPieceRate>();
-                
-                foreach (CardPieceConfig cardPieceConfig in ConfigData.CardPieceDict.Values)
-                {
-                    if (cardPieceConfig.Cid == id)
-                    {
-                        pieces[id].Add(CardPieceRate.FromCardPiece(cardPieceConfig.ItemId, monsterConfig.Star));        
-                    }
-                }//todo 这个遍历可以缓存起来
+                if (monsterConfig.DropId1 > 0)
+                    pieces[id].Add(CardPieceRate.FromCardPiece(monsterConfig.DropId1, monsterConfig.Star));
+                if (monsterConfig.DropId2 > 0)
+                    pieces[id].Add(CardPieceRate.FromCardPiece(monsterConfig.DropId2, monsterConfig.Star));
 
                 foreach (CardPieceTypeConfig cardPieceConfig in ConfigData.CardPieceTypeDict.Values)
                 {
@@ -63,11 +59,11 @@ namespace TaleofMonsters.DataType.CardPieces
         static public int[] GetCardIdsByItemId(int id)
         {
             List<int> data = new List<int>();
-            foreach (CardPieceConfig cardPieceConfig in ConfigData.CardPieceDict.Values)
+            foreach (var monsterConfig in ConfigData.MonsterDict.Values)
             {
-                if (cardPieceConfig.ItemId==id)
+                if (monsterConfig.DropId1==id || monsterConfig.DropId2 == id)
                 {
-                    data.Add(cardPieceConfig.Cid);
+                    data.Add(monsterConfig.Id);
                 }
             }
 
