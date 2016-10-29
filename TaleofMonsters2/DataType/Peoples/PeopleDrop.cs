@@ -2,8 +2,6 @@
 using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Items;
-using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.DataType.Peoples
 {
@@ -14,14 +12,6 @@ namespace TaleofMonsters.DataType.Peoples
 
         public PeopleDrop(int id)
         {
-            foreach (DropCardConfig dropCardConfig in ConfigData.DropCardDict.Values)
-            {
-                if (dropCardConfig.Pid==id)
-                {
-                    dropIds = dropCardConfig.CardId;
-                }   
-            }
-
             PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(id);
 
             DropResource gold = new DropResource();

@@ -72,10 +72,6 @@ namespace TaleofMonsters.Controler.Battle
                 resource = drop.GetDropResource();
                 PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(rightId);
                 exp = ExpTree.GetNextRequired(peopleConfig.Level) / 2 / (15 + Math.Abs(UserProfile.InfoBasic.Level - peopleConfig.Level) * 3) + 1;
-//                if (UserProfile.InfoBag.GetDayItem(HItemSpecial.DoubleExpItem))
-//                {
-//                    exp *= 2;
-//                }
 
                 resource[0] = resource[0]*(100 + battleInfo.GoldRatePlus)/100;
                 exp = exp*(100 + battleInfo.ExpRatePlus)/100;
@@ -84,13 +80,13 @@ namespace TaleofMonsters.Controler.Battle
                 {
                     if (MathTool.GetRandom(2) >= 0)//todo 临时ws下
                     {
-                        rewardItemList.Add(32101);
-                        rewardItemList.Add(32104);
-                        rewardItemList.Add(32107);
+                        //rewardItemList.Add(32101);
+                        //rewardItemList.Add(32104);
+                        //rewardItemList.Add(32107);
 
-                        virtualRegion.SetRegionInfo(1, 32101);
-                        virtualRegion.SetRegionInfo(2, 32104);
-                        virtualRegion.SetRegionInfo(3, 32107);
+                        //virtualRegion.SetRegionInfo(1, 32101);
+                        //virtualRegion.SetRegionInfo(2, 32104);
+                        //virtualRegion.SetRegionInfo(3, 32107);
                     }
                 }
                 else
@@ -99,10 +95,6 @@ namespace TaleofMonsters.Controler.Battle
                         resource[i] /= 5;
                     exp /= 4;
                 }
-//                if (UserProfile.InfoBag.GetDayItem(HItemSpecial.DoubleGoldItem))
-//                {
-//                    resource[0] *= 2;
-//                }
             }
             else
             {

@@ -53,21 +53,6 @@ namespace TaleofMonsters.DataType.Peoples
             return tipData.Image;
         }
 
-        public static bool IsPeopleDropCard(int id)
-        {
-            foreach (DropCardConfig dropCardConfig in ConfigData.DropCardDict.Values)
-            {
-                for (int i = 0; i < dropCardConfig.CardId.Count; i++)
-                {
-                    if (dropCardConfig.CardId[i].Id == id)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
         static public bool IsPeople(int id)
        {
            PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(id);

@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
-using TaleofMonsters.Forms.Items;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 
@@ -63,9 +62,6 @@ namespace TaleofMonsters.Forms.MagicBook
                     MainForm.Instance.DealPanel(new PeopleDeckViewForm());
                     break;
                 case 4:
-                    MainForm.Instance.DealPanel(new PeopleDropViewForm());
-                    break;
-                case 5:
                     MainForm.Instance.DealPanel(new DropItemViewerForm());
                     break;
             }
@@ -92,8 +88,7 @@ namespace TaleofMonsters.Forms.MagicBook
             e.Graphics.DrawString("查看所有全卡片效果", font, last == 1 ? Brushes.Yellow : Brushes.Black, 59, 84);
             e.Graphics.DrawString("查看所有卡片技能效果", font, last == 2 ? Brushes.Yellow : Brushes.Black, 59, 114);
             e.Graphics.DrawString("查看所有对手卡组", font, last == 3? Brushes.Yellow : Brushes.Black, 59, 144);
-            e.Graphics.DrawString("查看所有对手卡片掉落", font, last == 4 ? Brushes.Yellow : Brushes.Black, 59, 174);
-            e.Graphics.DrawString("查看所有材料掉落", font, last == 5? Brushes.Yellow : Brushes.Black, 59, 204);
+            e.Graphics.DrawString("查看所有材料掉落", font, last == 4? Brushes.Yellow : Brushes.Black, 59, 174);
             font.Dispose();
         }
 
