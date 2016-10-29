@@ -63,57 +63,6 @@ namespace TaleofMonsters.DataType.Items
             return false;
         }
 
-        public static void DrawOnDeck(int id, Graphics g, int xoff, int yoff)
-        {
-            HItemConfig hItemConfig = ConfigData.GetHItemConfig(id);
-
-            int basel = yoff;
-            g.FillRectangle(new SolidBrush(Color.FromArgb(190, 175, 160)), xoff + 10, basel, 180, 20);
-            for (int i = 0; i < 1; i++)
-            {
-                g.FillRectangle(new SolidBrush(Color.FromArgb(215, 210, 200)), xoff + 10, basel + 35 + i * 30, 180, 15);
-            }
-            g.FillRectangle(new SolidBrush(Color.FromArgb(190, 175, 160)), xoff + 10, basel + 55, 180, 20);
-            for (int i = 0; i < 2; i++)
-            {
-                g.FillRectangle(new SolidBrush(Color.FromArgb(215, 210, 200)), xoff + 10, basel + 90 + i * 30, 180, 15);
-            }
-            g.FillRectangle(new SolidBrush(Color.FromArgb(215, 210, 200)), xoff + 10, basel + 125, 180, 45);
-
-            Font fontblack = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            Font fontsong = new Font("宋体", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            g.DrawString("主要信息", fontblack, Brushes.White, xoff + 10, basel + 2);
-            g.DrawString(string.Format("{0}", hItemConfig.Name), fontsong, Brushes.Black, xoff + 10, basel + 21);
-            g.DrawString(("★★★★★★★★★★").Substring(10 - hItemConfig.Rare), fontsong, Brushes.DeepPink, xoff + 10, basel + 36);
-
-            SolidBrush sb = new SolidBrush(Color.FromArgb(100, 50, 0));
-
-            g.DrawString("效果", fontblack, Brushes.White, xoff + 10, basel + 57);
-            g.DrawString(string.Format("等级: {0}", hItemConfig.Level), fontsong, sb, xoff + 10, basel + 76);
-            g.DrawString(string.Format("类型: {0}", HSTypes.I2HItemType(hItemConfig.Type)), fontsong, sb, xoff + 10, basel + 91);
-            g.DrawString(string.Format("价值: {0}", hItemConfig.Value), fontsong, sb, xoff + 10, basel + 106);
-
-            string descript = hItemConfig.Descript;
-            if (descript.Length < 13)
-            {
-                g.DrawString(descript, fontsong, sb, xoff + 10, basel + 121);
-            }
-            else if (descript.Length < 26)
-            {
-                g.DrawString(descript.Substring(0, 13), fontsong, sb, xoff + 10, basel + 121);
-                g.DrawString(descript.Substring(13), fontsong, sb, xoff + 10, basel + 136);
-            }
-            else
-            {
-                g.DrawString(descript.Substring(0, 13), fontsong, sb, xoff + 10, basel + 121);
-                g.DrawString(descript.Substring(13, 13), fontsong, sb, xoff + 10, basel + 136);
-                g.DrawString(descript.Substring(26), fontsong, sb, xoff + 10, basel + 151);
-            }
-            fontblack.Dispose();
-            fontsong.Dispose();
-            sb.Dispose();
-        }
-
         public static Image GetPreview(int id)
         {
             HItemConfig hItemConfig = ConfigData.GetHItemConfig(id);

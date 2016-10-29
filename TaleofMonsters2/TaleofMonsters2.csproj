@@ -325,8 +325,6 @@
     <Compile Include="Forms\MagicBook\DropItemViewerForm.Designer.cs">
       <DependentUpon>DropItemViewerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MagicBook\ItemDetail.cs">
-    </Compile>
     <Compile Include="Forms\MazeWindow.cs">
       <SubType>UserControl</SubType>
     </Compile>

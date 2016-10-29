@@ -28,7 +28,7 @@ namespace TaleofMonsters.Forms.MagicBook
         private Bitmap tempImage;
         private bool isDirty = true;
         private CardDetail cardDetail;
-        private string skillDesStr = "";
+        private string skillDesStr = ""; //显示在下方的技能说明
 
         public MonsterSkillViewForm()
         {

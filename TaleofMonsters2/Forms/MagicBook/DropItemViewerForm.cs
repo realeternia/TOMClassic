@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType.CardPieces;
-using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.Forms.Items.Core;
 using ConfigDatas;
@@ -28,7 +27,8 @@ namespace TaleofMonsters.Forms.MagicBook
         private List<int> items;
         private Bitmap tempImage;
         private bool isDirty = true;
-        private ItemDetail itemDetail;
+        private CardDetail cardDetail;
+        private string itemDesStr = ""; //显示在下方的道具说明
 
         public DropItemViewerForm()
         {
@@ -41,9 +41,9 @@ namespace TaleofMonsters.Forms.MagicBook
             bitmapButtonPre.NoUseDrawNine = true;
             tempImage = new Bitmap(cardWidth*xCount, cardHeight*yCount);
 
-            itemDetail = new ItemDetail(cardWidth * xCount + 65, 35, cardHeight * yCount+93);
-            nlClickLabel1.Location = new Point(75, cardHeight * yCount + 60);
-            nlClickLabel1.Size = new Size(cardWidth * xCount - 20, 63);
+            cardDetail = new CardDetail(this, cardWidth * xCount + 65, 35, cardHeight * yCount + 93 + cardHeight);
+            nlClickLabel1.Location = new Point(75, cardHeight * yCount + 100);
+            nlClickLabel1.Size = new Size(cardWidth * xCount - 20, 23);
         }
 
         internal override void Init(int width, int height)
@@ -62,6 +62,10 @@ namespace TaleofMonsters.Forms.MagicBook
 
             UpdateButtonState();
         }
+        internal override void OnFrame(int tick)
+        {
+            cardDetail.OnFrame();
+        }
 
         private void UpdateButtonState()
         {
@@ -79,7 +83,7 @@ namespace TaleofMonsters.Forms.MagicBook
             }
             tar = -1;
             sel = -1;
-            itemDetail.ItemId = -1;
+            cardDetail.SetInfo(-1);
             UpdateButtonState();
             isDirty = true;
             Invalidate(new Rectangle(65, 35, cardWidth * xCount+200, 630));
@@ -95,7 +99,7 @@ namespace TaleofMonsters.Forms.MagicBook
             }
             tar = -1;
             sel = -1;
-            itemDetail.ItemId = -1;
+            cardDetail.SetInfo(-1);
             UpdateButtonState();
             isDirty = true;
             Invalidate(new Rectangle(65, 35, cardWidth * xCount+200, 630));
@@ -107,9 +111,10 @@ namespace TaleofMonsters.Forms.MagicBook
             {
                 sel = tar;
 
-                itemDetail.ItemId = items[tar];
-                itemDetail.Type = 1;
-                Invalidate(new Rectangle(65 + cardWidth * xCount, 35, 200, 630));
+                HItemConfig itemConfig = ConfigData.GetHItemConfig(items[tar]);
+                const string stars = "★★★★★★★★★★";
+                itemDesStr = string.Format("{0}({2}){1}", itemConfig.Name, itemConfig.Descript, stars.Substring(10 - itemConfig.Rare));
+                Invalidate(new Rectangle(65, cardHeight * yCount + 37 + 21, 500, 20));
 
                 nlClickLabel1.ClearLabel();
                 int[] cardIds = CardPieceBook.GetCardIdsByItemId(items[tar]);
@@ -147,6 +152,8 @@ namespace TaleofMonsters.Forms.MagicBook
 
         private void nlClickLabel1_SelectionChange(Object value)
         {
+            cardDetail.SetInfo((int)value);
+            Invalidate(new Rectangle(65, 35, cardWidth * xCount + 200, 630));
         }
 
         private void buttonClose_Click(object sender, EventArgs e)
@@ -161,14 +168,23 @@ namespace TaleofMonsters.Forms.MagicBook
             Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             e.Graphics.DrawString(" 全材料 ", font, Brushes.White, 320, 8);
             font.Dispose();
-
-            Font fontblack = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(245, 244, 242)), 65, cardHeight * yCount+35, cardWidth * xCount, 93);
-            e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(190, 175, 160)), 65, cardHeight * yCount+35, cardWidth * xCount, 20);
-            e.Graphics.DrawString("掉落怪物", fontblack, Brushes.White, 65, cardHeight * yCount + 37);
+            Font fontblack = new Font("黑体", 12 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+            font = new Font("宋体", 10 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(245, 244, 242)), 65, cardHeight * yCount + 35, cardWidth * xCount, 93);
+            e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(190, 175, 160)), 65, cardHeight * yCount + 35, cardWidth * xCount, 20);
+            e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(190, 175, 160)), 65, cardHeight * yCount + 75, cardWidth * xCount, 20);
+            e.Graphics.DrawString("说明", fontblack, Brushes.White, 65, cardHeight * yCount + 37);
+            if (!string.IsNullOrEmpty(itemDesStr))
+            {
+                e.Graphics.DrawString(itemDesStr, font, Brushes.SaddleBrown, 65 + 5, cardHeight * yCount + 37 + 21);
+            }
+            e.Graphics.DrawString("掉落怪物", fontblack, Brushes.White, 65, cardHeight * yCount + 77);
+            font.Dispose();
             fontblack.Dispose();
 
-            itemDetail.Draw(e.Graphics);
+            cardDetail.Draw(e.Graphics);
+
+
 
             if (show)
             {
@@ -192,8 +208,8 @@ namespace TaleofMonsters.Forms.MagicBook
                 if (sel != -1 && sel < totalCount)
                 {
                     SolidBrush yellowbrush = new SolidBrush(Color.FromArgb(80, Color.Lime));
-                    int x = (sel%xCount)*cardWidth + 65;
-                    int y = ((sel/xCount)%yCount)*cardHeight + 35;
+                    int x = (sel % xCount) * cardWidth + 65;
+                    int y = ((sel / xCount) % yCount) * cardHeight + 35;
                     e.Graphics.FillRectangle(yellowbrush, x, y, cardWidth, cardHeight);
                     yellowbrush.Dispose();
 
