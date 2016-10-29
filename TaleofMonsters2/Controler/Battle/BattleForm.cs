@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
@@ -12,7 +13,6 @@ using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.HeroSkills;
 using TaleofMonsters.DataType.User;
@@ -71,6 +71,8 @@ namespace TaleofMonsters.Controler.Battle
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
         private MagicRegion magicRegion = new MagicRegion();
         private CardVisualRegion visualRegion = new CardVisualRegion(); //怪物选中后的地图效果
+
+        private List<DateTime> fpsList = new List<DateTime>();
 
         public bool IsWin
         {
@@ -180,6 +182,10 @@ namespace TaleofMonsters.Controler.Battle
         {
             base.OnFrame(tick);
 
+            fpsList.Add(DateTime.Now);//fps计算
+            while (fpsList.Count > 21)
+                fpsList.RemoveAt(0);
+
             if (onTurn)
                 return;
             onTurn = true;
@@ -268,6 +274,14 @@ namespace TaleofMonsters.Controler.Battle
             e.Graphics.DrawImageUnscaled(bmp, 0, 0);
             g.Dispose();
             bmp.Dispose();
+
+            if (fpsList.Count >= 20)//fps显示
+            {
+                int fps = (int)Math.Round((fpsList.Count - 1) * 1000 / fpsList[fpsList.Count - 1].Subtract(fpsList[0]).TotalMilliseconds);
+                Font fontFps = new Font("黑体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+                e.Graphics.DrawString(string.Format("fps {0}", fps), fontFps, Brushes.White, 3, 3);
+                fontFps.Dispose();
+            }
         }
 
 

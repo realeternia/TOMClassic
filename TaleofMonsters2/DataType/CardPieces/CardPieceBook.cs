@@ -2,6 +2,7 @@
 using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Tool;
+using TaleofMonsters.Core;
 
 namespace TaleofMonsters.DataType.CardPieces
 {
@@ -11,7 +12,7 @@ namespace TaleofMonsters.DataType.CardPieces
 
         static public int CheckPiece(int id)
         {
-            if (BattleManager.Instance.BattleInfo.Items.Count > 15)
+            if (BattleManager.Instance.BattleInfo.Items.Count > GameConstants.MaxDropItemGetOnBattle)
             {
                 return 0;
             }
@@ -56,7 +57,7 @@ namespace TaleofMonsters.DataType.CardPieces
                 }
             }
             
-            return 0;
+            return pieces[id][0].ItemId;
         }
 
         static public int[] GetCardIdsByItemId(int id)

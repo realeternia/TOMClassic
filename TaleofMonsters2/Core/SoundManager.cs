@@ -6,9 +6,22 @@ namespace TaleofMonsters.Core
 {
     class SoundManager
     {
-        private static WindowsMediaPlayer soundPlayer;
+        private const int workCount = 4;//音效的工作线程数量
+        private static WindowsMediaPlayer[] soundPlayerWorkers;
+        private static int soundIndexer=0;//目前分配到哪一个
+
         private static WindowsMediaPlayer bgmPlayer;
         private static Stack<string> bgmHistory;
+
+        static SoundManager()
+        {
+            soundPlayerWorkers = new WindowsMediaPlayer[workCount];
+            for (int i = 0; i < workCount; i++)
+            {
+                soundPlayerWorkers[i] = new WindowsMediaPlayer();
+                soundPlayerWorkers[i].settings.volume = 30;
+            }
+        }
 
         public static void Play(string dir, string path)
         {
@@ -18,14 +31,10 @@ namespace TaleofMonsters.Core
                 return;
             }
 
-            if (soundPlayer == null)
-            {
-                soundPlayer = new WindowsMediaPlayer();
-                soundPlayer.settings.volume = 30;
-            }
+            var sounder = soundPlayerWorkers[(soundIndexer++)% workCount];
 
-            soundPlayer.URL = filePath;
-            soundPlayer.controls.play();
+            sounder.URL = filePath;
+            sounder.controls.play();
         }
 
         public static void PlayBGM(string path)

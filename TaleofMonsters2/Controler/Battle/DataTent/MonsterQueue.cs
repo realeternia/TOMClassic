@@ -37,7 +37,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             mon.OwnerPlayer.State.CheckMonsterEvent(true, mon);
             monsters.Add(mon);
             BattleLocationManager.UpdateCellOwner(mon.Position.X, mon.Position.Y, mon.Id);
-            mon.SkillManager.CheckInitialEffect();
+            mon.OnInit();
             if (mon.IsLeft)
             {
                 LeftCount++;

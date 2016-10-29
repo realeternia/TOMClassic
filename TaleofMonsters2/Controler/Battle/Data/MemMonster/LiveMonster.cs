@@ -270,6 +270,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             Luk = new AttrModifyData(Avatar.Luk);
         }
 
+        public void OnInit()
+        {
+            SkillManager.CheckInitialEffect();
+            SoundManager.Play("Unit", "VO_EX1_362_Play_01.MP3");
+        }
+
         public bool BeHited(LiveMonster src)
         {
             int hitrate = SkillAssistant.GetHit(src, this);
@@ -324,7 +330,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                         if (itemId > 0)
                         {
                             BattleManager.Instance.BattleInfo.AddItemGet(itemId);
-                            UserProfile.InfoBag.AddItem(itemId, 1);
                             BattleManager.Instance.FlowWordQueue.Add(new FlowItemInfo(itemId, Position, 20, 50), true);
                         }
                         UserProfile.Profile.OnKillMonster(Avatar.MonsterConfig.Star, Avatar.MonsterConfig.Type, Avatar.MonsterConfig.Type);
@@ -339,6 +344,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 var rival = Rival as Player;
                 rival.OnKillMonster(lastDamagerId, Level, Avatar.MonsterConfig.Star, Position);
             }
+
+            SoundManager.Play("Unit", "VO_EX1_362_Death_03.MP3");
         }
 
         public void Next(float pastRound, bool tileMatching)//附带判断地形因素

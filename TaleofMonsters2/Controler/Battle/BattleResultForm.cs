@@ -13,7 +13,6 @@ using TaleofMonsters.Forms;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.DataType.Others;
-using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.DataTent;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType;
@@ -76,18 +75,17 @@ namespace TaleofMonsters.Controler.Battle
                 resource[0] = resource[0]*(100 + battleInfo.GoldRatePlus)/100;
                 exp = exp*(100 + battleInfo.ExpRatePlus)/100;
 
+                for (int i = 0; i < battleInfo.Items.Count; i++)
+                {
+                    rewardItemList.Add(battleInfo.Items[i]);
+                    if (i < 4)
+                    {
+                        virtualRegion.SetRegionInfo(i + 1, battleInfo.Items[i]); //前4个掉落可以显示出来
+                    }
+                }
+
                 if (isWin)
                 {
-                    if (MathTool.GetRandom(2) >= 0)//todo 临时ws下
-                    {
-                        //rewardItemList.Add(32101);
-                        //rewardItemList.Add(32104);
-                        //rewardItemList.Add(32107);
-
-                        //virtualRegion.SetRegionInfo(1, 32101);
-                        //virtualRegion.SetRegionInfo(2, 32104);
-                        //virtualRegion.SetRegionInfo(3, 32107);
-                    }
                 }
                 else
                 {
@@ -113,10 +111,6 @@ namespace TaleofMonsters.Controler.Battle
 
             if (isWin)
             {
-                foreach (var itemId in rewardItemList)
-                {
-                    UserProfile.InfoBag.AddItem(itemId,1);
-                }
                 UserProfile.InfoRival.AddRivalState(rightId, true);
                 UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalWin, 1);
                 UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.ContinueWin, 1);
@@ -128,6 +122,10 @@ namespace TaleofMonsters.Controler.Battle
                 UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.ContinueWin, 0);
             }
 
+            foreach (var itemId in rewardItemList)
+            {
+                UserProfile.InfoBag.AddItem(itemId, 1);
+            }
             UserProfile.InfoBasic.AddExp(exp);
             UserProfile.InfoBag.AddResource(resource);
         }
