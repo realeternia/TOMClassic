@@ -219,6 +219,12 @@
     <Compile Include="Forms\Items\Regions\ItemUseRegion.cs" />
     <Compile Include="Forms\Items\Regions\SwitchButtonRegion.cs" />
     <Compile Include="Forms\MagicBook\CardDeckStatistic.cs" />
+    <Compile Include="Forms\MagicBook\CardDropViewForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MagicBook\CardDropViewForm.Designer.cs">
+      <DependentUpon>CardDropViewForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MiniGame\MGThreeBody.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -645,6 +651,10 @@
     <EmbeddedResource Include="Controler\Battle\Components\CardsArray.resx">
       <SubType>Designer</SubType>
       <DependentUpon>CardsArray.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MagicBook\CardDropViewForm.resx">
+      <DependentUpon>CardDropViewForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MagicBook\MagicBookViewForm.resx">
       <DependentUpon>MagicBookViewForm.cs</DependentUpon>

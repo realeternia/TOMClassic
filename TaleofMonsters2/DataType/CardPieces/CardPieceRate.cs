@@ -4,18 +4,8 @@ namespace TaleofMonsters.DataType.CardPieces
 {
     public struct CardPieceRate
     {
-        private int itemId;
-        private int rate;
-
-        public int ItemId
-        {
-            get { return itemId; }
-        }
-
-        public int Rate
-        {
-            get { return rate; }
-        }
+        public int ItemId { get; private set; }
+        public int Rate { get; private set; }
 
         private static int[] rates = { 12, 8, 6, 4, 2, 1, 1, 1, 1 };
         private static int[] prices = { 5, 8, 12, 20, 30, 50, 75, 1, 1 };
@@ -24,23 +14,9 @@ namespace TaleofMonsters.DataType.CardPieces
             CardPieceRate pieceRate = new CardPieceRate();
             HItemConfig itemConfig = ConfigData.GetHItemConfig(id);
 
-            int percent = rates[itemConfig.Level - 1];
-            if (clevel > itemConfig.Level)
-            {
-                percent += (clevel - itemConfig.Level) * 2;
-            }
-
-            percent = percent * prices[itemConfig.Level - 1] / itemConfig.Value;
-            if (percent < 1)
-            {
-                percent = 1;
-            }
-            else if (percent > 20)
-            {
-                percent = 20;
-            }
-            pieceRate.itemId = id;
-            pieceRate.rate = percent;
+            int percent = rates[itemConfig.Rare - 1];
+            pieceRate.ItemId = id;
+            pieceRate.Rate = CheckBound(clevel, itemConfig, percent);
             return pieceRate;
         }
 
@@ -50,27 +26,11 @@ namespace TaleofMonsters.DataType.CardPieces
             CardPieceRate pieceRate = new CardPieceRate();
             HItemConfig itemConfig = ConfigData.GetHItemConfig(id);
 
-            pieceRate.rate = 0;
-            if (itemConfig.Rare <= clevel)
-            {
-                int percent = rateTypes[itemConfig.Level - 1];
-                if (clevel > itemConfig.Level)
-                {
-                    percent += (clevel - itemConfig.Level) * 2;
-                }
-
-                if (percent < 1)
-                {
-                    percent = 1;
-                }
-                else if (percent > 20)
-                {
-                    percent = 20;
-                }
-                pieceRate.rate = percent;
-            }
-
-            pieceRate.itemId = id;
+            int percent = rateTypes[itemConfig.Rare - 1];
+            percent = CheckBound(clevel, itemConfig, percent);
+            pieceRate.ItemId = id;
+            pieceRate.Rate = CheckBound(clevel, itemConfig, percent);
+         
             return pieceRate;
         }
 
@@ -80,28 +40,32 @@ namespace TaleofMonsters.DataType.CardPieces
             CardPieceRate pieceRate = new CardPieceRate();
             HItemConfig itemConfig = ConfigData.GetHItemConfig(id);
 
-            pieceRate.rate = 0;
-            if (itemConfig.Rare <= clevel)
-            {
-                int percent = rateRaces[itemConfig.Level - 1];
-                if (clevel > itemConfig.Level)
-                {
-                    percent += (clevel - itemConfig.Level) * 2;
-                }
-
-                if (percent < 1)
-                {
-                    percent = 1;
-                }
-                else if (percent > 20)
-                {
-                    percent = 20;
-                }
-                pieceRate.rate = percent;
-            }
-
-            pieceRate.itemId = id;
+            int percent = rateRaces[itemConfig.Rare - 1];
+            pieceRate.ItemId = id;
+            pieceRate.Rate = CheckBound(clevel, itemConfig, percent);
+           
             return pieceRate;
+        }
+
+        private static int CheckBound(int clevel, HItemConfig itemConfig, int percent)
+        {
+            if (clevel > itemConfig.Rare)
+            {
+                percent += (clevel - itemConfig.Rare)*2;
+            }
+            else if (clevel == itemConfig.Rare)
+            {
+                percent++;
+            }
+            if (percent < 1)
+            {
+                percent = 1;
+            }
+            else if (percent > 15)
+            {
+                percent = 15;
+            }
+            return percent;
         }
     }
 }

@@ -10,37 +10,17 @@ namespace TaleofMonsters.DataType.CardPieces
     {
         static Dictionary<int, List<CardPieceRate>> pieces = new Dictionary<int, List<CardPieceRate>>();
 
-        static public int CheckPiece(int id)
+        /// <summary>
+        /// 限制战斗时调用
+        /// </summary>
+        public static int CheckPiece(int id)
         {
             if (BattleManager.Instance.BattleInfo.Items.Count > GameConstants.MaxDropItemGetOnBattle)
             {
                 return 0;
             }
 
-            MonsterConfig monsterConfig = ConfigData.GetMonsterConfig(id);
-            if (!pieces.ContainsKey(id))
-            {
-                pieces[id] = new List<CardPieceRate>();
-                if (monsterConfig.DropId1 > 0)
-                    pieces[id].Add(CardPieceRate.FromCardPiece(monsterConfig.DropId1, monsterConfig.Star));
-                if (monsterConfig.DropId2 > 0)
-                    pieces[id].Add(CardPieceRate.FromCardPiece(monsterConfig.DropId2, monsterConfig.Star));
-
-                foreach (CardPieceTypeConfig cardPieceConfig in ConfigData.CardPieceTypeDict.Values)
-                {
-                    if (cardPieceConfig.Tid == monsterConfig.Attr)
-                    {
-                        pieces[id].Add(CardPieceRate.FromCardTypePiece(cardPieceConfig.ItemId, monsterConfig.Star));
-                    }
-                }
-                foreach (CardPieceRaceConfig cardPieceConfig in ConfigData.CardPieceRaceDict.Values)
-                {
-                    if (cardPieceConfig.Rid == monsterConfig.Type)
-                    {
-                        pieces[id].Add(CardPieceRate.FromCardRacePiece(cardPieceConfig.ItemId, monsterConfig.Star));
-                    }
-                }
-            }
+            TryUpdateCache(id);
 
             int roll = MathTool.GetRandom(100);
             int baseValue = 0;
@@ -53,10 +33,58 @@ namespace TaleofMonsters.DataType.CardPieces
                 }
             }
             
-            return pieces[id][0].ItemId;
+            return 0;
         }
 
-        static public int[] GetCardIdsByItemId(int id)
+        private static void TryUpdateCache(int id)
+        {
+            if (!pieces.ContainsKey(id))
+            {
+                MonsterConfig monsterConfig = ConfigData.GetMonsterConfig(id);
+                pieces[id] = new List<CardPieceRate>();
+                if (monsterConfig.DropId1 > 0)
+                    pieces[id].Add(CardPieceRate.FromCardPiece(monsterConfig.DropId1, monsterConfig.Star));
+                if (monsterConfig.DropId2 > 0)
+                    pieces[id].Add(CardPieceRate.FromCardPiece(monsterConfig.DropId2, monsterConfig.Star));
+
+                foreach (CardPieceTypeConfig cardPieceConfig in ConfigData.CardPieceTypeDict.Values)
+                {
+                    if (cardPieceConfig.Tid == monsterConfig.Attr && monsterConfig.Star >= cardPieceConfig.DropStarMin && monsterConfig.Star <= cardPieceConfig.DropStarMax)
+                    {
+                        var rate = CardPieceRate.FromCardTypePiece(cardPieceConfig.ItemId, monsterConfig.Star);
+                        if (rate.Rate > 0)
+                        {
+                            pieces[id].Add(rate);
+                        }
+                    }
+                }
+                foreach (CardPieceRaceConfig cardPieceConfig in ConfigData.CardPieceRaceDict.Values)
+                {
+                    if (cardPieceConfig.Rid == monsterConfig.Type && monsterConfig.Star >= cardPieceConfig.DropStarMin && monsterConfig.Star <= cardPieceConfig.DropStarMax)
+                    {
+                        var rate = CardPieceRate.FromCardRacePiece(cardPieceConfig.ItemId, monsterConfig.Star);
+                        if (rate.Rate > 0)
+                        {
+                            pieces[id].Add(rate);
+                        }
+                    }
+                }
+            }
+        }
+
+        public static List<CardPieceRate> GetDropListByCardId(int id)
+        {
+            if (id <= 0)
+            {
+                return new List<CardPieceRate>();
+            }
+
+            TryUpdateCache(id);
+
+            return pieces[id];
+        }
+
+        public static int[] GetCardIdsByItemId(int id)
         {
             List<int> data = new List<int>();
             foreach (var monsterConfig in ConfigData.MonsterDict.Values)

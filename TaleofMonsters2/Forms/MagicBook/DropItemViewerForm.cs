@@ -41,7 +41,7 @@ namespace TaleofMonsters.Forms.MagicBook
             bitmapButtonPre.NoUseDrawNine = true;
             tempImage = new Bitmap(cardWidth*xCount, cardHeight*yCount);
 
-            cardDetail = new CardDetail(this, cardWidth * xCount + 65, 35, cardHeight * yCount + 93 + cardHeight);
+            cardDetail = new CardDetail(this, cardWidth * xCount + 65, 35, cardHeight * yCount + 93);
             nlClickLabel1.Location = new Point(75, cardHeight * yCount + 100);
             nlClickLabel1.Size = new Size(cardWidth * xCount - 20, 23);
         }

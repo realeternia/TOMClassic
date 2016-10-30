@@ -347,7 +347,7 @@ namespace TaleofMonsters.Forms.MagicBook
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
             Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString(" 全卡片 ", font, Brushes.White, Width / 2 - 40, 8);
+            e.Graphics.DrawString("全卡片", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
 
             cardDetail.Draw(e.Graphics);

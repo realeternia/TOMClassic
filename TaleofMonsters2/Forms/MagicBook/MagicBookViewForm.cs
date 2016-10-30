@@ -24,7 +24,8 @@ namespace TaleofMonsters.Forms.MagicBook
             AddBookRegion(1, xOff + 55, yOff + 35, 51000129, "卡牌手册");
             AddBookRegion(2, xOff + 55 + 90, yOff + 35,  53000014, "技能手册");
             AddBookRegion(3, xOff + 55 + 180, yOff + 35, 53000098,"对手分析");
-            AddBookRegion(4, xOff + 55 + 270, yOff + 35, 52000061,"材料大全");
+            AddBookRegion(4, xOff + 55, yOff + 35 + 120, 52000061,"材料大全");
+            AddBookRegion(5, xOff + 55 + 90, yOff + 35 +120, 53000110, "掉落系谱");
             virtualRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
             virtualRegion.RegionEntered+=new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             virtualRegion.RegionLeft+=new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
@@ -75,6 +76,9 @@ namespace TaleofMonsters.Forms.MagicBook
                     break;
                 case 4:
                     MainForm.Instance.DealPanel(new DropItemViewerForm());
+                    break;
+                case 5:
+                    MainForm.Instance.DealPanel(new CardDropViewForm());
                     break;
             }
         }
