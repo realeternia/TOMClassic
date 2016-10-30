@@ -37,29 +37,28 @@ namespace TaleofMonsters.Forms.MagicBook
             // 
             this.bitmapButtonClose.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButtonClose.Image = null;
-            
-            
+            this.bitmapButtonClose.IconImage = null;
+            this.bitmapButtonClose.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonClose.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonClose.ImageNormal = null;
-            
-            this.bitmapButtonClose.Location = new System.Drawing.Point(663, 4);
+            this.bitmapButtonClose.Location = new System.Drawing.Point(653, 4);
             this.bitmapButtonClose.Name = "bitmapButtonClose";
+            this.bitmapButtonClose.NoUseDrawNine = false;
             this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
             this.bitmapButtonClose.TabIndex = 27;
-            this.bitmapButtonClose.Text = "";
+            this.bitmapButtonClose.TextOffX = 0;
             this.bitmapButtonClose.UseVisualStyleBackColor = true;
             this.bitmapButtonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
             // MagicBookViewForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.bitmapButtonClose);
             this.DoubleBuffered = true;
             this.Name = "MagicBookViewForm";
-            this.Size = new System.Drawing.Size(705, 465);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.CardShopViewForm_Paint);
+            this.Size = new System.Drawing.Size(682, 462);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.MagicBookViewForm_Paint);
             this.ResumeLayout(false);
 
         }

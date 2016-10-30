@@ -5,6 +5,7 @@ using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
+using TaleofMonsters.Forms.Items.Regions.Decorators;
 
 namespace TaleofMonsters.Forms.MagicBook
 {
@@ -18,14 +19,25 @@ namespace TaleofMonsters.Forms.MagicBook
             InitializeComponent();
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
             virtualRegion = new VirtualRegion(this);
-            virtualRegion.AddRegion(new SubVirtualRegion(1, 59, 84, 250, 19, 1));
-            virtualRegion.AddRegion(new SubVirtualRegion(2, 59, 114, 250, 19, 2));
-            virtualRegion.AddRegion(new SubVirtualRegion(3, 59, 144, 250, 19, 3));
-            virtualRegion.AddRegion(new SubVirtualRegion(4, 59, 174, 250, 19, 4));
-            virtualRegion.AddRegion(new SubVirtualRegion(5, 59, 204, 250, 19, 5));
+            int xOff = 15;
+            int yOff = 40;
+            AddBookRegion(1, xOff + 55, yOff + 35, 51000129, "卡牌手册");
+            AddBookRegion(2, xOff + 55 + 90, yOff + 35,  53000014, "技能手册");
+            AddBookRegion(3, xOff + 55 + 180, yOff + 35, 53000098,"对手分析");
+            AddBookRegion(4, xOff + 55 + 270, yOff + 35, 52000061,"材料大全");
             virtualRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
             virtualRegion.RegionEntered+=new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             virtualRegion.RegionLeft+=new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+        }
+
+        private void AddBookRegion(int id,int x, int y, int cardId, string text)
+        {
+            RegionTextDecorator textControl;
+            var region = new PictureAnimRegion(id, x, y, 76, 100, id, VirtualRegionCellType.Card, cardId);
+            textControl = new RegionTextDecorator(region, 3, 80, 10, Color.Lime, true);
+            textControl.SetState(text);
+            region.AddDecorator(textControl);
+            virtualRegion.AddRegion(region);
         }
 
         internal override void Init(int width, int height)
@@ -72,7 +84,7 @@ namespace TaleofMonsters.Forms.MagicBook
             Close();
         }
 
-        private void CardShopViewForm_Paint(object sender, PaintEventArgs e)
+        private void MagicBookViewForm_Paint(object sender, PaintEventArgs e)
         {
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
@@ -81,15 +93,10 @@ namespace TaleofMonsters.Forms.MagicBook
             font.Dispose();
 
             Image back = PicLoader.Read("System", "MagicBookBack.JPG");
-            e.Graphics.DrawImage(back, 15, 35, 672, 420);
+            e.Graphics.DrawImage(back, 5, 35, 672, 420);
             back.Dispose();
 
-            font = new Font("华文行楷", 15*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            e.Graphics.DrawString("查看所有全卡片效果", font, last == 1 ? Brushes.Yellow : Brushes.Black, 59, 84);
-            e.Graphics.DrawString("查看所有卡片技能效果", font, last == 2 ? Brushes.Yellow : Brushes.Black, 59, 114);
-            e.Graphics.DrawString("查看所有对手卡组", font, last == 3? Brushes.Yellow : Brushes.Black, 59, 144);
-            e.Graphics.DrawString("查看所有材料掉落", font, last == 4? Brushes.Yellow : Brushes.Black, 59, 174);
-            font.Dispose();
+            virtualRegion.Draw(e.Graphics);
         }
 
     }
