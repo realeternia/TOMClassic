@@ -89,9 +89,10 @@
             return "Cyan";
         }
 
+        //道具的稀有度
         public static string I2RareColor(int value)
         {
-            string[] rares = { "White", "Cyan", "DodgerBlue", "Yellow", "Pink", "Violet", "Orange", "Red" };
+            string[] rares = { "Gray", "Green", "Green", "DodgerBlue", "DodgerBlue", "Violet", "Orange", "Red" };
             return rares[value];
         }
 

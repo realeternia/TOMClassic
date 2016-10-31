@@ -47,22 +47,17 @@ namespace TaleofMonsters.DataType.CardPieces
                 if (monsterConfig.DropId2 > 0)
                     pieces[id].Add(CardPieceRate.FromCardPiece(monsterConfig.DropId2, monsterConfig.Star));
 
-                foreach (CardPieceTypeConfig cardPieceConfig in ConfigData.CardPieceTypeDict.Values)
-                {
-                    if (cardPieceConfig.Tid == monsterConfig.Attr && monsterConfig.Star >= cardPieceConfig.DropStarMin && monsterConfig.Star <= cardPieceConfig.DropStarMax)
-                    {
-                        var rate = CardPieceRate.FromCardTypePiece(cardPieceConfig.ItemId, monsterConfig.Star);
-                        if (rate.Rate > 0)
-                        {
-                            pieces[id].Add(rate);
-                        }
-                    }
-                }
                 foreach (CardPieceRaceConfig cardPieceConfig in ConfigData.CardPieceRaceDict.Values)
                 {
-                    if (cardPieceConfig.Rid == monsterConfig.Type && monsterConfig.Star >= cardPieceConfig.DropStarMin && monsterConfig.Star <= cardPieceConfig.DropStarMax)
+                    if (cardPieceConfig.Race != -1 && cardPieceConfig.Race != monsterConfig.Type)
+                        continue;
+
+                    if (cardPieceConfig.Attr != -1 && cardPieceConfig.Attr != monsterConfig.Attr)
+                        continue;
+
+                    if (monsterConfig.Star >= cardPieceConfig.DropStarMin && monsterConfig.Star <= cardPieceConfig.DropStarMax)
                     {
-                        var rate = CardPieceRate.FromCardRacePiece(cardPieceConfig.ItemId, monsterConfig.Star);
+                        var rate = CardPieceRate.FromCardRacePiece(cardPieceConfig.Id, monsterConfig.Star);
                         if (rate.Rate > 0)
                         {
                             pieces[id].Add(rate);

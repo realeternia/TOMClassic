@@ -30,6 +30,10 @@ namespace TaleofMonsters.Forms.Items.Regions
                 else if (type == VirtualRegionCellType.Item)
                 {
                     g.DrawImage(DataType.Items.HItemBook.GetHItemImage(nid), x, y, width, height);
+                    var itemConfig = ConfigData.GetHItemConfig(nid);
+                    var pen = new Pen(Color.FromName(HSTypes.I2RareColor(itemConfig.Rare)),2);
+                    g.DrawRectangle(pen, x, y, width, height);
+                    pen.Dispose();
                 }
                 else if (type == VirtualRegionCellType.Equip)
                 {
