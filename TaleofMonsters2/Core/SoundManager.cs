@@ -1,26 +1,24 @@
-﻿using System.Collections.Generic;
-using WMPLib;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using FMOD;
+using NarlonLib.Log;
 
 namespace TaleofMonsters.Core
 {
-    class SoundManager
+    internal class SoundManager
     {
-        private const int workCount = 4;//音效的工作线程数量
-        private static WindowsMediaPlayer[] soundPlayerWorkers;
-        private static int soundIndexer=0;//目前分配到哪一个
-
-        private static WindowsMediaPlayer bgmPlayer;
         private static Stack<string> bgmHistory;
+
+        private static FMOD.System _fmod = null;
+        private static Channel _channelBGM = null;
+
 
         static SoundManager()
         {
-            soundPlayerWorkers = new WindowsMediaPlayer[workCount];
-            for (int i = 0; i < workCount; i++)
-            {
-                soundPlayerWorkers[i] = new WindowsMediaPlayer();
-                soundPlayerWorkers[i].settings.volume = 30;
-            }
+            Factory.System_Create(out _fmod);
+            _fmod.setDSPBufferSize(4096, 2);
+            var result = _fmod.init(16, FMOD.INITFLAGS.NORMAL, (IntPtr)null);
         }
 
         public static void Play(string dir, string path)
@@ -31,10 +29,7 @@ namespace TaleofMonsters.Core
                 return;
             }
 
-            var sounder = soundPlayerWorkers[(soundIndexer++)% workCount];
-
-            sounder.URL = filePath;
-            sounder.controls.play();
+            Play(filePath, false);
         }
 
         public static void PlayBGM(string path)
@@ -45,17 +40,7 @@ namespace TaleofMonsters.Core
                 return;
             }
 
-            if (bgmPlayer == null)
-            {
-                bgmPlayer = new WindowsMediaPlayer();
-                bgmPlayer.settings.volume = 50;
-                bgmHistory = new Stack<string>();
-            }
-
-            bgmHistory.Push(path);
-            bgmPlayer.URL = filePath;
-            bgmPlayer.controls.play();
-            bgmPlayer.settings.setMode("loop", true);
+            SwitchBGM(filePath);
         }
 
         public static void PlayLastBGM()
@@ -68,15 +53,53 @@ namespace TaleofMonsters.Core
             bgmHistory.Pop();
 
             string path = bgmHistory.Peek();
-            string filePath = string.Format("Bgm/{0}", path);
-            if (!Config.Config.PlayerSound || !File.Exists(filePath))
+            SwitchBGM(path);
+        }
+
+        private static void Play(string path, bool isBGM)
+        {
+            var file = File.ReadAllBytes(path);
+            //MessageBox.Show("Bytes from file: " + file.Length);
+
+            var info = new FMOD.CREATESOUNDEXINFO();
+            info.length = (uint)file.Length;
+            Sound s;
+            var result = _fmod.createSound(file, MODE.OPENMEMORY, ref info, out s);
+            if (result != RESULT.OK)
             {
-                return;
+                NLog.Error(result);
             }
 
-            bgmPlayer.URL = filePath;
-            bgmPlayer.controls.play();
-            bgmPlayer.settings.setMode("loop", true);
+
+            Channel channel;
+            result = _fmod.playSound(s, null, false, out channel);
+            _fmod.update();
+            int index;
+            channel.getIndex(out index);
+            if (result != RESULT.OK)
+            {
+                NLog.Error(result);
+            }
+
+            if (isBGM)
+            {
+                _channelBGM = channel;
+            }
+        }
+
+        private static void SwitchBGM(string path)
+        {
+            if (_channelBGM != null)
+            {
+                bool isPlaying;
+                _channelBGM.isPlaying(out isPlaying);
+                if (isPlaying)
+                {
+                    _channelBGM.stop();
+                }
+            }
+            
+            Play(path, true);
         }
     }
 }

@@ -8,7 +8,6 @@ namespace TaleofMonsters.DataType.CardPieces
         public int Rate { get; private set; }
 
         private static int[] rates = { 12, 8, 6, 4, 2, 1, 1, 1, 1 };
-        private static int[] prices = { 5, 8, 12, 20, 30, 50, 75, 1, 1 };
         static public CardPieceRate FromCardPiece(int id, int clevel)
         {
             CardPieceRate pieceRate = new CardPieceRate();
