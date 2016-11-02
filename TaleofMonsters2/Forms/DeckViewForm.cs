@@ -158,7 +158,7 @@ namespace TaleofMonsters.Forms
             UpdateButtonState();
             UpdateDeckButtonState();            
 
-            SoundManager.PlayBGM("TOM003.MP3");
+            SoundManager.PlayBGM("TOM003.mp3");
             IsChangeBgm = true;
         }
 

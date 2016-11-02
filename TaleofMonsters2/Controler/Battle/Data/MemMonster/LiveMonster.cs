@@ -273,7 +273,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public void OnInit()
         {
             SkillManager.CheckInitialEffect();
-            SoundManager.Play("Unit", "VO_EX1_362_Play_01.MP3");
+            SoundManager.Play("Unit", "VO_EX1_362_Play_01.mp3");
         }
 
         public bool BeHited(LiveMonster src)
@@ -345,7 +345,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 rival.OnKillMonster(lastDamagerId, Level, Avatar.MonsterConfig.Star, Position);
             }
 
-            SoundManager.Play("Unit", "VO_EX1_362_Death_03.MP3");
+            SoundManager.Play("Unit", "VO_EX1_362_Death_03.mp3");
         }
 
         public void Next(float pastRound, bool tileMatching)//附带判断地形因素

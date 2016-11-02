@@ -70,7 +70,7 @@ namespace TaleofMonsters.Forms
                 Bind(types[0]);
             }            
 
-            SoundManager.PlayBGM("TOM002.MP3");
+            SoundManager.PlayBGM("TOM002.mp3");
             IsChangeBgm = true;
 
             if (UserProfile.InfoBasic.LastRival > 0)

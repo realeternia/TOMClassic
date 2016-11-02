@@ -13,17 +13,23 @@ namespace TaleofMonsters.Core
         private static FMOD.System _fmod = null;
         private static Channel _channelBGM = null;
 
-
         static SoundManager()
         {
+            NLVFS.NLVFS.LoadVfsFile("./SoundResource.vfs");
+
             Factory.System_Create(out _fmod);
             _fmod.setDSPBufferSize(4096, 2);
             var result = _fmod.init(16, FMOD.INITFLAGS.NORMAL, (IntPtr)null);
+            if (result != RESULT.OK)
+            {
+                NLog.Error("fmod SoundManager " + result);
+            }
+            bgmHistory = new Stack<string>();
         }
 
         public static void Play(string dir, string path)
         {
-            string filePath = string.Format("Sound/{0}/{1}", dir, path);
+            string filePath = string.Format("Sound.{0}.{1}", dir, path);
             if (!Config.Config.PlayerSound || !File.Exists(filePath))
             {
                 return;
@@ -34,13 +40,14 @@ namespace TaleofMonsters.Core
 
         public static void PlayBGM(string path)
         {
-            string filePath = string.Format("Bgm/{0}", path);
-            if (!Config.Config.PlayerSound || !File.Exists(filePath))
+            string filePath = string.Format("Bgm.{0}", path);
+            if (!Config.Config.PlayerSound)
             {
                 return;
             }
 
             SwitchBGM(filePath);
+            bgmHistory.Push(filePath);
         }
 
         public static void PlayLastBGM()
@@ -58,19 +65,17 @@ namespace TaleofMonsters.Core
 
         private static void Play(string path, bool isBGM)
         {
-            var file = File.ReadAllBytes(path);
-            //MessageBox.Show("Bytes from file: " + file.Length);
+            var file = NLVFS.NLVFS.LoadFile(path);
 
-            var info = new FMOD.CREATESOUNDEXINFO();
+            var info = new CREATESOUNDEXINFO();
             info.length = (uint)file.Length;
             Sound s;
             var result = _fmod.createSound(file, MODE.OPENMEMORY, ref info, out s);
             if (result != RESULT.OK)
             {
-                NLog.Error(result);
+                NLog.Error("fmod createSound " + result);
             }
-
-
+            
             Channel channel;
             result = _fmod.playSound(s, null, false, out channel);
             _fmod.update();
@@ -78,7 +83,7 @@ namespace TaleofMonsters.Core
             channel.getIndex(out index);
             if (result != RESULT.OK)
             {
-                NLog.Error(result);
+                NLog.Error("fmod playSound " + result);
             }
 
             if (isBGM)

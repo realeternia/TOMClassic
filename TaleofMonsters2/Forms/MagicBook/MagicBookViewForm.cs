@@ -45,7 +45,7 @@ namespace TaleofMonsters.Forms.MagicBook
         {
             base.Init(width, height);
 
-            SoundManager.PlayBGM("TOM004.MP3");
+            SoundManager.PlayBGM("TOM004.mp3");
             IsChangeBgm = true;
         }
 
