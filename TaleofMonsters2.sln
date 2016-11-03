@@ -1,8 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
-MinimumVisualStudioVersion = 10.0.40219.1
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaleofMonsters2", "TaleofMonsters2\TaleofMonsters2.csproj", "{65E35A87-EE43-42E7-AD01-743008B6EAFE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataResource", "DataResource\DataResource.csproj", "{B0A31F62-AE2B-4F0B-8EAB-6E646D422BC9}"
