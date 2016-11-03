@@ -86,7 +86,7 @@ namespace TaleofMonsters.DataType.User
         {
             if (Diamond < value)
             {
-                MainForm.Instance.AddTip("钻石不足", "Red");
+                MainForm.Instance.AddTip(HSErrorTypes.GetDescript(HSErrorTypes.BagNotEnoughDimond), "Red");
                 return false;
             }
             Diamond -= value;

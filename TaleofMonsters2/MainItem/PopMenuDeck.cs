@@ -1,4 +1,4 @@
-using System.Windows.Forms;
+ï»¿using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus;
 using TaleofMonsters.Core;
@@ -43,7 +43,7 @@ namespace TaleofMonsters.MainItem
                 {
                     Form.AddFlowCenter(HSErrorTypes.GetDescript(HSErrorTypes.CardExpNotEnough), "Red");
                 }
-                else if (MessageBoxEx2.Show("È·¶¨Òª·Ö½â¶àÓàµÄËéÆ¬£¿") == DialogResult.OK)
+                else if (MessageBoxEx2.Show("ç¡®å®šè¦åˆ†è§£å¤šä½™çš„ç¢ç‰‡ï¼Ÿ") == DialogResult.OK)
                 {
                     UserProfile.InfoCard.RemoveCardPiece(TargetCard.BaseId, true);
                 }
@@ -54,7 +54,7 @@ namespace TaleofMonsters.MainItem
                 {
                     Form.AddFlowCenter(HSErrorTypes.GetDescript(HSErrorTypes.CardExpNotEnough), "Red");
                 }
-                else if (MessageBoxEx2.Show("È·¶¨ÏûºÄËùÓĞËéÆ¬ÌáÉıµÈ¼¶£¿") == DialogResult.OK)
+                else if (MessageBoxEx2.Show("ç¡®å®šæ¶ˆè€—æ‰€æœ‰ç¢ç‰‡æå‡ç­‰çº§ï¼Ÿ") == DialogResult.OK)
                 {
                     UserProfile.InfoCard.CardLevelUp(TargetCard.BaseId);
                 }

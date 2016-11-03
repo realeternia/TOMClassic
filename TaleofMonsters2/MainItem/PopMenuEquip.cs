@@ -1,4 +1,4 @@
-using TaleofMonsters.Core;
+锘縰sing TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
@@ -21,7 +21,7 @@ namespace TaleofMonsters.MainItem
             if (target.Type == "decompose")
             {
                 var equipConfig = ConfigDatas.ConfigData.GetEquipConfig(UserProfile.InfoEquip.Equipoff[EquipIndex]);
-                MainForm.Instance.AddTip(string.Format("|分解装备-|{0}|{1}", HSTypes.I2QualityColor(equipConfig.Quality), equipConfig.Name), "White");
+                MainForm.Instance.AddTip(string.Format("|鍒嗚В瑁呭-|{0}|{1}", HSTypes.I2QualityColor(equipConfig.Quality), equipConfig.Name), "White");
                 UserProfile.Profile.InfoBag.AddResource(GameResourceType.Mercury, GameResourceBook.GetMercuryEquipDecompose(equipConfig.Quality, equipConfig.Level));
 
                 UserProfile.InfoEquip.Equipoff[EquipIndex] = 0;

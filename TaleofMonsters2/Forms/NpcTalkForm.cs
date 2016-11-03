@@ -119,7 +119,7 @@ namespace TaleofMonsters.Forms
                         case "Maz":
                             if (UserProfile.InfoBasic.Ap < GameConstants.MazeAPCost)
                             {
-                                MainForm.Instance.AddTip("体力不足", "Red");
+                                MainForm.Instance.AddTip(HSErrorTypes.GetDescript(HSErrorTypes.SceneAPNotEnough), "Red");
                                 return;
                             }
                             UserProfile.InfoBasic.Ap -= GameConstants.MazeAPCost;

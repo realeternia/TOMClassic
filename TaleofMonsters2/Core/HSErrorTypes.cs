@@ -17,6 +17,11 @@ namespace TaleofMonsters.Core
         public const int CardExpNotEnough = 1003;
         public const int CardJobTwice = 1004;
 
+        public const int SceneLevelNeed = 2000;
+        public const int SceneAPNotEnough = 2001;
+
+        public const int BagNotEnoughDimond = 3000;
+
         public static string GetDescript(int id)
         {
             return ConfigDatas.ConfigData.GetErrorConfig(id).Des;

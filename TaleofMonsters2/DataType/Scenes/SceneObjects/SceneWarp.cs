@@ -1,5 +1,6 @@
 using System.Drawing;
 using ConfigDatas;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.MainItem;
 
@@ -46,15 +47,10 @@ namespace TaleofMonsters.DataType.Scenes.SceneObjects
 
         public override void CheckClick()
         {
-            string err = "";
-
             SceneConfig sceneConfig = ConfigData.GetSceneConfig(TargetMap);
             if (UserProfile.InfoBasic.Level < sceneConfig.Level)
             {
-                err = string.Format("需要等级到达{0}级", sceneConfig.Level);
-            }
-            if (err != "")
-            {
+                string err = string.Format(HSErrorTypes.GetDescript(HSErrorTypes.SceneLevelNeed), sceneConfig.Level);
                 MainForm.Instance.AddTip(err, "Red");
                 return;
             }

@@ -93,7 +93,7 @@ namespace TaleofMonsters.DataType.Peoples
         {
             if (UserProfile.InfoBasic.Ap < GameConstants.FightAPCost)
             {
-                MainForm.Instance.AddTip("体力不足", "Red");
+                MainForm.Instance.AddTip(HSErrorTypes.GetDescript(HSErrorTypes.SceneAPNotEnough), "Red");
                 return;
             }
 
