@@ -30,7 +30,7 @@ namespace TaleofMonsters.Core
         public static void Play(string dir, string path)
         {
             string filePath = string.Format("Sound.{0}.{1}", dir, path);
-            if (!Config.Config.PlayerSound || !File.Exists(filePath))
+            if (!Config.Config.PlayerSound)
             {
                 return;
             }
