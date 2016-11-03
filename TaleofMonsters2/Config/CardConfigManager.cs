@@ -178,6 +178,8 @@ namespace TaleofMonsters.Config
             List<int> rtData;
             if (jobCardDict.TryGetValue(jobId, out rtData))
             {
+                if(rtData.Count == 0)//special job
+                    return 0;
                 return rtData[MathTool.GetRandom(rtData.Count)];
             }
             return 0;
