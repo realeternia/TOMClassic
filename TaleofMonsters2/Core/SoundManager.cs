@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using FMOD;
 using NarlonLib.Log;
 
@@ -66,6 +65,11 @@ namespace TaleofMonsters.Core
         private static void Play(string path, bool isBGM)
         {
             var file = NLVFS.NLVFS.LoadFile(path);
+            if (file == null)
+            {
+                NLog.Warn("fmod Play file not Found " + path);
+                return;
+            }
 
             var info = new CREATESOUNDEXINFO();
             info.length = (uint)file.Length;
