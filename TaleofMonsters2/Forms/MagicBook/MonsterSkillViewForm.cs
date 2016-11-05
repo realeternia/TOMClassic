@@ -30,6 +30,12 @@ namespace TaleofMonsters.Forms.MagicBook
         private CardDetail cardDetail;
         private string skillDesStr = ""; //显示在下方的技能说明
 
+        private string filterType = "全部";
+        private string filterRemark = "全部";
+
+        private string[] strTypeList = null;
+        private string[] strRemarkList = null;
+
         public MonsterSkillViewForm()
         {
             InitializeComponent();
@@ -64,7 +70,8 @@ namespace TaleofMonsters.Forms.MagicBook
             nlClickLabel1.Location = new Point(75, cardHeight * yCount + 100 + cardHeight);
             nlClickLabel1.Size = new Size(cardWidth * xCount - 20, 63);
 
-            ChangeCards("全部种类");
+            SetupType();
+            ChangeCards();
         }
 
         internal override void OnFrame(int tick)
@@ -78,7 +85,49 @@ namespace TaleofMonsters.Forms.MagicBook
             bitmapButtonNext.Enabled = (page + 1) * cardCount < totalCount;
         }
 
-        private void ChangeCards(string type)
+        private void SetupType()
+        {
+            Dictionary<string, bool> typeDict = new Dictionary<string, bool>();
+            Dictionary<string, bool> remarkDict = new Dictionary<string, bool>();
+            typeDict["全部"] = true;
+            remarkDict["全部"] = true;
+            foreach (var skill in ConfigData.SkillDict.Values)
+            {
+                if (skill.Remark != "")
+                {
+                    remarkDict[skill.Remark] = true;
+                }
+                if (skill.Type != "")
+                {
+                    typeDict[skill.Type] = true;
+                }
+            }
+            strTypeList = new string[typeDict.Count];
+            typeDict.Keys.CopyTo(strTypeList, 0);
+            strRemarkList = new string[remarkDict.Count];
+            remarkDict.Keys.CopyTo(strRemarkList, 0);
+        }
+
+        private void comboBoxType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comboBoxValue.Items.Clear();
+            var type = comboBoxType.SelectedItem.ToString();
+            switch (type)
+            {
+                case "类别":
+                    foreach (var typeStr in strTypeList)
+                        comboBoxValue.Items.Add(typeStr);
+                    break;
+                case "特性":
+                    foreach (var remarkStr in strRemarkList)
+                        comboBoxValue.Items.Add(remarkStr); break;
+                default:
+                    comboBoxValue.Items.Add("全部"); break;
+            }
+            comboBoxValue.SelectedIndex = 0;
+        }
+
+        private void ChangeCards()
         {
             page = 0;
             totalCount = 0;
@@ -87,21 +136,23 @@ namespace TaleofMonsters.Forms.MagicBook
             cardDetail.SetInfo(-1);
             #region 数据装载
             List<IntPair> things = new List<IntPair>();
-            foreach (SkillConfig skill in ConfigData.SkillDict.Values)
+            foreach (var skill in ConfigData.SkillDict.Values)
             {
-                if ((skill.Type == type || type == "全部种类"))
-                {
-                    IntPair mt = new IntPair();
-                    mt.Type = skill.Id;
-                    mt.Value = skill.Id;
-                    things.Add(mt);
-                    totalCount++;
-                }
+                if (filterType != "全部" && !skill.Type.Contains(filterType))
+                    continue;
+                if (filterRemark != "全部" && !skill.Remark.Contains(filterRemark))
+                    continue;
+
+                IntPair mt = new IntPair();
+                mt.Type = skill.Id;
+                mt.Value = skill.Id;
+                things.Add(mt);
+                totalCount++;
             }
             things.Sort(new CompareBySid());
 
             skills = new List<int>();
-            foreach (IntPair mt in things)
+            foreach (var mt in things)
             {
                 skills.Add(mt.Value);
             }
@@ -113,8 +164,18 @@ namespace TaleofMonsters.Forms.MagicBook
 
         private void buttonOk_Click(object sender, EventArgs e)
         {
-            string type = comboBoxType.SelectedItem.ToString();
-            ChangeCards(type);
+            filterType = "全部";
+            filterRemark = "全部";
+
+            var type = comboBoxType.SelectedItem.ToString();
+            switch (type)
+            {
+                case "类别":
+                    filterType = comboBoxValue.SelectedItem.ToString(); break;
+                case "特性":
+                    filterRemark = comboBoxValue.SelectedItem.ToString(); break;
+            }
+            ChangeCards();
         }
 
         private void buttonPre_Click(object sender, EventArgs e)
@@ -286,6 +347,7 @@ namespace TaleofMonsters.Forms.MagicBook
                 }
             }
         }
+
     }
 
 

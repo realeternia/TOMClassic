@@ -34,9 +34,10 @@ namespace TaleofMonsters.Forms.MagicBook
             this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
             this.bitmapButtonNext = new NarlonLib.Control.BitmapButton();
             this.bitmapButtonPre = new NarlonLib.Control.BitmapButton();
-            this.comboBoxType = new NLComboBox();
+            this.comboBoxType = new ControlPlus.NLComboBox();
             this.buttonOk = new System.Windows.Forms.Button();
             this.nlClickLabel1 = new ControlPlus.NLClickLabel();
+            this.comboBoxValue = new ControlPlus.NLComboBox();
             this.SuspendLayout();
             // 
             // bitmapButtonClose
@@ -93,29 +94,20 @@ namespace TaleofMonsters.Forms.MagicBook
             // comboBoxType
             // 
             this.comboBoxType.BackColor = System.Drawing.Color.Black;
+            this.comboBoxType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.comboBoxType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxType.Font = new System.Drawing.Font("SimSun", 9F);
             this.comboBoxType.ForeColor = System.Drawing.SystemColors.Window;
             this.comboBoxType.FormattingEnabled = true;
             this.comboBoxType.Items.AddRange(new object[] {
-            "全部种类",
-            "常规",
-            "攻击",
-            "防御",
-            "生命",
-            "克制",
-            "魔法",
-            "状态",
-            "光环",
-            "地形",
-            "成长",
-            "范围",
-            "特效",
-            "特殊"});
+            "分类",
+            "类别",
+            "特性"});
             this.comboBoxType.Location = new System.Drawing.Point(128, 47);
             this.comboBoxType.Name = "comboBoxType";
-            this.comboBoxType.Size = new System.Drawing.Size(75, 23);
+            this.comboBoxType.Size = new System.Drawing.Size(75, 26);
             this.comboBoxType.TabIndex = 46;
+            this.comboBoxType.SelectedIndexChanged += new System.EventHandler(this.comboBoxType_SelectedIndexChanged);
             // 
             // buttonOk
             // 
@@ -142,10 +134,26 @@ namespace TaleofMonsters.Forms.MagicBook
             this.nlClickLabel1.TabIndex = 50;
             this.nlClickLabel1.SelectionChange += new ControlPlus.NLClickLabel.ClickEventHandler(this.nlClickLabel1_SelectionChange);
             // 
+            // comboBoxValue
+            // 
+            this.comboBoxValue.BackColor = System.Drawing.Color.Black;
+            this.comboBoxValue.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.comboBoxValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxValue.Font = new System.Drawing.Font("SimSun", 9F);
+            this.comboBoxValue.ForeColor = System.Drawing.SystemColors.Window;
+            this.comboBoxValue.FormattingEnabled = true;
+            this.comboBoxValue.Items.AddRange(new object[] {
+            "全部"});
+            this.comboBoxValue.Location = new System.Drawing.Point(226, 47);
+            this.comboBoxValue.Name = "comboBoxValue";
+            this.comboBoxValue.Size = new System.Drawing.Size(75, 26);
+            this.comboBoxValue.TabIndex = 54;
+            // 
             // MonsterSkillViewForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.comboBoxValue);
             this.Controls.Add(this.nlClickLabel1);
             this.Controls.Add(this.buttonOk);
             this.Controls.Add(this.comboBoxType);
@@ -170,5 +178,6 @@ namespace TaleofMonsters.Forms.MagicBook
         private NLComboBox comboBoxType;
         private System.Windows.Forms.Button buttonOk;
         private ControlPlus.NLClickLabel nlClickLabel1;
+        private NLComboBox comboBoxValue;
     }
 }
