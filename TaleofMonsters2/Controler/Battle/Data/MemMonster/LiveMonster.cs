@@ -47,7 +47,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public int Level { get; private set; }
         public Monster Avatar { get; private set; }
         public int HpReg { get; set; }
-        public int GhostTime { get; set; }
+        public float GhostTime { get; set; } //0-1表示在墓地状态
         public bool IsDefence { get { return ReadMov == 0 && !Avatar.MonsterConfig.IsBuilding; } }
         public Point Position { get; set; }
         public bool IsHero { get { return Avatar.MonsterConfig.Type == (int) CardTypeSub.Hero; } }
@@ -306,7 +306,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void OnDie()
         {
-            GhostTime = 1;//一回合ghost
+            GhostTime = 0.01f;//开始死亡
             BattleManager.Instance.MemMap.GetMouseCell(Position.X,Position.Y).UpdateOwner(-Id);
             if (Avatar.MonsterConfig.Type == (int)CardTypeSub.Hero)
             {
@@ -570,7 +570,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 pen.Dispose();
 
                 g.FillRectangle(Brushes.Red, 0, 2, 100, 5);
-                g.FillRectangle(Brushes.Cyan, 0, 2, Math.Min(GhostTime, 100), 5);
+                g.FillRectangle(Brushes.Cyan, 0, 2, Math.Min(GhostTime * 100, 100), 5);
             }
 
             g.Dispose();
@@ -822,7 +822,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             if (IsGhost)
             {
-                GhostTime += 10000;//让坟场消失
+                GhostTime = 1;//让坟场消失
             }
         }
 

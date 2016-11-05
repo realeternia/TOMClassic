@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
@@ -121,8 +120,11 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                     }
                     else
                     {
-                        mon.GhostTime++;
-                        if (mon.GhostTime>=100) //100 is ghost time 1round
+                        if (mon.OwnerPlayer.SpikeManager.HasSpike("grave") || (mon.Rival as Player).SpikeManager.HasSpike("grave"))
+                            mon.GhostTime+=0.005f;
+                        else
+                            mon.GhostTime+=0.01f;
+                        if (mon.GhostTime>=1)
                         {
                             removeMids.Add(mon.Id);
                         }

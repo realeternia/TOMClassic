@@ -385,7 +385,8 @@ namespace TaleofMonsters.Controler.Battle
                         if (placeMon != null && placeMon.IsLeft && !placeMon.Avatar.MonsterConfig.IsBuilding)
                         {
                             if (MonsterBook.HasTag(leftSelectCard.CardId, "sidekicker") ||
-                                MonsterBook.HasTag(placeMon.CardId, "sidekickee"))
+                                MonsterBook.HasTag(placeMon.CardId, "sidekickee") || 
+                                    BattleManager.Instance.PlayerManager.LeftPlayer.SpikeManager.HasSpike("sidekickall"))
                             {
                                 cursorname = "sidekick";
                             }
