@@ -125,44 +125,47 @@ namespace TaleofMonsters.DataType.User
             int count = num;
             for (int i = 0; i < BagCount; i++)
             {
-                if (Items[i].Type == id && Items[i].Value < max)
+                var pickItem = Items[i];
+                if (pickItem.Type == id && pickItem.Value < max)
                 {
-                    if (Items[i].Value + count <= max)
+                    if (pickItem.Value + count <= max)
                     {
-                        Items[i].Value += count;
+                        pickItem.Value += count;
                         return;
                     }
-                    count -= max - Items[i].Value;
-                    Items[i].Value = max;
+                    count -= max - pickItem.Value;
+                    pickItem.Value = max;
                 }
             }
             for (int i = 0; i < BagCount; i++)
             {
-                if (Items[i].Type == 0)
+                var pickItem = Items[i];
+                if (pickItem.Type == 0)
                 {
                     if (count <= max)
                     {
-                        Items[i].Type = id;
-                        Items[i].Value = count;
+                        pickItem.Type = id;
+                        pickItem.Value = count;
                         return;
                     }
-                    Items[i].Type = id;
+                    pickItem.Type = id;
                     count -= max;
-                    Items[i].Value = max;
+                    pickItem.Value = max;
                 }
             }
         }
 
         public void UseItemByPos(int pos, int type)
         {
-            if (Items[pos].Value <= 0)
+            var pickItem = Items[pos];
+            if (pickItem.Value <= 0)
                 return;
 
-            if (HItemAssistant.UseItemsById(Items[pos].Type, type))
+            if (HItemAssistant.UseItemsById(pickItem.Type, type))
             {
-                Items[pos].Value--;
-                if (Items[pos].Value <= 0)
-                    Items[pos].Type = 0;
+                pickItem.Value--;
+                if (pickItem.Value <= 0)
+                    pickItem.Type = 0;
             }
         }
 
@@ -174,9 +177,10 @@ namespace TaleofMonsters.DataType.User
 
         public void SellItemAllByPos(int pos)
         {
-            if (Items[pos].Type > 0 && Items[pos].Value > 0)
+            var pickItem = Items[pos];
+            if (pickItem.Type > 0 && pickItem.Value > 0)
             {
-                int money = ConfigData.GetHItemConfig(Items[pos].Type).Value * Items[pos].Value;
+                int money = ConfigData.GetHItemConfig(pickItem.Type).Value * pickItem.Value;
                 AddResource(GameResourceType.Gold, money);
             }
             ClearItemAllByPos(pos);
@@ -188,9 +192,10 @@ namespace TaleofMonsters.DataType.User
             int count = 0;
             for (int i = 0; i < BagCount; i++)
             {
-                if (Items[i].Type == id)
+                var pickItem = Items[i];
+                if (pickItem.Type == id)
                 {
-                    count += Items[i].Value;
+                    count += pickItem.Value;
                 }
             }
             return count;
@@ -202,16 +207,17 @@ namespace TaleofMonsters.DataType.User
             int count = num;
             for (int i = 0; i < BagCount; i++)
             {
-                if (Items[i].Type == id)
+                var pickItem = Items[i];
+                if (pickItem.Type == id)
                 {
-                    if (Items[i].Value > count)
+                    if (pickItem.Value > count)
                     {
-                        Items[i].Value -= count;
+                        pickItem.Value -= count;
                         return;
                     }
-                    count -= Items[i].Value;
-                    Items[i].Type = 0;
-                    Items[i].Value = 0;
+                    count -= pickItem.Value;
+                    pickItem.Type = 0;
+                    pickItem.Value = 0;
                 }
             }
         }
@@ -221,21 +227,22 @@ namespace TaleofMonsters.DataType.User
             Array.Sort(Items, new CompareByMid());
             for (int i = 0; i < 999; i++)
             {
-                if (Items[i].Type == 0)
+                var pickItem = Items[i];
+                if (pickItem.Type == 0)
                     break;
-                int max = ConfigData.GetHItemConfig(Items[i].Type).MaxPile;
-                if (Items[i].Value < max && Items[i].Type == Items[i + 1].Type)
+                int max = ConfigData.GetHItemConfig(pickItem.Type).MaxPile;
+                if (pickItem.Value < max && pickItem.Type == Items[i + 1].Type)
                 {
-                    if (Items[i].Value + Items[i + 1].Value <= max)
+                    if (pickItem.Value + Items[i + 1].Value <= max)
                     {
-                        Items[i].Value = Items[i].Value + Items[i + 1].Value;
+                        pickItem.Value = pickItem.Value + Items[i + 1].Value;
                         Items[i + 1].Type = 0;
                         Items[i + 1].Value = 0;
                     }
                     else
                     {
-                        Items[i + 1].Value = Items[i].Value + Items[i + 1].Value - max;
-                        Items[i].Value = max;
+                        Items[i + 1].Value = pickItem.Value + Items[i + 1].Value - max;
+                        pickItem.Value = max;
                     }
                 }
             }

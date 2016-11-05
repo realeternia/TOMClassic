@@ -17,7 +17,7 @@ namespace TaleofMonsters.Forms.MagicBook
         private const int cardWidth = 50;
         private const int cardHeight = 50;
         private int xCount = 10;
-        private int yCount = 8;
+        private int yCount = 9;
         private int cardCount;
         private int totalCount;
         private int page;
@@ -60,7 +60,7 @@ namespace TaleofMonsters.Forms.MagicBook
             cardCount = xCount * yCount;
 
             Width = xCount * cardWidth + borderX;
-            Height = yCount * cardHeight + borderY;
+            Height = yCount * cardHeight + borderY + 63;//63是下方说明栏跨度
             #endregion
 
             base.Init(width, height);

@@ -9,18 +9,18 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
 {
     internal class ActiveCard
     {
-        private int id;//唯一id
+        public int Id { get; } //唯一的id
+        public DeckCard Card { get; }
 
-        private readonly DeckCard card;
         public int Mp {
             get
             {
-                var lpCost = card.Lp == 0 ? 0 : Math.Max(0, card.Lp + LpCostChange);
+                var lpCost = Card.Lp == 0 ? 0 : Math.Max(0, Card.Lp + LpCostChange);
                 if (Lp2Mp && lpCost > 0)
                 {
                     return lpCost;
                 }
-                return card.Mp==0?0: Math.Max(0, card.Mp + MpCostChange);
+                return Card.Mp==0?0: Math.Max(0, Card.Mp + MpCostChange);
             }
         }
         public int Lp
@@ -30,11 +30,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
                 {
                     return 0;
                 }
-                return card.Lp == 0 ? 0 : Math.Max(0,card.Lp + LpCostChange); }
+                return Card.Lp == 0 ? 0 : Math.Max(0,Card.Lp + LpCostChange); }
         }
         public int Pp
         {
-            get { return card.Pp == 0 ? 0 : Math.Max(0, card.Pp + PpCostChange); }
+            get { return Card.Pp == 0 ? 0 : Math.Max(0, Card.Pp + PpCostChange); }
         }
 
         public IEnumerable<PlayerManaTypes> CostList
@@ -65,27 +65,23 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
 
         public ActiveCard()
         {
-            card = new DeckCard(0,0,0);
+            Card = new DeckCard(0,0,0);
         }
 
         public ActiveCard(DeckCard card)
         {
-            this.card = card;
-            id = World.WorldInfoManager.GetCardFakeId();
+            this.Card = card;
+            Id = World.WorldInfoManager.GetCardFakeId();
             Level = card.Level;
         }
 
         public ActiveCard(int baseid, byte level, ushort exp)
         {
-            id = World.WorldInfoManager.GetCardFakeId();
-            card = new DeckCard(baseid, level, exp);
-            Level = card.Level;
+            Id = World.WorldInfoManager.GetCardFakeId();
+            Card = new DeckCard(baseid, level, exp);
+            Level = Card.Level;
         }
-
-        public int Id //唯一的id
-        {
-            get { return id; }
-        }
+        
 
         public int CardId //卡片配置的id
         {
@@ -99,22 +95,23 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
                 return CardAssistant.GetCardType(Card.BaseId);
             }
         }
-
-        public DeckCard Card
-        {
-            get { return card; }
-        }
+        
 
         public ActiveCard GetCopy()
         {
             DeckCard dc = new DeckCard(Card.BaseId, Card.Level, Card.Exp);
-            return new ActiveCard(dc);
+            var ac = new ActiveCard(dc);
+            ac.MpCostChange = MpCostChange;
+            ac.LpCostChange = LpCostChange;
+            ac.PpCostChange = PpCostChange;
+            ac.Lp2Mp = Lp2Mp;
+            return ac;
         }
 
         public void ChangeLevel(byte level)
         {
             Level = level;
-            card.Level = level;
+            Card.Level = level;
         }
 
         public static bool operator ==(ActiveCard rec1, ActiveCard rec2)

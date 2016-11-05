@@ -55,6 +55,10 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             {
                 cards[count] = card;
             }
+            if (spikeManager.HasSpike("copycard") && count < GameConstants.CardSlotMaxCount-1)
+            {
+                cards[count+1] = card.GetCopy();
+            }
             if (self.CardsDesk != null)
                 self.CardsDesk.UpdateSlot(cards);
         }
