@@ -45,18 +45,8 @@ namespace TaleofMonsters.Forms.MagicBook
             bitmapButtonPre.NoUseDrawNine = true;
             tempImage = new Bitmap(cardWidth * xCount, cardHeight*yCount);
 
-            int baseY = cardHeight*yCount + 45;
             virtualRegion = new VirtualRegion(this);
-            InitVirtualRegion(1, 65 +10, baseY + 3);
-            InitVirtualRegion(2, 65 + 70, baseY + 3);
-            InitVirtualRegion(3, 65 + 130, baseY + 3);
-            InitVirtualRegion(4, 65 + 190, baseY + 3);
-            InitVirtualRegion(5, 65 + 250, baseY + 3);
-            InitVirtualRegion(6, 65 + 310, baseY + 3);
-            InitVirtualRegion(7, 65 + 370, baseY + 3);
-            InitVirtualRegion(8, 65 + 430, baseY + 3);
-            InitVirtualRegion(9, 65 + 490, baseY + 3);
-            InitVirtualRegion(10, 65 + 550, baseY + 3);
+
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
@@ -87,6 +77,18 @@ namespace TaleofMonsters.Forms.MagicBook
             show = true;
             cards = new List<int>();
             cardDetail = new CardDetail(this, cardWidth * xCount + 65, 35, cardHeight * yCount + 70);
+
+            int baseY = cardHeight * yCount + 45;
+            InitVirtualRegion(1, 65 + 10, baseY + 3);
+            InitVirtualRegion(2, 65 + 70, baseY + 3);
+            InitVirtualRegion(3, 65 + 130, baseY + 3);
+            InitVirtualRegion(4, 65 + 190, baseY + 3);
+            InitVirtualRegion(5, 65 + 250, baseY + 3);
+            InitVirtualRegion(6, 65 + 310, baseY + 3);
+            InitVirtualRegion(7, 65 + 370, baseY + 3);
+            InitVirtualRegion(8, 65 + 430, baseY + 3);
+            InitVirtualRegion(9, 65 + 490, baseY + 3);
+            InitVirtualRegion(10, 65 + 550, baseY + 3);
 
             ChangeCards();
         }
@@ -212,7 +214,7 @@ namespace TaleofMonsters.Forms.MagicBook
             for (int i = 0; i < Math.Min(10, dropList.Count); i++)
             {
                 virtualRegion.SetRegionInfo(i + 1, dropList[i].ItemId);
-                virtualRegion.SetRegionDecorator(i+1,0,string.Format("{0}%", dropList[i].Rate));
+                virtualRegion.SetRegionDecorator(i+1,0,string.Format("{0:0.0}%", (float)(dropList[i].Rate)/100));
             }
 
             Invalidate(new Rectangle(67, 37 + yCount * cardHeight, cardWidth * xCount - 4,71));

@@ -8,6 +8,7 @@ using TaleofMonsters.DataType.Effects;
 using TaleofMonsters.DataType.Skills;
 using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Tool;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 
 namespace TaleofMonsters.Controler.Battle.Data
@@ -65,7 +66,7 @@ namespace TaleofMonsters.Controler.Battle.Data
 
         private bool CheckRate()
         {
-            return Percent > MathTool.GetRandom(100);
+            return MathTool.GetRandom(10000 + Self.RealLuk * GameConstants.LukToRoll) > (100 - Percent) * 100;
         }
 
         public void CheckBurst(LiveMonster src, LiveMonster dest, bool isMelee)

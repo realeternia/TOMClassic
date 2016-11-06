@@ -1,30 +1,36 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Math;
-using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
 
 namespace TaleofMonsters.DataType.CardPieces
 {
     static class CardPieceBook
     {
-        static Dictionary<int, List<CardPieceRate>> pieces = new Dictionary<int, List<CardPieceRate>>();
+        private static Dictionary<int, List<CardPieceRate>> pieces = new Dictionary<int, List<CardPieceRate>>();
 
         /// <summary>
         /// 限制战斗时调用
         /// </summary>
-        public static int CheckPiece(int id)
+        public static int CheckPieceDrop(int id, int luk)
         {
-            if (BattleManager.Instance.BattleInfo.Items.Count > GameConstants.MaxDropItemGetOnBattle)
+            TryUpdateCache(id);
+
+            int blankTotal = 10000;
+            foreach (var cardPieceRate in pieces[id])
+            {
+                blankTotal -= cardPieceRate.Rate;
+            }
+
+            int roll = MathTool.GetRandom(10000 + luk*GameConstants.LukToRoll);//万分之roll点
+            if (roll < blankTotal)
             {
                 return 0;
             }
 
-            TryUpdateCache(id);
-
-            int roll = MathTool.GetRandom(100);
-            int baseValue = 0;
-            foreach (CardPieceRate cardPieceRate in pieces[id])
+            int baseValue = blankTotal;
+            foreach (var cardPieceRate in pieces[id])
             {
                 baseValue += cardPieceRate.Rate;
                 if (baseValue>roll)
@@ -64,6 +70,8 @@ namespace TaleofMonsters.DataType.CardPieces
                         }
                     }
                 }
+
+                pieces[id].Sort((a,b)=> b.Rate - a.Rate);
             }
         }
 

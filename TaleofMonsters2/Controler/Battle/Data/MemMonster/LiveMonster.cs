@@ -34,7 +34,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public BuffManager BuffManager { get; private set; }
 
         private int life;
-        private int lastDamagerId;
+        private int lastDamagerId; //最后一击的怪物id
+        private int lastDamagerLuk; //最后一击的怪物幸运值
 
         private List<MonsterAuro> auroList;//光环
         private int[] antiMagic;//魔法抗性
@@ -298,6 +299,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 {
                     BuffManager.CheckRecoverOnHit();
                     lastDamagerId = src.Id;
+                    lastDamagerLuk = src.RealLuk;
                 }
                 return true;
             }
@@ -326,24 +328,24 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 {
                     if (Rival is HumanPlayer)
                     {
-                        int itemId = CardPieceBook.CheckPiece(Avatar.Id);
-                        if (itemId > 0)
+                        if (BattleManager.Instance.BattleInfo.Items.Count < GameConstants.MaxDropItemGetOnBattle)
                         {
-                            BattleManager.Instance.BattleInfo.AddItemGet(itemId);
-                            BattleManager.Instance.FlowWordQueue.Add(new FlowItemInfo(itemId, Position, 20, 50), true);
+                            int itemId = CardPieceBook.CheckPieceDrop(Avatar.Id, lastDamagerLuk);
+                            if (itemId > 0)
+                            {
+                                BattleManager.Instance.BattleInfo.AddItemGet(itemId);
+                                BattleManager.Instance.FlowWordQueue.Add(new FlowItemInfo(itemId, Position, 20, 50), true);
+                            }
+                            UserProfile.Profile.OnKillMonster(Avatar.MonsterConfig.Star, Avatar.MonsterConfig.Type, Avatar.MonsterConfig.Type);
                         }
-                        UserProfile.Profile.OnKillMonster(Avatar.MonsterConfig.Star, Avatar.MonsterConfig.Type, Avatar.MonsterConfig.Type);
                     }
                 }
                 BattleManager.Instance.BattleInfo.GetPlayer(!IsLeft).Kill++;
             }
 
             SkillManager.CheckRemoveEffect();
-            if (lastDamagerId != 0)
-            {
-                var rival = Rival as Player;
-                rival.OnKillMonster(lastDamagerId, Level, Avatar.MonsterConfig.Star, Position);
-            }
+            var rival = Rival as Player;
+            rival.OnKillMonster(Level, Avatar.MonsterConfig.Star, Position);
 
             MakeSound(false);
         }
@@ -868,6 +870,16 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             var dam = new HitDamage((int) damage, (int) damage, element, DamageTypes.Magic);
             Life -= SkillAssistant.GetMagicDamage(this, dam);
+            if (source == null)
+            {
+                lastDamagerId = 0;
+                lastDamagerLuk = 0;
+            }
+            else
+            {
+                lastDamagerId = source.Id;
+                lastDamagerLuk = (source as LiveMonster).RealLuk;
+            }
             OnDamage(dam);
         }
 

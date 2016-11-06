@@ -254,7 +254,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             AddResource((GameResourceType)type, number);
         }
 
-        public virtual void OnKillMonster(int killerId, int dieLevel, int dieStar, Point position)
+        public virtual void OnKillMonster(int dieLevel, int dieStar, Point position)
         {
 
         }

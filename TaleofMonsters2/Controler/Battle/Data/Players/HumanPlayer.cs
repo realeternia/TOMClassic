@@ -40,9 +40,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             UserProfile.InfoBag.AddResource(type, number);
         }
         
-        public override void OnKillMonster(int killerId, int dieLevel, int dieStar, Point position)
+        public override void OnKillMonster(int dieLevel, int dieStar, Point position)
         {
-            base.OnKillMonster(killerId, dieLevel, dieStar, position);
+            base.OnKillMonster(dieLevel, dieStar, position);
 
             int expGet = (int)Math.Sqrt(dieLevel * dieStar) / 2 + 1; //杀死怪物经验
             int rexp = UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.HeroExpPoint) + expGet;
@@ -55,7 +55,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             base.InitialCards();
 
 #if DEBUG
-            int[] cardToGive = new[] { 53000026};
+            int[] cardToGive = new[] { 51000146 };
             foreach (var cardId in cardToGive)
             {
                 CardManager.AddCard(new ActiveCard(cardId, 1, 0));
