@@ -64,7 +64,7 @@ namespace ConfigDatas
         void ExtendDebuff(double count);
         bool HasBuff(int id);
         void SetToPosition(string type);
-        void OnMagicDamage(double damage, int element);
+        void OnMagicDamage(IMonster source, double damage, int element);
         void SuddenDeath();
         void Rebel();//‘Ï∑¥
         void AddMaxHp(double val);

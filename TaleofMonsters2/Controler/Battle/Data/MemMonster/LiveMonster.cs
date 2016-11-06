@@ -864,7 +864,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
         }
 
-        public void OnMagicDamage(double damage, int element)
+        public void OnMagicDamage(IMonster source, double damage, int element)
         {
             var dam = new HitDamage((int) damage, (int) damage, element, DamageTypes.Magic);
             Life -= SkillAssistant.GetMagicDamage(this, dam);

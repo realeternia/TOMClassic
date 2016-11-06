@@ -134,7 +134,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
 
             if (FlyProc(target.Position, ref position, ref angle) == FlyCheckType.EndPoint)
             {
-                target.OnMagicDamage(spell.Damage, spell.Attr);
+                target.OnMagicDamage(null, spell.Damage, spell.Attr);
                 return false;
             }
             return true;
@@ -167,7 +167,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
                 var mon = BattleLocationManager.GetPlaceMonster((int)position.X, (int)position.Y);
                 if (mon != null && mon.IsLeft != owner.IsLeft)
                 {
-                    mon.OnMagicDamage(spell.Damage, spell.Attr);
+                    mon.OnMagicDamage(null, spell.Damage, spell.Attr);
                     return false;
                 }
             }
