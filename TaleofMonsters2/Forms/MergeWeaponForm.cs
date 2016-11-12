@@ -20,7 +20,7 @@ namespace TaleofMonsters.Forms
 {
     internal sealed partial class MergeWeaponForm : BasePanel
     {
-        private int methodid;
+        private int targetMethodId;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
         private VirtualRegion virtualRegion;
         private int[] itemCounts;
@@ -75,7 +75,7 @@ namespace TaleofMonsters.Forms
 
         private void selectPanel_SelectedIndexChanged()
         {
-            methodid = 0;
+            targetMethodId = 0;
 
             UpdateMethod();
         }
@@ -89,11 +89,15 @@ namespace TaleofMonsters.Forms
             g.DrawString(equipConfig.Name, font, sb, 50 + xOff, 5 + yOff);
             sb.Dispose();
             font.Dispose();
+
+            font = new Font("宋体", 10F * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            g.DrawString("Lv" + equipConfig.Level, font, Brushes.DimGray, 50 + xOff + 10, 5 + yOff + 24);
+            font.Dispose();
         }
 
         private void buttonChange_Click(object sender, EventArgs e)
         {
-            methodid = (methodid + 1) % currentInfo.Count;
+            targetMethodId = (targetMethodId + 1) % currentInfo.Count;
 
             UpdateMethod();
         }
@@ -117,7 +121,7 @@ namespace TaleofMonsters.Forms
                 return;
 
             EquipConfig equipConfig = ConfigData.GetEquipConfig(currentInfo.Target);
-            foreach (IntPair pairValue in currentInfo[methodid])
+            foreach (IntPair pairValue in currentInfo[targetMethodId])
             {
                 if (UserProfile.InfoBag.GetItemCount(pairValue.Type) < pairValue.Value)
                 {
@@ -131,7 +135,7 @@ namespace TaleofMonsters.Forms
                 return;
             }
 
-            DoMerge(methodid);
+            DoMerge(targetMethodId);
             UpdateMethod();
         }
 
@@ -157,7 +161,7 @@ namespace TaleofMonsters.Forms
             itemCounts[0] = UserProfile.InfoEquip.GetEquipCount(equipConfig.Id);
 
             int index = 1;
-            foreach (IntPair pair in currentInfo[methodid])
+            foreach (IntPair pair in currentInfo[targetMethodId])
             {
                 virtualRegion.SetRegionInfo(index+1, pair.Type);
                 itemCounts[index] = UserProfile.InfoBag.GetItemCount(pair.Type);
@@ -254,7 +258,7 @@ namespace TaleofMonsters.Forms
 
             int[] imgOff = {200,410,270,340};
             int index = 1;
-            foreach (IntPair pair in currentInfo[methodid])
+            foreach (var pair in currentInfo[targetMethodId])
             {
                 var imgOffX = imgOff[index - 1];
                 Brush brush = new SolidBrush(Color.FromName(HSTypes.I2RareColor(ConfigData.GetHItemConfig(pair.Type).Rare)));

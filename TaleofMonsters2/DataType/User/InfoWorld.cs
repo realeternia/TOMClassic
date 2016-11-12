@@ -296,7 +296,7 @@ namespace TaleofMonsters.DataType.User
 
         public void CheckAllTournament(int day)
         {
-            foreach (TournamentConfig tournamentConfig in ConfigData.TournamentDict.Values)
+            foreach (var tournamentConfig in ConfigData.TournamentDict.Values)
             {
                 if (tournamentConfig.ApplyDate == day)
                 {
@@ -356,11 +356,9 @@ namespace TaleofMonsters.DataType.User
                 }
             }
             List<MemRankData> rks = new List<MemRankData>();
-            foreach (int key in Ranks.Keys)
+            foreach (var key in Ranks.Keys)
             {
-                MemRankData data = new MemRankData();
-                data.Id = key;
-                data.Mark = Ranks[key];
+                MemRankData data = new MemRankData {Id = key, Mark = Ranks[key]};
                 rks.Add(data);
             }
             return rks.ToArray();
@@ -387,15 +385,13 @@ namespace TaleofMonsters.DataType.User
         public MemMergeData CreateMergeMethod(int mid)
         {
             EquipConfig equipConfig = ConfigData.GetEquipConfig(mid);
-            int elevel = equipConfig.Level + EQualityBonus(equipConfig.Quality);
-
             MemMergeData mthds = new MemMergeData();
             mthds.Target = mid;
-            int mcount = GetMethodCount(elevel);
+            int mcount = GetMethodCount(equipConfig.Quality);
             for (int i = 0; i < mcount; i++)
             {
                 List<IntPair> mthd = new List<IntPair>();
-                int icount = GetItemCount(elevel);
+                int icount = GetItemCount(equipConfig.Level);
                 int itrare = MathTool.GetRandom(Math.Max(1, equipConfig.Quality*2-1), equipConfig.Quality*2+1);//第一个素材品质和装备品质挂钩
                 Dictionary<int, bool> existFormula = new Dictionary<int, bool>();
                 for (int j = 0; j < icount; j++)
@@ -404,13 +400,13 @@ namespace TaleofMonsters.DataType.User
                     if (j == 0)
                     {
                         pv.Type = HItemBook.GetRandRareMid(itrare);
-                        pv.Value = GetItemCountByEquipLevel(elevel, itrare) + 1;
+                        pv.Value = GetItemCountByEquipLevel(equipConfig.Level, itrare) + 1;
                     }
                     else
                     {
                         int nrare = MathTool.GetRandom(Math.Max(1, itrare - 3), itrare);
                         pv.Type = HItemBook.GetRandRareMid(nrare);
-                        pv.Value = Math.Max(1, GetItemCountByEquipLevel(elevel, nrare));
+                        pv.Value = Math.Max(1, GetItemCountByEquipLevel(equipConfig.Level, nrare));
                     }
                     if (existFormula.ContainsKey(pv.Type))
                     {
@@ -428,31 +424,18 @@ namespace TaleofMonsters.DataType.User
             return mthds;
         }
 
-        private static int EQualityBonus(int quality)
+        private int GetMethodCount(int quality)
         {
             int rt = 0;
             switch (quality)
             {
-                case EquipQualityTypes.Common: rt = -1; break;
-                case EquipQualityTypes.Good: rt = 0; break;
-                case EquipQualityTypes.Excel: rt = 1; break;
+                case EquipQualityTypes.Common: rt = 1; break;
+                case EquipQualityTypes.Good: rt = 1; break;
+                case EquipQualityTypes.Excel: rt = 2; break;
                 case EquipQualityTypes.Epic: rt = 2; break;
-                case EquipQualityTypes.Legend: rt = 4; break;
+                case EquipQualityTypes.Legend: rt = 2; break;
             }
             return rt;
-        }
-
-        private int GetMethodCount(int elevel)
-        {
-            if (elevel < 8)
-            {
-                return 4;
-            }
-            if (elevel < 16)
-            {
-                return 3;
-            }
-            return 2;
         }
 
         private int GetItemCount(int elevel)
