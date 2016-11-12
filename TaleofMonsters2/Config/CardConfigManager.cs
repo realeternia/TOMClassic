@@ -156,7 +156,7 @@ namespace TaleofMonsters.Config
 
             foreach (var cardConfigData in cardConfigDataDict.Values)
             {
-                if (cardConfigData.Attr > 0 && !cardConfigData.IsSpecial)
+                if (!cardConfigData.IsSpecial)
                 {
                     attrCardDict[cardConfigData.Attr].Add(cardConfigData.Id);
                 }
@@ -185,10 +185,10 @@ namespace TaleofMonsters.Config
             return 0;
         }
 
-        public static int GetRandomAttrCard(int jobId)
+        public static int GetRandomAttrCard(int attrId)
         {
             List<int> rtData;
-            if (attrCardDict.TryGetValue(jobId, out rtData))
+            if (attrCardDict.TryGetValue(attrId, out rtData))
             {
                 return rtData[MathTool.GetRandom(rtData.Count)];
             }

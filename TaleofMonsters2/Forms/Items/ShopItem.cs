@@ -76,7 +76,7 @@ namespace TaleofMonsters.Forms.Items
             }
             if (priceType > 0) //非金币购买
             {
-                price = Math.Max(1, (int) Math.Sqrt(price));
+                price = price / 10 + 1;
             }
 
             parent.Invalidate(new Rectangle(x, y, width, height));

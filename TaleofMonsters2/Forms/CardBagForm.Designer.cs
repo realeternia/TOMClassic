@@ -58,7 +58,7 @@ namespace TaleofMonsters.Forms
             this.DoubleBuffered = true;
             this.Name = "CardBagForm";
             this.Size = new System.Drawing.Size(697, 205);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.CalendarForm_Paint);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.CardBagForm_Paint);
             this.ResumeLayout(false);
 
         }

@@ -96,7 +96,7 @@ namespace TaleofMonsters.Forms
             }
         }
 
-        private void CalendarForm_Paint(object sender, PaintEventArgs e)
+        private void CardBagForm_Paint(object sender, PaintEventArgs e)
         {
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 

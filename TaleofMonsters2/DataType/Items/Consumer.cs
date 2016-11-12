@@ -1,4 +1,5 @@
 ﻿using ConfigDatas;
+using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType.Cards.Monsters;
@@ -18,8 +19,7 @@ namespace TaleofMonsters.DataType.Items
 
             return true;
         }
-
-
+        
         public static bool UseFightItem(ItemConsumerConfig itemConfig)
         {
             var player = BattleManager.Instance.PlayerManager.LeftPlayer;
@@ -71,6 +71,14 @@ namespace TaleofMonsters.DataType.Items
             if (itemConfig.GainAp > 0)
             {
                 UserProfile.InfoBasic.Ap += itemConfig.GainAp;
+            }
+            if (itemConfig.RandomCardRate2 != null && itemConfig.RandomCardRate2.Length > 0)
+            {
+                var type = itemConfig.RandomCardRate2[0];
+                var info = itemConfig.RandomCardRate2[1];
+
+                var cardId = CardConfigManager.GetRandomAttrCard(info);
+                UserProfile.InfoCard.AddCard(cardId);
             }
 
             return true;

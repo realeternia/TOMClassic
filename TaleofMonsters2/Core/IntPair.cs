@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace TaleofMonsters.Core
 {
-    public struct IntPair
+    public class IntPair
     {
         [FieldIndexAttribute(Index = 1)]
         public int Type;
