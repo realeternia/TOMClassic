@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TaleofMonsters.Core;
 using NarlonLib.Math;
 using TaleofMonsters.Config;
-using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Others;
 
 namespace TaleofMonsters.DataType.Shops
@@ -55,7 +54,7 @@ namespace TaleofMonsters.DataType.Shops
                     res.Gold = 300;
                 }
                 int qual = cardData.Quality + 1;
-                res.Add(GameResourceType.Gem, GameResourceBook.GetGemCardBuy(qual));
+                res.Add(GameResourceType.Gem, (int)GameResourceBook.GetGemCardBuy(qual));
                 return res;
             }
         }

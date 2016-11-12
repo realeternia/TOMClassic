@@ -35,7 +35,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         private int life;
         private int lastDamagerId; //最后一击的怪物id
-        private int lastDamagerLuk; //最后一击的怪物幸运值
+        private int peakDamagerLuk; //最高攻击者的幸运值
 
         private List<MonsterAuro> auroList;//光环
         private int[] antiMagic;//魔法抗性
@@ -299,7 +299,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 {
                     BuffManager.CheckRecoverOnHit();
                     lastDamagerId = src.Id;
-                    lastDamagerLuk = src.RealLuk;
+                    peakDamagerLuk = Math.Max(peakDamagerLuk, src.RealLuk);
                 }
                 return true;
             }
@@ -330,7 +330,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                     {
                         if (BattleManager.Instance.BattleInfo.Items.Count < GameConstants.MaxDropItemGetOnBattle)
                         {
-                            int itemId = CardPieceBook.CheckPieceDrop(Avatar.Id, lastDamagerLuk);
+                            int itemId = CardPieceBook.CheckPieceDrop(Avatar.Id, peakDamagerLuk);
                             if (itemId > 0)
                             {
                                 BattleManager.Instance.BattleInfo.AddItemGet(itemId);
@@ -870,16 +870,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             var dam = new HitDamage((int) damage, (int) damage, element, DamageTypes.Magic);
             Life -= SkillAssistant.GetMagicDamage(this, dam);
-            if (source == null)
-            {
-                lastDamagerId = 0;
-                lastDamagerLuk = 0;
-            }
-            else
-            {
-                lastDamagerId = source.Id;
-                lastDamagerLuk = (source as LiveMonster).RealLuk;
-            }
+            lastDamagerId = source == null ? 0 : source.Id;
             OnDamage(dam);
         }
 

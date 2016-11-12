@@ -42,9 +42,9 @@ namespace TaleofMonsters.DataType.User
             return false;
         }
 
-        internal bool HasResource(GameResourceType type, int value)
+        internal bool HasResource(GameResourceType type, uint value)
         {
-            return Resource.Has(type, value);
+            return Resource.Has(type, (int)value);
         }
 
         public void AddDiamond(int value)
@@ -72,9 +72,9 @@ namespace TaleofMonsters.DataType.User
             AchieveBook.CheckByCheckType("resource");
         }
 
-        internal void AddResource(GameResourceType type, int value)
+        internal void AddResource(GameResourceType type, uint value)
         {
-            Resource.Add(type, value);
+            Resource.Add(type, (int)value);
             if (type > 0)
             {
                 MainForm.Instance.AddTip(string.Format("|获得|{0}|{1}||x{2}", HSTypes.I2ResourceColor((int)type), HSTypes.I2Resource((int)type), value), "White");
@@ -103,6 +103,11 @@ namespace TaleofMonsters.DataType.User
             Resource.Carbuncle -= res[4];
             Resource.Sulfur -= res[5];
             Resource.Gem -= res[6];
+        }
+
+        internal void SubResource(GameResourceType type, uint value)
+        {
+            Resource.Add(type, (int)-value);
         }
 
 
@@ -180,7 +185,7 @@ namespace TaleofMonsters.DataType.User
             var pickItem = Items[pos];
             if (pickItem.Type > 0 && pickItem.Value > 0)
             {
-                int money = ConfigData.GetHItemConfig(pickItem.Type).Value * pickItem.Value;
+                uint money = (uint)(ConfigData.GetHItemConfig(pickItem.Type).Value * pickItem.Value);
                 AddResource(GameResourceType.Gold, money);
             }
             ClearItemAllByPos(pos);

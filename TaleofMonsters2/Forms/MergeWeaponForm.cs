@@ -106,7 +106,7 @@ namespace TaleofMonsters.Forms
         {
             EquipConfig equipConfig = ConfigData.GetEquipConfig(currentInfo.Target);
 
-            UserProfile.InfoBag.Resource.Mercury -= GameResourceBook.GetMercuryMerge(equipConfig.Quality + 1, equipConfig.Level);
+            UserProfile.InfoBag.SubResource(GameResourceType.Stone, GameResourceBook.GetStoneMerge(equipConfig.Quality + 1, equipConfig.Level));
             foreach (IntPair pairValue in currentInfo[index])
             {
                 UserProfile.InfoBag.DeleteItem(pairValue.Type, pairValue.Value);
@@ -129,9 +129,9 @@ namespace TaleofMonsters.Forms
                     return;
                 }
             }
-            if (UserProfile.InfoBag.Resource.Mercury < GameResourceBook.GetMercuryMerge(equipConfig.Quality+1, equipConfig.Level))
+            if (UserProfile.InfoBag.HasResource( GameResourceType.Stone, GameResourceBook.GetStoneMerge(equipConfig.Quality+1, equipConfig.Level)))
             {
-                AddFlowCenter("水银不足", "Red");
+                AddFlowCenter("石材不足", "Red");
                 return;
             }
 
@@ -250,8 +250,8 @@ namespace TaleofMonsters.Forms
             int targetid = selectPanel.SelectInfo;
             EquipConfig equipConfig = ConfigData.GetEquipConfig(targetid);
             font =new Font("微软雅黑", 14 * 1.33f,  FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString((GameResourceBook.GetMercuryMerge(equipConfig.Quality + 1, equipConfig.Level)).ToString().PadLeft(5, ' '), font, PaintTool.GetBrushByResource((int)GameResourceType.Mercury), 273, 368);
-            e.Graphics.DrawImage(HSIcons.GetIconsByEName("res4"), 333, 370, 24, 24);
+            e.Graphics.DrawString((GameResourceBook.GetStoneMerge(equipConfig.Quality + 1, equipConfig.Level)).ToString().PadLeft(5, ' '), font, PaintTool.GetBrushByResource((int)GameResourceType.Mercury), 273, 368);
+            e.Graphics.DrawImage(HSIcons.GetIconsByEName("res3"), 333, 370, 24, 24);
             font.Dispose();
 
             font =new Font("微软雅黑", 10*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);

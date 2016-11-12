@@ -14,7 +14,7 @@ namespace TaleofMonsters.DataType.Items
     {
         public static bool UseOre(ItemConsumerConfig itemConfig)
         {
-            UserProfile.InfoBag.AddResource((GameResourceType)(itemConfig.ResourceId - 1), itemConfig.ResourceCount);
+            UserProfile.InfoBag.AddResource((GameResourceType)(itemConfig.ResourceId - 1), (uint)itemConfig.ResourceCount);
 
             return true;
         }

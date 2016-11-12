@@ -136,7 +136,7 @@ namespace TaleofMonsters.DataType.User.Mem
                     }
                     else
                     {
-                        UserProfile.InfoBag.AddResource((GameResourceType)tournamentConfig.Resource[i].Id, tournamentConfig.Resource[i].Value);
+                        UserProfile.InfoBag.AddResource((GameResourceType)tournamentConfig.Resource[i].Id, (uint)tournamentConfig.Resource[i].Value);
                     }
                 }
             }

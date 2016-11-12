@@ -4,24 +4,33 @@ namespace TaleofMonsters.DataType.Others
 {
     static class GameResourceBook
     {
-        public static int GetGemCardBuy(int qual)
+        /// <summary>
+        /// 购买卡牌消耗Gem
+        /// </summary>
+        public static uint GetGemCardBuy(int qual)
         {
-            return (int)(qual * (qual + 1) * Math.Sqrt(qual)) * 2;
+            return (uint)(qual * (qual + 1) * Math.Sqrt(qual)) * 2;
         }
-
-        public static int GetGemCardDecompose(int qual)
+        /// <summary>
+        /// 分解卡牌获得Gem
+        /// </summary>
+        public static uint GetGemCardDecompose(int qual)
         {
-            return (int)(qual * (qual + 1) * Math.Sqrt(qual));
+            return (uint)(qual * (qual + 1) * Math.Sqrt(qual));
         }
-
-        public static int GetMercuryMerge(int qual, int level)
+        /// <summary>
+        /// 消耗石材制作装备
+        /// </summary>
+        public static uint GetStoneMerge(int qual, int level)
         {
-            return (int)((float)level * 1.5 * Math.Sqrt(qual));
+            return (uint)((float)level * 5 * Math.Sqrt(qual));
         }
-
-        public static int GetMercuryEquipDecompose(int qual, int level)
+        /// <summary>
+        /// 分解装备获得石材
+        /// </summary>
+        public static uint GetStoneEquipDecompose(int qual, int level)
         {
-            return Math.Max(1, (int)((float)level * 1 * Math.Sqrt(qual)));
+            return Math.Max(1, (uint)((float)level * 2 * Math.Sqrt(qual)));
         }
     }
 }

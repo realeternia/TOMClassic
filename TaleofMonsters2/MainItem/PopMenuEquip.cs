@@ -22,7 +22,7 @@ namespace TaleofMonsters.MainItem
             {
                 var equipConfig = ConfigDatas.ConfigData.GetEquipConfig(UserProfile.InfoEquip.Equipoff[EquipIndex]);
                 MainForm.Instance.AddTip(string.Format("|分解装备-|{0}|{1}", HSTypes.I2QualityColor(equipConfig.Quality), equipConfig.Name), "White");
-                UserProfile.Profile.InfoBag.AddResource(GameResourceType.Mercury, GameResourceBook.GetMercuryEquipDecompose(equipConfig.Quality, equipConfig.Level));
+                UserProfile.Profile.InfoBag.AddResource(GameResourceType.Stone, GameResourceBook.GetStoneEquipDecompose(equipConfig.Quality, equipConfig.Level));
 
                 UserProfile.InfoEquip.Equipoff[EquipIndex] = 0;
             }

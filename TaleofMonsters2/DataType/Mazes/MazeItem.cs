@@ -1,7 +1,6 @@
 using System;
 using System.Drawing;
 using ConfigDatas;
-using TaleofMonsters.Controler.Battle;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Items;
@@ -12,11 +11,7 @@ namespace TaleofMonsters.DataType.Mazes
 {
     internal class MazeItem
     {
-        private int id;
-        public int Id
-        {
-            get { return id; }
-        }
+        public int Id { get; }
         public MazeItemConfig MazeItemConfig;
         public int mlevel;
         private int[] infos;
@@ -25,7 +20,7 @@ namespace TaleofMonsters.DataType.Mazes
         public MazeItem(int id, int level)
         {
             mlevel = level;
-            this.id = id;
+            this.Id = id;
             MazeItemConfig = ConfigData.GetMazeItemConfig(id);
             type = MazeItemConfig.Type;
             infos = new int[MazeItemConfig.Info.Length];
@@ -91,7 +86,7 @@ namespace TaleofMonsters.DataType.Mazes
             }
             else if (type == "gold")
             {
-                UserProfile.InfoBag.AddResource(GameResourceType.Gold, infos[0]);
+                UserProfile.InfoBag.AddResource(GameResourceType.Gold, (uint)infos[0]);
                 panel.AddFlowCenter(string.Format("»ñµÃ»Æ½ðx{0}", infos[0]), HSTypes.I2ResourceColor(0));
             }
             else if (type == "resource")

@@ -37,7 +37,14 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public override void AddResource(GameResourceType type, int number)
         {
-            UserProfile.InfoBag.AddResource(type, number);
+            if (number > 0)
+            {
+                UserProfile.InfoBag.AddResource(type, (uint)number);
+            }
+            else if (number < 0)
+            {
+                UserProfile.InfoBag.SubResource(type, (uint)(-number));
+            }
         }
         
         public override void OnKillMonster(int dieLevel, int dieStar, Point position)
