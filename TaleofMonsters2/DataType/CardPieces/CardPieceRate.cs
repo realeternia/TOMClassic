@@ -19,13 +19,12 @@ namespace TaleofMonsters.DataType.CardPieces
             return pieceRate;
         }
 
-        private static int[] rateTypes = { 0, 300, 0, 100, 0, 100, 0, 0, 0 };
         static public CardPieceRate FromCardTypePiece(int id, int clevel)
         {
             CardPieceRate pieceRate = new CardPieceRate();
             HItemConfig itemConfig = ConfigData.GetHItemConfig(id);
 
-            int percent = rateTypes[itemConfig.Rare - 1];
+            int percent = rates[itemConfig.Rare - 1]/10;//属性掉落概率是特有掉落的1/10
             percent = CheckBound(clevel, itemConfig, percent);
             pieceRate.ItemId = id;
             pieceRate.Rate = CheckBound(clevel, itemConfig, percent);
@@ -33,13 +32,12 @@ namespace TaleofMonsters.DataType.CardPieces
             return pieceRate;
         }
 
-        private static int[] rateRaces = { 400, 0, 200, 0, 100, 0, 100, 0, 0 };
         static public CardPieceRate FromCardRacePiece(int id, int clevel)
         {
             CardPieceRate pieceRate = new CardPieceRate();
             HItemConfig itemConfig = ConfigData.GetHItemConfig(id);
 
-            int percent = rateRaces[itemConfig.Rare - 1];
+            int percent = rates[itemConfig.Rare - 1]/10;//种族掉落概率是特有掉落的1/10
             pieceRate.ItemId = id;
             pieceRate.Rate = CheckBound(clevel, itemConfig, percent);
            
