@@ -9,22 +9,14 @@ namespace TaleofMonsters.Forms
 {
     internal sealed partial class NpcShopForm : BasePanel
     {
-        private int npcId;
-        private int shopId;
         private RLIdValue[] items;
         private int page;
         private ShopItem[] itemControls;
         private ControlPlus.NLPageSelector nlPageSelector1;
 
-        public int NpcId
-        {
-            set { npcId = value; }
-        }
+        public int NpcId { get; set; }
 
-        public int ShopId
-        {
-            set { shopId = value; }
-        }
+        public int ShopId { get; set; }
 
         public NpcShopForm()
         {
@@ -37,16 +29,18 @@ namespace TaleofMonsters.Forms
         internal override void Init(int width, int height)
         {
             base.Init(width, height);
-            items = new RLIdValue[ConfigData.GetNpcShopConfig(shopId).SellTable.Count];
+
+            var shopInfo = ConfigData.GetNpcShopConfig(ShopId);
+            items = new RLIdValue[shopInfo.SellTable.Count];
             for (int i = 0; i < items.Length; i++)
             {
-                items[i] = ConfigData.GetNpcShopConfig(shopId).SellTable[i];
+                items[i] = shopInfo.SellTable[i];
             }
             itemControls = new ShopItem[6];
             for (int i = 0; i < 6; i++)
             {
                 itemControls[i] = new ShopItem(this, 8 + (i % 2) * 142, 75 + (i / 2) * 55, 143, 56);
-                itemControls[i].Init();
+                itemControls[i].Init(shopInfo.MoneyType);
             }
             nlPageSelector1.TotalPage = (items.Length - 1) / 6 + 1;
             refreshInfo();
@@ -74,15 +68,15 @@ namespace TaleofMonsters.Forms
 
         private void ShopWindow_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
-            if (npcId > 0)
+            if (NpcId > 0)
             {
                 Image bgImage = PicLoader.Read("System", "TalkBack.PNG");
                 e.Graphics.DrawImage(bgImage, 0, 0, bgImage.Width, bgImage.Height);
                 bgImage.Dispose();
-                e.Graphics.DrawImage(NPCBook.GetPersonImage(npcId), 24, 0, 70, 70);
+                e.Graphics.DrawImage(NPCBook.GetPersonImage(NpcId), 24, 0, 70, 70);
 
                 Font font = new Font("宋体", 11*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-                e.Graphics.DrawString(ConfigData.GetNpcConfig(npcId).Name, font, Brushes.Chocolate, 131, 50);
+                e.Graphics.DrawString(ConfigData.GetNpcConfig(NpcId).Name, font, Brushes.Chocolate, 131, 50);
                 font.Dispose();
 
                 foreach (ShopItem ctl in itemControls)

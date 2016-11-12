@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Equips;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.User;
@@ -16,6 +16,7 @@ namespace TaleofMonsters.Forms.Items
     {
         private int itemId;
         private int itemType;
+        private int priceType;//货币类型
         private int price;
         private bool show;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
@@ -45,8 +46,9 @@ namespace TaleofMonsters.Forms.Items
             parent.Controls.Add(bitmapButtonBuy);
         }
 
-        public void Init()
+        public void Init(int type)
         {
+            priceType = type;
             virtualRegion = new VirtualRegion(parent);
             virtualRegion.AddRegion(new PictureAnimRegion(1, x + 5, y + 8, 40, 40, 1, VirtualRegionCellType.Card, 0));
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
@@ -71,6 +73,10 @@ namespace TaleofMonsters.Forms.Items
             else
             {                
                 price = ConfigData.GetEquipConfig(itemId).Value;
+            }
+            if (priceType > 0) //非金币购买
+            {
+                price = Math.Max(1, (int) Math.Sqrt(price));
             }
 
             parent.Invalidate(new Rectangle(x, y, width, height));
@@ -102,13 +108,13 @@ namespace TaleofMonsters.Forms.Items
 
         private void pictureBoxBuy_Click(object sender, EventArgs e)
         {
-            if (UserProfile.InfoBag.Resource.Gold < price)
+            if (!UserProfile.InfoBag.HasResource((GameResourceType)priceType, (uint)price))
             {
-                parent.AddFlowCenter("金钱不足", "Red");
+                parent.AddFlowCenter("资源不足", "Red");
                 return;
             }
 
-            UserProfile.InfoBag.Resource.Gold -= price;
+            UserProfile.InfoBag.SubResource((GameResourceType) priceType, (uint)price);
             if (itemType == 1)
             {
                 UserProfile.InfoBag.AddItem(itemId, 1);
@@ -143,7 +149,7 @@ namespace TaleofMonsters.Forms.Items
                     brush.Dispose();
                 }
                 g.DrawString(price.ToString(), font, Brushes.Gold,x+ 50,y+ 30);
-                g.DrawImage(HSIcons.GetIconsByEName("res1"), g.MeasureString(price.ToString(), font).Width + 50+x, 32+y, 16, 16);
+                g.DrawImage(HSIcons.GetIconsByEName("res"+(priceType+1)), g.MeasureString(price.ToString(), font).Width + 50+x, 32+y, 16, 16);
                 font.Dispose();
 
                 virtualRegion.Draw(g);
