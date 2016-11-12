@@ -33,19 +33,23 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonFresh = new NarlonLib.Control.BitmapButton();
             this.bitmapButtonRefresh = new NarlonLib.Control.BitmapButton();
             this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
+            this.bitmapButtonDouble = new NarlonLib.Control.BitmapButton();
             this.SuspendLayout();
             // 
             // bitmapButtonFresh
             // 
             this.bitmapButtonFresh.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButtonFresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButtonFresh.Image = null;
+            this.bitmapButtonFresh.IconImage = null;
+            this.bitmapButtonFresh.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonFresh.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonFresh.ImageNormal = null;
             this.bitmapButtonFresh.Location = new System.Drawing.Point(352, 337);
             this.bitmapButtonFresh.Name = "bitmapButtonFresh";
+            this.bitmapButtonFresh.NoUseDrawNine = false;
             this.bitmapButtonFresh.Size = new System.Drawing.Size(40, 40);
             this.bitmapButtonFresh.TabIndex = 48;
-            this.bitmapButtonFresh.Text = "";
+            this.bitmapButtonFresh.TextOffX = 0;
             this.bitmapButtonFresh.UseVisualStyleBackColor = true;
             this.bitmapButtonFresh.Click += new System.EventHandler(this.bitmapButtonFresh_Click);
             // 
@@ -53,13 +57,16 @@ namespace TaleofMonsters.Forms
             // 
             this.bitmapButtonRefresh.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButtonRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButtonRefresh.Image = null;
+            this.bitmapButtonRefresh.IconImage = null;
+            this.bitmapButtonRefresh.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonRefresh.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonRefresh.ImageNormal = null;
             this.bitmapButtonRefresh.Location = new System.Drawing.Point(306, 337);
             this.bitmapButtonRefresh.Name = "bitmapButtonRefresh";
+            this.bitmapButtonRefresh.NoUseDrawNine = false;
             this.bitmapButtonRefresh.Size = new System.Drawing.Size(40, 40);
             this.bitmapButtonRefresh.TabIndex = 47;
-            this.bitmapButtonRefresh.Text = "";
+            this.bitmapButtonRefresh.TextOffX = 0;
             this.bitmapButtonRefresh.UseVisualStyleBackColor = true;
             this.bitmapButtonRefresh.Click += new System.EventHandler(this.bitmapButtonRefresh_Click);
             // 
@@ -67,24 +74,41 @@ namespace TaleofMonsters.Forms
             // 
             this.bitmapButtonClose.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButtonClose.Image = null;
-            
-            
+            this.bitmapButtonClose.IconImage = null;
+            this.bitmapButtonClose.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonClose.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonClose.ImageNormal = null;
-            
             this.bitmapButtonClose.Location = new System.Drawing.Point(365, 4);
             this.bitmapButtonClose.Name = "bitmapButtonClose";
+            this.bitmapButtonClose.NoUseDrawNine = false;
             this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
             this.bitmapButtonClose.TabIndex = 23;
-            this.bitmapButtonClose.Text = "";
+            this.bitmapButtonClose.TextOffX = 0;
             this.bitmapButtonClose.UseVisualStyleBackColor = true;
             this.bitmapButtonClose.Click += new System.EventHandler(this.pictureBoxCancel_Click);
             // 
+            // bitmapButtonDouble
+            // 
+            this.bitmapButtonDouble.BorderColor = System.Drawing.Color.DarkBlue;
+            this.bitmapButtonDouble.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bitmapButtonDouble.IconImage = null;
+            this.bitmapButtonDouble.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonDouble.IconXY = new System.Drawing.Point(0, 0);
+            this.bitmapButtonDouble.ImageNormal = null;
+            this.bitmapButtonDouble.Location = new System.Drawing.Point(260, 337);
+            this.bitmapButtonDouble.Name = "bitmapButtonDouble";
+            this.bitmapButtonDouble.NoUseDrawNine = false;
+            this.bitmapButtonDouble.Size = new System.Drawing.Size(40, 40);
+            this.bitmapButtonDouble.TabIndex = 49;
+            this.bitmapButtonDouble.TextOffX = 0;
+            this.bitmapButtonDouble.UseVisualStyleBackColor = true;
+            this.bitmapButtonDouble.Click += new System.EventHandler(this.bitmapButtonDouble_Click);
+            // 
             // BuyPieceForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.bitmapButtonDouble);
             this.Controls.Add(this.bitmapButtonFresh);
             this.Controls.Add(this.bitmapButtonRefresh);
             this.Controls.Add(this.bitmapButtonClose);
@@ -101,9 +125,6 @@ namespace TaleofMonsters.Forms
         private BitmapButton bitmapButtonClose;
         private BitmapButton bitmapButtonRefresh;
         private BitmapButton bitmapButtonFresh;
-
-
-
-
+        private BitmapButton bitmapButtonDouble;
     }
 }

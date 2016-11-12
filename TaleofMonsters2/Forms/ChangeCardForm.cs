@@ -82,7 +82,6 @@ namespace TaleofMonsters.Forms
             {
                 if (UserProfile.InfoBag.PayDiamond(10))
                 {
-                    UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastCardChangeTime, 0);
                     UserProfile.InfoWorld.RefreshAllChangeCardData();
                     RefreshInfo();
                 }

@@ -30,6 +30,8 @@ namespace TaleofMonsters.Forms
             bitmapButtonRefresh.NoUseDrawNine = true;
             this.bitmapButtonFresh.ImageNormal = PicLoader.Read("ButtonBitmap", "FreshButton.JPG");
             bitmapButtonFresh.NoUseDrawNine = true;
+            this.bitmapButtonDouble.ImageNormal = PicLoader.Read("ButtonBitmap", "MoneyButton.JPG");
+            bitmapButtonDouble.NoUseDrawNine = true;
             colorWord = new ColorWordRegion(12, 38, 384, "微软雅黑", 11, Color.White);
             colorWord.Bold = true;
             colorWord.Text = "|每|Red|6小时||随机更新5条购买素材，素材的|Lime|背景颜色||决定素材的最高品质。";
@@ -83,8 +85,18 @@ namespace TaleofMonsters.Forms
             {
                 if (UserProfile.InfoBag.PayDiamond(10))
                 {
-                    UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastNpcPieceTime, 0);
                     UserProfile.InfoWorld.RefreshAllPieceData();
+                    RefreshInfo();
+                }
+            }
+        }
+        private void bitmapButtonDouble_Click(object sender, EventArgs e)
+        {
+            if (MessageBoxEx2.Show("是否花5钻石翻倍所有素材数量?") == DialogResult.OK)
+            {
+                if (UserProfile.InfoBag.PayDiamond(5))
+                {
+                    UserProfile.InfoWorld.DoubleAllPieceData();
                     RefreshInfo();
                 }
             }
@@ -127,5 +139,6 @@ namespace TaleofMonsters.Forms
                 ctl.Draw(e.Graphics);
             }
         }
+
     }
 }

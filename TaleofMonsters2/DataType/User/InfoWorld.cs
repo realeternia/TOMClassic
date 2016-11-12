@@ -164,6 +164,14 @@ namespace TaleofMonsters.DataType.User
             }
         }
 
+        public void DoubleAllPieceData()
+        {
+            foreach (var memNpcPieceData in Pieces)
+            {
+                memNpcPieceData.Count *= 2;
+            }
+        }
+
         private MemNpcPieceData CreatePieceMethod(int index)
         {
             MemNpcPieceData piece = new MemNpcPieceData();
