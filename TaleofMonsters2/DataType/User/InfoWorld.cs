@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using ConfigDatas;
 using NarlonLib.Core;
 using NarlonLib.Math;
@@ -372,7 +371,7 @@ namespace TaleofMonsters.DataType.User
             int time = TimeTool.DateTimeToUnixTime(DateTime.Now);
             if (MergeMethods == null || UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastMergeTime) < time - GameConstants.MergeWeaponDura)
             {
-                int[] ids = EquipBook.GetCanMergeId();
+                int[] ids = EquipBook.GetCanMergeId(UserProfile.InfoBasic.Level);
                 List<int> newids = RandomShuffle.Process(ids);
                 MergeMethods = new List<MemMergeData>();
                 for (int i = 0; i < 8; i++)
@@ -397,8 +396,8 @@ namespace TaleofMonsters.DataType.User
             {
                 List<IntPair> mthd = new List<IntPair>();
                 int icount = GetItemCount(elevel);
-                int itrare = GetItemRareByEquipLevel(elevel);
-                Dictionary<int, bool> has = new Dictionary<int, bool>();
+                int itrare = MathTool.GetRandom(Math.Max(1, equipConfig.Quality*2-1), equipConfig.Quality*2+1);//第一个素材品质和装备品质挂钩
+                Dictionary<int, bool> existFormula = new Dictionary<int, bool>();
                 for (int j = 0; j < icount; j++)
                 {
                     IntPair pv = new IntPair();
@@ -411,15 +410,15 @@ namespace TaleofMonsters.DataType.User
                     {
                         int nrare = MathTool.GetRandom(Math.Max(1, itrare - 3), itrare);
                         pv.Type = HItemBook.GetRandRareMid(nrare);
-                        pv.Value = GetItemCountByEquipLevel(elevel, nrare);
+                        pv.Value = Math.Max(1, GetItemCountByEquipLevel(elevel, nrare));
                     }
-                    if (has.ContainsKey(pv.Type))
+                    if (existFormula.ContainsKey(pv.Type))
                     {
-                        j--;
+                        j--;//相当于做redo
                     }
                     else
                     {
-                        has.Add(pv.Type, true);
+                        existFormula.Add(pv.Type, true);
                         mthd.Add(pv);
                     }
                 }
@@ -469,16 +468,11 @@ namespace TaleofMonsters.DataType.User
             return 4;
         }
 
-        private int GetItemRareByEquipLevel(int level)
-        {
-            int lv = level / 5 + 1;
-            return lv > 7 ? 7 : lv;
-        }
 
         private int GetItemCountByEquipLevel(int elevel, int rare)
         {
-            int[] levelp = { 1, 2, 3, 4, 6, 8, 10, 14 };
-            return elevel / levelp[rare] + MathTool.GetRandom(0, 2);
+            int[] levelp = { 1, 2, 3, 4, 6, 10, 14, 20 };
+            return elevel*MathTool.GetRandom(8, 12)/10/levelp[rare];
         }
     }
 }

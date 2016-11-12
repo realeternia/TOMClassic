@@ -20,11 +20,14 @@ namespace TaleofMonsters.DataType.Equips
             return ImageManager.GetImage(fname);
         }
 
-        public static int[] GetCanMergeId()
+        public static int[] GetCanMergeId(int level)
         {
             List<int> datas = new List<int>();
-            foreach (EquipConfig equipConfig in ConfigData.EquipDict.Values)
+            foreach (var equipConfig in ConfigData.EquipDict.Values)
             {
+                if (equipConfig.LvNeed > level + 5 || equipConfig.LvNeed < level - 5)
+                    continue;
+
                 datas.Add(equipConfig.Id);//返回所有
             }
             return datas.ToArray();
