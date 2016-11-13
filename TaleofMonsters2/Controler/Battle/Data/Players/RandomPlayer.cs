@@ -1,10 +1,7 @@
 ﻿using ConfigDatas;
-using NarlonLib.Math;
+using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Cards.Monsters;
-using TaleofMonsters.DataType.Cards.Spells;
-using TaleofMonsters.DataType.Cards.Weapons;
 using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.User;
 
@@ -26,19 +23,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             DeckCard[] cd = new DeckCard[GameConstants.DeckCardCount];
             for (int i = 0; i < GameConstants.DeckCardCount; i++)
             {
-                switch (MathTool.GetRandom(4))
-                {
-                    case 0:
-                    case 1:
-                        cd[i] = new DeckCard( MonsterBook.GetRandMonsterId(), 1, 0);
-                        break;
-                    case 2:
-                        cd[i] = new DeckCard( WeaponBook.GetRandWeaponId(), 1, 0);
-                        break;
-                    case 3:
-                        cd[i] = new DeckCard(SpellBook.GetRandSpellId(), 1, 0);
-                        break;
-                }
+                cd[i] = new DeckCard(CardConfigManager.GetRandomCard(0), 1, 0);
             }
             Cards = new ActiveCards(cd);
             InitBase();

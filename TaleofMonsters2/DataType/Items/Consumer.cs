@@ -77,7 +77,7 @@ namespace TaleofMonsters.DataType.Items
                 var type = itemConfig.RandomCardRate2[0];
                 var info = itemConfig.RandomCardRate2[1];
 
-                var cardId = CardConfigManager.GetRandomAttrCard(info);
+                var cardId = CardConfigManager.GetRateCard(itemConfig.RandomCardRate, CardConfigManager.GetRandomAttrCard, info);
                 UserProfile.InfoCard.AddCard(cardId);
             }
 

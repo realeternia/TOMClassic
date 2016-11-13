@@ -2,6 +2,9 @@
 using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Cards.Monsters;
+using TaleofMonsters.DataType.Cards.Spells;
+using TaleofMonsters.DataType.Cards.Weapons;
 
 namespace TaleofMonsters.Config
 {
@@ -173,6 +176,23 @@ namespace TaleofMonsters.Config
             return new CardConfigData();
         }
 
+        public static int GetRandomCard(int seed)
+        {
+            int type = MathTool.GetRandom(10);
+            if (type < 6)
+            {
+                return MonsterBook.GetRandMonsterId();
+            }
+            else if (type < 8)
+            {
+                return WeaponBook.GetRandWeaponId();
+            }
+            else
+            {
+                return SpellBook.GetRandSpellId();
+            }
+        }
+
         public static int GetRandomJobCard(int jobId)
         {
             List<int> rtData;
@@ -203,6 +223,32 @@ namespace TaleofMonsters.Config
                 return rtData[MathTool.GetRandom(rtData.Count)];
             }
             return 0;
+        }
+
+        internal delegate int RandomCardSelectorDelegate(int raceId);
+
+        public static int GetRateCard(int[] rate, RandomCardSelectorDelegate del, int funcInfo)
+        {
+            int timeCount = 1;
+            int cardId = 0;
+            while (true)
+            {
+                int id = del(funcInfo);
+                var quality = GetCardConfig(id).Quality;
+                if (quality >= rate.Length)
+                {
+                    continue;
+                }
+                int lvinfo = rate[quality];
+                if (timeCount >= lvinfo && lvinfo != 0)
+                {
+                    cardId = id;
+                    break;
+                }
+                timeCount++;
+            }
+
+            return cardId;
         }
     }
 }

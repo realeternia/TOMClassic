@@ -2,15 +2,11 @@
 using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Control;
-using NarlonLib.Math;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards;
-using TaleofMonsters.DataType.Cards.Monsters;
-using TaleofMonsters.DataType.Cards.Spells;
-using TaleofMonsters.DataType.Cards.Weapons;
 using TaleofMonsters.DataType.Effects;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Core;
@@ -159,39 +155,7 @@ namespace TaleofMonsters.Forms
 
         private int UseScard()
         {
-            int timeCount = 1;
-            int cardId = 0;
-            while (true)
-            {
-                int id;
-                int type = MathTool.GetRandom(10);
-                if (type < 6)
-                {
-                    id = MonsterBook.GetRandMonsterId();
-                }
-                else if (type < 8)
-                {
-                    id = WeaponBook.GetRandWeaponId();
-                }
-                else
-                {
-                    id = SpellBook.GetRandSpellId();
-                }
-                var quality = CardConfigManager.GetCardConfig(id).Quality;
-                if (quality >= Effect.Length)
-                {
-                    continue;
-                }
-                int lvinfo = Effect[quality];
-                if (timeCount >= lvinfo && lvinfo != 0)
-                {
-                    cardId = id;
-                    break;
-                }
-                timeCount++;
-            }
-
-            return cardId;
+            return CardConfigManager.GetRateCard(Effect, CardConfigManager.GetRandomCard, 0);
         }
     }
 }
