@@ -23,7 +23,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             DeckCard[] cd = new DeckCard[GameConstants.DeckCardCount];
             for (int i = 0; i < GameConstants.DeckCardCount; i++)
             {
-                cd[i] = new DeckCard(CardConfigManager.GetRandomCard(0), 1, 0);
+                cd[i] = new DeckCard(CardConfigManager.GetRandomCard(0, -1), 1, 0);
             }
             Cards = new ActiveCards(cd);
             InitBase();

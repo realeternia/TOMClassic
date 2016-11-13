@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ConfigDatas;
+using NarlonLib.Log;
 using NarlonLib.Math;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Cards.Spells;
@@ -28,18 +31,81 @@ namespace TaleofMonsters.Config
         }
     }
 
-    public enum CardAttr
-    {
-        Atk = 1,
-        Def = 2,
-    }
-
+    
     internal class CardConfigManager
     {
+        private class CardInfoList
+        {
+            private List<IntPair> dataList;
+            private int[] qualityIndex;
+
+            public CardInfoList()
+            {
+                dataList = new List<IntPair>();
+            }
+
+            public void Add(int cardId, int quality)
+            {
+                IntPair data = new IntPair();
+                data.Type = cardId;
+                data.Value = quality;
+                dataList.Add(data);
+            }
+
+            public void EndInit()
+            {
+                dataList.Sort(new CompareByQuality());
+                qualityIndex = new[] {-1, -1, -1, -1, -1};
+                for (int i = 0; i < dataList.Count; i++)
+                {
+                    if (dataList[i].Value >= qualityIndex.Length)
+                    {
+                        NLog.Debug(string.Format("EndInit invalide quality id={0}", dataList[i].Type));
+                        continue;
+                    }
+
+                    if (qualityIndex[dataList[i].Value]==-1)
+                    {
+                        qualityIndex[dataList[i].Value] = i;
+                    }
+                }
+            }
+
+            public int GetRandom(int quality)
+            {
+                if (quality ==-1)
+                {
+                    return dataList[MathTool.GetRandom(dataList.Count)].Type;
+                }
+                if (quality<4)
+                {
+                    return dataList[MathTool.GetRandom(qualityIndex[quality], qualityIndex[quality + 1])].Type;
+                }
+                return dataList[MathTool.GetRandom(qualityIndex[quality], dataList.Count)].Type;
+            }
+
+
+            private class CompareByQuality : IComparer<IntPair>
+            {
+                #region IComparer<IntPair> 成员
+
+                public int Compare(IntPair x, IntPair y)
+                {
+                    if (y.Value != x.Value)
+                        return x.Value.CompareTo(y.Value);
+
+                    return x.Type.CompareTo(y.Type);
+                }
+
+                #endregion
+            }
+        }
+
         private static readonly Dictionary<int, CardConfigData> cardConfigDataDict;
-        private static readonly Dictionary<int, List<int>> jobCardDict; //职业卡组列表
-        private static readonly Dictionary<int, List<int>> attrCardDict; //属性卡组列表
-        private static readonly Dictionary<int, List<int>> raceCardDict; //种族卡组列表
+        private static CardInfoList allCardData;
+        private static readonly Dictionary<int, CardInfoList> jobCardDict; //职业卡组列表
+        private static readonly Dictionary<int, CardInfoList> attrCardDict; //属性卡组列表
+        private static readonly Dictionary<int, CardInfoList> raceCardDict; //种族卡组列表
 
         public static int MonsterTotal { get; set; }
         public static int MonsterAvail { get; set; }
@@ -50,120 +116,155 @@ namespace TaleofMonsters.Config
 
         static CardConfigManager()
         {
-            cardConfigDataDict = new Dictionary<int, CardConfigData>();
-            raceCardDict = new Dictionary<int, List<int>>();
-            for (int i = 0; i < 17; i++)
+            try
             {
-                raceCardDict[i] = new List<int>();
-            }
-
-            foreach (var monsterConfig in ConfigData.MonsterDict.Values)
-            {
-                CardConfigData card = new CardConfigData
+                cardConfigDataDict = new Dictionary<int, CardConfigData>();
+                raceCardDict = new Dictionary<int, CardInfoList>();
+                for (int i = 0; i < 17; i++)
                 {
-                    Id = monsterConfig.Id,
-                    Type = CardTypes.Monster,
-                    TypeSub = monsterConfig.Type,
-                    Attr = monsterConfig.Attr,
-                    Cost = monsterConfig.Cost,
-                    Star = monsterConfig.Star,
-                    Name = monsterConfig.Name,
-                    Quality = monsterConfig.Quality,
-                    JobId = monsterConfig.JobId,
-                    IsSpecial = monsterConfig.IsSpecial == 1,
-                    Remark = monsterConfig.Remark
-                };
-                cardConfigDataDict.Add(monsterConfig.Id, card);
-                if (monsterConfig.IsSpecial == 0)
-                {
-                    MonsterTotal++;
-                    if (monsterConfig.Remark != "未完成")
-                    {
-                        MonsterAvail++;
-                    }
-                    raceCardDict[monsterConfig.Type].Add(card.Id);
+                    raceCardDict[i] = new CardInfoList();
                 }
-            }
-            foreach (var weaponConfig in ConfigData.WeaponDict.Values)
-            {
-                CardConfigData card = new CardConfigData
+
+                foreach (var monsterConfig in ConfigData.MonsterDict.Values)
                 {
-                    Id = weaponConfig.Id,
-                    Type = CardTypes.Weapon,
-                    TypeSub = weaponConfig.Type,
-                    Attr = weaponConfig.Attr,
-                    Cost = weaponConfig.Cost,
-                    Star = weaponConfig.Star,
-                    Name = weaponConfig.Name,
-                    Quality = weaponConfig.Quality,
-                    JobId = weaponConfig.JobId,
-                    IsSpecial = weaponConfig.IsSpecial == 1,
-                    Remark = weaponConfig.Remark
-                };
-                cardConfigDataDict.Add(weaponConfig.Id, card);
-                if (weaponConfig.IsSpecial == 0)
-                {
-                    WeaponTotal++;
-                    if (weaponConfig.Remark != "未完成")
+                    CardConfigData card = new CardConfigData
                     {
-                        WeaponAvail++;
+                        Id = monsterConfig.Id,
+                        Type = CardTypes.Monster,
+                        TypeSub = monsterConfig.Type,
+                        Attr = monsterConfig.Attr,
+                        Cost = monsterConfig.Cost,
+                        Star = monsterConfig.Star,
+                        Name = monsterConfig.Name,
+                        Quality = monsterConfig.Quality,
+                        JobId = monsterConfig.JobId,
+                        IsSpecial = monsterConfig.IsSpecial == 1,
+                        Remark = monsterConfig.Remark
+                    };
+                    cardConfigDataDict.Add(monsterConfig.Id, card);
+                    if (monsterConfig.IsSpecial == 0)
+                    {
+                        MonsterTotal++;
+                        if (monsterConfig.Remark != "未完成")
+                        {
+                            MonsterAvail++;
+                        }
+                        raceCardDict[monsterConfig.Type].Add(card.Id, card.Quality);
                     }
                 }
-            }
-            foreach (var spellConfig in ConfigData.SpellDict.Values)
-            {
-                CardConfigData card = new CardConfigData
+
+                for (int i = 0; i < 17; i++)
                 {
-                    Id = spellConfig.Id,
-                    Type = CardTypes.Spell,
-                    TypeSub = spellConfig.Type,
-                    Attr = spellConfig.Attr,
-                    Cost = spellConfig.Cost,
-                    Star = spellConfig.Star,
-                    Name = spellConfig.Name,
-                    Quality = spellConfig.Quality,
-                    JobId = spellConfig.JobId,
-                    IsSpecial = spellConfig.IsSpecial == 1,
-                    Remark = spellConfig.Remark
-                };
-                cardConfigDataDict.Add(spellConfig.Id, card);
-                if (spellConfig.IsSpecial == 0)
+                    raceCardDict[i].EndInit();
+                }
+
+                foreach (var weaponConfig in ConfigData.WeaponDict.Values)
                 {
-                    SpellTotal++;
-                    if (!spellConfig.Remark.Contains("未完成"))
+                    CardConfigData card = new CardConfigData
                     {
-                        SpellAvail++;
+                        Id = weaponConfig.Id,
+                        Type = CardTypes.Weapon,
+                        TypeSub = weaponConfig.Type,
+                        Attr = weaponConfig.Attr,
+                        Cost = weaponConfig.Cost,
+                        Star = weaponConfig.Star,
+                        Name = weaponConfig.Name,
+                        Quality = weaponConfig.Quality,
+                        JobId = weaponConfig.JobId,
+                        IsSpecial = weaponConfig.IsSpecial == 1,
+                        Remark = weaponConfig.Remark
+                    };
+                    cardConfigDataDict.Add(weaponConfig.Id, card);
+                    if (weaponConfig.IsSpecial == 0)
+                    {
+                        WeaponTotal++;
+                        if (weaponConfig.Remark != "未完成")
+                        {
+                            WeaponAvail++;
+                        }
                     }
                 }
-            }
-
-            jobCardDict = new Dictionary<int, List<int>>();
-            foreach (var jobId in ConfigData.JobDict.Keys)
-            {
-                jobCardDict.Add(jobId, new List<int>());
-            }
-
-            foreach (var cardConfigData in cardConfigDataDict.Values)
-            {
-                if (cardConfigData.JobId > 0 && !cardConfigData.IsSpecial)
+                foreach (var spellConfig in ConfigData.SpellDict.Values)
                 {
-                    jobCardDict[cardConfigData.JobId].Add(cardConfigData.Id);
+                    CardConfigData card = new CardConfigData
+                    {
+                        Id = spellConfig.Id,
+                        Type = CardTypes.Spell,
+                        TypeSub = spellConfig.Type,
+                        Attr = spellConfig.Attr,
+                        Cost = spellConfig.Cost,
+                        Star = spellConfig.Star,
+                        Name = spellConfig.Name,
+                        Quality = spellConfig.Quality,
+                        JobId = spellConfig.JobId,
+                        IsSpecial = spellConfig.IsSpecial == 1,
+                        Remark = spellConfig.Remark
+                    };
+                    cardConfigDataDict.Add(spellConfig.Id, card);
+                    if (spellConfig.IsSpecial == 0)
+                    {
+                        SpellTotal++;
+                        if (!spellConfig.Remark.Contains("未完成"))
+                        {
+                            SpellAvail++;
+                        }
+                    }
                 }
-            }
 
-            attrCardDict = new Dictionary<int, List<int>>();
-            for (int i = 0; i < 10; i++)
-            {
-                attrCardDict.Add(i, new List<int>());
-            }
-
-            foreach (var cardConfigData in cardConfigDataDict.Values)
-            {
-                if (!cardConfigData.IsSpecial)
+                jobCardDict = new Dictionary<int, CardInfoList>();
+                foreach (var jobId in ConfigData.JobDict.Keys)
                 {
-                    attrCardDict[cardConfigData.Attr].Add(cardConfigData.Id);
+                    jobCardDict.Add(jobId, new CardInfoList());
                 }
+
+                foreach (var cardConfigData in cardConfigDataDict.Values)
+                {
+                    if (cardConfigData.JobId > 0 && !cardConfigData.IsSpecial)
+                    {
+                        jobCardDict[cardConfigData.JobId].Add(cardConfigData.Id, cardConfigData.Quality);
+                    }
+                }
+
+                foreach (var jobId in ConfigData.JobDict.Keys)
+                {
+                    jobCardDict[jobId].EndInit();
+                }
+
+                attrCardDict = new Dictionary<int, CardInfoList>();
+                for (int i = 0; i < 10; i++)
+                {
+                    attrCardDict.Add(i, new CardInfoList());
+                }
+
+                foreach (var cardConfigData in cardConfigDataDict.Values)
+                {
+                    if (!cardConfigData.IsSpecial)
+                    {
+                        attrCardDict[cardConfigData.Attr].Add(cardConfigData.Id, cardConfigData.Quality);
+                    }
+                }
+
+                for (int i = 0; i < 10; i++)
+                {
+                    attrCardDict[i].EndInit();
+                }
+
+                allCardData = new CardInfoList();
+                foreach (var cardConfigData in cardConfigDataDict.Values)
+                {
+                    if (!cardConfigData.IsSpecial)
+                    {
+                        allCardData.Add(cardConfigData.Id, cardConfigData.Quality);
+                    }
+                }
+                allCardData.EndInit();
             }
+            catch (Exception e)
+            {
+                NLog.Warn(e);
+                throw;
+            }
+          
         }
 
         public static CardConfigData GetCardConfig(int id)
@@ -176,79 +277,79 @@ namespace TaleofMonsters.Config
             return new CardConfigData();
         }
 
-        public static int GetRandomCard(int seed)
+        public static int GetRandomCard(int seed, int quality=-1)
         {
-            int type = MathTool.GetRandom(10);
-            if (type < 6)
-            {
-                return MonsterBook.GetRandMonsterId();
-            }
-            else if (type < 8)
-            {
-                return WeaponBook.GetRandWeaponId();
-            }
-            else
-            {
-                return SpellBook.GetRandSpellId();
-            }
+            return allCardData.GetRandom(quality);
         }
 
-        public static int GetRandomJobCard(int jobId)
+        public static int GetRandomJobCard(int jobId, int quality=-1)
         {
-            List<int> rtData;
+            CardInfoList rtData;
             if (jobCardDict.TryGetValue(jobId, out rtData))
             {
-                if(rtData.Count == 0)//special job
+                if(rtData == null)//special job
                     return 0;
-                return rtData[MathTool.GetRandom(rtData.Count)];
+                return rtData.GetRandom(quality);
             }
             return 0;
         }
 
-        public static int GetRandomAttrCard(int attrId)
+        public static int GetRandomAttrCard(int attrId, int quality = -1)
         {
-            List<int> rtData;
+            CardInfoList rtData;
             if (attrCardDict.TryGetValue(attrId, out rtData))
             {
-                return rtData[MathTool.GetRandom(rtData.Count)];
+                return rtData.GetRandom(quality);
             }
             return 0;
         }
 
-        public static int GetRandomRaceCard(int raceId)
+        public static int GetRandomRaceCard(int raceId, int quality = -1)
         {
-            List<int> rtData;
+            CardInfoList rtData;
             if (raceCardDict.TryGetValue(raceId, out rtData))
             {
-                return rtData[MathTool.GetRandom(rtData.Count)];
+                return rtData.GetRandom(quality);
             }
             return 0;
         }
 
-        internal delegate int RandomCardSelectorDelegate(int raceId);
+        internal delegate int RandomCardSelectorDelegate(int raceId, int quality);
 
         public static int GetRateCard(int[] rate, RandomCardSelectorDelegate del, int funcInfo)
         {
-            int timeCount = 1;
-            int cardId = 0;
             while (true)
             {
-                int id = del(funcInfo);
-                var quality = GetCardConfig(id).Quality;
-                if (quality >= rate.Length)
+                int sum = 0;
+                foreach (var r in rate)
                 {
-                    continue;
+                    sum += r;
                 }
-                int lvinfo = rate[quality];
-                if (timeCount >= lvinfo && lvinfo != 0)
+                int roll = MathTool.GetRandom(sum);
+                int quality = 0;
+                sum = 0;
+                for (int i = 0; i < rate.Length; i++)
                 {
-                    cardId = id;
-                    break;
+                    sum += rate[i];
+                    if (roll < sum)
+                    {
+                        quality = i;
+                        break;
+                    }
                 }
-                timeCount++;
+
+                var cardId = del(funcInfo, quality);
+                if (cardId > 0)
+                {
+                    return cardId;
+                }
+                else
+                {
+                    NLog.Debug("GetRateCard cardId = 0 funcInfo " + funcInfo);
+                }
             }
 
-            return cardId;
+            return 0;
         }
     }
 }
