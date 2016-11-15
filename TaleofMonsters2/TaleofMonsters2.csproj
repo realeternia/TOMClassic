@@ -151,6 +151,7 @@
     <Compile Include="Controler\Resource\ImageManager.cs" />
     <Compile Include="Controler\World\TimeManager.cs" />
     <Compile Include="Controler\World\WorldInfoManager.cs" />
+    <Compile Include="Forms\Items\Regions\Decorators\RegionCoverDecorator.cs" />
     <Compile Include="ThirdParty\fmod.cs" />
     <Compile Include="DataType\Buffs\BuffImmuneGroup.cs" />
     <Compile Include="DataType\CustomTypes.cs" />

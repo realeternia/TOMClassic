@@ -32,7 +32,7 @@ namespace TaleofMonsters.Forms
             for (int i = 0; i < 4; i++)
             {
                 SubVirtualRegion subRegion = new ButtonRegion(i + 1, 16 + 45 * i, 39, 42, 23, i + 1, "ShopTag.JPG", "ShopTagOn.JPG");
-                subRegion.AddDecorator(new RegionTextDecorator(subRegion, 8,7,9,Color.White, false));
+                subRegion.AddDecorator(new RegionTextDecorator(8,7,9,Color.White, false));
                 virtualRegion.AddRegion(subRegion);
             }
             virtualRegion.SetRegionDecorator(1, 0, "礼包");

@@ -99,7 +99,7 @@ namespace TaleofMonsters.DataType.Items
                 return false;
             }
             form = new CardBagForm();
-            ((CardBagForm)form).Effect = itemConfig.RandomCardRate;
+            ((CardBagForm)form).SetEffect(5, itemConfig.RandomCardRate);
             MainForm.Instance.DealPanel(form);
 
             return true;

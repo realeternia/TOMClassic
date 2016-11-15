@@ -31,9 +31,9 @@ namespace TaleofMonsters.Forms.Items.Regions
                 }
             }
             
-            foreach (RegionTextDecorator decorator in decorators)
+            foreach (var decorator in decorators)
             {
-                decorator.Draw(g);
+                decorator.Draw(g, x, y, width, height);
             }
         }
 

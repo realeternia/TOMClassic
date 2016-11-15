@@ -49,7 +49,7 @@ namespace TaleofMonsters.Forms.MiniGame
             for (int i = 0; i < 5; i++)
             {
                 ButtonRegion region = new ButtonRegion(i + 1, 40 + 55 * i, 310, 50, 50, i + 1, string.Format("GameSanTi{0}.PNG", i + 1), string.Format("GameSanTi{0}On.PNG", i + 1));
-                region.AddDecorator(new RegionTextDecorator(region, 10, 30, 10));
+                region.AddDecorator(new RegionTextDecorator(10, 30, 10));
                 virtualRegion.AddRegion(region);
             }
             virtualRegion.SetRegionDecorator(1, 0, "浸泡");

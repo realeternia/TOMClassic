@@ -54,7 +54,7 @@ namespace TaleofMonsters.Forms.MagicBook
         private void InitVirtualRegion(int id, int x, int y)
         {
             var picRegion = new PictureRegion(id, x, y, 50, 50, id, VirtualRegionCellType.Item, 22031201);
-            picRegion.AddDecorator(new RegionTextDecorator(picRegion, 2, 35, 9, Color.White));
+            picRegion.AddDecorator(new RegionTextDecorator(2, 35, 9, Color.White));
             virtualRegion.AddRegion(picRegion);
         }
 

@@ -38,7 +38,7 @@ namespace TaleofMonsters.Forms
                 int xoff = (i%5)*cardWidth+19;
                 int yoff = (i / 5) * cardHeight+159;
                 SubVirtualRegion region = new PictureAnimRegion(i + 2, xoff, yoff, cardWidth, cardHeight, i + 2, VirtualRegionCellType.People, 0);
-                region.AddDecorator(new RegionTextDecorator(region, 0, 45, 9));
+                region.AddDecorator(new RegionTextDecorator(0, 45, 9));
                 virtualRegion.AddRegion(region);
             }
             types = GetPeopleAvailTypes();

@@ -42,7 +42,7 @@ namespace TaleofMonsters.Forms.Items.Regions
 
             foreach (IRegionDecorator decorator in decorators)
             {
-                decorator.Draw(g);
+                decorator.Draw(g, x, y, width, height);
             }
         }
 

@@ -66,7 +66,7 @@ namespace TaleofMonsters.DataType.User
             {
                 var myCard = GetDeckCardById(cid);
                 myCard.AddExp(1);//多余的卡转化为经验值
-                return card;//每种卡牌只能拥有1张
+                return myCard;//每种卡牌只能拥有1张
             }
 
             Cards.Add(card.BaseId, card);

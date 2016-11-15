@@ -37,7 +37,7 @@ namespace TaleofMonsters.Forms.MiniGame
             for (int i = 0; i < 4; i++)
             {
                 ButtonRegion region = new ButtonRegion(i + 1, 60 + 55 * i, 310, 50, 50, i + 1, "GameUpToNumber1.PNG", "GameUpToNumber1On.PNG");
-                region.AddDecorator(new RegionTextDecorator(region, 10, 20, 10));
+                region.AddDecorator(new RegionTextDecorator(10, 20, 10));
                 virtualRegion.AddRegion(region);
             }
             virtualRegion.SetRegionDecorator(1, 0, "牛肉");

@@ -45,7 +45,7 @@ namespace TaleofMonsters.Forms.Items.Regions
         {
             foreach (IRegionDecorator decorator in decorators)
             {
-                decorator.Draw(g);
+                decorator.Draw(g, x, y, width, height);
             }
         }
 
@@ -67,6 +67,10 @@ namespace TaleofMonsters.Forms.Items.Regions
             if (decorators.Count > idx)
             {
                 decorators[idx].SetState(value);
+            }
+            else
+            {
+                AddDecorator((IRegionDecorator)value);
             }
         }
 

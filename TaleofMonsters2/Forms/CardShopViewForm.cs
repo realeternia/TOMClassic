@@ -24,7 +24,7 @@ namespace TaleofMonsters.Forms
         private CardProduct[] products;
         private string timeText;
 
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
 
         public CardShopViewForm()
         {
@@ -34,17 +34,17 @@ namespace TaleofMonsters.Forms
             this.nlPageSelector1 = new NLPageSelector(this, 371, 438, 150);
             nlPageSelector1.PageChange += nlPageSelector1_PageChange;
 
-            virtualRegion = new VirtualRegion(this);
+            vRegion = new VirtualRegion(this);
             for (int i = 0; i < 3; i++)
             {
                 SubVirtualRegion subRegion = new ButtonRegion(i + 1, 16 + 45 * i, 40, 42, 23, i + 1, "ShopTag.JPG", "ShopTagOn.JPG");
-                subRegion.AddDecorator(new RegionTextDecorator(subRegion, 8, 7, 9, Color.White, false));
-                virtualRegion.AddRegion(subRegion);
+                subRegion.AddDecorator(new RegionTextDecorator(8, 7, 9, Color.White, false));
+                vRegion.AddRegion(subRegion);
             }
-            virtualRegion.SetRegionDecorator(1, 0, "怪物");
-            virtualRegion.SetRegionDecorator(2, 0, "武器");
-            virtualRegion.SetRegionDecorator(3, 0, "魔法");
-            virtualRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClick);
+            vRegion.SetRegionDecorator(1, 0, "怪物");
+            vRegion.SetRegionDecorator(2, 0, "武器");
+            vRegion.SetRegionDecorator(3, 0, "魔法");
+            vRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClick);
         }
 
         internal override void Init(int width, int height)
@@ -111,10 +111,10 @@ namespace TaleofMonsters.Forms
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    virtualRegion.SetRegionState(i + 1, RegionState.Free);
+                    vRegion.SetRegionState(i + 1, RegionState.Free);
                 }
 
-                virtualRegion.SetRegionState(info, RegionState.Blacken);
+                vRegion.SetRegionState(info, RegionState.Blacken);
                 shelf = info;
                 ChangeShop(shelf);
                 Invalidate(new Rectangle(16, 40, 45 * 3, 23));
@@ -152,7 +152,7 @@ namespace TaleofMonsters.Forms
             e.Graphics.DrawString("卡片商店", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
 
-            virtualRegion.Draw(e.Graphics);
+            vRegion.Draw(e.Graphics);
             foreach (CardShopItem ctl in itemControls)
             {
                 ctl.Draw(e.Graphics);

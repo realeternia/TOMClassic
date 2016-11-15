@@ -138,7 +138,7 @@ namespace TaleofMonsters.Controler.Battle
             foreach (var skillId in BattleManager.Instance.PlayerManager.LeftPlayer.HeroSkillList)
             {
                 var region = new PictureAnimRegion(index+1, 25, 518+index*45, 40, 40, skillId, VirtualRegionCellType.HeroSkill, skillId);
-                region.AddDecorator(new RegionBorderDecorator(region, Color.Lime));
+                region.AddDecorator(new RegionBorderDecorator(Color.Lime));
                 vRegion.AddRegion(region);
                 index++;
             }

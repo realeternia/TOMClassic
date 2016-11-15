@@ -35,7 +35,7 @@ namespace TaleofMonsters.Forms.MagicBook
         {
             RegionTextDecorator textControl;
             var region = new PictureAnimRegion(id, x, y, 76, 100, id, VirtualRegionCellType.Card, cardId);
-            textControl = new RegionTextDecorator(region, 3, 80, 10, Color.Lime, true);
+            textControl = new RegionTextDecorator(3, 80, 10, Color.Lime, true);
             textControl.SetState(text);
             region.AddDecorator(textControl);
             virtualRegion.AddRegion(region);

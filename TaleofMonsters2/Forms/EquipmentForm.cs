@@ -40,16 +40,16 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
             vRegion = new VirtualRegion(this);
             var r1 = new PictureRegion(1, 413, 69, 64, 64, 1, VirtualRegionCellType.Equip, UserProfile.InfoEquip.Equipon[0]);
-            r1.AddDecorator(new RegionBorderDecorator(r1, Color.Yellow));//头盔
+            r1.AddDecorator(new RegionBorderDecorator(Color.Yellow));//头盔
             vRegion.AddRegion(r1);
             r1 = new PictureRegion(2, 374, 151, 40, 40, 2, VirtualRegionCellType.Equip, UserProfile.InfoEquip.Equipon[1]);
-            r1.AddDecorator(new RegionBorderDecorator(r1, Color.Yellow));//武器
+            r1.AddDecorator(new RegionBorderDecorator(Color.Yellow));//武器
             vRegion.AddRegion(r1);
             r1 = new PictureRegion(3, 425, 151, 40, 40, 3, VirtualRegionCellType.Equip, UserProfile.InfoEquip.Equipon[2]);
-            r1.AddDecorator(new RegionBorderDecorator(r1, Color.Yellow));//防具
+            r1.AddDecorator(new RegionBorderDecorator(Color.Yellow));//防具
             vRegion.AddRegion(r1);
             r1 = new PictureRegion(4, 476, 151, 40, 40, 4, VirtualRegionCellType.Equip, UserProfile.InfoEquip.Equipon[3]);
-            r1.AddDecorator(new RegionBorderDecorator(r1, Color.Yellow));//饰品
+            r1.AddDecorator(new RegionBorderDecorator(Color.Yellow));//饰品
             vRegion.AddRegion(r1);
 
             vRegion.AddRegion(new SubVirtualRegion(10, 147, 107, 46, 44, 10));

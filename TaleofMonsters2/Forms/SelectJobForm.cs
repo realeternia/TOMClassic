@@ -56,7 +56,7 @@ namespace TaleofMonsters.Forms
 
             virtualRegion = new VirtualRegion(this);
             PictureRegion region = new PictureRegion(1, 178, 266, 48, 48, 1, VirtualRegionCellType.HeroSkill, 0);
-            region.AddDecorator(new RegionBorderDecorator(region, Color.DodgerBlue));
+            region.AddDecorator(new RegionBorderDecorator(Color.DodgerBlue));
             virtualRegion.AddRegion(region);
 
             virtualRegion.AddRegion(new PictureRegion(2, 238, 266, 48, 48, 2, VirtualRegionCellType.Card, 0));

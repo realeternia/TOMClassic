@@ -18,7 +18,7 @@ namespace TaleofMonsters.Forms.Items.Regions
         private readonly Dictionary<int, SubVirtualRegion> subRegions;
         private Control parent;
 
-        private int lastMouseX;
+        private int lastMouseX; //移动时记录下位置，供点击时使用
         private int lastMouseY;
 
         public bool Visible { get; set; }
@@ -41,49 +41,55 @@ namespace TaleofMonsters.Forms.Items.Regions
 
         public void SetRegionInfo(int id, int value)
         {
-            if (subRegions.ContainsKey(id))
+            SubVirtualRegion region;
+            if (subRegions.TryGetValue(id, out region))
             {
-                subRegions[id].SetKeyValue(value);
+                region.SetKeyValue(value);
             }
         }
 
         public void SetRegionType(int id, VirtualRegionCellType value)
         {
-            if (subRegions.ContainsKey(id))
+            SubVirtualRegion region;
+            if (subRegions.TryGetValue(id, out region))
             {
-                subRegions[id].SetType(value);
+                region.SetType(value);
             }
         }
 
         public void SetRegionState(int id, RegionState value)
         {
-            if (subRegions.ContainsKey(id))
+            SubVirtualRegion region;
+            if (subRegions.TryGetValue(id, out region))
             {
-                subRegions[id].SetState(value);
+                region.SetState(value);
             }
         }
 
         public void SetRegionDecorator(int id, int did, object value)
         {
-            if (subRegions.ContainsKey(id))
+            SubVirtualRegion region;
+            if (subRegions.TryGetValue(id, out region))
             {
-                subRegions[id].SetDecorator(did, value);
+                region.SetDecorator(did, value);
             }
         }
 
         public void SetRegionParm(int id, object value)
         {
-            if (subRegions.ContainsKey(id))
+            SubVirtualRegion region;
+            if (subRegions.TryGetValue(id, out region))
             {
-                subRegions[id].SetParm(value);
+                region.SetParm(value);
             }
         }
 
         public Point GetRegionPosition(int id)
         {
-            if (subRegions.ContainsKey(id))
+            SubVirtualRegion region;
+            if (subRegions.TryGetValue(id, out region))
             {
-                return new Point(subRegions[id].x+ selectRegion.width + 1, subRegions[id].y);
+                return new Point(region.x + selectRegion.width + 1, region.y);
             }
             return new Point(0,0);
         }

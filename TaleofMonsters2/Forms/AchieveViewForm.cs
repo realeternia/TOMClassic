@@ -29,7 +29,7 @@ namespace TaleofMonsters.Forms
             for (int i = 0; i < 5; i++)
             {
                 ButtonRegion region = new ButtonRegion(i + 1, 9, 35 + 30 * i, 74, 24, i + 1, "CommonButton1.JPG", "CommonButton1On.JPG");
-                region.AddDecorator(new RegionTextDecorator(region, 18, 7, 10, Color.Black));
+                region.AddDecorator(new RegionTextDecorator(18, 7, 10, Color.Black));
                 virtualRegion.AddRegion(region);
             }
             virtualRegion.SetRegionDecorator(1, 0, "常 规");
