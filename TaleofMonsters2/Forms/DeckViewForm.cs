@@ -374,7 +374,7 @@ namespace TaleofMonsters.Forms
             Invalidate();
         }
 
-        private void OnVRegionClicked(int info, MouseButtons button)
+        private void OnVRegionClicked(int info, int x, int y, MouseButtons button)
         {
             if (button == MouseButtons.Left)
             {

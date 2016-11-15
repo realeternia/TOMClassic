@@ -56,7 +56,7 @@ namespace TaleofMonsters.Forms
                 itemControls[i] = new CardShopItem(this, 12 + (i % 6) * 85, 62 + (i / 6) * 125, 85, 125);
                 itemControls[i].Init();
             }
-            virtualRegion_RegionClick(1, MouseButtons.Left);
+            virtualRegion_RegionClick(1,0,0, MouseButtons.Left);
 
             SoundManager.PlayBGM("TOM003.mp3");
             IsChangeBgm = true;
@@ -105,7 +105,7 @@ namespace TaleofMonsters.Forms
             }
         }
 
-        private void virtualRegion_RegionClick(int info, MouseButtons button)
+        private void virtualRegion_RegionClick(int info, int x, int y, MouseButtons button)
         {
             if (button == MouseButtons.Left)
             {

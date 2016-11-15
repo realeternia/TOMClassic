@@ -161,7 +161,7 @@ namespace TaleofMonsters.Forms
             tooltip.Hide(this);
         }
 
-        private void virtualRegion_RegionClick(int info, MouseButtons button)
+        private void virtualRegion_RegionClick(int info, int x, int y, MouseButtons button)
         {
             if(button == MouseButtons.Left )
             {

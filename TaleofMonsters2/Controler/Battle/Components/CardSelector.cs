@@ -33,7 +33,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             region.RegionClicked+=region_RegionClicked;
         }
 
-        private void region_RegionClicked(int info, MouseButtons button)
+        private void region_RegionClicked(int info, int x, int y, MouseButtons button)
         {
             if (region != null)
             {

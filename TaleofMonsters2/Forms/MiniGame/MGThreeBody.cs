@@ -14,11 +14,11 @@ namespace TaleofMonsters.Forms.MiniGame
 {
     internal partial class MGThreeBody : BasePanel
     {
-        private const int Work_Water = 1;
-        private const int Work_Dry = 2;
-        private const int Work_Popu = 3;
-        private const int Work_Food = 4;
-        private const int Work_Sci = 5;
+        private const int WorkWater = 1;
+        private const int WorkDry = 2;
+        private const int WorkPopu = 3;
+        private const int WorkFood = 4;
+        private const int WorkSci = 5;
 
         private VirtualRegion virtualRegion;
 
@@ -90,7 +90,7 @@ namespace TaleofMonsters.Forms.MiniGame
             sci = 0;
             isGoodEra = true;
             isFail = false;
-            changeWork(Work_Popu);            
+            ChangeWork(WorkPopu);            
         }
 
         public void EndGame()
@@ -123,7 +123,7 @@ namespace TaleofMonsters.Forms.MiniGame
             Close();
         }
 
-        private void changeWork(int id)
+        private void ChangeWork(int id)
         {
             selectWork = id;
             for (int i = 0; i < 5; i++)
@@ -134,7 +134,7 @@ namespace TaleofMonsters.Forms.MiniGame
             Invalidate(new Rectangle(xoff, yoff, 324, 244));
         }
 
-        private string getState()
+        private string GetState()
         {
             if (isGoodEra)
             {
@@ -172,7 +172,7 @@ namespace TaleofMonsters.Forms.MiniGame
             }
 
             int mood = Math.Max(30 - MathTool.GetRandom(eraGoodBad), 0);
-            if (selectWork == Work_Water)
+            if (selectWork == WorkWater)
             {
                 if (populationDry > 0)
                 {
@@ -181,7 +181,7 @@ namespace TaleofMonsters.Forms.MiniGame
                     populationDry -= change;
                 }
             }
-            else if (selectWork == Work_Dry)
+            else if (selectWork == WorkDry)
             {
                 if (population > 0)
                 {
@@ -190,15 +190,15 @@ namespace TaleofMonsters.Forms.MiniGame
                     populationDry += change;
                 }
             }
-            else if (selectWork == Work_Food && isGoodEra && population > 0)
+            else if (selectWork == WorkFood && isGoodEra && population > 0)
             {
                 food += population * 4 + population * mood / 20;
             }
-            else if (selectWork == Work_Popu && isGoodEra)
+            else if (selectWork == WorkPopu && isGoodEra)
             {
                 population += MathTool.GetRandom(5, 15)+population*(20+mood)/2000;
             }
-            else if (selectWork == Work_Sci && isGoodEra && population>0)
+            else if (selectWork == WorkSci && isGoodEra && population>0)
             {
                 sci += population + population * mood / 50;
             }
@@ -233,11 +233,11 @@ namespace TaleofMonsters.Forms.MiniGame
             Invalidate(new Rectangle(xoff, yoff, 324, 244));
         }
 
-        void virtualRegion_RegionClicked(int info, MouseButtons button)
+        void virtualRegion_RegionClicked(int info, int x, int y, MouseButtons button)
         {
             if (button == MouseButtons.Left)
             {
-                changeWork(info);
+                ChangeWork(info);
             }
         }
 
@@ -272,7 +272,7 @@ namespace TaleofMonsters.Forms.MiniGame
             virtualRegion.Draw(e.Graphics);
 
             font = new Font("宋体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            DrawShadeText(e.Graphics, string.Format("{0}({1})", isGoodEra ? "恒纪元" : "乱纪元", getState()), font, isGoodEra?Brushes.Lime: Brushes.OrangeRed, xoff + 165, 35 + yoff);
+            DrawShadeText(e.Graphics, string.Format("{0}({1})", isGoodEra ? "恒纪元" : "乱纪元", GetState()), font, isGoodEra?Brushes.Lime: Brushes.OrangeRed, xoff + 165, 35 + yoff);
             DrawShadeText(e.Graphics, string.Format("人口 {0}({1})", population, populationDry), font, Brushes.White, xoff+165, 65+yoff);
             DrawShadeText(e.Graphics, string.Format("食物 {0}", food), font, Brushes.White, xoff + 165, 95 + yoff);
             DrawShadeText(e.Graphics, string.Format("科技 {0}/5000", sci), font, Brushes.White, xoff + 165, 125 + yoff);            

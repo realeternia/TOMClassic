@@ -7,7 +7,7 @@ namespace TaleofMonsters.Forms.Items.Regions
     internal class VirtualRegion
     {
         public delegate void VRegionLeftEventHandler();
-        public delegate void VRegionClickEventHandler(int info, MouseButtons button);
+        public delegate void VRegionClickEventHandler(int info, int x, int y, MouseButtons button);
         public delegate void VRegionEnteredEventHandler(int info, int x, int y, int key);
 
         public event VRegionClickEventHandler RegionClicked;
@@ -17,6 +17,9 @@ namespace TaleofMonsters.Forms.Items.Regions
         private SubVirtualRegion selectRegion;
         private readonly Dictionary<int, SubVirtualRegion> subRegions;
         private Control parent;
+
+        private int lastMouseX;
+        private int lastMouseY;
 
         public bool Visible { get; set; }
 
@@ -80,13 +83,15 @@ namespace TaleofMonsters.Forms.Items.Regions
         {
             if (subRegions.ContainsKey(id))
             {
-                return new Point(subRegions[id].x, subRegions[id].y);
+                return new Point(subRegions[id].x+ selectRegion.width + 1, subRegions[id].y);
             }
             return new Point(0,0);
         }
 
         private void CheckMouseMove(int mouseX, int mouseY)
         {
+            lastMouseX = mouseX;
+            lastMouseY = mouseY;
             foreach (SubVirtualRegion subRegion in subRegions.Values)
             {
                 if (mouseX > subRegion.x && mouseX < subRegion.x + subRegion.width && mouseY > subRegion.y && mouseY < subRegion.y + subRegion.height)
@@ -122,7 +127,7 @@ namespace TaleofMonsters.Forms.Items.Regions
         {
             if (RegionClicked != null && selectRegion != null && selectRegion.id > 0)
             {
-                RegionClicked(selectRegion.info, button);
+                RegionClicked(selectRegion.info, lastMouseX, lastMouseY, button);
             }
         }
 

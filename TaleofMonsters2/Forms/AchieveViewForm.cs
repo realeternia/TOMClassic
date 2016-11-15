@@ -85,7 +85,7 @@ namespace TaleofMonsters.Forms
             Invalidate(new Rectangle(9, 35, 66, 30*5));
         }
 
-        void virtualRegion_RegionClicked(int info, MouseButtons button)
+        void virtualRegion_RegionClicked(int info, int x, int y, MouseButtons button)
         {
             if (button == MouseButtons.Left)
             {

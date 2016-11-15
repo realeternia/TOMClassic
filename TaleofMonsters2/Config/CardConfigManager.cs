@@ -5,9 +5,6 @@ using NarlonLib.Log;
 using NarlonLib.Math;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards.Monsters;
-using TaleofMonsters.DataType.Cards.Spells;
-using TaleofMonsters.DataType.Cards.Weapons;
 
 namespace TaleofMonsters.Config
 {

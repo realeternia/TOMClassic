@@ -144,7 +144,7 @@ namespace TaleofMonsters.Forms.MiniGame
             return mk;
         }
 
-        void virtualRegion_RegionClicked(int info, MouseButtons button)
+        void virtualRegion_RegionClicked(int info, int x, int y, MouseButtons button)
         {
             if (button == MouseButtons.Left)
             {

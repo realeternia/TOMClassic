@@ -508,7 +508,7 @@ namespace TaleofMonsters.Controler.Battle
             }
         }
 
-        private void OnVRegionClick(int info, MouseButtons button)
+        private void OnVRegionClick(int info, int x, int y, MouseButtons button)
         {
             if (info > 0)
             {

@@ -74,7 +74,7 @@ namespace TaleofMonsters.Forms
             Close();
         }
 
-        private void OnVRegionClick(int info, MouseButtons button)
+        private void OnVRegionClick(int info, int x, int y, MouseButtons button)
         {
             if (info > 0)//说明是button
             {
@@ -88,6 +88,9 @@ namespace TaleofMonsters.Forms
                     coverEffect[info-1] = new CoverEffect(EffectBook.GetEffect("transmit"), new Point(cardPos[(info - 1) * 2], cardPos[(info - 1) * 2+1]), new Size(120, 150));
                     coverEffect[info - 1].PlayOnce = true;
                     Invalidate();
+
+                    var pos = vRegion.GetRegionPosition(info);
+                    OnVRegionEntered(info, pos.X, pos.Y, cardId);
                 }
             }
         }
@@ -140,6 +143,10 @@ namespace TaleofMonsters.Forms
                 {
                     Image image = CardAssistant.GetCard(pickCardId).GetPreview(CardPreviewType.Normal, new int[] { });
                     tooltip.Show(image, this, x, y);
+                }
+                else
+                {
+                    tooltip.Hide(this);
                 }
             }
             else

@@ -52,7 +52,7 @@ namespace TaleofMonsters.Forms
                 itemControls[i] = new GameShopItem(this, 11 + (i % 3) * 170, 61 + (i / 3) * 101, 170, 101);
                 itemControls[i].Init();
             }
-            virtualRegion_RegionClick(1, MouseButtons.Left);
+            virtualRegion_RegionClick(1, 0, 0, MouseButtons.Left);
         }
 
         private void RefreshInfo()
@@ -63,7 +63,7 @@ namespace TaleofMonsters.Forms
             }
         }
 
-        private void virtualRegion_RegionClick(int info, MouseButtons button)
+        private void virtualRegion_RegionClick(int info, int x, int y, MouseButtons button)
         {
             if (button == MouseButtons.Left)
             {

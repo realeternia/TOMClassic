@@ -61,7 +61,7 @@ namespace TaleofMonsters.Forms.MagicBook
             Invalidate();
         }
 
-        private void virtualRegion_RegionClicked(int info, MouseButtons button)
+        private void virtualRegion_RegionClicked(int info, int x, int y, MouseButtons button)
         {
             switch (info)
             {

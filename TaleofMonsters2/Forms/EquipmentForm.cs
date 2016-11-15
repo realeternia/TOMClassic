@@ -25,7 +25,7 @@ namespace TaleofMonsters.Forms
         private Bitmap tempImage;
         private ImageToolTip tooltip = SystemToolTip.Instance;
         private HSCursor myCursor;
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
 
         private PopMenuEquip popMenuEquip;
         private PoperContainer popContainer;
@@ -38,38 +38,38 @@ namespace TaleofMonsters.Forms
         {
             InitializeComponent();
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
-            virtualRegion = new VirtualRegion(this);
+            vRegion = new VirtualRegion(this);
             var r1 = new PictureRegion(1, 413, 69, 64, 64, 1, VirtualRegionCellType.Equip, UserProfile.InfoEquip.Equipon[0]);
             r1.AddDecorator(new RegionBorderDecorator(r1, Color.Yellow));//头盔
-            virtualRegion.AddRegion(r1);
+            vRegion.AddRegion(r1);
             r1 = new PictureRegion(2, 374, 151, 40, 40, 2, VirtualRegionCellType.Equip, UserProfile.InfoEquip.Equipon[1]);
             r1.AddDecorator(new RegionBorderDecorator(r1, Color.Yellow));//武器
-            virtualRegion.AddRegion(r1);
+            vRegion.AddRegion(r1);
             r1 = new PictureRegion(3, 425, 151, 40, 40, 3, VirtualRegionCellType.Equip, UserProfile.InfoEquip.Equipon[2]);
             r1.AddDecorator(new RegionBorderDecorator(r1, Color.Yellow));//防具
-            virtualRegion.AddRegion(r1);
+            vRegion.AddRegion(r1);
             r1 = new PictureRegion(4, 476, 151, 40, 40, 4, VirtualRegionCellType.Equip, UserProfile.InfoEquip.Equipon[3]);
             r1.AddDecorator(new RegionBorderDecorator(r1, Color.Yellow));//饰品
-            virtualRegion.AddRegion(r1);
+            vRegion.AddRegion(r1);
 
-            virtualRegion.AddRegion(new SubVirtualRegion(10, 147, 107, 46, 44, 10));
-            virtualRegion.AddRegion(new SubVirtualRegion(11, 200, 107, 46, 44, 11));
-            virtualRegion.AddRegion(new SubVirtualRegion(12, 253, 107, 46, 44, 12));
-            virtualRegion.AddRegion(new SubVirtualRegion(13, 306, 107, 46, 44, 13));
-            virtualRegion.AddRegion(new SubVirtualRegion(14, 147, 170, 46, 44, 14));
-            virtualRegion.AddRegion(new SubVirtualRegion(15, 200, 170, 46, 44, 15));
-            virtualRegion.AddRegion(new SubVirtualRegion(16, 253, 170, 46, 44, 16));
+            vRegion.AddRegion(new SubVirtualRegion(10, 147, 107, 46, 44, 10));
+            vRegion.AddRegion(new SubVirtualRegion(11, 200, 107, 46, 44, 11));
+            vRegion.AddRegion(new SubVirtualRegion(12, 253, 107, 46, 44, 12));
+            vRegion.AddRegion(new SubVirtualRegion(13, 306, 107, 46, 44, 13));
+            vRegion.AddRegion(new SubVirtualRegion(14, 147, 170, 46, 44, 14));
+            vRegion.AddRegion(new SubVirtualRegion(15, 200, 170, 46, 44, 15));
+            vRegion.AddRegion(new SubVirtualRegion(16, 253, 170, 46, 44, 16));
 
             for (int i = 0; i < 60; i++)
             {
                 var region = new PictureRegion(20 + i, 38 + (i % 15) * 32, 227 + (i / 15) * 32, 32, 32, 20+i, VirtualRegionCellType.Equip, UserProfile.InfoEquip.Equipoff[i]);
              //   region.AddDecorator(new RegionBorderDecorator(region, Color.Yellow));
-                virtualRegion.AddRegion(region);
+                vRegion.AddRegion(region);
             }
 
-            virtualRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
-            virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
-            virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+            vRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
+            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
+            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
             tempImage = new Bitmap(160, 160);
             selectTar = -1;
             myCursor = new HSCursor(this);
@@ -141,7 +141,7 @@ namespace TaleofMonsters.Forms
             tooltip.Hide(this);
         }
 
-        private void virtualRegion_RegionClicked(int info, MouseButtons button)
+        private void virtualRegion_RegionClicked(int info, int x, int y, MouseButtons button)
         {
             tooltip.Hide(this);
             int id = info;
@@ -162,9 +162,9 @@ namespace TaleofMonsters.Forms
                             {
                                 int oldid = UserProfile.InfoEquip.Equipon[id - 1];
                                 UserProfile.InfoEquip.Equipon[id - 1] = UserProfile.InfoEquip.Equipoff[selectTar];
-                                virtualRegion.SetRegionInfo(id, UserProfile.InfoEquip.Equipon[id - 1]);
+                                vRegion.SetRegionInfo(id, UserProfile.InfoEquip.Equipon[id - 1]);
                                 UserProfile.InfoEquip.Equipoff[selectTar] = oldid;
-                                virtualRegion.SetRegionInfo(selectTar + 20, oldid);
+                                vRegion.SetRegionInfo(selectTar + 20, oldid);
                                 UserProfile.InfoEquip.OnEquipOn(UserProfile.InfoEquip.Equipon[id - 1]);//触发事件
                                 RefreshEquip();
                                 selectTar = -1;
@@ -178,9 +178,9 @@ namespace TaleofMonsters.Forms
                         if (i == -1)//没有空格了
                             return;
                         UserProfile.InfoEquip.Equipoff[i] = UserProfile.InfoEquip.Equipon[id - 1];
-                        virtualRegion.SetRegionInfo(i + 20, UserProfile.InfoEquip.Equipoff[i]);
+                        vRegion.SetRegionInfo(i + 20, UserProfile.InfoEquip.Equipoff[i]);
                         UserProfile.InfoEquip.Equipon[id - 1] = 0;
-                        virtualRegion.SetRegionInfo(id, 0);
+                        vRegion.SetRegionInfo(id, 0);
                         UserProfile.InfoEquip.OnEquipOff(UserProfile.InfoEquip.Equipoff[i]);//触发事件
                         RefreshEquip();
                     }
@@ -206,8 +206,8 @@ namespace TaleofMonsters.Forms
                             UserProfile.InfoEquip.Equipoff[tar] = UserProfile.InfoEquip.Equipoff[selectTar];
                             UserProfile.InfoEquip.Equipoff[selectTar] = 0;
 
-                            virtualRegion.SetRegionInfo(tar + 20, UserProfile.InfoEquip.Equipoff[tar]);
-                            virtualRegion.SetRegionInfo(selectTar + 20, 0);
+                            vRegion.SetRegionInfo(tar + 20, UserProfile.InfoEquip.Equipoff[tar]);
+                            vRegion.SetRegionInfo(selectTar + 20, 0);
                         }
                         else//交换
                         {
@@ -215,8 +215,8 @@ namespace TaleofMonsters.Forms
                             UserProfile.InfoEquip.Equipoff[tar] = UserProfile.InfoEquip.Equipoff[selectTar];
                             UserProfile.InfoEquip.Equipoff[selectTar] = oldid;
 
-                            virtualRegion.SetRegionInfo(tar + 20, UserProfile.InfoEquip.Equipoff[tar]);
-                            virtualRegion.SetRegionInfo(selectTar + 20, UserProfile.InfoEquip.Equipoff[selectTar]);
+                            vRegion.SetRegionInfo(tar + 20, UserProfile.InfoEquip.Equipoff[tar]);
+                            vRegion.SetRegionInfo(selectTar + 20, UserProfile.InfoEquip.Equipoff[selectTar]);
                         }
                         selectTar = -1;
                     }
@@ -240,15 +240,15 @@ namespace TaleofMonsters.Forms
                     #endregion
                     popMenuEquip.AutoResize();
                     popMenuEquip.EquipIndex = tar;
-                    var pos = virtualRegion.GetRegionPosition(tar + 20);
-                    popContainer.Show(this, pos.X+32, pos.Y);   
+                    var pos = vRegion.GetRegionPosition(tar + 20);
+                    popContainer.Show(this, pos.X, pos.Y);   
                 }
             }
         }
 
         public void MenuRefresh(int id)
         {
-            virtualRegion.SetRegionInfo(id + 20, UserProfile.InfoEquip.Equipoff[id]);
+            vRegion.SetRegionInfo(id + 20, UserProfile.InfoEquip.Equipoff[id]);
             Invalidate();
         }
 
@@ -278,9 +278,9 @@ namespace TaleofMonsters.Forms
             if (!show)
                 return;
 
-            if (virtualRegion != null)
+            if (vRegion != null)
             {
-                virtualRegion.Draw(e.Graphics);
+                vRegion.Draw(e.Graphics);
             }
 
             JobConfig jobConfig = ConfigDatas.ConfigData.GetJobConfig(UserProfile.InfoBasic.Job);
