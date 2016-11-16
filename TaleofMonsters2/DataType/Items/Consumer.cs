@@ -72,14 +72,6 @@ namespace TaleofMonsters.DataType.Items
             {
                 UserProfile.InfoBasic.Ap += itemConfig.GainAp;
             }
-            if (itemConfig.RandomCardRate2 != null && itemConfig.RandomCardRate2.Length > 0)
-            {
-                var type = itemConfig.RandomCardRate2[0];
-                var info = itemConfig.RandomCardRate2[1];
-
-                var cardId = CardConfigManager.GetRateCard(itemConfig.RandomCardRate, CardConfigManager.GetRandomAttrCard, info);
-                UserProfile.InfoCard.AddCard(cardId);
-            }
 
             return true;
         }
@@ -99,7 +91,7 @@ namespace TaleofMonsters.DataType.Items
                 return false;
             }
             form = new CardBagForm();
-            ((CardBagForm)form).SetEffect(5, itemConfig.RandomCardRate);
+            ((CardBagForm)form).SetEffect(itemConfig.Id);
             MainForm.Instance.DealPanel(form);
 
             return true;

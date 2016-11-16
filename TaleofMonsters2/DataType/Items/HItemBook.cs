@@ -99,6 +99,21 @@ namespace TaleofMonsters.DataType.Items
             tipData.AddTextNewLine(string.Format("       等级:{0}", hItemConfig.Level), "White");
             tipData.AddTextNewLine("", "White");
             tipData.AddTextLines(hItemConfig.Descript, "White",20,true);
+            if (hItemConfig.SubType == HItemTypes.RandomCard)
+            {
+                var consumerConfig = ConfigData.GetItemConsumerConfig(hItemConfig.Id);
+                int totalRate = 0;
+                foreach (var rate in consumerConfig.RandomCardRate)
+                    totalRate += rate;
+                tipData.AddLine();
+                tipData.AddTextNewLine("抽卡概率", "White");
+                tipData.AddTextNewLine("", "White");
+                tipData.AddImage(HSIcons.GetIconsByEName("gem5"));
+                tipData.AddText(string.Format("{0:0}%  ", (float)consumerConfig.RandomCardRate[3]*100/ totalRate), "White");
+                tipData.AddImage(HSIcons.GetIconsByEName("gem4"));
+                tipData.AddText(string.Format("{0:0}%  ", (float)consumerConfig.RandomCardRate[2] * 100 / totalRate), "White");
+                tipData.AddLine();
+            }
             tipData.AddTextNewLine(string.Format("出售价格:{0}", hItemConfig.Value), "Yellow");
             tipData.AddImage(HSIcons.GetIconsByEName("res1"));
             tipData.AddImageXY(GetHItemImage(id), 8, 8, 48, 48, 7, 24, 32, 32);

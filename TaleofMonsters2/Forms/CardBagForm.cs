@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using ConfigDatas;
 using NarlonLib.Control;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Loader;
@@ -23,7 +24,7 @@ namespace TaleofMonsters.Forms
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
         private int[] cardPos;
         private CoverEffect[] coverEffect;
-        private int[] effect;
+        private int itemId; //卡包id
         private int cardCount;
 
         public CardBagForm()
@@ -46,28 +47,28 @@ namespace TaleofMonsters.Forms
             IsChangeBgm = true;
         }
 
-        internal void SetEffect(int count, int[] eff)
+        internal void SetEffect(int item)
         {
-            effect = eff;
-            cardCount = count;
+            itemId = item;
+            cardCount = ConfigData.GetItemConsumerConfig(itemId).RandomCardCatalog[0];
 
-            coverEffect = new CoverEffect[count];
-            cardOpenArray = new int[count];
+            coverEffect = new CoverEffect[cardCount];
+            cardOpenArray = new int[cardCount];
 
-            cardPos = new int[count * 2];
-            for (int i = 0; i < count; i++)
+            cardPos = new int[cardCount * 2];
+            for (int i = 0; i < cardCount; i++)
             {
                 cardPos[i * 2] = 20 + 135 * i;
                 cardPos[i * 2 + 1] = 40;
             }
 
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < cardCount; i++)
             {
                 var region = new SubVirtualRegion(1 + i, cardPos[i * 2], cardPos[i * 2 + 1], 120, 150, 1 + i);
                 vRegion.AddRegion(region);
             }
 
-            Width = 135*count + 20;
+            Width = 135* cardCount + 20;
         }
 
         internal override void OnFrame(int tick)
@@ -190,7 +191,12 @@ namespace TaleofMonsters.Forms
 
         private int UseScard()
         {
-            return CardConfigManager.GetRateCard(effect, CardConfigManager.GetRandomCard, 0);
+            var itemConfig = ConfigData.GetItemConsumerConfig(itemId);
+            var type = itemConfig.RandomCardCatalog[1];
+            var info = itemConfig.RandomCardCatalog[2];
+            if (type == 1)
+                return CardConfigManager.GetRateCard(itemConfig.RandomCardRate, CardConfigManager.GetRandomAttrCard, info);
+            return CardConfigManager.GetRateCard(itemConfig.RandomCardRate, CardConfigManager.GetRandomCard, 0);
         }
     }
 }

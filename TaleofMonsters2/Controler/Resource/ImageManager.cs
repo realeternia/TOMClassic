@@ -26,20 +26,20 @@ namespace TaleofMonsters.Controler.Resource
                 lastCompressTime = TimeTool.DateTimeToUnixTime(DateTime.Now);
             }
 
-            return images.ContainsKey(path) && images[path].image != null;
+            return images.ContainsKey(path) && images[path].Image != null;
         }
 
         static public Image GetImage(string path)
         {
-            images[path].time = TimeTool.DateTimeToUnixTime(DateTime.Now);
-            return images[path].image ?? nullImage;
+            images[path].Time = TimeTool.DateTimeToUnixTime(DateTime.Now);
+            return images[path].Image ?? nullImage;
         }
 
         static public void AddImage(string path, Image img)
         {
             ImageItem item = new ImageItem();
-            item.image = img;
-            item.time = TimeTool.DateTimeToUnixTime(DateTime.Now);
+            item.Image = img;
+            item.Time = TimeTool.DateTimeToUnixTime(DateTime.Now);
             if (images.ContainsKey(path))
             {
                 images[path] = item;
@@ -56,14 +56,14 @@ namespace TaleofMonsters.Controler.Resource
             int now = TimeTool.DateTimeToUnixTime(DateTime.Now);
             foreach (ImageItem item in images.Values)
             {
-                if (item.image!=null)
+                if (item.Image!=null)
                 {
-                    int size = item.image.Width*item.image.Height;
+                    int size = item.Image.Width*item.Image.Height;
                     int time = 60*10000/size;
-                    if (item.time < now - time)
+                    if (item.Time < now - time)
                     {
-                        item.image.Dispose();
-                        item.image = null;
+                        item.Image.Dispose();
+                        item.Image = null;
                         count--;
                     }
                 }

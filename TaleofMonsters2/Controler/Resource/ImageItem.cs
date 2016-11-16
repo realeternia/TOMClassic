@@ -2,14 +2,14 @@
 
 namespace TaleofMonsters.Controler.Resource
 {
-    class ImageItem
+    internal class ImageItem
     {
-        public Image image;
-        public int time;
+        public Image Image;
+        public int Time;
 
         public override string ToString()
         {
-            return string.Format("{0}x{1} {2}", image != null ? image.Width : 0, image != null ? image.Height : 0, time);
+            return string.Format("{0}x{1} {2}", Image != null ? Image.Width : 0, Image != null ? Image.Height : 0, Time);
         }
     }
 }
