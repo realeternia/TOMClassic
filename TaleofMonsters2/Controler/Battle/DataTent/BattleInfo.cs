@@ -66,8 +66,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
         public int MonsterAdd { get; set; }
         public int WeaponAdd { get; set; }
         public int SpellAdd { get; set; }
-        public int HeroAdd { get; set; }
         public int Kill { get; set; }
-        public int HeroKill { get; set; }
+        public int DamageTotal { get; set; }
     }
 }

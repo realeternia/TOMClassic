@@ -11,7 +11,7 @@ namespace TaleofMonsters.DataType.Mazes
 {
     internal class MazeItem
     {
-        public int Id { get; }
+        public int Id { get; private set; }
         public MazeItemConfig MazeItemConfig;
         public int mlevel;
         private int[] infos;

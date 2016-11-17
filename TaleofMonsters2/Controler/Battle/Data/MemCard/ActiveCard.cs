@@ -9,8 +9,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
 {
     internal class ActiveCard
     {
-        public int Id { get; } //唯一的id
-        public DeckCard Card { get; }
+        public int Id { get; private set; } //唯一的id
+        public DeckCard Card { get; private set; }
 
         public int Mp {
             get

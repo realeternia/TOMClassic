@@ -75,12 +75,13 @@ namespace TaleofMonsters.Controler.Battle
                 resource[0] = resource[0]*(100 + battleInfo.GoldRatePlus)/100;
                 exp = exp*(100 + battleInfo.ExpRatePlus)/100;
 
+               // battleInfo.Items.Insert();
                 for (int i = 0; i < battleInfo.Items.Count; i++)
                 {
                     rewardItemList.Add(battleInfo.Items[i]);
-                    if (i < 4)
+                    if (i < 5)
                     {
-                        virtualRegion.SetRegionInfo(i + 1, battleInfo.Items[i]); //前4个掉落可以显示出来
+                        virtualRegion.SetRegionInfo(i + 1, battleInfo.Items[i]); //前5个掉落可以显示出来
                     }
                 }
 
@@ -197,17 +198,15 @@ namespace TaleofMonsters.Controler.Battle
                 BattleInfo battleInfo = BattleManager.Instance.BattleInfo;
                 e.Graphics.DrawString(string.Format("{0,2:D}", battleInfo.Left.MonsterAdd), font2, Brushes.White, 159, 103);
                 e.Graphics.DrawString(string.Format("{0,2:D}", battleInfo.Left.SpellAdd), font2, Brushes.White, 159, 123);
-                e.Graphics.DrawString(string.Format("{0,2:D}", battleInfo.Left.HeroAdd), font2, Brushes.White, 259, 103);
+                e.Graphics.DrawString(string.Format("{0,2:D}", battleInfo.Left.Kill), font2, Brushes.White, 259, 103);
                 e.Graphics.DrawString(string.Format("{0,2:D}", battleInfo.Left.WeaponAdd), font2, Brushes.White, 259, 123);
-                e.Graphics.DrawString(string.Format("{0,2:D}", battleInfo.Left.Kill), font2, Brushes.White, 159, 143);
-                e.Graphics.DrawString(string.Format("{0,2:D}", battleInfo.Left.HeroKill), font2, Brushes.White, 259, 143);
+                e.Graphics.DrawString(GetDamageStr(battleInfo.Left.DamageTotal) , font2, Brushes.White, 159, 143);
 
                 e.Graphics.DrawString(string.Format("{0,2:D}", battleInfo.Right.MonsterAdd), font2, Brushes.White, 373, 103);
                 e.Graphics.DrawString(string.Format("{0,2:D}", battleInfo.Right.SpellAdd), font2, Brushes.White, 373, 123);
-                e.Graphics.DrawString(string.Format("{0,2:D}", battleInfo.Right.HeroAdd), font2, Brushes.White, 473, 103);
+                e.Graphics.DrawString(string.Format("{0,2:D}", battleInfo.Right.Kill), font2, Brushes.White, 473, 103);
                 e.Graphics.DrawString(string.Format("{0,2:D}", battleInfo.Right.WeaponAdd), font2, Brushes.White, 473, 123);
-                e.Graphics.DrawString(string.Format("{0,2:D}", battleInfo.Right.Kill), font2, Brushes.White, 373, 143);
-                e.Graphics.DrawString(string.Format("{0,2:D}", battleInfo.Right.HeroKill), font2, Brushes.White, 473, 143);
+                e.Graphics.DrawString(GetDamageStr(battleInfo.Right.DamageTotal), font2, Brushes.White, 373, 143);
 
                 TimeSpan span = battleInfo.EndTime - battleInfo.StartTime;
                 e.Graphics.DrawString(string.Format("{0:00}:{1:00}:{2:00}", span.Hours, span.Minutes, span.Seconds), font2, Brushes.White, 158, 195);
@@ -223,5 +222,18 @@ namespace TaleofMonsters.Controler.Battle
             }
         }
 
+        private static string GetDamageStr(int dam)
+        {
+            if (dam < 100)
+            {
+                return string.Format("{0,2:D}", dam);
+            }
+            if (dam < 1000)
+            {
+                return dam.ToString();
+            }
+            return string.Format("{0}K", dam/1000);
+        }
+        
     }
 }

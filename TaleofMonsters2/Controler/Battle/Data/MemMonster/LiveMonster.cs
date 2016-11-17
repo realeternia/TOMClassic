@@ -319,7 +319,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                         UserProfile.Profile.OnKillMonster(Avatar.MonsterConfig.Star, Avatar.MonsterConfig.Type, Avatar.MonsterConfig.Type);
                     }
                 }
-                BattleManager.Instance.BattleInfo.GetPlayer(!IsLeft).HeroKill++;
                 OwnerPlayer.IsAlive = false;
             }
             else
@@ -487,6 +486,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         private void OnDamage(HitDamage damage)
         {
+            BattleManager.Instance.BattleInfo.GetPlayer(!IsLeft).DamageTotal+=damage.Value;
             BattleManager.Instance.FlowWordQueue.Add(new FlowDamageInfo(damage, CenterPosition), false);//掉血显示
         }
 
