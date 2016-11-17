@@ -75,7 +75,11 @@ namespace TaleofMonsters.Controler.Battle
                 resource[0] = resource[0]*(100 + battleInfo.GoldRatePlus)/100;
                 exp = exp*(100 + battleInfo.ExpRatePlus)/100;
 
-               // battleInfo.Items.Insert();
+                var dropItemId = drop.GetDropItem();
+                if (dropItemId != 0)
+                {
+                    battleInfo.Items.Insert(0, dropItemId);
+                }
                 for (int i = 0; i < battleInfo.Items.Count; i++)
                 {
                     rewardItemList.Add(battleInfo.Items[i]);

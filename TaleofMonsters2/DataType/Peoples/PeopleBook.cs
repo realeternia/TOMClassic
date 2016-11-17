@@ -44,12 +44,12 @@ namespace TaleofMonsters.DataType.Peoples
             //tipData.AddTextNewLine(string.Format("法术 {0,3:D}  技巧 {1,3:D}", attrs[2], attrs[3]), "Lime");
             //tipData.AddTextNewLine(string.Format("速度 {0,3:D}  幸运 {1,3:D}", attrs[4], attrs[5]), "Lime");
             //tipData.AddTextNewLine(string.Format("体质 {0,3:D}  生存 {1,3:D}", attrs[6], attrs[7]), "Lime");
-            tipData.AddLine();
-            tipData.AddTextNewLine("王牌", "White", 30);
-            foreach (int cid in peopleConfig.Cards)
-            {
-                tipData.AddImage(MonsterBook.GetMonsterImage(cid, 40, 40), 28);
-            }
+            //tipData.AddLine();
+            //tipData.AddTextNewLine("王牌", "White", 30);
+            //foreach (int cid in peopleConfig.Cards)
+            //{
+            //    tipData.AddImage(MonsterBook.GetMonsterImage(cid, 40, 40), 28);
+            //}
             return tipData.Image;
         }
 

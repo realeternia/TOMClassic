@@ -1,18 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Math;
-using TaleofMonsters.Core;
+using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.DataType.Peoples
 {
     class PeopleDrop
     {
-        private RLIdValueList dropIds;
         private List<DropResource> resources = new List<DropResource>();
+        private PeopleConfig peopleConfig;
 
         public PeopleDrop(int id)
         {
-            PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(id);
+            peopleConfig = ConfigData.GetPeopleConfig(id);
 
             DropResource gold = new DropResource();
             gold.id = 1;
@@ -31,19 +32,28 @@ namespace TaleofMonsters.DataType.Peoples
             }
         }
 
-        public int GetDropCard(IntPair[] cardRates)
+        public int GetDropItem()
         {
-            RandomMaker maker = new RandomMaker();
-            for (int i = 0; i < dropIds.Count; i++)
+            if (peopleConfig.DropItem == null || peopleConfig.DropItem.Length == 0)
+                return 0;
+
+            int roll = MathTool.GetRandom(1000);
+            int sum = 0;
+            foreach (var itemId in peopleConfig.DropItem)
             {
-                var cardData = dropIds[i];
-                maker.Add(cardData.Id, cardData.Value*10);
+                sum += GetItemDropRate(itemId);
+                if (roll <= sum)
+                    return itemId;
             }
-            foreach (IntPair intPair in cardRates)
-            {
-                maker.Add(intPair.Type, intPair.Value);
-            }
-            return maker.Process(1)[0];
+            return 0;
+        }
+
+        private int GetItemDropRate(int itemId)
+        {
+            int rate = ConfigData.GetHItemConfig(itemId).Rare;
+            int dropRate = Math.Max(1, 12 - rate*2)*10;
+            int lvDiff = (peopleConfig.Level + 10)*100/(UserProfile.InfoBasic.Level + 10);
+            return dropRate*lvDiff/100;//千分之
         }
 
         public int[] GetDropResource()

@@ -6,6 +6,7 @@ namespace TaleofMonsters.Core
         public const int CardSlotMaxCount = 10;
         public const int DeckCardCount = 30;//一套牌有几张
         public const int CardLimit = 1;//同种卡牌拥有的上限
+        public const int DiamondToGold = 20; //钻石黄金比值
 
         public const int CardShopDura = 24*3600;
         public const int MergeWeaponDura = 6*3600; //锻造系统重置时间

@@ -97,7 +97,8 @@ namespace TaleofMonsters.Forms.Items
         private void pictureBoxBuy_Click(object sender, EventArgs e)
         {
             GameShopConfig gameShopConfig = ConfigData.GetGameShopConfig(productId);
-            PopBuyProduct.Show(gameShopConfig.ItemId, gameShopConfig.Type, gameShopConfig.Price);
+            var itmConfig = ConfigData.GetHItemConfig(gameShopConfig.ItemId);
+            PopBuyProduct.Show(gameShopConfig.ItemId, gameShopConfig.Type,Math.Max(1, itmConfig.Value/GameConstants.DiamondToGold));
         }
 
         public void Draw(Graphics g)
@@ -127,7 +128,8 @@ namespace TaleofMonsters.Forms.Items
                 Brush brush = new SolidBrush(Color.FromName(fontcolor));
                 g.DrawString(name, fontsong, brush, x + 76, y + 9);
                 brush.Dispose();
-                g.DrawString(string.Format("{0,3:D}", gameShopConfig.Price), fontsong, Brushes.PaleTurquoise, x + 80, y + 37);
+                var itmConfig = ConfigData.GetHItemConfig(gameShopConfig.ItemId);
+                g.DrawString(string.Format("{0,3:D}", Math.Max(1, itmConfig.Value / GameConstants.DiamondToGold)), fontsong, Brushes.PaleTurquoise, x + 80, y + 37);
                 fontsong.Dispose();
                 g.DrawImage(HSIcons.GetIconsByEName("res8"), x + 110, y + 35, 16, 16);
 
