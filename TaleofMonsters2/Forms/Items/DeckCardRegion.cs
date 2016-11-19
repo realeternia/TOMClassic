@@ -188,6 +188,13 @@ namespace TaleofMonsters.Forms.Items
             Font fontsong = new Font("宋体", 9*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             string text = string.Format("{0:00}", card.Level);
             g.DrawString(text, fontsong, Brushes.Yellow, x + 4, y + 4 + cardHeight-23);
+            if (card.Exp >= ConfigData.GetLevelExpConfig(card.Level).CardExp)//可以升级
+            {
+                g.DrawString(text, fontsong, Brushes.Lime, x + 4, y + 4 + cardHeight - 23);
+                Image mark = PicLoader.Read("System", "ArrowU.PNG");
+                g.DrawImage(mark, x + 2, y + 4 + cardHeight - 43, 18, 16);
+                mark.Dispose();
+            }
             fontsong.Dispose();
         }
 
