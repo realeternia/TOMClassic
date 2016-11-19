@@ -8,17 +8,31 @@ namespace TaleofMonsters.MainItem
 {
     internal partial class PopMenuBase : PopedCotainer
     {
+        protected struct MenuItemData
+        {
+            public string Type;
+            public string Text;
+            public string Color;
+
+            public MenuItemData(string t, string tx, string cr)
+            {
+                Type = t;
+                Text = tx;
+                Color = cr;
+            }
+        }
+
         public PoperContainer PoperContainer;
         private const int yOff = 18;
+        protected int selectIndex = -1;
+        private List<MenuItemData> datas;
 
         public PopMenuBase()
         {
             InitializeComponent();
             datas = new List<MenuItemData>();
         }
-
-        private List<MenuItemData> datas;
-
+        
         public void AddItem(string type, string text)
         {
             datas.Add(new MenuItemData(type, text, "White"));
@@ -75,19 +89,18 @@ namespace TaleofMonsters.MainItem
             int index = 0;
             if (selectIndex>-1)
             {
-                e.Graphics.FillRectangle(Brushes.DarkBlue, 0, selectIndex * yOff, Width, yOff);
+                e.Graphics.FillRectangle(Brushes.DeepSkyBlue, 0, selectIndex * yOff, Width, yOff);
             }
-            foreach (MenuItemData menuItemData in datas)
+            foreach (var menuItemData in datas)
             {
                 Brush b = new SolidBrush(Color.FromName(menuItemData.Color));
-                e.Graphics.DrawString(menuItemData.Text, fontsong, b, 3, yOff*index+3);
+                e.Graphics.DrawString(menuItemData.Text, fontsong, b, 3, yOff*index);
                 b.Dispose();
                 index++;
             }
             fontsong.Dispose();
         }
 
-        protected int selectIndex =-1;
         private void PopMenuDeck_MouseMove(object sender, MouseEventArgs e)
         {
             int tepIndex = e.Y/yOff;
@@ -108,18 +121,5 @@ namespace TaleofMonsters.MainItem
         }
     }
 
-    internal struct MenuItemData
-    {
-        public string Type;
-        public string Text;
-        public string Color;
-
-        public MenuItemData(string t,string tx, string cr)
-        {
-            Type = t;
-            Text = tx;
-            Color = cr;
-        }
-    }
 }
 

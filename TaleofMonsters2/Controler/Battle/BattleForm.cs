@@ -74,11 +74,6 @@ namespace TaleofMonsters.Controler.Battle
 
         private List<DateTime> fpsList = new List<DateTime>();
 
-        public bool IsWin
-        {
-            get { return BattleManager.Instance.BattleInfo.PlayerWin; }
-        }
-
         public bool IsGamePaused
         {
             get { return isGamePaused; }
