@@ -6,7 +6,7 @@ using ConfigDatas;
 
 namespace TaleofMonsters.DataType.Buffs
 {
-    static class BuffBook
+    internal static class BuffBook
     {
         public static bool HasEffect(int id, BuffEffectTypes etype)
         {

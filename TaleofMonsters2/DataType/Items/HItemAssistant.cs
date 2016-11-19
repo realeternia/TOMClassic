@@ -5,7 +5,7 @@ using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.DataType.Items
 {
-    static class HItemAssistant
+    internal static class HItemAssistant
     {
         public static bool UseItemsById(int id, int type)
         {

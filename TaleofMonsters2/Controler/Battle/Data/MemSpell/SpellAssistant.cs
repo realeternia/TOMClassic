@@ -9,7 +9,7 @@ using TaleofMonsters.DataType.Effects;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemSpell
 {
-    static class SpellAssistant
+    internal static class SpellAssistant
     {
         public static void CheckSpellEffect(Spell spell, bool isLeft, LiveMonster target, Point mouse)
         {

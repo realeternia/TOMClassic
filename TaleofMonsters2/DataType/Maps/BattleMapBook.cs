@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace TaleofMonsters.DataType.Maps
 {
-    static class BattleMapBook
+    internal static class BattleMapBook
     {
         static Dictionary<string, BattleMap> mapType = new Dictionary<string, BattleMap>();
 

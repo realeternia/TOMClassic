@@ -7,7 +7,7 @@ using TaleofMonsters.DataType.Scenes.SceneObjects;
 
 namespace TaleofMonsters.DataType.NPCs
 {
-    static class NPCBook
+    internal static class NPCBook
     {
         static public Image GetPersonImage(int id)
         {

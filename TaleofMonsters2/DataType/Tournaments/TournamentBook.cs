@@ -6,7 +6,7 @@ using TaleofMonsters.DataType.Maps;
 
 namespace TaleofMonsters.DataType.Tournaments
 {
-    static class TournamentBook
+    internal static class TournamentBook
     {
         public static int GetDayApplyId(int date)
         {

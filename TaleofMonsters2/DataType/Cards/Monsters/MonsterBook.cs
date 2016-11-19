@@ -9,7 +9,7 @@ using TaleofMonsters.Controler.Resource;
 
 namespace TaleofMonsters.DataType.Cards.Monsters
 {
-    static class MonsterBook
+    internal static class MonsterBook
     {
         private static Dictionary<int, List<int>> starMidDict;
         private static List<int> randomMonsterIdList;

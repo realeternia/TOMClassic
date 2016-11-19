@@ -5,14 +5,13 @@ using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
-using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Pops;
 using TaleofMonsters.Core;
 
 namespace TaleofMonsters.DataType.Peoples
 {
-    static class PeopleBook
+    internal static class PeopleBook
     {
         public static int GetRandPersonIdByLevel(int dlevel)
         {

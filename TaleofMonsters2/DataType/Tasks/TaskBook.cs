@@ -11,7 +11,7 @@ using TaleofMonsters.DataType.Others;
 
 namespace TaleofMonsters.DataType.Tasks
 {
-    static class TaskBook
+    internal static class TaskBook
     {
         public static int[] GetTaskByLevels()
         {

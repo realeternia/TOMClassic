@@ -1,6 +1,6 @@
 namespace TaleofMonsters.Controler.World
 {
-    static class TimeManager
+    internal static class TimeManager
     {
         //public static void OnDayFinish(int day)
         //{

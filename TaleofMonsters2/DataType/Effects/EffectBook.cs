@@ -7,7 +7,7 @@ using TaleofMonsters.Controler.Resource;
 
 namespace TaleofMonsters.DataType.Effects
 {
-    static class EffectBook
+    internal static class EffectBook
     {
         static Dictionary<string, Effect> effectType = new Dictionary<string, Effect>();
 

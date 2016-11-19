@@ -4,9 +4,9 @@ using System.IO;
 
 namespace TaleofMonsters.Controler.Loader
 {
-    static class PicLoader
+    internal static class PicLoader
     {
-        static PicLoader()
+        public static void Init()
         {
             NLVFS.NLVFS.LoadVfsFile("./PicResource.vfs");
         }

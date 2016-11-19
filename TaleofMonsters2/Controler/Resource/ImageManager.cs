@@ -6,7 +6,7 @@ using TaleofMonsters.Controler.Loader;
 
 namespace TaleofMonsters.Controler.Resource
 {
-    static class ImageManager
+    internal static class ImageManager
     {
         private static Image nullImage;
         static Dictionary<string, ImageItem> images = new Dictionary<string, ImageItem>();

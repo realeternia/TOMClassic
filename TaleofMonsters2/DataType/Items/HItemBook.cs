@@ -9,7 +9,7 @@ using TaleofMonsters.Core;
 
 namespace TaleofMonsters.DataType.Items
 {
-    static class HItemBook
+    internal static class HItemBook
     {
         private static Dictionary<int, List<int>> rareMidDict;
 

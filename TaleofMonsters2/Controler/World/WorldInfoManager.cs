@@ -3,7 +3,7 @@ using System.IO;
 
 namespace TaleofMonsters.Controler.World
 {
-    static class WorldInfoManager
+    internal static class WorldInfoManager
     {
         private static int playerid=1;
         private static int cardid = 10000;

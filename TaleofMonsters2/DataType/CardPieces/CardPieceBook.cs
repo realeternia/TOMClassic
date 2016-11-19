@@ -6,7 +6,7 @@ using TaleofMonsters.Core;
 
 namespace TaleofMonsters.DataType.CardPieces
 {
-    static class CardPieceBook
+    internal static class CardPieceBook
     {
         private static Dictionary<int, List<CardPieceRate>> pieces = new Dictionary<int, List<CardPieceRate>>();
 

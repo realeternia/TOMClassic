@@ -7,7 +7,7 @@ using ConfigDatas;
 
 namespace TaleofMonsters.DataType.Scenes
 {
-    static class SceneBook
+    internal static class SceneBook
     { 
         static public Image GetPreview(int id)
         {

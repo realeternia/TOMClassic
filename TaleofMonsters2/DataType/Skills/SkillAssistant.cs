@@ -7,7 +7,7 @@ using TaleofMonsters.DataType.Cards.Monsters;
 
 namespace TaleofMonsters.DataType.Skills
 {
-    static class SkillAssistant
+    internal static class SkillAssistant
     {
         public static void CheckBurst(LiveMonster src, LiveMonster dest, bool isMelee)
         {

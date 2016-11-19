@@ -11,7 +11,7 @@ using TaleofMonsters.Forms;
 
 namespace TaleofMonsters.DataType.Items
 {
-    public static class Consumer
+    internal static class Consumer
     {
         public static bool UseOre(ItemConsumerConfig itemConfig)
         {

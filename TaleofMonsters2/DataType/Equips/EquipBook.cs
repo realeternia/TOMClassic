@@ -7,7 +7,7 @@ using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.DataType.Equips
 {
-    static class EquipBook
+    internal static class EquipBook
     {
         static public Image GetEquipImage(int id)
         {

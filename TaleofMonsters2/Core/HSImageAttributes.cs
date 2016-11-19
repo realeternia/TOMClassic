@@ -1,6 +1,6 @@
 namespace TaleofMonsters.Core
 {
-    static class HSImageAttributes
+    internal static class HSImageAttributes
     {
         static System.Drawing.Imaging.ColorMatrix cm;
 

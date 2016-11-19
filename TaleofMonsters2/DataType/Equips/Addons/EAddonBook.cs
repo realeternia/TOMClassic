@@ -5,7 +5,7 @@ using TaleofMonsters.Controler.Battle.Tool;
 
 namespace TaleofMonsters.DataType.Equips.Addons
 {
-    static class EAddonBook
+    internal static class EAddonBook
     {
         public static void UpdateMonsterData(LiveMonster mon, int[] skillid, int[] skillvalue)
         {

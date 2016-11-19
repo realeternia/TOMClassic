@@ -2,7 +2,7 @@
 
 namespace TaleofMonsters.DataType.Others
 {
-    static class GameResourceBook
+    internal static class GameResourceBook
     {
         /// <summary>
         /// 购买卡牌消耗Gem

@@ -5,14 +5,14 @@ using NarlonLib.Log;
 
 namespace TaleofMonsters.Core
 {
-    internal class SoundManager
+    internal static class SoundManager
     {
         private static Stack<string> bgmHistory;
 
         private static FMOD.System _fmod = null;
         private static Channel _channelBGM = null;
 
-        static SoundManager()
+        public static void Init()
         {
             NLVFS.NLVFS.LoadVfsFile("./SoundResource.vfs");
 

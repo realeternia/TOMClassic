@@ -6,7 +6,7 @@ using TaleofMonsters.Controler.Resource;
 
 namespace TaleofMonsters.DataType.Mazes
 {
-    static class MazeBook
+    internal static class MazeBook
     {
         public static Image GetMoveImage(string name)
         {

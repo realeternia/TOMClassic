@@ -2,7 +2,7 @@
 
 namespace TaleofMonsters.Controler.Battle.Tool
 {
-    static class BattleTargetManager
+    internal static class BattleTargetManager
     {
         public static bool IsSpellUnitTarget(string target)
         {

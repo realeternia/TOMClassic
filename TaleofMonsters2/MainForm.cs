@@ -55,15 +55,24 @@ namespace TaleofMonsters
         {
             string version = FileVersionInfo.GetVersionInfo(Application.ExecutablePath).FileVersion;
             Text = string.Format("幻兽传说卡片版 v{0}", version);
+          
+            try
+            {
+                ConfigData.LoadData();
+                Scene.Instance = new Scene(tabPageGame, tabPageGame.Width, tabPageGame.Height);
+                SystemMenuManager.Load(tabPageGame.Width, tabPageGame.Height);
+                MainTipManager.Init(tabPageGame.Height);
+                CardConfigManager.Init();
+                DbSerializer.Init();
+                WorldInfoManager.Load();
+            }
+            catch (Exception ex)
+            {
+                NLog.Warn(ex);
+                Close();
+            }
+
             tabPageLogin.BackgroundImage = PicLoader.Read("System", "LogBack.JPG");
-
-            ConfigData.LoadData();
-            Scene.Instance = new Scene(tabPageGame, tabPageGame.Width, tabPageGame.Height);
-            SystemMenuManager.Load(tabPageGame.Width, tabPageGame.Height);
-            MainTipManager.Init(tabPageGame.Height);
-            DbSerializer.Init();
-            WorldInfoManager.Load();
-
             textBoxName.Text = WorldInfoManager.LastAccountName;
             ChangePage(0);
             myCursor.ChangeCursor("default");

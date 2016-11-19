@@ -1,11 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using System;
-using ConfigDatas;
-
-namespace TaleofMonsters.DataType.Others
+﻿namespace TaleofMonsters.DataType.Others
 {
-    static class JobBook
+    internal static class JobBook
     {
         //public static int GetSkillCommonRate(int id, int index)
         //{

@@ -9,7 +9,7 @@ using ConfigDatas;
 
 namespace TaleofMonsters.DataType.Skills
 {
-    static class SkillBook
+    internal static class SkillBook
     {
         private static List<int> randomSkillIds;
 

@@ -9,7 +9,7 @@ using ConfigDatas;
 
 namespace TaleofMonsters.DataType.Cards.Spells
 {
-    static class SpellBook
+    internal static class SpellBook
     {
         private static List<int> randomSpellIdList;
 

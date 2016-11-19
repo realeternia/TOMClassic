@@ -8,7 +8,7 @@ using TaleofMonsters.DataType.Cards.Monsters;
 
 namespace TaleofMonsters.Controler.Battle.Tool
 {
-    static class BattleLocationManager
+    internal static class BattleLocationManager
     {
         public static LiveMonster GetPlaceMonster(int x, int y)
         {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using NarlonLib.Log;
+using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters
 {
@@ -19,6 +19,8 @@ namespace TaleofMonsters
             //return;
 
             NLog.Start(LogTargets.File);
+            PicLoader.Init(); 
+            SoundManager.Init();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

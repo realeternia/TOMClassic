@@ -9,7 +9,7 @@ using TaleofMonsters.Controler.Resource;
 
 namespace TaleofMonsters.DataType.Cards.Weapons
 {
-    static class WeaponBook
+    internal static class WeaponBook
     {
         private static List<int> randomWeaponIdList;
 
