@@ -75,11 +75,21 @@ namespace TaleofMonsters.Controler.Battle
                 resource[0] = resource[0]*(100 + battleInfo.GoldRatePlus)/100;
                 exp = exp*(100 + battleInfo.ExpRatePlus)/100;
 
-                var dropItemId = drop.GetDropItem();
-                if (dropItemId != 0)
+                if (isWin)
                 {
-                    battleInfo.Items.Insert(0, dropItemId);
+                    var dropItemId = drop.GetDropItem();//获胜可以获得掉落物
+                    if (dropItemId != 0)
+                    {
+                        battleInfo.Items.Insert(0, dropItemId);
+                    }
                 }
+                else
+                {
+                    for (int i = 0; i < 7; i++)
+                        resource[i] /= 5;
+                    exp /= 4;
+                }
+
                 for (int i = 0; i < battleInfo.Items.Count; i++)
                 {
                     rewardItemList.Add(battleInfo.Items[i]);
@@ -87,16 +97,6 @@ namespace TaleofMonsters.Controler.Battle
                     {
                         virtualRegion.SetRegionInfo(i + 1, battleInfo.Items[i]); //前5个掉落可以显示出来
                     }
-                }
-
-                if (isWin)
-                {
-                }
-                else
-                {
-                    for (int i = 0; i < 7; i++)
-                        resource[i] /= 5;
-                    exp /= 4;
                 }
             }
             else

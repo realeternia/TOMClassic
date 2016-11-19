@@ -48,13 +48,16 @@ namespace TaleofMonsters.Controler.Battle
             // 
             this.bitmapButtonClose.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButtonClose.Image = null;
+            this.bitmapButtonClose.IconImage = null;
+            this.bitmapButtonClose.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonClose.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonClose.ImageNormal = null;
             this.bitmapButtonClose.Location = new System.Drawing.Point(891, 4);
             this.bitmapButtonClose.Name = "bitmapButtonClose";
+            this.bitmapButtonClose.NoUseDrawNine = true;
             this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
             this.bitmapButtonClose.TabIndex = 25;
-            this.bitmapButtonClose.Text = "";
+            this.bitmapButtonClose.TextOffX = 0;
             this.bitmapButtonClose.UseVisualStyleBackColor = true;
             this.bitmapButtonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
@@ -101,12 +104,12 @@ namespace TaleofMonsters.Controler.Battle
             // 
             // cardList2
             // 
-            this.cardList2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.cardList2.Location = new System.Drawing.Point(578, 74);
+            this.cardList2.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.cardList2.Location = new System.Drawing.Point(554, 74);
             this.cardList2.Marginp = 3;
             this.cardList2.MaxCards = 10;
             this.cardList2.Name = "cardList2";
-            this.cardList2.Size = new System.Drawing.Size(262, 35);
+            this.cardList2.Size = new System.Drawing.Size(240, 30);
             this.cardList2.TabIndex = 36;
             this.cardList2.Visible = false;
             // 

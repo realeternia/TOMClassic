@@ -7,14 +7,14 @@ namespace TaleofMonsters.DataType.Items
 {
     internal static class HItemAssistant
     {
-        public static bool UseItemsById(int id, int type)
+        public static bool UseItemsById(int id, int useMethod)
         {
             HItemConfig itemConfig = ConfigData.GetHItemConfig(id);
             if (itemConfig.Id == ConfigData.NoneHItem.Id)
                 return false;
 
             ItemConsumerConfig consumerConfig = ConfigData.GetItemConsumerConfig(id);
-            if (type == HItemTypes.Common)
+            if (useMethod == HItemTypes.Common)
             {
                 if (itemConfig.SubType == HItemTypes.Gift)
                     return UseGift(id);
@@ -27,12 +27,12 @@ namespace TaleofMonsters.DataType.Items
                 if (itemConfig.SubType == HItemTypes.RandomCard)
                     return Consumer.UseScard(consumerConfig);
             }
-            else if (type == HItemTypes.Fight)
+            else if (useMethod == HItemTypes.Fight)
             {
                 if (itemConfig.SubType == HItemTypes.Fight)
                     return Consumer.UseFightItem(consumerConfig);
             }
-            else if (type == HItemTypes.Seed)
+            else if (useMethod == HItemTypes.Seed)
             {
                 if (itemConfig.SubType == HItemTypes.Seed)
                     return Consumer.UseSeedItem(consumerConfig);

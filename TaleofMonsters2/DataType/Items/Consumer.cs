@@ -53,7 +53,10 @@ namespace TaleofMonsters.DataType.Items
                 var card = new ActiveCard(new DeckCard(cardId, 1, 0));
                 player.CardManager.AddCard(card);
             }
-
+            if (!string.IsNullOrEmpty(itemConfig.HolyWord))
+            {
+                player.AddHolyWord(itemConfig.HolyWord);
+            }
             return true;
         }
 

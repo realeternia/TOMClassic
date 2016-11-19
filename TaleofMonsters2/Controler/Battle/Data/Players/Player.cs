@@ -18,6 +18,7 @@ using NarlonLib.Log;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Cards.Spells;
 using TaleofMonsters.DataType.Cards.Weapons;
 using TaleofMonsters.DataType.Effects;
@@ -78,16 +79,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public int DirectDamage { get; set; }
 
-
-        public void AddSpike(int id)
-        {
-            SpikeManager.AddSpike(id);
-        }
-
-        public void RemoveSpike(int id)
-        {
-            SpikeManager.RemoveSpike(id);
-        }
+        private List<string> holyWordList = new List<string>(); //圣言，一些特殊效果的指令
 
         #endregion
 
@@ -575,6 +567,28 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             SpellEffectAddon += rate;
         }
 
+        public void AddSpike(int id)
+        {
+            SpikeManager.AddSpike(id);
+        }
+
+        public void RemoveSpike(int id)
+        {
+            SpikeManager.RemoveSpike(id);
+        }
+
+        public void AddHolyWord(string word)
+        {
+            if (!holyWordList.Contains(word))
+            {
+                holyWordList.Add(word);
+            }
+        }
+
+        public bool HasHolyWord(string word)
+        {
+            return holyWordList.Contains(word);
+        }
 
         public void DrawToolTips(Graphics g)
         {
@@ -591,23 +605,41 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         {
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine(string.Format("Lv{0}", Level), "LightBlue", 20);
-            tipData.AddLine();
+
             if (trapList.Count>0)
             {
-                tipData.AddTextNewLine("陷阱", "White");
                 tipData.AddLine();
-            }
-            foreach (var trap in trapList)
-            {
-                var trapConfig = ConfigData.GetSpellTrapConfig(trap.Id);
-                if (isPlayerControl)
+                tipData.AddTextNewLine("陷阱", "White");
+                foreach (var trap in trapList)
                 {
-                    tipData.AddTextNewLine(trapConfig.Name, "Lime");
-                    tipData.AddText(string.Format("Lv{0} {1:0.0}%", trap.Level,trap.Rate), "White");
+                    var trapConfig = ConfigData.GetSpellTrapConfig(trap.Id);
+                    if (isPlayerControl)
+                    {
+                        tipData.AddTextNewLine(trapConfig.Name, "Lime");
+                        tipData.AddText(string.Format("Lv{0} {1:0.0}%", trap.Level, trap.Rate), "White");
+                    }
+                    else
+                    {
+                        tipData.AddTextNewLine("???", "Red");
+                    }
                 }
-                else
+            }
+            
+            var rival = IsLeft ? BattleManager.Instance.PlayerManager.RightPlayer : BattleManager.Instance.PlayerManager.LeftPlayer;
+            if (rival.HasHolyWord("witcheye"))
+            {
+                tipData.AddLine();
+                tipData.AddTextNewLine("手牌", "White");
+                for (int i = 0; i < 10; i++)
                 {
-                    tipData.AddTextNewLine("???", "Red");
+                    var card = CardManager.GetDeckCardAt(i);
+                    if (card.CardId > 0)
+                    {
+                        var cardConfig = CardConfigManager.GetCardConfig(card.CardId);
+                        tipData.AddTextNewLine("-", "White");
+                        tipData.AddImage(CardAssistant.GetCardImage(card.CardId, 20, 20));
+                        tipData.AddText(string.Format("{0}({1}★)Lv{2}", cardConfig.Name, cardConfig.Star, card.Level), HSTypes.I2QualityColor(cardConfig.Quality));
+                    }
                 }
             }
             return tipData.Image;

@@ -52,7 +52,7 @@ namespace TaleofMonsters.Controler.Battle.Components
                 return;
 
             int heg = Height;
-            int wid = heg-12;
+            int wid = (Width-margin*9)/10;
             for (int i = 0; i < maxCards; i++)
             {
                 e.Graphics.DrawImage(CardAssistant.GetCardImage(cards[i].CardId, 60, 60), (wid + margin)*i, 0, wid, heg);
