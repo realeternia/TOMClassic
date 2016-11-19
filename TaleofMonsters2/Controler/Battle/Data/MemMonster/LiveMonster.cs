@@ -271,6 +271,20 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             Luk = new AttrModifyData(Avatar.Luk);
         }
 
+        public void AddBasicData(int attrIndex, int addon)
+        {
+            switch (attrIndex)
+            {
+                case 1: Def += addon; return;
+                case 2: Mag += addon; return;
+                case 3: Spd += addon; return;
+                case 4: Hit += addon; return;
+                case 5: Dhit += addon; return;
+                case 6: Crt += addon; return;
+                case 7: Luk += addon; return;
+            }
+        }
+
         public void OnInit()
         {
             SkillManager.CheckInitialEffect();

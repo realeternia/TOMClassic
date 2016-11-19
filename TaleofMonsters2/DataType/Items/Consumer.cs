@@ -1,5 +1,4 @@
 ﻿using ConfigDatas;
-using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType.Cards.Monsters;
@@ -56,6 +55,10 @@ namespace TaleofMonsters.DataType.Items
             if (!string.IsNullOrEmpty(itemConfig.HolyWord))
             {
                 player.AddHolyWord(itemConfig.HolyWord);
+            }
+            if (itemConfig.AttrAddAfterSummon != null)
+            {
+                player.AddMonsterAddon(itemConfig.AttrAddAfterSummon);
             }
             return true;
         }

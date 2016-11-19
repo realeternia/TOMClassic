@@ -80,6 +80,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public int DirectDamage { get; set; }
 
         private List<string> holyWordList = new List<string>(); //圣言，一些特殊效果的指令
+        private List<int[]> monsterAddonOnce = new List<int[]>(); //一次性的强化
 
         #endregion
 
@@ -287,6 +288,13 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
                 LiveMonster newMon = new LiveMonster(card.Id, card.Level, mon, location, IsLeft);
                 BattleManager.Instance.MonsterQueue.Add(newMon);
+
+                var addon = GetAllMonsterAddonAndClear();//这个属性目前可以来自药水
+                if (addon.Length > 0)
+                {
+                    foreach (var add in addon)
+                        newMon.AddBasicData(add[0], add[1]);
+                }
 
                 var rival = IsLeft ? BattleManager.Instance.PlayerManager.RightPlayer : BattleManager.Instance.PlayerManager.LeftPlayer;
                 rival.CheckTrapOnSummon(newMon, rival, this);
@@ -588,6 +596,18 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public bool HasHolyWord(string word)
         {
             return holyWordList.Contains(word);
+        }
+
+        public void AddMonsterAddon(int[] addon)
+        {
+            monsterAddonOnce.Add(addon);
+        }
+
+        public int[][] GetAllMonsterAddonAndClear()
+        {
+            var data = monsterAddonOnce.ToArray();
+            monsterAddonOnce.Clear();
+            return data;
         }
 
         public void DrawToolTips(Graphics g)
