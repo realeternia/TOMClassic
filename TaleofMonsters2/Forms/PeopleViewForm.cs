@@ -94,22 +94,22 @@ namespace TaleofMonsters.Forms
             PeopleBook.Fight(peopleConfig.Id, peopleConfig.BattleMap, -1, peopleConfig.Level, null, null);
         }
 
-        private int[] GetPeopleAvailTypes()
+        private static int[] GetPeopleAvailTypes()
         {
-            List<int> types = new List<int>();
+            List<int> typeLists = new List<int>();
             foreach (RivalState person in UserProfile.InfoRival.Rivals.Values)
             {
                 if (person.Avail)
                 {
                     int personType = ConfigData.GetPeopleConfig(person.Pid).Type;
-                    if (personType!=0 && !types.Contains(personType))
+                    if (personType!=0 && !typeLists.Contains(personType))
                     {
-                        types.Add(personType);
+                        typeLists.Add(personType);
                     }
                 }
             }
-            types.Sort();
-            return types.ToArray();
+            typeLists.Sort();
+            return typeLists.ToArray();
         }
 
         private void Bind(int type)
@@ -120,6 +120,7 @@ namespace TaleofMonsters.Forms
             for (int i = 0; i < 20; i++)
             {
                 virtualRegion.SetRegionInfo(i + 2, 0);
+                virtualRegion.SetRegionDecorator(i + 2, 0, "");
             }
 
             foreach (RivalState person in UserProfile.InfoRival.Rivals.Values)
