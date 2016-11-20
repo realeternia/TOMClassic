@@ -606,7 +606,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             get { return Weapon == null ? 0 : Weapon.CardId; }
         }
-
+        public int WeaponType
+        {
+            get { return Weapon != null ? Weapon.Type - CardTypeSub.Weapon + 1 : 0; }
+        }
         public void AddHp(double addon)
         {
             Life += (int)addon;
@@ -799,18 +802,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public bool IsNight
         {
             get { return BattleManager.Instance.IsNight; }
-        }
-
-        public bool HasScroll
-        {
-            get
-            {
-                if (Weapon != null)
-                {
-                    return Weapon.Type == CardTypeSub.Scroll;
-                }
-                return false;
-            }
         }
 
         public bool HasSkill(int sid)

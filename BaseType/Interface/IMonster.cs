@@ -11,6 +11,7 @@ namespace ConfigDatas
         double HpRate{get;}
         int Hp{get;}
         int WeaponId{get;}
+        int WeaponType { get; }	//1,2,3,4
         IPlayer Owner{get;}
         IPlayer Rival { get; }
         bool IsHero{get;}
@@ -59,7 +60,6 @@ namespace ConfigDatas
         int Type { get; } //种族
 
         bool IsNight{get;}
-        bool HasScroll { get; }//是否拿着卷轴 		
         void ClearDebuff();
         void ExtendDebuff(double count);
         bool HasBuff(int id);
