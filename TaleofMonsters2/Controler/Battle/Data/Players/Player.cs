@@ -610,6 +610,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             return data;
         }
 
+        public void AddTowerHp(int hp)
+        {
+            var unit = BattleManager.Instance.MonsterQueue.GetKingTower(IsLeft);
+            unit.AddHp(hp);
+        }
+
         public void DrawToolTips(Graphics g)
         {
             int x = 0, y = 0;

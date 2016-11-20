@@ -36,7 +36,7 @@ namespace TaleofMonsters.Forms
                 virtualRegion.AddRegion(subRegion);
             }
             virtualRegion.SetRegionDecorator(1, 0, "礼包");
-            virtualRegion.SetRegionDecorator(2, 0, "药剂");
+            virtualRegion.SetRegionDecorator(2, 0, "战斗");
             virtualRegion.SetRegionDecorator(3, 0, "道具");
             virtualRegion.SetRegionDecorator(4, 0, "神器");
 

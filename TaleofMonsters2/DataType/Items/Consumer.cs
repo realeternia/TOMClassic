@@ -60,6 +60,10 @@ namespace TaleofMonsters.DataType.Items
             {
                 player.AddMonsterAddon(itemConfig.AttrAddAfterSummon);
             }
+            if (itemConfig.AddTowerHp > 0)
+            {
+                player.AddTowerHp(itemConfig.AddTowerHp);
+            }
             return true;
         }
 
