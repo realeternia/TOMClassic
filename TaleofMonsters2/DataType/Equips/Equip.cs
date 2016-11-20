@@ -1,4 +1,5 @@
-﻿using ConfigDatas;
+﻿using System;
+using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.HeroSkills;
 using TaleofMonsters.DataType.User;
@@ -50,11 +51,11 @@ namespace TaleofMonsters.DataType.Equips
             MpRate = equipConfig.EnergyRate[2];
             int qual = equipConfig.Quality;
             int addonFactor = ConfigData.GetLevelExpConfig(equipConfig.Level).EquipAddon;
-            int standardValue = (35 + qual * 5) * (100+addonFactor) / 100 * AttrFactor / 100;
+            int standardValue = (35 + qual * 5) * addonFactor / 50 * AttrFactor / 100;
             if (equipConfig.AtkP > 0)
-                Atk = standardValue * (100 + equipConfig.AtkP) / 100; //200
+                Atk = Math.Max(1, standardValue * (100 + equipConfig.AtkP) / 100); //200
             if (equipConfig.VitP > 0)
-                Hp = standardValue * (100 + equipConfig.VitP) / 100 * 5; //200
+                Hp = Math.Max(5, standardValue * (100 + equipConfig.VitP) / 100 * 5); //200
         }
 
         public Image GetPreview()
