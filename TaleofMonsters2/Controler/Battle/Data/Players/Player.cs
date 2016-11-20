@@ -293,7 +293,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 if (addon.Length > 0)
                 {
                     foreach (var add in addon)
-                        newMon.AddBasicData(add[0], add[1]);
+                        if (add.Length > 1)
+                            newMon.AddBasicData(add[0], add[1]);
                 }
 
                 var rival = IsLeft ? BattleManager.Instance.PlayerManager.RightPlayer : BattleManager.Instance.PlayerManager.LeftPlayer;

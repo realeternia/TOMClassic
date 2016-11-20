@@ -56,7 +56,7 @@ namespace TaleofMonsters.DataType.Items
             {
                 player.AddHolyWord(itemConfig.HolyWord);
             }
-            if (itemConfig.AttrAddAfterSummon != null)
+            if (itemConfig.AttrAddAfterSummon != null && itemConfig.AttrAddAfterSummon.Length>0)
             {
                 player.AddMonsterAddon(itemConfig.AttrAddAfterSummon);
             }
