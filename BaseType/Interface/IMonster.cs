@@ -76,6 +76,6 @@ namespace ConfigDatas
         void CureRandomAlien(double rate);
         bool ResistBuffType(int type);
         void EatTomb(IMonster tomb);
-
+        void ClearTarget();
     }
 }

@@ -115,12 +115,12 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             return ImageManager.GetImage(fname);
         }
 
-       public static SkillConfig GetRangeSkill(int mid)
+       public static SkillConfig GetAreaSkill(int mid)
        {
            foreach (var skill in GetSkillList(mid))
            {
                var skilConfig = ConfigData.GetSkillConfig(skill.Id);
-               if (skilConfig.Target != "" && skilConfig.OnAdd != null)
+               if (skilConfig.Target != "" && skilConfig.OnAdd != null && skilConfig.PointSelf)
                {
                    return skilConfig;
                }

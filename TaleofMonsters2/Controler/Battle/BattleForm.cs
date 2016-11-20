@@ -368,7 +368,7 @@ namespace TaleofMonsters.Controler.Battle
                     if (BattleLocationManager.IsPlaceCanSummon(leftSelectCard.CardId, mouseX, mouseY, true))
                     {
                         cursorname = "summon";
-                        var skillConfig = MonsterBook.GetRangeSkill(leftSelectCard.CardId);
+                        var skillConfig = MonsterBook.GetAreaSkill(leftSelectCard.CardId);
                         if (skillConfig != null)
                         {
                             magicRegion.Update(skillConfig);

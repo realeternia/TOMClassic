@@ -21,6 +21,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             monster = mon;
         }
 
+        public void ClearTarget()
+        {
+            lastTarget = 0;
+        }
+
         /// <summary>
         /// 获得一次行动机会
         /// </summary>
@@ -81,7 +86,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 if (isLeft != mon.Owner.IsLeft)
                 {
                     var tpDis = MathTool.GetDistance(mon.Position, mouse);
-                    if (tpDis / BattleManager.Instance.MemMap.CardSize * 10 > mon.RealRange && (isLeft && mon.Position.X < mouse.X || !isLeft && mon.Position.X > mouse.X)) //不管身后的敌人
+                    if (tpDis / BattleManager.Instance.MemMap.CardSize * 10 > mon.RealRange 
+                        && (isLeft && mon.Position.X < mouse.X || !isLeft && mon.Position.X > mouse.X)) //不管身后的敌人
                         continue;
 
                     var targetRate = GetMonsterRate(mon);
@@ -168,10 +174,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             if (MonsterBook.HasTag(mon.CardId, "taunt"))
             {
                 score += 10000;
-            }
-            else if (MonsterBook.HasTag(mon.CardId, "hide"))
-            {
-                score -= 5000;
             }
             return score;
         }

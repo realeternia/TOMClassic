@@ -1029,6 +1029,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             (tomb as LiveMonster).Disappear();
         }
 
+        public void ClearTarget()
+        {
+            aiController.ClearTarget();
+        }
+
         #endregion
     }
 }
