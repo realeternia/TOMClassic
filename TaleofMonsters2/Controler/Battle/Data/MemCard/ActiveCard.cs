@@ -63,6 +63,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         public bool Lp2Mp { get; set; } //可以被技能修改
         public byte Level { get; set; }
 
+        public bool Combo { get; set; }//可以被修改
+
         public ActiveCard()
         {
             Card = new DeckCard(0,0,0);

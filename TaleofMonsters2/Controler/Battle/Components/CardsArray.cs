@@ -43,7 +43,7 @@ namespace TaleofMonsters.Controler.Battle.Components
         public void SetEnable(bool enable)
         {
             Enabled = enable;
-            foreach (CardSlot cardSlot in cards)
+            foreach (var cardSlot in cards)
             {
                 cardSlot.Enabled = enable;
             }
@@ -129,7 +129,7 @@ namespace TaleofMonsters.Controler.Battle.Components
 
         private void CardsArray_Paint(object sender, PaintEventArgs e)
         {
-            foreach (CardSlot cardSlot in cards)
+            foreach (var cardSlot in cards)
             {
                 if (cardSlot != null)
                 {

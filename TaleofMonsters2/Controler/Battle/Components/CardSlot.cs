@@ -1,6 +1,8 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
+using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
+using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Cards;
 
@@ -73,6 +75,12 @@ namespace TaleofMonsters.Controler.Battle.Components
                 g.FillRectangle(sbrush, x, y, Size.Width, 120);
                 sbrush.Dispose();
             }
+            if (ACard.Combo && CardConfigManager.GetCardConfig(ACard.CardId).Remark.Contains("连击"))
+            {
+                Image img = PicLoader.Read("System", "CardEff1.PNG");
+                g.DrawImage(img, x + 2, y + 2, Size.Width - 4, 120 - 4);
+                img.Dispose();
+            }
 
             Font font = new Font("Arial", 7*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             for (int i = 0; i < Card.Star; i++)
@@ -105,6 +113,7 @@ namespace TaleofMonsters.Controler.Battle.Components
                 g.DrawString("无消耗", font, Brushes.White, x + index * 10+2, y + 1+2);
                 font.Dispose();
             }
+
         }
 
     }

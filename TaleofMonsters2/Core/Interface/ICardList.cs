@@ -1,5 +1,4 @@
 using TaleofMonsters.Controler.Battle.Data.MemCard;
-using TaleofMonsters.Controler.Battle.Data.Players;
 
 namespace TaleofMonsters.Core.Interface
 {

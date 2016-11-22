@@ -50,6 +50,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             card.LpCostChange = spikeManager.LpCost;
             card.PpCostChange = spikeManager.PpCost;
             card.Lp2Mp = spikeManager.HasSpike("lp2mp");
+            card.Combo = self.Combo;
             int count = GetCardNumber();
             if (count < GameConstants.CardSlotMaxCount)
             {
@@ -72,6 +73,17 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                 activeCard.MpCostChange = spikeManager.MpCost;
                 activeCard.PpCostChange = spikeManager.PpCost;
                 activeCard.Lp2Mp = spikeManager.HasSpike("lp2mp");
+            }
+            if (self.CardsDesk != null)
+                self.CardsDesk.UpdateSlot(cards);
+        }
+
+        public void UpdateCardCombo()
+        {
+            var isCombo = self.Combo;
+            foreach (ActiveCard activeCard in cards)
+            {
+                activeCard.Combo = isCombo;
             }
             if (self.CardsDesk != null)
                 self.CardsDesk.UpdateSlot(cards);

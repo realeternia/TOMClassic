@@ -6,7 +6,9 @@ namespace ConfigDatas
         int Job { get; }
         float Mp { get; }
         float Lp { get; }
-        float Pp { get; }  
+        float Pp { get; }
+        bool Combo { get; }
+
         void AddMp(double addon);//spell π”√
         void AddLp(double addon);
         void AddPp(double addon);

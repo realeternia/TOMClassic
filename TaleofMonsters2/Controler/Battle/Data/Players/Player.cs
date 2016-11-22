@@ -45,6 +45,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public bool IsAlive { get; set; }//是否活着
         public int[] InitialMonster { get; set; } //由peoplebook决定
 
+        private float comboTime;//>0表示在combo状态
+        public bool Combo { get { return comboTime > 0; } }
+
         #region 属性
 
         public bool IsLeft { get; private set; }
@@ -118,6 +121,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 ManaChanged();
             }
             SpikeManager.OnRound(pastRound);
+            comboTime -= pastRound;
+            if (comboTime<=0)
+            {
+                comboTime = 0;
+                CardManager.UpdateCardCombo();
+            }
         }
 
         private void AddRandomMana(int killerId, int count)
@@ -234,6 +243,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
 
             SpikeManager.OnUseCard(selectCard.CardType);
+
+            var oldComboTime = comboTime;
+            comboTime = 1;
+            if (oldComboTime <= 0)
+                CardManager.UpdateCardCombo();
 
             return true;
         }

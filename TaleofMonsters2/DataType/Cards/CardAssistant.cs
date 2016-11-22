@@ -21,8 +21,9 @@ namespace TaleofMonsters.DataType.Cards
             g.DrawImage(img, x + 2 + xDiff, y + 2 + xDiff, width - 4 - xDiff*2, height - 4-yDiff*2);
 
             string cardBorder = GetCardBorder(cardData);
-            g.DrawImage(PicLoader.Read("Border", cardBorder), x + 2, y + 2, width - 4, height - 4);
-           
+            var imgBack = PicLoader.Read("Border", cardBorder);
+            g.DrawImage(imgBack, x + 2, y + 2, width - 4, height - 4);
+            imgBack.Dispose();
         }
 
         public static string GetCardBorder(CardConfigData card)
