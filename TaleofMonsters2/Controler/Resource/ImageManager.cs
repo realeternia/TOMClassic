@@ -9,7 +9,7 @@ namespace TaleofMonsters.Controler.Resource
     internal static class ImageManager
     {
         private static Image nullImage;
-        static Dictionary<string, ImageItem> images = new Dictionary<string, ImageItem>();
+        private static Dictionary<string, ImageItem> images = new Dictionary<string, ImageItem>();
         private static int lastCompressTime;
         private static int count;
 

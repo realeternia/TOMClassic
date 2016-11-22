@@ -150,36 +150,38 @@ namespace TaleofMonsters.Controler.Battle.Components
 
             for (int i = 0; i < 10; i++)
             {
+                var targetCard = cards[i];
                 if (realCardNum > 6)
                 {
-                    cards[i].Size.Width = (754 - (realCardNum + 1) * 4 - 120) / (realCardNum - 1);
+                    targetCard.Size.Width = (754 - (realCardNum + 1) * 4 - 120) / (realCardNum - 1);
                     xOff += 4;
                 }
                 else
                 {
-                    cards[i].Size.Width = 120;
+                    targetCard.Size.Width = 120;
                     xOff += 4;
                 }
-                cards[i].Location.X = xOff;
-                xOff += cards[i].Size.Width;
+                targetCard.Location.X = xOff;
+                xOff += targetCard.Size.Width;
 
-                if (e.X > cards[i].Location.X && e.X < cards[i].Location.X + cards[i].Size.Width)
+                if (e.X > targetCard.Location.X && e.X < targetCard.Location.X + targetCard.Size.Width)
                 {
                     if (realCardNum > 6)
                     {
-                        xOff += 120 - cards[i].Size.Width;
+                        xOff += 120 - targetCard.Size.Width;
                     }
-                    cards[i].Size.Width = 120;
+                    targetCard.Size.Width = 120;
                 }
             }
 
             for (int i = 0; i < 10; i++)
             {
-                cards[i].MouseOn = false;
-                if (e.X > cards[i].Location.X && e.X < cards[i].Location.X + cards[i].Size.Width)
+                var targetCard = cards[i];
+                targetCard.MouseOn = false;
+                if (e.X > targetCard.Location.X && e.X < targetCard.Location.X + targetCard.Size.Width)
                 {
                     newIndex = i + 1;
-                    cards[i].MouseOn = true;
+                    targetCard.MouseOn = true;
                 }
             }
 
