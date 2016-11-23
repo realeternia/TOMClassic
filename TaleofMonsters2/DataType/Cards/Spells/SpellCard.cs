@@ -98,13 +98,13 @@ namespace TaleofMonsters.DataType.Cards.Spells
                 g.FillRectangle(lineBack, offX + 10, basel + 20 + i * 30, 180, 15);
             }
             g.FillRectangle(headerBack, offX + 10, basel + 40, 180, 20);
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 3; i++)
             {
                 g.FillRectangle(lineBack, offX + 10, basel + 75 + i * 30, 180, 15);
             }
-            g.FillRectangle(headerBack, offX + 10, basel + 135, 180, 20);
+            g.FillRectangle(headerBack, offX + 10, basel + 150, 180, 20);
 
-            g.FillRectangle(lineBack, offX + 10, basel + 155, 180, 45);
+            g.FillRectangle(lineBack, offX + 10, basel + 170, 180, 45);
             headerBack.Dispose();
             lineBack.Dispose();
 
@@ -129,9 +129,11 @@ namespace TaleofMonsters.DataType.Cards.Spells
             PaintTool.DrawValueLine(g, (int)(spell.Help * 10), 70 + offX, add.Now + 1, 115, 10);
             g.DrawString(string.Format("几率 {0,3:D}", (int)spell.Rate), fontsong, sb, 10 + offX, add.Next);
             PaintTool.DrawValueLine(g, (int)spell.Rate, 70 + offX, add.Now + 1, 115, 10);
-            g.DrawString("效果", fontblack, Brushes.White, offX + 10, basel + 137);
+            g.DrawString(string.Format("加成 {0,3:D}", spell.Atk), fontsong, sb, offX + 10, add.Next);
+            PaintTool.DrawValueLine(g, spell.Atk / 2, 70 + offX, add.Now + 1, 115, 10);
+            g.DrawString("效果", fontblack, Brushes.White, offX + 10, basel + 152);
             string des = spell.Descript;
-            PaintTool.DrawStringMultiLine(g, fontsong, sb, offX + 10, basel + 61 + 95, 15, 13, des);
+            PaintTool.DrawStringMultiLine(g, fontsong, sb, offX + 10, basel + 61 + 110, 15, 13, des);
             fontblack.Dispose();
             fontsong.Dispose();
             sb.Dispose();

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ConfigDatas
+﻿namespace ConfigDatas
 {
     public interface ISpell : ITargetMeasurable
     {
@@ -15,5 +11,7 @@ namespace ConfigDatas
         double Time { get; }
         double Help { get; }
         double Rate { get; }
+
+        int Atk { get; }
     }
 }

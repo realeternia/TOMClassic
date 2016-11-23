@@ -20,6 +20,7 @@ namespace TaleofMonsters.DataType.Cards.Spells
         public double Time { get; set; }
         public double Help { get; set; }
         public double Rate { get; set; }//100表示100%
+        public int Atk { get; set; }
 
         public int Attr {
             get { return SpellConfig.Attr; }
@@ -52,7 +53,7 @@ namespace TaleofMonsters.DataType.Cards.Spells
         {
             get
             {
-                return string.Format(SpellConfig.GetDescript, Damage, Cure, Time, Help, Rate);
+                return string.Format(SpellConfig.GetDescript, Damage, Cure, Time, Help, Rate, Atk);
             }
         }
 
@@ -91,6 +92,7 @@ namespace TaleofMonsters.DataType.Cards.Spells
             int standardValue = (30 + SpellConfig.Star*10)*(level*8 + 92)/100*(100 + SpellConfig.Modify)/100;
             Damage = standardValue * (SpellConfig.Damage) / 100 * 5;
             Cure = standardValue * (SpellConfig.Cure) / 100 * 5;
+            Atk = standardValue * (SpellConfig.Atk) / 100 * 2;//和monster的攻击一样
             if (Addon > 0 || Addon < 0)
             {
                 Damage = (int)(Damage * (1 + Addon));
