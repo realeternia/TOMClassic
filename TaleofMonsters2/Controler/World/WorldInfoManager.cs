@@ -62,10 +62,5 @@ namespace TaleofMonsters.Controler.World
             }
             return cardfakeid;
         }
-
-        public static int GetCardUniqueId()
-        {
-            return cardid++;
-        }
     }
 }

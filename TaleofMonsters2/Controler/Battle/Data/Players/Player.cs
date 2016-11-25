@@ -272,7 +272,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             var truePos = new Point(location.X/size*size, location.Y/size*size);
             var mon = new Monster(cardId);
             mon.UpgradeToLevel(level);
-            LiveMonster newMon = new LiveMonster(World.WorldInfoManager.GetCardFakeId(), level, mon, truePos, IsLeft);
+            LiveMonster newMon = new LiveMonster(level, mon, truePos, IsLeft);
             BattleManager.Instance.MonsterQueue.Add(newMon);
         }
 
@@ -300,7 +300,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 mon.UpgradeToLevel(card.Level);
                 BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).MonsterAdd++;
 
-                LiveMonster newMon = new LiveMonster(card.Id, card.Level, mon, location, IsLeft);
+                LiveMonster newMon = new LiveMonster(card.Level, mon, location, IsLeft);
                 BattleManager.Instance.MonsterQueue.Add(newMon);
 
                 var addon = GetAllMonsterAddonAndClear();//这个属性目前可以来自药水
@@ -426,7 +426,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 var effect = ConfigData.GetSpellTrapConfig(trap.Id).EffectUse;
                 if (effect != null)
                 {
-                    if (MathTool.GetRandom(100) < trap.Rate && effect(left, right, trap, selectCard.CardId, selectCard.Id, (int)selectCard.CardType))
+                    if (MathTool.GetRandom(100) < trap.Rate && effect(left, right, trap, selectCard.CardId, (int)selectCard.CardType))
                     {
                         RemoveTrap(trap.Id);
                         NLog.Debug(string.Format("RemoveTrap UseCard id={0} cardId={1}", trap.Id, selectCard.CardId));

@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Core.Interface;
 using TaleofMonsters.DataType.Cards;
-using TaleofMonsters.Controler.Battle.Data.Players;
 
 namespace TaleofMonsters.Controler.Battle.Components
 {
@@ -73,8 +72,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             }
             for (int i = 0; i < Math.Min(pCards.Length, cards.Length); i++)
             {
-                if (cards[i].Id != pCards[i].Id)
-                    cards[i] = pCards[i];
+                cards[i] = pCards[i];
             }
             Invalidate();
         }

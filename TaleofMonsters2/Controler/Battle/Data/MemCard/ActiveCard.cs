@@ -9,7 +9,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
 {
     internal class ActiveCard
     {
-        public int Id { get; private set; } //唯一的id
         public DeckCard Card { get; private set; }
 
         public int Mp {
@@ -73,13 +72,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         public ActiveCard(DeckCard card)
         {
             this.Card = card;
-            Id = World.WorldInfoManager.GetCardFakeId();
             Level = card.Level;
         }
 
         public ActiveCard(int baseid, byte level, ushort exp)
         {
-            Id = World.WorldInfoManager.GetCardFakeId();
             Card = new DeckCard(baseid, level, exp);
             Level = Card.Level;
         }
@@ -139,15 +136,17 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
                 return false;
             ActiveCard rec = (ActiveCard) obj;
             if (rec.Card == Card)
-            {
                 return true;
-            }
-            return false;
+            if (rec.CardId != CardId) 
+                return false;
+            if (rec.Level != Level) //todo 还有其他可能性，暂时只有这个
+                return false;
+            return true;
         }
 
         public override string ToString()
         {
-            return string.Format("id={0} cid={1}", Id, CardId);
+            return string.Format("id={0}", CardId);
         }
     }   
 }

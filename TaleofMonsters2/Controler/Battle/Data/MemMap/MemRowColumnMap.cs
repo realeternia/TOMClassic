@@ -77,10 +77,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
 
             foreach (var unitInfo in bMap.Info)
             {
-                var id = World.WorldInfoManager.GetCardFakeId();
                 var heroData = new Monster(unitInfo.UnitId);
                 var level = ConfigData.GetLevelExpConfig(player.Level).TowerLevel;
-                LiveMonster lm = new LiveMonster(id, level, heroData, new Point((x + (player.IsLeft ? unitInfo.X : (-unitInfo.X))) * CardSize, (y + unitInfo.Y) * CardSize), player.IsLeft);
+                LiveMonster lm = new LiveMonster(level, heroData, new Point((x + (player.IsLeft ? unitInfo.X : (-unitInfo.X))) * CardSize, (y + unitInfo.Y) * CardSize), player.IsLeft);
                 BattleManager.Instance.MonsterQueue.Add(lm);
             }
 
@@ -92,12 +91,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                     int xoff = player.InitialMonster[i+1];
                     int yoff = player.InitialMonster[i+2];
 
-                    var id = World.WorldInfoManager.GetCardFakeId();
                     var level = ConfigData.GetLevelExpConfig(player.Level).TowerLevel;
                     var mon = new Monster(mid);
                     mon.UpgradeToLevel(level);
                     var pos = new Point((x + xoff)*CardSize, yoff*CardSize);
-                    LiveMonster lm = new LiveMonster(id, level, mon, pos, player.IsLeft);
+                    LiveMonster lm = new LiveMonster(level, mon, pos, player.IsLeft);
                     BattleManager.Instance.MonsterQueue.Add(lm);
                 }
             }

@@ -37,14 +37,14 @@ namespace TaleofMonsters.Controler.Battle
             roundMark = 0;
             int size = BattleManager.Instance.MemMap.CardSize;
             BattleManager.Instance.BattleInfo.Round = 0;
-            LiveMonster newMon = new LiveMonster(World.WorldInfoManager.GetCardFakeId(), 1, new Monster(left),
+            LiveMonster newMon = new LiveMonster(1, new Monster(left),
                 new Point(3 * size, 2 * size), true);
             //if (leftWeapon > 0)
             //{
             //    newMon.AddWeapon(leftWeapon, 1, 0);
             //}
            
-            LiveMonster newMon2 = new LiveMonster(World.WorldInfoManager.GetCardFakeId(), 1, new Monster(right),
+            LiveMonster newMon2 = new LiveMonster(1, new Monster(right),
                 new Point(6 * size, 2 * size), false);
            BattleManager.Instance.MonsterQueue.Add(newMon);
            BattleManager.Instance.MonsterQueue.Add(newMon2);

@@ -226,11 +226,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         #endregion
 
-        public LiveMonster(int id, int level, Monster mon, Point point, bool isLeft)
+        public LiveMonster(int level, Monster mon, Point point, bool isLeft)
         {
             hpBar = new HpBar();
-
-            Id = id;
+            Id = World.WorldInfoManager.GetCardFakeId();
             Level = level;
             Avatar = mon;
             Avatar.UpgradeToLevel(level);          
@@ -960,7 +959,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 {
                     var mon = new Monster(id);
                     mon.UpgradeToLevel(Level);
-                    LiveMonster newMon = new LiveMonster(World.WorldInfoManager.GetCardFakeId(), Level, mon, pos, IsLeft);
+                    LiveMonster newMon = new LiveMonster(Level, mon, pos, IsLeft);
                     newMon.IsSummoned = true;
                     BattleManager.Instance.MonsterQueue.AddDelay(newMon);
                 }

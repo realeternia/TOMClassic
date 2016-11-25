@@ -262,7 +262,7 @@ namespace ExcelToCsv
                     result = datas[i].ToString() == ""
                                   ? "null"
                                   : string.Format(
-                                      "delegate(IPlayer p, IPlayer r, ITrap t, int cid, int id, int type){{{0}}}",
+                                      "delegate(IPlayer p, IPlayer r, ITrap t, int cid, int type){{{0}}}",
                                       datas[i]);
                 }
                 else if (typeStr == "SpellTrapSummonDelegate")

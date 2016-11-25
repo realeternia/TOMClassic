@@ -12,7 +12,7 @@ namespace ConfigDatas
 
     public delegate void SpellEffectDelegate(ISpell spell,IMap map, IPlayer player, IPlayer rival, IMonster target, System.Drawing.Point mouse, int level);
 
-    public delegate bool SpellTrapAddCardDelegate(IPlayer player, IPlayer rival, ITrap trap, int cardId, int cardRealId, int cardType);
+    public delegate bool SpellTrapAddCardDelegate(IPlayer player, IPlayer rival, ITrap trap, int cardId, int cardType);
     public delegate bool SpellTrapSummonDelegate(IPlayer player, IPlayer rival, ITrap trap, IMonster mon, int level);
 
     public delegate string FormatStringDelegate(int level);

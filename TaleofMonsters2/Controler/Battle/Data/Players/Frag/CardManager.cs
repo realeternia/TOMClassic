@@ -107,7 +107,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             cards[index - 1] = ActiveCards.NoneCard;
             for (int i = 0; i < GameConstants.CardSlotMaxCount - 1; i++)
             {
-                if (cards[i].Id == 0 && cards[i + 1].Id > 0)
+                if (cards[i].CardId == 0 && cards[i + 1].CardId > 0)
                 {
                     ActiveCard tempCard = cards[i];
                     cards[i] = cards[i + 1];
@@ -210,7 +210,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             int count = 0;
             for (int i = 0; i < GameConstants.CardSlotMaxCount; i++)
             {
-                if (cards[i].Id != 0)
+                if (cards[i].CardId != 0)
                     count++;
             }
             return count;

@@ -64,7 +64,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             realCardNum = 0;
             for (int i = 0; i < 10; i++)
             {
-                if (cards[i].ACard.Id != pCards[i].Id)
+                if (cards[i].ACard != pCards[i])
                     cards[i].SetSlotCard(pCards[i]);
                 if (pCards[i].CardId > 0)
                 {
@@ -189,7 +189,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             {
                 mouseIndex = newIndex;
                 tooltip.Hide(this);
-                if (mouseIndex != -1 && cards[mouseIndex - 1].ACard.Id != 0)
+                if (mouseIndex != -1 && cards[mouseIndex - 1].ACard.CardId != 0)
                 {
                     var targetCard = cards[mouseIndex - 1];
                     var card = CardAssistant.GetCard(targetCard.ACard.CardId);
