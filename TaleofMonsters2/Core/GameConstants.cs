@@ -5,7 +5,8 @@ namespace TaleofMonsters.Core
         public const int CardMaxLevel = 99;
         public const int CardSlotMaxCount = 10;
         public const int DeckCardCount = 30;//一套牌有几张
-        public const int CardLimit = 1;//同种卡牌拥有的上限
+        public const int CardLimitLegend = 1;//同种卡牌拥有的上限
+        public const int CardLimit = 2;//同种卡牌拥有的上限
         public const int DiamondToGold = 20; //钻石黄金比值
 
         public const int CardShopDura = 24*3600;

@@ -54,7 +54,8 @@ namespace TaleofMonsters.DataType.User.Mem
         {
             int firstBlank = -1;
             int count = 0;
-            int newCardJob = CardConfigManager.GetCardConfig(card.BaseId).JobId;
+            var cardConfig = CardConfigManager.GetCardConfig(card.BaseId);
+            int newCardJob = cardConfig.JobId;
             for (int i = 0; i < GameConstants.DeckCardCount; i++)
             {
                 var dcard = CardIds[i];
@@ -67,7 +68,7 @@ namespace TaleofMonsters.DataType.User.Mem
                 {
                     DeckCard tCard = UserProfile.InfoCard.GetDeckCardById(dcard);
                     if (tCard.BaseId == card.BaseId)
-                        return HSErrorTypes.DeckCardAlreadyIn;
+                        count++;
 
                     int cardJob = CardConfigManager.GetCardConfig(tCard.BaseId).JobId;
                     if (newCardJob > 0 && cardJob > 0 && newCardJob != cardJob)
@@ -75,7 +76,11 @@ namespace TaleofMonsters.DataType.User.Mem
                 }
             }
 
-            if (count >= GameConstants.CardLimit)
+            if (cardConfig.Quality == CardQualityTypes.Legend && count >= GameConstants.CardLimitLegend)
+            {
+                return HSErrorTypes.DeckCardTypeLimitLegend;
+            }
+            if (cardConfig.Quality != CardQualityTypes.Legend && count >= GameConstants.CardLimit)
             {
                 return HSErrorTypes.DeckCardTypeLimit;
             }

@@ -174,7 +174,11 @@ namespace TaleofMonsters.Forms.Items
             if (attr.Contains("D"))
             {
                 Image mark = PicLoader.Read("System", "MarkSelect.PNG");
-                g.DrawImage(mark, x, y, cardWidth, cardHeight);
+                g.DrawImage(mark, x+ cardWidth - 21, y+cardHeight-25, 21, 25);
+                if (attr.Contains("DD"))//2张出战
+                {
+                    g.DrawImage(mark, x + cardWidth - 21, y + cardHeight - 25 - 15, 21, 25);
+                }
                 mark.Dispose();
             }
             if (attr.Contains("N"))
