@@ -93,5 +93,17 @@ namespace TaleofMonsters.DataType.Cards
         {
             return movPunish[mov / 5];
         }
+
+        public static int GetCardModify(int quality, int modify)
+        {
+            int result = modify;
+            if (quality == CardQualityTypes.Legend)
+                result += 6;
+            else if (quality == CardQualityTypes.Epic)
+                result += 2;
+            else if (quality == CardQualityTypes.Excel)
+                result += 1;
+            return result;
+        }
     }
 }

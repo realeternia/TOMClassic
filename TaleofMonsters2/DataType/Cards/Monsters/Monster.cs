@@ -90,7 +90,11 @@ namespace TaleofMonsters.DataType.Cards.Monsters
 
         public void UpgradeToLevel(int level)
         {
-            int standardValue = (30 + MonsterConfig.Star * 10) * (level*8 + 92) / 100 * (200 + MonsterConfig.Modify) / 200;
+            var modify = CardAssistant.GetCardModify(MonsterConfig.Quality, MonsterConfig.Modify);
+
+            Level = level;
+
+            int standardValue = (30 + MonsterConfig.Star * 10) * (level*8 + 92) / 100 * (200 + modify) / 200;
             Atk = standardValue * (100 + MonsterConfig.AtkP) / 100; //200
             Hp = standardValue * (100 + MonsterConfig.VitP) / 100 * 5; //200
             if (Range!=10)
@@ -103,8 +107,6 @@ namespace TaleofMonsters.DataType.Cards.Monsters
                 Atk = (int)(Atk * CardAssistant.GetCardFactorOnMove(Mov));
                 Hp = (int)(Hp * CardAssistant.GetCardFactorOnMove(Mov));
             }
-
-            Level = level;
         }
     }
 }

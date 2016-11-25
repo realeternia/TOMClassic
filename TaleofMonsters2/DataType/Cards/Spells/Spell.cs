@@ -87,9 +87,11 @@ namespace TaleofMonsters.DataType.Cards.Spells
 
         public void UpgradeToLevel(int level)
         {
+            var modify = CardAssistant.GetCardModify(SpellConfig.Quality, SpellConfig.Modify);
+            
             Level = level;
 
-            int standardValue = (30 + SpellConfig.Star*10)*(level*8 + 92)/100*(100 + SpellConfig.Modify)/100;
+            int standardValue = (30 + SpellConfig.Star*10)*(level*8 + 92)/100*(200 + modify) /200;
             Damage = standardValue * (SpellConfig.Damage) / 100 * 5;
             Cure = standardValue * (SpellConfig.Cure) / 100 * 5;
             Atk = standardValue * (SpellConfig.Atk) / 100;//和monster的攻击一样
