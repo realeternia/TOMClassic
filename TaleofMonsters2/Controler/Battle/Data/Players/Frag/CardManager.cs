@@ -166,9 +166,10 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             }
         }
 
-        public void AddCard(int cardId, int level)
+        public void AddCard(int cardId, int level, int modify)
         {
             ActiveCard card = new ActiveCard(cardId, (byte)level, 0);
+            card.CostModify = modify;
             AddCard(card);
         }
 

@@ -496,7 +496,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void AddCard(IMonster mon, int cardId, int level)
         {
-            CardManager.AddCard(cardId, level);
+            CardManager.AddCard(cardId, level, 0);
+        }
+        public void AddCard(IMonster mon, int cardId, int level, int modify)
+        {
+            CardManager.AddCard(cardId, level, modify);
         }
 
         public void GetNextNCard(IMonster mon, int n)

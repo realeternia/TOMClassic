@@ -684,7 +684,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             Action += (int)(GameConstants.LimitAts*value);
         }
 
-        public void Return()
+        public void Return(int costChange)
         {
             if (Avatar.MonsterConfig.IsBuilding)
             {
@@ -694,7 +694,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
             BattleManager.Instance.MemMap.GetMouseCell(Position.X, Position.Y).UpdateOwner(0);
             SkillManager.CheckRemoveEffect();
-            Owner.AddCard(this, CardId, Level);
+            Owner.AddCard(this, CardId, Level, costChange);
 
             BattleManager.Instance.MonsterQueue.RemoveDirect(Id);
         }

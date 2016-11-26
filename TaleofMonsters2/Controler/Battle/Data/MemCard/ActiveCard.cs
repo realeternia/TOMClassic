@@ -14,12 +14,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         public int Mp {
             get
             {
-                var lpCost = Card.Lp == 0 ? 0 : Math.Max(0, Card.Lp + LpCostChange);
+                var lpCost = Card.Lp == 0 ? 0 : Math.Max(0, Card.Lp + LpCostChange + CostModify);
                 if (Lp2Mp && lpCost > 0)
                 {
                     return lpCost;
                 }
-                return Card.Mp==0?0: Math.Max(0, Card.Mp + MpCostChange);
+                return Card.Mp==0?0: Math.Max(0, Card.Mp + MpCostChange+ CostModify);
             }
         }
         public int Lp
@@ -29,11 +29,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
                 {
                     return 0;
                 }
-                return Card.Lp == 0 ? 0 : Math.Max(0,Card.Lp + LpCostChange); }
+                return Card.Lp == 0 ? 0 : Math.Max(0,Card.Lp + LpCostChange+ CostModify); }
         }
         public int Pp
         {
-            get { return Card.Pp == 0 ? 0 : Math.Max(0, Card.Pp + PpCostChange); }
+            get { return Card.Pp == 0 ? 0 : Math.Max(0, Card.Pp + PpCostChange+ CostModify); }
         }
 
         public IEnumerable<PlayerManaTypes> CostList
@@ -62,6 +62,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         public bool Lp2Mp { get; set; } //可以被技能修改
         public byte Level { get; set; }
 
+        public int CostModify { get; set; }
         public bool Combo { get; set; }//可以被修改
 
         public ActiveCard()
