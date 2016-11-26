@@ -230,7 +230,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             return HSErrorTypes.OK;
         }
 
-        public bool CheckUseCard(ActiveCard selectCard)
+        public bool BeforeUseCard(ActiveCard selectCard)
         {
             AddMp(-selectCard.Mp);
             AddLp(-selectCard.Lp);
@@ -243,13 +243,16 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
 
             SpikeManager.OnUseCard(selectCard.CardType);
+            
+            return true;
+        }
 
+        public void AfterUseCard(ActiveCard selectCard)
+        {
             var oldComboTime = comboTime;
             comboTime = 1;
             if (oldComboTime <= 0)
                 CardManager.UpdateCardCombo();
-
-            return true;
         }
 
         public virtual void AddResource(GameResourceType type, int number)
@@ -289,7 +292,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void UseMonster(ActiveCard card, Point location)
         {
-            if (!CheckUseCard(card))
+            if (!BeforeUseCard(card))
             {
                 return;
             }
@@ -320,13 +323,13 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 BattleManager.Instance.FlowWordQueue.Add(new FlowWord("未知错误", location, 0, "Red", 26, 0, 0, 2, 15), false);
                 return;
             }
-
+            AfterUseCard(card);
             CardManager.DeleteCardAt(SelectId);
         }
 
         public void UseWeapon(LiveMonster lm, ActiveCard card)
         {
-            if (!CheckUseCard(card))
+            if (!BeforeUseCard(card))
             {
                 return;
             }
@@ -346,13 +349,13 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 BattleManager.Instance.FlowWordQueue.Add(new FlowWord("未知错误", lm.Position, 0, "Red", 26, 0, 0, 2, 15), false);
                 return;
             }
-
+            AfterUseCard(card);
             CardManager.DeleteCardAt(SelectId);
         }
 
         public void UseSideKick(LiveMonster lm, ActiveCard card)
         {
-            if (!CheckUseCard(card))
+            if (!BeforeUseCard(card))
             {
                 return;
             }
@@ -372,13 +375,13 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 BattleManager.Instance.FlowWordQueue.Add(new FlowWord("未知错误", lm.Position, 0, "Red", 26, 0, 0, 2, 15), false);
                 return;
             }
-
+            AfterUseCard(card);
             CardManager.DeleteCardAt(SelectId);
         }
 
         public void DoSpell(LiveMonster target, ActiveCard card, Point location)
         {
-            if (!CheckUseCard(card))
+            if (!BeforeUseCard(card))
             {
                 return;
             }
@@ -404,7 +407,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 BattleManager.Instance.FlowWordQueue.Add(new FlowWord("未知错误", location, 0, "Red", 26, 0, 0, 2, 15),false);
                 return;
             }
-            
+            AfterUseCard(card);
             CardManager.DeleteCardAt(SelectId);
         }
 
