@@ -94,7 +94,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
 
             Level = level;
 
-            int standardValue = (30 + MonsterConfig.Star * 10) * (level*8 + 92) / 100 * (200 + modify) / 200;
+            int standardValue = (20 + MonsterConfig.Star * 12) * (level*8 + 92) / 100 * (200 + modify) / 200;
             Atk = standardValue * (100 + MonsterConfig.AtkP) / 100; //200
             Hp = standardValue * (100 + MonsterConfig.VitP) / 100 * 5; //200
             if (Range!=10)

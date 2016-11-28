@@ -91,7 +91,7 @@ namespace TaleofMonsters.DataType.Cards.Spells
             
             Level = level;
 
-            int standardValue = (30 + SpellConfig.Star*10)*(level*8 + 92)/100*(200 + modify) /200;
+            int standardValue = (20 + SpellConfig.Star*12)*(level*8 + 92)/100*(200 + modify) /200;
             Damage = standardValue * (SpellConfig.Damage) / 100 * 5;
             Cure = standardValue * (SpellConfig.Cure) / 100 * 5;
             Atk = standardValue * (SpellConfig.Atk) / 100;//和monster的攻击一样
