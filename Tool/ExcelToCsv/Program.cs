@@ -5,23 +5,24 @@ using System.Data.OleDb;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace ExcelToCsv
 {
     class Program
     {
+        private static List<FileData> tableState = new List<FileData>();
+
+        private static Thread[] sThread;
+
+        private const int ThreadCount = 4;
+
+        private static int threadLeft; //还在工作的线程数
+
         static void Main(string[] args)
         {
             string[] files = Directory.GetFiles("./Xlsx");
-            StreamWriter swTotal = new StreamWriter("./ConfigData/ConfigData.cs", false, Encoding.Default);
-
-            swTotal.WriteLine("using System;");
-            swTotal.WriteLine("using System.Collections.Generic;");
-            swTotal.WriteLine("using NarlonLib.Math;");            
-            swTotal.WriteLine("namespace ConfigDatas");
-            swTotal.WriteLine("{");
-            swTotal.WriteLine("\tpublic class ConfigData");
-            swTotal.WriteLine("\t{");
+            var startTime = DateTime.Now;
             string loadStr = "";
             try
             {
@@ -35,12 +36,20 @@ namespace ExcelToCsv
                         {
                             continue;
                         }
-                        Console.WriteLine(keyname);
+                        Console.WriteLine("Find " + keyname);
                         loadStr += string.Format("\t\t\tLoad{0}();\r\n", keyname);
 
-                        CopeFile(keyname, fileInfo, swTotal);
+                        FileData data = new FileData
+                        {
+                            KeyName = keyname,
+                            Path = fileInfo.FullName,
+                            Size = fileInfo.Length
+                        };
+                        tableState.Add(data);
                     }
                 }
+
+                tableState.Sort(new CompareBySize());
             }
             catch (Exception e)
             {
@@ -50,6 +59,61 @@ namespace ExcelToCsv
                 Console.ReadKey();
             }
 
+            sThread = new Thread[ThreadCount];
+            threadLeft = ThreadCount;
+            for (int i = 0; i < sThread.Length; i++)
+            {
+                sThread[i] = new Thread(new ParameterizedThreadStart(ThreadWork));
+                sThread[i].Start(i);
+            }
+
+            while (threadLeft > 0)
+            {
+                Thread.Sleep(100);
+            }
+        
+
+            WriteConfigData(loadStr);
+
+            Console.WriteLine("ThreadCount " + ThreadCount);
+            Console.WriteLine("TimePast " + (DateTime.Now-startTime));
+        }
+
+        private static void ThreadWork(object o)
+        {
+            while (true)
+            {
+                FileData targetFile;
+                lock (tableState)
+                {
+                    if (tableState.Count > 0)
+                    {
+                        targetFile = tableState[0];
+                        tableState.RemoveAt(0);
+                    }
+                    else
+                    {
+                        break; //退出线程
+                    }
+                }
+                Console.WriteLine("Process " + targetFile.KeyName + "-" + o);
+                FileInfo fileInfo = new FileInfo(targetFile.Path);
+                CopeFile(targetFile.KeyName, fileInfo);
+            }
+            threadLeft--;
+        }
+
+        private static void WriteConfigData(string loadStr)
+        {
+            StreamWriter swTotal = new StreamWriter("./ConfigData/ConfigData.cs", false, Encoding.Default);
+
+            swTotal.WriteLine("using System;");
+            swTotal.WriteLine("using System.Collections.Generic;");
+            swTotal.WriteLine("using NarlonLib.Math;");
+            swTotal.WriteLine("namespace ConfigDatas");
+            swTotal.WriteLine("{");
+            swTotal.WriteLine("\tpublic partial class ConfigData");
+            swTotal.WriteLine("\t{");
             swTotal.WriteLine("\t\tpublic static void LoadData()");
             swTotal.WriteLine("\t\t{");
             swTotal.WriteLine(loadStr);
@@ -59,8 +123,17 @@ namespace ExcelToCsv
             swTotal.Close();
         }
 
-        private static void CopeFile(string keyname, FileInfo fileInfo, StreamWriter swTotal)
+        private static void CopeFile(string keyname, FileInfo fileInfo)
         {
+            StreamWriter swTotal = new StreamWriter(string.Format("./ConfigData/ConfigData{0}.cs", keyname), false, Encoding.Default);
+            swTotal.WriteLine("using System;");
+            swTotal.WriteLine("using System.Collections.Generic;");
+            swTotal.WriteLine("using NarlonLib.Math;");
+            swTotal.WriteLine("namespace ConfigDatas");
+            swTotal.WriteLine("{");
+            swTotal.WriteLine("\tpublic partial class ConfigData");
+            swTotal.WriteLine("\t{");
+
             var datas = GetExcelToDataTableBySheet(fileInfo.FullName);
             List<string> indexerBlock = new List<string>();
 
@@ -111,6 +184,9 @@ namespace ExcelToCsv
             }
 
             swTotal.WriteLine("\t\t}");
+            swTotal.WriteLine("\t}");
+            swTotal.WriteLine("}");
+            swTotal.Close();
 
             //再写各个类定义文件
             StreamWriter sw = new StreamWriter(string.Format("./ConfigData/{0}.cs", keyname), false, Encoding.Default);
@@ -349,7 +425,21 @@ namespace ExcelToCsv
             //string strConn = "Provider=Microsoft.Jet.OleDb.4.0;" + "data source=" + FileFullPath +sheetNameed Properties='Excel 8.0; HDR=NO; IMEX=1'"; //此连接只能操作Excel2007之前(.xls)文件  
             string strConn = "Provider=Microsoft.Ace.OleDb.12.0;" + "data source=" + fileFullPath + ";Extended Properties='Excel 12.0; HDR=NO; IMEX=1'"; //此连接可以操作.xls与.xlsx文件  
             OleDbConnection conn = new OleDbConnection(strConn);
-            conn.Open();
+
+            bool isLoad = false;
+            while (!isLoad)
+            {
+                try
+                {
+                    conn.Open();
+                    isLoad = true;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("GetExcelToDataTableBySheet failed " + fileFullPath);
+                    Thread.Sleep(50);
+                }
+            }
             System.Data.DataTable dt = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
             DataSet ds = new DataSet();
             foreach (DataRow row in dt.Rows)
