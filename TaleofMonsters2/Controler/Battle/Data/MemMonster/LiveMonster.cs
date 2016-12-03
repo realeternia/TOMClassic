@@ -739,6 +739,17 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
         }
 
+        public void LevelUpWeapon(int lv)
+        {
+            if (Weapon != null)
+            {
+                var weaponId = Weapon.CardId;
+                var weaponLevel = Weapon.Level;
+                BreakWeapon();
+                AddWeapon(weaponId, weaponLevel+lv);
+            }
+        }
+
         public void AddRandSkill()
         {
             SkillManager.AddSkill(SkillBook.GetRandSkillId(), Level / 2, 100, SkillSourceTypes.Skill);

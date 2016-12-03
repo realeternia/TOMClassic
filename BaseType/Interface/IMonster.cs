@@ -31,6 +31,7 @@ namespace ConfigDatas
         void StealWeapon(IMonster target);
         void BreakWeapon();
         void WeaponReturn();
+        void LevelUpWeapon(int lv);
         void AddRandSkill();
         int GetMonsterCountByRace(int rid);
         int GetMonsterCountByType(int type);

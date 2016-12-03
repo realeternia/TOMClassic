@@ -131,8 +131,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
         {
             get
             {
-                return string.Format("{0}({1}/{2})", avatar.WeaponConfig.Name,
-                    Life, avatar.Dura);
+                return string.Format("{0}Lv{3}({1}/{2})", avatar.WeaponConfig.Name,
+                    Life, avatar.Dura, Level);
             }
         }
     }
