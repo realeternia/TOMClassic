@@ -537,11 +537,11 @@ namespace TaleofMonsters.Controler.Battle
             {
                 if (active)
                 {
-                    vRegion.SetRegionDecorator(index + 1, 1, null);
+                    vRegion.SetRegionDecorator(index + 1, 1, null);//移掉黑色遮罩
                 }
                 else
                 {
-                    var color = Color.FromArgb(150, Color.Black);
+                    var color = Color.FromArgb(150, Color.Black); //cd中就加一层黑色遮罩
                     var decorate = new RegionCoverDecorator(color);
                     vRegion.SetRegionDecorator(index + 1, 1, decorate);
                 }

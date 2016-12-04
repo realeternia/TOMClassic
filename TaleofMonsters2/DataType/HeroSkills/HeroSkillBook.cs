@@ -38,7 +38,11 @@ namespace TaleofMonsters.DataType.HeroSkills
             tipData.AddTextNewLine("消耗：", "White");
             if (heroSkillConfig.Type == (int)CardTypes.Monster)
             {
-                tipData.AddText(cost + "AP", "Red");
+                tipData.AddText(cost + "LP", "Yellow");
+            }
+            else if (heroSkillConfig.Type == (int)CardTypes.Weapon)
+            {
+                tipData.AddText(cost + "PP", "Red");
             }
             else
             {
