@@ -2,6 +2,7 @@ namespace ConfigDatas
 {
     public interface IPlayer
     {
+        IMonster Tower { get; }
         bool IsLeft{get;}
         int Job { get; }
         float Mp { get; }

@@ -994,6 +994,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             HpBar.AddMArmor((int)val);
         }
+
+        public int GetPArmor()
+        {
+            return HpBar.PArmor;
+        }
         #endregion
     }
 }

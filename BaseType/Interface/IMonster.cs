@@ -80,5 +80,6 @@ namespace ConfigDatas
         void ClearTarget();
         void AddPArmor(double val);
         void AddMArmor(double val);
+        int GetPArmor();
     }
 }

@@ -101,7 +101,7 @@ namespace TaleofMonsters.DataType.Cards.Spells
                 Cure = (int)(Cure * (1 + Addon));
             }
 
-            double standardValue2 = Math.Sqrt(((double)level + 5) / 6) * (100 + SpellConfig.Modify) / 100;
+            double standardValue2 = Math.Sqrt(((double)level + 3) / 4) * (100 + SpellConfig.Modify) / 100;
             Time = SpellConfig.Time*standardValue2;
             Help = SpellConfig.Help * standardValue2;
 

@@ -67,6 +67,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public ICardList CardsDesk { get; set; }
 
+        public IMonster Tower
+        {
+            get { return BattleManager.Instance.MonsterQueue.GetKingTower(IsLeft); }
+        }
+
         public int SelectCardId
         {
             get { return CardsDesk.GetSelectCard().CardId; }
