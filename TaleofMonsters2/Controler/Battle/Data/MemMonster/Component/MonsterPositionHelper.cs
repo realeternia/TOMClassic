@@ -27,7 +27,20 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             return availPoints;
         }
 
-        public static Point GetAvailPoint(Point pos, string type, bool isLeft)
+        public static Point GetAvailPoint(Point pos, string type, bool isLeft, int step)
+        {
+            Point resultPoint = pos;
+            for (int i = 0; i < step; i++)
+            {
+                var tmpPos = GetAvailPoint(resultPoint, type, isLeft);
+                if (tmpPos.X == -1 || tmpPos.Y == -1)
+                    break;
+                resultPoint = tmpPos;
+            }
+            return resultPoint;
+        }
+
+        private static Point GetAvailPoint(Point pos, string type, bool isLeft)
         {
             List<Point> posList = GetPointInner(pos, type, isLeft);
             List<Point> availPoints = new List<Point>();

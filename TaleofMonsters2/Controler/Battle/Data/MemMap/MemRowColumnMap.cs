@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using NarlonLib.Core;
-using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.DataType.Cards.Monsters;
@@ -184,7 +183,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                 if (lm.IsHero)
                     continue;
 
-                lm.SetToPosition(type);
+                lm.SetToPosition(type, 1);
             }
         }
 

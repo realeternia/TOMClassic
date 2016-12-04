@@ -863,7 +863,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             return BuffManager.HasBuff(buffid);
         }
 
-        public void SetToPosition(string type)
+        public void SetToPosition(string type, int step)
         {
             if (Avatar.MonsterConfig.IsBuilding)
             {
@@ -871,13 +871,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 return;
             }
 
-            Point dest = MonsterPositionHelper.GetAvailPoint(Position, type, IsLeft);
-            if (dest.X != -1 && dest.Y != -1)
+            Point dest = MonsterPositionHelper.GetAvailPoint(Position, type, IsLeft, step);
+            if (dest.X != Position.X || dest.Y != Position.Y)
             {
-                if (!Avatar.MonsterConfig.IsBuilding)
-                {
-                    BattleLocationManager.SetToPosition(this, dest);
-                }
+                BattleLocationManager.SetToPosition(this, dest);
             }
         }
 
