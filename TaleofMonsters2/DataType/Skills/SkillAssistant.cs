@@ -106,13 +106,12 @@ namespace TaleofMonsters.DataType.Skills
             }
         }
 
-        public static int GetMagicDamage(LiveMonster dest, HitDamage damage)
+        public static void CheckMagicDamage(LiveMonster dest, HitDamage damage)
         {
             if (damage.Dtype == DamageTypes.Magic)
             {
                 dest.CheckMagicDamage(damage);
             }
-            return damage.Value;
         }
 
     }

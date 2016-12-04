@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
@@ -111,7 +112,10 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             {
                 var rival = mon.Rival as Player;
                 if (rival.DirectDamage > 0)
-                    mon.Life -= rival.DirectDamage;
+                {
+                    HitDamage damage = new HitDamage(rival.DirectDamage, rival.DirectDamage, 0, DamageTypes.Magic);
+                    mon.HpBar.OnDamage(damage);
+                }
                 if (!mon.IsAlive)
                 {
                     if (!mon.IsGhost)

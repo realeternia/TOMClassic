@@ -29,11 +29,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
     internal class LiveMonster : IMonster
     {
         private readonly MonsterAi aiController;
-        private readonly HpBar hpBar;
+        public HpBar HpBar { get; private set; }
         public SkillManager SkillManager { get; private set; }
         public BuffManager BuffManager { get; private set; }
         
-        private int life;
         private int lastDamagerId; //最后一击的怪物id
         private int peakDamagerLuk; //最高攻击者的幸运值
 
@@ -47,7 +46,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public int Id { get; private set; }
         public int Level { get; private set; }
         public Monster Avatar { get; private set; }
-        public int HpReg { get; set; }
+
         public float GhostTime { get; set; } //0-1表示在墓地状态
         public bool IsDefence { get { return ReadMov == 0 && !Avatar.MonsterConfig.IsBuilding; } }
         public Point Position { get; set; }
@@ -76,10 +75,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public int Life
         {
-            get { return Math.Max(life, 0); }
-            set { life = value; if (life > RealMaxHp) life = RealMaxHp;
-            hpBar.Rate = life * 100 / RealMaxHp;                
-            }
+            get { return HpBar.Life; }
         }
         
         public Point CenterPosition
@@ -90,7 +86,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public bool IsAlive
         {
-            get { return life > 0; }
+            get { return Life > 0; }
         }
 
         public int RealAtk
@@ -228,7 +224,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public LiveMonster(int level, Monster mon, Point point, bool isLeft)
         {
-            hpBar = new HpBar();
             Id = World.WorldInfoManager.GetCardFakeId();
             Level = level;
             Avatar = mon;
@@ -238,6 +233,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             IsLeft = isLeft;
             Action = 0;
             roundPast = 0;
+            HpBar = new HpBar(this);
             SkillManager = new SkillManager(this);
             AttackType = (int)CardElements.None;
             CanAttack = true;
@@ -247,7 +243,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             LiveMonsterToolTip = new LiveMonsterToolTip(this);
 
             SetBasicData();
-            Life = Avatar.Hp;
+            HpBar.SetHp(Avatar.Hp);
             MonsterCoverBox = new MonsterCoverBox(this);
         }
 
@@ -297,8 +293,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             {
                 HitDamage damage = SkillAssistant.GetDamage(src, this);
                 CheckDamageBuffEffect(src, damage);
-                Life -= damage.Value;
-                OnDamage(damage);
+
+                HpBar.OnDamage(damage);
                 SkillAssistant.CheckHitEffectAfter(src, this, damage);
                 if (src.WeaponId > 0)
                 {
@@ -367,21 +363,13 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             roundPast++;
             pastRoundTotal += pastRound;
 
-            hpBar.Update();
+            HpBar.Update();
             SkillAssistant.CheckAuroState(this, tileMatching);
 
             if (pastRoundTotal >= 1)
             {
                 pastRoundTotal -= 1;
-                if (HpReg > 0)
-                {
-                    Life += HpReg;
-                }
-
-                if (Avatar.MonsterConfig.LifeRound > 0)
-                {//这里使用默认的生命值来扣
-                    Life -= (int)(Avatar.Hp / Avatar.MonsterConfig.LifeRound);
-                }
+                HpBar.OnRound();
             }
 
             BuffManager.BuffCount();
@@ -461,7 +449,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             {
                 if (BuffManager.HasBuff(BuffEffectTypes.Chaos) && MathTool.GetRandom(100) < 25)
                 {
-                    src.Life -= dam.Value;
+                    src.HpBar.OnDamage(dam);
                     dam.SetDamage(DamageTypes.Physical, 0);
                 }
             }
@@ -484,7 +472,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             GhostTime = 0;
             BattleManager.Instance.MemMap.GetMouseCell(Position.X, Position.Y).UpdateOwner(Id);
-            Life++;
+            HpBar.SetHp(1);//复活给1hp
 
             SkillManager.CheckInitialEffect();
         }
@@ -496,12 +484,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 //		    Def += (double) basedata/10;
 //			MaxHp=Avatar.Hp + 3 * basedata / 10;
 		}
-
-        private void OnDamage(HitDamage damage)
-        {
-            BattleManager.Instance.BattleInfo.GetPlayer(!IsLeft).DamageTotal+=damage.Value;
-            BattleManager.Instance.FlowWordQueue.Add(new FlowDamageInfo(damage, CenterPosition), false);//掉血显示
-        }
 
         private void MakeSound(bool onSummon)
         {
@@ -539,7 +521,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 g.DrawRectangle(pen, 1, 1, 98, 98);
                 pen.Dispose();
 
-                hpBar.Draw(g);
+                HpBar.Draw(g);
 
                 g.FillPie(Brushes.Gray, 65, 65, 30, 30, 0, 360);
                 var skillPercent = SkillManager.GetRoundSkillPercent();
@@ -611,12 +593,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         }
         public void AddHp(double addon)
         {
-            Life += (int)addon;
+            HpBar.AddHp((int)addon);
         }
 
         public void AddHpRate(double value)
         {
-            Life += (int)(RealMaxHp * value);
+            HpBar.AddHp((int)(RealMaxHp * value));
         }
 
         public IMonsterAuro AddAuro(int buff, int lv, string tar)
@@ -676,7 +658,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             {
                 AddWeapon(savedWeapon);
             }
-            Life = Avatar.Hp * lifp / 100;
+            HpBar.SetHp(Avatar.Hp * lifp / 100);
         }
 
         public void AddActionRate(double value)
@@ -779,7 +761,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public double HpRate
         {
-            get { return (double)life*100/Avatar.Hp; }
+            get { return (double)Life * 100/Avatar.Hp; }
         }
 
         public int Hp
@@ -881,9 +863,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public void OnMagicDamage(IMonster source, double damage, int element)
         {
             var dam = new HitDamage((int) damage, (int) damage, element, DamageTypes.Magic);
-            Life -= SkillAssistant.GetMagicDamage(this, dam);
             lastDamagerId = source == null ? 0 : source.Id;
-            OnDamage(dam);
+            SkillAssistant.CheckMagicDamage(this, dam);
+            HpBar.OnDamage(dam);
         }
 
         public void SuddenDeath()
@@ -893,7 +875,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", Position, 0, "Gold", 26, 0, 0, 1, 15), false);
                 return;
             }
-            Life = 0;
+            HpBar.SetHp(0);
         }
 
         public void Rebel()

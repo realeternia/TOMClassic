@@ -19,7 +19,7 @@ namespace TaleofMonsters.DataType.Equips.Addons
                     //case 104: mon.Hit += skillvalue[i]; break;
                     //case 105: mon.DHit += skillvalue[i]; break;
                     case 106: mon.MaxHp += skillvalue[i]; break;
-                    case 107: mon.HpReg += skillvalue[i]; break;
+                    //case 107: mon.HpReg += skillvalue[i]; break;
                  //   case 108: mon.MagicRatePlus += skillvalue[i]; break;
                  //   case 109: mon.TileEffectPlus += skillvalue[i]; break;
                     case 111: if (mon.Avatar.MonsterConfig.Attr == (int)CardElements.Water) mon.AddStrengthLevel(skillvalue[i]); break;
