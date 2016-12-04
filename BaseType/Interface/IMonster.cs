@@ -78,5 +78,7 @@ namespace ConfigDatas
         bool ResistBuffType(int type);
         void EatTomb(IMonster tomb);
         void ClearTarget();
+        void AddPArmor(double val);
+        void AddMArmor(double val);
     }
 }

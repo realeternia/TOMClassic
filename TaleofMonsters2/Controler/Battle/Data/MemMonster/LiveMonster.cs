@@ -896,6 +896,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 return;
             }
 
+            var lifeRate = Life/MaxHp;
             MaxHp.Source += value;
             if (value > 0)
             {
@@ -903,8 +904,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
             else
             {
-                var decRate = Life/ MaxHp;
-                AddHp(decRate * value);
+                AddHp(lifeRate * value);
             }
         }
 
@@ -985,6 +985,15 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             aiController.ClearTarget();
         }
 
+        public void AddPArmor(double val)
+        {
+            HpBar.AddPArmor((int)val);
+        }
+
+        public void AddMArmor(double val)
+        {
+            HpBar.AddMArmor((int)val);
+        }
         #endregion
     }
 }
