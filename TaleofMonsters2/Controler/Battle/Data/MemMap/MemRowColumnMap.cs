@@ -100,7 +100,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             }
         }
 
-        public MemMapPoint GetCell(int x, int y)
+        private MemMapPoint GetCell(int x, int y)
         {
             return Cells[x, y];
         }
@@ -108,20 +108,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         public MemMapPoint GetMouseCell(int x, int y)
         {
             return Cells[x / CardSize, y / CardSize];
-        }
-
-        public bool IsMousePositionCanSummon(int x, int y)
-        {
-            var sideCount = ColumnCount/2;
-            if (x < 0 || (x >= CardSize * sideCount && x < CardSize * (sideCount + 1)) || x >= CardSize * ColumnCount)
-            {
-                return false;
-            }
-            if (y < 0 || y >= CardSize * RowCount)
-            {
-                return false;
-            }
-            return GetMouseCell(x, y).Owner <= 0;
         }
 
         public int GetEnemyId(int mid, bool isLeft, int y, bool isShooter) //pos方位

@@ -13,7 +13,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             List<Point> availPoints = new List<Point>();
             foreach (var point in posList)
             {
-                if (BattleManager.Instance.MemMap.IsMousePositionCanSummon(point.X, point.Y))
+                if (BattleLocationManager.IsPlaceCanMove(point.X, point.Y))
                 {
                     availPoints.Add(point);
                 }
@@ -46,7 +46,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             List<Point> availPoints = new List<Point>();
             foreach (var point in posList)
             {
-                if (BattleManager.Instance.MemMap.IsMousePositionCanSummon(point.X, point.Y))
+                if (BattleLocationManager.IsPlaceCanMove(point.X, point.Y))
                 {
                     availPoints.Add(point);
                 }

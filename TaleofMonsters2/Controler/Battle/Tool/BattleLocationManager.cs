@@ -67,6 +67,9 @@ namespace TaleofMonsters.Controler.Battle.Tool
 
         public static bool IsPlaceCanMove(int tx, int ty)
         {
+            if (tx < 0 || ty < 0 || tx >= BattleManager.Instance.MemMap.StageWidth || ty >= BattleManager.Instance.MemMap.StageHeight)
+                return false;
+
             MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
             return point.CanMove && point.Owner == 0;
         }
@@ -192,7 +195,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
                 int xoff = MathTool.GetRandom(BattleManager.Instance.MemMap.Cells.GetLength(0));
                 int yoff = MathTool.GetRandom(BattleManager.Instance.MemMap.Cells.GetLength(1));
                 pa = new Point(xoff * size, yoff * size);
-                paavail = BattleManager.Instance.MemMap.IsMousePositionCanSummon(pa.X, pa.Y);
+                paavail = IsPlaceCanMove(pa.X, pa.Y);
             }
             return pa;
         }
