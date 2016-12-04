@@ -45,6 +45,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             tipData.AddLine();
 
             tipData.AddTextNewLine(string.Format("生命 {0}/{1}", liveMonster.Life, liveMonster.RealMaxHp), "Lime");
+            if (liveMonster.HpBar.PArmor > 0)
+                AddText(tipData, "物甲", liveMonster.HpBar.PArmor, liveMonster.HpBar.PArmor, "LightGray", true);
+            if (liveMonster.HpBar.MArmor > 0)
+                AddText(tipData, "魔甲", liveMonster.HpBar.MArmor, liveMonster.HpBar.MArmor, "DodgerBlue", true);
             AddText(tipData, "攻击", (int)liveMonster.Atk.Source, liveMonster.RealAtk, liveMonster.CanAttack ? "White" : "DarkGray", true);
             AddText(tipData, "移动", liveMonster.ReadMov, liveMonster.ReadMov, "White", false);
             AddText(tipData, "射程", liveMonster.RealRange, liveMonster.RealRange, "White", true);

@@ -16,10 +16,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public int HpReg { get; set; }
 
+        public int PArmor { get; private set; } //物理护甲，必然>=0
+
+        public int MArmor { get; private set; } //魔法护甲，必然>=0
+
         public int Life
         {
             get { return Math.Max(life, 0); }
-            set
+            private set
             {
                 life = value; if (life > self.RealMaxHp) life = self.RealMaxHp;
                 Rate = life * 100 / self.RealMaxHp;
@@ -50,6 +54,27 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             Life = hp;
         }
 
+        public void AddPArmor(int differ)
+        {
+            if (PArmor > 0 && differ + PArmor < 0)
+            {
+                PArmor = 0;
+                return;
+            }
+
+            PArmor += differ;
+        }
+
+        public void AddMArmor(int differ)
+        {
+            if (MArmor > 0 && differ + MArmor < 0)
+            {
+                MArmor = 0;
+                return;
+            }
+
+            MArmor += differ;
+        }
         public void Update()
         {
             if (rate<lastRate)
@@ -73,8 +98,19 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void OnDamage(HitDamage damage)
         {
-            Life -= damage.Value;
             BattleManager.Instance.BattleInfo.GetPlayer(!self.IsLeft).DamageTotal += damage.Value;
+
+            if (damage.Dtype != DamageTypes.Magic && PArmor > 0)
+            {
+                AddPArmor(-damage.Value);
+                return;
+            }
+            if (damage.Dtype != DamageTypes.Physical && MArmor > 0)
+            {
+                AddMArmor(-damage.Value);
+                return;
+            }
+            Life -= damage.Value;
             BattleManager.Instance.FlowWordQueue.Add(new FlowDamageInfo(damage, self.CenterPosition), false);//掉血显示
         }
 
@@ -85,11 +121,26 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void Draw(Graphics g)
         {
-            g.FillRectangle(Brushes.Lime, 0, 2, 100, 8);
-            g.FillRectangle(Brushes.Red, Math.Max(rate, 0), 2, Math.Min(100 - rate, 100), 8);
+            int hpLenth = 100;
+            if (PArmor > 0 || MArmor > 0)
+            {
+                hpLenth = (hpLenth*self.RealMaxHp)/(self.RealMaxHp + PArmor + MArmor);
+                if (PArmor > 0)
+                {
+                    g.FillRectangle(Brushes.LightGray, hpLenth, 2, 100 - hpLenth, 8);
+                }
+                if (MArmor > 0)
+                {
+                    var startP = (100 * (self.RealMaxHp+ PArmor)) / (self.RealMaxHp + PArmor + MArmor);
+                    g.FillRectangle(Brushes.DodgerBlue, startP, 2, 100 - startP, 8);
+                }
+            }
+
+            g.FillRectangle(Brushes.Lime, 0, 2, hpLenth, 8);
+            g.FillRectangle(Brushes.Red, Math.Max(rate* hpLenth/100, 0), 2, Math.Min(hpLenth - rate * hpLenth / 100, hpLenth), 8);
             if (rate<lastRate)
             {
-                g.FillRectangle(Brushes.Yellow, rate, 2, lastRate - rate, 8);
+                g.FillRectangle(Brushes.Yellow, rate * hpLenth / 100, 2, (lastRate - rate) * hpLenth / 100, 8);
             }            
         }
     }

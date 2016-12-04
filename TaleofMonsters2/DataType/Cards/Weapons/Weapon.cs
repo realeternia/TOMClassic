@@ -14,8 +14,9 @@ namespace TaleofMonsters.DataType.Cards.Weapons
         }
 
         public int Atk { get; set; }
-        public int Hp { get; set; }
-        
+        public int PArmor { get; set; }
+        public int MArmor { get; set; }
+
         public int Dura { get; set; }
         public int Range { get; set; }
         public int Mov { get; set; }
@@ -107,18 +108,17 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             int standardValue = (20 + WeaponConfig.Star * 12) * (level*8 + 92) / 100 * (200 + modify) / 200;
             standardValue = (int)((float)standardValue * 4 / WeaponConfig.Dura * (1 + (WeaponConfig.Dura - 4) * 0.1));//耐久低的武器总值削减
             Atk = standardValue * (WeaponConfig.AtkP) / 100;
-            Hp = standardValue * (WeaponConfig.VitP) / 100*5;
+            PArmor = standardValue * (WeaponConfig.PArmor) / 100*5;
+            MArmor = standardValue * (WeaponConfig.MArmor) / 100 * 5;
 
             if (Range > 10)
             {
                 Atk = (int)(Atk * CardAssistant.GetCardFactorOnRange(Range));
-                Hp = (int)(Hp * CardAssistant.GetCardFactorOnRange(Range));
             }
 
             if (Mov > 10)
             {
                 Atk = (int)(Atk * CardAssistant.GetCardFactorOnMove(Mov));
-                Hp = (int)(Hp * CardAssistant.GetCardFactorOnMove(Mov));
             }
         }
     }

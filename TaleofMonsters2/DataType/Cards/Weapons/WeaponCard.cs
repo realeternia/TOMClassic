@@ -115,16 +115,33 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             g.DrawString(string.Format("({0}/{1})", card.Exp, ExpTree.GetNextRequiredCard(card.Level)), fontsong, Brushes.RoyalBlue, 70 + offX, basel + 22);
             g.DrawString("数据", fontblack, Brushes.White, offX + 10, basel + 42);
             Adder add = new Adder(basel + 61, 15);
-            g.DrawString(string.Format("攻击 {0,3:D}", weapon.Atk), fontsong, sb, offX + 10, add.Next);
-            PaintTool.DrawValueLine(g, weapon.Atk / 2, 70 + offX, add.Now+1, 115, 10);
-            g.DrawString(string.Format("生命 {0,3:D}", weapon.Hp), fontsong, sb, offX + 10, add.Next);
-            PaintTool.DrawValueLine(g, weapon.Hp / 10, 70 + offX, add.Now + 1, 115, 10);
-            g.DrawString(string.Format("射程 {0,3:D}", weapon.Range), fontsong, sb, 10 + offX, add.Next);
-            PaintTool.DrawValueLine(g, weapon.Range * 2, 70 + offX, add.Now + 1, 115, 10);
-            g.DrawString(string.Format("移动 {0,3:D}", weapon.Mov), fontsong, sb, 10 + offX, add.Next);
-            PaintTool.DrawValueLine(g, weapon.Mov * 2, 70 + offX, add.Now + 1, 115, 10);
             g.DrawString(string.Format("耐久 {0,3:D}", weapon.Dura), fontsong, sb, 10 + offX, add.Next);
             PaintTool.DrawValueLine(g, weapon.Dura * 5, 70 + offX, add.Now + 1, 115, 10);
+            if (weapon.Atk != 0)
+            {
+                g.DrawString(string.Format("攻击 {0,3:D}", weapon.Atk), fontsong, sb, offX + 10, add.Next);
+                PaintTool.DrawValueLine(g, weapon.Atk/2, 70 + offX, add.Now + 1, 115, 10);
+            }
+            if (weapon.PArmor != 0)
+            {
+                g.DrawString(string.Format("物甲 {0,3:D}", weapon.PArmor), fontsong, sb, offX + 10, add.Next);
+                PaintTool.DrawValueLine(g, weapon.PArmor / 10, 70 + offX, add.Now + 1, 115, 10);
+            }
+            if (weapon.MArmor != 0)
+            {
+                g.DrawString(string.Format("魔甲 {0,3:D}", weapon.MArmor), fontsong, sb, offX + 10, add.Next);
+                PaintTool.DrawValueLine(g, weapon.MArmor / 10, 70 + offX, add.Now + 1, 115, 10);
+            }
+            if (weapon.Range != 0)
+            {
+                g.DrawString(string.Format("射程 {0,3:D}", weapon.Range), fontsong, sb, 10 + offX, add.Next);
+                PaintTool.DrawValueLine(g, weapon.Range*2, 70 + offX, add.Now + 1, 115, 10);
+            }
+            if (weapon.Mov != 0)
+            {
+                g.DrawString(string.Format("移动 {0,3:D}", weapon.Mov), fontsong, sb, 10 + offX, add.Next);
+                PaintTool.DrawValueLine(g, weapon.Mov*2, 70 + offX, add.Now + 1, 115, 10);
+            }
             sb.Dispose();
             sb = new SolidBrush(Color.FromArgb(50, 0, 100));
 
@@ -209,9 +226,13 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             {
                 tipData.AddTextNewLine(string.Format("攻击 +{0}", weapon.Atk), "White");
             }
-            if (weapon.Hp > 0)
+            if (weapon.PArmor > 0)
             {
-                tipData.AddTextNewLine(string.Format("生命 +{0}", weapon.Hp), "White");
+                tipData.AddTextNewLine(string.Format("物甲 +{0}", weapon.PArmor), "White");
+            }
+            if (weapon.MArmor > 0)
+            {
+                tipData.AddTextNewLine(string.Format("魔甲 +{0}", weapon.PArmor), "White");
             }
             if (weapon.Range > 0)
             {

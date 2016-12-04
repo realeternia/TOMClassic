@@ -88,12 +88,15 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
             WeaponConfig weaponConfig = ConfigData.GetWeaponConfig(CardId);
 
             src.Atk += avatar.Atk * symbol;
-            src.MaxHp += avatar.Hp * symbol;
-            if (symbol > 0 && avatar.Hp > 0)//加buff时候
+            //src.MaxHp += avatar.Hp * symbol;
+            if (avatar.PArmor > 0)
             {
-                src.AddHp(avatar.Hp);//顺便把hp也加上
+                src.HpBar.AddPArmor(avatar.PArmor * symbol);
             }
-
+            if (avatar.MArmor > 0)
+            {
+                src.HpBar.AddMArmor(avatar.MArmor * symbol);
+            }
             src.Def += avatar.Def * symbol;
             src.Mag += avatar.Mag * symbol;
             src.Hit += avatar.Hit * symbol;
