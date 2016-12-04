@@ -144,9 +144,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             if (!BattleLocationManager.IsPlaceCanMove(aimPos.X, aimPos.Y))
             {
                 if (goX)//绕过不可行走区域
-                    aimPos = BattleLocationManager.GetMonsterNearPoint(monster.Position, "side", !monster.IsLeft);
+                    aimPos = MonsterPositionHelper.GetAvailPoint(monster.Position, "side", monster.IsLeft);
                 else//往前走
-                    aimPos= BattleLocationManager.GetMonsterNearPoint(monster.Position, "come", !monster.IsLeft);
+                    aimPos= MonsterPositionHelper.GetAvailPoint(monster.Position, "come", monster.IsLeft);
             }
 
             if (aimPos.X >=0&& aimPos.Y >=0)

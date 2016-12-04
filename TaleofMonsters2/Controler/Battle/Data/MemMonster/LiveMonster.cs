@@ -32,7 +32,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         private readonly HpBar hpBar;
         public SkillManager SkillManager { get; private set; }
         public BuffManager BuffManager { get; private set; }
-
+        
         private int life;
         private int lastDamagerId; //最后一击的怪物id
         private int peakDamagerLuk; //最高攻击者的幸运值
@@ -871,7 +871,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 return;
             }
 
-            Point dest = BattleLocationManager.GetMonsterNearPoint(Position, type, !IsLeft);
+            Point dest = MonsterPositionHelper.GetAvailPoint(Position, type, IsLeft);
             if (dest.X != -1 && dest.Y != -1)
             {
                 if (!Avatar.MonsterConfig.IsBuilding)
@@ -929,55 +929,26 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
         }
 
-        public void Summon(int type, int id)
+        public void Summon(string type, int id, int count)
         {
             if (IsSummoned)
             {//召唤生物不能继续召唤，防止无限循环
                 return;
             }
 
-            List<Point> posLis = new List<Point>();
-            if (type == 1)//上下各一个
-            {
-                int size = BattleManager.Instance.MemMap.CardSize;
-                posLis.Add(new Point(Position.X, Position.Y - size));
-                posLis.Add(new Point(Position.X, Position.Y + size));
-            }
-            else if (type == 2)//4格随机位置
-            {
-                posLis.Add(BattleLocationManager.GetMonsterNearPoint(Position, "around", IsLeft));
-            }
-            else if (type == 3)//后面
-            {
-                posLis.Add(BattleLocationManager.GetMonsterNearPoint(Position, "come", IsLeft));
-            }
-            else if (type == 4)//前面
-            {
-                posLis.Add(BattleLocationManager.GetMonsterNearPoint(Position, "back", IsLeft));
-            }
-            else if (type == 5)//4格位置
-            {
-                int size = BattleManager.Instance.MemMap.CardSize;
-                posLis.Add(new Point(Position.X, Position.Y - size));
-                posLis.Add(new Point(Position.X, Position.Y + size));
-                posLis.Add(new Point(Position.X - size, Position.Y));
-                posLis.Add(new Point(Position.X + size, Position.Y));
-            }
+            List<Point> posLis = MonsterPositionHelper.GetAvailPointList(Position, type, IsLeft, count);
 
             foreach (var pos in posLis)
             {
-                if (BattleManager.Instance.MemMap.IsMousePositionCanSummon(pos.X, pos.Y))
-                {
-                    var mon = new Monster(id);
-                    mon.UpgradeToLevel(Level);
-                    LiveMonster newMon = new LiveMonster(Level, mon, pos, IsLeft);
-                    newMon.IsSummoned = true;
-                    BattleManager.Instance.MonsterQueue.AddDelay(newMon);
-                }
+                var mon = new Monster(id);
+                mon.UpgradeToLevel(Level);
+                LiveMonster newMon = new LiveMonster(Level, mon, pos, IsLeft);
+                newMon.IsSummoned = true;
+                BattleManager.Instance.MonsterQueue.AddDelay(newMon);
             }
         }
 
-        public void SummonRandomAttr(int type, int attr)
+        public void SummonRandomAttr(string type, int attr)
         {
             int cardId;
             while (true)
@@ -986,7 +957,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 if(CardConfigManager.GetCardConfig(cardId).Type == CardTypes.Monster)
                     break;
             }
-            Summon(type, cardId);
+            Summon(type, cardId, 1);
         }
 
         public void MadDrug()
