@@ -72,6 +72,10 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             get { return BattleManager.Instance.MonsterQueue.GetKingTower(IsLeft); }
         }
 
+        public IPlayer Rival
+        {
+            get { return IsLeft ? BattleManager.Instance.PlayerManager.RightPlayer : BattleManager.Instance.PlayerManager.LeftPlayer; }
+        }
         public int SelectCardId
         {
             get { return CardsDesk.GetSelectCard().CardId; }
@@ -247,7 +251,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             AddLp(-selectCard.Lp);
             AddPp(-selectCard.Pp);
 
-            var rival = IsLeft ? BattleManager.Instance.PlayerManager.RightPlayer : BattleManager.Instance.PlayerManager.LeftPlayer;
+            var rival = Rival as Player;
             if (rival.CheckTrapOnUseCard(selectCard, rival, this))
             {
                 return false;
@@ -333,7 +337,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                             newMon.AddBasicData(add[0], add[1]);
                 }
 
-                var rival = IsLeft ? BattleManager.Instance.PlayerManager.RightPlayer : BattleManager.Instance.PlayerManager.LeftPlayer;
+                var rival = Rival as Player;
                 rival.CheckTrapOnSummon(newMon, rival, this);
             }
             catch (Exception e)
@@ -419,8 +423,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
                 if (SpikeManager.HasSpike("mirrorspell"))
                 {
-                    var rival = IsLeft ? BattleManager.Instance.PlayerManager.RightPlayer : BattleManager.Instance.PlayerManager.LeftPlayer;
-                    rival.AddCard(null, card.CardId, card.Level);
+                    Rival.AddCard(null, card.CardId, card.Level);
                 }
             }
             catch (Exception e)
@@ -464,7 +467,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             return false;
         }
 
-        private void CheckTrapOnSummon(LiveMonster mon, Player left, Player right)
+        private void CheckTrapOnSummon(LiveMonster mon, IPlayer left, IPlayer right)
         {
             foreach (var trap in trapList)
             {
@@ -695,7 +698,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 }
             }
             
-            var rival = IsLeft ? BattleManager.Instance.PlayerManager.RightPlayer : BattleManager.Instance.PlayerManager.LeftPlayer;
+            var rival = Rival as Player;
             if (rival.HasHolyWord("witcheye"))
             {
                 tipData.AddLine();
