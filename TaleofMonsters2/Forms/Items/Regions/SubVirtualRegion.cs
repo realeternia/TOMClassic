@@ -66,11 +66,21 @@ namespace TaleofMonsters.Forms.Items.Regions
         {
             if (decorators.Count > idx)
             {
-                decorators[idx].SetState(value);
+                if (value != null)
+                {
+                    decorators[idx].SetState(value);
+                }
+                else
+                {
+                    decorators.RemoveAt(idx);
+                }
             }
             else
             {
-                AddDecorator((IRegionDecorator)value);
+                if (value != null)
+                {
+                    AddDecorator((IRegionDecorator)value);
+                }
             }
         }
 

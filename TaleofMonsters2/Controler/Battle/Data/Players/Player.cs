@@ -30,6 +30,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public delegate void PlayerPointEventHandler();
         public event PlayerPointEventHandler ManaChanged;
 
+        public delegate void PlayerHeroSkillStateEventHandler(bool active);
+        public event PlayerHeroSkillStateEventHandler HeroSkillChanged;
+
         private float recoverTime;
 
         public EnergyGenerator EnergyGenerator { get; set; }
@@ -127,6 +130,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 comboTime = 0;
                 CardManager.UpdateCardCombo();
             }
+            if (CardManager.HeroSkillCd > 0)
+            {
+                CardManager.HeroSkillCd -= pastRound;
+                if (HeroSkillChanged != null && CardManager.HeroSkillCd <= 0)
+                    HeroSkillChanged(true);
+            }
         }
 
         private void AddRandomMana(int killerId, int count)
@@ -213,19 +222,16 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public int CheckUseCard(ActiveCard selectCard, Player left, Player right)
         {
             if (Mp < selectCard.Mp)
-            {
                 return HSErrorTypes.BattleLackMp;
-            }
 
             if (Lp < selectCard.Lp)
-            {
                 return HSErrorTypes.BattleLackLp;
-            }
 
             if (Pp < selectCard.Pp)
-            {
                 return HSErrorTypes.BattleLackPp;
-            }
+
+            if (selectCard.IsHeroSkill && CardManager.HeroSkillCd > 0)
+                return HSErrorTypes.BattleHeroSkillInCd;
 
             return HSErrorTypes.OK;
         }
@@ -253,6 +259,13 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             comboTime = 1;
             if (oldComboTime <= 0)
                 CardManager.UpdateCardCombo();
+
+            if (selectCard.IsHeroSkill) //成功使用英雄技能
+            {
+                CardManager.HeroSkillCd = 1;
+                if (HeroSkillChanged != null)
+                    HeroSkillChanged(false);
+            }
         }
 
         public virtual void AddResource(GameResourceType type, int number)
@@ -301,7 +314,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             {
                 var mon = new Monster(card.CardId);
                 mon.UpgradeToLevel(card.Level);
-                BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).MonsterAdd++;
+                if (!card.IsHeroSkill)
+                    BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).MonsterAdd++;
 
                 LiveMonster newMon = new LiveMonster(card.Level, mon, location, IsLeft);
                 BattleManager.Instance.MonsterQueue.Add(newMon);
@@ -338,7 +352,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             {
                 Weapon wpn = new Weapon(card.CardId);
                 wpn.UpgradeToLevel(card.Level);
-                BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).WeaponAdd++;
+                if (!card.IsHeroSkill)
+                    BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).WeaponAdd++;
 
                 var tWeapon = new TrueWeapon(lm, card.Level, wpn);
                 lm.AddWeapon(tWeapon);
@@ -364,7 +379,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             {
                 Monster mon = new Monster(card.CardId);
                 mon.UpgradeToLevel(card.Level);
-                BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).MonsterAdd++;
+                if (!card.IsHeroSkill)
+                    BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).MonsterAdd++;
 
                 var tWeapon = new SideKickWeapon(lm, card.Level, mon);
                 lm.AddWeapon(tWeapon);
@@ -391,7 +407,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 Spell spell = new Spell(card.CardId);
                 spell.Addon = SpellEffectAddon;
                 spell.UpgradeToLevel(card.Level);
-                BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).SpellAdd++;
+                if (!card.IsHeroSkill)
+                    BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).SpellAdd++;
 
                 SpellAssistant.CheckSpellEffect(spell, IsLeft, target, location);
 

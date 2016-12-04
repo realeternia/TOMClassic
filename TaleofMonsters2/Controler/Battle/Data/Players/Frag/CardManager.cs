@@ -14,6 +14,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         private Player self;
         private ActiveCard[] cards = new ActiveCard[GameConstants.CardSlotMaxCount];
 
+        public float HeroSkillCd { get; set; }
+
         public CardManager(Player p)
         {
             self = p;

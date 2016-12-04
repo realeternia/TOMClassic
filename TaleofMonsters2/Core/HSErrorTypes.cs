@@ -10,6 +10,7 @@ namespace TaleofMonsters.Core
         public const int BattleLackMp = 103;
         public const int BattleLackLp = 104;
         public const int BattleLackPp = 105;
+        public const int BattleHeroSkillInCd = 106;
 
         public const int DeckCardTypeLimitLegend = 1000;
         public const int DeckCardTypeLimit = 1001;

@@ -64,6 +64,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
 
         public int CostModify { get; set; }
         public bool Combo { get; set; }//可以被修改
+        public bool IsHeroSkill { get; set; }
 
         public ActiveCard()
         {

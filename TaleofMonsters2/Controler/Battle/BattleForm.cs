@@ -145,6 +145,7 @@ namespace TaleofMonsters.Controler.Battle
             BattleManager.Instance.PlayerManager.RightPlayer.CardsDesk = cardList2;
             BattleManager.Instance.PlayerManager.RightPlayer.InitialCards();
             cardSelector1.Init(BattleManager.Instance.PlayerManager.LeftPlayer);
+            BattleManager.Instance.PlayerManager.LeftPlayer.HeroSkillChanged += LeftPlayer_HeroSkillChanged;
             cardsArray1.Visible = false;
             miniItemView1.Visible = false;
             vRegion.Visible = false;
@@ -510,6 +511,7 @@ namespace TaleofMonsters.Controler.Battle
                 HeroSkillConfig heroSkillConfig = ConfigDatas.ConfigData.GetHeroSkillConfig(info);
                 LevelExpConfig levelConfig = ConfigData.GetLevelExpConfig(UserProfile.Profile.InfoBasic.Level);
                 leftSelectCard = new ActiveCard(heroSkillConfig.CardId, (byte)levelConfig.HeroSkillLevel, 0);
+                leftSelectCard.IsHeroSkill = true;
                 panelState.Invalidate();
             }
         }
@@ -526,6 +528,26 @@ namespace TaleofMonsters.Controler.Battle
         private void virtualRegion_RegionLeft()
         {
             tooltip.Hide(this);
+        }
+
+        private void LeftPlayer_HeroSkillChanged(bool active)
+        {
+            int index = 0;//初始化英雄技能按钮
+            foreach (var skillId in BattleManager.Instance.PlayerManager.LeftPlayer.HeroSkillList)
+            {
+                if (active)
+                {
+                    vRegion.SetRegionDecorator(index + 1, 1, null);
+                }
+                else
+                {
+                    var color = Color.FromArgb(150, Color.Black);
+                    var decorate = new RegionCoverDecorator(color);
+                    vRegion.SetRegionDecorator(index + 1, 1, decorate);
+                }
+                index++;
+            }
+            Invalidate();
         }
 
         private void OnGameOver()
