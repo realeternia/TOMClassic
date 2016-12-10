@@ -245,14 +245,14 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             return HSErrorTypes.OK;
         }
 
-        public bool BeforeUseCard(ActiveCard selectCard)
+        public bool BeforeUseCard(ActiveCard selectCard, Point location)
         {
             AddMp(-selectCard.Mp);
             AddLp(-selectCard.Lp);
             AddPp(-selectCard.Pp);
 
             var rival = Rival as Player;
-            if (rival.CheckTrapOnUseCard(selectCard, rival, this))
+            if (rival.CheckTrapOnUseCard(selectCard, location, rival, this))
             {
                 return false;
             }
@@ -314,7 +314,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void UseMonster(ActiveCard card, Point location)
         {
-            if (!BeforeUseCard(card))
+            if (!BeforeUseCard(card, location))
             {
                 return;
             }
@@ -352,7 +352,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void UseWeapon(LiveMonster lm, ActiveCard card)
         {
-            if (!BeforeUseCard(card))
+            if (!BeforeUseCard(card, lm.Position))
             {
                 return;
             }
@@ -379,7 +379,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void UseSideKick(LiveMonster lm, ActiveCard card)
         {
-            if (!BeforeUseCard(card))
+            if (!BeforeUseCard(card, lm.Position))
             {
                 return;
             }
@@ -406,7 +406,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void DoSpell(LiveMonster target, ActiveCard card, Point location)
         {
-            if (!BeforeUseCard(card))
+            if (!BeforeUseCard(card, location))
             {
                 return;
             }
@@ -437,9 +437,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         }
 
         #region 陷阱
-        public void AddTrap(int id, int lv, double rate, int damage)
+        public void AddTrap(int id, int lv, double rate, int damage, double help)
         {
-            trapList.Add(new Trap {Id = id, Level = lv, Rate = rate, Damage = damage});
+            trapList.Add(new Trap {Id = id, Level = lv, Rate = rate, Damage = damage, Help = help});
         }
 
         private void RemoveTrap(int id)
@@ -447,17 +447,18 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             trapList.RemoveAll(s => s.Id == id);
         }
 
-        private bool CheckTrapOnUseCard(ActiveCard selectCard, Player left, Player right)
+        private bool CheckTrapOnUseCard(ActiveCard selectCard, Point location, IPlayer left, IPlayer right)
         {
             foreach (var trap in trapList)
             {
-                var effect = ConfigData.GetSpellTrapConfig(trap.Id).EffectUse;
-                if (effect != null)
+                var trapConfig = ConfigData.GetSpellTrapConfig(trap.Id);
+                if (trapConfig.EffectUse != null)
                 {
-                    if (MathTool.GetRandom(100) < trap.Rate && effect(left, right, trap, selectCard.CardId, (int)selectCard.CardType))
+                    if (MathTool.GetRandom(100) < trap.Rate && trapConfig.EffectUse(left, right, trap, selectCard.CardId, (int)selectCard.CardType))
                     {
                         RemoveTrap(trap.Id);
                         NLog.Debug(string.Format("RemoveTrap UseCard id={0} cardId={1}", trap.Id, selectCard.CardId));
+                        BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(trapConfig.UnitEffect), location, false));
 
                         return true;
                     }
@@ -467,18 +468,18 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             return false;
         }
 
-        private void CheckTrapOnSummon(LiveMonster mon, IPlayer left, IPlayer right)
+        private void CheckTrapOnSummon(IMonster mon, IPlayer left, IPlayer right)
         {
             foreach (var trap in trapList)
             {
-                var effect = ConfigData.GetSpellTrapConfig(trap.Id).EffectSummon;
-                if (effect != null)
+                var trapConfig = ConfigData.GetSpellTrapConfig(trap.Id);
+                if (trapConfig.EffectSummon != null)
                 {
-                    if (MathTool.GetRandom(100) < trap.Rate && effect(left, right, trap, mon, trap.Level))
+                    if (MathTool.GetRandom(100) < trap.Rate && trapConfig.EffectSummon(left, right, trap, mon, trap.Level))
                     {
                         RemoveTrap(trap.Id);
                         NLog.Debug(string.Format("RemoveTrap Summon id={0} cardId={1}", trap.Id, mon.Id));
-
+                        BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(trapConfig.UnitEffect), mon as LiveMonster, false));
                         return;
                     }
                 }
