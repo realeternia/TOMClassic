@@ -26,6 +26,7 @@ namespace TaleofMonsters.DataType.Achieves
 
         public static void CheckByCheckType(string ctype)
         {
+            return; //todo 暂时关闭成就系统
             foreach (AchieveConfig ach in ConfigData.AchieveDict.Values)
             {
                 if (ach.CheckType == ctype && !UserProfile.Profile.InfoAchieve.GetAchieve(ach.Id))
