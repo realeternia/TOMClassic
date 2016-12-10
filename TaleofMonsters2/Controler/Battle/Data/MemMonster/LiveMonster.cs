@@ -734,7 +734,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void AddRandSkill()
         {
-            SkillManager.AddSkill(SkillBook.GetRandSkillId(), Level / 2, 100, SkillSourceTypes.Skill);
+            SkillManager.AddSkill(SkillBook.GetRandSkillId(), Level, 100, SkillSourceTypes.Skill);
+        }
+
+        public void AddSkill(int skillId, int rate)
+        {
+            SkillManager.AddSkill(skillId, Level, rate, SkillSourceTypes.Skill);
         }
 
         public int GetMonsterCountByRace(int rid)

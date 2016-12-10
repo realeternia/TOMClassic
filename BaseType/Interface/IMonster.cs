@@ -33,6 +33,7 @@ namespace ConfigDatas
         void WeaponReturn();
         void LevelUpWeapon(int lv);
         void AddRandSkill();
+        void AddSkill(int id, int rate);
         int GetMonsterCountByRace(int rid);
         int GetMonsterCountByType(int type);
         void AddMissile(IMonster target, string arrow);
