@@ -146,6 +146,7 @@
         Column = 3,
         Circle = 4,
         Cross = 5,
+        MultiColumn = 6,
         Grid = 7,
         All = 9,
     };

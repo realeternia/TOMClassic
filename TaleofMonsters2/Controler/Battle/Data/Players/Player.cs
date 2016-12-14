@@ -442,6 +442,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             trapList.Add(new Trap {Id = id, Level = lv, Rate = rate, Damage = damage, Help = help});
         }
 
+        public void RemoveRandomTrap()
+        {
+            if (trapList.Count > 0)
+                trapList.RemoveAt(MathTool.GetRandom(trapList.Count));
+        }
+
         private void RemoveTrap(int id)
         {
             trapList.RemoveAll(s => s.Id == id);

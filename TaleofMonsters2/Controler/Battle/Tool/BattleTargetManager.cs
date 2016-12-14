@@ -61,6 +61,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
                 case 'F': return RegionTypes.RowForward;
                 case 'W': return RegionTypes.Row;
                 case 'C':return RegionTypes.Column;
+                case 'L': return RegionTypes.MultiColumn;
                 case 'R':return RegionTypes.Circle;
                 case 'V':return RegionTypes.Cross;
                 case 'G':return RegionTypes.Grid;

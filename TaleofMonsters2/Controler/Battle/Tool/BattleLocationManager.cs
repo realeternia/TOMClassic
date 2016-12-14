@@ -165,6 +165,11 @@ namespace TaleofMonsters.Controler.Battle.Tool
                 if (mousePoint.X != pos.X || Math.Abs(mousePoint.Y - pos.Y) > range * size / 10)
                     return false;
             }
+            else if (type == RegionTypes.MultiColumn)
+            {
+                if (Math.Abs(mousePoint.X - pos.X) > range * size / 10)
+                    return false;
+            }
             return true;
         }
 
