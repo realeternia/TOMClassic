@@ -72,6 +72,10 @@ namespace TaleofMonsters.Forms
             weaponIdList = new List<int>();
             for (int i = EquipConfig.Indexer.InitJobEquipStart; i <= EquipConfig.Indexer.InitJobEquipEnd; i++)//循环初始给的装备
             {
+                EquipConfig selectEquip = ConfigData.GetEquipConfig(i);
+                JobConfig jobConfig = ConfigData.GetJobConfig(selectEquip.Job);
+                if (jobConfig.isSpecial)
+                    continue;
                 weaponIdList.Add(i);
             }
             nlPageSelector1.TotalPage = (weaponIdList.Count + 7) / 8;
