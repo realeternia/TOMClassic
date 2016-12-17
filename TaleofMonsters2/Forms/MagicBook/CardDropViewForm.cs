@@ -208,6 +208,7 @@ namespace TaleofMonsters.Forms.MagicBook
             for (int i = 0; i < 10; i++)
             {
                 virtualRegion.SetRegionInfo(i+1, 0);
+                virtualRegion.SetRegionDecorator(i + 1, 0, "");//回复默认状态
             }
 
             var dropList = CardPieceBook.GetDropListByCardId(cardId);
