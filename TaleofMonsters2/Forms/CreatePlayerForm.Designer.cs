@@ -172,7 +172,7 @@
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.Size = new System.Drawing.Size(70, 24);
             this.buttonOk.TabIndex = 17;
-            this.buttonOk.Text = "设定完成";
+            this.buttonOk.Text = "完成";
             this.buttonOk.UseVisualStyleBackColor = false;
             this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
             // 

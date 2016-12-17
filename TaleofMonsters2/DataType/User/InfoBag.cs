@@ -27,6 +27,10 @@ namespace TaleofMonsters.DataType.User
         {
             Resource = new GameResource();
             Items = new IntPair[50];
+            for (int i = 0; i < 50; i++)
+            {
+                Items[i] = new IntPair();
+            }
         }
 
         public bool CheckResource(int[] resourceInfo)
@@ -273,6 +277,17 @@ namespace TaleofMonsters.DataType.User
                 datas.Add(pairData);
             }
             return datas;
+        }
+
+        public void ResizeBag(int newSize)
+        {
+            IntPair[] item = new IntPair[BagCount];
+            Array.Copy(Items, item, BagCount);
+            Items = new IntPair[newSize];
+            Array.Copy(item, Items, BagCount);
+            for (int i = BagCount; i < newSize; i++)
+                Items[i] = new IntPair();
+            BagCount = newSize;
         }
 
         [Obsolete("暂时没用的")]

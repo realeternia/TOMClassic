@@ -62,7 +62,7 @@ namespace TaleofMonsters.DataType.User
         {
             DeckCard card = new DeckCard(cid, 1, 0);
             var cardData = CardConfigManager.GetCardConfig(cid);
-            if (GetCardCount(cid) >= GameConstants.CardLimit)
+            if (GetCardCount(cid) >= 1) //每张卡其实只能有一份
             {
                 var myCard = GetDeckCardById(cid);
                 myCard.AddExp(1);//多余的卡转化为经验值

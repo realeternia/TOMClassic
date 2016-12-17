@@ -147,11 +147,7 @@ namespace TaleofMonsters.Forms
                         {
                             if (UserProfile.InfoBag.PayDiamond(pricecount))
                             {
-                                IntPair[] item = new IntPair[UserProfile.InfoBag.BagCount];
-                                Array.Copy(UserProfile.InfoBag.Items, item, UserProfile.InfoBag.BagCount);
-                                UserProfile.InfoBag.BagCount += diff;
-                                UserProfile.InfoBag.Items = new IntPair[UserProfile.InfoBag.BagCount];
-                                Array.Copy(item, UserProfile.InfoBag.Items, UserProfile.InfoBag.BagCount - diff);
+                                UserProfile.InfoBag.ResizeBag(UserProfile.InfoBag.BagCount+diff);
 
                                 nlPageSelector1.TotalPage = Math.Min((UserProfile.InfoBag.BagCount - 1) / 100 + 2, 9);
 
