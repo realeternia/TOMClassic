@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using FMOD;
 using NarlonLib.Log;
 
@@ -10,7 +11,16 @@ namespace TaleofMonsters.Core
         private static Stack<string> bgmHistory;
 
         private static FMOD.System _fmod = null;
-        private static Channel _channelBGM = null;
+        
+        private static Thread soundThread;
+        private static Channel _channelBGM = null;//在子线程使用
+        private static List<SoundItem> taskList;//在子线程使用
+
+        struct SoundItem
+        {
+            public bool IsBGM;
+            public byte[] Data;
+        }
 
         public static void Init()
         {
@@ -18,12 +28,18 @@ namespace TaleofMonsters.Core
 
             Factory.System_Create(out _fmod);
             _fmod.setDSPBufferSize(4096, 2);
-            var result = _fmod.init(16, FMOD.INITFLAGS.NORMAL, (IntPtr)null);
+            var result = _fmod.init(16, FMOD.INITFLAGS.NORMAL, (IntPtr)null);//16个频道
             if (result != RESULT.OK)
             {
                 NLog.Error("fmod SoundManager " + result);
             }
             bgmHistory = new Stack<string>();
+
+            soundThread = new Thread(SoundWork);
+            soundThread.Start();
+            soundThread.IsBackground = true;
+
+            taskList = new List<SoundItem>();
         }
 
         public static void Play(string dir, string path)
@@ -45,7 +61,7 @@ namespace TaleofMonsters.Core
                 return;
             }
 
-            SwitchBGM(filePath);
+            Play(filePath, true);
             bgmHistory.Push(filePath);
         }
 
@@ -59,7 +75,7 @@ namespace TaleofMonsters.Core
             bgmHistory.Pop();
 
             string path = bgmHistory.Peek();
-            SwitchBGM(path);
+            Play(path, true);
         }
 
         private static void Play(string path, bool isBGM)
@@ -71,6 +87,48 @@ namespace TaleofMonsters.Core
                 return;
             }
 
+            SoundItem item = new SoundItem {IsBGM = isBGM, Data = file};
+            lock (taskList)
+            {
+                taskList.Add(item);
+            }
+        }
+
+        private static void SoundWork()
+        {
+            while (true)
+            {
+                SoundItem[] itemInfo;
+                lock (taskList)
+                {
+                    itemInfo = new SoundItem[taskList.Count];
+                    taskList.CopyTo(itemInfo);
+                    taskList.Clear();
+                }
+                foreach (var task in itemInfo)
+                {
+                    PlayInThread(task.Data, task.IsBGM);
+                }
+
+                Thread.Sleep(50);
+            }
+        }
+
+        private static void PlayInThread(byte[] file,bool isBGM)
+        {//子线程中的处理
+            if (isBGM)
+            {
+                if (_channelBGM != null)
+                {
+                    bool isPlaying;
+                    _channelBGM.isPlaying(out isPlaying);
+                    if (isPlaying)
+                    {
+                        _channelBGM.stop();
+                    }
+                }
+            }
+
             var info = new CREATESOUNDEXINFO();
             info.length = (uint)file.Length;
             Sound s;
@@ -79,7 +137,7 @@ namespace TaleofMonsters.Core
             {
                 NLog.Error("fmod createSound " + result);
             }
-            
+
             Channel channel;
             result = _fmod.playSound(s, null, false, out channel);
             _fmod.update();
@@ -94,21 +152,6 @@ namespace TaleofMonsters.Core
             {
                 _channelBGM = channel;
             }
-        }
-
-        private static void SwitchBGM(string path)
-        {
-            if (_channelBGM != null)
-            {
-                bool isPlaying;
-                _channelBGM.isPlaying(out isPlaying);
-                if (isPlaying)
-                {
-                    _channelBGM.stop();
-                }
-            }
-            
-            Play(path, true);
         }
     }
 }
