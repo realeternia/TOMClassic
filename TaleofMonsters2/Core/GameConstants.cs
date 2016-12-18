@@ -49,5 +49,7 @@ namespace TaleofMonsters.Core
         public const int SkillTileId = 55610001;
         public const int NewbieGift = 22031001;
         public const int NewbieGiftElement = 22018001;
+
+        public const float SceneTileGradient = 0.33f;
     }
 }

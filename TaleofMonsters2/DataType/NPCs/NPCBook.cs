@@ -30,8 +30,6 @@ namespace TaleofMonsters.DataType.NPCs
                     var npc = new SceneNPC(npcConfig.Id);
                     npc.X = (int)(npc.X*Config.Config.SceneTextureFactorX);
                     npc.Y = (int)(npc.Y * Config.Config.SceneTextureFactorY);
-                    npc.Width = (int)(npc.Width* Config.Config.SceneTextureFactorSise);
-                    npc.Height = (int)(npc.Height * Config.Config.SceneTextureFactorSise);
                     rt.Add(npc);
                 }
             }

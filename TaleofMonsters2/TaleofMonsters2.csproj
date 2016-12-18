@@ -153,6 +153,7 @@
     <Compile Include="Controler\World\TimeManager.cs" />
     <Compile Include="Controler\World\WorldInfoManager.cs" />
     <Compile Include="Forms\Items\Regions\Decorators\RegionCoverDecorator.cs" />
+    <Compile Include="MainItem\Scenes\SceneObjects\SceneTile.cs" />
     <Compile Include="ThirdParty\fmod.cs" />
     <Compile Include="DataType\Buffs\BuffImmuneGroup.cs" />
     <Compile Include="DataType\CustomTypes.cs" />
@@ -564,7 +565,6 @@
     <Compile Include="MainItem\MainTipManager.cs" />
     <Compile Include="MainItem\Scenes\SceneObjects\SceneNPC.cs" />
     <Compile Include="MainItem\Scenes\SceneObjects\SceneObject.cs" />
-    <Compile Include="MainItem\Scenes\SceneObjects\SceneWarp.cs" />
     <Compile Include="MainItem\PanelManager.cs" />
     <Compile Include="MainItem\PopMenuDeck.cs">
       <SubType>UserControl</SubType>

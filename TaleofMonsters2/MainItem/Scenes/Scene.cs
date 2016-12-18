@@ -11,7 +11,7 @@ using TaleofMonsters.MainItem.Scenes.SceneObjects;
 
 namespace TaleofMonsters.MainItem.Scenes
 {
-    public class Scene
+    internal class Scene
     {
         public static Scene Instance { get; set; }
 
@@ -59,7 +59,8 @@ namespace TaleofMonsters.MainItem.Scenes
 
             SystemMenuManager.ResetIconState(); //reset main icon state
 
-            RefreshNpcState();
+            sceneItems = SceneManager.GetSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35);
+
             parent.Invalidate();
         }
 
@@ -101,8 +102,8 @@ namespace TaleofMonsters.MainItem.Scenes
             int nTemp = -1;
             foreach (SceneObject sceneObject in sceneItems)
             {
-                if (x > sceneObject.X && x < sceneObject.X + sceneObject.Width && y > sceneObject.Y + 50 && y < sceneObject.Y + 50 + sceneObject.Height)
-                    nTemp = sceneObject.Id;
+                //if (x > sceneObject.X && x < sceneObject.X + sceneObject.Width && y > sceneObject.Y + 50 && y < sceneObject.Y + 50 + sceneObject.Height)
+                //    nTemp = sceneObject.Id;
             }
             if (npcTar != nTemp)
             {
@@ -111,20 +112,9 @@ namespace TaleofMonsters.MainItem.Scenes
             }
         }
 
-        public void CheckMouseClick()
-        {
-            foreach (SceneObject obj in sceneItems)
-            {
-                if (obj.Id == npcTar)
-                {
-                    obj.CheckClick();
-                }
-            }
-        }
-
         public void Paint(Graphics g, int timeMinutes)
         {
-            g.DrawImage(backPicture, 0, 50, width, height);
+            g.DrawImage(backPicture, 0, 50, width, height-35);
             g.DrawImage(mainTop, 0, 0, width, 50);
             g.DrawImage(mainTopRes, (width-688)/2, 4, 688, 37);//688是图片尺寸
             g.DrawImage(mainTopTitle, width-145, 3, 115, 32);
@@ -198,11 +188,7 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public void RefreshNpcState()
         {
-            sceneItems = new List<SceneObject>();
-          //  sceneItems.AddRange(SceneManager.GetWarps(UserProfile.InfoBasic.MapId));
-          //  sceneItems.AddRange(NPCBook.GetNPCOnMap(UserProfile.InfoBasic.MapId));
 
-            parent.Invalidate();
         }
     }
 }

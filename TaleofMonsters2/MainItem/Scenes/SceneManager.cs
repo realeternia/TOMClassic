@@ -1,13 +1,50 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using ConfigDatas;
+using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.NPCs;
+using TaleofMonsters.MainItem.Scenes.SceneObjects;
 
 namespace TaleofMonsters.MainItem.Scenes
 {
     internal static class SceneManager
-    { 
-        static public Image GetPreview(int id)
+    {
+        public static List<SceneObject> GetSceneObjects(int id, int mapWidth ,int mapHeight)
+        {
+            List<SceneObject> objects = new List<SceneObject>();
+            var filePath = ConfigData.GetSceneConfig(id).TilePath;
+
+            StreamReader sr = new StreamReader(DataLoader.Read("Scene", string.Format("{0}.scn", filePath)));
+            int xoff = int.Parse(sr.ReadLine().Split('=')[1])*mapWidth/1422;
+            int yoff = int.Parse(sr.ReadLine().Split('=')[1])*mapHeight/855+50;//50为固定偏移
+            int wid = int.Parse(sr.ReadLine().Split('=')[1]);
+            int height = int.Parse(sr.ReadLine().Split('=')[1]);
+
+            int cellWidth = 100*mapWidth/1422;//todo 100
+            int cellHeight = 65 * mapHeight / 855;//todo 65
+            for (int i = 0; i < height; i++)
+            {
+                string[] data = sr.ReadLine().Split('\t');
+                for (int j = 0; j < wid; j++)
+                {
+                    int val = int.Parse(data[j]);
+                    if (val ==0)
+                    {
+                        continue;
+                    }
+
+                    int lineOff = (int)(cellWidth*(height-i-1)* GameConstants.SceneTileGradient);
+                    SceneTile so = new SceneTile(val,xoff + j * cellWidth+ lineOff, yoff + i * cellHeight , cellWidth, cellHeight);
+                    objects.Add(so);
+                }
+            }
+            sr.Close();
+            return objects;
+        }
+
+        public static Image GetPreview(int id)
         {
             SceneConfig sceneConfig = ConfigData.GetSceneConfig(id);
 

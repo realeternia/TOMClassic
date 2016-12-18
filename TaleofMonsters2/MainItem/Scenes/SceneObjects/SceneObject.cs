@@ -1,47 +1,32 @@
 using System.Drawing;
-using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.Core;
 
 namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 {
     internal class SceneObject
     {
         public int Id { get; protected set; }
-
         public int X { get; set; }
-
-        public int Y { get; set; } 
-
-        public int Width { get; set; } //可能会被缩放
-
-        public int Height { get; set; }//可能会被缩放
-
-        public string Name { get; protected set; }
-
-        public virtual string Figue { get; protected set; }
+        public int Y { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
 
         public virtual void Draw(Graphics g, int target)
         {
-            Font font = new Font("微软雅黑", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            Image head = PicLoader.Read("NPC", string.Format("{0}.PNG", Figue));
-            int ty = Y + 50;
-            if (target == Id)
-            {
-                g.DrawImage(head, X - 5, ty - 5, Width*5/4, Height*5/4);
-                g.DrawString(Name, font, Brushes.Black, X + 5, ty + Height - 33);
-                g.DrawString(Name, font, Brushes.Yellow, X + 2, ty + Height - 30);
-            }
-            else
-            {
-                g.DrawImage(head, X, ty, Width, Height);
-                g.DrawString(Name, font, Brushes.Black, X + 3, ty + Height - 33);
-                g.DrawString(Name, font, Brushes.White, X, ty + Height - 30);
-            }
-            head.Dispose();
-            font.Dispose();
-        }
+            Point[] dts = new Point[4];
+            dts[0] = new Point(X-Width/2,Y + Height / 2);
+            dts[1] = new Point(X - Width / 2 + Width, Y + Height / 2);
+            dts[2] = new Point(X - Width / 2 + Width + (int)(Width* GameConstants.SceneTileGradient), Y + Height / 2 - Height);
+            dts[3] = new Point(X - Width / 2+ (int)(Width * GameConstants.SceneTileGradient), Y + Height / 2 - Height);
+            
 
-        public virtual void CheckClick()
-        {
+            Brush brush = new SolidBrush(Color.FromArgb(100, Color.White));
+            g.FillPolygon(brush, dts);
+            brush.Dispose();
+
+            Pen pen = new Pen(Color.DimGray, 2);
+            g.DrawPolygon(pen, dts);
+            pen.Dispose();
         }
     }
 }

@@ -166,7 +166,7 @@ namespace TaleofMonsters
         private void MainForm_MouseClick(object sender, MouseEventArgs e)
         {
             SystemMenuManager.CheckItemClick((SystemMenuIds)SystemMenuManager.MenuTar);
-            Scene.Instance.CheckMouseClick();
+         //   Scene.Instance.CheckMouseClick();
         }
 
         private void MainForm_KeyUp(object sender, KeyEventArgs e)
