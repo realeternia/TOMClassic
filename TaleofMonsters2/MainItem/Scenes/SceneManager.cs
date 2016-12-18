@@ -22,8 +22,8 @@ namespace TaleofMonsters.MainItem.Scenes
             int wid = int.Parse(sr.ReadLine().Split('=')[1]);
             int height = int.Parse(sr.ReadLine().Split('=')[1]);
 
-            int cellWidth = 100*mapWidth/1422;//todo 100
-            int cellHeight = 65 * mapHeight / 855;//todo 65
+            int cellWidth = GameConstants.SceneTileStandardWidth * mapWidth/1422;
+            int cellHeight = GameConstants.SceneTileStandardHeight * mapHeight / 855;
             for (int i = 0; i < height; i++)
             {
                 string[] data = sr.ReadLine().Split('\t');

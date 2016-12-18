@@ -51,5 +51,7 @@ namespace TaleofMonsters.Core
         public const int NewbieGiftElement = 22018001;
 
         public const float SceneTileGradient = 0.33f;
+        public const int SceneTileStandardWidth = 100;
+        public const int SceneTileStandardHeight = 65;
     }
 }

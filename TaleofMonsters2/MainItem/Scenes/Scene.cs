@@ -102,13 +102,25 @@ namespace TaleofMonsters.MainItem.Scenes
             int nTemp = -1;
             foreach (SceneObject sceneObject in sceneItems)
             {
-                //if (x > sceneObject.X && x < sceneObject.X + sceneObject.Width && y > sceneObject.Y + 50 && y < sceneObject.Y + 50 + sceneObject.Height)
-                //    nTemp = sceneObject.Id;
+                if (sceneObject.IsMouseIn(x, y))
+                    nTemp = sceneObject.Id;
             }
             if (npcTar != nTemp)
             {
                 npcTar = nTemp;
                 parent.Invalidate();
+            }
+        }
+
+        public void CheckMouseClick()
+        {
+            if (npcTar != -1)
+            {
+                foreach (SceneObject sceneObject in sceneItems)
+                {
+                    if (sceneObject.Id == npcTar)
+                        sceneObject.OnClick();
+                }
             }
         }
 
