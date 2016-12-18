@@ -5,7 +5,7 @@ using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 {
-    internal class SceneObject
+    internal abstract class SceneObject
     {
         public int Id { get; protected set; }
         public int X { get; set; }
@@ -24,7 +24,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             return true;
         }
 
-        public bool OnClick()
+        public virtual bool OnClick()
         {
             if (SceneManager.CanMove(Id, UserProfile.Profile.InfoBasic.Position))
             {
@@ -59,14 +59,6 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             Pen pen = new Pen(lineColor, 2);
             g.DrawPolygon(pen, dts);
             pen.Dispose();
-            if (Id == UserProfile.Profile.InfoBasic.Position)
-            {
-                Image token = PicLoader.Read("System", "Token.PNG");
-                int drawWidth = token.Width * Width / GameConstants.SceneTileStandardWidth;
-                int drawHeight = token.Height * Height / GameConstants.SceneTileStandardHeight;
-                g.DrawImage(token, X - drawWidth / 2 + Width / 8, Y - drawHeight + Height / 3, drawWidth, drawHeight);
-                token.Dispose();
-            }
         }
     }
 }

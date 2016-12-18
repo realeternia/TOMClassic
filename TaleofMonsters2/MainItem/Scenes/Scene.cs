@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.MainItem.Scenes.SceneObjects;
@@ -191,9 +192,23 @@ namespace TaleofMonsters.MainItem.Scenes
             g.DrawImage(miniBack, width - 190, 38, 185, 160);
 
             //画NPC
+            SceneObject possessCell = null;
             foreach (SceneObject obj in sceneItems)
             {
                 obj.Draw(g, npcTar);
+                if (obj.Id == UserProfile.Profile.InfoBasic.Position)
+                {
+                    possessCell = obj;
+                }
+            }
+
+            if (possessCell != null)
+            {
+                Image token = PicLoader.Read("Map", "Token.PNG");
+                int drawWidth = token.Width * possessCell.Width / GameConstants.SceneTileStandardWidth;
+                int drawHeight = token.Height * possessCell.Height / GameConstants.SceneTileStandardHeight;
+                g.DrawImage(token, possessCell.X - drawWidth / 2 + possessCell.Width / 8, possessCell.Y - drawHeight + possessCell.Height / 3, drawWidth, drawHeight);
+                token.Dispose();
             }
         }
 

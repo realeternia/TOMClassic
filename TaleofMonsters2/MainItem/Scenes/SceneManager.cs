@@ -12,11 +12,28 @@ namespace TaleofMonsters.MainItem.Scenes
 {
     internal static class SceneManager
     {
+        private struct ScenePosData
+        {
+            public int Id;
+            public int X;
+            public int Y;
+            public int Width;
+            public int Height;
+        }
+
+        private struct SceneSpecialPosData
+        {
+            public string Type;
+            public string Info;
+        }
+
         public static List<SceneObject> GetSceneObjects(int id, int mapWidth ,int mapHeight)
         {
-            List<SceneObject> objects = new List<SceneObject>();
+            List<ScenePosData> cachedMapData = new List<ScenePosData>();
+            Dictionary<int, SceneSpecialPosData> cachedSpecialData = new Dictionary<int, SceneSpecialPosData>();
             var filePath = ConfigData.GetSceneConfig(id).TilePath;
 
+#region 读取文件信息
             StreamReader sr = new StreamReader(DataLoader.Read("Scene", string.Format("{0}.scn", filePath)));
             int xoff = int.Parse(sr.ReadLine().Split('=')[1])*mapWidth/1422;
             int yoff = int.Parse(sr.ReadLine().Split('=')[1])*mapHeight/855+50;//50为固定偏移
@@ -37,12 +54,55 @@ namespace TaleofMonsters.MainItem.Scenes
                     }
 
                     int lineOff = (int)(cellWidth*(height-i-1)* GameConstants.SceneTileGradient);
-                    SceneTile so = new SceneTile(val,xoff + j * cellWidth+ lineOff, yoff + i * cellHeight , cellWidth, cellHeight);
-                    objects.Add(so);
+                    ScenePosData so = new ScenePosData
+                    {
+                        Id = val,
+                        X = xoff + j*cellWidth + lineOff,
+                        Y = yoff + i*cellHeight,
+                        Width = cellWidth,
+                        Height = cellHeight
+                    };
+                    cachedMapData.Add(so);
                 }
             }
+
+            string line;
+            while ((line = sr.ReadLine())!=null)
+            {
+                string[] data = line.Split('\t');
+                if (data.Length < 2)
+                    continue;
+
+                SceneSpecialPosData posData = new SceneSpecialPosData();
+                posData.Type = data[1];
+                if (data.Length > 2)
+                    posData.Info = data[2];
+                cachedSpecialData[int.Parse(data[0])] = posData;
+            }
             sr.Close();
-            return objects;
+            #endregion
+
+            List<SceneObject> sceneObjects = new List<SceneObject>();
+
+            foreach (var scenePosData in cachedMapData)
+            {
+                SceneSpecialPosData specialData;
+                cachedSpecialData.TryGetValue(scenePosData.Id, out specialData);
+
+                SceneObject so;
+                switch (specialData.Type)
+                {
+                    case "Quest":
+                        so = new SceneQuest(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height); break;
+                    case "Warp":
+                        so = new SceneWarp(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Info); break;
+                    default:
+                        so = new SceneTile(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height); break;
+                }
+                sceneObjects.Add(so);
+            }
+
+            return sceneObjects;
         }
 
         public static bool CanMove(int id1, int id2)

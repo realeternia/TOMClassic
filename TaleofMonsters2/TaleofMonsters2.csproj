@@ -153,6 +153,8 @@
     <Compile Include="Controler\World\TimeManager.cs" />
     <Compile Include="Controler\World\WorldInfoManager.cs" />
     <Compile Include="Forms\Items\Regions\Decorators\RegionCoverDecorator.cs" />
+    <Compile Include="MainItem\Scenes\SceneObjects\SceneWarp.cs" />
+    <Compile Include="MainItem\Scenes\SceneObjects\SceneQuest.cs" />
     <Compile Include="MainItem\Scenes\SceneObjects\SceneTile.cs" />
     <Compile Include="ThirdParty\fmod.cs" />
     <Compile Include="DataType\Buffs\BuffImmuneGroup.cs" />
