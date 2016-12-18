@@ -35,7 +35,7 @@ namespace TaleofMonsters.Core
             return Brushes.White;
         }
 
-        static public Color GetColorByAttribute(int attr)
+        public static Color GetColorByAttribute(int attr)
         {
             switch (attr)
             {
@@ -48,6 +48,19 @@ namespace TaleofMonsters.Core
                 case 6: return Color.DimGray;
             }
             return Color.White;
+        }
+
+        public static Brush GetBrushByManaType(int type)
+        {
+            switch (type)
+            {
+                case 0: return Brushes.White;
+                case 1: return Brushes.Blue;
+                case 2: return Brushes.Red;
+                case 3: return Brushes.Yellow;
+                case 4: return Brushes.Purple;
+            }
+            return Brushes.White;
         }
 
         public static void DrawValueLine(Graphics g, int value, int x, int y, int width, int height)

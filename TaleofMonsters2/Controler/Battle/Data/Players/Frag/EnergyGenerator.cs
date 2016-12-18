@@ -1,4 +1,5 @@
-﻿using ConfigDatas;
+﻿using System.Collections.Generic;
+using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Core;
 
@@ -6,7 +7,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 {
     internal class EnergyGenerator
     {
-        public PlayerManaTypes NextAimMana { get; private set; }
+        public PlayerManaTypes NextAimMana { get { return manaList[0]; } }
+
+        public List<PlayerManaTypes> QueuedMana { get { return manaList.GetRange(1,4); } }
+
+        private List<PlayerManaTypes> manaList = new List<PlayerManaTypes>();
 
         private int rateLp;
         private int ratePp;
@@ -51,24 +56,32 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 
         public void Next(int round)
         {
-            if (round > 0 && (round % GameConstants.RoundRecoverAllRound) == 0)
+            while (manaList.Count < 5)
             {
-                NextAimMana = PlayerManaTypes.All;
-                return;
-            }
+                if (round > 0 && (round % GameConstants.RoundRecoverAllRound) == 0)
+                {
+                    manaList.Add(PlayerManaTypes.All);
+                    continue;
+                }
 
-            var roll = MathTool.GetRandom(100);
-            if (roll < rateLp)
-            {
-                NextAimMana = PlayerManaTypes.LeaderShip;
-                return;
+                var roll = MathTool.GetRandom(100);
+                if (roll < rateLp)
+                {
+                    manaList.Add(PlayerManaTypes.Lp);
+                    continue;
+                }
+                if (roll < rateLp + ratePp)
+                {
+                    manaList.Add(PlayerManaTypes.Pp);
+                    continue;
+                }
+                manaList.Add(PlayerManaTypes.Mp);
             }
-            if (roll < rateLp + ratePp)
-            {
-                NextAimMana = PlayerManaTypes.Power;
-                return;
-            }
-            NextAimMana = PlayerManaTypes.Mana;
+        }
+
+        public void UseMana()
+        {
+            manaList.RemoveAt(0);
         }
     }
 }

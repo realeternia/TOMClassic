@@ -43,15 +43,15 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
                 List<PlayerManaTypes> l = new List<PlayerManaTypes>();
                 for (int i = 0; i < Lp; i++)
                 {
-                    l.Add(PlayerManaTypes.LeaderShip);
+                    l.Add(PlayerManaTypes.Lp);
                 }
                 for (int i = 0; i < Mp; i++)
                 {
-                    l.Add(PlayerManaTypes.Mana);
+                    l.Add(PlayerManaTypes.Mp);
                 }
                 for (int i = 0; i < Pp; i++)
                 {
-                    l.Add(PlayerManaTypes.Power);
+                    l.Add(PlayerManaTypes.Pp);
                 }
                 return l;
             }

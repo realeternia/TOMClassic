@@ -126,6 +126,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             {
                 recoverTime -= need;
                 AddManaData(EnergyGenerator.NextAimMana, 1);
+                EnergyGenerator.UseMana();
                 EnergyGenerator.Next(round);
             }
             if (ManaChanged != null)//todo 先ws下
@@ -152,7 +153,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             List<PlayerManaTypes> manas = new List<PlayerManaTypes>();
             for (int i = 0; i < count; i++)
             {
-                var get = MathTool.GetRandom(100) < 50 ? PlayerManaTypes.LeaderShip : PlayerManaTypes.Mana;
+                var get = MathTool.GetRandom(100) < 50 ? PlayerManaTypes.Lp : PlayerManaTypes.Mp;
                 AddManaData(get,1);
                 manas.Add(get);
             }
@@ -194,30 +195,30 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void AddMp(double addon)
         {
-            AddManaData(PlayerManaTypes.Mana, (int) addon);
+            AddManaData(PlayerManaTypes.Mp, (int) addon);
         }
 
         public void AddLp(double addon)
         {
-            AddManaData(PlayerManaTypes.LeaderShip, (int)addon);
+            AddManaData(PlayerManaTypes.Lp, (int)addon);
         }
 
         public void AddPp(double addon)
         {
-            AddManaData(PlayerManaTypes.Power, (int)addon);
+            AddManaData(PlayerManaTypes.Pp, (int)addon);
         }
 
         private void AddManaData(PlayerManaTypes type, int num)
         {
-            if (type == PlayerManaTypes.Mana || type == PlayerManaTypes.All)
+            if (type == PlayerManaTypes.Mp || type == PlayerManaTypes.All)
             {
                 Mp = Math.Min(Mp + num, EnergyGenerator.LimitMp);
             }
-            if (type == PlayerManaTypes.LeaderShip || type == PlayerManaTypes.All)
+            if (type == PlayerManaTypes.Lp || type == PlayerManaTypes.All)
             {
                 Lp = Math.Min(Lp + num, EnergyGenerator.LimitLp);
             }
-            if (type == PlayerManaTypes.Power || type == PlayerManaTypes.All)
+            if (type == PlayerManaTypes.Pp || type == PlayerManaTypes.All)
             {
                 Pp = Math.Min(Pp + num, EnergyGenerator.LimitPp);
             }

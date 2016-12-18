@@ -90,10 +90,12 @@ namespace TaleofMonsters.Controler.Battle.Components
                     e.Graphics.DrawImage(head, Width - 67, 3, 63, 64);
             }
             PlayerManaTypes nextAimMana = PlayerManaTypes.None;
+            List<PlayerManaTypes> manaQueue = null;
             float roundRate = 0;
             if (player != null)
             {
                 nextAimMana = player.EnergyGenerator.NextAimMana;
+                manaQueue = player.EnergyGenerator.QueuedMana;
                 roundRate = player.GetRoundRate();
             }
 
@@ -102,11 +104,16 @@ namespace TaleofMonsters.Controler.Battle.Components
             Pen pen = new Pen(Brushes.Black, 2);
             if (IsLeft)
             {
+                if (manaQueue != null)
+                {
+                    for (int i = 0; i < manaQueue.Count; i++)
+                        e.Graphics.FillRectangle(PaintTool.GetBrushByManaType((int)manaQueue[i]),78-7,12+i*7,17,6);
+                }
                 if (nextAimMana != PlayerManaTypes.None)
                 {
-                    e.Graphics.DrawImage(HSIcons.GetIconsByEName("mix" + (int)nextAimMana), 73, 10, 30, 30);
+                    e.Graphics.DrawImage(HSIcons.GetIconsByEName("mix" + (int)nextAimMana), 78, 10, 30, 30);
                 }
-                var destRegion = new Rectangle(73, 10, 30, (int)(30*(1-roundRate)));
+                var destRegion = new Rectangle(78, 10, 30, (int)(30*(1-roundRate)));
                 e.Graphics.DrawImage(HSIcons.GetIconsByEName("mix0"), destRegion, 0, 0, 32, 32 * (1-roundRate), GraphicsUnit.Pixel);
                 if (player != null)
                 {
@@ -114,7 +121,7 @@ namespace TaleofMonsters.Controler.Battle.Components
                     {
                         if (i < player.Mp)
                         {
-                            e.Graphics.FillRectangle(Brushes.Blue, 112 + 24*i, 10, 22, 8);
+                            e.Graphics.FillRectangle(PaintTool.GetBrushByManaType((int)PlayerManaTypes.Mp), 112 + 24*i, 10, 22, 8);
                         }
                         e.Graphics.DrawRectangle(Pens.Gray, 112 + 24 * i, 10, 22, 8);
                     }
@@ -122,7 +129,7 @@ namespace TaleofMonsters.Controler.Battle.Components
                     {
                         if (i < player.Pp)
                         {
-                            e.Graphics.FillRectangle(Brushes.Red, 112 + 24*i, 20, 22, 8);
+                            e.Graphics.FillRectangle(PaintTool.GetBrushByManaType((int)PlayerManaTypes.Pp), 112 + 24*i, 20, 22, 8);
                         }
                         e.Graphics.DrawRectangle(Pens.Gray, 112 + 24 * i, 20, 22, 8);
                     }
@@ -130,7 +137,7 @@ namespace TaleofMonsters.Controler.Battle.Components
                     {
                         if (i < player.Lp)
                         {
-                            e.Graphics.FillRectangle(Brushes.Yellow, 112 + 24*i, 30, 22, 8);
+                            e.Graphics.FillRectangle(PaintTool.GetBrushByManaType((int)PlayerManaTypes.Lp), 112 + 24*i, 30, 22, 8);
                         }
                         e.Graphics.DrawRectangle(Pens.Gray, 112 + 24 * i, 30, 22, 8);
                     } 
@@ -138,11 +145,16 @@ namespace TaleofMonsters.Controler.Battle.Components
             }
             else
             {
+                if (manaQueue != null)
+                {
+                    for (int i = 0; i < manaQueue.Count; i++)
+                        e.Graphics.FillRectangle(PaintTool.GetBrushByManaType((int)manaQueue[i]), Width - 108 + 20, 12 + i * 7, 17, 6);
+                }
                 if (nextAimMana != PlayerManaTypes.None)
                 {
-                    e.Graphics.DrawImage(HSIcons.GetIconsByEName("mix" + (int) nextAimMana), Width - 105, 10, 30, 30);
+                    e.Graphics.DrawImage(HSIcons.GetIconsByEName("mix" + (int) nextAimMana), Width - 108, 10, 30, 30);
                 }
-                var destRegion = new Rectangle(Width - 105, 10, 30, (int)(30 * (1 - roundRate)));
+                var destRegion = new Rectangle(Width - 108, 10, 30, (int)(30 * (1 - roundRate)));
                 e.Graphics.DrawImage(HSIcons.GetIconsByEName("mix0"), destRegion, 0, 0, 32, 32 * (1 - roundRate), GraphicsUnit.Pixel);
 
                 if (player != null)
@@ -151,7 +163,7 @@ namespace TaleofMonsters.Controler.Battle.Components
                     {
                         if (i < player.Mp)
                         {
-                            e.Graphics.FillRectangle(Brushes.Blue, Width - 134 - 24 * i, 10, 22, 8);    
+                            e.Graphics.FillRectangle(PaintTool.GetBrushByManaType((int)PlayerManaTypes.Mp), Width - 134 - 24 * i, 10, 22, 8);    
                         }
                         e.Graphics.DrawRectangle(Pens.Gray, Width - 134 - 24 * i, 10, 22, 8);
                     }
@@ -159,7 +171,7 @@ namespace TaleofMonsters.Controler.Battle.Components
                     {
                         if (i < player.Pp)
                         {
-                            e.Graphics.FillRectangle(Brushes.Red, Width - 134 - 24*i, 20, 22, 8);
+                            e.Graphics.FillRectangle(PaintTool.GetBrushByManaType((int)PlayerManaTypes.Pp), Width - 134 - 24*i, 20, 22, 8);
                         }
                         e.Graphics.DrawRectangle(Pens.Gray, Width - 134 - 24 * i, 20, 22, 8);
                     }
@@ -167,7 +179,7 @@ namespace TaleofMonsters.Controler.Battle.Components
                     {
                         if (i < player.Lp)
                         {
-                            e.Graphics.FillRectangle(Brushes.Yellow, Width - 134 - 24*i, 30, 22, 8);
+                            e.Graphics.FillRectangle(PaintTool.GetBrushByManaType((int)PlayerManaTypes.Lp), Width - 134 - 24*i, 30, 22, 8);
                         }
                         e.Graphics.DrawRectangle(Pens.Gray, Width - 134 - 24 * i, 30, 22, 8);
                     }

@@ -30,7 +30,7 @@ namespace TaleofMonsters.Core
         public const int RoundTime = 8000;//一个回合多少ms，一个回合给一张卡
         public const float RoundRecoverAddon = 1.5f; //回合的回复倍率
         public const int RoundRecoverDoubleRound = 10; //第几个回合开始恢复加倍
-        public const int RoundRecoverAllRound = 4; //每多少回合回复一次所有能量点
+        public const int RoundRecoverAllRound = 9999; //每多少回合回复一次所有能量点，todo 暂时去掉这个功能
         public const int RoundAts = 30;//这个高了，怪的hp也要调高，spell的伤害和武器的耐久调整
         public const int LimitAts = 600; //超过这个值就会进行攻击，LimitAts/RoundAts/5=攻击间隔时间
 

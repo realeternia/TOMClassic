@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace ConfigDatas
 {
     public struct RLIdValue
@@ -219,9 +216,9 @@ namespace ConfigDatas
     public enum PlayerManaTypes
     {
         None,
-        Mana = 1,//魔力
-        Power = 2,//力量
-        LeaderShip = 3,//领导
+        Mp = 1,//魔力
+        Pp = 2,//力量
+        Lp = 3,//领导
         All = 4,//1+2+3
     }
 }

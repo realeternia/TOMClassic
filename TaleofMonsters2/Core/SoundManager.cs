@@ -14,7 +14,7 @@ namespace TaleofMonsters.Core
         
         private static Thread soundThread;
         private static Channel _channelBGM = null;//在子线程使用
-        private static List<SoundItem> taskList;//在子线程使用
+        private static List<SoundItem> taskList = new List<SoundItem>();//在子线程使用
 
         struct SoundItem
         {
@@ -38,8 +38,6 @@ namespace TaleofMonsters.Core
             soundThread = new Thread(SoundWork);
             soundThread.Start();
             soundThread.IsBackground = true;
-
-            taskList = new List<SoundItem>();
         }
 
         public static void Play(string dir, string path)
