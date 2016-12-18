@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using ConfigDatas;
@@ -42,6 +43,12 @@ namespace TaleofMonsters.MainItem.Scenes
             }
             sr.Close();
             return objects;
+        }
+
+        public static bool CanMove(int id1, int id2)
+        {
+            int differ = Math.Abs(id1 - id2);
+            return differ == 1 || differ == 1000;
         }
 
         public static Image GetPreview(int id)

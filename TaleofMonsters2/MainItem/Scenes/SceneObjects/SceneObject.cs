@@ -1,6 +1,7 @@
 using System.Drawing;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 {
@@ -23,9 +24,14 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             return true;
         }
 
-        public void OnClick()
+        public bool OnClick()
         {
-            
+            if (SceneManager.CanMove(Id, UserProfile.Profile.InfoBasic.Position))
+            {
+                UserProfile.Profile.InfoBasic.Position = Id;
+                return true;
+            }
+            return false;
         }
 
         public virtual void Draw(Graphics g, int target)
@@ -53,12 +59,14 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             Pen pen = new Pen(lineColor, 2);
             g.DrawPolygon(pen, dts);
             pen.Dispose();
-
-            Image token = PicLoader.Read("System", "Token.PNG");
-            int drawWidth = token.Width * Width/ GameConstants.SceneTileStandardWidth;
-            int drawHeight = token.Height* Height/ GameConstants.SceneTileStandardHeight;
-            g.DrawImage(token, X - drawWidth / 2+Width/8, Y - drawHeight + Height/3, drawWidth, drawHeight);
-            token.Dispose();
+            if (Id == UserProfile.Profile.InfoBasic.Position)
+            {
+                Image token = PicLoader.Read("System", "Token.PNG");
+                int drawWidth = token.Width * Width / GameConstants.SceneTileStandardWidth;
+                int drawHeight = token.Height * Height / GameConstants.SceneTileStandardHeight;
+                g.DrawImage(token, X - drawWidth / 2 + Width / 8, Y - drawHeight + Height / 3, drawWidth, drawHeight);
+                token.Dispose();
+            }
         }
     }
 }

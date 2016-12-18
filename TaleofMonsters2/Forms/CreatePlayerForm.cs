@@ -95,6 +95,7 @@ namespace TaleofMonsters.Forms
             profile.InfoBasic.Face = headId;
             profile.InfoBasic.Level = 1;
             profile.InfoBasic.MapId = SceneConfig.Indexer.BornMapId;
+            profile.InfoBasic.Position = 1001;
             profile.InfoBag.BagCount = 50;
             return profile;
         }

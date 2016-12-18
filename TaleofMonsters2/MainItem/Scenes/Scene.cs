@@ -100,7 +100,7 @@ namespace TaleofMonsters.MainItem.Scenes
         public void CheckMouseMove(int x, int y)
         {
             int nTemp = -1;
-            foreach (SceneObject sceneObject in sceneItems)
+            foreach (var sceneObject in sceneItems)
             {
                 if (sceneObject.IsMouseIn(x, y))
                     nTemp = sceneObject.Id;
@@ -114,13 +114,12 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public void CheckMouseClick()
         {
-            if (npcTar != -1)
+            if (npcTar == -1) return;
+            foreach (var sceneObject in sceneItems)
             {
-                foreach (SceneObject sceneObject in sceneItems)
-                {
-                    if (sceneObject.Id == npcTar)
-                        sceneObject.OnClick();
-                }
+                if (sceneObject.Id == npcTar)
+                    if(sceneObject.OnClick())
+                        parent.Invalidate();
             }
         }
 

@@ -6,30 +6,19 @@ namespace TaleofMonsters.DataType.User
 {
     public class InfoBasic
     {
-         [FieldIndex(Index = 3)]
-        public int Face;
-         [FieldIndex(Index = 4)]
-         public int BloodType;//血型
-         [FieldIndex(Index = 5)]
-        public int Constellation;//星座
-         [FieldIndex(Index =6)]
-        public int Job;
-         [FieldIndex(Index = 7)]
-        public byte Level;
-         [FieldIndex(Index = 16)]
-        public int Exp;
-         [FieldIndex(Index = 17)]
-        public int MapId;
-         [FieldIndex(Index = 18)]
-        public int AttrPoint;
-         [FieldIndex(Index = 19)]
-        public int LastLoginTime;
-         [FieldIndex(Index = 20)]
-        public int Ap;
-         [FieldIndex(Index = 21)]
-        public int DigCount;
-         [FieldIndex(Index = 22)]
-         public int LastRival;//上一个peopleview的对手id
+        [FieldIndex(Index = 3)] public int Face;
+        [FieldIndex(Index = 4)] public int BloodType; //血型
+        [FieldIndex(Index = 5)] public int Constellation; //星座
+        [FieldIndex(Index = 6)] public int Job;
+        [FieldIndex(Index = 7)] public byte Level;
+        [FieldIndex(Index = 16)] public int Exp;
+        [FieldIndex(Index = 17)] public int MapId;
+        [FieldIndex(Index = 18)] public int AttrPoint;
+        [FieldIndex(Index = 19)] public int LastLoginTime;
+        [FieldIndex(Index = 20)] public int Ap;
+        [FieldIndex(Index = 21)] public int DigCount;
+        [FieldIndex(Index = 22)] public int LastRival; //上一个peopleview的对手id
+        [FieldIndex(Index = 23)] public int Position;
 
         public void AddExp(int ex)
         {
@@ -44,7 +33,7 @@ namespace TaleofMonsters.DataType.User
 
             if (Exp >= ExpTree.GetNextRequired(Level))
             {
-                while (CheckNewLevel())//循环升级
+                while (CheckNewLevel()) //循环升级
                 {
                 }
 
