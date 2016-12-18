@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
+using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.NPCs;
-using TaleofMonsters.DataType.Scenes.SceneObjects;
-using ConfigDatas;
 
-namespace TaleofMonsters.DataType.Scenes
+namespace TaleofMonsters.MainItem.Scenes
 {
-    internal static class SceneBook
+    internal static class SceneManager
     { 
         static public Image GetPreview(int id)
         {
@@ -37,24 +35,6 @@ namespace TaleofMonsters.DataType.Scenes
                 }
             }
             return tipData.Image;
-        }
-
-        static public SceneObject[] GetWarps(int id)
-        {
-            List<SceneWarp> warpObjs = new List<SceneWarp>();
-            foreach (SceneWarpConfig warpConfig in ConfigData.SceneWarpDict.Values)
-            {
-                if (warpConfig.FromMap!=id)
-                    continue;
-
-                SceneWarp warp = new SceneWarp( warpConfig.Id, warpConfig.X, warpConfig.Y, warpConfig.ToMap);
-                warp.X = (int)(warp.X * Config.Config.SceneTextureFactorX);
-                warp.Y = (int)(warp.Y * Config.Config.SceneTextureFactorX);
-                warp.Width = (int)(warp.Width * Config.Config.SceneTextureFactorSise);
-                warp.Height = (int)(warp.Height * Config.Config.SceneTextureFactorSise);
-                warpObjs.Add(warp);
-            }
-            return warpObjs.ToArray();
         }
     }
 }

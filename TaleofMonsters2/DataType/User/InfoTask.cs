@@ -5,6 +5,7 @@ using TaleofMonsters.DataType.Achieves;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.Tasks;
 using TaleofMonsters.MainItem;
+using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.DataType.User
 {

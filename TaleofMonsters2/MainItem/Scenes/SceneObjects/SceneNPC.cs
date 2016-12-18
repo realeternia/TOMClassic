@@ -1,13 +1,13 @@
 using System.Collections.Generic;
-using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.Forms;
-using TaleofMonsters.DataType.Tasks;
 using System.Drawing;
 using ConfigDatas;
+using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.DataType.Tasks;
+using TaleofMonsters.Forms;
 
-namespace TaleofMonsters.DataType.Scenes.SceneObjects
+namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 { 
-    class SceneNPC : SceneObject
+    internal class SceneNPC : SceneObject
     {
         private List<int> taskAvails;
         private List<int> taskFinishs;
@@ -17,8 +17,8 @@ namespace TaleofMonsters.DataType.Scenes.SceneObjects
             Id = npcid;
             NpcConfig npcConfig = ConfigData.GetNpcConfig(npcid);
             Name = npcConfig.Name;
-            X = npcConfig.X;
-            Y = npcConfig.Y;
+            //X = npcConfig.X;
+            //Y = npcConfig.Y;
             Width = 60;
             Height = 60;
             Figue = npcConfig.Figue;

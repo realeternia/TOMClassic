@@ -8,6 +8,7 @@ using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.MainItem;
+using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.Controler.GM
 {

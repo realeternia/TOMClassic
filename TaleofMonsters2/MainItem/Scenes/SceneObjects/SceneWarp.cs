@@ -2,11 +2,10 @@ using System.Drawing;
 using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User;
-using TaleofMonsters.MainItem;
 
-namespace TaleofMonsters.DataType.Scenes.SceneObjects
+namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 {
-    class SceneWarp : SceneObject
+    internal class SceneWarp : SceneObject
     {
         public SceneWarp(int wid, int wx, int wy, int wmap)
         {

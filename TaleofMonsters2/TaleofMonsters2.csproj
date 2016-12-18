@@ -562,9 +562,9 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainItem\MainTipManager.cs" />
-    <Compile Include="DataType\Scenes\SceneObjects\SceneNPC.cs" />
-    <Compile Include="DataType\Scenes\SceneObjects\SceneObject.cs" />
-    <Compile Include="DataType\Scenes\SceneObjects\SceneWarp.cs" />
+    <Compile Include="MainItem\Scenes\SceneObjects\SceneNPC.cs" />
+    <Compile Include="MainItem\Scenes\SceneObjects\SceneObject.cs" />
+    <Compile Include="MainItem\Scenes\SceneObjects\SceneWarp.cs" />
     <Compile Include="MainItem\PanelManager.cs" />
     <Compile Include="MainItem\PopMenuDeck.cs">
       <SubType>UserControl</SubType>
@@ -572,7 +572,7 @@
     <Compile Include="MainItem\PopMenuDeck.Designer.cs">
       <DependentUpon>PopMenuDeck.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainItem\Scene.cs" />
+    <Compile Include="MainItem\Scenes\Scene.cs" />
     <Compile Include="MainItem\SystemMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -588,7 +588,7 @@
     <Compile Include="Controler\Battle\Data\Players\PlayerState.cs" />
     <Compile Include="DataType\User\Profile.cs" />
     <Compile Include="Controler\Battle\Data\Players\RandomPlayer.cs" />
-    <Compile Include="DataType\Scenes\SceneBook.cs" />
+    <Compile Include="MainItem\Scenes\SceneManager.cs" />
     <Compile Include="DataType\Buffs\Buff.cs" />
     <Compile Include="DataType\Cards\Card.cs" />
     <Compile Include="Forms\MagicBook\CardDetail.cs">

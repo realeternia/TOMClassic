@@ -1,7 +1,7 @@
 using System.Drawing;
 using TaleofMonsters.Controler.Loader;
 
-namespace TaleofMonsters.DataType.Scenes.SceneObjects
+namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 {
     internal class SceneObject
     {

@@ -16,6 +16,7 @@ using TaleofMonsters.MainItem;
 using System.Threading;
 using NarlonLib.Log;
 using TaleofMonsters.Config;
+using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters
 {

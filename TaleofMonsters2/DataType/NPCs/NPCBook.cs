@@ -3,7 +3,7 @@ using System.Drawing;
 using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
-using TaleofMonsters.DataType.Scenes.SceneObjects;
+using TaleofMonsters.MainItem.Scenes.SceneObjects;
 
 namespace TaleofMonsters.DataType.NPCs
 {

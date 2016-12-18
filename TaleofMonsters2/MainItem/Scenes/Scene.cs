@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.DataType.Items;
-using TaleofMonsters.DataType.NPCs;
-using TaleofMonsters.DataType.Scenes;
-using TaleofMonsters.DataType.Scenes.SceneObjects;
-using TaleofMonsters.DataType.User; 
-using System.Windows.Forms;
 using TaleofMonsters.DataType.Others;
+using TaleofMonsters.DataType.User;
+using TaleofMonsters.MainItem.Scenes.SceneObjects;
 
-namespace TaleofMonsters.MainItem
+namespace TaleofMonsters.MainItem.Scenes
 {
     public class Scene
     {
@@ -202,8 +199,8 @@ namespace TaleofMonsters.MainItem
         public void RefreshNpcState()
         {
             sceneItems = new List<SceneObject>();
-            sceneItems.AddRange(SceneBook.GetWarps(UserProfile.InfoBasic.MapId));
-            sceneItems.AddRange(NPCBook.GetNPCOnMap(UserProfile.InfoBasic.MapId));
+          //  sceneItems.AddRange(SceneManager.GetWarps(UserProfile.InfoBasic.MapId));
+          //  sceneItems.AddRange(NPCBook.GetNPCOnMap(UserProfile.InfoBasic.MapId));
 
             parent.Invalidate();
         }

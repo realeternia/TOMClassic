@@ -5,10 +5,9 @@ using ConfigDatas;
 using ControlPlus;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Core;
-using TaleofMonsters.MainItem;
+using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.Forms
 {
@@ -195,7 +194,7 @@ namespace TaleofMonsters.Forms
                         e.Graphics.DrawImage(image, destRect2, 0, 0, width, height, GraphicsUnit.Pixel);
                         image.Dispose();
 
-                        image = SceneBook.GetPreview(mapIconConfig.Id);
+                        image = SceneManager.GetPreview(mapIconConfig.Id);
                         int tx = x - baseX + width;
                         if (tx > 750 - image.Width)
                         {

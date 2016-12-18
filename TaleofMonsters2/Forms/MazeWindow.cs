@@ -7,6 +7,7 @@ using TaleofMonsters.DataType.Mazes;
 using System.IO;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.MainItem;
+using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.Forms
 {
