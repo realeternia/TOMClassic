@@ -147,7 +147,7 @@ namespace TaleofMonsters.Forms
                     {
                         if (UserProfile.InfoBag.PayDiamond(10))
                         {
-                            Scene.Instance.ChangeMap(mapIconConfig.Id);
+                            Scene.Instance.ChangeMap(mapIconConfig.Id, true);
                             Close();
                         }
                     }

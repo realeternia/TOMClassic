@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using ConfigDatas;
 using TaleofMonsters.Controler.Battle;
-using TaleofMonsters.Core.Interface;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.Forms.TourGame;
 using TaleofMonsters.Core;

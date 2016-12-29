@@ -6,6 +6,7 @@ using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.NPCs;
+using TaleofMonsters.DataType.User.Mem;
 using TaleofMonsters.MainItem.Scenes.SceneObjects;
 
 namespace TaleofMonsters.MainItem.Scenes
@@ -21,16 +22,10 @@ namespace TaleofMonsters.MainItem.Scenes
             public int Height;
         }
 
-        private struct SceneSpecialPosData
-        {
-            public string Type;
-            public string Info;
-        }
-
-        public static List<SceneObject> GetSceneObjects(int id, int mapWidth ,int mapHeight)
+        public static List<SceneObject> GetSceneObjects(int id, int mapWidth ,int mapHeight, bool isWarp)
         {
             List<ScenePosData> cachedMapData = new List<ScenePosData>();
-            Dictionary<int, SceneSpecialPosData> cachedSpecialData = new Dictionary<int, SceneSpecialPosData>();
+            Dictionary<int, MemSceneSpecialPosData> cachedSpecialData = new Dictionary<int, MemSceneSpecialPosData>();
             var filePath = ConfigData.GetSceneConfig(id).TilePath;
 
 #region 读取文件信息
@@ -73,7 +68,7 @@ namespace TaleofMonsters.MainItem.Scenes
                 if (data.Length < 2)
                     continue;
 
-                SceneSpecialPosData posData = new SceneSpecialPosData();
+                MemSceneSpecialPosData posData = new MemSceneSpecialPosData();
                 posData.Type = data[1];
                 if (data.Length > 2)
                     posData.Info = data[2];
@@ -83,21 +78,28 @@ namespace TaleofMonsters.MainItem.Scenes
             #endregion
 
             List<SceneObject> sceneObjects = new List<SceneObject>();
-
+            //todo 需要根据存档状态来修改位置信息
             foreach (var scenePosData in cachedMapData)
             {
-                SceneSpecialPosData specialData;
+                MemSceneSpecialPosData specialData;
                 cachedSpecialData.TryGetValue(scenePosData.Id, out specialData);
 
                 SceneObject so;
-                switch (specialData.Type)
+                if (specialData != null)
                 {
-                    case "Quest":
-                        so = new SceneQuest(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height); break;
-                    case "Warp":
-                        so = new SceneWarp(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Info); break;
-                    default:
-                        so = new SceneTile(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height); break;
+                    switch (specialData.Type)
+                    {
+                        case "Quest":
+                            so = new SceneQuest(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height); break;
+                        case "Warp":
+                            so = new SceneWarp(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Info); break;
+                        default:
+                            so = new SceneTile(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height); break;
+                    }
+                }
+                else
+                {
+                    so = new SceneQuest(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height); 
                 }
                 sceneObjects.Add(so);
             }

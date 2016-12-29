@@ -46,7 +46,7 @@ namespace TaleofMonsters.MainItem.Scenes
             miniBack = PicLoader.Read("System", "MiniBack.PNG");
         }
 
-        public void ChangeMap(int mapid)
+        public void ChangeMap(int mapid, bool isWarp)
         {
             if (backPicture != null)
                 backPicture.Dispose();
@@ -60,7 +60,7 @@ namespace TaleofMonsters.MainItem.Scenes
 
             SystemMenuManager.ResetIconState(); //reset main icon state
 
-            sceneItems = SceneManager.GetSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35);
+            sceneItems = SceneManager.GetSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, isWarp);
 
             parent.Invalidate();
         }

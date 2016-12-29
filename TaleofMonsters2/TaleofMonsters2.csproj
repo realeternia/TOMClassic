@@ -152,6 +152,7 @@
     <Compile Include="Controler\Resource\ImageManager.cs" />
     <Compile Include="Controler\World\TimeManager.cs" />
     <Compile Include="Controler\World\WorldInfoManager.cs" />
+    <Compile Include="DataType\User\Mem\MemSceneSpecialPosData.cs" />
     <Compile Include="Forms\Items\Regions\Decorators\RegionCoverDecorator.cs" />
     <Compile Include="MainItem\Scenes\SceneObjects\SceneWarp.cs" />
     <Compile Include="MainItem\Scenes\SceneObjects\SceneQuest.cs" />

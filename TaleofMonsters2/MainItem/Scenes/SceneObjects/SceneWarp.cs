@@ -47,7 +47,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                 return false;
             }
 
-            Scene.Instance.ChangeMap(targetMap);
+            Scene.Instance.ChangeMap(targetMap, true);
 
             return true;
         }

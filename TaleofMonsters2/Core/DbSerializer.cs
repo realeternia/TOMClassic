@@ -96,6 +96,7 @@ namespace TaleofMonsters.Core
             register.Register(typeof(InfoSkill), 12);
             register.Register(typeof(MatchResult), 13);
             register.Register(typeof(InfoFarm), 14);
+            register.Register(typeof(MemSceneSpecialPosData), 16);
             register.Register(typeof(MemChangeCardData), 17);
             register.Register(typeof(MemDeckData), 18);
             register.Register(typeof(InfoTask), 19);

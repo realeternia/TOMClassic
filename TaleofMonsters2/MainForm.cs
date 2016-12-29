@@ -104,7 +104,7 @@ namespace TaleofMonsters
                 }
                 MainTipManager.Refresh();
                 SoundManager.PlayBGM("TOM001.mp3");
-                Scene.Instance.ChangeMap(UserProfile.InfoBasic.MapId);
+                Scene.Instance.ChangeMap(UserProfile.InfoBasic.MapId, false);
                 UserProfile.Profile.OnLogin();
                 timeMinutes = (int) DateTime.Now.TimeOfDay.TotalMinutes;
             }

@@ -34,6 +34,9 @@ namespace TaleofMonsters.DataType.User
         public Dictionary<int, int> Ranks;
         [FieldIndex(Index = 6)]
         public List<MemMergeData> MergeMethods;
+        [FieldIndex(Index = 7)]
+        public List<MemSceneSpecialPosData> PosInfos;
+
 
         public InfoWorld()
         {
@@ -43,6 +46,7 @@ namespace TaleofMonsters.DataType.User
             Tournaments = new Dictionary<int, MemTournamentData>();
             Ranks = new Dictionary<int, int>();
             MergeMethods = new List<MemMergeData>();
+            PosInfos = new List<MemSceneSpecialPosData>();
         }
 
         public List<MemChangeCardData> GetChangeCardData()
