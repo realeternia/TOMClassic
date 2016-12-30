@@ -1,6 +1,7 @@
 using System.Drawing;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.Forms;
 
 namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 { 
@@ -20,11 +21,18 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 
             if (!Disabled)
             {
-                //todo some thing happened
+                BeginEvent();
                 SetEnable(false);
             }
 
             return true;
+        }
+
+        private void BeginEvent()
+        {
+            NpcTalkForm sw = new NpcTalkForm();
+            sw.EventId = 1;
+            MainForm.Instance.DealPanel(sw);
         }
 
         public override void Draw(Graphics g, int target)

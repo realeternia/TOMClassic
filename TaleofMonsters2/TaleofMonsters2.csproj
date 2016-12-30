@@ -515,12 +515,6 @@
     <Compile Include="Forms\WorldMapViewForm.Designer.cs">
       <DependentUpon>WorldMapViewForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\NpcTaskBeginForm.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Forms\NpcTaskBeginForm.Designer.cs">
-      <DependentUpon>NpcTaskBeginForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\CommandForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -587,7 +581,6 @@
       <DependentUpon>SystemMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="DataType\NPCs\NPCBook.cs" />
-    <Compile Include="DataType\NPCs\TalkWord.cs" />
     <Compile Include="DataType\Peoples\PeopleBook.cs" />
     <Compile Include="DataType\Peoples\PeopleDrop.cs" />
     <Compile Include="Controler\Battle\Data\Players\AIPlayer.cs" />
@@ -796,10 +789,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\WorldMapViewForm.resx">
       <DependentUpon>WorldMapViewForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\NpcTaskBeginForm.resx">
-      <DependentUpon>NpcTaskBeginForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CommandForm.resx">
