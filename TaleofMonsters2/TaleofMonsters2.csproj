@@ -566,7 +566,6 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainItem\MainTipManager.cs" />
-    <Compile Include="MainItem\Scenes\SceneObjects\SceneNPC.cs" />
     <Compile Include="MainItem\Scenes\SceneObjects\SceneObject.cs" />
     <Compile Include="MainItem\PanelManager.cs" />
     <Compile Include="MainItem\PopMenuDeck.cs">

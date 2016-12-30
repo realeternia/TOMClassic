@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using ConfigDatas;
+using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.NPCs;
+using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.User.Mem;
 using TaleofMonsters.MainItem.Scenes.SceneObjects;
 
@@ -69,16 +71,39 @@ namespace TaleofMonsters.MainItem.Scenes
                     continue;
 
                 MemSceneSpecialPosData posData = new MemSceneSpecialPosData();
+                posData.Id = int.Parse(data[0]);
                 posData.Type = data[1];
                 if (data.Length > 2)
                     posData.Info = data[2];
-                cachedSpecialData[int.Parse(data[0])] = posData;
+                cachedSpecialData[posData.Id] = posData;
             }
             sr.Close();
             #endregion
 
+            if (isWarp || UserProfile.Profile.InfoWorld.PosInfos == null || UserProfile.Profile.InfoWorld.PosInfos.Count <= 0)
+            {
+                List<MemSceneSpecialPosData> posList = new List<MemSceneSpecialPosData>();
+                foreach (var scenePosData in cachedMapData)
+                {
+                    MemSceneSpecialPosData specialData;
+                    cachedSpecialData.TryGetValue(scenePosData.Id, out specialData);
+
+                    if (specialData == null)
+                    {
+                        specialData = new MemSceneSpecialPosData(); //随机一个出来
+                        specialData.Id = scenePosData.Id;
+                        specialData.Type = "Quest";
+                    }
+                    specialData.RandomSeed = MathTool.GetRandom(10000);
+                    cachedSpecialData[specialData.Id] = specialData;
+
+                    posList.Add(specialData);
+                }
+
+                UserProfile.Profile.InfoWorld.PosInfos = posList;
+            }
+
             List<SceneObject> sceneObjects = new List<SceneObject>();
-            //todo 需要根据存档状态来修改位置信息
             foreach (var scenePosData in cachedMapData)
             {
                 MemSceneSpecialPosData specialData;
@@ -90,16 +115,16 @@ namespace TaleofMonsters.MainItem.Scenes
                     switch (specialData.Type)
                     {
                         case "Quest":
-                            so = new SceneQuest(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height); break;
+                            so = new SceneQuest(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Disabled); break;
                         case "Warp":
-                            so = new SceneWarp(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Info); break;
+                            so = new SceneWarp(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Disabled, specialData.Info); break;
                         default:
-                            so = new SceneTile(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height); break;
+                            so = new SceneTile(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Disabled); break;
                     }
                 }
                 else
                 {
-                    so = new SceneQuest(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height); 
+                    throw new Exception("GetSceneObjects error");
                 }
                 sceneObjects.Add(so);
             }

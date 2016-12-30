@@ -1,5 +1,4 @@
 using System.Drawing;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User;
 
@@ -12,6 +11,17 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
         public int Y { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+        public bool Disabled { get; set; }
+
+        public SceneObject(int wid, int wx, int wy, int wwidth, int wheight, bool disabled)
+        {
+            Id = wid;
+            X = wx;
+            Y = wy;
+            Width = wwidth;
+            Height = wheight;
+            Disabled = disabled;
+        }
 
         public bool IsMouseIn(int mx, int my)
         {

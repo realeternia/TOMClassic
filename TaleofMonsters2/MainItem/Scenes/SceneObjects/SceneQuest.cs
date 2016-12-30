@@ -7,13 +7,9 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 { 
     internal class SceneQuest : SceneObject
     {
-        public SceneQuest(int wid, int wx, int wy, int wwidth, int wheight)
+        public SceneQuest(int wid, int wx, int wy, int wwidth, int wheight, bool disabled)
+            :base(wid,wx,wy,wwidth,wheight, disabled)
         {
-            Id = wid;
-            X = wx;
-            Y = wy;
-            Width = wwidth;
-            Height = wheight;
         }
 
         public override void Draw(Graphics g, int target)

@@ -3,13 +3,12 @@ using System.Drawing;
 using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
-using TaleofMonsters.MainItem.Scenes.SceneObjects;
 
 namespace TaleofMonsters.DataType.NPCs
 {
     internal static class NPCBook
     {
-        static public Image GetPersonImage(int id)
+        public static Image GetPersonImage(int id)
         {
             string fname = string.Format("NPC/{0}.PNG", ConfigData.NpcDict[id].Figue);
             if (!ImageManager.HasImage(fname))
@@ -20,23 +19,7 @@ namespace TaleofMonsters.DataType.NPCs
             return ImageManager.GetImage(fname);
         }
 
-        static public SceneObject[] GetNPCOnMap(int id)
-        {
-            List<SceneNPC> rt = new List<SceneNPC>();
-            foreach (NpcConfig npcConfig in ConfigData.NpcDict.Values)
-            {
-                if (npcConfig.MapId == id)
-                {
-                    var npc = new SceneNPC(npcConfig.Id);
-                    npc.X = (int)(npc.X*Config.Config.SceneTextureFactorX);
-                    npc.Y = (int)(npc.Y * Config.Config.SceneTextureFactorY);
-                    rt.Add(npc);
-                }
-            }
-            return rt.ToArray();
-        }
-
-        static public string[] GetNPCIconsOnMap(int id)
+        public static string[] GetNPCIconsOnMap(int id)
         {
             List<string> strs = new List<string>();
             foreach (NpcConfig npcConfig in ConfigData.NpcDict.Values)
