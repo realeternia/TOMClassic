@@ -472,7 +472,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Effect\flycard.eff" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="SceneQuest\test.txt" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scene\default.scn" />
     <EmbeddedResource Include="Scene\home.scn" />

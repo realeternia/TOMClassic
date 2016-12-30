@@ -14,10 +14,6 @@ namespace TaleofMonsters
         [STAThread]
         static void Main()
         {
-            //DbSerializer.Init();
-            //var bts = DbSerializer.CustomTypeToBytes(new Profile(), typeof (Profile));
-            //return;
-
             NLog.Start(LogTargets.File);
             PicLoader.Init(); 
             SoundManager.Init();

@@ -469,5 +469,17 @@ namespace TaleofMonsters.DataType.User
             int[] levelp = { 1, 2, 3, 4, 6, 10, 14, 20 };
             return elevel*MathTool.GetRandom(8, 12)/10/levelp[rare];
         }
+
+        public void UpdatePosEnable(int id, bool isEnable)
+        {
+            foreach (var posData in PosInfos)
+            {
+                if (posData.Id == id)
+                {
+                    posData.Disabled = !isEnable;
+                    break;
+                }
+            }
+        }
     }
 }

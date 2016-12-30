@@ -117,12 +117,6 @@ namespace TaleofMonsters.Forms
                             MainForm.Instance.DealPanel(sw);
                             break;
                         case "Maz":
-                            if (UserProfile.InfoBasic.Ap < GameConstants.MazeAPCost)
-                            {
-                                MainForm.Instance.AddTip(HSErrorTypes.GetDescript(HSErrorTypes.SceneAPNotEnough), "Red");
-                                return;
-                            }
-                            UserProfile.InfoBasic.Ap -= GameConstants.MazeAPCost;
                             MazeWindow mw = new MazeWindow();
                             mw.NpcId = npcId;
                             mw.MazeId = actionData;

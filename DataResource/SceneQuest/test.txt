@@ -1,0 +1,23 @@
+﻿s欢迎来到|Cyan|幻兽传说卡片版||的世界。你是否玩过一个叫做|Red|幻兽传说||的魔兽RPG地图？
+	a当然玩过。
+		ewin
+	a呃，还没有…
+		sbalala
+			a好的
+				ewin
+			a过河
+				eroll-大成功，成功，成功，失败
+					r0
+						s你赢了
+							a好啊
+								ewin
+					r1r2
+						s去不去
+							a好啊
+								efail
+							a不好
+								ewin
+					r3
+						s你挂了
+							a好啊
+								efail

@@ -6,12 +6,12 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 {
     internal abstract class SceneObject
     {
-        public int Id { get; protected set; }
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
-        public bool Disabled { get; set; }
+        public readonly int Id;
+        public readonly int X;
+        public readonly int Y;
+        public readonly int Width;
+        public readonly int Height;
+        public bool Disabled { get; private set; }
 
         public SceneObject(int wid, int wx, int wy, int wwidth, int wheight, bool disabled)
         {
@@ -21,6 +21,13 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             Width = wwidth;
             Height = wheight;
             Disabled = disabled;
+        }
+
+        public void SetEnable(bool isEnable)
+        {
+            Disabled = !isEnable;
+
+            UserProfile.Profile.InfoWorld.UpdatePosEnable(Id, isEnable);
         }
 
         public bool IsMouseIn(int mx, int my)
@@ -36,12 +43,19 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 
         public virtual bool OnClick()
         {
-            if (SceneManager.CanMove(Id, UserProfile.Profile.InfoBasic.Position))
+            if (!SceneManager.CanMove(Id, UserProfile.Profile.InfoBasic.Position))
             {
-                UserProfile.Profile.InfoBasic.Position = Id;
-                return true;
+                return false;
             }
-            return false;
+
+            UserProfile.Profile.InfoBasic.Position = Id;
+            UserProfile.InfoBasic.Ap -= GameConstants.SceneMoveCost;
+            if (UserProfile.InfoBasic.Ap <= 0)
+            {
+                UserProfile.InfoBasic.Ap = 0;
+            }
+
+            return true;
         }
 
         public virtual void Draw(Graphics g, int target)

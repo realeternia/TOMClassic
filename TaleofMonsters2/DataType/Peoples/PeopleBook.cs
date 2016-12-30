@@ -90,19 +90,12 @@ namespace TaleofMonsters.DataType.Peoples
 
         public static void Fight(int pid, string map, int tile, int rlevel, HsActionCallback winEvent, HsActionCallback lossEvent)
         {
-            if (UserProfile.InfoBasic.Ap < GameConstants.FightAPCost)
-            {
-                MainForm.Instance.AddTip(HSErrorTypes.GetDescript(HSErrorTypes.SceneAPNotEnough), "Red");
-                return;
-            }
-
             bool rt = PopDeckChoose.Show(map, tile, UserProfile.InfoCard.GetDeckNames());
             if (!rt)
             {
                 return;
             }
 
-            UserProfile.InfoBasic.Ap -= GameConstants.FightAPCost;
             BattleForm bf = new BattleForm();
             bf.BattleWin = winEvent;
             bf.BattleLose = lossEvent;

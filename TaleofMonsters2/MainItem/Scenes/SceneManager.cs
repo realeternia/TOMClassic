@@ -10,6 +10,7 @@ using TaleofMonsters.DataType.NPCs;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.User.Mem;
 using TaleofMonsters.MainItem.Scenes.SceneObjects;
+using TaleofMonsters.MainItem.Scenes.SceneObjects.SceneQuests;
 
 namespace TaleofMonsters.MainItem.Scenes
 {
@@ -102,6 +103,13 @@ namespace TaleofMonsters.MainItem.Scenes
 
                 UserProfile.Profile.InfoWorld.PosInfos = posList;
             }
+            else
+            {
+                foreach (var posData in UserProfile.Profile.InfoWorld.PosInfos)
+                {
+                    cachedSpecialData[posData.Id] = posData;
+                }
+            }
 
             List<SceneObject> sceneObjects = new List<SceneObject>();
             foreach (var scenePosData in cachedMapData)
@@ -136,6 +144,59 @@ namespace TaleofMonsters.MainItem.Scenes
         {
             int differ = Math.Abs(id1 - id2);
             return differ == 1 || differ == 1000;
+        }
+
+        public static SceneQuestBlock GetQuestData(string name)
+        {
+            Dictionary<int, SceneQuestBlock> levelCachDict = new Dictionary<int, SceneQuestBlock>();//存下每一深度的最后节点
+            SceneQuestBlock root = null;
+            StreamReader sr = new StreamReader(DataLoader.Read("SceneQuest", string.Format("{0}.txt", name)));
+            string line;
+            int lineCount = 0;
+            while ((line=sr.ReadLine())!= null)
+            {
+                lineCount++;
+                int lineDepth = GetStringDepth(ref line);
+                char type = line[0];
+                string script = line.Substring(1);
+                SceneQuestBlock data;
+                switch (type)
+                {
+                    case 's': data = new SceneQuestSay(script, lineDepth, lineCount); break;
+                    case 'a': data = new SceneQuestAnswer(script, lineDepth, lineCount); break;
+                    case 'e': data = new SceneQuestEvent(script, lineDepth, lineCount); break;
+                    case 'r': data = new SceneQuestRollItem(script, lineDepth, lineCount); break;
+                    default: throw new Exception("GetQuestData unknown type");
+                }
+
+                levelCachDict[data.Depth] = data;
+                if (root == null)
+                {
+                    root = data;
+                }
+                else
+                {
+                    levelCachDict[data.Depth-1].Children.Add(data);
+                }
+            }
+            sr.Close();
+
+            return root;
+        }
+
+        private static int GetStringDepth(ref string str)
+        {
+            int tabCount = 0;
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (str[i] != '\t')
+                {
+                    break;
+                }
+                tabCount++;
+            }
+            str = str.Substring(tabCount);
+            return tabCount;
         }
 
         public static Image GetPreview(int id)

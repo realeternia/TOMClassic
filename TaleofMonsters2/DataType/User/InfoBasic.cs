@@ -15,7 +15,7 @@ namespace TaleofMonsters.DataType.User
         [FieldIndex(Index = 17)] public int MapId;
         [FieldIndex(Index = 18)] public int AttrPoint;
         [FieldIndex(Index = 19)] public int LastLoginTime;
-        [FieldIndex(Index = 20)] public int Ap;
+        [FieldIndex(Index = 20)] public int Ap; //健康度
         [FieldIndex(Index = 21)] public int DigCount;
         [FieldIndex(Index = 22)] public int LastRival; //上一个peopleview的对手id
         [FieldIndex(Index = 23)] public int Position;
