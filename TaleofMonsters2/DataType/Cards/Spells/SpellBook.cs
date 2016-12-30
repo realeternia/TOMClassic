@@ -13,7 +13,7 @@ namespace TaleofMonsters.DataType.Cards.Spells
     {
         private static List<int> randomSpellIdList;
 
-        static public int GetRandSpellId()
+        public static int GetRandSpellId()
         {
             if (randomSpellIdList == null)
             {
@@ -28,7 +28,7 @@ namespace TaleofMonsters.DataType.Cards.Spells
             return randomSpellIdList[MathTool.GetRandom(randomSpellIdList.Count)];
         }
 
-        static public string GetAttrByString(int id, string info)
+        public static string GetAttrByString(int id, string info)
         {
             SpellConfig spellConfig = ConfigData.GetSpellConfig(id);
             switch (info)
@@ -39,7 +39,7 @@ namespace TaleofMonsters.DataType.Cards.Spells
             return "";
         }
 
-        static public Image GetSpellImage(int id, int width, int height)
+        public static Image GetSpellImage(int id, int width, int height)
         {
             SpellConfig spellConfig = ConfigData.GetSpellConfig(id);
             string fname = string.Format("Spell/{0}{1}x{2}", spellConfig.Icon, width, height);

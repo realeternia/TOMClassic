@@ -8,13 +8,13 @@ namespace TaleofMonsters.DataType.HeroSkills
 {
     internal static class HeroSkillAttrBook
     {
-        static public int GetCost(int id, int level)
+        public static int GetCost(int id, int level)
         {
             HeroSkillAttrConfig heroSkillAttrConfig = ConfigData.GetHeroSkillAttrConfig(id);
             return level * level * (10 + heroSkillAttrConfig.HeroLevel / 5) / 10 + heroSkillAttrConfig.HeroLevel * level + 50 + heroSkillAttrConfig.HeroLevel * 10;
         }
 
-        static private string GetDes(int id, int level)
+        private static string GetDes(int id, int level)
         {
             HeroSkillAttrConfig heroSkillAttrConfig = ConfigData.GetHeroSkillAttrConfig(id);
             string tp = heroSkillAttrConfig.Des;
@@ -28,7 +28,7 @@ namespace TaleofMonsters.DataType.HeroSkills
             return tp;
         }
 
-        static public Image GetPreview(int id, int level)
+        public static Image GetPreview(int id, int level)
         {
             HeroSkillAttrConfig heroSkillAttrConfig = ConfigData.GetHeroSkillAttrConfig(id);
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
@@ -56,7 +56,7 @@ namespace TaleofMonsters.DataType.HeroSkills
             return skills.ToArray();
         }
 
-        static public Image GetHeroSkillAttrImage(int id)
+        public static Image GetHeroSkillAttrImage(int id)
         {
             string fname = string.Format("HeroSkill/Attr/{0}.JPG", ConfigData.HeroSkillAttrDict[id].Icon);
             if (!ImageManager.HasImage(fname))

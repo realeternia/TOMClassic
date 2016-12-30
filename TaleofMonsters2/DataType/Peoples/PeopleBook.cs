@@ -52,13 +52,13 @@ namespace TaleofMonsters.DataType.Peoples
             return tipData.Image;
         }
 
-        static public bool IsPeople(int id)
+        public static bool IsPeople(int id)
        {
            PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(id);
            return peopleConfig.Type > 0 && peopleConfig.Type < 100; 
         }
 
-        static public bool IsMonster(int id)
+        public static bool IsMonster(int id)
         {
             PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(id);
             return peopleConfig.Type == 0;

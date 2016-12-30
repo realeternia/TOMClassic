@@ -6,7 +6,7 @@ namespace TaleofMonsters.Core
 {
     internal static class HSIcons
     {
-        static public Image GetIconsByEName(string name)
+        public static Image GetIconsByEName(string name)
         {
             string fname = string.Format("Icon/{0}.PNG", name);
             if (!ImageManager.HasImage(fname))

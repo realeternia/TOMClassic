@@ -13,7 +13,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
     {
         private static List<int> randomWeaponIdList;
 
-        static public int GetRandWeaponId()
+        public static int GetRandWeaponId()
         {
             if (randomWeaponIdList == null)
             {
@@ -29,7 +29,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             return randomWeaponIdList[MathTool.GetRandom(randomWeaponIdList.Count)];  
         }
 
-        static public int[] GetSkillWids(int sid)
+        public static int[] GetSkillWids(int sid)
         {
             List<int> sids = new List<int>();
             foreach (WeaponConfig weaponConfig in ConfigData.WeaponDict.Values)
@@ -42,7 +42,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             return sids.ToArray();
         }
 
-        static public string GetAttrByString(int id, string des)
+        public static string GetAttrByString(int id, string des)
         {
             WeaponConfig weaponConfig = ConfigData.GetWeaponConfig(id);
 
@@ -56,7 +56,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             return "";
         }
 
-        static public Image GetWeaponImage(int id, int width, int height)
+        public static Image GetWeaponImage(int id, int width, int height)
         {
             WeaponConfig weaponConfig = ConfigData.GetWeaponConfig(id);
             string fname = string.Format("Weapon/{0}{1}x{2}", weaponConfig.Icon, width, height);

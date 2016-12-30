@@ -6,7 +6,7 @@ namespace TaleofMonsters.Controler.Loader
 {
     class DataLoader
     {
-        static public Stream Read(String dir, String path)
+        public static Stream Read(String dir, String path)
         {
             Stream myStream;
             try

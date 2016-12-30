@@ -10,7 +10,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
         static Dictionary<int, Image> effectType = new Dictionary<int, Image>();
         static Dictionary<string, MissileConfig> cachedConfigDict;
 
-        static public Image GetImage(int id)
+        public static Image GetImage(int id)
         {
             if (!effectType.ContainsKey(id))
             {
@@ -24,7 +24,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
             return effectType[id];
         }
 
-        static public MissileConfig GetConfig(string name)
+        public static MissileConfig GetConfig(string name)
         {
             if (cachedConfigDict == null)
             {

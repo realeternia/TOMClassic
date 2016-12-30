@@ -39,7 +39,7 @@ namespace TaleofMonsters.DataType.Tournaments
             return ids.ToArray();
         }
 
-        static public Image GetPreview(int id)
+        public static Image GetPreview(int id)
         {
             TournamentConfig tournamentConfig = ConfigData.GetTournamentConfig(id);
 

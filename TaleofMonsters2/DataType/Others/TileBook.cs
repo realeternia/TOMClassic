@@ -25,7 +25,7 @@ namespace TaleofMonsters.DataType.Others
             return false;
         }
 
-        static public Image GetTileImage(int id, int width, int height)
+        public static Image GetTileImage(int id, int width, int height)
         {
             string fname = string.Format("Tiles/{0}{1}x{2}", id, width, height);
             if (!ImageManager.HasImage(fname))

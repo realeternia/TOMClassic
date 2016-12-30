@@ -13,7 +13,7 @@ namespace TaleofMonsters.DataType.Skills
     {
         private static List<int> randomSkillIds;
 
-        static public int GetRandSkillId()
+        public static int GetRandSkillId()
         {
             if (randomSkillIds==null)
             {
@@ -41,12 +41,12 @@ namespace TaleofMonsters.DataType.Skills
             return "";
         }
 
-        static public Image GetSkillImage(int id)
+        public static Image GetSkillImage(int id)
         {
             return GetSkillImage(id,64,64);
         }
 
-        static public Image GetSkillImage(int id, int width, int height)
+        public static Image GetSkillImage(int id, int width, int height)
         {
             SkillConfig skillConfig = ConfigData.GetSkillConfig(id);
 

@@ -29,7 +29,7 @@ namespace TaleofMonsters.DataType.Buffs
             return Color.FromArgb(100, int.Parse(colorStr[0]), int.Parse(colorStr[1]), int.Parse(colorStr[2]));
         }
 
-        static public Image GetBuffImage(int id,int index)
+        public static Image GetBuffImage(int id,int index)
         {
             BuffConfig buffConfig = ConfigData.BuffDict[id];
             string indexTxt = index == 0 ? "" : index.ToString();

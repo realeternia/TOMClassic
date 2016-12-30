@@ -8,7 +8,7 @@ namespace TaleofMonsters.DataType.Formulas
     internal static class FormulaBook
     {
         [Obsolete("已经废弃")]
-        static public double GetPhysicalDamage(int atk, int def)
+        public static double GetPhysicalDamage(int atk, int def)
         {
             Dictionary<string, string> rules = new Dictionary<string, string>();
             rules.Add("atk", atk.ToString());
@@ -17,7 +17,7 @@ namespace TaleofMonsters.DataType.Formulas
         }
 
         [Obsolete("已经废弃")]
-        static public double GetMagicDamage(int atk, int def)
+        public static double GetMagicDamage(int atk, int def)
         {
             Dictionary<string, string> rules = new Dictionary<string, string>();
             rules.Add("atk", atk.ToString());
@@ -26,7 +26,7 @@ namespace TaleofMonsters.DataType.Formulas
         }
 
         [Obsolete("已经废弃")]
-        static public double GetHitRate(int hit, int dhit)
+        public static double GetHitRate(int hit, int dhit)
         {
             Dictionary<string, string> rules = new Dictionary<string, string>();
             rules.Add("hit", hit.ToString());

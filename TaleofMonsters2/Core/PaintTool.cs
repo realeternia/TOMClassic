@@ -5,7 +5,7 @@ namespace TaleofMonsters.Core
 {
     static class PaintTool
     {
-        static public Brush GetBrushByAttribute(int attr)
+        public static Brush GetBrushByAttribute(int attr)
         {
             switch (attr)
             {
@@ -20,7 +20,7 @@ namespace TaleofMonsters.Core
             return Brushes.White;
         }
 
-        static public Brush GetBrushByResource(int rid)
+        public static Brush GetBrushByResource(int rid)
         {
             switch (rid)
             {

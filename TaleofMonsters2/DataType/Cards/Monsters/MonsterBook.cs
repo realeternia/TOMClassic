@@ -14,7 +14,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
         private static Dictionary<int, List<int>> starMidDict;
         private static List<int> randomMonsterIdList;
 
-        static public int GetRandMonsterId()
+        public static int GetRandMonsterId()
         {
             if (randomMonsterIdList == null)
             {
@@ -30,7 +30,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             return randomMonsterIdList[MathTool.GetRandom(randomMonsterIdList.Count)];
         }
 
-        static public int GetRandStarMid(int star)
+        public static int GetRandStarMid(int star)
         {
             if (starMidDict == null)
             {
@@ -50,7 +50,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             return starMidDict[star][MathTool.GetRandom(starMidDict[star].Count)];
         }
 
-        static public int[] GetSkillMids(int sid)
+        public static int[] GetSkillMids(int sid)
         {
             List<int> mids = new List<int>();
             foreach (MonsterConfig monsterConfig in ConfigData.MonsterDict.Values)
@@ -69,7 +69,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             return mids.ToArray();
         }
 
-        static public string GetAttrByString(int id, string des)
+        public static string GetAttrByString(int id, string des)
         {
             MonsterConfig monsterConfig = ConfigData.GetMonsterConfig(id);
             switch (des)
@@ -84,7 +84,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             return "";
         }
 
-        static public Image GetMonsterImage(int id, int width, int height)
+        public static Image GetMonsterImage(int id, int width, int height)
         {
             MonsterConfig monsterConfig = ConfigData.GetMonsterConfig(id);
 

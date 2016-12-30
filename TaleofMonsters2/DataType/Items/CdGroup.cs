@@ -14,7 +14,7 @@
             200, 
             200};
 
-        static public int GetCDTime(int gid)
+        public static int GetCDTime(int gid)
         {
             return times[gid];
         }

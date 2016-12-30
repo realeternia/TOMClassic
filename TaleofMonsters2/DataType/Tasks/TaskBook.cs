@@ -75,19 +75,19 @@ namespace TaleofMonsters.DataType.Tasks
             return false;
         }
 
-        static public int GetMoneyReal(int id)
+        public static int GetMoneyReal(int id)
         {
             TaskConfig taskConfig = ConfigData.GetTaskConfig(id);
             return (int)Math.Sqrt(ExpTree.GetNextRequired(taskConfig.Level) * 60) * taskConfig.Money / 100; 
         }
 
-        static public int GetExpReal(int id)
+        public static int GetExpReal(int id)
         {
            TaskConfig taskConfig = ConfigData.GetTaskConfig(id);
            return ExpTree.GetNextRequired(taskConfig.Level) * taskConfig.Exp / 2000; 
         }
 
-        static public bool CanReceive(int id)
+        public static bool CanReceive(int id)
         {
             TaskConfig taskConfig = ConfigData.GetTaskConfig(id);
             if (taskConfig.Former != 0 && UserProfile.InfoTask.GetTaskStateById(taskConfig.Former) != 3)
@@ -105,7 +105,7 @@ namespace TaleofMonsters.DataType.Tasks
             return true;
         }
 
-        static public string GetReceiveWord(int id)
+        public static string GetReceiveWord(int id)
         {
             TaskConfig taskConfig = ConfigData.GetTaskConfig(id);
             switch (taskConfig.Type)
@@ -116,13 +116,13 @@ namespace TaleofMonsters.DataType.Tasks
             return string.Format("[Upd{0}-1]{1}", id, taskConfig.Name);
         }
 
-        static private string GetFightStr(int id)
+        private static string GetFightStr(int id)
         {
             TaskConfig taskConfig = ConfigData.GetTaskConfig(id);
             return string.Format("[Mon{0}-{1}&Upw{2}-3]{3}", taskConfig.FightId, taskConfig.FightLand, id, taskConfig.Name);
         }
 
-        static public bool CanFinish(int id)
+        public static bool CanFinish(int id)
         {
             int state = UserProfile.InfoTask.GetTaskStateById(id);
             if (state == 0 || state == 3)
@@ -161,7 +161,7 @@ namespace TaleofMonsters.DataType.Tasks
             return true;
         }
 
-        static public string[] GetFinishWord(int id)
+        public static string[] GetFinishWord(int id)
         {
             TaskConfig taskConfig = ConfigData.GetTaskConfig(id);
             List<string> words = new List<string>();
@@ -175,7 +175,7 @@ namespace TaleofMonsters.DataType.Tasks
             return words.ToArray();
         }
 
-        static private string GetItemStr(int id)
+        private static string GetItemStr(int id)
         {
             string itemstr = "";
             TaskConfig taskConfig = ConfigData.GetTaskConfig(id);
@@ -191,7 +191,7 @@ namespace TaleofMonsters.DataType.Tasks
             return string.Format("[Upd{0}-3&Dit{1}]{2}", id, itemstr, taskConfig.Name);
         }
 
-       static private string[] GetTeachStr(int id)
+       private static string[] GetTeachStr(int id)
         {
             TaskConfig taskConfig = ConfigData.GetTaskConfig(id);
             List<string> strs = new List<string>();
@@ -203,7 +203,7 @@ namespace TaleofMonsters.DataType.Tasks
             return strs.ToArray();
         }
 
-        static public void Award(int id)
+        public static void Award(int id)
         {
             TaskConfig taskConfig = ConfigData.GetTaskConfig(id);
             Profile user = UserProfile.Profile;
@@ -242,7 +242,7 @@ namespace TaleofMonsters.DataType.Tasks
             }
         }
 
-        static public Image GetPreview(int id)
+        public static Image GetPreview(int id)
         {
             TaskConfig taskConfig = ConfigData.GetTaskConfig(id);
 

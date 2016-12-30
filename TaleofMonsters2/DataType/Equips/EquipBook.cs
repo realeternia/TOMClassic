@@ -9,7 +9,7 @@ namespace TaleofMonsters.DataType.Equips
 {
     internal static class EquipBook
     {
-        static public Image GetEquipImage(int id)
+        public static Image GetEquipImage(int id)
         {
             string fname = string.Format("Equip/{0}.JPG", ConfigData.GetEquipConfig(id).Url);
             if (!ImageManager.HasImage(fname))
@@ -33,7 +33,7 @@ namespace TaleofMonsters.DataType.Equips
             return datas.ToArray();
         }
 
-        static public bool CanEquip(int id)
+        public static bool CanEquip(int id)
         {
             EquipConfig equipConfig = ConfigData.GetEquipConfig(id);
 

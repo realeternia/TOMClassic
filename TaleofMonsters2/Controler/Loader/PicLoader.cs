@@ -11,7 +11,7 @@ namespace TaleofMonsters.Controler.Loader
             NLVFS.NLVFS.LoadVfsFile("./PicResource.vfs");
         }
 
-        static public Image Read(string dir, string path)
+        public static Image Read(string dir, string path)
         {
             if (!Config.Config.ShowImage && dir != "Cursor")
             {

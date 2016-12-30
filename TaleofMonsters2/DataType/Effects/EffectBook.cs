@@ -11,7 +11,7 @@ namespace TaleofMonsters.DataType.Effects
     {
         static Dictionary<string, Effect> effectType = new Dictionary<string, Effect>();
 
-        static public int Count
+        public static int Count
         {
             get
             {
@@ -19,7 +19,7 @@ namespace TaleofMonsters.DataType.Effects
             }
         }
 
-        static public Effect GetEffect(string name)
+        public static Effect GetEffect(string name)
         {
             if (!effectType.ContainsKey(name))
             {
@@ -28,7 +28,7 @@ namespace TaleofMonsters.DataType.Effects
             return effectType[name];
         }
 
-        static private Effect GetEffectFromFile(string path, string name)
+        private static Effect GetEffectFromFile(string path, string name)
         {
             StreamReader sr = new StreamReader(DataLoader.Read(path, name));
             Effect effect = new Effect(name);
@@ -65,7 +65,7 @@ namespace TaleofMonsters.DataType.Effects
             return effect;
         }
 
-        static public Image GetEffectImage(string name, int type, bool flip)
+        public static Image GetEffectImage(string name, int type, bool flip)
         {
             string fname = string.Format("Effect/{0}t{1}{2}", name, type, flip ? "f" : "");
             if (!ImageManager.HasImage(fname))

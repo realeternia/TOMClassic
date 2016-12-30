@@ -64,7 +64,7 @@ namespace TaleofMonsters.MainItem
             }
         }
 
-        static public bool UpdateToolbar(int mouseX, int mouseY)
+        public static bool UpdateToolbar(int mouseX, int mouseY)
         {
             foreach (ToolBarItemData item in activeItems)
             {
@@ -86,7 +86,7 @@ namespace TaleofMonsters.MainItem
             return false;
         }
 
-        static public void ResetIconState()
+        public static void ResetIconState()
         {
             foreach (ToolBarItemData toolBarItemData in menuItems)
             {
@@ -104,7 +104,7 @@ namespace TaleofMonsters.MainItem
             Reload();
         }
 
-        static private void SetIconEnable(SystemMenuIds id, bool enable)
+        private static void SetIconEnable(SystemMenuIds id, bool enable)
         {
             foreach (ToolBarItemData toolBarItemData in menuItems)
             {
@@ -116,7 +116,7 @@ namespace TaleofMonsters.MainItem
             }
         }
 
-        static public void UpdateAll(Control parent)
+        public static void UpdateAll(Control parent)
          {
              foreach (ToolBarItemData item in activeItems)
              {
@@ -124,7 +124,7 @@ namespace TaleofMonsters.MainItem
              }
          }
 
-        static public void DrawAll(System.Drawing.Graphics g)
+        public static void DrawAll(System.Drawing.Graphics g)
         {
             foreach (ToolBarItemData item in activeItems)
             {
@@ -132,7 +132,7 @@ namespace TaleofMonsters.MainItem
             }
         }
 
-        static public void CheckItemClick(SystemMenuIds id)
+        public static void CheckItemClick(SystemMenuIds id)
         {
             foreach (ToolBarItemData toolBarItemData in activeItems)
             {
@@ -249,7 +249,7 @@ namespace TaleofMonsters.MainItem
             }
         }
 
-        static public void CheckHotKey(Keys key)
+        public static void CheckHotKey(Keys key)
         {
             if (!isHotkeyEnabled)
             {

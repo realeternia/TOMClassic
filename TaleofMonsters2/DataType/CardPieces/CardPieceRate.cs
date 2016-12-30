@@ -8,7 +8,7 @@ namespace TaleofMonsters.DataType.CardPieces
         public int Rate { get; private set; }//万分之概率
 
         private static int[] rates = { 1200, 800, 600, 400, 200, 100, 100, 100, 100 };
-        static public CardPieceRate FromCardPiece(int id, int clevel)
+        public static CardPieceRate FromCardPiece(int id, int clevel)
         {
             CardPieceRate pieceRate = new CardPieceRate();
             HItemConfig itemConfig = ConfigData.GetHItemConfig(id);
@@ -19,7 +19,7 @@ namespace TaleofMonsters.DataType.CardPieces
             return pieceRate;
         }
 
-        static public CardPieceRate FromCardTypePiece(int id, int clevel)
+        public static CardPieceRate FromCardTypePiece(int id, int clevel)
         {
             CardPieceRate pieceRate = new CardPieceRate();
             HItemConfig itemConfig = ConfigData.GetHItemConfig(id);
@@ -32,7 +32,7 @@ namespace TaleofMonsters.DataType.CardPieces
             return pieceRate;
         }
 
-        static public CardPieceRate FromCardRacePiece(int id, int clevel)
+        public static CardPieceRate FromCardRacePiece(int id, int clevel)
         {
             CardPieceRate pieceRate = new CardPieceRate();
             HItemConfig itemConfig = ConfigData.GetHItemConfig(id);

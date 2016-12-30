@@ -10,7 +10,7 @@ namespace TaleofMonsters.DataType.Maps
     {
         static Dictionary<string, BattleMap> mapType = new Dictionary<string, BattleMap>();
 
-        static public BattleMap GetMap(string name)
+        public static BattleMap GetMap(string name)
         {
             if (!mapType.ContainsKey(name))
             {
@@ -19,7 +19,7 @@ namespace TaleofMonsters.DataType.Maps
             return mapType[name];
         }
 
-        static private BattleMap GetMapFromFile(string name)
+        private static BattleMap GetMapFromFile(string name)
         {
             StreamReader sr = new StreamReader(DataLoader.Read("Map", name));
             BattleMap map = new BattleMap();
@@ -55,7 +55,7 @@ namespace TaleofMonsters.DataType.Maps
             return map;
         }
 
-        static public Image GetMapImage(string name, int nowtile)
+        public static Image GetMapImage(string name, int nowtile)
         {
             Image img = new Bitmap(100, 100);
             BattleMap mapInfo = GetMap(name);

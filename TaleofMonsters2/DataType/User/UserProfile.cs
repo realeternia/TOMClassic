@@ -53,7 +53,7 @@ namespace TaleofMonsters.DataType.User
             get { return Profile.InfoWorld; }
         }
 
-        static public bool LoadFromDB(string passport)
+        public static bool LoadFromDB(string passport)
         {
             if (File.Exists(string.Format("./Save/{0}.db", passport)))
             {
@@ -70,7 +70,7 @@ namespace TaleofMonsters.DataType.User
             return false;
         }
 
-        static public void SaveToDB()
+        public static void SaveToDB()
         {
             FileStream fs = new FileStream(string.Format("./Save/{0}.db", ProfileName), FileMode.OpenOrCreate);
             var dts= DbSerializer.CustomTypeToBytes(Profile, typeof(Profile));

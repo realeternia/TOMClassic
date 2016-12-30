@@ -434,7 +434,7 @@ namespace ExcelToCsv
                     conn.Open();
                     isLoad = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     Console.WriteLine("GetExcelToDataTableBySheet failed " + fileFullPath);
                     Thread.Sleep(50);

@@ -12,7 +12,7 @@ namespace TaleofMonsters.DataType.HeroSkills
     /// </summary>
     internal static class HeroSkillBook
     {
-        static public Image GetHeroSkillImage(int id)
+        public static Image GetHeroSkillImage(int id)
         {
             HeroSkillConfig skillConfig = ConfigData.GetHeroSkillConfig(id);
 
@@ -25,7 +25,7 @@ namespace TaleofMonsters.DataType.HeroSkills
             return ImageManager.GetImage(fname);
         }
         
-        static public Image GetSkillPreview(int id)
+        public static Image GetSkillPreview(int id)
         {
             HeroSkillConfig heroSkillConfig = ConfigData.GetHeroSkillConfig(id);
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
