@@ -9,8 +9,8 @@ using TaleofMonsters.Core;
 using TaleofMonsters.DataType.NPCs;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.User.Mem;
+using TaleofMonsters.MainItem.Quests.SceneQuests;
 using TaleofMonsters.MainItem.Scenes.SceneObjects;
-using TaleofMonsters.MainItem.Scenes.SceneObjects.SceneQuests;
 
 namespace TaleofMonsters.MainItem.Scenes
 {

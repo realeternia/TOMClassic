@@ -4,8 +4,9 @@ using System.Windows.Forms;
 using TaleofMonsters.DataType.NPCs;
 using TaleofMonsters.Forms.Items;
 using TaleofMonsters.Forms.Items.Core;
+using TaleofMonsters.MainItem.Quests;
+using TaleofMonsters.MainItem.Quests.SceneQuests;
 using TaleofMonsters.MainItem.Scenes;
-using TaleofMonsters.MainItem.Scenes.SceneObjects.SceneQuests;
 
 namespace TaleofMonsters.Forms
 {
@@ -37,18 +38,21 @@ namespace TaleofMonsters.Forms
         {
             base.OnFrame(tick);
 
-            if (evtItem != null && evtItem.IsRunning)
+            if (evtItem != null && evtItem.RunningState == TalkEventItem.TalkEventState.Running)
             {
                 evtItem.OnFrame(tick);
-                interactBlock = evtItem.GetResult();
-                if (interactBlock is SceneQuestSay)
+                if (evtItem.RunningState == TalkEventItem.TalkEventState.Finish)
                 {
-                    SetupQuestItem();
-                }
-                else if (interactBlock == null)
-                {
-                    answerList.Clear();
-                    answerList.Add("结束");
+                    interactBlock = evtItem.GetResult();
+                    if (interactBlock is SceneQuestSay)
+                    {
+                        SetupQuestItem();
+                    }
+                    else if (interactBlock == null)
+                    {
+                        answerList.Clear();
+                        answerList.Add("结束");
+                    }
                 }
                 Invalidate();
             }
@@ -73,8 +77,7 @@ namespace TaleofMonsters.Forms
                 }
                 else if (interactBlock.Children.Count == 1 && interactBlock.Children[0] is SceneQuestEvent)
                 {
-                    evtItem = new TalkEventItem(new Rectangle(10, Height - 10 - 5 * 20 - 160, Width - 20, 160), interactBlock.Children[0] as SceneQuestEvent);
-                    //Close();
+                    evtItem = TalkEventItem.CreateEventItem(new Rectangle(10, Height - 10 - 5 * 20 - 160, Width - 20, 160), interactBlock.Children[0] as SceneQuestEvent);
                 }
                 this.Invalidate();
             }
@@ -103,7 +106,7 @@ namespace TaleofMonsters.Forms
 
             colorWord.Draw(e.Graphics);
 
-            if (answerList != null && (evtItem == null || !evtItem.IsRunning))
+            if (answerList != null && (evtItem == null || evtItem.RunningState != TalkEventItem.TalkEventState.Running ))
             {
                 Font font = new Font("宋体", 11 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
                 int id = 0;
@@ -123,7 +126,7 @@ namespace TaleofMonsters.Forms
 
         private void NpcTalkForm_MouseMove(object sender, MouseEventArgs e)
         {
-            if (evtItem == null || !evtItem.IsRunning) //evtItem运行期间无法选择
+            if (evtItem == null || evtItem.RunningState != TalkEventItem.TalkEventState.Running) //evtItem运行期间无法选择
             {
                 if (e.Y > Height - 10 - answerList.Count * 20 && e.Y < Height - 10)
                 {

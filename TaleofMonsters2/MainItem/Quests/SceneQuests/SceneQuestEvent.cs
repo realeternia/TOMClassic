@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TaleofMonsters.MainItem.Scenes.SceneObjects.SceneQuests
+namespace TaleofMonsters.MainItem.Quests.SceneQuests
 {
     public class SceneQuestEvent : SceneQuestBlock
     {

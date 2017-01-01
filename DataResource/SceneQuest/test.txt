@@ -6,12 +6,12 @@
 			a好的
 				ewin
 			a过河
-				eroll-大成功，成功，成功，失败
+				eroll|大成功|成功|成功|失败
 					r0
 						s你赢了
 							a好啊
 								ewin
-					r1r2
+					r1-2
 						s去不去
 							a好啊
 								efail
