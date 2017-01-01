@@ -19,6 +19,17 @@ namespace TaleofMonsters.DataType.NPCs
             return ImageManager.GetImage(fname);
         }
 
+        public static Image GetSceneQuestImage(int id)
+        {
+            string fname = string.Format("SceneQuest/{0}.PNG", ConfigData.SceneQuestDict[id].Figue);
+            if (!ImageManager.HasImage(fname))
+            {
+                Image image = PicLoader.Read("SceneQuest", string.Format("{0}.JPG", ConfigData.SceneQuestDict[id].Figue));
+                ImageManager.AddImage(fname, image);
+            }
+            return ImageManager.GetImage(fname);
+        }
+
         public static string[] GetNPCIconsOnMap(int id)
         {
             List<string> strs = new List<string>();

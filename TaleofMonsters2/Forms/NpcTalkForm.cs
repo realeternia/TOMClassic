@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using ConfigDatas;
 using TaleofMonsters.DataType.NPCs;
-using TaleofMonsters.Forms.Items;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.MainItem.Quests;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
@@ -13,23 +13,27 @@ namespace TaleofMonsters.Forms
     internal sealed partial class NpcTalkForm : BasePanel
     {
         private int tar = -1;
+        private bool showImage;
         private SceneQuestBlock interactBlock;
 
         private ColorWordRegion colorWord;//问题区域
         public int EventId { get; set; }
+        private SceneQuestConfig config;
         private List<string> answerList; //回答区
         private TalkEventItem evtItem; //事件交互区
 
         public NpcTalkForm()
         {
             InitializeComponent();
-            colorWord = new ColorWordRegion(140, 38, Width-150, "宋体", 14, Color.White);
+            colorWord = new ColorWordRegion(160, 38, Width-170, "宋体", 14, Color.White);
         }
 
         internal override void Init(int width, int height)
         {
             base.Init(width, height);
-            interactBlock = SceneManager.GetQuestData("test");
+            showImage = true;
+            config = ConfigData.GetSceneQuestConfig(42000001);
+            interactBlock = SceneManager.GetQuestData(config.Script);
             answerList = new List<string>();
             SetupQuestItem();
         }
@@ -97,30 +101,37 @@ namespace TaleofMonsters.Forms
         {
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
-            e.Graphics.DrawImage(NPCBook.GetPersonImage(41000001), 15, 35, 120, 140);
-
-            if (evtItem != null)
+            if (showImage)
             {
-                evtItem.Draw(e.Graphics);
-            }
+                Font font2 = new Font("黑体", 12 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+                e.Graphics.DrawString(config.Name, font2, Brushes.White, Width / 2 - 40, 8);
+                font2.Dispose();
 
-            colorWord.Draw(e.Graphics);
+                e.Graphics.DrawImage(NPCBook.GetSceneQuestImage(config.Id), 15, 40, 140, 140);
 
-            if (answerList != null && (evtItem == null || evtItem.RunningState != TalkEventItem.TalkEventState.Running ))
-            {
-                Font font = new Font("宋体", 11 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-                int id = 0;
-                foreach (var word in answerList)
+                if (evtItem != null)
                 {
-                    if (id == tar)
-                    {
-                        e.Graphics.FillRectangle(Brushes.DarkBlue, 10, id * 20 + Height - 10 - answerList.Count * 20, Width - 20, 20);
-                    }
-                    e.Graphics.DrawString(word, font, Brushes.Wheat, 22, id * 20 + Height - 10 - answerList.Count * 20 + 2);
-
-                    id++;
+                    evtItem.Draw(e.Graphics);
                 }
-                font.Dispose();
+
+                colorWord.Draw(e.Graphics);
+
+                if (answerList != null && (evtItem == null || evtItem.RunningState != TalkEventItem.TalkEventState.Running))
+                {
+                    Font font = new Font("宋体", 11 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+                    int id = 0;
+                    foreach (var word in answerList)
+                    {
+                        if (id == tar)
+                        {
+                            e.Graphics.FillRectangle(Brushes.DarkBlue, 10, id * 20 + Height - 10 - answerList.Count * 20, Width - 20, 20);
+                        }
+                        e.Graphics.DrawString(word, font, Brushes.Wheat, 22, id * 20 + Height - 10 - answerList.Count * 20 + 2);
+
+                        id++;
+                    }
+                    font.Dispose();
+                }
             }
         }
 
