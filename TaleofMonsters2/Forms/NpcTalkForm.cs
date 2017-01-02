@@ -82,7 +82,7 @@ namespace TaleofMonsters.Forms
                 }
                 else if (interactBlock.Children.Count == 1 && interactBlock.Children[0] is SceneQuestEvent)
                 {
-                    evtItem = TalkEventItem.CreateEventItem(new Rectangle(10, Height - 10 - 5 * 20 - 160, Width - 20, 160), interactBlock.Children[0] as SceneQuestEvent);
+                    evtItem = TalkEventItem.CreateEventItem(this, new Rectangle(10, Height - 10 - 5 * 20 - 160, Width - 20, 160), interactBlock.Children[0] as SceneQuestEvent);
                 }
                 this.Invalidate();
             }

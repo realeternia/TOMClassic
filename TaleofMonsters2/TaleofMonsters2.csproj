@@ -162,6 +162,7 @@
     <Compile Include="MainItem\Quests\SceneQuests\SceneQuestSay.cs" />
     <Compile Include="MainItem\Quests\SceneQuests\SceneQuestBlock.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemFight.cs" />
+    <Compile Include="MainItem\Quests\TalkEventItemReward.cs" />
     <Compile Include="MainItem\Scenes\SceneObjects\SceneWarp.cs" />
     <Compile Include="MainItem\Scenes\SceneObjects\SceneQuest.cs" />
     <Compile Include="MainItem\Scenes\SceneObjects\SceneTile.cs" />

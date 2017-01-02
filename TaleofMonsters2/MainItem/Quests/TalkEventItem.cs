@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Windows.Forms;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
 
 namespace TaleofMonsters.MainItem.Quests
@@ -10,12 +11,13 @@ namespace TaleofMonsters.MainItem.Quests
             Running, Finish
         }
 
-        public static TalkEventItem CreateEventItem(Rectangle r, SceneQuestEvent e)
+        public static TalkEventItem CreateEventItem(Control c, Rectangle r, SceneQuestEvent e)
         {
             switch (e.Type)
             {
                 case "roll": return new TalkEventItemRoll(r, e);break;
                 case "fight": return new TalkEventItemFight(r, e); break;
+                case "reward": return new TalkEventItemReward(c, r, e); break;
                 default: return new TalkEventItem(r, e); break;
             }
         }
