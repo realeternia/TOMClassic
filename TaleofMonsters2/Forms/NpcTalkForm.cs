@@ -33,7 +33,8 @@ namespace TaleofMonsters.Forms
         {
             base.Init(width, height);
             showImage = true;
-            config = ConfigData.GetSceneQuestConfig(42000001);
+            EventId = 42000001;
+            config = ConfigData.GetSceneQuestConfig(EventId);
             interactBlock = SceneManager.GetQuestData(config.Script);
             answerList = new List<string>();
             SetupQuestItem();
@@ -82,7 +83,7 @@ namespace TaleofMonsters.Forms
                 }
                 else if (interactBlock.Children.Count == 1 && interactBlock.Children[0] is SceneQuestEvent)
                 {
-                    evtItem = TalkEventItem.CreateEventItem(this, new Rectangle(10, Height - 10 - 5 * 20 - 160, Width - 20, 160), interactBlock.Children[0] as SceneQuestEvent);
+                    evtItem = TalkEventItem.CreateEventItem(EventId, this, new Rectangle(10, Height - 10 - 5 * 20 - 160, Width - 20, 160), interactBlock.Children[0] as SceneQuestEvent);
                 }
                 this.Invalidate();
             }

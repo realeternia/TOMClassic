@@ -6,7 +6,7 @@
 			a拿钱走人
 				ereward
 			a杀杀杀
-				efight|43000001
+				efight
 					r0
 						s你挂了
 							a好啊

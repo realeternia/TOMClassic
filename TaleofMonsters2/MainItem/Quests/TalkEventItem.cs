@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
+using ConfigDatas;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
 
 namespace TaleofMonsters.MainItem.Quests
@@ -11,27 +12,29 @@ namespace TaleofMonsters.MainItem.Quests
             Running, Finish
         }
 
-        public static TalkEventItem CreateEventItem(Control c, Rectangle r, SceneQuestEvent e)
+        public static TalkEventItem CreateEventItem(int eventId, Control c, Rectangle r, SceneQuestEvent e)
         {
             switch (e.Type)
             {
-                case "roll": return new TalkEventItemRoll(r, e);break;
-                case "fight": return new TalkEventItemFight(r, e); break;
-                case "reward": return new TalkEventItemReward(c, r, e); break;
-                default: return new TalkEventItem(r, e); break;
+                case "roll": return new TalkEventItemRoll(eventId,r, e); break;
+                case "fight": return new TalkEventItemFight(eventId, r, e); break;
+                case "reward": return new TalkEventItemReward(eventId, c, r, e); break;
+                default: return new TalkEventItem(eventId, r, e); break;
             }
         }
 
         protected Rectangle pos;
+        protected SceneQuestConfig config;
         protected SceneQuestEvent evt;
         protected SceneQuestBlock result;
 
         public TalkEventState RunningState { get; set; }
 
-        public TalkEventItem(Rectangle r, SceneQuestEvent e)
+        public TalkEventItem(int evtId, Rectangle r, SceneQuestEvent e)
         {
             pos = r;
             evt = e;
+            config = ConfigData.GetSceneQuestConfig(evtId);
             RunningState = TalkEventState.Running;
         }
 

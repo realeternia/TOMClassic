@@ -9,10 +9,10 @@ namespace TaleofMonsters.MainItem.Quests
     {
         private bool isEndFight = false;
 
-        public TalkEventItemFight(Rectangle r, SceneQuestEvent e)
-            : base(r, e)
+        public TalkEventItemFight(int evtId, Rectangle r, SceneQuestEvent e)
+            : base(evtId, r, e)
         {
-            int enemyId = int.Parse(evt.ParamList[0]);
+            int enemyId = config.EnemyId;
             HsActionCallback winCallback = () => { result = evt.ChooseTarget(1); isEndFight = true; };
             HsActionCallback failCallback = () => { result = evt.ChooseTarget(0); isEndFight = true; };
             PeopleBook.Fight(enemyId, "oneline", -1, 1, winCallback, failCallback, failCallback);
