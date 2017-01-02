@@ -15,6 +15,7 @@ namespace TaleofMonsters.MainItem.Quests
             switch (e.Type)
             {
                 case "roll": return new TalkEventItemRoll(r, e);break;
+                case "fight": return new TalkEventItemFight(r, e); break;
                 default: return new TalkEventItem(r, e); break;
             }
         }

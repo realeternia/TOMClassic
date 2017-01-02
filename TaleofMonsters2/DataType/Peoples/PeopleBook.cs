@@ -88,11 +88,15 @@ namespace TaleofMonsters.DataType.Peoples
             return RandomShuffle.Process(pids.ToArray()).GetRange(0, count).ToArray();
         }
 
-        public static void Fight(int pid, string map, int tile, int rlevel, HsActionCallback winEvent, HsActionCallback lossEvent)
+        public static void Fight(int pid, string map, int tile, int rlevel, HsActionCallback winEvent, HsActionCallback lossEvent, HsActionCallback cancelEvent)
         {
             bool rt = PopDeckChoose.Show(map, tile, UserProfile.InfoCard.GetDeckNames());
             if (!rt)
             {
+                if (cancelEvent != null)
+                {
+                    cancelEvent();
+                }
                 return;
             }
 

@@ -65,17 +65,17 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                 }
 
                 var roll = MathTool.GetRandom(100);
-                if (roll < rateLp)
+                if (roll < rateMp)
                 {
-                    manaList.Add(PlayerManaTypes.Lp);
+                    manaList.Add(PlayerManaTypes.Mp);
                     continue;
                 }
-                if (roll < rateLp + ratePp)
+                if (roll < rateMp + ratePp)
                 {
                     manaList.Add(PlayerManaTypes.Pp);
                     continue;
                 }
-                manaList.Add(PlayerManaTypes.Mp);
+                manaList.Add(PlayerManaTypes.Lp);
             }
         }
 
