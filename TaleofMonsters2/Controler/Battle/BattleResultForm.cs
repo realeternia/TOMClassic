@@ -39,10 +39,10 @@ namespace TaleofMonsters.Controler.Battle
             this.bitmapButtonClose2.ImageNormal = PicLoader.Read("ButtonBitmap", "CancelButton.JPG");
             bitmapButtonClose2.NoUseDrawNine = true;
             virtualRegion = new VirtualRegion(this);
-            virtualRegion.AddRegion(new PictureAnimRegion(1, 102, 270, 60, 60, 1, VirtualRegionCellType.Item, 0));
-            virtualRegion.AddRegion(new PictureAnimRegion(2, 172, 270, 60, 60, 2, VirtualRegionCellType.Item, 0));
-            virtualRegion.AddRegion(new PictureAnimRegion(3, 242, 270, 60, 60, 3, VirtualRegionCellType.Item, 0));
-            virtualRegion.AddRegion(new PictureAnimRegion(4, 312, 270, 60, 60, 4, VirtualRegionCellType.Item, 0));
+            virtualRegion.AddRegion(new PictureAnimRegion(1, 102, 270, 60, 60, PictureRegionCellType.Item, 0));
+            virtualRegion.AddRegion(new PictureAnimRegion(2, 172, 270, 60, 60, PictureRegionCellType.Item, 0));
+            virtualRegion.AddRegion(new PictureAnimRegion(3, 242, 270, 60, 60, PictureRegionCellType.Item, 0));
+            virtualRegion.AddRegion(new PictureAnimRegion(4, 312, 270, 60, 60, PictureRegionCellType.Item, 0));
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
@@ -63,7 +63,7 @@ namespace TaleofMonsters.Controler.Battle
             
             rightId = BattleManager.Instance.PlayerManager.RightPlayer.PeopleId;
             leftId = BattleManager.Instance.PlayerManager.LeftPlayer.PeopleId;
-            virtualRegion.SetRegionInfo(1, 0);
+            virtualRegion.SetRegionKey(1, 0);
             if (leftId == 0)
             {
                 BattleInfo battleInfo = BattleManager.Instance.BattleInfo;
@@ -95,7 +95,7 @@ namespace TaleofMonsters.Controler.Battle
                     rewardItemList.Add(battleInfo.Items[i]);
                     if (i < 5)
                     {
-                        virtualRegion.SetRegionInfo(i + 1, battleInfo.Items[i]); //前5个掉落可以显示出来
+                        virtualRegion.SetRegionKey(i + 1, battleInfo.Items[i]); //前5个掉落可以显示出来
                     }
                 }
             }
@@ -135,7 +135,7 @@ namespace TaleofMonsters.Controler.Battle
             UserProfile.InfoBag.AddResource(resource);
         }
 
-        private void virtualRegion_RegionEntered(int info, int x, int y, int key)
+        private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
             if (key > 10)
             {

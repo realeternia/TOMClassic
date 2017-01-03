@@ -32,12 +32,12 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
             people = new List<RivalState>();
             virtualRegion = new VirtualRegion(this);
-            virtualRegion.AddRegion(new PictureRegion(1, 41, 40, 70, 70, 1, VirtualRegionCellType.People, 0));
+            virtualRegion.AddRegion(new PictureRegion(1, 41, 40, 70, 70, PictureRegionCellType.People, 0));
             for (int i = 0; i < 20; i++)
             {
                 int xoff = (i%5)*cardWidth+19;
                 int yoff = (i / 5) * cardHeight+159;
-                SubVirtualRegion region = new PictureAnimRegion(i + 2, xoff, yoff, cardWidth, cardHeight, i + 2, VirtualRegionCellType.People, 0);
+                SubVirtualRegion region = new PictureAnimRegion(i + 2, xoff, yoff, cardWidth, cardHeight, PictureRegionCellType.People, 0);
                 region.AddDecorator(new RegionTextDecorator(0, 45, 9));
                 virtualRegion.AddRegion(region);
             }
@@ -46,7 +46,7 @@ namespace TaleofMonsters.Forms
             {
                 int xoff = i * 26 + 19;
                 int yoff = 125;
-                virtualRegion.AddRegion(new ButtonRegion(i + 30, xoff, yoff, 24, 24, i + 30, string.Format("MiniPeopleType{0}.JPG", types[i]), string.Format("MiniPeopleType{0}On.JPG", types[i])));
+                virtualRegion.AddRegion(new ButtonRegion(i + 30, xoff, yoff, 24, 24, string.Format("MiniPeopleType{0}.JPG", types[i]), string.Format("MiniPeopleType{0}On.JPG", types[i])));
             }
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
@@ -119,7 +119,7 @@ namespace TaleofMonsters.Forms
 
             for (int i = 0; i < 20; i++)
             {
-                virtualRegion.SetRegionInfo(i + 2, 0);
+                virtualRegion.SetRegionKey(i + 2, 0);
                 virtualRegion.SetRegionDecorator(i + 2, 0, "");
             }
 
@@ -131,7 +131,7 @@ namespace TaleofMonsters.Forms
                     if (personInfo.Type == type)
                     {
                         people.Add(person);
-                        virtualRegion.SetRegionInfo(off, person.Pid);
+                        virtualRegion.SetRegionKey(off, person.Pid);
                         virtualRegion.SetRegionDecorator(off, 0, personInfo.Name);
                         off++;
                     }
@@ -139,13 +139,13 @@ namespace TaleofMonsters.Forms
             }
 
             realTar = 0;
-            virtualRegion.SetRegionInfo(1, people[realTar].Pid);
+            virtualRegion.SetRegionKey(1, people[realTar].Pid);
             Invalidate();
         }
 
-        private void virtualRegion_RegionEntered(int info, int x, int y, int key)
+        private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
-            int id = info;
+
             if (id == 1 && realTar != -1)
             {
                 Image image = PeopleBook.GetPreview(people[realTar].Pid);
@@ -162,29 +162,29 @@ namespace TaleofMonsters.Forms
             tooltip.Hide(this);
         }
 
-        private void virtualRegion_RegionClick(int info, int x, int y, MouseButtons button)
+        private void virtualRegion_RegionClick(int id, int x, int y, MouseButtons button)
         {
             if(button == MouseButtons.Left )
             {
-                if (info > 1 && info < 30)
+                if (id > 1 && id < 30)
                 {
-                    int tar = info - 2;                   
+                    int tar = id - 2;                   
                     if (tar < people.Count)
                     {
                         realTar = tar;
-                        virtualRegion.SetRegionInfo(1, people[realTar].Pid);
+                        virtualRegion.SetRegionKey(1, people[realTar].Pid);
                         UserProfile.InfoBasic.LastRival = people[realTar].Pid;
                         Invalidate();
                     }
                 }
-                else if (info>=30)
+                else if (id >= 30)
                 {
-                    int realtype = types[info - 30];
+                    int realtype = types[id - 30];
                     for (int i = 0; i < types.Length; i++)
                     {
                         virtualRegion.SetRegionState(i + 30, RegionState.Free);    
                     }                    
-                    virtualRegion.SetRegionState(info, RegionState.Rectangled);
+                    virtualRegion.SetRegionState(id, RegionState.Rectangled);
                     Bind(realtype);
                 }
             }
@@ -195,7 +195,7 @@ namespace TaleofMonsters.Forms
         {
             PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(id);
             Bind(peopleConfig.Type);
-            virtualRegion.SetRegionInfo(1, id);
+            virtualRegion.SetRegionKey(1, id);
             for (int i = 0; i < people.Count; i++)
             {
                 if (people[i].Pid == id)

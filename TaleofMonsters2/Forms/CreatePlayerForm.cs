@@ -33,9 +33,9 @@ namespace TaleofMonsters.Forms
             FormBorderStyle = FormBorderStyle.None;
             myCursor = new HSCursor(this);
             virtualRegion = new VirtualRegion(this);
-            virtualRegion.AddRegion(new SubVirtualRegion(1, 141, 159, 24, 24, 1));
-            virtualRegion.AddRegion(new SubVirtualRegion(2, 141, 192, 24, 24, 2));
-            virtualRegion.AddRegion(new SubVirtualRegion(3, 141, 225, 24, 24, 3));
+            virtualRegion.AddRegion(new SubVirtualRegion(1, 141, 159, 24, 24));
+            virtualRegion.AddRegion(new SubVirtualRegion(2, 141, 192, 24, 24));
+            virtualRegion.AddRegion(new SubVirtualRegion(3, 141, 225, 24, 24));
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
@@ -175,18 +175,18 @@ namespace TaleofMonsters.Forms
             Close();
         }
 
-        private void virtualRegion_RegionEntered(int info, int x, int y, int key)
+        private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
             Image image = null;
-            if (info == 1)
+            if (id == 1)
             {
                 image = DrawTool.GetImageByString("", HSTypes.I2ConstellationTip(constellation), 150, Color.LimeGreen);
             }
-            else if (info == 2)
+            else if (id == 2)
             {
                 image = DrawTool.GetImageByString("", HSTypes.I2InitialAttrTip(type), 140, Color.Gold);
             }
-            else if (info == 3)
+            else if (id == 3)
             {
                 image = DrawTool.GetImageByString("", HSTypes.I2BloodTypeTip(bldType), 150, Color.LimeGreen);
             }

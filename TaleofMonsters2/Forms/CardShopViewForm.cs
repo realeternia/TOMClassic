@@ -37,7 +37,7 @@ namespace TaleofMonsters.Forms
             vRegion = new VirtualRegion(this);
             for (int i = 0; i < 3; i++)
             {
-                SubVirtualRegion subRegion = new ButtonRegion(i + 1, 16 + 45 * i, 40, 42, 23, i + 1, "ShopTag.JPG", "ShopTagOn.JPG");
+                SubVirtualRegion subRegion = new ButtonRegion(i + 1, 16 + 45 * i, 40, 42, 23, "ShopTag.JPG", "ShopTagOn.JPG");
                 subRegion.AddDecorator(new RegionTextDecorator(8, 7, 9, Color.White, false));
                 vRegion.AddRegion(subRegion);
             }
@@ -105,7 +105,7 @@ namespace TaleofMonsters.Forms
             }
         }
 
-        private void virtualRegion_RegionClick(int info, int x, int y, MouseButtons button)
+        private void virtualRegion_RegionClick(int id, int x, int y, MouseButtons button)
         {
             if (button == MouseButtons.Left)
             {
@@ -114,8 +114,8 @@ namespace TaleofMonsters.Forms
                     vRegion.SetRegionState(i + 1, RegionState.Free);
                 }
 
-                vRegion.SetRegionState(info, RegionState.Blacken);
-                shelf = info;
+                vRegion.SetRegionState(id, RegionState.Blacken);
+                shelf = id;
                 ChangeShop(shelf);
                 Invalidate(new Rectangle(16, 40, 45 * 3, 23));
             }

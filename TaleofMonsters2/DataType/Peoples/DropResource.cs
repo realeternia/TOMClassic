@@ -2,9 +2,9 @@
 {
     internal struct DropResource
     {
-        public int id;
-        public int percent;
-        public int min;
-        public int max;
+        public int Id;
+        public uint Percent;
+        public uint Min;
+        public uint Max;
     }
 }

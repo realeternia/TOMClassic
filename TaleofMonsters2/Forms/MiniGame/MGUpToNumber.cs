@@ -36,7 +36,7 @@ namespace TaleofMonsters.Forms.MiniGame
             virtualRegion = new VirtualRegion(this);
             for (int i = 0; i < 4; i++)
             {
-                ButtonRegion region = new ButtonRegion(i + 1, 60 + 55 * i, 310, 50, 50, i + 1, "GameUpToNumber1.PNG", "GameUpToNumber1On.PNG");
+                ButtonRegion region = new ButtonRegion(i + 1, 60 + 55 * i, 310, 50, 50,"GameUpToNumber1.PNG", "GameUpToNumber1On.PNG");
                 region.AddDecorator(new RegionTextDecorator(10, 20, 10));
                 virtualRegion.AddRegion(region);
             }
@@ -144,11 +144,11 @@ namespace TaleofMonsters.Forms.MiniGame
             return mk;
         }
 
-        void virtualRegion_RegionClicked(int info, int x, int y, MouseButtons button)
+        void virtualRegion_RegionClicked(int id, int x, int y, MouseButtons button)
         {
             if (button == MouseButtons.Left)
             {
-                changeFood(info);
+                changeFood(id);
             }
         }
 

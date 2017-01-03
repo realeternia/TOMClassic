@@ -1,5 +1,4 @@
 using System.Drawing;
-using TaleofMonsters.Forms.Items.Regions.Decorators;
 
 namespace TaleofMonsters.Forms.Items.Regions
 {
@@ -8,17 +7,17 @@ namespace TaleofMonsters.Forms.Items.Regions
         private string path1;
         private string path2;
 
-        public SwitchButtonRegion(int id, int x, int y, int width, int height, int info, string path1, string path2)
-            : base(id, x, y, width, height, info)
+        public SwitchButtonRegion(int id, int x, int y, int width, int height, string path1, string path2)
+            : base(id, x, y, width, height)
         {
             this.path1 = path1;
             this.path2 = path2;
-            parm = true;
+            Parm = true;
         }
 
         public override void Draw(Graphics g)
         {
-            bool parmInfo = (bool)parm;
+            bool parmInfo = (bool)Parm;
 
             string path = !parmInfo ? path1 : path2;
             if (path != "")
@@ -26,14 +25,14 @@ namespace TaleofMonsters.Forms.Items.Regions
                 Image img = Controler.Loader.PicLoader.Read("Button", path);
                 if (img != null)
                 {
-                    g.DrawImage(img, x, y, width, height);
+                    g.DrawImage(img, X, Y, Width, Height);
                     img.Dispose();
                 }
             }
             
             foreach (var decorator in decorators)
             {
-                decorator.Draw(g, x, y, width, height);
+                decorator.Draw(g, X, Y, Width, Height);
             }
         }
 

@@ -47,14 +47,14 @@ namespace TaleofMonsters.Forms
             var itemIndex = itemTypeList.Count + 1;
             if (taskConfig.Card != 0 && CardConfigManager.GetCardConfig(taskConfig.Card).Id > 0)
             {
-                virtualRegion.AddRegion(new PictureAnimRegion(itemIndex, 15+80*itemIndex, 200, 60, 60, itemIndex, VirtualRegionCellType.Card, taskConfig.Card));
+                virtualRegion.AddRegion(new PictureAnimRegion(itemIndex, 15+80*itemIndex, 200, 60, 60, PictureRegionCellType.Card, taskConfig.Card));
                 itemTypeList.Add(3);
                 itemIndex++;
             }
             for (int i = 0; i < taskConfig.Item.Count; i++)
             {
-                var type = taskConfig.Item[i].Value == 1 ? VirtualRegionCellType.Item : VirtualRegionCellType.Equip;
-                virtualRegion.AddRegion(new PictureAnimRegion(itemIndex, 15 + 80 * itemIndex, 200, 60, 60, itemIndex, type, taskConfig.Item[i].Id));
+                var type = taskConfig.Item[i].Value == 1 ? PictureRegionCellType.Item : PictureRegionCellType.Equip;
+                virtualRegion.AddRegion(new PictureAnimRegion(itemIndex, 15 + 80 * itemIndex, 200, 60, 60, type, taskConfig.Item[i].Id));
                 itemTypeList.Add(taskConfig.Item[i].Value);
                 itemIndex++;
             }
@@ -62,14 +62,14 @@ namespace TaleofMonsters.Forms
             show = true;
         }
 
-        private void virtualRegion_RegionEntered(int info, int x, int y, int key)
+        private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
-            if (info > itemTypeList.Count)
+            if (id > itemTypeList.Count)
             {
                 return;
             }
 
-            int type = itemTypeList[info - 1];
+            int type = itemTypeList[id - 1];
             Image image = null;
             if (type == 1)
             {

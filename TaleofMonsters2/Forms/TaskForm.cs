@@ -37,7 +37,7 @@ namespace TaleofMonsters.Forms
             foreach (int tid in tids)
             {
                 TaskConfig taskConfig = ConfigData.GetTaskConfig(tid);
-                virtualRegion.AddRegion(new PictureRegion(id, 24 + taskConfig.Position.X * 32, 82 + taskConfig.Position.Y * 32, 28, 28, id, VirtualRegionCellType.Task, tid));
+                virtualRegion.AddRegion(new PictureRegion(id, 24 + taskConfig.Position.X * 32, 82 + taskConfig.Position.Y * 32, 28, 28, PictureRegionCellType.Task, tid));
                 id++;
             }
         }
@@ -58,9 +58,8 @@ namespace TaleofMonsters.Forms
             }
         }
 
-        private void virtualRegion_RegionEntered(int info, int x, int y, int key)
+        private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
-            int id = info;
             if (id > 0)
             {
                 if (UserProfile.InfoTask.GetTaskStateById(key) > 0)

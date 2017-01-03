@@ -10,11 +10,11 @@ using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType.Achieves;
 using TaleofMonsters.DataType.Items;
-using TaleofMonsters.DataType.NPCs;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType.Scenes;
 
 namespace TaleofMonsters.Forms
 {
@@ -67,7 +67,7 @@ namespace TaleofMonsters.Forms
                 dinfo.percent = int.Parse(datas[1]);
                 digs.Add(dinfo);
 
-                virtualRegion.AddRegion(new PictureAnimRegion(i + 1, 25 + 30 * i, 203, 25, 25, i + 1, VirtualRegionCellType.Item, dinfo.itemid));
+                virtualRegion.AddRegion(new PictureAnimRegion(i + 1, 25 + 30 * i, 203, 25, 25, PictureRegionCellType.Item, dinfo.itemid));
             }
         }
 
@@ -78,9 +78,9 @@ namespace TaleofMonsters.Forms
             DigEnd();
         }
 
-        private void virtualRegion_RegionEntered(int info, int x, int y, int key)
+        private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
-            if (info >= 1)
+            if (id >= 1)
             {
                 Image image = HItemBook.GetPreview(key);
                 tooltip.Show(image, this, x, y);
@@ -166,7 +166,7 @@ namespace TaleofMonsters.Forms
             Image bgImage = PicLoader.Read("System", "TalkBack.PNG");
             e.Graphics.DrawImage(bgImage, 0, 0, bgImage.Width, bgImage.Height);
             bgImage.Dispose();
-            e.Graphics.DrawImage(NPCBook.GetPersonImage(npcId), 24, 0, 70, 70);
+            e.Graphics.DrawImage(SceneBook.GetSceneNpcImage(npcId), 24, 0, 70, 70);
 
             Font font = new Font("宋体", 11*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             e.Graphics.DrawString(ConfigData.GetNpcConfig(npcId).Name, font, Brushes.Chocolate, 131, 50);

@@ -194,11 +194,11 @@ namespace TaleofMonsters.MainItem
                     MainForm.Instance.DealPanel(new TournamentViewForm());
                     break;
                 case SystemMenuIds.AddDayForm:
-                    if (MessageBoxEx2.Show("是否花5钻石增加20点健康度？") == DialogResult.OK)
+                    if (MessageBoxEx2.Show("是否花5钻石增加20点饱腹值？") == DialogResult.OK)
                     {
                         if (UserProfile.InfoBag.PayDiamond(5))
                         {
-                            UserProfile.InfoBasic.Ap += 20;
+                            UserProfile.InfoBasic.EatFood(20);
                         }
                     }
                     break;

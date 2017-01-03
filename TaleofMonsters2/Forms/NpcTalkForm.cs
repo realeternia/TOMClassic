@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.DataType.NPCs;
+using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.MainItem.Quests;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
@@ -106,10 +106,10 @@ namespace TaleofMonsters.Forms
             if (showImage)
             {
                 Font font2 = new Font("黑体", 12 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-                e.Graphics.DrawString(config.Name, font2, Brushes.White, Width / 2 - 40, 8);
+                e.Graphics.DrawString(string.Format("{0}(Lv{1})",config.Name,config.Level), font2, Brushes.White, Width / 2 - 40, 8);
                 font2.Dispose();
 
-                e.Graphics.DrawImage(NPCBook.GetSceneQuestImage(config.Id), 15, 40, 140, 140);
+                e.Graphics.DrawImage(SceneBook.GetSceneQuestImage(config.Id), 15, 40, 140, 140);
                 Image border = PicLoader.Read("Border", "questb1.PNG"); //边框
                 e.Graphics.DrawImage(border, 15, 40, 140, 140);
                 border.Dispose();

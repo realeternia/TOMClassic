@@ -64,7 +64,7 @@ namespace TaleofMonsters.Forms.Items
             }
 
             virtualRegion = new VirtualRegion(parent);
-            virtualRegion.AddRegion(new PictureAnimRegion(1, x + 5, y + 8, 40, 40, 1, VirtualRegionCellType.Item, 0));
+            virtualRegion.AddRegion(new PictureAnimRegion(1, x + 5, y + 8, 40, 40, PictureRegionCellType.Item, 0));
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
@@ -77,14 +77,14 @@ namespace TaleofMonsters.Forms.Items
                 itemId = piece.Id;
                 itemCount = piece.Count;
                 bitmapButtonBuy.Visible = !piece.Used;
-                virtualRegion.SetRegionInfo(1, itemId);
+                virtualRegion.SetRegionKey(1, itemId);
                 price = ConfigDatas.ConfigData.GetHItemConfig(itemId).Value * piece.Count * 3;//素材价格x3
                 show = true;
             }
             else
             {
                 itemId = 0;
-                virtualRegion.SetRegionInfo(1, 0);
+                virtualRegion.SetRegionKey(1, 0);
                 bitmapButtonBuy.Visible = false;
                 show = false;
             }

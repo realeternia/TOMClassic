@@ -53,7 +53,7 @@ namespace TaleofMonsters.Forms.MagicBook
 
         private void InitVirtualRegion(int id, int x, int y)
         {
-            var picRegion = new PictureRegion(id, x, y, 50, 50, id, VirtualRegionCellType.Item, 22031201);
+            var picRegion = new PictureRegion(id, x, y, 50, 50, PictureRegionCellType.Item, 22031201);
             picRegion.AddDecorator(new RegionTextDecorator(2, 35, 9, Color.White));
             virtualRegion.AddRegion(picRegion);
         }
@@ -207,21 +207,21 @@ namespace TaleofMonsters.Forms.MagicBook
         {
             for (int i = 0; i < 10; i++)
             {
-                virtualRegion.SetRegionInfo(i+1, 0);
+                virtualRegion.SetRegionKey(i+1, 0);
                 virtualRegion.SetRegionDecorator(i + 1, 0, "");//回复默认状态
             }
 
             var dropList = CardPieceBook.GetDropListByCardId(cardId);
             for (int i = 0; i < Math.Min(10, dropList.Count); i++)
             {
-                virtualRegion.SetRegionInfo(i + 1, dropList[i].ItemId);
+                virtualRegion.SetRegionKey(i + 1, dropList[i].ItemId);
                 virtualRegion.SetRegionDecorator(i+1,0,string.Format("{0:0.0}%", (float)(dropList[i].Rate)/100));
             }
 
             Invalidate(new Rectangle(67, 37 + yCount * cardHeight, cardWidth * xCount - 4,71));
         }
 
-        private void virtualRegion_RegionEntered(int info, int x, int y, int key)
+        private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
             if (key > 10)
             {

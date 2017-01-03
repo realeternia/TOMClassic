@@ -7,32 +7,26 @@ namespace TaleofMonsters.Forms.Items.Regions
 {
     internal class SubVirtualRegion
     {
-        public int id;
-        public int x;
-        public int y;
-        public int width;
-        public int height;
-        public int info;
-        private bool isIn;
+        public int Id { get; private set; }
+        public int X { get; private set; }
+        public int Y { get; private set; }
+        public int Width { get; private set; }
+        public int Height { get; private set; }
+        public object Parm { get; set; }//可选信息
+
+        protected bool isIn;
         protected List<IRegionDecorator> decorators;
         protected RegionState state;
-        protected object parm; //额外信息
-
-        protected bool IsIn
-        {
-            get { return isIn; }
-        }
 
         public Control Parent { get; set; }
 
-        public SubVirtualRegion(int id, int x, int y, int width, int height, int info)
+        public SubVirtualRegion(int id, int x, int y, int width, int height)
         {
-            this.id = id;
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
-            this.info = info;
+            Id = id;
+            X = x;
+            Y = y;
+            Width = width;
+            Height = height;
             decorators = new List<IRegionDecorator>();
         }
 
@@ -45,7 +39,7 @@ namespace TaleofMonsters.Forms.Items.Regions
         {
             foreach (IRegionDecorator decorator in decorators)
             {
-                decorator.Draw(g, x, y, width, height);
+                decorator.Draw(g, X, Y, Width, Height);
             }
         }
 
@@ -56,10 +50,6 @@ namespace TaleofMonsters.Forms.Items.Regions
         public virtual int GetKeyValue()
         {
             return 0;
-        }
-
-        public virtual void SetType(VirtualRegionCellType value)
-        {
         }
 
         public void SetDecorator(int idx, object value)//设置子装饰器状态
@@ -87,11 +77,6 @@ namespace TaleofMonsters.Forms.Items.Regions
         public void SetState(RegionState newState)
         {
             state = newState;
-        }
-
-        public void SetParm(object p)
-        {
-            parm = p;
         }
 
         public virtual void Enter()

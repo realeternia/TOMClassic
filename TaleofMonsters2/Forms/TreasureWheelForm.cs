@@ -58,7 +58,7 @@ namespace TaleofMonsters.Forms
             virtualRegion = new VirtualRegion(panelBack);
             for (int i = 0; i < points.Length; i++)
             {
-                virtualRegion.AddRegion(new PictureAnimRegion(i, points[i].X, points[i].Y, 40, 40, 1, VirtualRegionCellType.Item, ConfigDatas.ConfigData.GetTreasureWheelConfig(i + 1).Item)); 
+                virtualRegion.AddRegion(new PictureAnimRegion(i, points[i].X, points[i].Y, 40, 40, PictureRegionCellType.Item, ConfigDatas.ConfigData.GetTreasureWheelConfig(i + 1).Item)); 
             }
            
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
@@ -97,7 +97,7 @@ namespace TaleofMonsters.Forms
             }
         }
 
-        private void virtualRegion_RegionEntered(int info, int x, int y, int key)
+        private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
             if (key > 0)
             {

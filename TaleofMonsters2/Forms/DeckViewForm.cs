@@ -77,7 +77,7 @@ namespace TaleofMonsters.Forms
             SubVirtualRegion region;
             for (int i = 0; i < 2; i++)
             {
-                region = new ButtonRegion(i + 1, 12+120+85*i, 40, 74, 24, i + 1, "CommonButton1.JPG", "CommonButton1On.JPG");
+                region = new ButtonRegion(i + 1, 12+120+85*i, 40, 74, 24, "CommonButton1.JPG", "CommonButton1On.JPG");
                 region.AddDecorator(new RegionTextDecorator(8, 7, 10, Color.Black));
                 virtualRegion.AddRegion(region);
             }
@@ -374,15 +374,15 @@ namespace TaleofMonsters.Forms
             Invalidate();
         }
 
-        private void OnVRegionClicked(int info, int x, int y, MouseButtons button)
+        private void OnVRegionClicked(int id, int x, int y, MouseButtons button)
         {
             if (button == MouseButtons.Left)
             {
-                if (info>0 && info < 10)
+                if (id > 0 && id < 10)
                 {
-                    ChangeDeck(info);
+                    ChangeDeck(id);
                 }
-                //else if (info == 11)//说明是升级
+                //else if (id == 11)//说明是升级
                 //{
                 //    int itemId = 32101;//todo 规则需要修改
                 //    HItemConfig itemConfig = ConfigData.GetHItemConfig(itemId);
@@ -397,7 +397,7 @@ namespace TaleofMonsters.Forms
             }
         }
 
-        private void OnVRegionEntered(int info, int x, int y, int key)
+        private void OnVRegionEntered(int id, int x, int y, int key)
         {
 
         }

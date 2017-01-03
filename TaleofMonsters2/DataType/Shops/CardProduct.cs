@@ -54,7 +54,7 @@ namespace TaleofMonsters.DataType.Shops
                     res.Gold = 300;
                 }
                 int qual = cardData.Quality + 1;
-                res.Add(GameResourceType.Gem, (int)GameResourceBook.GetGemCardBuy(qual));
+                res.Add(GameResourceType.Gem, (int)GameResourceBook.OutGemCardBuy(qual));
                 return res;
             }
         }

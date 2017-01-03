@@ -26,10 +26,10 @@ namespace TaleofMonsters.Forms
             InitializeComponent();
             this.bitmapButtonC1.ImageNormal = PicLoader.Read("ButtonBitmap", "LevelButton.JPG");
             virtualRegion = new VirtualRegion(this);
-            virtualRegion.AddRegion(new SubVirtualRegion(1, 5, 5, 40, 40, 1));
-            virtualRegion.AddRegion(new SubVirtualRegion(2, 5, 55, 40, 40, 2));
-            virtualRegion.AddRegion(new SubVirtualRegion(3, 155, 5, 40, 40, 3));
-            virtualRegion.AddRegion(new SubVirtualRegion(4, 155, 55, 40, 40, 4));
+            virtualRegion.AddRegion(new SubVirtualRegion(1, 5, 5, 40, 40));
+            virtualRegion.AddRegion(new SubVirtualRegion(2, 5, 55, 40, 40));
+            virtualRegion.AddRegion(new SubVirtualRegion(3, 155, 5, 40, 40));
+            virtualRegion.AddRegion(new SubVirtualRegion(4, 155, 55, 40, 40));
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
@@ -165,9 +165,8 @@ namespace TaleofMonsters.Forms
             }
         }
 
-        private void virtualRegion_RegionEntered(int info, int x, int y, int key)
+        private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
-            int id = info;
             if (id < 4 && skillcommon[id - 1] != 0)
             {
                 int sid = skillcommon[id - 1];

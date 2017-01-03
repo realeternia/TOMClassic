@@ -95,7 +95,7 @@ namespace TaleofMonsters.DataType.User
                     var cardData = CardConfigManager.GetCardConfig(dc.BaseId);
                     MainForm.Instance.AddTip(string.Format("|分解卡片-|{0}|{1}", HSTypes.I2QualityColor(cardData.Quality), cardData.Name), "White");
                     int qual = CardConfigManager.GetCardConfig(dc.BaseId).Quality + 1;
-                    UserProfile.Profile.InfoBag.AddResource(GameResourceType.Gem, GameResourceBook.GetGemCardDecompose(qual));
+                    UserProfile.Profile.InfoBag.AddResource(GameResourceType.Gem, GameResourceBook.OutGemCardDecompose(qual));
                 }
 
                 dc.Exp--;

@@ -35,7 +35,7 @@ namespace TaleofMonsters.Forms.Items
             index = idx;
 
             virtualRegion = new VirtualRegion(parent);
-            virtualRegion.AddRegion(new PictureRegion(1, x + 3, y + 3, 76, 75, 1, VirtualRegionCellType.Achieve, 0));
+            virtualRegion.AddRegion(new PictureRegion(1, x + 3, y + 3, 76, 75, PictureRegionCellType.Achieve, 0));
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
@@ -45,12 +45,12 @@ namespace TaleofMonsters.Forms.Items
             aid = acid;
             if (aid > 0)
             {
-                virtualRegion.SetRegionInfo(1, aid);
+                virtualRegion.SetRegionKey(1, aid);
                 show = true;
             }
             else
             {
-                virtualRegion.SetRegionInfo(1, 0);
+                virtualRegion.SetRegionKey(1, 0);
                 show = false;
             }
 

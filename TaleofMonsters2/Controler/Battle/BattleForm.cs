@@ -132,7 +132,7 @@ namespace TaleofMonsters.Controler.Battle
             int index = 0;//初始化英雄技能按钮
             foreach (var skillId in BattleManager.Instance.PlayerManager.LeftPlayer.HeroSkillList)
             {
-                var region = new PictureAnimRegion(index+1, 25, 518+index*45, 40, 40, skillId, VirtualRegionCellType.HeroSkill, skillId);
+                var region = new PictureAnimRegion(index+1, 25, 518+index*45, 40, 40, PictureRegionCellType.HeroSkill, skillId);
                 region.AddDecorator(new RegionBorderDecorator(Color.Lime));
                 vRegion.AddRegion(region);
                 index++;
@@ -504,11 +504,12 @@ namespace TaleofMonsters.Controler.Battle
             }
         }
 
-        private void OnVRegionClick(int info, int x, int y, MouseButtons button)
+        private void OnVRegionClick(int id, int x, int y, MouseButtons button)
         {
-            if (info > 0)
+            if (id > 0)
             {
-                HeroSkillConfig heroSkillConfig = ConfigDatas.ConfigData.GetHeroSkillConfig(info);
+                var key = vRegion.GetRegion(id).GetKeyValue();
+                HeroSkillConfig heroSkillConfig = ConfigDatas.ConfigData.GetHeroSkillConfig(key);
                 LevelExpConfig levelConfig = ConfigData.GetLevelExpConfig(UserProfile.Profile.InfoBasic.Level);
                 leftSelectCard = new ActiveCard(heroSkillConfig.CardId, (byte)levelConfig.HeroSkillLevel, 0);
                 leftSelectCard.IsHeroSkill = true;
@@ -516,11 +517,11 @@ namespace TaleofMonsters.Controler.Battle
             }
         }
 
-        private void virtualRegion_RegionEntered(int info, int x, int y, int key)
+        private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
-            if (info > 0)
+            if (id > 0)
             {
-                Image image = HeroSkillBook.GetSkillPreview(info);
+                Image image = HeroSkillBook.GetSkillPreview(key);
                 tooltip.Show(image, this, x, y);
             }
         }

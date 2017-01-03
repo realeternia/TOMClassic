@@ -46,7 +46,7 @@ namespace TaleofMonsters.Forms.Items
         public void Init()
         {
             virtualRegion = new VirtualRegion(parent);
-            virtualRegion.AddRegion(new PictureAnimRegion(1, x + 11, y + 19, 56, 56, 1, VirtualRegionCellType.Item, 0));
+            virtualRegion.AddRegion(new PictureAnimRegion(1, x + 11, y + 19, 56, 56, PictureRegionCellType.Item, 0));
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
@@ -61,8 +61,8 @@ namespace TaleofMonsters.Forms.Items
 
             if (id != 0)
             {
-                virtualRegion.SetRegionInfo(1, gameShopConfig.ItemId);
-                virtualRegion.SetRegionType(1, gameShopConfig.Type == 1 ? VirtualRegionCellType.Item : VirtualRegionCellType.Equip);
+                virtualRegion.SetRegionKey(1, gameShopConfig.ItemId);
+                virtualRegion.SetRegionType(1, gameShopConfig.Type == 1 ? PictureRegionCellType.Item : PictureRegionCellType.Equip);
             }
 
             parent.Invalidate(new Rectangle(x, y, width, height));

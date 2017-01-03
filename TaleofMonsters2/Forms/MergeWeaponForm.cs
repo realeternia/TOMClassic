@@ -34,11 +34,11 @@ namespace TaleofMonsters.Forms
             InitializeComponent();
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
             virtualRegion = new VirtualRegion(this);
-            virtualRegion.AddRegion(new PictureAnimRegion(1, 295, 100, 60, 60, 1, VirtualRegionCellType.Equip, 0));
-            virtualRegion.AddRegion(new PictureAnimRegion(2, 200, 259, 40, 40, 3, VirtualRegionCellType.Item, 0));
-            virtualRegion.AddRegion(new PictureAnimRegion(3, 410, 259, 40, 40, 4, VirtualRegionCellType.Item, 0));
-            virtualRegion.AddRegion(new PictureAnimRegion(4, 270, 259, 40, 40, 5, VirtualRegionCellType.Item, 0));
-            virtualRegion.AddRegion(new PictureAnimRegion(5, 340, 259, 40, 40, 6, VirtualRegionCellType.Item, 0));
+            virtualRegion.AddRegion(new PictureAnimRegion(1, 295, 100, 60, 60, PictureRegionCellType.Equip, 0));
+            virtualRegion.AddRegion(new PictureAnimRegion(2, 200, 259, 40, 40, PictureRegionCellType.Item, 0));
+            virtualRegion.AddRegion(new PictureAnimRegion(3, 410, 259, 40, 40, PictureRegionCellType.Item, 0));
+            virtualRegion.AddRegion(new PictureAnimRegion(4, 270, 259, 40, 40, PictureRegionCellType.Item, 0));
+            virtualRegion.AddRegion(new PictureAnimRegion(5, 340, 259, 40, 40, PictureRegionCellType.Item, 0));
 
             virtualRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
@@ -106,7 +106,7 @@ namespace TaleofMonsters.Forms
         {
             EquipConfig equipConfig = ConfigData.GetEquipConfig(currentInfo.Target);
 
-            UserProfile.InfoBag.SubResource(GameResourceType.Stone, GameResourceBook.GetStoneMerge(equipConfig.Quality + 1, equipConfig.Level));
+            UserProfile.InfoBag.SubResource(GameResourceType.Stone, GameResourceBook.OutStoneMerge(equipConfig.Quality + 1, equipConfig.Level));
             foreach (IntPair pairValue in currentInfo[index])
             {
                 UserProfile.InfoBag.DeleteItem(pairValue.Type, pairValue.Value);
@@ -129,7 +129,7 @@ namespace TaleofMonsters.Forms
                     return;
                 }
             }
-            if (UserProfile.InfoBag.HasResource( GameResourceType.Stone, GameResourceBook.GetStoneMerge(equipConfig.Quality+1, equipConfig.Level)))
+            if (UserProfile.InfoBag.HasResource( GameResourceType.Stone, GameResourceBook.OutStoneMerge(equipConfig.Quality+1, equipConfig.Level)))
             {
                 AddFlowCenter("石材不足", "Red");
                 return;
@@ -157,34 +157,33 @@ namespace TaleofMonsters.Forms
             }
 
             EquipConfig equipConfig = ConfigData.GetEquipConfig(targetid);
-            virtualRegion.SetRegionInfo(1, equipConfig.Id);
+            virtualRegion.SetRegionKey(1, equipConfig.Id);
             itemCounts[0] = UserProfile.InfoEquip.GetEquipCount(equipConfig.Id);
 
             int index = 1;
             foreach (IntPair pair in currentInfo[targetMethodId])
             {
-                virtualRegion.SetRegionInfo(index+1, pair.Type);
+                virtualRegion.SetRegionKey(index+1, pair.Type);
                 itemCounts[index] = UserProfile.InfoBag.GetItemCount(pair.Type);
                 index++;
             }
             for (int i = index; i < 6; i++)
             {
-                virtualRegion.SetRegionInfo(i+1, 0);
+                virtualRegion.SetRegionKey(i+1, 0);
             }
 
             Invalidate();
         }
 
-        private void virtualRegion_RegionEntered(int info, int x, int y, int key)
+        private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
             if (key == 0)
             {
                 return;
             }
 
-            int id = info;
             Image image = null;
-            if (id >= 3)
+            if (id >= 2)
             {
                 image = HItemBook.GetPreview(key);
             }
@@ -202,7 +201,7 @@ namespace TaleofMonsters.Forms
             tooltip.Hide(this);
         }
 
-        private void virtualRegion_RegionClicked(int info, int x, int y, MouseButtons button)
+        private void virtualRegion_RegionClicked(int id, int x, int y, MouseButtons button)
         {
         }
 
@@ -250,7 +249,7 @@ namespace TaleofMonsters.Forms
             int targetid = selectPanel.SelectInfo;
             EquipConfig equipConfig = ConfigData.GetEquipConfig(targetid);
             font =new Font("微软雅黑", 14 * 1.33f,  FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString((GameResourceBook.GetStoneMerge(equipConfig.Quality + 1, equipConfig.Level)).ToString().PadLeft(5, ' '), font, PaintTool.GetBrushByResource((int)GameResourceType.Mercury), 273, 368);
+            e.Graphics.DrawString((GameResourceBook.OutStoneMerge(equipConfig.Quality + 1, equipConfig.Level)).ToString().PadLeft(5, ' '), font, PaintTool.GetBrushByResource((int)GameResourceType.Mercury), 273, 368);
             e.Graphics.DrawImage(HSIcons.GetIconsByEName("res3"), 333, 370, 24, 24);
             font.Dispose();
 

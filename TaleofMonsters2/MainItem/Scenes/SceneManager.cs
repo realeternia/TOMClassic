@@ -6,7 +6,7 @@ using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.NPCs;
+using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.User.Mem;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
@@ -207,7 +207,7 @@ namespace TaleofMonsters.MainItem.Scenes
             tipData.AddTextNewLine(sceneConfig.Name, "Lime", 20);
             tipData.AddTextNewLine(string.Format("需要等级: {0}", sceneConfig.Level), "White");
 
-            string[] icons = NPCBook.GetNPCIconsOnMap(id);
+            string[] icons = SceneBook.GetNPCIconsOnMap(id);
             if (icons.Length > 0)
             {
                 tipData.AddTextNewLine("设施", "Green");

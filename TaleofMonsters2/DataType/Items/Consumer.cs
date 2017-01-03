@@ -80,7 +80,7 @@ namespace TaleofMonsters.DataType.Items
             }
             if (itemConfig.GainAp > 0)
             {
-                UserProfile.InfoBasic.Ap += itemConfig.GainAp;
+                UserProfile.InfoBasic.EatFood(itemConfig.GainAp);
             }
 
             return true;

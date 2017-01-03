@@ -64,7 +64,7 @@ namespace TaleofMonsters.Forms
 
             for (int i = 0; i < cardCount; i++)
             {
-                var region = new SubVirtualRegion(1 + i, cardPos[i * 2], cardPos[i * 2 + 1], 120, 150, 1 + i);
+                var region = new SubVirtualRegion(1 + i, cardPos[i * 2], cardPos[i * 2 + 1], 120, 150);
                 vRegion.AddRegion(region);
             }
 
@@ -95,31 +95,31 @@ namespace TaleofMonsters.Forms
             Close();
         }
 
-        private void OnVRegionClick(int info, int x, int y, MouseButtons button)
+        private void OnVRegionClick(int id, int x, int y, MouseButtons button)
         {
-            if (info > 0)//说明是button
+            if (id > 0)//说明是button
             {
-                var hasOpen = cardOpenArray[info - 1];
+                var hasOpen = cardOpenArray[id - 1];
                 if (hasOpen == 0)
                 {
                     int cardId = UseScard();
-                    vRegion.SetRegionInfo(info, cardId);
+                    vRegion.SetRegionKey(id, cardId);
                     var card = UserProfile.InfoCard.AddCard(cardId);
                     if (card.Exp != 0) //不是新卡
                     {
                         IRegionDecorator decorator = new RegionCoverDecorator(Color.FromArgb(150, Color.Black));
-                        vRegion.SetRegionDecorator(info, 0, decorator);
+                        vRegion.SetRegionDecorator(id, 0, decorator);
                         decorator = new RegionTextDecorator(18, 50, 16, Color.White, true);
                         decorator.SetState("EXP+1");
-                        vRegion.SetRegionDecorator(info, 1, decorator);
+                        vRegion.SetRegionDecorator(id, 1, decorator);
                     }
-                    cardOpenArray[info - 1] = cardId;
-                    coverEffect[info-1] = new CoverEffect(EffectBook.GetEffect("transmit"), new Point(cardPos[(info - 1) * 2], cardPos[(info - 1) * 2+1]), new Size(120, 150));
-                    coverEffect[info - 1].PlayOnce = true;
+                    cardOpenArray[id - 1] = cardId;
+                    coverEffect[id - 1] = new CoverEffect(EffectBook.GetEffect("transmit"), new Point(cardPos[(id - 1) * 2], cardPos[(id - 1) * 2+1]), new Size(120, 150));
+                    coverEffect[id - 1].PlayOnce = true;
                     Invalidate();
 
-                    var pos = vRegion.GetRegionPosition(info);
-                    OnVRegionEntered(info, pos.X, pos.Y, cardId);
+                    var pos = vRegion.GetRegionPosition(id);
+                    OnVRegionEntered(id, pos.X, pos.Y, cardId);
                 }
             }
         }
@@ -163,11 +163,11 @@ namespace TaleofMonsters.Forms
             font.Dispose();
         }
 
-        private void OnVRegionEntered(int info, int x, int y, int key)
+        private void OnVRegionEntered(int id, int x, int y, int key)
         {
-            if (info > 0 && info < 10)
+            if (id > 0 && id < 10)
             {
-                var pickCardId = cardOpenArray[info - 1];
+                var pickCardId = cardOpenArray[id - 1];
                 if (pickCardId > 0)
                 {
                     Image image = CardAssistant.GetCard(pickCardId).GetPreview(CardPreviewType.Normal, new int[] { });

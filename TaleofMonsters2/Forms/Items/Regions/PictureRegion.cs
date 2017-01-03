@@ -4,102 +4,112 @@ using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Interface;
 using ConfigDatas;
+using TaleofMonsters.DataType.Scenes;
 
 namespace TaleofMonsters.Forms.Items.Regions
 {
     internal class PictureRegion : SubVirtualRegion
     {
-        protected VirtualRegionCellType type;
+        protected PictureRegionCellType type;
         protected int nid;//特征id，比如卡的id，npc的id等等
 
-        public PictureRegion(int id, int x, int y, int width, int height, int info, VirtualRegionCellType type, int nid)
-            : base(id, x, y, width, height, info)
+        public PictureRegion(int id, int x, int y, int width, int height, PictureRegionCellType type, int nid)
+            : base(id, x, y, width, height)
         {
             this.nid = nid;
             this.type = type;
+            Scale = 1;
         }
 
         public override void Draw(Graphics g)
         {
             if (nid > 0)
             {
-                if (type == VirtualRegionCellType.Npc)
+                Image img = null;
+                HsActionCallback action = null;
+                if (type == PictureRegionCellType.Npc)
                 {
-                    g.DrawImage(DataType.NPCs.NPCBook.GetPersonImage(nid), x, y, width, height);
+                    img = SceneBook.GetSceneNpcImage(nid);
                 }
-                else if (type == VirtualRegionCellType.Item)
+                else if (type == PictureRegionCellType.Item)
                 {
-                    g.DrawImage(DataType.Items.HItemBook.GetHItemImage(nid), x, y, width, height);
-                    var itemConfig = ConfigData.GetHItemConfig(nid);
-                    var pen = new Pen(Color.FromName(HSTypes.I2RareColor(itemConfig.Rare)),2);
-                    g.DrawRectangle(pen, x, y, width, height);
-                    pen.Dispose();
+                    img = DataType.Items.HItemBook.GetHItemImage(nid);
+                    action = () =>
+                    {
+                        var itemConfig = ConfigData.GetHItemConfig(nid);
+                        var pen = new Pen(Color.FromName(HSTypes.I2RareColor(itemConfig.Rare)), 2);
+                        g.DrawRectangle(pen, X, Y, Width, Height);
+                        pen.Dispose();
+                    };
                 }
-                else if (type == VirtualRegionCellType.Equip)
+                else if (type == PictureRegionCellType.Equip)
                 {
-                    g.DrawImage(DataType.Equips.EquipBook.GetEquipImage(nid), x, y, width, height);
+                    img = DataType.Equips.EquipBook.GetEquipImage(nid);
                 }
-                else if (type == VirtualRegionCellType.Card)
+                else if (type == PictureRegionCellType.Card)
                 {
-                    var cardData = CardConfigManager.GetCardConfig(nid);
-                    int attr = cardData.Attr;//属性决定包边颜色
-                    g.FillRectangle(PaintTool.GetBrushByAttribute(attr), x + 1, y + 1, width - 2, height - 2);
-                    g.DrawImage(DataType.Cards.CardAssistant.GetCardImage(nid, 60, 60), x + 2, y + 2, width - 4, height - 4);
-                    string cardBorder = DataType.Cards.CardAssistant.GetCardBorder(cardData);
-                    g.DrawImage(PicLoader.Read("Border", cardBorder), x + 2, y + 2, width - 4, height - 4);
+                    img = DataType.Cards.CardAssistant.GetCardImage(nid, 60, 60);
+                    action = () =>
+                    {
+                        var cardData = CardConfigManager.GetCardConfig(nid);
+                        string cardBorder = DataType.Cards.CardAssistant.GetCardBorder(cardData);
+                        g.DrawImage(PicLoader.Read("Border", cardBorder), X + 2, Y + 2, Width - 4, Height - 4);
+                    };
                 }
-                else if (type == VirtualRegionCellType.SkillAttr)
+                else if (type == PictureRegionCellType.SkillAttr)
                 {
-                    g.DrawImage(DataType.HeroSkills.HeroSkillAttrBook.GetHeroSkillAttrImage(nid), x, y, width, height);
+                    img = DataType.HeroSkills.HeroSkillAttrBook.GetHeroSkillAttrImage(nid);
                 }
-                else if (type == VirtualRegionCellType.Achieve)
+                else if (type == PictureRegionCellType.Achieve)
                 {
-                    g.DrawImage(DataType.Achieves.AchieveBook.GetAchieveImage(nid), x, y, width, height);
+                    img = DataType.Achieves.AchieveBook.GetAchieveImage(nid);
                 }
-                else if (type == VirtualRegionCellType.People)
+                else if (type == PictureRegionCellType.People)
                 {
-                    g.DrawImage(DataType.Peoples.PeopleBook.GetPersonImage(nid), x, y, width, height);
+                    img = DataType.Peoples.PeopleBook.GetPersonImage(nid);
                 }
-                else if (type == VirtualRegionCellType.HeroSkill)
+                else if (type == PictureRegionCellType.HeroSkill)
                 {
-                    g.DrawImage(DataType.HeroSkills.HeroSkillBook.GetHeroSkillImage(nid), x, y, width, height);
+                    img = DataType.HeroSkills.HeroSkillBook.GetHeroSkillImage(nid);
                 }
-                else if (type == VirtualRegionCellType.CardQual)
+                else if (type == PictureRegionCellType.CardQual)
                 {
-                    g.DrawImage(HSIcons.GetIconsByEName("gem" + nid), x, y, width, height);
+                    img = HSIcons.GetIconsByEName("gem" + nid);
                 }
-                else if (type == VirtualRegionCellType.Job)
+                else if (type == PictureRegionCellType.Job)
                 {
-                    if (nid>0)
+                    img = HSIcons.GetIconsByEName("job" + nid);
+                    action = () =>
                     {
                         var jobConfig = ConfigData.GetJobConfig(nid + JobConfig.Indexer.NewBie);
-                        Brush brush = new SolidBrush(Color.FromName(jobConfig.Color));
-                        g.FillRectangle(brush, x, y, width, height);
-                        g.DrawImage(HSIcons.GetIconsByEName("job" + nid), x, y, width, height);
-                        brush.Dispose();
+                        Pen pen = new Pen(Color.FromName(jobConfig.Color));
+                        g.DrawRectangle(pen, X, Y, Width, Height);
+                        pen.Dispose();
+                    };
+                }
+
+                if (img != null)
+                {
+                    if (Scale == 1)
+                    {
+                        g.DrawImage(img, X, Y, Width, Height);
+                    }
+                    else
+                    {
+                        int realWidth = (int)(Width*Scale);
+                        int realHeight = (int)(Height * Scale);
+                        g.DrawImage(img, X + (Width- realWidth)/2, Y + (Height- realHeight)/2, realWidth, realHeight);
                     }
                 }
-                else if (type == VirtualRegionCellType.Task)
+                if (action != null)
                 {
-                    string sicon = "oth3";
-                    TaskConfig taskConfig = ConfigData.GetTaskConfig(nid);
-                    int tstate = DataType.User.UserProfile.InfoTask.GetTaskStateById(nid);
-                    if (tstate > 0)
-                    {
-                        SolidBrush sb = new SolidBrush(Color.FromName(HSTypes.I2TaskStateColor(tstate)));
-                        g.FillRectangle(sb, x + 2, y + 2, width - 4, height - 4);
-                        sb.Dispose();
-                        sicon = taskConfig.Icon;
-                    }
-                    if (taskConfig.Main == 1)
-                        g.DrawRectangle(Pens.Red, x + 2, y + 2, width - 4, height - 4);
-                    g.DrawImage(HSIcons.GetIconsByEName(sicon), x, y, width, height);
+                    action();
                 }
             }
 
             foreach (IRegionDecorator decorator in decorators)
             {
-                decorator.Draw(g, x, y, width, height);
+                decorator.Draw(g, X, Y, Width, Height);
             }
         }
 
@@ -114,9 +124,31 @@ namespace TaleofMonsters.Forms.Items.Regions
             return nid;
         }
 
-        public override void SetType(VirtualRegionCellType value)
+        public void SetType(PictureRegionCellType value)
         {
             type = value;
         }
+
+        public PictureRegionCellType GetVType()
+        {
+            return type;
+        }
+
+        public float Scale { get; set; } //中心图片缩放
+    }
+
+    internal enum PictureRegionCellType
+    {
+        Npc,
+        Item,
+        Equip,
+        Card,
+        SkillAttr,
+        Achieve,
+        HeroSkill,
+        People,
+        Task,
+        CardQual,
+        Job,
     }
 }

@@ -9,8 +9,8 @@ namespace TaleofMonsters.Forms.Items.Regions
         protected int nid;
         private int need;
 
-        public ItemUseRegion(int id, int x, int y, int width, int height, int info, int nid, int need)
-            : base(id, x, y, width, height, info)
+        public ItemUseRegion(int id, int x, int y, int width, int height, int nid, int need)
+            : base(id, x, y, width, height)
         {
             this.nid = nid;
             this.need = need;//需求的道具
@@ -23,26 +23,26 @@ namespace TaleofMonsters.Forms.Items.Regions
                 int itemCount = UserProfile.Profile.InfoBag.GetItemCount(nid);
                 bool isEnough = itemCount >= need;
 
-                g.DrawImage(DataType.Items.HItemBook.GetHItemImage(nid), x, y, width, height);
-                if (IsIn && isEnough)
+                g.DrawImage(DataType.Items.HItemBook.GetHItemImage(nid), X, Y, Width, Height);
+                if (isIn && isEnough)
                 {
-                    g.DrawImage(DataType.Items.HItemBook.GetHItemImage(nid), x+3, y+3, width-6, height-6);
+                    g.DrawImage(DataType.Items.HItemBook.GetHItemImage(nid), X+3, Y+3, Width-6, Height-6);
                 }
                 if (!isEnough)
                 {//灰色遮罩
                     Brush brush = new SolidBrush(Color.FromArgb(120, Color.Black));
-                    g.FillRectangle(brush, x, y, width, height);
+                    g.FillRectangle(brush, X, Y, Width, Height);
                     brush.Dispose();
                 }
 
                 Font fontsong = new Font("宋体", 7*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-                g.DrawString(string.Format("{0}/{1}", need, itemCount), fontsong, isEnough ? Brushes.White : Brushes.Red, x + 1, y + 18);
+                g.DrawString(string.Format("{0}/{1}", need, itemCount), fontsong, isEnough ? Brushes.White : Brushes.Red, X + 1, Y + 18);
                 fontsong.Dispose();
             }
 
             foreach (IRegionDecorator decorator in decorators)
             {
-                decorator.Draw(g, x, y, width, height);
+                decorator.Draw(g, X, Y, Width, Height);
             }
         }
 
@@ -62,7 +62,7 @@ namespace TaleofMonsters.Forms.Items.Regions
             base.Enter();
             if (Parent != null)
             {
-                Parent.Invalidate(new Rectangle(x, y, width, height));
+                Parent.Invalidate(new Rectangle(X, Y, Width, Height));
             }
         }
 
@@ -71,7 +71,7 @@ namespace TaleofMonsters.Forms.Items.Regions
             base.Left();
             if (Parent != null)
             {
-                Parent.Invalidate(new Rectangle(x, y, width, height));
+                Parent.Invalidate(new Rectangle(X, Y, Width, Height));
             }
         }
     }

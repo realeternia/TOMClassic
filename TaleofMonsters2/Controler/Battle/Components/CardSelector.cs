@@ -27,18 +27,18 @@ namespace TaleofMonsters.Controler.Battle.Components
             InitializeComponent();
 
             region = new VirtualRegion(this);
-            region.AddRegion(new SwitchButtonRegion(1, 0, 0, 120, 120, 1, "ErrorButton.PNG", ""));
-            region.AddRegion(new SwitchButtonRegion(2, 200, 0, 120, 120, 2, "ErrorButton.PNG", ""));
-            region.AddRegion(new SwitchButtonRegion(3, 400, 0, 120, 120, 3, "ErrorButton.PNG", ""));
+            region.AddRegion(new SwitchButtonRegion(1, 0, 0, 120, 120, "ErrorButton.PNG", ""));
+            region.AddRegion(new SwitchButtonRegion(2, 200, 0, 120, 120, "ErrorButton.PNG", ""));
+            region.AddRegion(new SwitchButtonRegion(3, 400, 0, 120, 120, "ErrorButton.PNG", ""));
             region.RegionClicked+=region_RegionClicked;
         }
 
-        private void region_RegionClicked(int info, int x, int y, MouseButtons button)
+        private void region_RegionClicked(int id, int x, int y, MouseButtons button)
         {
             if (region != null)
             {
-                keepCard[info - 1] = !keepCard[info - 1];
-                region.SetRegionParm(info, keepCard[info - 1]);
+                keepCard[id - 1] = !keepCard[id - 1];
+                region.SetRegionParm(id, keepCard[id - 1]);
                 Invalidate();
             }
         }

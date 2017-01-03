@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Math;
+using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.DataType.Peoples
 {
-    class PeopleDrop
+    internal class PeopleDrop
     {
         private List<DropResource> resources = new List<DropResource>();
         private PeopleConfig peopleConfig;
@@ -14,20 +15,21 @@ namespace TaleofMonsters.DataType.Peoples
         public PeopleDrop(int id)
         {
             peopleConfig = ConfigData.GetPeopleConfig(id);
-
-            DropResource gold = new DropResource();
-            gold.id = 1;
-            gold.percent = 100;
-            gold.min = PeopleBook.IsPeople(id) ? peopleConfig.Level : peopleConfig.Level * 3 + 12;
-            gold.max = PeopleBook.IsPeople(id) ? peopleConfig.Level * 3 / 2 : peopleConfig.Level * 5 + 20;
+            uint goldExpect = GameResourceBook.InGoldFight(peopleConfig.Level, PeopleBook.IsPeople(id));
+            DropResource gold = new DropResource
+            {
+                Id = 1,
+                Percent = 100,
+                Min = goldExpect*7/10,
+                Max = goldExpect*13/10
+            };
             resources.Add(gold);
             foreach (int rid in peopleConfig.Reward)
             {
-                DropResource drop = new DropResource();
-                drop.id = rid;
-                drop.percent = drop.id <= 3 ? peopleConfig.Level * 5 / 4 + 5 : peopleConfig.Level / 2 + 2;
-                drop.min = 1;
-                drop.max = 1;
+                DropResource drop = new DropResource {Id = rid};
+                drop.Percent = (uint)(drop.Id <= 3 ? peopleConfig.Level * 5 / 4 + 5 : peopleConfig.Level / 2 + 2);
+                drop.Min = 1;
+                drop.Max = 1;
                 resources.Add(drop);
             }
         }
@@ -61,14 +63,14 @@ namespace TaleofMonsters.DataType.Peoples
             int[] rt = { 0, 0, 0, 0, 0, 0, 0 };
             foreach (DropResource info in resources)
             {
-                int percent = info.percent;
+                uint percent = info.Percent;
 //                if (UserProfile.InfoBag.GetDayItem(HItemSpecial.DoubleGoldItem))
 //                {
 //                    percent *= 2;
 //                }
                 if (MathTool.GetRandom(100) < percent)
                 {
-                    rt[info.id - 1] = MathTool.GetRandom(info.min, info.max + 1);
+                    rt[info.Id - 1] = MathTool.GetRandom((int)info.Min, (int)info.Max + 1);
                 }
             }
             return rt;

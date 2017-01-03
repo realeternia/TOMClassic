@@ -31,7 +31,7 @@ namespace TaleofMonsters.Forms
             virtualRegion = new VirtualRegion(this);
             for (int i = 0; i < 4; i++)
             {
-                SubVirtualRegion subRegion = new ButtonRegion(i + 1, 16 + 45 * i, 39, 42, 23, i + 1, "ShopTag.JPG", "ShopTagOn.JPG");
+                SubVirtualRegion subRegion = new ButtonRegion(i + 1, 16 + 45 * i, 39, 42, 23, "ShopTag.JPG", "ShopTagOn.JPG");
                 subRegion.AddDecorator(new RegionTextDecorator(8,7,9,Color.White, false));
                 virtualRegion.AddRegion(subRegion);
             }
@@ -63,7 +63,7 @@ namespace TaleofMonsters.Forms
             }
         }
 
-        private void virtualRegion_RegionClick(int info, int x, int y, MouseButtons button)
+        private void virtualRegion_RegionClick(int id, int x, int y, MouseButtons button)
         {
             if (button == MouseButtons.Left)
             {
@@ -72,11 +72,11 @@ namespace TaleofMonsters.Forms
                     virtualRegion.SetRegionState(i+1, RegionState.Free);
                 }
 
-                virtualRegion.SetRegionState(info, RegionState.Blacken);
+                virtualRegion.SetRegionState(id, RegionState.Blacken);
                 productIds.Clear();
                 foreach (GameShopConfig gameShopConfig in ConfigData.GameShopDict.Values)
                 {
-                    if (gameShopConfig.Shelf==info)
+                    if (gameShopConfig.Shelf== id)
                     {
                         productIds.Add(gameShopConfig.Id);
                     }

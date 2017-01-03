@@ -30,7 +30,7 @@ namespace TaleofMonsters.Forms
         private ColorWordRegion jobDes;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
 
-        private List<VirtualRegionCellType> cellTypeList = new List<VirtualRegionCellType>();
+        private List<PictureRegionCellType> cellTypeList = new List<PictureRegionCellType>();
 
         public SelectJobForm()
         {
@@ -55,13 +55,13 @@ namespace TaleofMonsters.Forms
             jobDes = new ColorWordRegion(180, 70, 320, "宋体", 10, Color.White);
 
             virtualRegion = new VirtualRegion(this);
-            PictureRegion region = new PictureRegion(1, 178, 266, 48, 48, 1, VirtualRegionCellType.HeroSkill, 0);
+            PictureRegion region = new PictureRegion(1, 178, 266, 48, 48, PictureRegionCellType.HeroSkill, 0);
             region.AddDecorator(new RegionBorderDecorator(Color.DodgerBlue));
             virtualRegion.AddRegion(region);
 
-            virtualRegion.AddRegion(new PictureRegion(2, 238, 266, 48, 48, 2, VirtualRegionCellType.Card, 0));
-            virtualRegion.AddRegion(new PictureRegion(3, 298, 266, 48, 48, 3, VirtualRegionCellType.Card, 0));
-            virtualRegion.AddRegion(new PictureRegion(4, 358, 266, 48, 48, 4, VirtualRegionCellType.Card, 0));
+            virtualRegion.AddRegion(new PictureRegion(2, 238, 266, 48, 48, PictureRegionCellType.Card, 0));
+            virtualRegion.AddRegion(new PictureRegion(3, 298, 266, 48, 48, PictureRegionCellType.Card, 0));
+            virtualRegion.AddRegion(new PictureRegion(4, 358, 266, 48, 48, PictureRegionCellType.Card, 0));
             virtualRegion.RegionEntered += virtualRegion_RegionEntered;
             virtualRegion.RegionLeft += virtualRegion_RegionLeft;
      }
@@ -99,10 +99,10 @@ namespace TaleofMonsters.Forms
             EquipConfig selectEquip = ConfigData.GetEquipConfig(selectWeaponId);
             JobConfig jobConfig = ConfigData.GetJobConfig(selectEquip.Job);
             jobDes.Text = jobConfig.Des;
-            virtualRegion.SetRegionInfo(1, selectEquip.SpecialSkill);
+            virtualRegion.SetRegionKey(1, selectEquip.SpecialSkill);
             for (int i = 2; i < 5; i++)//把后面的物件都清除下
             {
-                virtualRegion.SetRegionInfo(i, 0);
+                virtualRegion.SetRegionKey(i, 0);
             }
             cellTypeList.Clear();
             int imgIndex = 2;
@@ -112,9 +112,9 @@ namespace TaleofMonsters.Forms
                 {
                     if (cardId > 0)
                     {
-                        virtualRegion.SetRegionType(imgIndex, VirtualRegionCellType.Card);
-                        virtualRegion.SetRegionInfo(imgIndex++, cardId);
-                        cellTypeList.Add(VirtualRegionCellType.Card);
+                        virtualRegion.SetRegionType(imgIndex, PictureRegionCellType.Card);
+                        virtualRegion.SetRegionKey(imgIndex++, cardId);
+                        cellTypeList.Add(PictureRegionCellType.Card);
                     }
                 }
             }
@@ -124,9 +124,9 @@ namespace TaleofMonsters.Forms
                 {
                     if (eid > 0)
                     {
-                        virtualRegion.SetRegionType(imgIndex, VirtualRegionCellType.Equip);
-                        virtualRegion.SetRegionInfo(imgIndex++, eid);
-                        cellTypeList.Add(VirtualRegionCellType.Equip);
+                        virtualRegion.SetRegionType(imgIndex, PictureRegionCellType.Equip);
+                        virtualRegion.SetRegionKey(imgIndex++, eid);
+                        cellTypeList.Add(PictureRegionCellType.Equip);
                     }
                 }
             }
@@ -136,9 +136,9 @@ namespace TaleofMonsters.Forms
                 {
                     if (eid > 0)
                     {
-                        virtualRegion.SetRegionType(imgIndex, VirtualRegionCellType.Item);
-                        virtualRegion.SetRegionInfo(imgIndex++, eid);
-                        cellTypeList.Add(VirtualRegionCellType.Item);
+                        virtualRegion.SetRegionType(imgIndex, PictureRegionCellType.Item);
+                        virtualRegion.SetRegionKey(imgIndex++, eid);
+                        cellTypeList.Add(PictureRegionCellType.Item);
                     }
                 }
             }
@@ -155,10 +155,10 @@ namespace TaleofMonsters.Forms
             font.Dispose();
         }
 
-        private void virtualRegion_RegionEntered(int info, int x, int y, int key)
+        private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
             Image image = null;
-            if (info == 1)
+            if (id == 1)
             {//1一定是heroskill
                 image = HeroSkillBook.GetSkillPreview(key);
             }
@@ -166,16 +166,16 @@ namespace TaleofMonsters.Forms
             {
                 if (key > 0)
                 {
-                    var cellType = cellTypeList[info - 2];
-                    if (cellType == VirtualRegionCellType.Card)
+                    var cellType = cellTypeList[id - 2];
+                    if (cellType == PictureRegionCellType.Card)
                     {
                         image = CardAssistant.GetCard(key).GetPreview(CardPreviewType.Normal, new int[] { });
                     }
-                    else if (cellType == VirtualRegionCellType.Item)
+                    else if (cellType == PictureRegionCellType.Item)
                     {
                         image = HItemBook.GetPreview(key);
                     }
-                    else if (cellType == VirtualRegionCellType.Equip)
+                    else if (cellType == PictureRegionCellType.Equip)
                     {
                         Equip equip = new Equip(key);
                         image = equip.GetPreview();

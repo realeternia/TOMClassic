@@ -1,5 +1,4 @@
 using System.Drawing;
-using TaleofMonsters.Forms.Items.Regions.Decorators;
 
 namespace TaleofMonsters.Forms.Items.Regions
 {
@@ -8,8 +7,8 @@ namespace TaleofMonsters.Forms.Items.Regions
         private string path1;
         private string path2;
 
-        public ButtonRegion(int id, int x, int y, int width, int height, int info, string path1, string path2)
-            : base(id, x, y, width, height, info)
+        public ButtonRegion(int id, int x, int y, int width, int height, string path1, string path2)
+            : base(id, x, y, width, height)
         {
             this.path1 = path1;
             this.path2 = path2;
@@ -17,29 +16,29 @@ namespace TaleofMonsters.Forms.Items.Regions
 
         public override void Draw(Graphics g)
         {
-            Image img = Controler.Loader.PicLoader.Read("Button", IsIn | state != RegionState.Free ? path2 : path1);
+            Image img = Controler.Loader.PicLoader.Read("Button", isIn | state != RegionState.Free ? path2 : path1);
             if (img != null)
             {
-                g.DrawImage(img, x, y, width, height);
+                g.DrawImage(img, X, Y, Width, Height);
                 img.Dispose();
             }
 
             foreach (var decorator in decorators)
             {
-                decorator.Draw(g, x, y, width, height);
+                decorator.Draw(g, X, Y, Width, Height);
             }
 
             if (state== RegionState.Rectangled)
             {
-                g.DrawRectangle(Pens.Firebrick, x, y, width, height);                
+                g.DrawRectangle(Pens.Firebrick, X, Y, Width, Height);                
                 Brush brush = new SolidBrush(Color.FromArgb(100, Color.Red));
-                g.FillRectangle(brush, x, y, width, height);
+                g.FillRectangle(brush, X, Y, Width, Height);
                 brush.Dispose();
             }
             else if (state == RegionState.Blacken)
             {
                 Brush brush = new SolidBrush(Color.FromArgb(60, Color.Black));
-                g.FillRectangle(brush, x, y, width, height);
+                g.FillRectangle(brush, X, Y, Width, Height);
                 brush.Dispose();
             }
         }
@@ -54,7 +53,7 @@ namespace TaleofMonsters.Forms.Items.Regions
             base.Enter();
             if (Parent != null)
             {
-                Parent.Invalidate(new Rectangle(x, y, width, height));
+                Parent.Invalidate(new Rectangle(X, Y, Width, Height));
             }
         }
 
@@ -63,7 +62,7 @@ namespace TaleofMonsters.Forms.Items.Regions
             base.Left();
             if (Parent != null)
             {
-                Parent.Invalidate(new Rectangle(x, y, width, height));
+                Parent.Invalidate(new Rectangle(X, Y, Width, Height));
             }
         }
     }

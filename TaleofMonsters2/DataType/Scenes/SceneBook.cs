@@ -4,11 +4,11 @@ using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
 
-namespace TaleofMonsters.DataType.NPCs
+namespace TaleofMonsters.DataType.Scenes
 {
-    internal static class NPCBook
+    internal static class SceneBook
     {
-        public static Image GetPersonImage(int id)
+        public static Image GetSceneNpcImage(int id)
         {
             string fname = string.Format("NPC/{0}.PNG", ConfigData.NpcDict[id].Figue);
             if (!ImageManager.HasImage(fname))

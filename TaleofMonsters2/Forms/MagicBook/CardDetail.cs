@@ -46,10 +46,10 @@ namespace TaleofMonsters.Forms.MagicBook
             Height = height;
 
             virtualRegion = new VirtualRegion(control);
-            virtualRegion.AddRegion(new SubVirtualRegion(1, x + 60, y + 170, 24, 24, 1));
-            virtualRegion.AddRegion(new SubVirtualRegion(2, x + 88, y + 170, 24, 24, 2));
-            virtualRegion.AddRegion(new PictureRegion(3, x + 116, y + 170, 24, 24, 3, VirtualRegionCellType.CardQual, 0));
-            virtualRegion.AddRegion(new PictureRegion(4, x + 146, y + 25, 24, 24, 4, VirtualRegionCellType.Job, 0));
+            virtualRegion.AddRegion(new SubVirtualRegion(1, x + 60, y + 170, 24, 24));
+            virtualRegion.AddRegion(new SubVirtualRegion(2, x + 88, y + 170, 24, 24));
+            virtualRegion.AddRegion(new PictureRegion(3, x + 116, y + 170, 24, 24, PictureRegionCellType.CardQual, 0));
+            virtualRegion.AddRegion(new PictureRegion(4, x + 146, y + 25, 24, 24, PictureRegionCellType.Job, 0));
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
@@ -64,13 +64,13 @@ namespace TaleofMonsters.Forms.MagicBook
             if (cid > 0)
             {
                 card = CardAssistant.GetCard(cid);
-                virtualRegion.SetRegionInfo(3, CardConfigManager.GetCardConfig(cid).Quality+1);
+                virtualRegion.SetRegionKey(3, CardConfigManager.GetCardConfig(cid).Quality+1);
                 var jobId = CardConfigManager.GetCardConfig(cid).JobId;
                 if (jobId > 0)
                 {
                     jobId = ConfigData.GetJobConfig(jobId).JobIndex;
                 }
-                virtualRegion.SetRegionInfo(4, jobId);
+                virtualRegion.SetRegionKey(4, jobId);
                 card.SetData(dcard);
                 if (card.GetCardType() == CardTypes.Monster)
                 {
@@ -171,18 +171,18 @@ namespace TaleofMonsters.Forms.MagicBook
             return tipData.Image;
         }
 
-        private void virtualRegion_RegionEntered(int info, int x, int y, int key)
+        private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
             if (cid == -1 || !Enabled)
                 return;
 
-            if (info == 3)
+            if (id == 3)
             {
                 Image image = DrawTool.GetImageByString("品质：" + HSTypes.I2Quality(key - 1), 100);
                 tooltip.Show(image, parent, x, y);
                 return;
             }
-            else if (info == 4)
+            else if (id == 4)
             {
                 if (key > 0)
                 {
@@ -196,7 +196,7 @@ namespace TaleofMonsters.Forms.MagicBook
             if (cardType == CardTypes.Monster)
             {
                 MonsterConfig monsterConfig = ConfigData.GetMonsterConfig(cid);
-                if (info ==1)
+                if (id == 1)
                 {
                     Image image = DrawTool.GetImageByString("种族：" + HSTypes.I2CardTypeSub(monsterConfig.Type), 100);
                     tooltip.Show(image, parent, x, y);
@@ -210,7 +210,7 @@ namespace TaleofMonsters.Forms.MagicBook
             else if (cardType == CardTypes.Weapon)
             {
                 WeaponConfig weaponConfig = ConfigData.GetWeaponConfig(cid);
-                if (info == 1)
+                if (id == 1)
                 {
                     Image image = DrawTool.GetImageByString("类型：" + HSTypes.I2CardTypeSub(weaponConfig.Type), 100);
                     tooltip.Show(image, parent, x, y);
@@ -224,7 +224,7 @@ namespace TaleofMonsters.Forms.MagicBook
             else if (cardType == CardTypes.Spell)
             {
                 SpellConfig spellConfig = ConfigData.GetSpellConfig(cid);
-                if (info == 1)
+                if (id == 1)
                 {
                     Image image = DrawTool.GetImageByString("类型：" + HSTypes.I2CardTypeSub(spellConfig.Type), 100);
                     tooltip.Show(image, parent, x, y);

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.DataType.NPCs;
 using TaleofMonsters.Forms.Items;
 using ConfigDatas;
+using TaleofMonsters.DataType.Scenes;
 
 namespace TaleofMonsters.Forms
 {
@@ -73,7 +73,7 @@ namespace TaleofMonsters.Forms
                 Image bgImage = PicLoader.Read("System", "TalkBack.PNG");
                 e.Graphics.DrawImage(bgImage, 0, 0, bgImage.Width, bgImage.Height);
                 bgImage.Dispose();
-                e.Graphics.DrawImage(NPCBook.GetPersonImage(NpcId), 24, 0, 70, 70);
+                e.Graphics.DrawImage(SceneBook.GetSceneNpcImage(NpcId), 24, 0, 70, 70);
 
                 Font font = new Font("宋体", 11*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
                 e.Graphics.DrawString(ConfigData.GetNpcConfig(NpcId).Name, font, Brushes.Chocolate, 131, 50);

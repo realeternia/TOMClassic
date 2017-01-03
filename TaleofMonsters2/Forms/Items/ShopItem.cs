@@ -50,7 +50,7 @@ namespace TaleofMonsters.Forms.Items
         {
             priceType = type;
             virtualRegion = new VirtualRegion(parent);
-            virtualRegion.AddRegion(new PictureAnimRegion(1, x + 5, y + 8, 40, 40, 1, VirtualRegionCellType.Card, 0));
+            virtualRegion.AddRegion(new PictureAnimRegion(1, x + 5, y + 8, 40, 40, PictureRegionCellType.Card, 0));
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
@@ -63,8 +63,8 @@ namespace TaleofMonsters.Forms.Items
             itemType = type;
             if (id != 0)
             {
-                virtualRegion.SetRegionInfo(1, id);
-                virtualRegion.SetRegionType(1, type == 1 ? VirtualRegionCellType.Item : VirtualRegionCellType.Equip);
+                virtualRegion.SetRegionKey(1, id);
+                virtualRegion.SetRegionType(1, type == 1 ? PictureRegionCellType.Item : PictureRegionCellType.Equip);
             }
             if (itemType == 1)
             {

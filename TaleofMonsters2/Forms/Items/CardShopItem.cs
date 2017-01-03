@@ -39,8 +39,8 @@ namespace TaleofMonsters.Forms.Items
         public void Init()
         {
             virtualRegion = new VirtualRegion(parent);
-            virtualRegion.AddRegion(new SubVirtualRegion(1, x + 12, y + 14, 64, 84, 1));
-            virtualRegion.AddRegion(new ButtonRegion(2, x + 55, y + 102, 17, 17, 2, "BuyIcon.PNG", "BuyIconOn.PNG"));
+            virtualRegion.AddRegion(new SubVirtualRegion(1, x + 12, y + 14, 64, 84));
+            virtualRegion.AddRegion(new ButtonRegion(2, x + 55, y + 102, 17, 17, "BuyIcon.PNG", "BuyIconOn.PNG"));
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
             virtualRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
@@ -52,7 +52,7 @@ namespace TaleofMonsters.Forms.Items
             product = pro;
             if (product.Id != 0)
             {
-                virtualRegion.SetRegionInfo(1, product.Cid);
+                virtualRegion.SetRegionKey(1, product.Cid);
             }
 
             string effectName = "";

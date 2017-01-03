@@ -28,7 +28,7 @@ namespace TaleofMonsters.Forms
             virtualRegion = new VirtualRegion(this);
             for (int i = 0; i < 5; i++)
             {
-                ButtonRegion region = new ButtonRegion(i + 1, 9, 35 + 30 * i, 74, 24, i + 1, "CommonButton1.JPG", "CommonButton1On.JPG");
+                ButtonRegion region = new ButtonRegion(i + 1, 9, 35 + 30 * i, 74, 24, "CommonButton1.JPG", "CommonButton1On.JPG");
                 region.AddDecorator(new RegionTextDecorator(18, 7, 10, Color.Black));
                 virtualRegion.AddRegion(region);
             }
@@ -85,11 +85,11 @@ namespace TaleofMonsters.Forms
             Invalidate(new Rectangle(9, 35, 66, 30*5));
         }
 
-        void virtualRegion_RegionClicked(int info, int x, int y, MouseButtons button)
+        void virtualRegion_RegionClicked(int id, int x, int y, MouseButtons button)
         {
             if (button == MouseButtons.Left)
             {
-                ChangeType(info);
+                ChangeType(id);
             }
         }
 

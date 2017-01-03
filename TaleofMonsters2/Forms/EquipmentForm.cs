@@ -39,30 +39,30 @@ namespace TaleofMonsters.Forms
             InitializeComponent();
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
             vRegion = new VirtualRegion(this);
-            var r1 = new PictureRegion(1, 413, 69, 64, 64, 1, VirtualRegionCellType.Equip, UserProfile.InfoEquip.Equipon[0]);
+            var r1 = new PictureRegion(1, 413, 69, 64, 64, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipon[0]);
             r1.AddDecorator(new RegionBorderDecorator(Color.Yellow));//头盔
             vRegion.AddRegion(r1);
-            r1 = new PictureRegion(2, 374, 151, 40, 40, 2, VirtualRegionCellType.Equip, UserProfile.InfoEquip.Equipon[1]);
+            r1 = new PictureRegion(2, 374, 151, 40, 40, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipon[1]);
             r1.AddDecorator(new RegionBorderDecorator(Color.Yellow));//武器
             vRegion.AddRegion(r1);
-            r1 = new PictureRegion(3, 425, 151, 40, 40, 3, VirtualRegionCellType.Equip, UserProfile.InfoEquip.Equipon[2]);
+            r1 = new PictureRegion(3, 425, 151, 40, 40, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipon[2]);
             r1.AddDecorator(new RegionBorderDecorator(Color.Yellow));//防具
             vRegion.AddRegion(r1);
-            r1 = new PictureRegion(4, 476, 151, 40, 40, 4, VirtualRegionCellType.Equip, UserProfile.InfoEquip.Equipon[3]);
+            r1 = new PictureRegion(4, 476, 151, 40, 40, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipon[3]);
             r1.AddDecorator(new RegionBorderDecorator(Color.Yellow));//饰品
             vRegion.AddRegion(r1);
 
-            vRegion.AddRegion(new SubVirtualRegion(10, 147, 107, 46, 44, 10));
-            vRegion.AddRegion(new SubVirtualRegion(11, 200, 107, 46, 44, 11));
-            vRegion.AddRegion(new SubVirtualRegion(12, 253, 107, 46, 44, 12));
-            vRegion.AddRegion(new SubVirtualRegion(13, 306, 107, 46, 44, 13));
-            vRegion.AddRegion(new SubVirtualRegion(14, 147, 170, 46, 44, 14));
-            vRegion.AddRegion(new SubVirtualRegion(15, 200, 170, 46, 44, 15));
-            vRegion.AddRegion(new SubVirtualRegion(16, 253, 170, 46, 44, 16));
+            vRegion.AddRegion(new SubVirtualRegion(10, 147, 107, 46, 44));
+            vRegion.AddRegion(new SubVirtualRegion(11, 200, 107, 46, 44));
+            vRegion.AddRegion(new SubVirtualRegion(12, 253, 107, 46, 44));
+            vRegion.AddRegion(new SubVirtualRegion(13, 306, 107, 46, 44));
+            vRegion.AddRegion(new SubVirtualRegion(14, 147, 170, 46, 44));
+            vRegion.AddRegion(new SubVirtualRegion(15, 200, 170, 46, 44));
+            vRegion.AddRegion(new SubVirtualRegion(16, 253, 170, 46, 44));
 
             for (int i = 0; i < 60; i++)
             {
-                var region = new PictureRegion(20 + i, 38 + (i % 15) * 32, 227 + (i / 15) * 32, 32, 32, 20+i, VirtualRegionCellType.Equip, UserProfile.InfoEquip.Equipoff[i]);
+                var region = new PictureRegion(20 + i, 38 + (i % 15) * 32, 227 + (i / 15) * 32, 32, 32, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipoff[i]);
              //   region.AddDecorator(new RegionBorderDecorator(region, Color.Yellow));
                 vRegion.AddRegion(region);
             }
@@ -95,14 +95,13 @@ namespace TaleofMonsters.Forms
             Close();
         }
 
-        private void virtualRegion_RegionEntered(int info, int x, int y, int key)
+        private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
             if (selectTar >= 0)//已经点起了一个装备，不显示tip了
             {
                 return;
             }
 
-            int id = info;
             Image image = null;
             if (id < 10)
             {
@@ -141,10 +140,10 @@ namespace TaleofMonsters.Forms
             tooltip.Hide(this);
         }
 
-        private void virtualRegion_RegionClicked(int info, int x, int y, MouseButtons button)
+        private void virtualRegion_RegionClicked(int id, int x, int y, MouseButtons button)
         {
             tooltip.Hide(this);
-            int id = info;
+
             if (button == MouseButtons.Left)
             {
                 if (id < 10)//点击装备
@@ -162,9 +161,9 @@ namespace TaleofMonsters.Forms
                             {
                                 int oldid = UserProfile.InfoEquip.Equipon[id - 1];
                                 UserProfile.InfoEquip.Equipon[id - 1] = UserProfile.InfoEquip.Equipoff[selectTar];
-                                vRegion.SetRegionInfo(id, UserProfile.InfoEquip.Equipon[id - 1]);
+                                vRegion.SetRegionKey(id, UserProfile.InfoEquip.Equipon[id - 1]);
                                 UserProfile.InfoEquip.Equipoff[selectTar] = oldid;
-                                vRegion.SetRegionInfo(selectTar + 20, oldid);
+                                vRegion.SetRegionKey(selectTar + 20, oldid);
                                 UserProfile.InfoEquip.OnEquipOn(UserProfile.InfoEquip.Equipon[id - 1]);//触发事件
                                 RefreshEquip();
                                 selectTar = -1;
@@ -178,9 +177,9 @@ namespace TaleofMonsters.Forms
                         if (i == -1)//没有空格了
                             return;
                         UserProfile.InfoEquip.Equipoff[i] = UserProfile.InfoEquip.Equipon[id - 1];
-                        vRegion.SetRegionInfo(i + 20, UserProfile.InfoEquip.Equipoff[i]);
+                        vRegion.SetRegionKey(i + 20, UserProfile.InfoEquip.Equipoff[i]);
                         UserProfile.InfoEquip.Equipon[id - 1] = 0;
-                        vRegion.SetRegionInfo(id, 0);
+                        vRegion.SetRegionKey(id, 0);
                         UserProfile.InfoEquip.OnEquipOff(UserProfile.InfoEquip.Equipoff[i]);//触发事件
                         RefreshEquip();
                     }
@@ -206,8 +205,8 @@ namespace TaleofMonsters.Forms
                             UserProfile.InfoEquip.Equipoff[tar] = UserProfile.InfoEquip.Equipoff[selectTar];
                             UserProfile.InfoEquip.Equipoff[selectTar] = 0;
 
-                            vRegion.SetRegionInfo(tar + 20, UserProfile.InfoEquip.Equipoff[tar]);
-                            vRegion.SetRegionInfo(selectTar + 20, 0);
+                            vRegion.SetRegionKey(tar + 20, UserProfile.InfoEquip.Equipoff[tar]);
+                            vRegion.SetRegionKey(selectTar + 20, 0);
                         }
                         else//交换
                         {
@@ -215,8 +214,8 @@ namespace TaleofMonsters.Forms
                             UserProfile.InfoEquip.Equipoff[tar] = UserProfile.InfoEquip.Equipoff[selectTar];
                             UserProfile.InfoEquip.Equipoff[selectTar] = oldid;
 
-                            vRegion.SetRegionInfo(tar + 20, UserProfile.InfoEquip.Equipoff[tar]);
-                            vRegion.SetRegionInfo(selectTar + 20, UserProfile.InfoEquip.Equipoff[selectTar]);
+                            vRegion.SetRegionKey(tar + 20, UserProfile.InfoEquip.Equipoff[tar]);
+                            vRegion.SetRegionKey(selectTar + 20, UserProfile.InfoEquip.Equipoff[selectTar]);
                         }
                         selectTar = -1;
                     }
@@ -248,7 +247,7 @@ namespace TaleofMonsters.Forms
 
         public void MenuRefresh(int id)
         {
-            vRegion.SetRegionInfo(id + 20, UserProfile.InfoEquip.Equipoff[id]);
+            vRegion.SetRegionKey(id + 20, UserProfile.InfoEquip.Equipoff[id]);
             Invalidate();
         }
 

@@ -154,6 +154,7 @@
     <Compile Include="Controler\World\WorldInfoManager.cs" />
     <Compile Include="DataType\User\Mem\MemSceneSpecialPosData.cs" />
     <Compile Include="Forms\Items\Regions\Decorators\RegionCoverDecorator.cs" />
+    <Compile Include="Forms\Items\Regions\ImageRegion.cs" />
     <Compile Include="MainItem\Quests\TalkEventItem.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemRoll.cs" />
     <Compile Include="MainItem\Quests\SceneQuests\SceneQuestEvent.cs" />
@@ -245,7 +246,6 @@
     <Compile Include="Forms\Items\Regions\Decorators\RegionTextDecorator.cs" />
     <Compile Include="Forms\Items\Regions\Decorators\RegionBorderDecorator.cs" />
     <Compile Include="Forms\Items\Regions\PictureAnimRegion.cs" />
-    <Compile Include="Forms\Items\Regions\VirtualRegionCellType.cs" />
     <Compile Include="Forms\Items\Regions\ItemUseRegion.cs" />
     <Compile Include="Forms\Items\Regions\SwitchButtonRegion.cs" />
     <Compile Include="Forms\MagicBook\CardDeckStatistic.cs" />
@@ -584,7 +584,7 @@
     <Compile Include="MainItem\SystemMenu.Designer.cs">
       <DependentUpon>SystemMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataType\NPCs\NPCBook.cs" />
+    <Compile Include="DataType\Scenes\SceneBook.cs" />
     <Compile Include="DataType\Peoples\PeopleBook.cs" />
     <Compile Include="DataType\Peoples\PeopleDrop.cs" />
     <Compile Include="Controler\Battle\Data\Players\AIPlayer.cs" />

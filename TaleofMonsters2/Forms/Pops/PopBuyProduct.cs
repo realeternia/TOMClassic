@@ -53,7 +53,7 @@ namespace TaleofMonsters.Forms.Pops
             toolTip.Hide(this);
         }
 
-        void virtualRegion_RegionEntered(int info, int x, int y, int key)
+        void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
             Image image = null;
             if (itemtype == 1)
@@ -97,7 +97,7 @@ namespace TaleofMonsters.Forms.Pops
             mb.itemid = id;
             mb.itemtype = type;
             mb.itemprice = price;
-            mb.virtualRegion.AddRegion(new PictureRegion(1, 68, 44, 40, 40, 1, type == 1 ? VirtualRegionCellType.Item : VirtualRegionCellType.Equip, id));
+            mb.virtualRegion.AddRegion(new PictureRegion(1, 68, 44, 40, 40, type == 1 ? PictureRegionCellType.Item : PictureRegionCellType.Equip, id));
             mb.ShowDialog();
         }
 

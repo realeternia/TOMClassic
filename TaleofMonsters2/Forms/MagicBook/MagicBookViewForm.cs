@@ -34,7 +34,7 @@ namespace TaleofMonsters.Forms.MagicBook
         private void AddBookRegion(int id,int x, int y, int cardId, string text)
         {
             RegionTextDecorator textControl;
-            var region = new PictureAnimRegion(id, x, y, 76, 100, id, VirtualRegionCellType.Card, cardId);
+            var region = new PictureAnimRegion(id, x, y, 76, 100, PictureRegionCellType.Card, cardId);
             textControl = new RegionTextDecorator(3, 80, 10, Color.Lime, true);
             textControl.SetState(text);
             region.AddDecorator(textControl);
@@ -61,9 +61,9 @@ namespace TaleofMonsters.Forms.MagicBook
             Invalidate();
         }
 
-        private void virtualRegion_RegionClicked(int info, int x, int y, MouseButtons button)
+        private void virtualRegion_RegionClicked(int id, int x, int y, MouseButtons button)
         {
-            switch (info)
+            switch (id)
             {
                 case 1:
                     MainForm.Instance.DealPanel(new CardViewForm());

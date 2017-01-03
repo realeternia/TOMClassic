@@ -7,8 +7,8 @@ namespace TaleofMonsters.Forms.Items.Regions
     internal class VirtualRegion
     {
         public delegate void VRegionLeftEventHandler();
-        public delegate void VRegionClickEventHandler(int info, int x, int y, MouseButtons button);
-        public delegate void VRegionEnteredEventHandler(int info, int x, int y, int key);
+        public delegate void VRegionClickEventHandler(int id, int x, int y, MouseButtons button);
+        public delegate void VRegionEnteredEventHandler(int id, int x, int y, int key);
 
         public event VRegionClickEventHandler RegionClicked;
         public event VRegionEnteredEventHandler RegionEntered;
@@ -36,10 +36,10 @@ namespace TaleofMonsters.Forms.Items.Regions
         public void AddRegion(SubVirtualRegion region)
         {
             region.Parent = parent;
-            subRegions.Add(region.id, region);
+            subRegions.Add(region.Id, region);
         }
 
-        public void SetRegionInfo(int id, int value)
+        public void SetRegionKey(int id, int value)
         {
             SubVirtualRegion region;
             if (subRegions.TryGetValue(id, out region))
@@ -48,12 +48,12 @@ namespace TaleofMonsters.Forms.Items.Regions
             }
         }
 
-        public void SetRegionType(int id, VirtualRegionCellType value)
+        public void SetRegionType(int id, PictureRegionCellType value)
         {
             SubVirtualRegion region;
             if (subRegions.TryGetValue(id, out region))
             {
-                region.SetType(value);
+                (region as PictureRegion).SetType(value);
             }
         }
 
@@ -80,7 +80,7 @@ namespace TaleofMonsters.Forms.Items.Regions
             SubVirtualRegion region;
             if (subRegions.TryGetValue(id, out region))
             {
-                region.SetParm(value);
+                region.Parm = value;
             }
         }
 
@@ -89,9 +89,19 @@ namespace TaleofMonsters.Forms.Items.Regions
             SubVirtualRegion region;
             if (subRegions.TryGetValue(id, out region))
             {
-                return new Point(region.x + selectRegion.width + 1, region.y);
+                return new Point(region.X + selectRegion.Width + 1, region.Y);
             }
             return new Point(0,0);
+        }
+
+        public SubVirtualRegion GetRegion(int id)
+        {
+            SubVirtualRegion region;
+            if (subRegions.TryGetValue(id, out region))
+            {
+                return region;
+            }
+            return null;
         }
 
         private void CheckMouseMove(int mouseX, int mouseY)
@@ -100,9 +110,9 @@ namespace TaleofMonsters.Forms.Items.Regions
             lastMouseY = mouseY;
             foreach (SubVirtualRegion subRegion in subRegions.Values)
             {
-                if (mouseX > subRegion.x && mouseX < subRegion.x + subRegion.width && mouseY > subRegion.y && mouseY < subRegion.y + subRegion.height)
+                if (mouseX > subRegion.X && mouseX < subRegion.X + subRegion.Width && mouseY > subRegion.Y && mouseY < subRegion.Y + subRegion.Height)
                 {
-                    if (selectRegion == null || subRegion.id != selectRegion.id)
+                    if (selectRegion == null || subRegion.Id != selectRegion.Id)
                     {
                         if (selectRegion!=null)
                         {
@@ -112,7 +122,7 @@ namespace TaleofMonsters.Forms.Items.Regions
                         selectRegion.Enter();
                         if (RegionEntered!=null)
                         {
-                            RegionEntered(selectRegion.info, selectRegion.x + selectRegion.width + 1, selectRegion.y, selectRegion.GetKeyValue());
+                            RegionEntered(selectRegion.Id, selectRegion.X + selectRegion.Width + 1, selectRegion.Y, selectRegion.GetKeyValue());
                         }
                     }
                     return;
@@ -131,9 +141,9 @@ namespace TaleofMonsters.Forms.Items.Regions
 
         private void CheckMouseClick(MouseButtons button)
         {
-            if (RegionClicked != null && selectRegion != null && selectRegion.id > 0)
+            if (RegionClicked != null && selectRegion != null && selectRegion.Id > 0)
             {
-                RegionClicked(selectRegion.info, lastMouseX, lastMouseY, button);
+                RegionClicked(selectRegion.Id, lastMouseX, lastMouseY, button);
             }
         }
 
