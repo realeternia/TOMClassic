@@ -33,6 +33,13 @@ namespace TaleofMonsters.DataType.Others
             return (uint)(5 * rate / 100);//todo
         }
         /// <summary>
+        /// 战斗获得经验值
+        /// </summary>
+        public static uint InExpFight(int level, int rLevel)
+        {
+            return (uint)(ExpTree.GetNextRequired(rLevel) / 2 / (15 + Math.Abs(level - rLevel) * 3) + 1);
+        }
+        /// <summary>
         /// 购买卡牌消耗Gem
         /// </summary>
         public static uint OutGemCardBuy(int qual)

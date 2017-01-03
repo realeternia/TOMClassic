@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
+using NarlonLib.Drawing;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Items;
@@ -16,6 +17,7 @@ using TaleofMonsters.DataType.Others;
 using TaleofMonsters.Controler.Battle.DataTent;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType;
+using TaleofMonsters.Forms.Items.Regions.Decorators;
 
 namespace TaleofMonsters.Controler.Battle
 {
@@ -26,11 +28,12 @@ namespace TaleofMonsters.Controler.Battle
         private int leftId;
         private int rightId;
         private int[] resource;
-        private int exp;
+        private uint exp;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
         private VirtualRegion virtualRegion;
 
-        private List<int> rewardItemList = new List<int>(); 
+        private List<int> rewardItemList = new List<int>();
+        private int cellIndex;
 
         internal BattleResultForm()
         {
@@ -39,10 +42,6 @@ namespace TaleofMonsters.Controler.Battle
             this.bitmapButtonClose2.ImageNormal = PicLoader.Read("ButtonBitmap", "CancelButton.JPG");
             bitmapButtonClose2.NoUseDrawNine = true;
             virtualRegion = new VirtualRegion(this);
-            virtualRegion.AddRegion(new PictureAnimRegion(1, 102, 270, 60, 60, PictureRegionCellType.Item, 0));
-            virtualRegion.AddRegion(new PictureAnimRegion(2, 172, 270, 60, 60, PictureRegionCellType.Item, 0));
-            virtualRegion.AddRegion(new PictureAnimRegion(3, 242, 270, 60, 60, PictureRegionCellType.Item, 0));
-            virtualRegion.AddRegion(new PictureAnimRegion(4, 312, 270, 60, 60, PictureRegionCellType.Item, 0));
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
@@ -63,17 +62,16 @@ namespace TaleofMonsters.Controler.Battle
             
             rightId = BattleManager.Instance.PlayerManager.RightPlayer.PeopleId;
             leftId = BattleManager.Instance.PlayerManager.LeftPlayer.PeopleId;
-            virtualRegion.SetRegionKey(1, 0);
             if (leftId == 0)
             {
                 BattleInfo battleInfo = BattleManager.Instance.BattleInfo;
                 PeopleDrop drop = new PeopleDrop(rightId);
                 resource = drop.GetDropResource();
                 PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(rightId);
-                exp = ExpTree.GetNextRequired(peopleConfig.Level) / 2 / (15 + Math.Abs(UserProfile.InfoBasic.Level - peopleConfig.Level) * 3) + 1;
+                exp = GameResourceBook.InExpFight(UserProfile.InfoBasic.Level, peopleConfig.Level);
 
                 resource[0] = resource[0]*(100 + battleInfo.GoldRatePlus)/100;
-                exp = exp*(100 + battleInfo.ExpRatePlus)/100;
+                exp = exp*(100 + (uint)battleInfo.ExpRatePlus)/100;
 
                 if (isWin)
                 {
@@ -89,14 +87,43 @@ namespace TaleofMonsters.Controler.Battle
                         resource[i] /= 5;
                     exp /= 4;
                 }
+                //resource[0] = 10;  //todo 测试使用
+                //for (int i = 0; i < 10; i++)
+                //{
+                //    battleInfo.Items.Add(22033032);
+                //}
+                //exp = 15;
+                if (resource[0] > 0)
+                {
+                    var pos = GetCellPosition();
+                    var pictureRegion = new ImageRegion(cellIndex, pos.X, pos.Y, 45, 45, ImageRegionCellType.Gold, HSIcons.GetIconsByEName("res1"));
+                    pictureRegion.Scale = 0.5f;
+                    pictureRegion.Parm = resource[0].ToString();
+                    var textControl = new RegionTextDecorator(3, 25, 11, Color.White, true);
+                    textControl.SetState(resource[0].ToString());
+                    pictureRegion.AddDecorator(textControl);
+                    pictureRegion.AddDecorator(new RegionBorderDecorator(Color.Gold));
+                    virtualRegion.AddRegion(pictureRegion);
+                }
+
+                if (exp > 0)
+                {
+                    var pos = GetCellPosition();
+                    var pictureRegion = new ImageRegion(cellIndex, pos.X, pos.Y, 45, 45, ImageRegionCellType.Exp, HSIcons.GetIconsByEName("oth5"));
+                    pictureRegion.Scale = 0.5f;
+                    pictureRegion.Parm = exp.ToString();
+                    var textControl = new RegionTextDecorator(3, 25, 11, Color.White, true);
+                    textControl.SetState(exp.ToString());
+                    pictureRegion.AddDecorator(textControl);
+                    pictureRegion.AddDecorator(new RegionBorderDecorator(Color.Purple));
+                    virtualRegion.AddRegion(pictureRegion);
+                }
 
                 for (int i = 0; i < battleInfo.Items.Count; i++)
                 {
                     rewardItemList.Add(battleInfo.Items[i]);
-                    if (i < 5)
-                    {
-                        virtualRegion.SetRegionKey(i + 1, battleInfo.Items[i]); //前5个掉落可以显示出来
-                    }
+                    var pos = GetCellPosition();
+                    virtualRegion.AddRegion(new PictureAnimRegion(cellIndex, pos.X, pos.Y, 45, 45, PictureRegionCellType.Item, battleInfo.Items[i]));
                 }
             }
             else
@@ -131,16 +158,56 @@ namespace TaleofMonsters.Controler.Battle
             {
                 UserProfile.InfoBag.AddItem(itemId, 1);
             }
-            UserProfile.InfoBasic.AddExp(exp);
+            UserProfile.InfoBasic.AddExp((int)exp);
             UserProfile.InfoBag.AddResource(resource);
+        }
+
+        private Point GetCellPosition()
+        {
+            int x = 102 + 55*(cellIndex%7);
+            int y = 232 + 55 * (cellIndex / 7);
+            cellIndex++;
+            return new Point(x,y);
         }
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
-            if (key > 10)
             {
-                Image image = HItemBook.GetPreview(key);
-                tooltip.Show(image, this, x, y);
+                var region = virtualRegion.GetRegion(id) as PictureAnimRegion;
+                if (region != null)
+                {
+                    var regionType = region.GetVType();
+                    if (regionType == PictureRegionCellType.Item)
+                    {
+                        Image image = HItemBook.GetPreview(key);
+                        tooltip.Show(image, this, x, y);
+                    }
+                }
+            }
+            {
+                var region = virtualRegion.GetRegion(id) as ImageRegion;
+                if (region != null)
+                {
+                    var regionType = region.GetVType();
+                    if (regionType == ImageRegionCellType.Gold)
+                    {
+                        string resStr = string.Format("黄金:{0}", region.Parm);
+                        Image image = DrawTool.GetImageByString(resStr, 100);
+                        tooltip.Show(image, this, x, y);
+                    }
+                    else if (regionType == ImageRegionCellType.Food)
+                    {
+                        string resStr = string.Format("食物:{0}", region.Parm);
+                        Image image = DrawTool.GetImageByString(resStr, 100);
+                        tooltip.Show(image, this, x, y);
+                    }
+                    else if (regionType == ImageRegionCellType.Exp)
+                    {
+                        string resStr = string.Format("经验值:{0}", region.Parm);
+                        Image image = DrawTool.GetImageByString(resStr, 100);
+                        tooltip.Show(image, this, x, y);
+                    }
+                }
             }
         }
 
@@ -216,11 +283,6 @@ namespace TaleofMonsters.Controler.Battle
                 e.Graphics.DrawString(string.Format("{0:00}:{1:00}:{2:00}", span.Hours, span.Minutes, span.Seconds), font2, Brushes.White, 158, 195);
                 e.Graphics.DrawString(string.Format("{0}", battleInfo.Round), font2, Brushes.White, 158, 175);
 
-                e.Graphics.DrawString(resource[0].ToString(), font2, Brushes.Yellow, 126, 232);
-                for (int i = 1; i < 7; i++)
-                {
-                    e.Graphics.DrawString(resource[i].ToString(), font2, Brushes.Pink, 141 + 57 * i, 232);
-                }
                 font.Dispose();
                 font2.Dispose();
             }

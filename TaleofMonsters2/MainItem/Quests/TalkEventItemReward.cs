@@ -61,6 +61,20 @@ namespace TaleofMonsters.MainItem.Quests
                 vRegion.AddRegion(pictureRegion);
                 index++;
             }
+            var expGet = GameResourceBook.InExpSceneQuest(config.Level, config.RewardExp);
+            if (expGet > 0)
+            {
+                UserProfile.Profile.InfoBasic.AddExp((int)expGet);
+                var pictureRegion = new ImageRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25, 60, 60, ImageRegionCellType.Exp, HSIcons.GetIconsByEName("oth5"));
+                pictureRegion.Scale = 0.5f;
+                pictureRegion.Parm = expGet.ToString();
+                var textControl = new RegionTextDecorator(3, 40, 11, Color.White, true);
+                textControl.SetState(expGet.ToString());
+                pictureRegion.AddDecorator(textControl);
+                pictureRegion.AddDecorator(new RegionBorderDecorator(Color.Purple));
+                vRegion.AddRegion(pictureRegion);
+                index++;
+            }
 
             vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25, 60, 60, PictureRegionCellType.Item, 22011180));
             index++;
@@ -94,6 +108,12 @@ namespace TaleofMonsters.MainItem.Quests
                     else if (regionType == ImageRegionCellType.Food)
                     {
                         string resStr = string.Format("食物:{0}", region.Parm);
+                        Image image = DrawTool.GetImageByString(resStr, 100);
+                        tooltip.Show(image, parent, x, y);
+                    }
+                    else if (regionType == ImageRegionCellType.Exp)
+                    {
+                        string resStr = string.Format("经验值:{0}", region.Parm);
                         Image image = DrawTool.GetImageByString(resStr, 100);
                         tooltip.Show(image, parent, x, y);
                     }
