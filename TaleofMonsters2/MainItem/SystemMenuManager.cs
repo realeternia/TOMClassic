@@ -16,9 +16,15 @@ namespace TaleofMonsters.MainItem
         private static List<ToolBarItemData> activeItems;
         private static List<RiverFlow> flows;
 
-        public static bool IsHotkeyEnabled { get; set; } = true;
+        public static bool IsHotkeyEnabled { get; set; }
 
-        public static int MenuTar { get; private set; } = -1;
+        public static int MenuTar { get; private set; }
+
+        static SystemMenuManager()
+        {
+            IsHotkeyEnabled = true;
+            MenuTar = -1;
+        }
 
         public static void Load(int width, int height)
         {
