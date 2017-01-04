@@ -479,6 +479,12 @@
     <EmbeddedResource Include="Scene\default.scn" />
     <EmbeddedResource Include="Scene\home.scn" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SceneQuest\poppyfield.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SceneQuest\sewer.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

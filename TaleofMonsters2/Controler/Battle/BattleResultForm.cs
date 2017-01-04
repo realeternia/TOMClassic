@@ -17,7 +17,6 @@ using TaleofMonsters.DataType.Others;
 using TaleofMonsters.Controler.Battle.DataTent;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType;
-using TaleofMonsters.Forms.Items.Regions.Decorators;
 
 namespace TaleofMonsters.Controler.Battle
 {
@@ -96,26 +95,14 @@ namespace TaleofMonsters.Controler.Battle
                 if (resource[0] > 0)
                 {
                     var pos = GetCellPosition();
-                    var pictureRegion = new ImageRegion(cellIndex, pos.X, pos.Y, 45, 45, ImageRegionCellType.Gold, HSIcons.GetIconsByEName("res1"));
-                    pictureRegion.Scale = 0.5f;
-                    pictureRegion.Parm = resource[0].ToString();
-                    var textControl = new RegionTextDecorator(3, 25, 11, Color.White, true);
-                    textControl.SetState(resource[0].ToString());
-                    pictureRegion.AddDecorator(textControl);
-                    pictureRegion.AddDecorator(new RegionBorderDecorator(Color.Gold));
+                    var pictureRegion = ComplexRegion.GetSceneDataRegion(cellIndex, pos, 45, ImageRegionCellType.Gold, resource[0]);
                     virtualRegion.AddRegion(pictureRegion);
                 }
 
                 if (exp > 0)
                 {
                     var pos = GetCellPosition();
-                    var pictureRegion = new ImageRegion(cellIndex, pos.X, pos.Y, 45, 45, ImageRegionCellType.Exp, HSIcons.GetIconsByEName("oth5"));
-                    pictureRegion.Scale = 0.5f;
-                    pictureRegion.Parm = exp.ToString();
-                    var textControl = new RegionTextDecorator(3, 25, 11, Color.White, true);
-                    textControl.SetState(exp.ToString());
-                    pictureRegion.AddDecorator(textControl);
-                    pictureRegion.AddDecorator(new RegionBorderDecorator(Color.Purple));
+                    var pictureRegion = ComplexRegion.GetSceneDataRegion(cellIndex, pos, 45, ImageRegionCellType.Exp,(int)exp);
                     virtualRegion.AddRegion(pictureRegion);
                 }
 

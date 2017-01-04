@@ -50,5 +50,7 @@ namespace TaleofMonsters.Forms.Items.Regions
         Gold,
         Exp,
         Food,
+        Health,
+        Mental
     }
 }

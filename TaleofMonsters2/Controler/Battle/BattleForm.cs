@@ -19,6 +19,7 @@ using TaleofMonsters.DataType.User;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Data.MemMap;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms;
 using TaleofMonsters.Forms.Items.Regions;
@@ -102,7 +103,7 @@ namespace TaleofMonsters.Controler.Battle
             lifeClock2.IsLeft = false;
         }
 
-        public void Init(int lid, int rid, string map, int tile, int rlevel)
+        public void Init(int lid, int rid, string map, int tile, int rlevel, PeopleFightReason reason)
         {
             isHuman = lid == 0;
             rightId = rid;
@@ -128,6 +129,7 @@ namespace TaleofMonsters.Controler.Battle
             cardsArray1.SetEnable(false);
 
             BattleManager.Instance.Init();
+            BattleManager.Instance.BattleInfo.Reason = reason;
             BattleManager.Instance.PlayerManager.Init(leftId, rightId, rightLevel);
             int index = 0;//初始化英雄技能按钮
             foreach (var skillId in BattleManager.Instance.PlayerManager.LeftPlayer.HeroSkillList)

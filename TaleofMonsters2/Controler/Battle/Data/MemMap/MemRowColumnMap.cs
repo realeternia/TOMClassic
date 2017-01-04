@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using NarlonLib.Core;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
@@ -9,6 +10,8 @@ using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType.Others;
 using ConfigDatas;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Peoples;
+using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMap
 {
@@ -79,6 +82,15 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                 var heroData = new Monster(unitInfo.UnitId);
                 var level = ConfigData.GetLevelExpConfig(player.Level).TowerLevel;
                 LiveMonster lm = new LiveMonster(level, heroData, new Point((x + (player.IsLeft ? unitInfo.X : (-unitInfo.X))) * CardSize, (y + unitInfo.Y) * CardSize), player.IsLeft);
+
+                if (lm.Owner is HumanPlayer && BattleManager.Instance.BattleInfo.Reason == PeopleFightReason.SceneQuest)
+                {
+                    if (UserProfile.InfoBasic.HealthPoint < 60)
+                    {
+                        lm.AddHpRate(Math.Max(1.0, UserProfile.InfoBasic.HealthPoint)/60-1);
+                    }
+           
+                }
                 BattleManager.Instance.MonsterQueue.Add(lm);
             }
 

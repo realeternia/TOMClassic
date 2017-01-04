@@ -71,7 +71,7 @@ namespace TaleofMonsters.DataType.User.Mem
             }
             else
             {
-                PeopleBook.Fight(currentRvId, tournamentConfig.Map, -1, 1, onWin, onLose, null);
+                PeopleBook.Fight(currentRvId, tournamentConfig.Map, -1, 1, PeopleFightReason.Other, onWin, onLose, null);
             }
         }
 

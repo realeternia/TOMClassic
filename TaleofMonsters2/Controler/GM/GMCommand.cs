@@ -1,13 +1,11 @@
 ﻿using System;
-using System.IO;
 using ConfigDatas;
 using TaleofMonsters.Controler.Battle;
 using TaleofMonsters.Controler.Battle.Tool;
-using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.User;
-using TaleofMonsters.MainItem;
+using TaleofMonsters.Forms;
 using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.Controler.GM
@@ -63,6 +61,13 @@ namespace TaleofMonsters.Controler.GM
                                 case "Vs": GmScript.MonsterVsBatch();break;
                             }
                         } break;
+                    case "sceq":
+                        NpcTalkForm sw = new NpcTalkForm();
+                        sw.EventId = int.Parse(data[1]);
+                        sw.NeedBlackForm = true;
+                        MainForm.Instance.DealPanel(sw); break;
+                    case "cure": UserProfile.InfoBasic.MentalPoint=100; UserProfile.InfoBasic.HealthPoint=100;
+                        UserProfile.InfoBasic.FoodPoint = 100;break;
                 }
             }
             catch (FormatException) { }

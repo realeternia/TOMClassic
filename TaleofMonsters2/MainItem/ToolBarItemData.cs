@@ -7,7 +7,6 @@ using TaleofMonsters.DataType.User;
 using ConfigDatas;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;
-using TaleofMonsters.DataType.User.Mem; 
 
 namespace TaleofMonsters.MainItem
 { 

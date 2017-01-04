@@ -10,24 +10,24 @@
 					r0
 						s你挂了
 							a好啊
-								efail
+								epunish
 					r1
 						s你赢了
 							a好啊
-								ewin
+								end
 			a跑跑跑
 				eroll|大成功|成功|成功|失败
 					r0
 						s你赢了
 							a好啊
-								ewin
+								end
 					r1-2
 						s去不去
 							a好啊
-								efail
+								epunish
 							a不好
-								ewin
+								end
 					r3
 						s你挂了
 							a好啊
-								efail
+								epunish

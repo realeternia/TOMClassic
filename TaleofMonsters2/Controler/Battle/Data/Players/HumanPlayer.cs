@@ -5,9 +5,11 @@ using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.Decks;
 using System.Drawing;
+using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Equips;
 using TaleofMonsters.DataType.Others;
+using TaleofMonsters.DataType.Peoples;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
 {
@@ -33,6 +35,14 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             EnergyGenerator.SetRate(energyRate, UserProfile.InfoBasic.Job);
 
             InitBase();
+
+            if (BattleManager.Instance.BattleInfo.Reason == PeopleFightReason.SceneQuest)
+            {
+                var initialPoint = Math.Min(3, (UserProfile.InfoBasic.MentalPoint+29)/30);
+                Mp = initialPoint;
+                Lp = initialPoint;
+                Pp = initialPoint;
+            }
         }
 
         public override void AddResource(GameResourceType type, int number)

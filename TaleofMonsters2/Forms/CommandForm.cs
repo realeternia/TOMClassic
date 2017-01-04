@@ -39,11 +39,6 @@ namespace TaleofMonsters.Forms
                 cmd = "atp";
                 hint = "提升角色[p1]点阅历";
             }
-            if (textBoxTitle.Text.Contains("skp"))
-            {
-                cmd = "skp";
-                hint = "提升角色[p1]点灵气";
-            }
             if (textBoxTitle.Text.Contains("emys"))
             {
                 cmd = "emys";
@@ -98,6 +93,16 @@ namespace TaleofMonsters.Forms
             {
                 cmd = "fbat";
                 hint = "快速战斗[p1]Vs[p2]";
+            }
+            if (textBoxTitle.Text.Contains("sceq"))
+            {
+                cmd = "sceq";
+                hint = "场景事件[p1]";
+            }
+            if (textBoxTitle.Text.Contains("cure"))
+            {
+                cmd = "cure";
+                hint = "回复所有的健康，食物和精神";
             }
             Invalidate();
         }

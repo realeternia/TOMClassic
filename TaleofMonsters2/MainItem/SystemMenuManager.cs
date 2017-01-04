@@ -15,14 +15,10 @@ namespace TaleofMonsters.MainItem
         private static List<ToolBarItemData> menuItems;
         private static List<ToolBarItemData> activeItems;
         private static List<RiverFlow> flows;
-        private static int menuTar = -1;
-        public static bool isHotkeyEnabled = true;
-        public static int formCount;
 
-        public static int MenuTar
-        {
-            get { return menuTar; }
-        }
+        public static bool IsHotkeyEnabled { get; set; } = true;
+
+        public static int MenuTar { get; private set; } = -1;
 
         public static void Load(int width, int height)
         {
@@ -70,17 +66,17 @@ namespace TaleofMonsters.MainItem
             {
                 if (item.InRegion(mouseX, mouseY))
                 {
-                    if (item.Id != menuTar)
+                    if (item.Id != MenuTar)
                     {
-                        menuTar = item.Id;
+                        MenuTar = item.Id;
                         return true;
                     }
                     return false;
                 }
             }
-            if (menuTar != -1)
+            if (MenuTar != -1)
             {
-                menuTar = -1;
+                MenuTar = -1;
                 return true;
             }
             return false;
@@ -128,7 +124,7 @@ namespace TaleofMonsters.MainItem
         {
             foreach (ToolBarItemData item in activeItems)
             {
-                item.Draw(g, menuTar);
+                item.Draw(g, MenuTar);
             }
         }
 
@@ -198,7 +194,7 @@ namespace TaleofMonsters.MainItem
                     {
                         if (UserProfile.InfoBag.PayDiamond(5))
                         {
-                            UserProfile.InfoBasic.EatFood(20);
+                            UserProfile.InfoBasic.AddFood(20);
                         }
                     }
                     break;
@@ -251,7 +247,7 @@ namespace TaleofMonsters.MainItem
 
         public static void CheckHotKey(Keys key)
         {
-            if (!isHotkeyEnabled)
+            if (!IsHotkeyEnabled)
             {
                 return;
             }

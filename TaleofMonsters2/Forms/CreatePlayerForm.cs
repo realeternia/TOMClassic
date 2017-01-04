@@ -96,6 +96,9 @@ namespace TaleofMonsters.Forms
             profile.InfoBasic.Level = 1;
             profile.InfoBasic.MapId = SceneConfig.Indexer.BornMapId;
             profile.InfoBasic.Position = 1001;
+            profile.InfoBasic.HealthPoint = 100;
+            profile.InfoBasic.MentalPoint = 100;
+            profile.InfoBasic.FoodPoint = 100;
             profile.InfoBag.BagCount = 50;
             return profile;
         }

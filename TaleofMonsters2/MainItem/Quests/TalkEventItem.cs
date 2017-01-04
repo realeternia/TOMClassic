@@ -16,10 +16,13 @@ namespace TaleofMonsters.MainItem.Quests
         {
             switch (e.Type)
             {
-                case "roll": return new TalkEventItemRoll(eventId,r, e); break;
-                case "fight": return new TalkEventItemFight(eventId, r, e); break;
-                case "reward": return new TalkEventItemReward(eventId, c, r, e); break;
-                default: return new TalkEventItem(eventId, r, e); break;
+                case "roll": return new TalkEventItemRoll(eventId,r, e);
+                case "fight": return new TalkEventItemFight(eventId, r, e); 
+                case "reward": return new TalkEventItemReward(eventId, c, r, e); 
+                case "punish": return new TalkEventItemPunish(eventId, c, r, e); 
+                case "reset": return new TalkEventItemReset(eventId, r, e);
+                case "nd": return new TalkEventItemEnd(eventId, r, e);
+                default: return new TalkEventItem(eventId, r, e); 
             }
         }
 
@@ -51,7 +54,12 @@ namespace TaleofMonsters.MainItem.Quests
 
         public virtual void Draw(Graphics g)
         {
-            g.DrawRectangle(Pens.White, pos);
+         //   g.DrawRectangle(Pens.White, pos);
+        }
+
+        public virtual bool AutoClose()
+        {
+            return false;
         }
     }
 }

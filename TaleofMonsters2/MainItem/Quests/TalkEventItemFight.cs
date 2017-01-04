@@ -15,7 +15,7 @@ namespace TaleofMonsters.MainItem.Quests
             int enemyId = config.EnemyId;
             HsActionCallback winCallback = () => { result = evt.ChooseTarget(1); isEndFight = true; };
             HsActionCallback failCallback = () => { result = evt.ChooseTarget(0); isEndFight = true; };
-            PeopleBook.Fight(enemyId, "oneline", -1, config.Level, winCallback, failCallback, failCallback);
+            PeopleBook.Fight(enemyId, "oneline", -1, config.Level, PeopleFightReason.SceneQuest, winCallback, failCallback, failCallback);
         }
 
         public override void OnFrame(int tick)
@@ -25,10 +25,6 @@ namespace TaleofMonsters.MainItem.Quests
                 RunningState = TalkEventState.Finish;
                 isEndFight = false;
             }
-        }
-        public override void Draw(Graphics g)
-        {
-
         }
     }
 }

@@ -2,13 +2,11 @@
 using System.Windows.Forms;
 using NarlonLib.Control;
 using NarlonLib.Drawing;
-using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Regions;
-using TaleofMonsters.Forms.Items.Regions.Decorators;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
 
 namespace TaleofMonsters.MainItem.Quests
@@ -37,27 +35,31 @@ namespace TaleofMonsters.MainItem.Quests
             if (goldGet > 0)
             {
                 UserProfile.Profile.InfoBag.AddResource(GameResourceType.Gold, goldGet);
-                var pictureRegion = new ImageRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25, 60, 60, ImageRegionCellType.Gold, HSIcons.GetIconsByEName("res1"));
-                pictureRegion.Scale = 0.5f;
-                pictureRegion.Parm = goldGet.ToString();
-                var textControl = new RegionTextDecorator(3, 40, 11, Color.White, true);
-                textControl.SetState(goldGet.ToString());
-                pictureRegion.AddDecorator(textControl);
-                pictureRegion.AddDecorator(new RegionBorderDecorator(Color.Gold));
+                var pictureRegion = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Gold, (int)goldGet);
                 vRegion.AddRegion(pictureRegion);
                 index++;
             }
-            var foodGet = GameResourceBook.InFoodSceneQuest(config.RewardGold);
+            var foodGet = GameResourceBook.InFoodSceneQuest(config.RewardFood);
             if (foodGet > 0)
             {
-                UserProfile.Profile.InfoBasic.EatFood((int)foodGet);
-                var pictureRegion = new ImageRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25, 60, 60, ImageRegionCellType.Food, HSIcons.GetIconsByEName("oth7"));
-                pictureRegion.Scale = 0.5f;
-                pictureRegion.Parm = foodGet.ToString();
-                var textControl = new RegionTextDecorator(3, 40, 11, Color.White, true);
-                textControl.SetState(foodGet.ToString());
-                pictureRegion.AddDecorator(textControl);
-                pictureRegion.AddDecorator(new RegionBorderDecorator(Color.GreenYellow));
+                UserProfile.Profile.InfoBasic.AddFood(foodGet);
+                var pictureRegion = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Food, (int)foodGet);
+                vRegion.AddRegion(pictureRegion);
+                index++;
+            }
+            var healthGet = GameResourceBook.InHealthSceneQuest(config.RewardHealth);
+            if (healthGet > 0)
+            {
+                UserProfile.Profile.InfoBasic.AddHealth(healthGet);
+                var pictureRegion = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Health, (int)healthGet);
+                vRegion.AddRegion(pictureRegion);
+                index++;
+            }
+            var mentalGet = GameResourceBook.InMentalSceneQuest(config.RewardMental);
+            if (mentalGet > 0)
+            {
+                UserProfile.Profile.InfoBasic.AddMental(mentalGet);
+                var pictureRegion = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Mental, (int)mentalGet);
                 vRegion.AddRegion(pictureRegion);
                 index++;
             }
@@ -65,19 +67,23 @@ namespace TaleofMonsters.MainItem.Quests
             if (expGet > 0)
             {
                 UserProfile.Profile.InfoBasic.AddExp((int)expGet);
-                var pictureRegion = new ImageRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25, 60, 60, ImageRegionCellType.Exp, HSIcons.GetIconsByEName("oth5"));
-                pictureRegion.Scale = 0.5f;
-                pictureRegion.Parm = expGet.ToString();
-                var textControl = new RegionTextDecorator(3, 40, 11, Color.White, true);
-                textControl.SetState(expGet.ToString());
-                pictureRegion.AddDecorator(textControl);
-                pictureRegion.AddDecorator(new RegionBorderDecorator(Color.Purple));
+                var pictureRegion = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Exp, (int)expGet);
                 vRegion.AddRegion(pictureRegion);
                 index++;
             }
 
-            vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25, 60, 60, PictureRegionCellType.Item, 22011180));
-            index++;
+            if (config.RewardItem1 > 0)
+            {
+                UserProfile.InfoBag.AddItem(config.RewardItem1, 1);
+                vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25, 60, 60, PictureRegionCellType.Item, config.RewardItem1));
+                index++;
+            }
+            if (config.RewardItem2 > 0)
+            {
+                UserProfile.InfoBag.AddItem(config.RewardItem2, 1);
+                vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25, 60, 60, PictureRegionCellType.Item, config.RewardItem2));
+                index++;
+            }
         }
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
@@ -108,6 +114,18 @@ namespace TaleofMonsters.MainItem.Quests
                     else if (regionType == ImageRegionCellType.Food)
                     {
                         string resStr = string.Format("食物:{0}", region.Parm);
+                        Image image = DrawTool.GetImageByString(resStr, 100);
+                        tooltip.Show(image, parent, x, y);
+                    }
+                    else if (regionType == ImageRegionCellType.Health)
+                    {
+                        string resStr = string.Format("生命:{0}", region.Parm);
+                        Image image = DrawTool.GetImageByString(resStr, 100);
+                        tooltip.Show(image, parent, x, y);
+                    }
+                    else if (regionType == ImageRegionCellType.Mental)
+                    {
+                        string resStr = string.Format("精神:{0}", region.Parm);
                         Image image = DrawTool.GetImageByString(resStr, 100);
                         tooltip.Show(image, parent, x, y);
                     }

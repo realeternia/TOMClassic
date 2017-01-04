@@ -4,10 +4,14 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using ConfigDatas;
+using NarlonLib.Control;
+using NarlonLib.Drawing;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.MainItem.Scenes.SceneObjects;
 
 namespace TaleofMonsters.MainItem.Scenes
@@ -30,11 +34,29 @@ namespace TaleofMonsters.MainItem.Scenes
 
         private int width, height;// 场景的宽度和高度
 
+        private VirtualRegion vRegion;
+        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
+
         public Scene(Control p, int w, int h)
         {
             parent = p;
             width = w;
             height = h;
+
+            int xOff = (width - 688) / 2 + 103;
+            vRegion = new VirtualRegion(parent);
+
+            vRegion.AddRegion(new SubVirtualRegion(1, xOff - 60 + 82 * 6, 13, 80, 20));
+            vRegion.AddRegion(new SubVirtualRegion(2, xOff-60, 13, 80, 20));
+            vRegion.AddRegion(new SubVirtualRegion(3, xOff - 60+82, 13, 80, 20));
+            vRegion.AddRegion(new SubVirtualRegion(4, xOff - 60 + 82*2, 13, 80, 20));
+            vRegion.AddRegion(new SubVirtualRegion(5, xOff - 60 + 82*3, 13, 80, 20));
+            vRegion.AddRegion(new SubVirtualRegion(6, xOff - 60 + 82*4, 13, 80, 20));
+            vRegion.AddRegion(new SubVirtualRegion(7, xOff - 60 + 82*5, 13, 80, 20));
+            
+            vRegion.AddRegion(new SubVirtualRegion(10, 0, 0, 150, 50));
+            vRegion.RegionEntered += virtualRegion_RegionEntered;
+            vRegion.RegionLeft += virtualRegion_RegionLeft;
         }
 
         public void Init()
@@ -70,7 +92,7 @@ namespace TaleofMonsters.MainItem.Scenes
             Image allMap = PicLoader.Read("Map", "worldmap.JPG"); //生成世界地图
             Graphics g = Graphics.FromImage(allMap);
             Font font = new Font("微软雅黑", 18*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            foreach (SceneMapIconConfig mapIconConfig in ConfigData.SceneMapIconDict.Values)
+            foreach (var mapIconConfig in ConfigData.SceneMapIconDict.Values)
             {
                 if (mapIconConfig.IconX < wx || mapIconConfig.IconX > wx + 300 || mapIconConfig.IconY < wy || mapIconConfig.IconY > wy + 300)
                     continue;
@@ -124,6 +146,29 @@ namespace TaleofMonsters.MainItem.Scenes
             }
         }
 
+
+        private void virtualRegion_RegionEntered(int id, int x, int y, int key)
+        {
+            if (id == 10)
+            {
+                Image image = GetPlayerImage();
+                tooltip.Show(image, parent, 0,50);
+            }
+            else if (id < 10)
+            {
+                var resName = HSTypes.I2Resource(id - 1);
+                string resStr = string.Format("{0}:{1}", resName, UserProfile.Profile.InfoBag.Resource.Get((GameResourceType)(id-1)));
+                Image image = DrawTool.GetImageByString(resStr, 100);
+                tooltip.Show(image, parent, x, y);
+            }
+        }
+
+        private void virtualRegion_RegionLeft()
+        {
+            tooltip.Hide(parent);
+        }
+
+
         public void Paint(Graphics g, int timeMinutes)
         {
             g.DrawImage(backPicture, 0, 50, width, height-35);
@@ -142,17 +187,27 @@ namespace TaleofMonsters.MainItem.Scenes
             Font font2 = new Font("宋体", 9*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
 
             Image head = PicLoader.Read("Player", string.Format("{0}.PNG", UserProfile.InfoBasic.Face));
-            g.DrawImage(head, 5, 5, 40, 40);
+            g.DrawImage(head, 0, 0, 50, 50);
             head.Dispose();
             g.DrawString(UserProfile.InfoBasic.Level.ToString(), font2, Brushes.Black, 3, 3);
             g.DrawString(UserProfile.InfoBasic.Level.ToString(), font2, Brushes.White, 2, 2);
-            g.DrawString(UserProfile.ProfileName, font, Brushes.White, 50, 10);
+           // g.DrawString(UserProfile.ProfileName, font, Brushes.White, 50, 10);
 
-            LinearGradientBrush b1 = new LinearGradientBrush(new Rectangle(50, 30, 100, 5), Color.LawnGreen, Color.LightSalmon, LinearGradientMode.Horizontal);
-            g.FillRectangle(b1, 50, 30, Math.Min(UserProfile.InfoBasic.Ap, 100), 5);
-            g.DrawRectangle(Pens.Navy, 50, 30, 100, 5);
+            LinearGradientBrush b1 = new LinearGradientBrush(new Rectangle(55, 5, 100, 5), Color.LightCoral, Color.Red, LinearGradientMode.Horizontal);
+            g.FillRectangle(b1, 55, 5, Math.Min(UserProfile.InfoBasic.HealthPoint, 100), 5);
+            g.DrawRectangle(Pens.DarkGray, 55, 5, 100, 5);
             b1.Dispose();
-            
+
+            b1 = new LinearGradientBrush(new Rectangle(55, 12, 100, 5), Color.LightBlue, Color.Blue, LinearGradientMode.Horizontal);
+            g.FillRectangle(b1, 55, 12, Math.Min(UserProfile.InfoBasic.MentalPoint, 100), 5);
+            g.DrawRectangle(Pens.DarkGray, 55, 12, 100, 5);
+            b1.Dispose();
+
+            b1 = new LinearGradientBrush(new Rectangle(55, 19, 100, 5), Color.LightGreen, Color.Green, LinearGradientMode.Horizontal);
+            g.FillRectangle(b1, 55, 19, Math.Min(UserProfile.InfoBasic.FoodPoint, 100), 5);
+            g.DrawRectangle(Pens.DarkGray, 55, 19, 100, 5);
+            b1.Dispose();
+
             if (timeMinutes >= 960 && timeMinutes < 1080)
             {
                 Brush yellow = new SolidBrush(Color.FromArgb(50, 255, 200, 0));
@@ -212,9 +267,21 @@ namespace TaleofMonsters.MainItem.Scenes
             }
         }
 
-        public void RefreshNpcState()
+        private Image GetPlayerImage()
         {
+            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+            tipData.AddTextNewLine(string.Format("{0}(Lv{1})", UserProfile.ProfileName, UserProfile.InfoBasic.Level), "LightBlue", 20);
+            tipData.AddLine(2);
+            tipData.AddTextNewLine(string.Format("生命:{0}",UserProfile.InfoBasic.HealthPoint), "Red");
+            tipData.AddTextNewLine(string.Format("精神:{0}", UserProfile.InfoBasic.MentalPoint), "LightBlue");
+            tipData.AddTextNewLine(string.Format("食物:{0}", UserProfile.InfoBasic.FoodPoint), "LightGreen");
+            return tipData.Image;
+        }
 
+        public void ResetScene()
+        {
+            sceneItems = SceneManager.GetSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, true);
+            parent.Invalidate();
         }
     }
 }

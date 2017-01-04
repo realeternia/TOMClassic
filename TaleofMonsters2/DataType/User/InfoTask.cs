@@ -4,8 +4,6 @@ using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Achieves;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.Tasks;
-using TaleofMonsters.MainItem;
-using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.DataType.User
 {
@@ -69,7 +67,6 @@ namespace TaleofMonsters.DataType.User
                 Tasks.Add(tid, new TaskState(tid, state, 0));
 
             CheckTaskNeedItem(tid);
-            Scene.Instance.RefreshNpcState();
         }
 
         public int GetTaskAddonById(int tid)

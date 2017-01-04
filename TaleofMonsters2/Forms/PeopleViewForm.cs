@@ -91,7 +91,7 @@ namespace TaleofMonsters.Forms
                 return;
             }
 
-            PeopleBook.Fight(peopleConfig.Id, peopleConfig.BattleMap, -1, peopleConfig.Level, null, null, null);
+            PeopleBook.Fight(peopleConfig.Id, peopleConfig.BattleMap, -1, peopleConfig.Level, PeopleFightReason.PeopleView, null, null, null);
         }
 
         private static int[] GetPeopleAvailTypes()

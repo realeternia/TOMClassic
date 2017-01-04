@@ -25,6 +25,7 @@ namespace TaleofMonsters
         private HSCursor myCursor;
         private int page;
         private List<BasePanel> panelList = new List<BasePanel>();
+        public int panelCount;
         private Thread workThread;
         private int timeTick;
         private int timeMinutes;
@@ -209,7 +210,7 @@ namespace TaleofMonsters
                 BlackWallForm.Instance.Init(tabPageGame.Width, tabPageGame.Height);
                 tabPageGame.Controls.Add(BlackWallForm.Instance);
                 BlackWallForm.Instance.BringToFront();
-                SystemMenuManager.isHotkeyEnabled = false;
+                SystemMenuManager.IsHotkeyEnabled = false;
             }
             else
             {
@@ -218,7 +219,7 @@ namespace TaleofMonsters
             panel.Init(tabPageGame.Width, tabPageGame.Height);            
             tabPageGame.Controls.Add(panel);
             panel.BringToFront();
-            SystemMenuManager.formCount++;
+            panelCount++;
         }
 
         public void RemovePanel(BasePanel panel)
@@ -230,11 +231,11 @@ namespace TaleofMonsters
             if (panel.NeedBlackForm)
             {
                 tabPageGame.Controls.Remove(BlackWallForm.Instance);
-                SystemMenuManager.isHotkeyEnabled = true;
+                SystemMenuManager.IsHotkeyEnabled = true;
             }
             tabPageGame.Controls.Remove(panel);
             panelList.Remove(panel);
-            SystemMenuManager.formCount--;
+            panelCount--;
         }
 
         public BasePanel FindForm(Type type)
@@ -282,7 +283,7 @@ namespace TaleofMonsters
                             }
                         }
 
-                        if (SystemMenuManager.isHotkeyEnabled && (timeTick % 5) == 0)
+                        if (SystemMenuManager.IsHotkeyEnabled && (timeTick % 5) == 0)
                         {
                             SystemMenuManager.UpdateAll(tabPageGame);
 

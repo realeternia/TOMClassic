@@ -88,7 +88,7 @@ namespace TaleofMonsters.DataType.Peoples
             return RandomShuffle.Process(pids.ToArray()).GetRange(0, count).ToArray();
         }
 
-        public static void Fight(int pid, string map, int tile, int rlevel, HsActionCallback winEvent, HsActionCallback lossEvent, HsActionCallback cancelEvent)
+        public static void Fight(int pid, string map, int tile, int rlevel, PeopleFightReason reason, HsActionCallback winEvent, HsActionCallback lossEvent, HsActionCallback cancelEvent)
         {
             bool rt = PopDeckChoose.Show(map, tile, UserProfile.InfoCard.GetDeckNames());
             if (!rt)
@@ -103,7 +103,7 @@ namespace TaleofMonsters.DataType.Peoples
             BattleForm bf = new BattleForm();
             bf.BattleWin = winEvent;
             bf.BattleLose = lossEvent;
-            bf.Init(0, pid, map, tile, rlevel);
+            bf.Init(0, pid, map, tile, rlevel, reason);
             MainForm.Instance.DealPanel(bf);
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using NarlonLib.Math;
 
 namespace TaleofMonsters.DataType.Others
 {
@@ -16,13 +17,71 @@ namespace TaleofMonsters.DataType.Others
         /// </summary>
         public static uint InGoldSceneQuest(int level, int rate)
         {
+            double[] factor = new[] {0.2, 0.5, 0.5, 1, 1, 1.5, 2.2};
+            rate = (int)(rate*factor[MathTool.GetRandom(factor.Length)]);
             return (uint)((level*5 + 10)*rate/100);
+        }
+        /// <summary>
+        /// 场景剧情消耗金币
+        /// </summary>
+        public static uint OutGoldSceneQuest(int level, int rate)
+        {
+            double[] factor = new[] { 0.5, 1, 1, 1.5};
+            rate = (int)(rate * factor[MathTool.GetRandom(factor.Length)]);
+            return (uint)((level * 5 + 10) * rate / 100);
         }
         /// <summary>
         /// 场景剧情获得食物
         /// </summary>
         public static uint InFoodSceneQuest(int rate)
         {
+            double[] factor = new[] { 0.5, 1, 1, 1.5 };
+            rate = (int)(rate * factor[MathTool.GetRandom(factor.Length)]);
+            return (uint)(5 * rate / 100);
+        }
+        /// <summary>
+        /// 场景剧情消耗食物
+        /// </summary>
+        public static uint OutFoodSceneQuest(int rate)
+        {
+            double[] factor = new[] { 0.5, 1, 1, 1.5 };
+            rate = (int)(rate * factor[MathTool.GetRandom(factor.Length)]);
+            return (uint)(5 * rate / 100);
+        }
+        /// <summary>
+        /// 场景剧情获得健康
+        /// </summary>
+        public static uint InHealthSceneQuest(int rate)
+        {
+            double[] factor = new[] { 0.5, 0.5, 1, 1, 2 };
+            rate = (int)(rate * factor[MathTool.GetRandom(factor.Length)]);
+            return (uint)(5 * rate / 100);
+        }
+        /// <summary>
+        /// 场景剧情消耗健康
+        /// </summary>
+        public static uint OutHealthSceneQuest(int rate)
+        {
+            double[] factor = new[] { 0.5, 0.5, 1, 1, 2 };
+            rate = (int)(rate * factor[MathTool.GetRandom(factor.Length)]);
+            return (uint)(5 * rate / 100);
+        }
+        /// <summary>
+        /// 场景剧情获得精神
+        /// </summary>
+        public static uint InMentalSceneQuest(int rate)
+        {
+            double[] factor = new[] { 0.2, 0.2, 0.5, 0.5, 1, 1, 2, 3 };
+            rate = (int)(rate * factor[MathTool.GetRandom(factor.Length)]);
+            return (uint)(5 * rate / 100);
+        }
+        /// <summary>
+        /// 场景剧情消耗精神
+        /// </summary>
+        public static uint OutMentalSceneQuest(int rate)
+        {
+            double[] factor = new[] { 0.2, 0.2, 0.5, 0.5, 1, 1, 2, 3 };
+            rate = (int)(rate * factor[MathTool.GetRandom(factor.Length)]);
             return (uint)(5 * rate / 100);
         }
         /// <summary>

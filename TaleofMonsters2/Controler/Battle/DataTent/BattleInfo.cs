@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TaleofMonsters.DataType.Peoples;
 
 namespace TaleofMonsters.Controler.Battle.DataTent
 {
@@ -12,6 +13,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             Items = new List<int>();
         }
 
+        public PeopleFightReason Reason { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public int Round { get; set; }

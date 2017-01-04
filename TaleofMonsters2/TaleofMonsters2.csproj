@@ -152,10 +152,15 @@
     <Compile Include="Controler\Resource\ImageManager.cs" />
     <Compile Include="Controler\World\TimeManager.cs" />
     <Compile Include="Controler\World\WorldInfoManager.cs" />
+    <Compile Include="DataType\Peoples\PeopleFightReason.cs" />
     <Compile Include="DataType\User\Mem\MemSceneSpecialPosData.cs" />
+    <Compile Include="Forms\Items\Regions\ComplexRegion.cs" />
     <Compile Include="Forms\Items\Regions\Decorators\RegionCoverDecorator.cs" />
     <Compile Include="Forms\Items\Regions\ImageRegion.cs" />
     <Compile Include="MainItem\Quests\TalkEventItem.cs" />
+    <Compile Include="MainItem\Quests\TalkEventItemEnd.cs" />
+    <Compile Include="MainItem\Quests\TalkEventItemReset.cs" />
+    <Compile Include="MainItem\Quests\TalkEventItemPunish.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemRoll.cs" />
     <Compile Include="MainItem\Quests\SceneQuests\SceneQuestEvent.cs" />
     <Compile Include="MainItem\Quests\SceneQuests\SceneQuestRollItem.cs" />

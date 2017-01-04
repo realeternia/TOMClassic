@@ -6,8 +6,6 @@ using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Mazes;
 using System.IO;
 using TaleofMonsters.Forms.Items.Core;
-using TaleofMonsters.MainItem;
-using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.Forms
 {
@@ -181,7 +179,6 @@ namespace TaleofMonsters.Forms
 
         private void pictureBoxCancel_Click(object sender, EventArgs e)
         {
-            Scene.Instance.RefreshNpcState();
             Close();
         }
 

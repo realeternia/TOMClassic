@@ -2,7 +2,7 @@ using NarlonLib.Control;
 
 namespace TaleofMonsters.MainItem
 {
-    class SystemToolTip
+    internal class SystemToolTip
     {
         private static ImageToolTip tooltip = new ImageToolTip();
 

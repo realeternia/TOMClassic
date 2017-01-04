@@ -15,10 +15,12 @@ namespace TaleofMonsters.DataType.User
         [FieldIndex(Index = 17)] public int MapId;
         [FieldIndex(Index = 18)] public int AttrPoint;
         [FieldIndex(Index = 19)] public int LastLoginTime;
-        [FieldIndex(Index = 20)] public int Ap; //饱腹值
+        [FieldIndex(Index = 20)] public uint FoodPoint; //饱腹值
         [FieldIndex(Index = 21)] public int DigCount;
         [FieldIndex(Index = 22)] public int LastRival; //上一个peopleview的对手id
         [FieldIndex(Index = 23)] public int Position;
+        [FieldIndex(Index = 24)] public uint HealthPoint; //健康度
+        [FieldIndex(Index = 25)] public uint MentalPoint; //精神
 
         public void AddExp(int ex)
         {
@@ -44,12 +46,62 @@ namespace TaleofMonsters.DataType.User
             }
         }
 
-        public void EatFood(int val)
+        public void AddFood(uint val)
         {
-            Ap += val;
-            if (Ap>=100)
+            FoodPoint += val;
+            if (FoodPoint>=100)
             {
-                Ap = 100;
+                FoodPoint = 100;
+            }
+        }
+        public void SubFood(uint val)
+        {
+            if (val > FoodPoint)
+            {
+                FoodPoint = 0;
+            }
+            else
+            {
+                FoodPoint -= val;
+            }
+        }
+
+        public void AddHealth(uint val)
+        {
+            HealthPoint += val;
+            if (HealthPoint >= 100)
+            {
+                HealthPoint = 100;
+            }
+        }
+        public void SubHealth(uint val)
+        {
+            if (val > HealthPoint)
+            {
+                HealthPoint = 0;
+            }
+            else
+            {
+                HealthPoint -= val;
+            }
+        }
+        public void AddMental(uint val)
+        {
+            MentalPoint += val;
+            if (MentalPoint >= 100)
+            {
+                MentalPoint = 100;
+            }
+        }
+        public void SubMental(uint val)
+        {
+            if (val > MentalPoint)
+            {
+                MentalPoint = 0;
+            }
+            else
+            {
+                MentalPoint -= val;
             }
         }
         public bool CheckNewLevel()

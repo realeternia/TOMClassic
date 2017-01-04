@@ -81,7 +81,7 @@ namespace TaleofMonsters.DataType.Mazes
             }
             else if (type == "mon")
             {
-                PeopleBook.Fight(infos[0], tile, -1, mlevel + infos[1], success, fail,null);
+                PeopleBook.Fight(infos[0], tile, -1, mlevel + infos[1], PeopleFightReason.Other, success, fail,null);
                 return;
             }
             else if (type == "gold")

@@ -31,7 +31,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
         private void BeginEvent()
         {
             NpcTalkForm sw = new NpcTalkForm();
-            sw.EventId = 1;
+            sw.EventId = 1;//todo
             sw.NeedBlackForm = true;
             MainForm.Instance.DealPanel(sw);
         }
