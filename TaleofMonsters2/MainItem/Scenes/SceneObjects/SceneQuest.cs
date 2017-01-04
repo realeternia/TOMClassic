@@ -7,9 +7,11 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 { 
     internal class SceneQuest : SceneObject
     {
-        public SceneQuest(int wid, int wx, int wy, int wwidth, int wheight, bool disabled)
+        private int questId;
+        public SceneQuest(int wid, int wx, int wy, int wwidth, int wheight, bool disabled, int info)
             :base(wid,wx,wy,wwidth,wheight, disabled)
         {
+            questId = info;
         }
 
         public override bool OnClick()
@@ -30,8 +32,13 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 
         private void BeginEvent()
         {
+            if (questId == 0)
+            {
+                return;
+            }
+
             NpcTalkForm sw = new NpcTalkForm();
-            sw.EventId = 1;//todo
+            sw.EventId = questId;
             sw.NeedBlackForm = true;
             MainForm.Instance.DealPanel(sw);
         }
@@ -39,6 +46,11 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
         public override void Draw(Graphics g, int target)
         {
             base.Draw(g, target);
+
+            if (Disabled && questId == 0)
+            {
+                return;
+            }
 
             Image markQuest = PicLoader.Read("Map", "SymQuest.PNG");
             int drawWidth = markQuest.Width * Width / GameConstants.SceneTileStandardWidth;

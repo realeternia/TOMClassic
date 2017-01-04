@@ -140,7 +140,7 @@
     <Compile Include="Math\Adder.cs" />
     <Compile Include="Math\Calculator.cs" />
     <Compile Include="Math\NLRandom.cs" />
-    <Compile Include="Math\RandomShuffle.cs" />
+    <Compile Include="Math\ListTool.cs" />
     <Compile Include="Net\NetPackets.cs" />
     <Compile Include="Net\OByteArray.cs" />
     <Compile Include="Net\IByteArray.cs" />

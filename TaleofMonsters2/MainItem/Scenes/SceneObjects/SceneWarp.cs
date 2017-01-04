@@ -11,10 +11,10 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
     {
         private int targetMap;
 
-        public SceneWarp(int wid, int wx, int wy, int wwidth, int wheight, bool disabled, string info)
+        public SceneWarp(int wid, int wx, int wy, int wwidth, int wheight, bool disabled, int info)
             : base(wid, wx, wy, wwidth, wheight, disabled)
         {
-            targetMap = int.Parse(info);
+            targetMap = info;
         }
 
         private bool CanWarp()

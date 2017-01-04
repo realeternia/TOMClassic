@@ -189,7 +189,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                 if (cards[i].CardId != 0 && (cards[i].CardId != spellid || cards[i].CardType != CardTypes.Spell))
                     indexs.Add(i);
             }
-            indexs = RandomShuffle.Process(indexs.ToArray());
+            ListTool.RandomShuffle(indexs);
             for (int i = 0; i < Math.Min(n, indexs.Count); i++)
             {
                 AddCard(cards[indexs[i]].GetCopy());

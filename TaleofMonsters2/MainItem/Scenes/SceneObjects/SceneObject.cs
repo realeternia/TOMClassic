@@ -49,8 +49,17 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             }
 
             UserProfile.Profile.InfoBasic.Position = Id;
-            UserProfile.InfoBasic.SubFood(GameConstants.SceneMoveCost);
-            UserProfile.InfoBasic.AddHealth(GameConstants.SceneMoveCost);
+
+            if (UserProfile.Profile.InfoBasic.FoodPoint >= GameConstants.SceneMoveCost)
+            {
+                UserProfile.InfoBasic.SubFood(GameConstants.SceneMoveCost);
+                UserProfile.InfoBasic.AddHealth(GameConstants.SceneMoveCost);
+            }
+            else
+            {
+                UserProfile.InfoBasic.SubHealth(GameConstants.SceneMoveCost*2);
+            }
+            
 
             return true;
         }

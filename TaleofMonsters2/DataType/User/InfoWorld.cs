@@ -382,7 +382,8 @@ namespace TaleofMonsters.DataType.User
             if (MergeMethods == null || UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastMergeTime) < time - GameConstants.MergeWeaponDura)
             {
                 int[] ids = EquipBook.GetCanMergeId(UserProfile.InfoBasic.Level);
-                List<int> newids = RandomShuffle.Process(ids);
+                List<int> newids = new List<int>(ids);
+                ListTool.RandomShuffle(newids);
                 MergeMethods = new List<MemMergeData>();
                 for (int i = 0; i < 8; i++)
                 {

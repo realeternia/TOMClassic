@@ -85,7 +85,9 @@ namespace TaleofMonsters.DataType.Peoples
                     pids.Add(peopleConfig.Id);
                 }
             }
-            return RandomShuffle.Process(pids.ToArray()).GetRange(0, count).ToArray();
+
+            ListTool.RandomShuffle(pids);
+            return pids.GetRange(0, count).ToArray();
         }
 
         public static void Fight(int pid, string map, int tile, int rlevel, PeopleFightReason reason, HsActionCallback winEvent, HsActionCallback lossEvent, HsActionCallback cancelEvent)

@@ -21,7 +21,8 @@ namespace NarlonLib.Math
                 for (int i = 0; i < count; i++)
                     datas[i] = i;
 
-                numberList = RandomShuffle.Process(datas);
+                numberList= new List<int>(datas);
+                ListTool.RandomShuffle(numberList);
                 lastNumber = 0;
             }
             else

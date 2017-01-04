@@ -31,59 +31,105 @@ namespace TaleofMonsters.MainItem.Quests
         private void DoReward()
         {
             int index = 1;
-            var goldGet = GameResourceBook.InGoldSceneQuest(config.Level, config.RewardGold);
-            if (goldGet > 0)
+            if (IsBonusAvail("gold"))
             {
-                UserProfile.Profile.InfoBag.AddResource(GameResourceType.Gold, goldGet);
-                var pictureRegion = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Gold, (int)goldGet);
-                vRegion.AddRegion(pictureRegion);
-                index++;
+                var goldGet = GameResourceBook.InGoldSceneQuest(config.Level, config.RewardGold);
+                if (goldGet > 0)
+                {
+                    UserProfile.Profile.InfoBag.AddResource(GameResourceType.Gold, goldGet);
+                    var pictureRegion = ComplexRegion.GetSceneDataRegion(index,
+                        new Point(pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25), 60, ImageRegionCellType.Gold,
+                        (int) goldGet);
+                    vRegion.AddRegion(pictureRegion);
+                    index++;
+                }
             }
-            var foodGet = GameResourceBook.InFoodSceneQuest(config.RewardFood);
-            if (foodGet > 0)
+            if (IsBonusAvail("food"))
             {
-                UserProfile.Profile.InfoBasic.AddFood(foodGet);
-                var pictureRegion = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Food, (int)foodGet);
-                vRegion.AddRegion(pictureRegion);
-                index++;
+                var foodGet = GameResourceBook.InFoodSceneQuest(config.RewardFood);
+                if (foodGet > 0)
+                {
+                    UserProfile.Profile.InfoBasic.AddFood(foodGet);
+                    var pictureRegion = ComplexRegion.GetSceneDataRegion(index,
+                        new Point(pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25), 60, ImageRegionCellType.Food,
+                        (int) foodGet);
+                    vRegion.AddRegion(pictureRegion);
+                    index++;
+                }
             }
-            var healthGet = GameResourceBook.InHealthSceneQuest(config.RewardHealth);
-            if (healthGet > 0)
+            if (IsBonusAvail("health"))
             {
-                UserProfile.Profile.InfoBasic.AddHealth(healthGet);
-                var pictureRegion = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Health, (int)healthGet);
-                vRegion.AddRegion(pictureRegion);
-                index++;
+                var healthGet = GameResourceBook.InHealthSceneQuest(config.RewardHealth);
+                if (healthGet > 0)
+                {
+                    UserProfile.Profile.InfoBasic.AddHealth(healthGet);
+                    var pictureRegion = ComplexRegion.GetSceneDataRegion(index,
+                        new Point(pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25), 60, ImageRegionCellType.Health,
+                        (int) healthGet);
+                    vRegion.AddRegion(pictureRegion);
+                    index++;
+                }
             }
-            var mentalGet = GameResourceBook.InMentalSceneQuest(config.RewardMental);
-            if (mentalGet > 0)
+            if (IsBonusAvail("mental"))
             {
-                UserProfile.Profile.InfoBasic.AddMental(mentalGet);
-                var pictureRegion = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Mental, (int)mentalGet);
-                vRegion.AddRegion(pictureRegion);
-                index++;
+                var mentalGet = GameResourceBook.InMentalSceneQuest(config.RewardMental);
+                if (mentalGet > 0)
+                {
+                    UserProfile.Profile.InfoBasic.AddMental(mentalGet);
+                    var pictureRegion = ComplexRegion.GetSceneDataRegion(index,
+                        new Point(pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25), 60, ImageRegionCellType.Mental,
+                        (int) mentalGet);
+                    vRegion.AddRegion(pictureRegion);
+                    index++;
+                }
             }
-            var expGet = GameResourceBook.InExpSceneQuest(config.Level, config.RewardExp);
-            if (expGet > 0)
+            if (IsBonusAvail("exp"))
             {
-                UserProfile.Profile.InfoBasic.AddExp((int)expGet);
-                var pictureRegion = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Exp, (int)expGet);
-                vRegion.AddRegion(pictureRegion);
-                index++;
+                var expGet = GameResourceBook.InExpSceneQuest(config.Level, config.RewardExp);
+                if (expGet > 0)
+                {
+                    UserProfile.Profile.InfoBasic.AddExp((int) expGet);
+                    var pictureRegion = ComplexRegion.GetSceneDataRegion(index,
+                        new Point(pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25), 60, ImageRegionCellType.Exp,
+                        (int) expGet);
+                    vRegion.AddRegion(pictureRegion);
+                    index++;
+                }
+            }
+            if (IsBonusAvail("item"))
+            {
+                if (config.RewardItem1 > 0)
+                {
+                    UserProfile.InfoBag.AddItem(config.RewardItem1, 1);
+                    vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25, 60, 60,
+                        PictureRegionCellType.Item, config.RewardItem1));
+                    index++;
+                }
+                if (config.RewardItem2 > 0)
+                {
+                    UserProfile.InfoBag.AddItem(config.RewardItem2, 1);
+                    vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25, 60, 60,
+                        PictureRegionCellType.Item, config.RewardItem2));
+                    index++;
+                }
+            }
+        }
+
+        private bool IsBonusAvail(string tp)
+        {
+            if (evt.ParamList.Count == 0)
+            {
+                return true;
             }
 
-            if (config.RewardItem1 > 0)
+            foreach (var item in evt.ParamList)
             {
-                UserProfile.InfoBag.AddItem(config.RewardItem1, 1);
-                vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25, 60, 60, PictureRegionCellType.Item, config.RewardItem1));
-                index++;
+                if (item == tp)
+                {
+                    return true;
+                }
             }
-            if (config.RewardItem2 > 0)
-            {
-                UserProfile.InfoBag.AddItem(config.RewardItem2, 1);
-                vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25, 60, 60, PictureRegionCellType.Item, config.RewardItem2));
-                index++;
-            }
+            return false;
         }
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)

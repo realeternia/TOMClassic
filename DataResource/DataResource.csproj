@@ -476,14 +476,20 @@
     <EmbeddedResource Include="SceneQuest\test.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Scene\default.scn" />
-    <EmbeddedResource Include="Scene\home.scn" />
+    <EmbeddedResource Include="Scene\default.txt" />
+    <EmbeddedResource Include="Scene\home.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SceneQuest\poppyfield.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SceneQuest\sewer.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SceneQuest\river.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SceneQuest\fortune.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

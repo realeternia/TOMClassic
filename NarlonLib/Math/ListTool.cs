@@ -3,11 +3,10 @@ using System.Collections.Generic;
 
 namespace NarlonLib.Math
 {
-    public class RandomShuffle
+    public class ListTool
     {
-        public static List<int> Process(int[] datas)
+        public static void RandomShuffle(List<int> list)
         {
-            List<int> list = new List<int>(datas);
             for (int i = 0; i < list.Count; ++i)
             {
                 int var = MathTool.GetRandom(list.Count);
@@ -15,8 +14,14 @@ namespace NarlonLib.Math
                 list[i] = list[var];
                 list[var] = temp;
             }
+        }
 
-            return list;
+        public static void Fill(List<int> list, int toFill, int total)
+        {
+            while (list.Count < total)
+            {
+                list.Add(toFill);
+            }
         }
     }
 }

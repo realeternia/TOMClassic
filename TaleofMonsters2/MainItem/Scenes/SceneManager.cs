@@ -32,7 +32,7 @@ namespace TaleofMonsters.MainItem.Scenes
             var filePath = ConfigData.GetSceneConfig(id).TilePath;
 
 #region 读取文件信息
-            StreamReader sr = new StreamReader(DataLoader.Read("Scene", string.Format("{0}.scn", filePath)));
+            StreamReader sr = new StreamReader(DataLoader.Read("Scene", string.Format("{0}.txt", filePath)));
             int xoff = int.Parse(sr.ReadLine().Split('=')[1])*mapWidth/1422;
             int yoff = int.Parse(sr.ReadLine().Split('=')[1])*mapHeight/855+50;//50为固定偏移
             int wid = int.Parse(sr.ReadLine().Split('=')[1]);
@@ -40,6 +40,7 @@ namespace TaleofMonsters.MainItem.Scenes
 
             int cellWidth = GameConstants.SceneTileStandardWidth * mapWidth/1422;
             int cellHeight = GameConstants.SceneTileStandardHeight * mapHeight / 855;
+            int questCellCount = 0;
             for (int i = 0; i < height; i++)
             {
                 string[] data = sr.ReadLine().Split('\t');
@@ -75,15 +76,30 @@ namespace TaleofMonsters.MainItem.Scenes
                 posData.Id = int.Parse(data[0]);
                 posData.Type = data[1];
                 if (data.Length > 2)
-                    posData.Info = data[2];
+                    posData.Info = int.Parse(data[2]);
                 cachedSpecialData[posData.Id] = posData;
             }
             sr.Close();
+
+            questCellCount = cachedMapData.Count - cachedSpecialData.Count;
             #endregion
 
             if (isWarp || UserProfile.Profile.InfoWorld.PosInfos == null || UserProfile.Profile.InfoWorld.PosInfos.Count <= 0)
-            {
+            {//重新生成
+                var sceneConfig = ConfigData.GetSceneConfig(id);
+                List<int> questList = new List<int>();
+                for (int i = 0; i < sceneConfig.Quest.Count; i++)
+                {
+                    for (int j = 0; j < sceneConfig.Quest[i].Value; j++)
+                    {
+                        questList.Add(sceneConfig.Quest[i].Id);
+                    }
+                    ListTool.Fill(questList, 0, questCellCount);
+                    ListTool.RandomShuffle(questList);
+                }
+
                 List<MemSceneSpecialPosData> posList = new List<MemSceneSpecialPosData>();
+                int index = 0;
                 foreach (var scenePosData in cachedMapData)
                 {
                     MemSceneSpecialPosData specialData;
@@ -94,6 +110,7 @@ namespace TaleofMonsters.MainItem.Scenes
                         specialData = new MemSceneSpecialPosData(); //随机一个出来
                         specialData.Id = scenePosData.Id;
                         specialData.Type = "Quest";
+                        specialData.Info = questList[index++];
                     }
                     specialData.RandomSeed = MathTool.GetRandom(10000);
                     cachedSpecialData[specialData.Id] = specialData;
@@ -104,7 +121,7 @@ namespace TaleofMonsters.MainItem.Scenes
                 UserProfile.Profile.InfoWorld.PosInfos = posList;
             }
             else
-            {
+            {//从存档加载
                 foreach (var posData in UserProfile.Profile.InfoWorld.PosInfos)
                 {
                     cachedSpecialData[posData.Id] = posData;
@@ -123,7 +140,7 @@ namespace TaleofMonsters.MainItem.Scenes
                     switch (specialData.Type)
                     {
                         case "Quest":
-                            so = new SceneQuest(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Disabled); break;
+                            so = new SceneQuest(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Disabled, specialData.Info); break;
                         case "Warp":
                             so = new SceneWarp(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Disabled, specialData.Info); break;
                         default:
