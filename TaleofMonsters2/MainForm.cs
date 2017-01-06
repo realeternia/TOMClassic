@@ -312,8 +312,9 @@ namespace TaleofMonsters
                                     tabPageGame.Invalidate(new Rectangle(10, 8, 130, 18));
                                 }
                             }
-                            Scene.Instance.TimeGo(timeMinutes);
                         }
+
+                        Scene.Instance.TimeGo(0.05f);
                     }
                     catch (Exception e)
                     {

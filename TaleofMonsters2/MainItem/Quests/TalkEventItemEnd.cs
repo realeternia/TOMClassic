@@ -5,8 +5,8 @@ namespace TaleofMonsters.MainItem.Quests
 {
     internal class TalkEventItemEnd : TalkEventItem
     {
-        public TalkEventItemEnd(int evtId, Rectangle r, SceneQuestEvent e)
-            : base(evtId, r, e)
+        public TalkEventItemEnd(int evtId, int level, Rectangle r, SceneQuestEvent e)
+            : base(evtId, level, r, e)
         {
         }
 

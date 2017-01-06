@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using System.Drawing;
-using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 { 
@@ -19,33 +17,26 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 
         private bool CanWarp()
         {
-            SceneConfig sceneConfig = ConfigData.GetSceneConfig(targetMap);
-            if (UserProfile.InfoBasic.Level < sceneConfig.Level)
-            {
-                return false;
-            }
+            //SceneConfig sceneConfig = ConfigData.GetSceneConfig(targetMap);
+            //if (UserProfile.InfoBasic.Level < sceneConfig.Level)
+            //{
+            //    return false;
+            //}
 
             return true;
         }
 
-        public override bool OnClick()
+        public override void MoveEnd()
         {
-            if (!base.OnClick())
-            {
-                return false;
-            }
+            base.MoveEnd();
 
             if (!CanWarp())
             {
-                SceneConfig sceneConfig = ConfigData.GetSceneConfig(targetMap);
-                string err = string.Format(HSErrorTypes.GetDescript(HSErrorTypes.SceneLevelNeed), sceneConfig.Level);
-                MainForm.Instance.AddTip(err, "Red");
-                return false;
+                MainForm.Instance.AddTip(HSErrorTypes.GetDescript(HSErrorTypes.SceneLevelNeed), "Red");
+                return;
             }
 
             Scene.Instance.ChangeMap(targetMap, true);
-
-            return true;
         }
 
         public override void Draw(Graphics g, int target)

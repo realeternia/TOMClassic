@@ -10,7 +10,6 @@ using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Effects;
 using TaleofMonsters.DataType.Others;
-using TaleofMonsters.DataType.Shops;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Regions;
 

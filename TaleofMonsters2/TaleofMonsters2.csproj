@@ -152,6 +152,7 @@
     <Compile Include="Controler\Resource\ImageManager.cs" />
     <Compile Include="Controler\World\TimeManager.cs" />
     <Compile Include="Controler\World\WorldInfoManager.cs" />
+    <Compile Include="DataType\Drops\DropBook.cs" />
     <Compile Include="DataType\Peoples\PeopleFightReason.cs" />
     <Compile Include="DataType\User\Mem\MemSceneSpecialPosData.cs" />
     <Compile Include="Forms\Items\Regions\ComplexRegion.cs" />
@@ -335,7 +336,7 @@
     <Compile Include="DataType\User\InfoWorld.cs" />
     <Compile Include="DataType\Peoples\DropResource.cs" />
     <Compile Include="Controler\Battle\Data\MemBaseBuff.cs" />
-    <Compile Include="DataType\Shops\CardProduct.cs" />
+    <Compile Include="DataType\Others\CardProduct.cs" />
     <Compile Include="DataType\Skills\MonsterSkill.cs" />
     <Compile Include="DataType\Tournaments\TournamentBook.cs" />
     <Compile Include="DataType\Cards\Weapons\Weapon.cs" />

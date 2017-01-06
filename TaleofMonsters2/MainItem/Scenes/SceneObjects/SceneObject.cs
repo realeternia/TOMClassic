@@ -48,8 +48,6 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                 return false;
             }
 
-            UserProfile.Profile.InfoBasic.Position = Id;
-
             if (UserProfile.Profile.InfoBasic.FoodPoint >= GameConstants.SceneMoveCost)
             {
                 UserProfile.InfoBasic.SubFood(GameConstants.SceneMoveCost);
@@ -64,6 +62,11 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             return true;
         }
 
+        public virtual void MoveEnd()
+        {
+            UserProfile.Profile.InfoBasic.Position = Id;
+        }
+
         public virtual void Draw(Graphics g, int target)
         {
             Color tileColor = Color.White;
@@ -71,8 +74,11 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 
             if (target == Id)
             {
-                tileColor = Color.Yellow;
-                lineColor = Color.Orange;
+                if (SceneManager.CanMove(Id, UserProfile.Profile.InfoBasic.Position))
+                {
+                    tileColor = Color.Yellow;
+                    lineColor = Color.Orange;
+                }
             }
 
             Point[] dts = new Point[4];

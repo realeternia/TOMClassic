@@ -10,8 +10,8 @@ namespace TaleofMonsters.MainItem.Quests
         private int rollItemX;
         private int rollItemSpeedX;
 
-        public TalkEventItemRoll(int evtId, Rectangle r, SceneQuestEvent e)
-            : base(evtId, r, e)
+        public TalkEventItemRoll(int evtId, int level, Rectangle r, SceneQuestEvent e)
+            : base(evtId, level, r, e)
         {
             rollItemX = MathTool.GetRandom(0, pos.Width);
             rollItemSpeedX = MathTool.GetRandom(20, 40);

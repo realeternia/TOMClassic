@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using NarlonLib.Control;
 using NarlonLib.Drawing;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Drops;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
@@ -17,8 +18,8 @@ namespace TaleofMonsters.MainItem.Quests
         private VirtualRegion vRegion; 
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
 
-        public TalkEventItemReward(int evtId, Control c, Rectangle r, SceneQuestEvent e)
-            : base(evtId, r, e)
+        public TalkEventItemReward(int evtId, int level, Control c, Rectangle r, SceneQuestEvent e)
+            : base(evtId, level, r, e)
         {
             parent = c;
             vRegion = new VirtualRegion(parent);
@@ -33,7 +34,7 @@ namespace TaleofMonsters.MainItem.Quests
             int index = 1;
             if (IsBonusAvail("gold"))
             {
-                var goldGet = GameResourceBook.InGoldSceneQuest(config.Level, config.RewardGold);
+                var goldGet = GameResourceBook.InGoldSceneQuest(level, config.RewardGold);
                 if (goldGet > 0)
                 {
                     UserProfile.Profile.InfoBag.AddResource(GameResourceType.Gold, goldGet);
@@ -85,7 +86,7 @@ namespace TaleofMonsters.MainItem.Quests
             }
             if (IsBonusAvail("exp"))
             {
-                var expGet = GameResourceBook.InExpSceneQuest(config.Level, config.RewardExp);
+                var expGet = GameResourceBook.InExpSceneQuest(level, config.RewardExp);
                 if (expGet > 0)
                 {
                     UserProfile.Profile.InfoBasic.AddExp((int) expGet);
@@ -98,19 +99,23 @@ namespace TaleofMonsters.MainItem.Quests
             }
             if (IsBonusAvail("item"))
             {
-                if (config.RewardItem1 > 0)
+                if (config.RewardItem > 0)
                 {
-                    UserProfile.InfoBag.AddItem(config.RewardItem1, 1);
+                    UserProfile.InfoBag.AddItem(config.RewardItem, 1);
                     vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25, 60, 60,
-                        PictureRegionCellType.Item, config.RewardItem1));
+                        PictureRegionCellType.Item, config.RewardItem));
                     index++;
                 }
-                if (config.RewardItem2 > 0)
+                if (config.RewardDrop > 0)
                 {
-                    UserProfile.InfoBag.AddItem(config.RewardItem2, 1);
-                    vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25, 60, 60,
-                        PictureRegionCellType.Item, config.RewardItem2));
-                    index++;
+                    var itemList = DropBook.GetDropItemList(config.RewardDrop);
+                    foreach (var itemId in itemList)
+                    {
+                        UserProfile.InfoBag.AddItem(itemId, 1);
+                        vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25, 60, 60,
+                            PictureRegionCellType.Item, itemId));
+                        index++;
+                    }
                 }
             }
         }

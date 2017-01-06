@@ -16,8 +16,8 @@ namespace TaleofMonsters.MainItem.Quests
         private VirtualRegion vRegion; 
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
 
-        public TalkEventItemPunish(int evtId, Control c, Rectangle r, SceneQuestEvent e)
-            : base(evtId, r, e)
+        public TalkEventItemPunish(int evtId, int level, Control c, Rectangle r, SceneQuestEvent e)
+            : base(evtId, level, r, e)
         {
             parent = c;
             vRegion = new VirtualRegion(parent);
@@ -30,7 +30,7 @@ namespace TaleofMonsters.MainItem.Quests
         private void DoPunish()
         {
             int index = 1;
-            var goldLoss = GameResourceBook.OutGoldSceneQuest(config.Level, config.PunishGold);
+            var goldLoss = GameResourceBook.OutGoldSceneQuest(level, config.PunishGold);
             if (goldLoss > 0)
             {
                 UserProfile.Profile.InfoBag.SubResource(GameResourceType.Gold, goldLoss);

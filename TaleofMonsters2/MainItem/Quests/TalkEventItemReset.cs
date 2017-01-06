@@ -6,8 +6,8 @@ namespace TaleofMonsters.MainItem.Quests
 {
     internal class TalkEventItemReset : TalkEventItem
     {
-        public TalkEventItemReset(int evtId, Rectangle r, SceneQuestEvent e)
-            : base(evtId, r, e)
+        public TalkEventItemReset(int evtId, int level, Rectangle r, SceneQuestEvent e)
+            : base(evtId, level, r, e)
         {
             Scene.Instance.ResetScene();
         }

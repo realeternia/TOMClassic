@@ -18,6 +18,13 @@ namespace TaleofMonsters.MainItem.Scenes
 {
     internal class Scene
     {
+        private class MovingData
+        {
+            public float Time { get; set; }
+            public Point Source { get; set; }
+            public Point Dest { get; set; }
+            public int DestId { get; set; }
+        }
         public static Scene Instance { get; set; }
 
         private Image mainBottom;
@@ -27,7 +34,7 @@ namespace TaleofMonsters.MainItem.Scenes
         private Image mainTopTitle;
         private Image miniBack;
         private Image backPicture;
-        private int npcTar = -1;
+        private int cellTar = -1;
         private List<SceneObject> sceneItems; //场景中的物件，各种npc等
         private string sceneName;
         private Control parent;
@@ -36,6 +43,9 @@ namespace TaleofMonsters.MainItem.Scenes
 
         private VirtualRegion vRegion;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
+        private MovingData movingData = new MovingData();
+
+        private const float ChessMoveAnimTime =0.5f;//旗子跳跃的动画世界
 
         public Scene(Control p, int w, int h)
         {
@@ -115,34 +125,71 @@ namespace TaleofMonsters.MainItem.Scenes
             allMap.Dispose();
         }
 
-        public void TimeGo(int timeMinutes)
+        public void TimeGo(float timePast)
         {
+            if (movingData.Time > 0)
+            {
+                movingData.Time -= timePast;
+                var x = movingData.Source.X/2 + movingData.Dest.X/2;
+                var y = movingData.Source.Y/2 + movingData.Dest.Y/2;
+                parent.Invalidate(new Rectangle(x - 150, y - 150, 300, 300));
 
+                if (movingData.Time <= 0)
+                {
+                    movingData.Time = 0;
+
+                    foreach (var sceneObject in sceneItems)
+                    {
+                        if (sceneObject.Id == movingData.DestId)
+                            sceneObject.MoveEnd();
+                    }
+                }
+            }
         }
         
         public void CheckMouseMove(int x, int y)
         {
+            if (movingData.Time > 0) return;
             int nTemp = -1;
             foreach (var sceneObject in sceneItems)
             {
                 if (sceneObject.IsMouseIn(x, y))
                     nTemp = sceneObject.Id;
             }
-            if (npcTar != nTemp)
+            if (cellTar != nTemp)
             {
-                npcTar = nTemp;
+                cellTar = nTemp;
                 parent.Invalidate();
             }
         }
 
         public void CheckMouseClick()
         {
-            if (npcTar == -1) return;
+            if (cellTar == -1) return;
+            if (movingData.Time > 0) return;
+            SceneObject src = null;
+            SceneObject dest = null;
             foreach (var sceneObject in sceneItems)
             {
-                if (sceneObject.Id == npcTar)
-                    if(sceneObject.OnClick())
-                        parent.Invalidate();
+                if (sceneObject.Id == cellTar)
+                {
+                    dest = sceneObject;
+                }
+                if (sceneObject.Id == UserProfile.InfoBasic.Position)
+                {
+                    src = sceneObject;
+                }
+            }
+
+            if (dest!=null && dest.OnClick())
+            {
+                int drawWidth = 57 * src.Width / GameConstants.SceneTileStandardWidth;
+                int drawHeight = 139 * src.Height / GameConstants.SceneTileStandardHeight;
+                movingData.Source = new Point(src.X - drawWidth / 2 + src.Width / 8, src.Y - drawHeight + src.Height / 3);
+                movingData.DestId = dest.Id;
+                movingData.Dest = new Point(dest.X - drawWidth / 2 + dest.Width / 8, dest.Y - drawHeight + dest.Height / 3);
+                movingData.Time = ChessMoveAnimTime;
+                parent.Invalidate();
             }
         }
 
@@ -246,11 +293,15 @@ namespace TaleofMonsters.MainItem.Scenes
             g.DrawImage(miniMap, width-160, 43, 150, 150);
             g.DrawImage(miniBack, width - 190, 38, 185, 160);
 
-            //画NPC
+            DrawCellAndToken(g);
+        }
+
+        private void DrawCellAndToken(Graphics g)
+        {
             SceneObject possessCell = null;
             foreach (SceneObject obj in sceneItems)
             {
-                obj.Draw(g, npcTar);
+                obj.Draw(g, cellTar);
                 if (obj.Id == UserProfile.Profile.InfoBasic.Position)
                 {
                     possessCell = obj;
@@ -260,9 +311,23 @@ namespace TaleofMonsters.MainItem.Scenes
             if (possessCell != null)
             {
                 Image token = PicLoader.Read("Map", "Token.PNG");
-                int drawWidth = token.Width * possessCell.Width / GameConstants.SceneTileStandardWidth;
-                int drawHeight = token.Height * possessCell.Height / GameConstants.SceneTileStandardHeight;
-                g.DrawImage(token, possessCell.X - drawWidth / 2 + possessCell.Width / 8, possessCell.Y - drawHeight + possessCell.Height / 3, drawWidth, drawHeight);
+                int drawWidth = token.Width*possessCell.Width/GameConstants.SceneTileStandardWidth;
+                int drawHeight = token.Height*possessCell.Height/GameConstants.SceneTileStandardHeight;
+                if (movingData.Time <= 0)
+                {
+                    g.DrawImage(token, possessCell.X - drawWidth/2 + possessCell.Width/8,
+                        possessCell.Y - drawHeight + possessCell.Height/3, drawWidth, drawHeight);
+                }
+                else
+                {
+                    int realX = (int)(movingData.Source.X*(movingData.Time)/ChessMoveAnimTime +
+                             movingData.Dest.X*(ChessMoveAnimTime - movingData.Time)/ChessMoveAnimTime);
+                    int yOff = (int) (Math.Pow(realX - (movingData.Source.X + movingData.Dest.X)/2, 2)*(4*80)/
+                                      Math.Pow(movingData.Source.X - movingData.Dest.X, 2) - 80);
+                    var pos = new Point(realX,yOff +(int)(movingData.Source.Y*(movingData.Time)/ChessMoveAnimTime +
+                                 movingData.Dest.Y*(ChessMoveAnimTime - movingData.Time)/ChessMoveAnimTime));
+                    g.DrawImage(token, pos.X, pos.Y, drawWidth, drawHeight);
+                }
                 token.Dispose();
             }
         }

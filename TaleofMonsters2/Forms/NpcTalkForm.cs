@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType.Scenes;
+using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.MainItem.Quests;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
@@ -18,10 +19,12 @@ namespace TaleofMonsters.Forms
         private SceneQuestBlock interactBlock;
 
         private ColorWordRegion colorWord;//问题区域
-        public int EventId { get; set; }
         private SceneQuestConfig config;
         private List<string> answerList; //回答区
         private TalkEventItem evtItem; //事件交互区
+
+        public int EventId { get; set; }
+        private int eventLevel;
 
         public NpcTalkForm()
         {
@@ -34,6 +37,10 @@ namespace TaleofMonsters.Forms
             base.Init(width, height);
             showImage = true;
             config = ConfigData.GetSceneQuestConfig(EventId);
+            if (config.Level > 0)
+                eventLevel = config.Level;
+            else
+                eventLevel = ConfigData.GetSceneConfig(UserProfile.InfoBasic.MapId).Level;
             interactBlock = SceneManager.GetQuestData(config.Script);
             answerList = new List<string>();
             SetupQuestItem();
@@ -82,7 +89,7 @@ namespace TaleofMonsters.Forms
                 }
                 else if (interactBlock.Children.Count == 1 && interactBlock.Children[0] is SceneQuestEvent)
                 {
-                    evtItem = TalkEventItem.CreateEventItem(EventId, this, new Rectangle(10, Height - 10 - 5 * 20 - 160, Width - 20, 160), interactBlock.Children[0] as SceneQuestEvent);
+                    evtItem = TalkEventItem.CreateEventItem(EventId, eventLevel, this, new Rectangle(10, Height - 10 - 5 * 20 - 160, Width - 20, 160), interactBlock.Children[0] as SceneQuestEvent);
                 }
 
                 if (evtItem != null && evtItem.AutoClose())
@@ -110,7 +117,7 @@ namespace TaleofMonsters.Forms
             if (showImage)
             {
                 Font font2 = new Font("黑体", 12 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-                e.Graphics.DrawString(string.Format("{0}(Lv{1})",config.Name,config.Level), font2, Brushes.White, Width / 2 - 40, 8);
+                e.Graphics.DrawString(string.Format("{0}(Lv{1})",config.Name, eventLevel), font2, Brushes.White, Width / 2 - 40, 8);
                 font2.Dispose();
 
                 e.Graphics.DrawImage(SceneBook.GetSceneQuestImage(config.Id), 15, 40, 140, 140);

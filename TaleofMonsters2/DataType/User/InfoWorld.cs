@@ -13,7 +13,7 @@ using TaleofMonsters.DataType.Cards.Weapons;
 using TaleofMonsters.DataType.Equips;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.Items;
-using TaleofMonsters.DataType.Shops;
+using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Tournaments;
 using TaleofMonsters.DataType.User.Mem;
 using TaleofMonsters.Forms.TourGame;

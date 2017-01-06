@@ -222,7 +222,7 @@ namespace TaleofMonsters.MainItem.Scenes
 
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine(sceneConfig.Name, "Lime", 20);
-            tipData.AddTextNewLine(string.Format("需要等级: {0}", sceneConfig.Level), "White");
+            tipData.AddTextNewLine(string.Format("地图等级: {0}", sceneConfig.Level), "White");
 
             string[] icons = SceneBook.GetNPCIconsOnMap(id);
             if (icons.Length > 0)

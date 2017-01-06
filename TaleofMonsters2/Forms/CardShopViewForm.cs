@@ -6,7 +6,7 @@ using NarlonLib.Core;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Shops;
+using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items;
 using TaleofMonsters.Forms.Items.Core;
