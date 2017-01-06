@@ -2,17 +2,20 @@ using System.Collections.Generic;
 using System.Drawing;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 { 
     internal class SceneWarp : SceneObject
     {
         private int targetMap;
+        private int targetPos;
 
-        public SceneWarp(int wid, int wx, int wy, int wwidth, int wheight, bool disabled, int info)
+        public SceneWarp(int wid, int wx, int wy, int wwidth, int wheight, bool disabled, int info, int info2)
             : base(wid, wx, wy, wwidth, wheight, disabled)
         {
             targetMap = info;
+            targetPos = info2;
         }
 
         private bool CanWarp()
@@ -36,6 +39,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                 return;
             }
 
+            UserProfile.InfoBasic.Position = targetPos;
             Scene.Instance.ChangeMap(targetMap, true);
         }
 

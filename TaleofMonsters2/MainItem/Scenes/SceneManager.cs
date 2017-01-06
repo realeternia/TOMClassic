@@ -77,6 +77,8 @@ namespace TaleofMonsters.MainItem.Scenes
                 posData.Type = data[1];
                 if (data.Length > 2)
                     posData.Info = int.Parse(data[2]);
+                if (data.Length > 3)
+                    posData.Info2 = int.Parse(data[3]);
                 cachedSpecialData[posData.Id] = posData;
             }
             sr.Close();
@@ -112,7 +114,6 @@ namespace TaleofMonsters.MainItem.Scenes
                         specialData.Type = "Quest";
                         specialData.Info = questList[index++];
                     }
-                    specialData.RandomSeed = MathTool.GetRandom(10000);
                     cachedSpecialData[specialData.Id] = specialData;
 
                     posList.Add(specialData);
@@ -142,14 +143,15 @@ namespace TaleofMonsters.MainItem.Scenes
                         case "Quest":
                             so = new SceneQuest(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Disabled, specialData.Info); break;
                         case "Warp":
-                            so = new SceneWarp(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Disabled, specialData.Info); break;
+                            so = new SceneWarp(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Disabled, specialData.Info, specialData.Info2); break;
                         default:
                             so = new SceneTile(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Disabled); break;
                     }
                 }
                 else
                 {
-                    throw new Exception("GetSceneObjects error");
+                    so = new SceneTile(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, true); break;
+                    //throw new Exception("GetSceneObjects error");
                 }
                 sceneObjects.Add(so);
             }
