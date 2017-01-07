@@ -96,9 +96,9 @@ namespace TaleofMonsters.MainItem.Scenes
                     {
                         questList.Add(sceneConfig.Quest[i].Id);
                     }
-                    ListTool.Fill(questList, 0, questCellCount);
-                    ListTool.RandomShuffle(questList);
                 }
+                ListTool.Fill(questList, 0, questCellCount);
+                ListTool.RandomShuffle(questList);
 
                 List<MemSceneSpecialPosData> posList = new List<MemSceneSpecialPosData>();
                 int index = 0;
@@ -185,7 +185,7 @@ namespace TaleofMonsters.MainItem.Scenes
                     case 'a': data = new SceneQuestAnswer(script, lineDepth, lineCount); break;
                     case 'e': data = new SceneQuestEvent(script, lineDepth, lineCount); break;
                     case 'r': data = new SceneQuestRollItem(script, lineDepth, lineCount); break;
-                    default: throw new Exception("GetQuestData unknown type");
+                    default: throw new Exception(string.Format("GetQuestData unknown type {0} {1}", name, lineCount));
                 }
 
                 levelCachDict[data.Depth] = data;
