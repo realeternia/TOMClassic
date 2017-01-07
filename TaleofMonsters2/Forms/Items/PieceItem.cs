@@ -71,7 +71,7 @@ namespace TaleofMonsters.Forms.Items
 
         public void RefreshData()
         {
-            MemNpcPieceData piece = UserProfile.InfoWorld.GetPieceData(index);
+            var piece = (parent as BuyPieceForm).GetPieceData(index);
             if (!piece.IsEmpty())
             {
                 itemId = piece.Id;
@@ -113,7 +113,7 @@ namespace TaleofMonsters.Forms.Items
             {
                 UserProfile.InfoBag.Resource.Gold -= price;
                 UserProfile.InfoBag.AddItem(itemId, itemCount);
-                UserProfile.InfoWorld.RemovePieceData(index);
+                (parent as BuyPieceForm).RemovePieceData(index);
 
                 RefreshData();
             }

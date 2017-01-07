@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ControlPlus;
-using NarlonLib.Core;
+using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.Core;
-using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.User.Mem;
 using TaleofMonsters.Forms.Items;
 using TaleofMonsters.DataType.User;
@@ -16,10 +15,23 @@ namespace TaleofMonsters.Forms
 {
     internal sealed partial class ChangeCardForm : BasePanel
     {
+        internal class MemChangeCardData
+        {
+            public int Id1;
+            public int Type1;
+            public int Id2;
+            public int Type2;
+            public bool Used;
+
+            public bool IsEmpty()
+            {
+                return Id1 == 0 && Id2 == 0;
+            }
+        }
+
         private List<MemChangeCardData> changes;
         private ChangeCardItem[] changeControls;
         private ColorWordRegion colorWord;
-        private string timeText;
 
         internal override void Init(int width, int height)
         {
@@ -37,7 +49,7 @@ namespace TaleofMonsters.Forms
 
         private void RefreshInfo()
         {
-            changes = UserProfile.InfoWorld.GetChangeCardData();
+            GetChangeCardData();
             for (int i = 0; i < 8; i++)
             {
                 changeControls[i].RefreshData();
@@ -70,7 +82,7 @@ namespace TaleofMonsters.Forms
             {
                 if (UserProfile.InfoBag.PayDiamond(5))
                 {
-                    UserProfile.InfoWorld.AddChangeCardData();
+                    AddChangeCardData();
                     RefreshInfo();
                 }
             }
@@ -82,26 +94,8 @@ namespace TaleofMonsters.Forms
             {
                 if (UserProfile.InfoBag.PayDiamond(10))
                 {
-                    UserProfile.InfoWorld.RefreshAllChangeCardData();
+                    RefreshAllChangeCardData();
                     RefreshInfo();
-                }
-            }
-        }
-
-        delegate void RefreshInfoCallback();
-        internal override void OnFrame(int tick)
-        {
-            if ((tick % 6) == 0)
-            {
-                TimeSpan span = TimeTool.UnixTimeToDateTime(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastCardChangeTime) + GameConstants.ChangeCardDura) - DateTime.Now;
-                if (span.TotalSeconds > 0)
-                {
-                    timeText = string.Format("更新剩余 {0}:{1:00}:{2:00}", span.Hours, span.Minutes, span.Seconds);
-                    Invalidate(new Rectangle(12, 345, 150, 20));
-                }
-                else
-                {
-                    BeginInvoke(new RefreshInfoCallback(RefreshInfo));
                 }
             }
         }
@@ -114,15 +108,75 @@ namespace TaleofMonsters.Forms
             e.Graphics.DrawString("交换", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
 
-            font = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            e.Graphics.DrawString(timeText, font, Brushes.YellowGreen, 12, 345);
-            font.Dispose();
-
             colorWord.Draw(e.Graphics);
             foreach (ChangeCardItem ctl in changeControls)
             {
                 ctl.Draw(e.Graphics);
             }
+        }
+
+        public List<MemChangeCardData> GetChangeCardData()
+        {
+            changes = new List<MemChangeCardData>();
+            for (int i = 0; i < 5; i++)
+            {
+                changes.Add(CreateMethod(i));
+            }
+            return changes;
+        }
+
+        private void AddChangeCardData()
+        {
+            if (changes.Count < 8)
+            {
+                changes.Add(CreateMethod(changes.Count));
+            }
+        }
+
+        public MemChangeCardData GetChangeCardData(int index)
+        {
+            if (changes.Count > index)
+            {
+                return changes[index];
+            }
+            return new MemChangeCardData();
+        }
+
+        public void RemoveChangeCardData(int index)
+        {
+            if (changes.Count > index)
+            {
+                changes[index].Used = true;
+            }
+        }
+
+        private void RefreshAllChangeCardData()
+        {
+            int count = changes.Count;
+            changes.Clear();
+            for (int i = 0; i < count; i++)
+            {
+                changes.Add(CreateMethod(i));
+            }
+        }
+        
+        private MemChangeCardData CreateMethod(int index)
+        {
+            MemChangeCardData chg = new MemChangeCardData();
+            int level = MathTool.GetRandom(Math.Max(index / 2, 1), index / 2 + 3);
+            chg.Id1 = MonsterBook.GetRandStarMid(level);
+            while (true)
+            {
+                chg.Id2 = MonsterBook.GetRandStarMid(level);
+                if (chg.Id2 != chg.Id1)
+                {
+                    break;
+                }
+            }
+            chg.Type1 = 1;
+            chg.Type2 = 1;
+
+            return chg;
         }
     }
 }

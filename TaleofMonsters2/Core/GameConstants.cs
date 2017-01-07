@@ -11,8 +11,6 @@ namespace TaleofMonsters.Core
 
         public const int CardShopDura = 24*3600;
         public const int MergeWeaponDura = 6*3600; //锻造系统重置时间
-        public const int ChangeCardDura = 24*3600;
-        public const int NpcPieceDura = 6 * 3600;
         public const int QuestionCooldownDura = 15;
 
         public const float DrawManaTime = 1f;

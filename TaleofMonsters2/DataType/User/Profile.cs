@@ -193,7 +193,6 @@ namespace TaleofMonsters.DataType.User
 
         public void OnNewDay()
         {
-            UserProfile.InfoBasic.DigCount = 0;
             UserProfile.Profile.InfoMinigame.Clear();
 
             int inter = TimeTool.DateTimeToUnixTime(DateTime.Now) - InfoBasic.LastLoginTime;

@@ -223,12 +223,6 @@ namespace TaleofMonsters.MainItem
                 case SystemMenuIds.FarmForm:
                     MainForm.Instance.DealPanel(new FarmForm());
                     break;
-                case SystemMenuIds.ChangeCard:
-                    MainForm.Instance.DealPanel(new ChangeCardForm());
-                    break;
-                case SystemMenuIds.BuyPiece:
-                    MainForm.Instance.DealPanel(new BuyPieceForm());
-                    break;
                 case SystemMenuIds.GameUpToNumber:
                     if (UserProfile.Profile.InfoMinigame.Has((int)id))
                     {
@@ -322,8 +316,8 @@ namespace TaleofMonsters.MainItem
         ExpBottle = 40,
         QuestionForm = 41,
         FarmForm = 42,
-        ChangeCard = 1000,
-        BuyPiece = 1001,
+        //ChangeCard = 1000,
+        //BuyPiece = 1001,
         GameUpToNumber = 1100,
         GameIconsCatch = 1101,
         GameBattleRobot = 1102,

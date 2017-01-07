@@ -6,7 +6,6 @@ using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.User;
-using TaleofMonsters.DataType.User.Mem;
 using TaleofMonsters.Forms.Items.Regions;
 
 namespace TaleofMonsters.Forms.Items
@@ -70,7 +69,7 @@ namespace TaleofMonsters.Forms.Items
 
         public void RefreshData()
         {
-            MemChangeCardData change = UserProfile.InfoWorld.GetChangeCardData(index);
+            var change = (parent as ChangeCardForm).GetChangeCardData(index);
             if (!change.IsEmpty())
             {
                 card1 = change.Id1;
@@ -124,7 +123,7 @@ namespace TaleofMonsters.Forms.Items
 
             UserProfile.InfoCard.RemoveCardPiece(card1, false);
             UserProfile.InfoCard.AddCard(card2);
-            UserProfile.InfoWorld.RemoveChangeCardData(index);
+            (parent as ChangeCardForm).RemoveChangeCardData(index);
 
             RefreshData();
         }

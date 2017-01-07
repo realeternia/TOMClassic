@@ -22,10 +22,6 @@ namespace TaleofMonsters.DataType.User
 {
     public class InfoWorld
     {
-        [FieldIndex(Index = 1)]
-        public List<MemChangeCardData> Cards ;
-        [FieldIndex(Index = 2)]
-        public List<MemNpcPieceData> Pieces;
         [FieldIndex(Index = 3)]
         public List<CardProduct> CardProducts;
         [FieldIndex(Index = 4)]
@@ -40,150 +36,11 @@ namespace TaleofMonsters.DataType.User
 
         public InfoWorld()
         {
-            Cards = new List<MemChangeCardData>();
-            Pieces = new List<MemNpcPieceData>();
             CardProducts = new List<CardProduct>();
             Tournaments = new Dictionary<int, MemTournamentData>();
             Ranks = new Dictionary<int, int>();
             MergeMethods = new List<MemMergeData>();
             PosInfos = new List<MemSceneSpecialPosData>();
-        }
-
-        public List<MemChangeCardData> GetChangeCardData()
-        {
-            int time = TimeTool.DateTimeToUnixTime(DateTime.Now);
-            if (Cards != null && UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastCardChangeTime) < time - GameConstants.ChangeCardDura)
-            {
-                Cards.Clear();
-                for (int i = 0; i < 5; i++)
-                {
-                    Cards.Add(CreateMethod(i));
-                }
-                UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastCardChangeTime, TimeManager.GetTimeOnNextInterval(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastCardChangeTime), time, GameConstants.ChangeCardDura));
-            }
-            return Cards;
-        }
-
-        public void AddChangeCardData()
-        {
-            if (Cards.Count < 8)
-            {
-                Cards.Add(CreateMethod(Cards.Count));
-            }
-        }
-
-        public MemChangeCardData GetChangeCardData(int index)
-        {
-            if (Cards.Count > index)
-            {
-                return Cards[index];
-            }
-            return new MemChangeCardData();
-        }
-
-        public void RemoveChangeCardData(int index)
-        {            
-            if (Cards.Count > index)
-            {
-                Cards[index].Used = true;
-            }
-        }
-
-        public void RefreshAllChangeCardData()
-        {
-            int count = Cards.Count;
-            Cards.Clear();
-            for (int i = 0; i < count; i++)
-            {
-                Cards.Add(CreateMethod(i));
-            }
-        }
-
-        private MemChangeCardData CreateMethod(int index)
-        {
-            MemChangeCardData chg = new MemChangeCardData();
-            int level = MathTool.GetRandom(Math.Max(index/2, 1), index/2 + 3);
-            chg.Id1 = MonsterBook.GetRandStarMid(level);
-            while (true)
-            {
-                chg.Id2 = MonsterBook.GetRandStarMid(level);
-                if (chg.Id2 != chg.Id1)
-                {
-                    break;
-                }
-            }
-            chg.Type1 = 1;
-            chg.Type2 = 1;
-
-            return chg;
-        }
-
-        public List<MemNpcPieceData> GetPieceData()
-        {
-            int time = TimeTool.DateTimeToUnixTime(DateTime.Now);
-            if (Cards != null && UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastNpcPieceTime) < time - GameConstants.NpcPieceDura)
-            {
-                Pieces.Clear();
-                for (int i = 0; i < 5; i++)
-                {
-                    Pieces.Add(CreatePieceMethod(i));
-                }
-                UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastNpcPieceTime, TimeManager.GetTimeOnNextInterval(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastNpcPieceTime), time, GameConstants.NpcPieceDura));
-            }
-            return Pieces;
-        }
-
-        public void AddPieceData()
-        {
-            if (Pieces.Count < 8)
-            {
-                Pieces.Add(CreatePieceMethod(Cards.Count));
-            }
-        }
-
-        public MemNpcPieceData GetPieceData(int index)
-        {
-            if (Pieces.Count > index)
-            {
-                return Pieces[index];
-            }
-            return new MemNpcPieceData();
-        }
-
-        public void RemovePieceData(int index)
-        {
-            if (Pieces.Count > index)
-            {
-                Pieces[index].Used = true;
-            }
-        }
-
-        public void RefreshAllPieceData()
-        {
-            int count = Pieces.Count;
-            Pieces.Clear();
-            for (int i = 0; i < count; i++)
-            {
-                Pieces.Add(CreatePieceMethod(i));
-            }
-        }
-
-        public void DoubleAllPieceData()
-        {
-            foreach (var memNpcPieceData in Pieces)
-            {
-                memNpcPieceData.Count *= 2;
-            }
-        }
-
-        private MemNpcPieceData CreatePieceMethod(int index)
-        {
-            MemNpcPieceData piece = new MemNpcPieceData();
-            int rare = MathTool.GetRandom(Math.Max(index / 2, 1), index / 2 + 3);
-            piece.Id = HItemBook.GetRandRareMid(rare);
-            piece.Count = MathTool.GetRandom((8 - rare) / 2, 8 - rare);
-
-            return piece;
         }
 
         internal CardProduct[] GetCardProductsByType(CardTypes type)

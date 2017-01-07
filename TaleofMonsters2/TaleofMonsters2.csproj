@@ -160,6 +160,7 @@
     <Compile Include="Forms\Items\Regions\ImageRegion.cs" />
     <Compile Include="MainItem\Quests\TalkEventItem.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemEnd.cs" />
+    <Compile Include="MainItem\Quests\TalkEventItemNpc.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemReset.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemPunish.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemRoll.cs" />
@@ -210,7 +211,6 @@
     <Compile Include="DataType\User\InfoSkill.cs" />
     <Compile Include="DataType\User\InfoTask.cs" />
     <Compile Include="DataType\User\Mem\MemMergeData.cs" />
-    <Compile Include="DataType\User\Mem\MemNpcPieceData.cs" />
     <Compile Include="DataType\Others\Question.cs" />
     <Compile Include="DataType\Others\QuestionBook.cs" />
     <Compile Include="Forms\CalendarForm.cs">
@@ -332,7 +332,6 @@
     <Compile Include="DataType\Mazes\MazeItem.cs" />
     <Compile Include="DataType\User\Mem\MemTournamentData.cs" />
     <Compile Include="DataType\User\Mem\MemRankData.cs" />
-    <Compile Include="DataType\User\Mem\MemChangeCardData.cs" />
     <Compile Include="DataType\User\InfoWorld.cs" />
     <Compile Include="DataType\Peoples\DropResource.cs" />
     <Compile Include="Controler\Battle\Data\MemBaseBuff.cs" />
@@ -922,10 +921,6 @@
       <DependentUpon>BattleResultForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\NpcDigForm.resx">
-      <DependentUpon>NpcDigForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\TaskResultForm.resx">
       <DependentUpon>TaskResultForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -1000,12 +995,6 @@
     </Compile>
     <Compile Include="Controler\Battle\BattleResultForm.Designer.cs">
       <DependentUpon>BattleResultForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\NpcDigForm.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Forms\NpcDigForm.Designer.cs">
-      <DependentUpon>NpcDigForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\TaskResultForm.cs">
       <SubType>UserControl</SubType>
