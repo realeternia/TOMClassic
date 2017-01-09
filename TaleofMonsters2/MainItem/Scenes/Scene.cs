@@ -348,5 +348,17 @@ namespace TaleofMonsters.MainItem.Scenes
             sceneItems = SceneManager.GetSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, true);
             parent.Invalidate();
         }
+
+        public void EnableTeleport()
+        {
+            foreach (var sceneObject in sceneItems)
+            {
+                if (sceneObject is SceneWarp)
+                {
+                    sceneObject.SetEnable(true);//激活所有的传说门
+                }
+            }
+            parent.Invalidate();
+        }
     }
 }

@@ -75,6 +75,8 @@ namespace TaleofMonsters.MainItem.Scenes
                 MemSceneSpecialPosData posData = new MemSceneSpecialPosData();
                 posData.Id = int.Parse(data[0]);
                 posData.Type = data[1];
+                if (posData.Type == "Warp")
+                    posData.Disabled = true;//传送门默认是关闭的
                 if (data.Length > 2)
                     posData.Info = int.Parse(data[2]);
                 if (data.Length > 3)

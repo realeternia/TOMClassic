@@ -20,11 +20,10 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 
         private bool CanWarp()
         {
-            //SceneConfig sceneConfig = ConfigData.GetSceneConfig(targetMap);
-            //if (UserProfile.InfoBasic.Level < sceneConfig.Level)
-            //{
-            //    return false;
-            //}
+            if (Disabled)
+            {
+                return false;
+            }
 
             return true;
         }
@@ -50,7 +49,17 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             Image markQuest = PicLoader.Read("Map", "SymWarp.PNG");
             int drawWidth = markQuest.Width * Width / GameConstants.SceneTileStandardWidth;
             int drawHeight = markQuest.Height * Height / GameConstants.SceneTileStandardHeight;
-            g.DrawImage(markQuest, X - drawWidth / 2 + Width / 8, Y - drawHeight / 2, drawWidth, drawHeight);
+            var destRect = new Rectangle(X - drawWidth / 2 + Width / 8, Y - drawHeight / 2, drawWidth, drawHeight);
+            if (Disabled)
+            {
+                g.DrawImage(markQuest, destRect, 0, 0, markQuest.Width, markQuest.Height, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
+            }
+            else
+            {
+                g.DrawImage(markQuest, destRect, 0, 0, markQuest.Width, markQuest.Height, GraphicsUnit.Pixel);
+            }
+
+
             markQuest.Dispose();
         }
     }

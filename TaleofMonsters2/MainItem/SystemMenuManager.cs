@@ -97,12 +97,17 @@ namespace TaleofMonsters.MainItem
                     toolBarItemData.Enable = false;
                 }
             }
-            string[] funcs = ConfigData.GetSceneConfig(UserProfile.InfoBasic.MapId).Func.Split(';');
-            foreach (string func in funcs)
+            var funcStr = ConfigData.GetSceneConfig(UserProfile.InfoBasic.MapId).Func;
+            if (funcStr != null)
             {
-                if (func != "")
-                    SetIconEnable((SystemMenuIds)Enum.Parse(typeof(SystemMenuIds), func), true);
+                string[] funcs = funcStr.Split(';');
+                foreach (string func in funcs)
+                {
+                    if (func != "")
+                        SetIconEnable((SystemMenuIds) Enum.Parse(typeof (SystemMenuIds), func), true);
+                }
             }
+
             Reload();
         }
 
