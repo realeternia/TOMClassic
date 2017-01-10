@@ -92,7 +92,7 @@ namespace TaleofMonsters.MainItem.Scenes
 
             SystemMenuManager.ResetIconState(); //reset main icon state
 
-            sceneItems = SceneManager.GetSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, isWarp);
+            sceneItems = SceneManager.RefreshSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, isWarp ? SceneManager.SceneFreshReason.Warp : SceneManager.SceneFreshReason.Load );
 
             parent.Invalidate();
         }
@@ -132,7 +132,7 @@ namespace TaleofMonsters.MainItem.Scenes
                 movingData.Time -= timePast;
                 var x = movingData.Source.X/2 + movingData.Dest.X/2;
                 var y = movingData.Source.Y/2 + movingData.Dest.Y/2;
-                parent.Invalidate(new Rectangle(x - 150, y - 150, 300, 300));
+                parent.Invalidate(new Rectangle(x - 200, y - 200, 400, 400));
 
                 if (movingData.Time <= 0)
                 {
@@ -345,7 +345,7 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public void ResetScene()
         {
-            sceneItems = SceneManager.GetSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, true);
+            sceneItems = SceneManager.RefreshSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, SceneManager.SceneFreshReason.Reset);
             parent.Invalidate();
         }
 

@@ -25,7 +25,14 @@ namespace TaleofMonsters.MainItem.Scenes
             public int Height;
         }
 
-        public static List<SceneObject> GetSceneObjects(int id, int mapWidth ,int mapHeight, bool isWarp)
+        internal enum SceneFreshReason 
+        {
+            Load,
+            Warp,
+            Reset
+        }
+
+        public static List<SceneObject> RefreshSceneObjects(int id, int mapWidth ,int mapHeight, SceneFreshReason reason)
         {
             List<ScenePosData> cachedMapData = new List<ScenePosData>();
             var cachedSpecialData = new Dictionary<int, DbSceneSpecialPosData>();
@@ -76,7 +83,7 @@ namespace TaleofMonsters.MainItem.Scenes
                 posData.Id = int.Parse(data[0]);
                 posData.Type = data[1];
                 if (posData.Type == "Warp")
-                    posData.Disabled = true;//传送门默认是关闭的
+                    posData.Disabled = reason == SceneFreshReason.Warp;//传送门默认是关闭的
                 if (data.Length > 2)
                     posData.Info = int.Parse(data[2]);
                 if (data.Length > 3)
@@ -88,7 +95,7 @@ namespace TaleofMonsters.MainItem.Scenes
             questCellCount = cachedMapData.Count - cachedSpecialData.Count;
             #endregion
 
-            if (isWarp || UserProfile.Profile.InfoWorld.PosInfos == null || UserProfile.Profile.InfoWorld.PosInfos.Count <= 0)
+            if (reason != SceneFreshReason.Load || UserProfile.Profile.InfoWorld.PosInfos == null || UserProfile.Profile.InfoWorld.PosInfos.Count <= 0)
             {//重新生成
                 var sceneConfig = ConfigData.GetSceneConfig(id);
                 List<int> questList = new List<int>();
@@ -153,7 +160,7 @@ namespace TaleofMonsters.MainItem.Scenes
                 else
                 {
                     so = new SceneTile(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, true); break;
-                    //throw new Exception("GetSceneObjects error");
+                    //throw new Exception("RefreshSceneObjects error");
                 }
                 sceneObjects.Add(so);
             }
