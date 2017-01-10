@@ -5,7 +5,6 @@ using System.Windows.Forms;
 using ConfigDatas;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.Forms.Items.Core;

@@ -8,7 +8,7 @@ using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
-using TaleofMonsters.DataType.User.Mem;
+using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
 using TaleofMonsters.MainItem.Scenes.SceneObjects;
 
@@ -28,7 +28,7 @@ namespace TaleofMonsters.MainItem.Scenes
         public static List<SceneObject> GetSceneObjects(int id, int mapWidth ,int mapHeight, bool isWarp)
         {
             List<ScenePosData> cachedMapData = new List<ScenePosData>();
-            Dictionary<int, MemSceneSpecialPosData> cachedSpecialData = new Dictionary<int, MemSceneSpecialPosData>();
+            var cachedSpecialData = new Dictionary<int, DbSceneSpecialPosData>();
             var filePath = ConfigData.GetSceneConfig(id).TilePath;
 
 #region 读取文件信息
@@ -72,7 +72,7 @@ namespace TaleofMonsters.MainItem.Scenes
                 if (data.Length < 2)
                     continue;
 
-                MemSceneSpecialPosData posData = new MemSceneSpecialPosData();
+                var posData = new DbSceneSpecialPosData();
                 posData.Id = int.Parse(data[0]);
                 posData.Type = data[1];
                 if (posData.Type == "Warp")
@@ -102,16 +102,16 @@ namespace TaleofMonsters.MainItem.Scenes
                 ListTool.Fill(questList, 0, questCellCount);
                 ListTool.RandomShuffle(questList);
 
-                List<MemSceneSpecialPosData> posList = new List<MemSceneSpecialPosData>();
+                var posList = new List<DbSceneSpecialPosData>();
                 int index = 0;
                 foreach (var scenePosData in cachedMapData)
                 {
-                    MemSceneSpecialPosData specialData;
+                    DbSceneSpecialPosData specialData;
                     cachedSpecialData.TryGetValue(scenePosData.Id, out specialData);
 
                     if (specialData == null)
                     {
-                        specialData = new MemSceneSpecialPosData(); //随机一个出来
+                        specialData = new DbSceneSpecialPosData(); //随机一个出来
                         specialData.Id = scenePosData.Id;
                         specialData.Type = "Quest";
                         specialData.Info = questList[index++];
@@ -134,7 +134,7 @@ namespace TaleofMonsters.MainItem.Scenes
             List<SceneObject> sceneObjects = new List<SceneObject>();
             foreach (var scenePosData in cachedMapData)
             {
-                MemSceneSpecialPosData specialData;
+                DbSceneSpecialPosData specialData;
                 cachedSpecialData.TryGetValue(scenePosData.Id, out specialData);
 
                 SceneObject so;

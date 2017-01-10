@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
+using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
-using TaleofMonsters.DataType.User.Mem;
 
 namespace TaleofMonsters.Forms.TourGame
 {
     internal partial class TourRankList : UserControl
     {
         private bool show;
-        private MemRankData[] ranks;
+        private RankData[] ranks;
 
         public TourRankList()
         {
@@ -23,7 +22,7 @@ namespace TaleofMonsters.Forms.TourGame
             show = true;
 
             ranks = UserProfile.InfoWorld.GetAllPeopleRank();
-            Array.Sort(ranks, new CompareByMark());
+            Array.Sort(ranks, new RankData.CompareByMark());
 
             Height = Math.Max(410, ranks.Length * 32 + 10);
             Invalidate();
@@ -50,17 +49,6 @@ namespace TaleofMonsters.Forms.TourGame
             }
         }
 
-        private class CompareByMark : IComparer<MemRankData>
-        {
-            #region IComparer<MemRankData> 成员
-
-            public int Compare(MemRankData x, MemRankData y)
-            {
-                return y.Mark - x.Mark;
-            }
-
-            #endregion
-        }
     }
 
 }

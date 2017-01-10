@@ -3,8 +3,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using ControlPlus;
 using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.DataType.User.Mem;
-using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;

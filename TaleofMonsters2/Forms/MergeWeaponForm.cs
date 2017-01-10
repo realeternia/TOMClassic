@@ -10,11 +10,11 @@ using TaleofMonsters.DataType.Equips;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
-using TaleofMonsters.DataType.User.Mem;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using ControlPlus;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.User.Db;
 
 namespace TaleofMonsters.Forms
 {
@@ -24,8 +24,8 @@ namespace TaleofMonsters.Forms
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
         private VirtualRegion virtualRegion;
         private int[] itemCounts;
-        private MemMergeData[] mergeInfos;
-        private MemMergeData currentInfo;
+        private DbMergeData[] mergeInfos;
+        private DbMergeData currentInfo;
         private NLSelectPanel selectPanel;
         private string timeText;
 
@@ -63,7 +63,7 @@ namespace TaleofMonsters.Forms
             mergeInfos = UserProfile.InfoWorld.GetAllMergeData();
             Array.Sort(mergeInfos, new CompareByMethod());
             selectPanel.ClearContent();
-            foreach (MemMergeData merge in mergeInfos)
+            foreach (DbMergeData merge in mergeInfos)
             {
                 EquipConfig equipConfig = ConfigData.GetEquipConfig(merge.Target);
                 selectPanel.AddContent(equipConfig.Id);
@@ -148,7 +148,7 @@ namespace TaleofMonsters.Forms
             if (targetid == 0)
                 return;
 
-            foreach (MemMergeData memMergeData in mergeInfos)
+            foreach (DbMergeData memMergeData in mergeInfos)
             {
                 if (memMergeData.Target == targetid)
                 {

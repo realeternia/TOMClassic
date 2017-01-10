@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Drawing;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;

@@ -92,16 +92,16 @@ namespace TaleofMonsters.DataType.User
                 case 31: return InfoCard.GetCardCountByType(CardTypes.Monster);
                 case 32: return InfoCard.GetCardCountByType(CardTypes.Weapon);
                 case 33: return InfoCard.GetCardCountByType(CardTypes.Spell);
-                case 50: return BattleManager.Instance.BattleInfo.FastWin;
-                case 51: return BattleManager.Instance.BattleInfo.Round;
-                case 52: return BattleManager.Instance.BattleInfo.Left.MonsterAdd;
-                case 53: return BattleManager.Instance.BattleInfo.Left.WeaponAdd;
-                case 54: return BattleManager.Instance.BattleInfo.Left.SpellAdd;
-                case 55: return BattleManager.Instance.BattleInfo.Items.Count;
-                case 56: return BattleManager.Instance.BattleInfo.ZeroDie;
-                case 57: return BattleManager.Instance.BattleInfo.OnlyMagic;
-                case 58: return BattleManager.Instance.BattleInfo.OnlySummon;
-                case 60: return BattleManager.Instance.BattleInfo.AlmostLost;
+                case 50: return BattleManager.Instance.StatisticData.FastWin;
+                case 51: return BattleManager.Instance.StatisticData.Round;
+                case 52: return BattleManager.Instance.StatisticData.Left.MonsterAdd;
+                case 53: return BattleManager.Instance.StatisticData.Left.WeaponAdd;
+                case 54: return BattleManager.Instance.StatisticData.Left.SpellAdd;
+                case 55: return BattleManager.Instance.StatisticData.Items.Count;
+                case 56: return BattleManager.Instance.StatisticData.ZeroDie;
+                case 57: return BattleManager.Instance.StatisticData.OnlyMagic;
+                case 58: return BattleManager.Instance.StatisticData.OnlySummon;
+                case 60: return BattleManager.Instance.StatisticData.AlmostLost;
             }
 
             if (MathTool.ValueBetween(achieveConfig.Condition.Id, 100,108))
@@ -130,22 +130,6 @@ namespace TaleofMonsters.DataType.User
             }
 
             return 0;
-        }
-
-        public void FinishPick(int type)
-        {
-            if (type == 1)
-            {
-                InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalPick, 1);
-            }
-            else if (type == 2)
-            {
-                InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalFish, 1);
-            }
-            else if (type == 3)
-            {
-                InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalDig, 1);
-            }
         }
 
         public void OnKillMonster(int tlevel, int trace, int ttype)

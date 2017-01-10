@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
@@ -15,7 +16,14 @@ namespace TaleofMonsters.MainItem.Quests
             int enemyId = config.EnemyId;
             HsActionCallback winCallback = () => { result = evt.ChooseTarget(1); isEndFight = true; };
             HsActionCallback failCallback = () => { result = evt.ChooseTarget(0); isEndFight = true; };
-            PeopleBook.Fight(enemyId, "oneline", -1, level, PeopleFightReason.SceneQuest, winCallback, failCallback, failCallback);
+            var parm = new PeopleFightParm();
+            parm.Reason = PeopleFightReason.SceneQuest;
+            if (evt.ParamList.Count > 1)
+            {
+                parm.RuleAddon = (PeopleFightRuleAddon)Enum.Parse(typeof (PeopleFightRuleAddon), evt.ParamList[0]);
+                parm.RuleLevel = int.Parse(evt.ParamList[1]);
+            }
+            PeopleBook.Fight(enemyId, config.BattleMap, level, parm, winCallback, failCallback, failCallback);
         }
 
         public override void OnFrame(int tick)

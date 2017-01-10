@@ -6,7 +6,6 @@ using ControlPlus;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType.Cards.Monsters;
-using TaleofMonsters.DataType.User.Mem;
 using TaleofMonsters.Forms.Items;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Core;

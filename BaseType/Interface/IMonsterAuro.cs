@@ -1,6 +1,4 @@
-﻿using System.Security.Principal;
-
-namespace ConfigDatas
+﻿namespace ConfigDatas
 {
     public interface IMonsterAuro
     {

@@ -57,15 +57,15 @@ namespace TaleofMonsters.Forms.Pops
             }
 
             Font font = new Font("宋体", 9*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            e.Graphics.DrawString(string.Format("地形:{0}", tile == -1 ? "默认" : ConfigDatas.ConfigData.GetTileConfig(tile).Cname), font, Brushes.White, 63, 117);
+            e.Graphics.DrawString(string.Format("地形:{0}", tile == 0 ? "默认" : ConfigDatas.ConfigData.GetTileConfig(tile).Cname), font, Brushes.White, 63, 117);
             font.Dispose();
         }
 
-        public static bool Show(string map, int tile, string[] datas)
+        public static bool Show(string map, string[] datas)
         {
             PopDeckChoose mb = new PopDeckChoose();
-            mb.tile = tile;
-            mb.img = BattleMapBook.GetMapImage(map, tile);
+            mb.tile = 0;
+            mb.img = BattleMapBook.GetMapImage(map, 0);
             mb.pageSelector.SetTarget(UserProfile.InfoCard.DeckId);
             mb.ShowDialog();
 

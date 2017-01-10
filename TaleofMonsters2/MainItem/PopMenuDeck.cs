@@ -1,5 +1,4 @@
 ﻿using System.Windows.Forms;
-using ConfigDatas;
 using ControlPlus;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Decks;

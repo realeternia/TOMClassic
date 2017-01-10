@@ -2,10 +2,11 @@
 using NarlonLib.Math;
 using TaleofMonsters.Config;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType.Others;
 
-namespace TaleofMonsters.DataType.Others
+namespace TaleofMonsters.DataType.User.Db
 {
-    public class CardProduct
+    public class DbCardProduct
     {
         [FieldIndex(Index = 1)]
         public int Id;
@@ -14,12 +15,12 @@ namespace TaleofMonsters.DataType.Others
         [FieldIndex(Index = 3)]
         public int Mark; //CardProductMarkTypes
 
-        public CardProduct()
+        public DbCardProduct()
         {
             
         }
 
-        public CardProduct(int id, int cid, int mark)
+        public DbCardProduct(int id, int cid, int mark)
         {
             Id = id;
             Cid = cid;
@@ -63,11 +64,11 @@ namespace TaleofMonsters.DataType.Others
         }
     }
 
-    internal class CompareByMark : IComparer<CardProduct>
+    internal class CompareByMark : IComparer<DbCardProduct>
     {
-        #region IComparer<CardProduct> 成员
+        #region IComparer<DbCardProduct> 成员
 
-        public int Compare(CardProduct x, CardProduct y)
+        public int Compare(DbCardProduct x, DbCardProduct y)
         {
             if (x.Mark != y.Mark)
             {

@@ -5,8 +5,7 @@ namespace TaleofMonsters.DataType.User
 {
     public class InfoSkill
     {
-        [FieldIndex(Index = 3)]
-         public Dictionary<int, int> SkillAttrs;
+        [FieldIndex(Index = 3)] public Dictionary<int, int> SkillAttrs;
 
         public InfoSkill()
         {

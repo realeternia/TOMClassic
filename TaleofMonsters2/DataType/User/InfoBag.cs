@@ -11,14 +11,10 @@ namespace TaleofMonsters.DataType.User
 {
     public class InfoBag
     {
-        [FieldIndex(Index = 1)]
-        public GameResource Resource;
-        [FieldIndex(Index = 2)]
-        public int Diamond;
-        [FieldIndex(Index = 3)]
-        public IntPair[] Items ;
-        [FieldIndex(Index = 4)]
-        public int BagCount ;
+        [FieldIndex(Index = 1)] public GameResource Resource;
+        [FieldIndex(Index = 2)] public int Diamond;
+        [FieldIndex(Index = 3)] public IntPair[] Items;
+        [FieldIndex(Index = 4)] public int BagCount;
 
         [Obsolete("此数据不用存回，但目前罗技有问题")]
         public AutoDictionary<int, int> tpBonusItem = new AutoDictionary<int, int>();

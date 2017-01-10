@@ -9,8 +9,7 @@ namespace TaleofMonsters.DataType.User
 {
     public class InfoTask
     {
-        [FieldIndex(Index = 1)]
-        public Dictionary<int, TaskState> Tasks ;
+        [FieldIndex(Index = 1)] public Dictionary<int, TaskState> Tasks;
 
         public InfoTask()
         {

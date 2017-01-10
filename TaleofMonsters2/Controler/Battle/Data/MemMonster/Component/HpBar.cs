@@ -98,7 +98,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void OnDamage(HitDamage damage)
         {
-            BattleManager.Instance.BattleInfo.GetPlayer(!self.IsLeft).DamageTotal += damage.Value;
+            BattleManager.Instance.StatisticData.GetPlayer(!self.IsLeft).DamageTotal += damage.Value;
 
             if (damage.Dtype != DamageTypes.Magic && PArmor > 0)
             {

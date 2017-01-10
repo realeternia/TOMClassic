@@ -32,9 +32,6 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 case "mirror": RightPlayer = new MirrorPlayer(right, LeftPlayer.Cards, false); break;
                 default: RightPlayer = new AIPlayer(right, peopleConfig.Emethod, false, rlevel, false); break;
             }
-
-            LeftPlayer.InitialMonster = peopleConfig.LeftMon;
-            RightPlayer.InitialMonster = peopleConfig.RightMon;
         }
 
         public void Clear()

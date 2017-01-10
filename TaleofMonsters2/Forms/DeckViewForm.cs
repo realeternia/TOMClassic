@@ -10,7 +10,7 @@ using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.User;
-using TaleofMonsters.DataType.User.Mem;
+using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.Forms.Items;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
@@ -177,12 +177,12 @@ namespace TaleofMonsters.Forms
         private void InstallDeckCard()
         {
             DeckCard[] dcards = null;
-            MemDeckData dk = UserProfile.InfoCard.SelectedDeck;
+            DbDeckData dk = UserProfile.InfoCard.SelectedDeck;
             dcards = new DeckCard[GameConstants.DeckCardCount];
             for (int i = 0; i < GameConstants.DeckCardCount; i++)
             {
                 int cid = dk.GetCardAt(i);
-                dcards[i] = UserProfile.InfoCard.GetDeckCardById(cid);
+                dcards[i] = new DeckCard(UserProfile.InfoCard.GetDeckCardById(cid));
             }
 
             selectRegion.ChangeDeck(dcards);
@@ -199,7 +199,10 @@ namespace TaleofMonsters.Forms
             if (floor == 1)
             {
                 dcards = new DeckCard[UserProfile.InfoCard.Cards.Count];
-                UserProfile.InfoCard.Cards.Values.CopyTo(dcards, 0);
+                for (int i = 0; i < dcards.Length; i++)
+                {
+                    dcards[i] = new DeckCard(UserProfile.InfoCard.Cards[i]);
+                }
                 Array.Sort(dcards, new CompareDeckCardByType());
             }
             else if (floor == 2)
@@ -207,7 +210,7 @@ namespace TaleofMonsters.Forms
                 dcards = new DeckCard[UserProfile.InfoCard.Newcards.Count];
                 for (int i = 0; i < dcards.Length; i++)
                 {
-                    dcards[i] = UserProfile.InfoCard.GetDeckCardById(UserProfile.InfoCard.Newcards[i]);
+                    dcards[i] = new DeckCard(UserProfile.InfoCard.GetDeckCardById(UserProfile.InfoCard.Newcards[i]));
                 }
             }
 

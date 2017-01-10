@@ -5,10 +5,9 @@ namespace TaleofMonsters.DataType.User
 {
     public class InfoEquip
     {
-        [FieldIndex(Index = 1)]
-        public int[] Equipon;
-        [FieldIndex(Index = 2)]
-        public int[] Equipoff;
+        [FieldIndex(Index = 1)] public int[] Equipon;
+
+        [FieldIndex(Index = 2)] public int[] Equipoff;
 
         public InfoEquip()
         {

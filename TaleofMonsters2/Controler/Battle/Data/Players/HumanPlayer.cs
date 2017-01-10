@@ -9,7 +9,6 @@ using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Equips;
 using TaleofMonsters.DataType.Others;
-using TaleofMonsters.DataType.Peoples;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
 {
@@ -26,7 +25,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             for (int i = 0; i < GameConstants.DeckCardCount; i++)
             {
                 int id = UserProfile.InfoCard.SelectedDeck.GetCardAt(i);
-                cd[i] = UserProfile.InfoCard.GetDeckCardById(id);
+                cd[i] = new DeckCard(UserProfile.InfoCard.GetDeckCardById(id));
             }
             Cards = new ActiveCards(cd);
 
@@ -36,13 +35,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
             InitBase();
 
-            if (BattleManager.Instance.BattleInfo.Reason == PeopleFightReason.SceneQuest)
-            {
-                var initialPoint = Math.Min(3, (UserProfile.InfoBasic.MentalPoint+29)/30);
-                Mp = initialPoint;
-                Lp = initialPoint;
-                Pp = initialPoint;
-            }
+            BattleManager.Instance.RuleData.CheckPlayerData(this);
         }
 
         public override void AddResource(GameResourceType type, int number)

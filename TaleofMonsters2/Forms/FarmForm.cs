@@ -5,8 +5,8 @@ using ControlPlus;
 using NarlonLib.Core;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.Forms.Items.Core;
 
 namespace TaleofMonsters.Forms
@@ -78,7 +78,7 @@ namespace TaleofMonsters.Forms
             int newsel = GetSelectedCell(e.X, e.Y);
             if (newsel != -1)
             {
-                FarmState timeState = UserProfile.Profile.InfoFarm.GetFarmState(newsel);
+                DbFarmState timeState = UserProfile.Profile.InfoFarm.GetFarmState(newsel);
                 if (timeState.Type == -1)
                 {
                     int pricecount = UserProfile.Profile.InfoFarm.GetFarmAvailCount() * 50;
@@ -86,7 +86,7 @@ namespace TaleofMonsters.Forms
                     {
                         if (UserProfile.InfoBag.PayDiamond(pricecount))
                         {
-                            UserProfile.Profile.InfoFarm.SetFarmState(newsel, new FarmState(0, 0));
+                            UserProfile.Profile.InfoFarm.SetFarmState(newsel, new DbFarmState(0, 0));
                         }
                     }
                 }
@@ -95,7 +95,7 @@ namespace TaleofMonsters.Forms
                     if (timeState.Time < TimeTool.DateTimeToUnixTime(DateTime.Now))
                     {
                         UserProfile.InfoBag.AddItem(timeState.Type, 1);
-                        UserProfile.Profile.InfoFarm.SetFarmState(newsel, new FarmState(0, 0));
+                        UserProfile.Profile.InfoFarm.SetFarmState(newsel, new DbFarmState(0, 0));
                     }
                     else
                     {
@@ -104,7 +104,7 @@ namespace TaleofMonsters.Forms
                         {
                             if (UserProfile.InfoBag.PayDiamond(pricecount))
                             {
-                                UserProfile.Profile.InfoFarm.SetFarmState(newsel, new FarmState(timeState.Type, 0));
+                                UserProfile.Profile.InfoFarm.SetFarmState(newsel, new DbFarmState(timeState.Type, 0));
                             }
                         }
                     }
@@ -150,7 +150,7 @@ namespace TaleofMonsters.Forms
                     baseX -= 80 * (i % 3);
                     baseY += 40 * (i % 3);
                 }
-                FarmState timeState = UserProfile.Profile.InfoFarm.GetFarmState(i);
+                DbFarmState timeState = UserProfile.Profile.InfoFarm.GetFarmState(i);
                 string baseName = timeState.Type == -1 ? "tile2" : "tile1";
                 Image tile = PicLoader.Read("Farm", i == select ? baseName + "On.PNG" : baseName + ".PNG");
                 e.Graphics.DrawImage(tile, baseX, baseY + 86 - tile.Height, tile.Width, tile.Height);

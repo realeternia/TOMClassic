@@ -11,13 +11,14 @@ using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Effects;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.Forms.Items.Regions;
 
 namespace TaleofMonsters.Forms.Items
 {
     internal class CardShopItem
     {
-        private CardProduct product;
+        private DbCardProduct product;
         private bool show;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
         private VirtualRegion virtualRegion;
@@ -45,7 +46,7 @@ namespace TaleofMonsters.Forms.Items
             virtualRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
         }
 
-        public void RefreshData(CardProduct pro)
+        public void RefreshData(DbCardProduct pro)
         {
             show = pro.Id != 0;
             product = pro;

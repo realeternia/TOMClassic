@@ -66,7 +66,7 @@ namespace TaleofMonsters.DataType.Mazes
             return false;
         }
 
-        public void Effect(Forms.BasePanel panel, string tile, HsActionCallback success, HsActionCallback fail)
+        public void Effect(Forms.BasePanel panel, HsActionCallback success, HsActionCallback fail)
         {
             if (type == "item")
             {
@@ -81,7 +81,7 @@ namespace TaleofMonsters.DataType.Mazes
             }
             else if (type == "mon")
             {
-                PeopleBook.Fight(infos[0], tile, -1, mlevel + infos[1], PeopleFightReason.Other, success, fail,null);
+                PeopleBook.Fight(infos[0], "oneline", mlevel + infos[1], new PeopleFightParm(), success, fail,null);
                 return;
             }
             else if (type == "gold")

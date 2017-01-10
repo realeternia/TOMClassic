@@ -6,8 +6,8 @@ using NarlonLib.Core;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.Forms.Items;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
@@ -21,7 +21,7 @@ namespace TaleofMonsters.Forms
         private NLPageSelector nlPageSelector1;
         private int page;
         private int shelf;
-        private CardProduct[] products;
+        private DbCardProduct[] products;
         private string timeText;
 
         private VirtualRegion vRegion;
@@ -67,7 +67,7 @@ namespace TaleofMonsters.Forms
         {
             for (int i = 0; i < 18; i++)
             {
-                itemControls[i].RefreshData((page * 18 + i < products.Length) ? products[page * 18 + i] : new CardProduct());
+                itemControls[i].RefreshData((page * 18 + i < products.Length) ? products[page * 18 + i] : new DbCardProduct());
             }
             Invalidate();
         }

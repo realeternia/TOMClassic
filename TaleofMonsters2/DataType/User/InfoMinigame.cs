@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using TaleofMonsters.Core;
 
 namespace TaleofMonsters.DataType.User

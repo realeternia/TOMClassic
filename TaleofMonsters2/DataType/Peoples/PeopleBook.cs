@@ -13,23 +13,6 @@ namespace TaleofMonsters.DataType.Peoples
 {
     internal static class PeopleBook
     {
-        public static int GetRandPersonIdByLevel(int dlevel)
-        {
-            RandomMaker randomMaker = new RandomMaker();
-            foreach (PeopleConfig peopleConfig in ConfigData.PeopleDict.Values)
-            {
-                if (IsMonster(peopleConfig.Id))
-                    continue;
-
-                if (peopleConfig.Level >= dlevel - 1 && peopleConfig.Level <= dlevel + 1)
-                {
-                    randomMaker.Add(peopleConfig.Id, 1);
-                }
-            }
-
-            return randomMaker.Process(1)[0];
-        }
-
         public static Image GetPreview(int id)
         {
             PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(id);
@@ -90,9 +73,9 @@ namespace TaleofMonsters.DataType.Peoples
             return pids.GetRange(0, count).ToArray();
         }
 
-        public static void Fight(int pid, string map, int tile, int rlevel, PeopleFightReason reason, HsActionCallback winEvent, HsActionCallback lossEvent, HsActionCallback cancelEvent)
+        public static void Fight(int pid, string map, int rlevel, PeopleFightParm reason, HsActionCallback winEvent, HsActionCallback lossEvent, HsActionCallback cancelEvent)
         {
-            bool rt = PopDeckChoose.Show(map, tile, UserProfile.InfoCard.GetDeckNames());
+            bool rt = PopDeckChoose.Show(map, UserProfile.InfoCard.GetDeckNames());
             if (!rt)
             {
                 if (cancelEvent != null)
@@ -105,7 +88,7 @@ namespace TaleofMonsters.DataType.Peoples
             BattleForm bf = new BattleForm();
             bf.BattleWin = winEvent;
             bf.BattleLose = lossEvent;
-            bf.Init(0, pid, map, tile, rlevel, reason);
+            bf.Init(0, pid, map, rlevel, reason);
             MainForm.Instance.DealPanel(bf);
         }
 

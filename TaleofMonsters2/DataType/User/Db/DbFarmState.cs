@@ -1,21 +1,20 @@
 ﻿using TaleofMonsters.Core;
-using TaleofMonsters.Core.Interface;
 
-namespace TaleofMonsters.DataType.Others
+namespace TaleofMonsters.DataType.User.Db
 {
-    public class FarmState
+    public class DbFarmState
     {
         [FieldIndex(Index = 1)]
         public int Type;
         [FieldIndex(Index = 2)]
         public int Time;
 
-        public FarmState()
+        public DbFarmState()
         {
             
         }
 
-        public FarmState(int type, int time)
+        public DbFarmState(int type, int time)
         {
             this.Type = type;
             this.Time = time;

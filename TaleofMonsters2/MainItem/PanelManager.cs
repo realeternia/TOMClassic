@@ -1,14 +1,10 @@
-﻿using TaleofMonsters.DataType.Peoples;
-using TaleofMonsters.DataType.User;
-using TaleofMonsters.Forms;
+﻿using TaleofMonsters.Forms;
 using TaleofMonsters.Forms.MiniGame;
 
 namespace TaleofMonsters.MainItem
 {
     internal class PanelManager
     {
-        private const int peopleBazi = 10001;
-
         public static void ShowLevelUp()
         {
             LevelUpForm levelUpForm = new LevelUpForm();
@@ -22,12 +18,6 @@ namespace TaleofMonsters.MainItem
                 LevelInfoForm levelInfoForm = new LevelInfoForm();
                 levelInfoForm.Level = level;
                 MainForm.Instance.DealPanel(levelInfoForm);
-                if (level == 3)
-                {
-                    RivalState rival = new RivalState(peopleBazi);
-                    rival.Avail = true;
-                    UserProfile.InfoRival.Rivals[peopleBazi] = rival;
-                }
             }
         }
 

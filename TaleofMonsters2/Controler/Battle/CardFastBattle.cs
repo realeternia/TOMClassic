@@ -36,7 +36,7 @@ namespace TaleofMonsters.Controler.Battle
 
             roundMark = 0;
             int size = BattleManager.Instance.MemMap.CardSize;
-            BattleManager.Instance.BattleInfo.Round = 0;
+            BattleManager.Instance.StatisticData.Round = 0;
             LiveMonster newMon = new LiveMonster(1, new Monster(left),
                 new Point(3 * size, 2 * size), true);
             //if (leftWeapon > 0)
@@ -75,14 +75,14 @@ namespace TaleofMonsters.Controler.Battle
                 
                     break;
                 }
-                if (BattleManager.Instance.BattleInfo.Round>=10)//10回合以上认为超时
+                if (BattleManager.Instance.StatisticData.Round>=10)//10回合以上认为超时
                 {
                     result = CardFastBattleResult.Draw;
                     break;
                 }
                 if (roundMark % 100 == 0)
                 {
-                    BattleManager.Instance.BattleInfo.Round++;
+                    BattleManager.Instance.StatisticData.Round++;
                 }
             }
         }

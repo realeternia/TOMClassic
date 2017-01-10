@@ -1,5 +1,7 @@
-﻿using ConfigDatas;
+﻿using System.Collections.Generic;
+using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
+using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType.Decks;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
@@ -29,5 +31,17 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         {
             base.InitialCards();
         }
+        public override List<int> GetInitialMonster()
+        {
+            var list = new List<int>();
+            PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(PeopleId);
+            if (peopleConfig.RightMon != null && peopleConfig.RightMon.Length>0)
+            {
+                list.AddRange(peopleConfig.RightMon);
+            }
+            BattleManager.Instance.RuleData.CheckInitialMonster(this, list, peopleConfig.PetMon);//会修改player.InitialMonster
+            return list;
+        }
+
     }
 }

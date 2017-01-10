@@ -1,6 +1,4 @@
 ﻿using System.Drawing;
-using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.Forms;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
 

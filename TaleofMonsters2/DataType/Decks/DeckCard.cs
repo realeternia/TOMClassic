@@ -1,22 +1,20 @@
-﻿using System;
-using TaleofMonsters.Config;
-using TaleofMonsters.Core;
+﻿using TaleofMonsters.Config;
 using TaleofMonsters.DataType.Cards;
-using TaleofMonsters.DataType.Others;
+using TaleofMonsters.DataType.User.Db;
 
 namespace TaleofMonsters.DataType.Decks
 {
     public class DeckCard
     {
-        [FieldIndex(Index = 2)]
-        public int BaseId ;
-        [FieldIndex(Index = 3)]
-        public byte Level ;
-        [FieldIndex(Index = 4)]
-        public ushort Exp ;
+        public int BaseId;
+        public byte Level;
+        public ushort Exp;
 
-        public DeckCard()
+        public DeckCard(DbDeckCard dc)
         {
+            BaseId = dc.BaseId;
+            Level = dc.Level;
+            Exp = dc.Exp;
         }
 
         public DeckCard(int baseId, byte level, ushort exp)
@@ -24,16 +22,6 @@ namespace TaleofMonsters.DataType.Decks
             BaseId = baseId;
             Level = level;
             Exp = exp;
-        }
-
-        public void AddExp(int addon)
-        {
-            if (Level>= ExpTree.MaxLevel)
-            {
-                return;
-            }
-
-            Exp = (ushort)(Exp + addon);
         }
 
         public int Mp

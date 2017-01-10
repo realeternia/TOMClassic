@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.IO;
 using TaleofMonsters.Core;
-using TaleofMonsters.Core.Interface;
 
 namespace TaleofMonsters.DataType.User
 {

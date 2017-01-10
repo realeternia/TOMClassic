@@ -53,7 +53,7 @@ namespace TaleofMonsters.Controler.Battle
             }
 
             roundMark = 0;
-            BattleManager.Instance.BattleInfo.StartTime = DateTime.Now;
+            BattleManager.Instance.StatisticData.StartTime = DateTime.Now;
 
             TimerProc();
         }
@@ -75,7 +75,7 @@ namespace TaleofMonsters.Controler.Battle
                 if (roundMark % 4 == 0)
                 {
                     float pastTime = (float)200 / GameConstants.RoundTime;
-                    BattleManager.Instance.PlayerManager.Update(false, pastTime, BattleManager.Instance.BattleInfo.Round);
+                    BattleManager.Instance.PlayerManager.Update(false, pastTime, BattleManager.Instance.StatisticData.Round);
                     if (roundMark % 250 == 0)
                     {
                         BattleManager.Instance.PlayerManager.CheckRoundCard();
@@ -86,7 +86,7 @@ namespace TaleofMonsters.Controler.Battle
                     AIStrategy.AIProc(BattleManager.Instance.PlayerManager.RightPlayer);
                     AIStrategy.AIProc(BattleManager.Instance.PlayerManager.LeftPlayer);
                 }
-                BattleManager.Instance.BattleInfo.Round = roundMark * 50 / GameConstants.RoundTime + 1;//50ms
+                BattleManager.Instance.StatisticData.Round = roundMark * 50 / GameConstants.RoundTime + 1;//50ms
             }
         }
 
@@ -96,7 +96,7 @@ namespace TaleofMonsters.Controler.Battle
             {
                 gameEnd = true;
                 leftWin =BattleManager.Instance.MonsterQueue.LeftCount > 0;
-                BattleManager.Instance.BattleInfo.EndTime = DateTime.Now;
+                BattleManager.Instance.StatisticData.EndTime = DateTime.Now;
                 BattleManager.Instance.PlayerManager.Clear();
             }
         }

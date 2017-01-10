@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using NarlonLib.Core;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
@@ -10,8 +9,6 @@ using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType.Others;
 using ConfigDatas;
 using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Peoples;
-using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMap
 {
@@ -81,31 +78,30 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             {
                 var heroData = new Monster(unitInfo.UnitId);
                 var level = ConfigData.GetLevelExpConfig(player.Level).TowerLevel;
-                LiveMonster lm = new LiveMonster(level, heroData, new Point((x + (player.IsLeft ? unitInfo.X : (-unitInfo.X))) * CardSize, (y + unitInfo.Y) * CardSize), player.IsLeft);
+                int realX = player.IsLeft ? x + unitInfo.X : x - unitInfo.X;
+                int realY = y + unitInfo.Y;
+                LiveMonster lm = new LiveMonster(level, heroData, new Point(realX * CardSize, realY * CardSize), player.IsLeft);
 
-                if (lm.Owner is HumanPlayer && BattleManager.Instance.BattleInfo.Reason == PeopleFightReason.SceneQuest)
-                {
-                    if (UserProfile.InfoBasic.HealthPoint < 60)
-                    {
-                        lm.AddHpRate(Math.Max(1.0, UserProfile.InfoBasic.HealthPoint)/60-1);
-                    }
-           
-                }
+                BattleManager.Instance.RuleData.CheckTowerData(lm);
+
                 BattleManager.Instance.MonsterQueue.Add(lm);
             }
 
-            if (player.InitialMonster != null && player.InitialMonster.Length >= 3)
+            var monList = player.GetInitialMonster();//只有aiplayer有效
+            if (monList != null && monList.Count >= 3)
             {
-                for (int i = 0; i < player.InitialMonster.Length; i+=3)
+                for (int i = 0; i < monList.Count; i+=3)
                 {
-                    int mid = player.InitialMonster[i];
-                    int xoff = player.InitialMonster[i+1];
-                    int yoff = player.InitialMonster[i+2];
+                    int mid = monList[i];
+                    int xoff = monList[i+1];
+                    int yoff = monList[i+2];
 
                     var level = ConfigData.GetLevelExpConfig(player.Level).TowerLevel;
                     var mon = new Monster(mid);
                     mon.UpgradeToLevel(level);
-                    var pos = new Point((x + xoff)*CardSize, yoff*CardSize);
+                    int realX = player.IsLeft ? x + xoff : x - xoff;
+                    int realY = y+ yoff;
+                    var pos = new Point(realX * CardSize, realY * CardSize);
                     LiveMonster lm = new LiveMonster(level, mon, pos, player.IsLeft);
                     BattleManager.Instance.MonsterQueue.Add(lm);
                 }

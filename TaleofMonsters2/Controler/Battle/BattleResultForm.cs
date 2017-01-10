@@ -49,7 +49,7 @@ namespace TaleofMonsters.Controler.Battle
         {
             base.Init(width, height);
 
-            isWin = BattleManager.Instance.BattleInfo.PlayerWin;
+            isWin = BattleManager.Instance.StatisticData.PlayerWin;
             if (isWin)
             {
                 SoundManager.Play("System", "QuestCompleted.wav");
@@ -63,21 +63,21 @@ namespace TaleofMonsters.Controler.Battle
             leftId = BattleManager.Instance.PlayerManager.LeftPlayer.PeopleId;
             if (leftId == 0)
             {
-                BattleInfo battleInfo = BattleManager.Instance.BattleInfo;
+                BattleStatisticData battleStatisticData = BattleManager.Instance.StatisticData;
                 PeopleDrop drop = new PeopleDrop(rightId);
                 resource = drop.GetDropResource();
                 PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(rightId);
                 exp = GameResourceBook.InExpFight(UserProfile.InfoBasic.Level, peopleConfig.Level);
 
-                resource[0] = resource[0]*(100 + battleInfo.GoldRatePlus)/100;
-                exp = exp*(100 + (uint)battleInfo.ExpRatePlus)/100;
+                resource[0] = resource[0]*(100 + battleStatisticData.GoldRatePlus)/100;
+                exp = exp*(100 + (uint)battleStatisticData.ExpRatePlus)/100;
 
                 if (isWin)
                 {
                     var dropItemId = drop.GetDropItem();//获胜可以获得掉落物
                     if (dropItemId != 0)
                     {
-                        battleInfo.Items.Insert(0, dropItemId);
+                        battleStatisticData.Items.Insert(0, dropItemId);
                     }
                 }
                 else
@@ -89,7 +89,7 @@ namespace TaleofMonsters.Controler.Battle
                 //resource[0] = 10;  //todo 测试使用
                 //for (int i = 0; i < 10; i++)
                 //{
-                //    battleInfo.Items.Add(22033032);
+                //    StatisticData.Items.Add(22033032);
                 //}
                 //exp = 15;
                 if (resource[0] > 0)
@@ -106,11 +106,11 @@ namespace TaleofMonsters.Controler.Battle
                     virtualRegion.AddRegion(pictureRegion);
                 }
 
-                for (int i = 0; i < battleInfo.Items.Count; i++)
+                for (int i = 0; i < battleStatisticData.Items.Count; i++)
                 {
-                    rewardItemList.Add(battleInfo.Items[i]);
+                    rewardItemList.Add(battleStatisticData.Items[i]);
                     var pos = GetCellPosition();
-                    virtualRegion.AddRegion(new PictureAnimRegion(cellIndex, pos.X, pos.Y, 45, 45, PictureRegionCellType.Item, battleInfo.Items[i]));
+                    virtualRegion.AddRegion(new PictureAnimRegion(cellIndex, pos.X, pos.Y, 45, 45, PictureRegionCellType.Item, battleStatisticData.Items[i]));
                 }
             }
             else
@@ -253,22 +253,22 @@ namespace TaleofMonsters.Controler.Battle
                 head2.Dispose();
                 e.Graphics.DrawString(rightPeople.Name, font, Brushes.White, 370, 45);
 
-                BattleInfo battleInfo = BattleManager.Instance.BattleInfo;
-                e.Graphics.DrawString(string.Format("{0,2:D}", battleInfo.Left.MonsterAdd), font2, Brushes.White, 159, 103);
-                e.Graphics.DrawString(string.Format("{0,2:D}", battleInfo.Left.SpellAdd), font2, Brushes.White, 159, 123);
-                e.Graphics.DrawString(string.Format("{0,2:D}", battleInfo.Left.Kill), font2, Brushes.White, 259, 103);
-                e.Graphics.DrawString(string.Format("{0,2:D}", battleInfo.Left.WeaponAdd), font2, Brushes.White, 259, 123);
-                e.Graphics.DrawString(GetDamageStr(battleInfo.Left.DamageTotal) , font2, Brushes.White, 159, 143);
+                BattleStatisticData battleStatisticData = BattleManager.Instance.StatisticData;
+                e.Graphics.DrawString(string.Format("{0,2:D}", battleStatisticData.Left.MonsterAdd), font2, Brushes.White, 159, 103);
+                e.Graphics.DrawString(string.Format("{0,2:D}", battleStatisticData.Left.SpellAdd), font2, Brushes.White, 159, 123);
+                e.Graphics.DrawString(string.Format("{0,2:D}", battleStatisticData.Left.Kill), font2, Brushes.White, 259, 103);
+                e.Graphics.DrawString(string.Format("{0,2:D}", battleStatisticData.Left.WeaponAdd), font2, Brushes.White, 259, 123);
+                e.Graphics.DrawString(GetDamageStr(battleStatisticData.Left.DamageTotal) , font2, Brushes.White, 159, 143);
 
-                e.Graphics.DrawString(string.Format("{0,2:D}", battleInfo.Right.MonsterAdd), font2, Brushes.White, 373, 103);
-                e.Graphics.DrawString(string.Format("{0,2:D}", battleInfo.Right.SpellAdd), font2, Brushes.White, 373, 123);
-                e.Graphics.DrawString(string.Format("{0,2:D}", battleInfo.Right.Kill), font2, Brushes.White, 473, 103);
-                e.Graphics.DrawString(string.Format("{0,2:D}", battleInfo.Right.WeaponAdd), font2, Brushes.White, 473, 123);
-                e.Graphics.DrawString(GetDamageStr(battleInfo.Right.DamageTotal), font2, Brushes.White, 373, 143);
+                e.Graphics.DrawString(string.Format("{0,2:D}", battleStatisticData.Right.MonsterAdd), font2, Brushes.White, 373, 103);
+                e.Graphics.DrawString(string.Format("{0,2:D}", battleStatisticData.Right.SpellAdd), font2, Brushes.White, 373, 123);
+                e.Graphics.DrawString(string.Format("{0,2:D}", battleStatisticData.Right.Kill), font2, Brushes.White, 473, 103);
+                e.Graphics.DrawString(string.Format("{0,2:D}", battleStatisticData.Right.WeaponAdd), font2, Brushes.White, 473, 123);
+                e.Graphics.DrawString(GetDamageStr(battleStatisticData.Right.DamageTotal), font2, Brushes.White, 373, 143);
 
-                TimeSpan span = battleInfo.EndTime - battleInfo.StartTime;
+                TimeSpan span = battleStatisticData.EndTime - battleStatisticData.StartTime;
                 e.Graphics.DrawString(string.Format("{0:00}:{1:00}:{2:00}", span.Hours, span.Minutes, span.Seconds), font2, Brushes.White, 158, 195);
-                e.Graphics.DrawString(string.Format("{0}", battleInfo.Round), font2, Brushes.White, 158, 175);
+                e.Graphics.DrawString(string.Format("{0}", battleStatisticData.Round), font2, Brushes.White, 158, 175);
 
                 font.Dispose();
                 font2.Dispose();

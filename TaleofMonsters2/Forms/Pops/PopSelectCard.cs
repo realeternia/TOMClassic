@@ -87,7 +87,7 @@ namespace TaleofMonsters.Forms.Pops
             {
                 if ((int)CardAssistant.GetCardType(cid)== fil_type)
                 {
-                    DeckCard card = UserProfile.InfoCard.GetDeckCardById(cid);
+                    DeckCard card = new DeckCard(UserProfile.InfoCard.GetDeckCardById(cid));
                     cards.Add(card);
                 }
             }
@@ -121,7 +121,7 @@ namespace TaleofMonsters.Forms.Pops
         {
             if (sel >= 0)
             {
-                DeckCard card = UserProfile.InfoCard.GetDeckCardById(activeCids[sel]);
+                DeckCard card = new DeckCard(UserProfile.InfoCard.GetDeckCardById(activeCids[sel]));
                 e.Graphics.DrawImage(CardAssistant.GetCardImage(card.BaseId, 100, 100), 38, 62, 100, 100);
 
                 Font font = new Font("Arial", 7*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);

@@ -46,7 +46,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public List<int> HeroSkillList = new List<int>();
         public bool IsAlive { get; set; }//是否活着
-        public int[] InitialMonster { get; set; } //由peoplebook决定
 
         private float comboTime;//>0表示在combo状态
         public bool Combo { get { return comboTime > 0; } }
@@ -172,10 +171,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public virtual void InitialCards()
         {
-            for (int i = 0; i < GameConstants.BattleInitialCardCount; i++)
-            {
-                CardManager.GetNextCard();
-            }
+            CardManager.GetNextNCard(GameConstants.BattleInitialCardCount);
+
+            BattleManager.Instance.RuleData.CheckInitialCards(this);
         }
         
         public void AddMana(IMonster mon, int type, double addon)
@@ -325,7 +323,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 var mon = new Monster(card.CardId);
                 mon.UpgradeToLevel(card.Level);
                 if (!card.IsHeroSkill)
-                    BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).MonsterAdd++;
+                    BattleManager.Instance.StatisticData.GetPlayer(IsLeft).MonsterAdd++;
 
                 LiveMonster newMon = new LiveMonster(card.Level, mon, location, IsLeft);
                 BattleManager.Instance.MonsterQueue.Add(newMon);
@@ -363,7 +361,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 Weapon wpn = new Weapon(card.CardId);
                 wpn.UpgradeToLevel(card.Level);
                 if (!card.IsHeroSkill)
-                    BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).WeaponAdd++;
+                    BattleManager.Instance.StatisticData.GetPlayer(IsLeft).WeaponAdd++;
 
                 var tWeapon = new TrueWeapon(lm, card.Level, wpn);
                 lm.AddWeapon(tWeapon);
@@ -390,7 +388,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 Monster mon = new Monster(card.CardId);
                 mon.UpgradeToLevel(card.Level);
                 if (!card.IsHeroSkill)
-                    BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).MonsterAdd++;
+                    BattleManager.Instance.StatisticData.GetPlayer(IsLeft).MonsterAdd++;
 
                 var tWeapon = new SideKickWeapon(lm, card.Level, mon);
                 lm.AddWeapon(tWeapon);
@@ -418,7 +416,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 spell.Addon = SpellEffectAddon;
                 spell.UpgradeToLevel(card.Level);
                 if (!card.IsHeroSkill)
-                    BattleManager.Instance.BattleInfo.GetPlayer(IsLeft).SpellAdd++;
+                    BattleManager.Instance.StatisticData.GetPlayer(IsLeft).SpellAdd++;
 
                 SpellAssistant.CheckSpellEffect(spell, IsLeft, target, location);
 
@@ -669,6 +667,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         {
             var unit = BattleManager.Instance.MonsterQueue.GetKingTower(IsLeft);
             unit.AddHp(hp);
+        }
+
+        public virtual List<int> GetInitialMonster()
+        {
+            return new List<int>();
         }
 
         public void DrawToolTips(Graphics g)

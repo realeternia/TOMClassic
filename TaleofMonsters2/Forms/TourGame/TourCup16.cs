@@ -2,14 +2,14 @@
 using System.Drawing;
 using System.Windows.Forms;
 using TaleofMonsters.DataType.User;
-using TaleofMonsters.DataType.User.Mem;
+using TaleofMonsters.DataType.User.Db;
 
 namespace TaleofMonsters.Forms.TourGame
 {
     internal partial class TourCup16 : UserControl
     {
         private bool show;
-        private MemTournamentData tourData;
+        private DbTournamentData tourData;
         private Button[] buttons;
         private int tid;
 

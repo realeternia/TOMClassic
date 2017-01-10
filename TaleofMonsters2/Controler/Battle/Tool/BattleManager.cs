@@ -23,13 +23,14 @@ namespace TaleofMonsters.Controler.Battle.Tool
             }
         }
 
-        public EffectQueue EffectQueue;
-        public FlowWordQueue FlowWordQueue;
-        public MonsterQueue MonsterQueue;
-        public BattleInfo BattleInfo;
-        public PlayerManager PlayerManager;
-        public MissileQueue MissileQueue;
-        public MemRowColumnMap MemMap;
+        public EffectQueue EffectQueue { get; set; }
+        public FlowWordQueue FlowWordQueue { get; set; }
+        public MonsterQueue MonsterQueue { get; set; }
+        public BattleStatisticData StatisticData { get; set; }//统计数据
+        public BattleRuleData RuleData { get; set; }//规则数据
+        public PlayerManager PlayerManager { get; set; }
+        public MissileQueue MissileQueue { get; set; }
+        public MemRowColumnMap MemMap { get; set; }
 
         public bool IsNight;
         public int RoundMark;//目前一个roundmark代表0.05s
@@ -45,7 +46,8 @@ namespace TaleofMonsters.Controler.Battle.Tool
             EffectQueue = new EffectQueue();
             FlowWordQueue = new FlowWordQueue();
             MonsterQueue = new MonsterQueue();
-            BattleInfo = new BattleInfo();
+            StatisticData = new BattleStatisticData();
+            RuleData = new BattleRuleData();
             PlayerManager = new PlayerManager();
             MissileQueue = new MissileQueue();
             IsNight = false;
@@ -65,7 +67,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
 
                 MonsterQueue.NextAction(pastRound); //1回合
 
-                PlayerManager.Update(false, pastRound, BattleInfo.Round);
+                PlayerManager.Update(false, pastRound, StatisticData.Round);
 
                 Round += pastRound;
                 if (Round >= 1)
@@ -74,7 +76,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
                     PlayerManager.CheckRoundCard(); //1回合
                 }
             }
-            BattleInfo.Round = RoundMark * 50 / GameConstants.RoundTime + 1;//50ms
+            StatisticData.Round = RoundMark * 50 / GameConstants.RoundTime + 1;//50ms
             if (RoundMark % 10 == 0)
             {
                 AIStrategy.AIProc(PlayerManager.RightPlayer);

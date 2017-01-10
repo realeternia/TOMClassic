@@ -15,7 +15,7 @@ using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Tournaments;
-using TaleofMonsters.DataType.User.Mem;
+using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.Forms.TourGame;
 
 namespace TaleofMonsters.DataType.User
@@ -23,38 +23,38 @@ namespace TaleofMonsters.DataType.User
     public class InfoWorld
     {
         [FieldIndex(Index = 3)]
-        public List<CardProduct> CardProducts;
+        public List<DbCardProduct> CardProducts;
         [FieldIndex(Index = 4)]
-        public Dictionary<int, MemTournamentData> Tournaments;
+        public Dictionary<int, DbTournamentData> Tournaments;
         [FieldIndex(Index = 5)]
         public Dictionary<int, int> Ranks;
         [FieldIndex(Index = 6)]
-        public List<MemMergeData> MergeMethods;
+        public List<DbMergeData> MergeMethods;
         [FieldIndex(Index = 7)]
-        public List<MemSceneSpecialPosData> PosInfos;
+        public List<DbSceneSpecialPosData> PosInfos;
 
 
         public InfoWorld()
         {
-            CardProducts = new List<CardProduct>();
-            Tournaments = new Dictionary<int, MemTournamentData>();
+            CardProducts = new List<DbCardProduct>();
+            Tournaments = new Dictionary<int, DbTournamentData>();
             Ranks = new Dictionary<int, int>();
-            MergeMethods = new List<MemMergeData>();
-            PosInfos = new List<MemSceneSpecialPosData>();
+            MergeMethods = new List<DbMergeData>();
+            PosInfos = new List<DbSceneSpecialPosData>();
         }
 
-        internal CardProduct[] GetCardProductsByType(CardTypes type)
+        internal DbCardProduct[] GetCardProductsByType(CardTypes type)
         {
             int time = TimeTool.DateTimeToUnixTime(DateTime.Now);
             if (CardProducts == null || UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastCardShopTime) < time - GameConstants.CardShopDura)
             {
-                CardProducts = new List<CardProduct>();
+                CardProducts = new List<DbCardProduct>();
                 ReinstallCardProducts();
                 UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastCardShopTime, TimeManager.GetTimeOnNextInterval(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastCardShopTime), time, GameConstants.CardShopDura));
             }
 
-            List<CardProduct> pros = new List<CardProduct>();
-            foreach (CardProduct cardProduct in CardProducts)
+            List<DbCardProduct> pros = new List<DbCardProduct>();
+            foreach (DbCardProduct cardProduct in CardProducts)
             {
                 if (CardAssistant.GetCardType(cardProduct.Cid) == type)
                     pros.Add(cardProduct);
@@ -65,7 +65,7 @@ namespace TaleofMonsters.DataType.User
 
         public void RemoveCardProduct(int id)
         {
-            foreach (CardProduct cardProduct in CardProducts)
+            foreach (DbCardProduct cardProduct in CardProducts)
             {
                 if (cardProduct.Cid == id)
                 {
@@ -96,7 +96,7 @@ namespace TaleofMonsters.DataType.User
                     {
                         mark = mon.GetSellMark();
                     }
-                    CardProducts.Add(new CardProduct(index++, mon.Id, (int)mark));
+                    CardProducts.Add(new DbCardProduct(index++, mon.Id, (int)mark));
                 }
             }
             foreach (var weaponConfig in ConfigData.WeaponDict.Values)
@@ -117,7 +117,7 @@ namespace TaleofMonsters.DataType.User
                     {
                         mark = wpn.GetSellMark();
                     }
-                    CardProducts.Add(new CardProduct(index++, wpn.Id, (int)mark));
+                    CardProducts.Add(new DbCardProduct(index++, wpn.Id, (int)mark));
                 }
             }
             foreach (var spellConfig in ConfigData.SpellDict.Values)
@@ -138,7 +138,7 @@ namespace TaleofMonsters.DataType.User
                     {
                         mark = spl.GetSellMark();
                     }
-                    CardProducts.Add(new CardProduct(index++, spl.Id, (int)mark));
+                    CardProducts.Add(new DbCardProduct(index++, spl.Id, (int)mark));
                 }
             }
         }
@@ -149,15 +149,15 @@ namespace TaleofMonsters.DataType.User
             return 11 - qual * 2;
         }
 
-        public MemTournamentData GetTournamentData(int tid)
+        public DbTournamentData GetTournamentData(int tid)
         {
             if (Tournaments == null)
             {
-                Tournaments = new Dictionary<int, MemTournamentData>();
+                Tournaments = new Dictionary<int, DbTournamentData>();
             }
             if (!Tournaments.ContainsKey(tid))
             {
-                MemTournamentData tourdata = new MemTournamentData(tid);
+                DbTournamentData tourdata = new DbTournamentData(tid);
                 Tournaments.Add(tid, tourdata);
             }
             return Tournaments[tid];
@@ -169,7 +169,7 @@ namespace TaleofMonsters.DataType.User
             {
                 if (tournamentConfig.ApplyDate == day)
                 {
-                    MemTournamentData tourdata = GetTournamentData(tournamentConfig.Id);
+                    DbTournamentData tourdata = GetTournamentData(tournamentConfig.Id);
                     tourdata.Pids = PeopleBook.GetRandNPeople(tournamentConfig.PlayerCount, tournamentConfig.MinLevel, tournamentConfig.MaxLevel);
                     if (tourdata.Engage)
                     {
@@ -212,7 +212,7 @@ namespace TaleofMonsters.DataType.User
             Ranks[personid] += mark;
         }
 
-        public MemRankData[] GetAllPeopleRank()
+        public RankData[] GetAllPeopleRank()
         {
             foreach (PeopleConfig peopleConfig in ConfigData.PeopleDict.Values)
             {
@@ -224,16 +224,16 @@ namespace TaleofMonsters.DataType.User
                     }
                 }
             }
-            List<MemRankData> rks = new List<MemRankData>();
+            List<RankData> rks = new List<RankData>();
             foreach (var key in Ranks.Keys)
             {
-                MemRankData data = new MemRankData {Id = key, Mark = Ranks[key]};
+                RankData data = new RankData {Id = key, Mark = Ranks[key]};
                 rks.Add(data);
             }
             return rks.ToArray();
         }
 
-        public MemMergeData[] GetAllMergeData()
+        public DbMergeData[] GetAllMergeData()
         {
             int time = TimeTool.DateTimeToUnixTime(DateTime.Now);
             if (MergeMethods == null || UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastMergeTime) < time - GameConstants.MergeWeaponDura)
@@ -241,7 +241,7 @@ namespace TaleofMonsters.DataType.User
                 int[] ids = EquipBook.GetCanMergeId(UserProfile.InfoBasic.Level);
                 List<int> newids = new List<int>(ids);
                 ListTool.RandomShuffle(newids);
-                MergeMethods = new List<MemMergeData>();
+                MergeMethods = new List<DbMergeData>();
                 for (int i = 0; i < 8; i++)
                 {
                     MergeMethods.Add(CreateMergeMethod(newids[i]));
@@ -252,10 +252,10 @@ namespace TaleofMonsters.DataType.User
             return MergeMethods.ToArray();
         }
 
-        public MemMergeData CreateMergeMethod(int mid)
+        public DbMergeData CreateMergeMethod(int mid)
         {
             EquipConfig equipConfig = ConfigData.GetEquipConfig(mid);
-            MemMergeData mthds = new MemMergeData();
+            DbMergeData mthds = new DbMergeData();
             mthds.Target = mid;
             int mcount = GetMethodCount(equipConfig.Quality);
             for (int i = 0; i < mcount; i++)

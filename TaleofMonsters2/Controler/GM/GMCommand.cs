@@ -5,6 +5,7 @@ using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.Forms;
 using TaleofMonsters.MainItem.Scenes;
 
@@ -28,9 +29,9 @@ namespace TaleofMonsters.Controler.GM
                     case "itm": if (data.Length == 3) UserProfile.InfoBag.AddItem(int.Parse(data[1]), int.Parse(data[2])); break;
                     case "emys": foreach (int peopleId in ConfigData.PeopleDict.Keys)
                         {
-                            RivalState rival = new RivalState(peopleId);
-                            rival.Avail = true;
-                            UserProfile.InfoRival.Rivals[peopleId] = rival;
+                            DbRivalState memRival = new DbRivalState(peopleId);
+                            memRival.Avail = true;
+                            UserProfile.InfoRival.Rivals[peopleId] = memRival;
                         }
                         break;
                     case "gold": if (data.Length == 2)
@@ -46,13 +47,13 @@ namespace TaleofMonsters.Controler.GM
                     case "fbat": if (data.Length == 3)
                         {
                             FastBattle.Instance.StartGame(int.Parse(data[1]), int.Parse(data[2]), "default", TileConfig.Indexer.DefaultTile);
-                            MainForm.Instance.AddTip(string.Format("{0} {1}合", FastBattle.Instance.LeftWin ? "左胜" : "右胜", BattleManager.Instance.BattleInfo.Round), "White");
+                            MainForm.Instance.AddTip(string.Format("{0} {1}合", FastBattle.Instance.LeftWin ? "左胜" : "右胜", BattleManager.Instance.StatisticData.Round), "White");
                         } break;
                     case "cbat":
                         if (data.Length == 4)
                         {
                             var result = CardFastBattle.Instance.StartGame(int.Parse(data[1]), int.Parse(data[2]), int.Parse(data[3]));
-                            MainForm.Instance.AddTip(string.Format("{0} {1}合", result, BattleManager.Instance.BattleInfo.Round), "White");
+                            MainForm.Instance.AddTip(string.Format("{0} {1}合", result, BattleManager.Instance.StatisticData.Round), "White");
                         }break;
                     case "scr": if (data.Length == 2)
                         {

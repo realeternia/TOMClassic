@@ -1,8 +1,8 @@
 ﻿using TaleofMonsters.Core;
 
-namespace TaleofMonsters.DataType.User.Mem
+namespace TaleofMonsters.DataType.User.Db
 {
-    public class MemSceneSpecialPosData
+    public class DbSceneSpecialPosData
     {
         [FieldIndex(Index = 4)] public int Id;
         [FieldIndex(Index = 1)] public string Type;

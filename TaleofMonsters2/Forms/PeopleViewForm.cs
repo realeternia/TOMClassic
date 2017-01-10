@@ -8,6 +8,7 @@ using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
@@ -21,7 +22,7 @@ namespace TaleofMonsters.Forms
         private bool showImage;
         private int realTar = -1;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
-        private List<RivalState> people;
+        private List<DbRivalState> people;
         private VirtualRegion virtualRegion;
 
         private int[] types;
@@ -30,7 +31,7 @@ namespace TaleofMonsters.Forms
         {
             InitializeComponent();
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
-            people = new List<RivalState>();
+            people = new List<DbRivalState>();
             virtualRegion = new VirtualRegion(this);
             virtualRegion.AddRegion(new PictureRegion(1, 41, 40, 70, 70, PictureRegionCellType.People, 0));
             for (int i = 0; i < 20; i++)
@@ -91,13 +92,15 @@ namespace TaleofMonsters.Forms
                 return;
             }
 
-            PeopleBook.Fight(peopleConfig.Id, peopleConfig.BattleMap, -1, peopleConfig.Level, PeopleFightReason.PeopleView, null, null, null);
+            var parm = new PeopleFightParm();
+            parm.Reason = PeopleFightReason.PeopleView;
+            PeopleBook.Fight(peopleConfig.Id, peopleConfig.BattleMap, peopleConfig.Level, parm, null, null, null);
         }
 
         private static int[] GetPeopleAvailTypes()
         {
             List<int> typeLists = new List<int>();
-            foreach (RivalState person in UserProfile.InfoRival.Rivals.Values)
+            foreach (var person in UserProfile.InfoRival.Rivals.Values)
             {
                 if (person.Avail)
                 {
@@ -123,7 +126,7 @@ namespace TaleofMonsters.Forms
                 virtualRegion.SetRegionDecorator(i + 2, 0, "");
             }
 
-            foreach (RivalState person in UserProfile.InfoRival.Rivals.Values)
+            foreach (var person in UserProfile.InfoRival.Rivals.Values)
             {
                 if (person.Avail)
                 {

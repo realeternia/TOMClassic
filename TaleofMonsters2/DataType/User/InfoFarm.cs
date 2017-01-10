@@ -1,41 +1,38 @@
 using System;
-using System.IO;
 using NarlonLib.Core;
 using TaleofMonsters.Core;
-using TaleofMonsters.Core.Interface;
-using TaleofMonsters.DataType.Others;
+using TaleofMonsters.DataType.User.Db;
 
 namespace TaleofMonsters.DataType.User
 {
     public class InfoFarm
     {
-         [FieldIndex(Index = 1)]
-        public FarmState[] FarmState;
+        [FieldIndex(Index = 1)] public DbFarmState[] DbFarmState;
 
         public InfoFarm()
         {
-            FarmState = new FarmState[GameConstants.PlayFarmCount];
-            FarmState[0] = new FarmState(0, 0);
-            for (int i = 1; i < FarmState.Length; i++)
+            DbFarmState = new DbFarmState[GameConstants.PlayFarmCount];
+            DbFarmState[0] = new DbFarmState(0, 0);
+            for (int i = 1; i < DbFarmState.Length; i++)
             {
-                FarmState[i] = new FarmState(-1, 0);
+                DbFarmState[i] = new DbFarmState(-1, 0);
             }
         }
 
-        public FarmState GetFarmState(int id)
+        public DbFarmState GetFarmState(int id)
         {
-            return FarmState[id];
+            return DbFarmState[id];
         }
 
-        public void SetFarmState(int id, FarmState state)
+        public void SetFarmState(int id, DbFarmState state)
         {
-            FarmState[id] = state;
+            DbFarmState[id] = state;
         }
 
         public int GetFarmAvailCount()
         {
             int count = 0;
-            foreach (FarmState state in FarmState)
+            foreach (DbFarmState state in DbFarmState)
             {
                 if (state.Type != -1)
                 {
@@ -49,10 +46,10 @@ namespace TaleofMonsters.DataType.User
         {
             for (int i = 0; i < 9; i++)
             {
-                if (FarmState[i].Type == 0)
+                if (DbFarmState[i].Type == 0)
                 {
-                    FarmState[i].Type = type;
-                    FarmState[i].Time = TimeTool.DateTimeToUnixTime(DateTime.Now) + dura;
+                    DbFarmState[i].Type = type;
+                    DbFarmState[i].Time = TimeTool.DateTimeToUnixTime(DateTime.Now) + dura;
                     return true;
                 }
             }

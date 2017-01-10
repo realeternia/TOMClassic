@@ -1,37 +1,36 @@
-using System.Collections.Generic;
-using System.IO;
+锘縰sing System.Collections.Generic;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Achieves;
 using TaleofMonsters.DataType.Peoples;
+using TaleofMonsters.DataType.User.Db;
 
 namespace TaleofMonsters.DataType.User
 {
     public class InfoRival
     {
-        [FieldIndex(Index = 1)]
-        public Dictionary<int, RivalState> Rivals ;
+        [FieldIndex(Index = 1)] public Dictionary<int, DbRivalState> Rivals;
 
         public InfoRival()
         {
-            Rivals = new Dictionary<int, RivalState>();
+            Rivals = new Dictionary<int, DbRivalState>();
         }
 
-        public RivalState GetRivalState(int id)
+        public DbRivalState GetRivalState(int id)
         {
             if (!Rivals.ContainsKey(id))
             {
-                return new RivalState(id);
+                return new DbRivalState(id);
             }
             return Rivals[id];
         }
 
         public void AddRivalState(int id, bool isWin)
         {
-            if (PeopleBook.IsPeople(id))//打怪不记录战绩
+            if (PeopleBook.IsPeople(id))//鎵撴�笉璁板綍鎴樼哗
             {
                 if (!Rivals.ContainsKey(id))
                 {
-                    Rivals[id] = new RivalState(id);
+                    Rivals[id] = new DbRivalState(id);
                 }
                 if (isWin)
                 {
@@ -50,7 +49,7 @@ namespace TaleofMonsters.DataType.User
         {
             if (!Rivals.ContainsKey(id))
             {
-                Rivals[id] = new RivalState(id);
+                Rivals[id] = new DbRivalState(id);
             }
 
             Rivals[id].Avail = true;
@@ -60,7 +59,7 @@ namespace TaleofMonsters.DataType.User
         public int GetRivalAvailCount()
         {
             int count = 0;
-            foreach (RivalState state in Rivals.Values)
+            foreach (var state in Rivals.Values)
             {
                 if (state.Avail)
                     count++;

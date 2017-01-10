@@ -336,19 +336,19 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 {
                     if (Rival is HumanPlayer)
                     {
-                        if (BattleManager.Instance.BattleInfo.Items.Count < GameConstants.MaxDropItemGetOnBattle)
+                        if (BattleManager.Instance.StatisticData.Items.Count < GameConstants.MaxDropItemGetOnBattle)
                         {
                             int itemId = CardPieceBook.CheckPieceDrop(Avatar.Id, peakDamagerLuk);
                             if (itemId > 0)
                             {
-                                BattleManager.Instance.BattleInfo.AddItemGet(itemId);
+                                BattleManager.Instance.StatisticData.AddItemGet(itemId);
                                 BattleManager.Instance.FlowWordQueue.Add(new FlowItemInfo(itemId, Position, 20, 50), true);
                             }
                             UserProfile.Profile.OnKillMonster(Avatar.MonsterConfig.Star, Avatar.MonsterConfig.Type, Avatar.MonsterConfig.Type);
                         }
                     }
                 }
-                BattleManager.Instance.BattleInfo.GetPlayer(!IsLeft).Kill++;
+                BattleManager.Instance.StatisticData.GetPlayer(!IsLeft).Kill++;
             }
 
             SkillManager.CheckRemoveEffect();
@@ -627,7 +627,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             if (OwnerPlayer is HumanPlayer)
             {
-                BattleManager.Instance.BattleInfo.AddItemGet(itemId);
+                BattleManager.Instance.StatisticData.AddItemGet(itemId);
                 UserProfile.InfoBag.AddItem(itemId, 1);
                 BattleManager.Instance.FlowWordQueue.Add(new FlowItemInfo(itemId, Position, 20, 50), true);
             }

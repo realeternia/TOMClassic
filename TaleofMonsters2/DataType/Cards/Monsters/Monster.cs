@@ -1,5 +1,4 @@
-﻿using System;
-using ConfigDatas;
+﻿using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Config;
 

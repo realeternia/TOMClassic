@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using ConfigDatas;
 using TaleofMonsters.Controler.Battle;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.Forms.TourGame;
-using TaleofMonsters.Core;
 
-namespace TaleofMonsters.DataType.User.Mem
+namespace TaleofMonsters.DataType.User.Db
 {
-    public class MemTournamentData
+    public class DbTournamentData
     {
         [FieldIndex(Index = 1)]
         public int Id;
@@ -22,11 +22,11 @@ namespace TaleofMonsters.DataType.User.Mem
         private int currentRvId;
         private bool currentAutoGiveUp;
 
-        public MemTournamentData()
+        public DbTournamentData()
         {
         }
 
-        public MemTournamentData(int tid)
+        public DbTournamentData(int tid)
         {
             Id = tid;
             TournamentConfig tournamentConfig = ConfigData.GetTournamentConfig(tid);
@@ -71,11 +71,11 @@ namespace TaleofMonsters.DataType.User.Mem
             }
             else
             {
-                PeopleBook.Fight(currentRvId, tournamentConfig.Map, -1, 1, PeopleFightReason.Other, onWin, onLose, null);
+                PeopleBook.Fight(currentRvId, tournamentConfig.Map, 1, new PeopleFightParm(), OnWin, OnLose, null);
             }
         }
 
-        private void onWin()
+        private void OnWin()
         {
             if (!currentAutoGiveUp)
             {
@@ -84,7 +84,7 @@ namespace TaleofMonsters.DataType.User.Mem
             }
         }
 
-        private void onLose()
+        private void OnLose()
         {
             Results[currentMid].Winner = currentRvId;
             Results[currentMid].Loser = -1;

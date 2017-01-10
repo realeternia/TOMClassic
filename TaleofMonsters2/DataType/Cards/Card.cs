@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 
 namespace TaleofMonsters.DataType.Cards

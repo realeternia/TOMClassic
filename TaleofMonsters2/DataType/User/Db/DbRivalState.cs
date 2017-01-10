@@ -1,8 +1,8 @@
 ﻿using TaleofMonsters.Core;
 
-namespace TaleofMonsters.DataType.Peoples
+namespace TaleofMonsters.DataType.User.Db
 {
-    public class RivalState
+    public class DbRivalState
     {
          [FieldIndex(Index = 1)]
         public int Pid;
@@ -13,12 +13,12 @@ namespace TaleofMonsters.DataType.Peoples
          [FieldIndex(Index = 4)]
         public bool Avail;
 
-        public RivalState()
+        public DbRivalState()
         {
             
         }
 
-        public RivalState(int perid)
+        public DbRivalState(int perid)
         {
             Pid = perid;
             Win = 0;

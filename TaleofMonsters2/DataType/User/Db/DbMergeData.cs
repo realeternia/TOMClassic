@@ -2,16 +2,16 @@
 using TaleofMonsters.Core;
 using ConfigDatas;
 
-namespace TaleofMonsters.DataType.User.Mem
+namespace TaleofMonsters.DataType.User.Db
 {
-    public class MemMergeData
+    public class DbMergeData
     {
         [FieldIndex(Index = 1)]
         public int Target;//武器id
         [FieldIndex(Index =2)]
         public List<List<IntPair>> Methods;//公式
 
-        public MemMergeData()
+        public DbMergeData()
         {
             Methods = new List<List<IntPair>>();
         }
@@ -33,11 +33,11 @@ namespace TaleofMonsters.DataType.User.Mem
         }
     }
 
-    internal class CompareByMethod : IComparer<MemMergeData>
+    internal class CompareByMethod : IComparer<DbMergeData>
     {
-        #region IComparer<MemMergeData> 成员
+        #region IComparer<DbMergeData> 成员
 
-        public int Compare(MemMergeData x, MemMergeData y)
+        public int Compare(DbMergeData x, DbMergeData y)
         {
             EquipConfig ea = ConfigData.GetEquipConfig(x.Target);
             EquipConfig eb = ConfigData.GetEquipConfig(y.Target);

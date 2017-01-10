@@ -3,9 +3,9 @@ using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Decks;
 
-namespace TaleofMonsters.DataType.User.Mem
+namespace TaleofMonsters.DataType.User.Db
 {
-    public class MemDeckData
+    public class DbDeckData
     {
         [FieldIndex(Index = 1)]
         public int[] CardIds;
@@ -16,12 +16,12 @@ namespace TaleofMonsters.DataType.User.Mem
         [FieldIndex(Index = 4)]
         public int Wcount;
 
-        public MemDeckData()
+        public DbDeckData()
         {
             
         }
 
-        public MemDeckData(int index)
+        public DbDeckData(int index)
         {
             CardIds = new int[GameConstants.DeckCardCount];
             for (int i = 0; i < GameConstants.DeckCardCount; i++)
@@ -66,7 +66,7 @@ namespace TaleofMonsters.DataType.User.Mem
                 }
                 else if (dcard != -1)
                 {
-                    DeckCard tCard = UserProfile.InfoCard.GetDeckCardById(dcard);
+                    var tCard = UserProfile.InfoCard.GetDeckCardById(dcard);
                     if (tCard.BaseId == card.BaseId)
                         count++;
 

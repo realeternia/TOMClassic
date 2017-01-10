@@ -99,6 +99,7 @@
     <Compile Include="Controler\Battle\Components\CardSelector.Designer.cs">
       <DependentUpon>CardSelector.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controler\Battle\DataTent\BattleRuleData.cs" />
     <Compile Include="Controler\Battle\DataTent\MissileQueue.cs" />
     <Compile Include="Controler\Battle\Data\CardVisualRegion.cs" />
     <Compile Include="Controler\Battle\Data\MemFlow\FlowDamageInfo.cs" />
@@ -144,7 +145,7 @@
     <Compile Include="Controler\Battle\DataTent\EffectQueue.cs" />
     <Compile Include="Controler\Battle\DataTent\FlowWordQueue.cs" />
     <Compile Include="Controler\Battle\DataTent\MonsterQueue.cs" />
-    <Compile Include="Controler\Battle\DataTent\BattleInfo.cs" />
+    <Compile Include="Controler\Battle\DataTent\BattleStatisticData.cs" />
     <Compile Include="Controler\Battle\FastBattle.cs" />
     <Compile Include="Controler\GM\GMCommand.cs" />
     <Compile Include="Controler\GM\GmScript.cs" />
@@ -154,7 +155,8 @@
     <Compile Include="Controler\World\WorldInfoManager.cs" />
     <Compile Include="DataType\Drops\DropBook.cs" />
     <Compile Include="DataType\Peoples\PeopleFightReason.cs" />
-    <Compile Include="DataType\User\Mem\MemSceneSpecialPosData.cs" />
+    <Compile Include="DataType\User\Db\DbDeckCard.cs" />
+    <Compile Include="DataType\User\Db\DbSceneSpecialPosData.cs" />
     <Compile Include="Forms\Items\Regions\ComplexRegion.cs" />
     <Compile Include="Forms\Items\Regions\Decorators\RegionCoverDecorator.cs" />
     <Compile Include="Forms\Items\Regions\ImageRegion.cs" />
@@ -193,7 +195,7 @@
     <Compile Include="DataType\Effects\CoverEffect.cs" />
     <Compile Include="DataType\Items\Consumer.cs" />
     <Compile Include="DataType\Maps\BattleMapUnitInfo.cs" />
-    <Compile Include="DataType\Others\FarmState.cs" />
+    <Compile Include="DataType\User\Db\DbFarmState.cs" />
     <Compile Include="DataType\Formulas\FormulaBook.cs" />
     <Compile Include="DataType\HeroSkills\HeroSkillAttrBook.cs" />
     <Compile Include="DataType\Others\GameResourceBook.cs" />
@@ -211,7 +213,7 @@
     <Compile Include="DataType\User\InfoRival.cs" />
     <Compile Include="DataType\User\InfoSkill.cs" />
     <Compile Include="DataType\User\InfoTask.cs" />
-    <Compile Include="DataType\User\Mem\MemMergeData.cs" />
+    <Compile Include="DataType\User\Db\DbMergeData.cs" />
     <Compile Include="DataType\Others\Question.cs" />
     <Compile Include="DataType\Others\QuestionBook.cs" />
     <Compile Include="Forms\CalendarForm.cs">
@@ -319,7 +321,7 @@
     <Compile Include="MainItem\MainTipData.cs" />
     <Compile Include="DataType\Achieves\AchieveBook.cs" />
     <Compile Include="DataType\Cards\CardMouseState.cs" />
-    <Compile Include="DataType\User\Mem\MemDeckData.cs" />
+    <Compile Include="DataType\User\Db\DbDeckData.cs" />
     <Compile Include="DataType\Decks\DeckBook.cs" />
     <Compile Include="DataType\Decks\DeckCard.cs" />
     <Compile Include="DataType\CardPieces\CardPieceBook.cs" />
@@ -331,12 +333,12 @@
     <Compile Include="DataType\Maps\BattleMap.cs" />
     <Compile Include="DataType\Maps\BattleMapBook.cs" />
     <Compile Include="DataType\Mazes\MazeItem.cs" />
-    <Compile Include="DataType\User\Mem\MemTournamentData.cs" />
-    <Compile Include="DataType\User\Mem\MemRankData.cs" />
+    <Compile Include="DataType\User\Db\DbTournamentData.cs" />
+    <Compile Include="DataType\Others\RankData.cs" />
     <Compile Include="DataType\User\InfoWorld.cs" />
     <Compile Include="DataType\Peoples\DropResource.cs" />
     <Compile Include="Controler\Battle\Data\MemBaseBuff.cs" />
-    <Compile Include="DataType\Others\CardProduct.cs" />
+    <Compile Include="DataType\User\Db\DbCardProduct.cs" />
     <Compile Include="DataType\Skills\MonsterSkill.cs" />
     <Compile Include="DataType\Tournaments\TournamentBook.cs" />
     <Compile Include="DataType\Cards\Weapons\Weapon.cs" />
@@ -414,7 +416,7 @@
     </Compile>
     <Compile Include="DataType\Mazes\Maze.cs" />
     <Compile Include="DataType\Mazes\MazeBook.cs" />
-    <Compile Include="DataType\Peoples\RivalState.cs" />
+    <Compile Include="DataType\User\Db\DbRivalState.cs" />
     <Compile Include="Forms\EquipmentForm.cs">
       <SubType>UserControl</SubType>
     </Compile>

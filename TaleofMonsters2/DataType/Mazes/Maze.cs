@@ -66,7 +66,7 @@ namespace TaleofMonsters.DataType.Mazes
             int idex;
             if ((idex = GetItemIndex(x, y)) >= 0)
             {
-                items[idex].Effect(panel, MazeConfig.Map, success, fail);
+                items[idex].Effect(panel, success, fail);
             }
         }
 

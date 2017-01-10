@@ -5,14 +5,14 @@ using System.Windows.Forms;
 using ConfigDatas;
 using TaleofMonsters.DataType.Tournaments;
 using TaleofMonsters.DataType.User;
-using TaleofMonsters.DataType.User.Mem;
+using TaleofMonsters.DataType.User.Db;
 
 namespace TaleofMonsters.Forms.TourGame
 {
     internal partial class TourLeague4 : UserControl
     {
         private bool show;
-        private MemTournamentData tourData;
+        private DbTournamentData tourData;
         private int tid;
         private Button[] buttons;
         private int headSize = 36;

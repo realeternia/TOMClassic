@@ -3,29 +3,28 @@ using TaleofMonsters.Config;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Achieves;
 using TaleofMonsters.DataType.Cards;
-using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.Others;
-using TaleofMonsters.DataType.User.Mem;
+using TaleofMonsters.DataType.User.Db;
 
 namespace TaleofMonsters.DataType.User
 {
     public class InfoCard
     {
         [FieldIndex(Index = 1)]
-        public Dictionary<int, DeckCard> Cards = new Dictionary<int, DeckCard>();//模板id为key
+        public Dictionary<int, DbDeckCard> Cards = new Dictionary<int, DbDeckCard>();//模板id为key
         [FieldIndex(Index = 2)]
         public List<int> Newcards = new List<int>();
         [FieldIndex(Index = 3)] 
-        public MemDeckData[] Decks;
+        public DbDeckData[] Decks;
         [FieldIndex(Index = 4)]
         public int DeckId; //上次出战的卡组
 
         public InfoCard()
         {
-            Decks = new MemDeckData[GameConstants.PlayDeckCount];
+            Decks = new DbDeckData[GameConstants.PlayDeckCount];
             for (int i = 0; i < Decks.Length; i++)
             {
-                Decks[i] = new MemDeckData(i + 1);
+                Decks[i] = new DbDeckData(i + 1);
             }
         }
 
@@ -36,7 +35,7 @@ namespace TaleofMonsters.DataType.User
                 return Cards.Count;
             }
             int count = 0;
-            foreach (DeckCard cd in Cards.Values)
+            foreach (var cd in Cards.Values)
             {
                 if (CardAssistant.GetCardType(cd.BaseId) == type)
                 {
@@ -46,7 +45,7 @@ namespace TaleofMonsters.DataType.User
             return count;
         }
 
-        public MemDeckData SelectedDeck
+        public DbDeckData SelectedDeck
         {
             get
             {
@@ -58,9 +57,9 @@ namespace TaleofMonsters.DataType.User
         /// 添加卡牌，外层都会检查cid的合法性，所以里面不用在判断了
         /// </summary>
         /// <param name="cid">卡牌id</param>
-        public DeckCard AddCard(int cid)
+        public DbDeckCard AddCard(int cid)
         {
-            DeckCard card = new DeckCard(cid, 1, 0);
+            DbDeckCard card = new DbDeckCard(cid, 1, 0);
             var cardData = CardConfigManager.GetCardConfig(cid);
             if (GetCardCount(cid) >= 1) //每张卡其实只能有一份
             {
@@ -82,7 +81,7 @@ namespace TaleofMonsters.DataType.User
 
         public void RemoveCardPiece(int id, bool returnResource)
         {
-            DeckCard dc;
+            DbDeckCard dc;
             if (Cards.TryGetValue(id, out dc))
             {
                 if (dc.Exp == 0)
@@ -121,13 +120,13 @@ namespace TaleofMonsters.DataType.User
             return names;
         }
 
-        public DeckCard GetDeckCardById(int id)
+        public DbDeckCard GetDeckCardById(int id)
         {
             if (Cards.ContainsKey(id))
             {
                 return Cards[id];
             }
-            return new DeckCard(0, 0, 0);
+            return new DbDeckCard();
         }
 
         public int GetCardExp(int cardId)

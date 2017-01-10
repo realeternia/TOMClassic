@@ -64,7 +64,6 @@ namespace TaleofMonsters.Controler.Battle
         private int rightId;
         private int rightLevel;
         private string mapName;
-        private int defaultTile;
 
         private long lastMouseMoveTime;
 
@@ -103,7 +102,7 @@ namespace TaleofMonsters.Controler.Battle
             lifeClock2.IsLeft = false;
         }
 
-        public void Init(int lid, int rid, string map, int tile, int rlevel, PeopleFightReason reason)
+        public void Init(int lid, int rid, string map, int rlevel, PeopleFightParm reason)
         {
             isHuman = lid == 0;
             rightId = rid;
@@ -120,7 +119,6 @@ namespace TaleofMonsters.Controler.Battle
             }
             lifeClock2.SetPlayer(rightId);
             mapName = map;
-            defaultTile = tile;
             timeViewer1.Init();
             cardsArray1.Init();
             cardList2.Init();
@@ -129,7 +127,7 @@ namespace TaleofMonsters.Controler.Battle
             cardsArray1.SetEnable(false);
 
             BattleManager.Instance.Init();
-            BattleManager.Instance.BattleInfo.Reason = reason;
+            BattleManager.Instance.RuleData.Parm = reason;
             BattleManager.Instance.PlayerManager.Init(leftId, rightId, rightLevel);
             int index = 0;//初始化英雄技能按钮
             foreach (var skillId in BattleManager.Instance.PlayerManager.LeftPlayer.HeroSkillList)
@@ -155,13 +153,13 @@ namespace TaleofMonsters.Controler.Battle
 
         private void StartGame() //初始化游戏
         {
-            BattleManager.Instance.MemMap = new MemRowColumnMap(mapName, defaultTile);
+            BattleManager.Instance.MemMap = new MemRowColumnMap(mapName, 0);
             BattleManager.Instance.MemMap.InitUnit(BattleManager.Instance.PlayerManager.LeftPlayer);
             BattleManager.Instance.MemMap.InitUnit(BattleManager.Instance.PlayerManager.RightPlayer);
             AIStrategy.OnInit(BattleManager.Instance.PlayerManager.RightPlayer);
 
-            BattleManager.Instance.BattleInfo.StartTime = DateTime.Now;
-            BattleManager.Instance.BattleInfo.EndTime = DateTime.Now;
+            BattleManager.Instance.StatisticData.StartTime = DateTime.Now;
+            BattleManager.Instance.StatisticData.EndTime = DateTime.Now;
 
             cardsArray1.Visible = true;
             miniItemView1.Visible = true;
@@ -228,8 +226,8 @@ namespace TaleofMonsters.Controler.Battle
                 StopGame();
                 lifeClock1.Invalidate();
                 lifeClock2.Invalidate();
-                BattleManager.Instance.BattleInfo.PlayerWin = !BattleManager.Instance.PlayerManager.RightPlayer.IsAlive;
-                BattleManager.Instance.BattleInfo.EndTime = DateTime.Now;
+                BattleManager.Instance.StatisticData.PlayerWin = !BattleManager.Instance.PlayerManager.RightPlayer.IsAlive;
+                BattleManager.Instance.StatisticData.EndTime = DateTime.Now;
                 CloseForm();
             }
         }
@@ -565,7 +563,7 @@ namespace TaleofMonsters.Controler.Battle
             {
                 MainForm.Instance.DealPanel(new BattleResultForm());
             }
-            if (BattleManager.Instance.BattleInfo.PlayerWin)
+            if (BattleManager.Instance.StatisticData.PlayerWin)
             {
                 if (BattleWin != null)
                 {

@@ -1,5 +1,4 @@
-﻿using ConfigDatas;
-using TaleofMonsters.Controler.Battle.Data.MemMonster;
+﻿using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
 using TaleofMonsters.Controler.Battle.Tool;
 
@@ -80,8 +79,8 @@ namespace TaleofMonsters.DataType.Equips.Addons
                     //case 12: mmana = mmana * (100 + skillvalue[i]) / 100; break;
                     //case 14: angerr += skillvalue[i] * 10; break;
                     //case 15: manar += skillvalue[i] * 4; break;
-                    case 51: BattleManager.Instance.BattleInfo.ExpRatePlus += skillvalue[i]; break;
-                    case 52: BattleManager.Instance.BattleInfo.GoldRatePlus += skillvalue[i]; break;
+                    case 51: BattleManager.Instance.StatisticData.ExpRatePlus += skillvalue[i]; break;
+                    case 52: BattleManager.Instance.StatisticData.GoldRatePlus += skillvalue[i]; break;
                 }
             }
         }

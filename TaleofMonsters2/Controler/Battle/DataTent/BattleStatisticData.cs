@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using TaleofMonsters.DataType.Peoples;
 
 namespace TaleofMonsters.Controler.Battle.DataTent
 {
-    internal class BattleInfo
+    internal class BattleStatisticData
     {
-        public BattleInfo()
+        public BattleStatisticData()
         {
-            Left = new BattleInfoPlayer();
-            Right = new BattleInfoPlayer();
+            Left = new BattleStatisticDataPlayer();
+            Right = new BattleStatisticDataPlayer();
             Items = new List<int>();
         }
 
-        public PeopleFightReason Reason { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public int Round { get; set; }
-        public BattleInfoPlayer Left { get; private set; }
-        public BattleInfoPlayer Right { get; private set; }
+        public BattleStatisticDataPlayer Left { get; private set; }
+        public BattleStatisticDataPlayer Right { get; private set; }
         public int ExpRatePlus { get; set; }
         public int GoldRatePlus { get; set; }
 
@@ -57,13 +55,13 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             Items.Add(id);
         }
 
-        public BattleInfoPlayer GetPlayer(bool isLeft)
+        public BattleStatisticDataPlayer GetPlayer(bool isLeft)
         {
             return isLeft ? Left : Right;
         }
     }
 
-    internal class BattleInfoPlayer
+    internal class BattleStatisticDataPlayer
     {
         public int MonsterAdd { get; set; }
         public int WeaponAdd { get; set; }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using ConfigDatas;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Loader;

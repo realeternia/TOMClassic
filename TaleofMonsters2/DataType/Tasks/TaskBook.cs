@@ -6,7 +6,6 @@ using ConfigDatas;
 using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Config;
-using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Others;
 
 namespace TaleofMonsters.DataType.Tasks
