@@ -10,7 +10,7 @@ namespace TaleofMonsters.DataType.Others
         /// </summary>
         public static uint InGoldFight(int level, bool isPeople)
         {
-            return isPeople ? (uint)level : (uint)level * 3 + 12;
+            return isPeople ? (uint)level : (uint)level * 2 -1;
         }
         /// <summary>
         /// 场景剧情获得金币
@@ -19,7 +19,7 @@ namespace TaleofMonsters.DataType.Others
         {
             double[] factor = new[] {0.2, 0.5, 0.5, 1, 1, 1.5, 2.2};
             rate = (int)(rate*factor[MathTool.GetRandom(factor.Length)]);
-            return (uint)((level*5 + 10)*rate/100);
+            return (uint)((level + 5)*rate/100);
         }
         /// <summary>
         /// 场景剧情消耗金币
@@ -28,7 +28,7 @@ namespace TaleofMonsters.DataType.Others
         {
             double[] factor = new[] { 0.5, 1, 1, 1.5};
             rate = (int)(rate * factor[MathTool.GetRandom(factor.Length)]);
-            return (uint)((level * 5 + 10) * rate / 100);
+            return (uint)((level+1) * rate/100);
         }
         /// <summary>
         /// 场景剧情获得食物
@@ -37,7 +37,7 @@ namespace TaleofMonsters.DataType.Others
         {
             double[] factor = new[] { 0.5, 1, 1, 1.5 };
             rate = (int)(rate * factor[MathTool.GetRandom(factor.Length)]);
-            return (uint)(5 * rate / 100);
+            return (uint)(10 * rate / 100);
         }
         /// <summary>
         /// 场景剧情消耗食物
@@ -46,7 +46,7 @@ namespace TaleofMonsters.DataType.Others
         {
             double[] factor = new[] { 0.5, 1, 1, 1.5 };
             rate = (int)(rate * factor[MathTool.GetRandom(factor.Length)]);
-            return (uint)(5 * rate / 100);
+            return (uint)(8 * rate / 100);
         }
         /// <summary>
         /// 场景剧情获得健康
@@ -55,7 +55,7 @@ namespace TaleofMonsters.DataType.Others
         {
             double[] factor = new[] { 0.5, 0.5, 1, 1, 2 };
             rate = (int)(rate * factor[MathTool.GetRandom(factor.Length)]);
-            return (uint)(5 * rate / 100);
+            return (uint)(10 * rate / 100);
         }
         /// <summary>
         /// 场景剧情消耗健康
@@ -64,7 +64,7 @@ namespace TaleofMonsters.DataType.Others
         {
             double[] factor = new[] { 0.5, 0.5, 1, 1, 2 };
             rate = (int)(rate * factor[MathTool.GetRandom(factor.Length)]);
-            return (uint)(5 * rate / 100);
+            return (uint)(10 * rate / 100);
         }
         /// <summary>
         /// 场景剧情获得精神
@@ -73,7 +73,7 @@ namespace TaleofMonsters.DataType.Others
         {
             double[] factor = new[] { 0.2, 0.2, 0.5, 0.5, 1, 1, 2, 3 };
             rate = (int)(rate * factor[MathTool.GetRandom(factor.Length)]);
-            return (uint)(5 * rate / 100);
+            return (uint)(15 * rate / 100);
         }
         /// <summary>
         /// 场景剧情消耗精神
@@ -82,14 +82,14 @@ namespace TaleofMonsters.DataType.Others
         {
             double[] factor = new[] { 0.2, 0.2, 0.5, 0.5, 1, 1, 2, 3 };
             rate = (int)(rate * factor[MathTool.GetRandom(factor.Length)]);
-            return (uint)(5 * rate / 100);
+            return (uint)(15 * rate / 100);
         }
         /// <summary>
         /// 场景剧情获得经验
         /// </summary>
         public static uint InExpSceneQuest(int level, int rate)
         {
-            return (uint)(5 * rate / 100);//todo
+            return (uint)(ExpTree.GetNextRequired(level)/12 * rate / 100);//todo
         }
         /// <summary>
         /// 战斗获得经验值

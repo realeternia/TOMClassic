@@ -49,7 +49,12 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             if (!Disabled)
             {
                 BeginEvent();
-                SetEnable(false);
+
+                var config = ConfigData.GetSceneQuestConfig(questId);
+                if (!config.TriggerMulti)
+                {
+                    SetEnable(false);
+                }
             }
         }
 
