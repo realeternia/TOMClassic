@@ -563,12 +563,6 @@
     <Compile Include="Forms\BlackWallForm.Designer.cs">
       <DependentUpon>BlackWallForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\LevelUpForm.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Forms\LevelUpForm.Designer.cs">
-      <DependentUpon>LevelUpForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Core\Interface\ICardList.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -825,10 +819,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\BlackWallForm.resx">
       <DependentUpon>BlackWallForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\LevelUpForm.resx">
-      <DependentUpon>LevelUpForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CalendarForm.resx">

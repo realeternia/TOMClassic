@@ -47,12 +47,15 @@ namespace TaleofMonsters.DataType.User
 
         public void SetRivalAvail(int id)
         {
-            if (!Rivals.ContainsKey(id))
+            DbRivalState state;
+            if (!Rivals.TryGetValue(id, out state))
             {
-                Rivals[id] = new DbRivalState(id);
+                Rivals[id] = new DbRivalState(id) {Avail = true};
             }
-
-            Rivals[id].Avail = true;
+            else
+            {
+                state.Avail = true;
+            }
             AchieveBook.CheckByCheckType("people");
         }
 

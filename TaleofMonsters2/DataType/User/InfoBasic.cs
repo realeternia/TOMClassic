@@ -1,4 +1,5 @@
-﻿using TaleofMonsters.Core;
+﻿using ConfigDatas;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Achieves;
 using TaleofMonsters.DataType.Others;
 
@@ -37,6 +38,7 @@ namespace TaleofMonsters.DataType.User
                 int oldLevel = Level;
                 while (CheckNewLevel()) //循环升级
                 {
+                    OnLevel(Level);
                 }
 
                 MainItem.SystemMenuManager.ResetIconState();
@@ -104,7 +106,7 @@ namespace TaleofMonsters.DataType.User
                 MentalPoint -= val;
             }
         }
-        public bool CheckNewLevel()
+        private bool CheckNewLevel()
         {
             int expNeed = ExpTree.GetNextRequired(Level);
             if (Exp >= expNeed)
@@ -114,6 +116,18 @@ namespace TaleofMonsters.DataType.User
                 return true;
             }
             return false;
+        }
+
+        private void OnLevel(int lv)
+        {
+            foreach (var peopleConfig in ConfigData.PeopleDict.Values)
+            {
+                if (peopleConfig.AutoAddLevel == lv)
+                {
+                    UserProfile.InfoRival.SetRivalAvail(peopleConfig.Id);
+                }
+            }
+          
         }
     }
 }

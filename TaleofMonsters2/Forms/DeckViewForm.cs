@@ -199,9 +199,10 @@ namespace TaleofMonsters.Forms
             if (floor == 1)
             {
                 dcards = new DeckCard[UserProfile.InfoCard.Cards.Count];
-                for (int i = 0; i < dcards.Length; i++)
+                int i = 0;
+                foreach (var card in UserProfile.InfoCard.Cards.Values)
                 {
-                    dcards[i] = new DeckCard(UserProfile.InfoCard.Cards[i]);
+                    dcards[i++] = new DeckCard(card);
                 }
                 Array.Sort(dcards, new CompareDeckCardByType());
             }

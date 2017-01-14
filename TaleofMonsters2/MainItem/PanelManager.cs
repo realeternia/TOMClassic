@@ -5,12 +5,6 @@ namespace TaleofMonsters.MainItem
 {
     internal class PanelManager
     {
-        public static void ShowLevelUp()
-        {
-            LevelUpForm levelUpForm = new LevelUpForm();
-            MainForm.Instance.DealPanel(levelUpForm);
-        }
-
         public static void ShowLevelInfo(int oldLevel, int level)
         {
             if (DataType.Others.LevelInfoBook.GetLevelInfosByLevel(oldLevel, level).Length > 0)

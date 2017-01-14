@@ -13,7 +13,7 @@ namespace TaleofMonsters.DataType.Others
             List<int> ids = new List<int>();
             foreach (LevelInfoConfig levelInfoConfig in ConfigData.LevelInfoDict.Values)
             {
-                if (levelInfoConfig.Level >= oldLevel && levelInfoConfig.Level < level)
+                if (levelInfoConfig.Level > oldLevel && levelInfoConfig.Level <= level)
                 {
                     ids.Add(levelInfoConfig.Id);
                 }
