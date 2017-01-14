@@ -65,9 +65,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                 return;
             }
 
-            NpcTalkForm sw = new NpcTalkForm();
-            sw.EventId = questId;
-            sw.NeedBlackForm = true;
+            NpcTalkForm sw = new NpcTalkForm {EventId = questId};
             WiseOpen(sw);
         }
 
@@ -86,13 +84,18 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             var destRect = new Rectangle(X - drawWidth / 2 + Width / 8, Y - drawHeight / 2, drawWidth, drawHeight);
             if (Disabled)
             {
-                var config = ConfigData.GetSceneQuestConfig(questId);
-                g.DrawImage(SceneBook.GetSceneQuestImage(config.Id), new Rectangle(X,Y, Width/2, Height/2), 0, 0, markQuest.Width, markQuest.Height, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
                 g.DrawImage(markQuest, destRect, 0, 0, markQuest.Width, markQuest.Height, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
+                var config = ConfigData.GetSceneQuestConfig(questId);
+                g.DrawImage(SceneBook.GetSceneQuestImage(config.Id), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
             }
             else
             {
                 g.DrawImage(markQuest, destRect, 0, 0, markQuest.Width, markQuest.Height, GraphicsUnit.Pixel);
+                if (MapSetting)
+                {
+                    var config = ConfigData.GetSceneQuestConfig(questId);
+                    g.DrawImage(SceneBook.GetSceneQuestImage(config.Id), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel);
+                }
             }
 
             markQuest.Dispose();

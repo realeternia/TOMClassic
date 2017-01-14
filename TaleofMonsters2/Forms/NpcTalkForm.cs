@@ -29,6 +29,7 @@ namespace TaleofMonsters.Forms
         public NpcTalkForm()
         {
             InitializeComponent();
+            NeedBlackForm = true;
             colorWord = new ColorWordRegion(160, 38, Width-170, "宋体", 14, Color.White);
         }
 
