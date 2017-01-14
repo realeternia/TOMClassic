@@ -82,6 +82,7 @@ namespace TaleofMonsters.MainItem.Scenes
                 var posData = new DbSceneSpecialPosData();
                 posData.Id = int.Parse(data[0]);
                 posData.Type = data[1];
+                posData.MapSetting = true;
                 if (posData.Type == "Warp")
                     posData.Disabled = reason == SceneFreshReason.Warp;//传送门默认是关闭的
                 if (data.Length > 2)
@@ -150,16 +151,19 @@ namespace TaleofMonsters.MainItem.Scenes
                     switch (specialData.Type)
                     {
                         case "Quest":
-                            so = new SceneQuest(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Disabled, specialData.Info); break;
+                            so = new SceneQuest(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Info); break;
                         case "Warp":
-                            so = new SceneWarp(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Disabled, specialData.Info, specialData.Info2); break;
+                            so = new SceneWarp(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Info, specialData.Info2); break;
                         default:
-                            so = new SceneTile(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Disabled); break;
+                            so = new SceneTile(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height); break;
                     }
+                    so.Disabled = specialData.Disabled;
+                    so.MapSetting = specialData.MapSetting;
                 }
                 else
                 {
-                    so = new SceneTile(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, true); break;
+                    so = new SceneTile(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height); break;
+                    so.Disabled = true;
                     //throw new Exception("RefreshSceneObjects error");
                 }
                 sceneObjects.Add(so);

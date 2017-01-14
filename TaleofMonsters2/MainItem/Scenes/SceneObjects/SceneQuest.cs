@@ -26,8 +26,8 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
         #endregion
 
         private int questId;
-        public SceneQuest(int wid, int wx, int wy, int wwidth, int wheight, bool disabled, int info)
-            :base(wid,wx,wy,wwidth,wheight, disabled)
+        public SceneQuest(int wid, int wx, int wy, int wwidth, int wheight, int info)
+            :base(wid,wx,wy,wwidth,wheight)
         {
             questId = info;
         }
@@ -80,7 +80,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                 return;
             }
 
-            Image markQuest = PicLoader.Read("Map", "SymQuest.PNG");
+            Image markQuest = PicLoader.Read("Map", MapSetting ? "SymEvent.PNG": "SymQuest.PNG");
             int drawWidth = markQuest.Width * Width / GameConstants.SceneTileStandardWidth;
             int drawHeight = markQuest.Height * Height / GameConstants.SceneTileStandardHeight;
             var destRect = new Rectangle(X - drawWidth / 2 + Width / 8, Y - drawHeight / 2, drawWidth, drawHeight);

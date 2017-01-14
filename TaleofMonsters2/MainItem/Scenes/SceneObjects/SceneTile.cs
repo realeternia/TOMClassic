@@ -4,8 +4,8 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 {
     internal class SceneTile : SceneObject
     {
-        public SceneTile(int wid, int wx, int wy, int wwidth, int wheight, bool disabled)
-            : base(wid, wx, wy, wwidth, wheight, disabled)
+        public SceneTile(int wid, int wx, int wy, int wwidth, int wheight)
+            : base(wid, wx, wy, wwidth, wheight)
         {
         }
 

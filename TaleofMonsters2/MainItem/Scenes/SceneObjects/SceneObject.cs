@@ -11,16 +11,16 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
         public readonly int Y;
         public readonly int Width;
         public readonly int Height;
-        public bool Disabled { get; private set; }
+        public bool Disabled { get; set; }
+        public bool MapSetting { get; set; }
 
-        public SceneObject(int wid, int wx, int wy, int wwidth, int wheight, bool disabled)
+        public SceneObject(int wid, int wx, int wy, int wwidth, int wheight)
         {
             Id = wid;
             X = wx;
             Y = wy;
             Width = wwidth;
             Height = wheight;
-            Disabled = disabled;
         }
 
         public void SetEnable(bool isEnable)

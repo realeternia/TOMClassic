@@ -9,5 +9,6 @@ namespace TaleofMonsters.DataType.User.Db
         [FieldIndex(Index = 3)] public bool Disabled;
         [FieldIndex(Index = 6)] public int Info;
         [FieldIndex(Index = 7)] public int Info2;
+        [FieldIndex(Index = 8)] public bool MapSetting;
     }
 }

@@ -10,8 +10,8 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
         private int targetMap;
         private int targetPos;
 
-        public SceneWarp(int wid, int wx, int wy, int wwidth, int wheight, bool disabled, int info, int info2)
-            : base(wid, wx, wy, wwidth, wheight, disabled)
+        public SceneWarp(int wid, int wx, int wy, int wwidth, int wheight, int info, int info2)
+            : base(wid, wx, wy, wwidth, wheight)
         {
             targetMap = info;
             targetPos = info2;
