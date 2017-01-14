@@ -34,6 +34,7 @@ namespace TaleofMonsters.DataType.User
 
             if (Exp >= ExpTree.GetNextRequired(Level))
             {
+                int oldLevel = Level;
                 while (CheckNewLevel()) //循环升级
                 {
                 }
@@ -41,7 +42,7 @@ namespace TaleofMonsters.DataType.User
                 MainItem.SystemMenuManager.ResetIconState();
                 MainForm.Instance.RefreshPanel();
 
-                MainItem.PanelManager.ShowLevelInfo(UserProfile.InfoBasic.Level);
+                MainItem.PanelManager.ShowLevelInfo(oldLevel, UserProfile.InfoBasic.Level);
             }
         }
 

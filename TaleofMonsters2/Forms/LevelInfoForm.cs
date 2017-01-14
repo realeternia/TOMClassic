@@ -11,12 +11,11 @@ namespace TaleofMonsters.Forms
     internal sealed partial class LevelInfoForm : BasePanel
     {
         private LevelInfoItem[] infoControls;
-        private int level;
+        public int Level { get; set; }
+        public int OldLevel { get; set; }
 
-        public int Level
-        {
-            set { level = value; }
-        }
+        private int[] infoDatas;
+        private int nowIndex;
 
         internal override void Init(int width, int height)
         {
@@ -28,16 +27,17 @@ namespace TaleofMonsters.Forms
                 infoControls[i] = new LevelInfoItem(this, 8, 35 + i * 80, 400, 80);
                 infoControls[i].Init(i);
             }
-            refreshInfo();
+            infoDatas = LevelInfoBook.GetLevelInfosByLevel(OldLevel, Level);
+            RefreshInfo();
         }
 
-        private void refreshInfo()
+        private void RefreshInfo()
         {
-            int[] ids = LevelInfoBook.GetLevelInfosByLevel(level);
             for (int i = 0; i < 3; i++)
             {
-                infoControls[i].RefreshData(i < ids.Length ? ids[i] : 0);
+                infoControls[i].RefreshData(i + nowIndex < infoDatas.Length ? infoDatas[i + nowIndex] : 0);
             }
+            nowIndex += 3;
         }
 
         public LevelInfoForm()
@@ -48,7 +48,14 @@ namespace TaleofMonsters.Forms
 
         private void pictureBoxCancel_Click(object sender, EventArgs e)
         {
-            Close();
+            if (nowIndex >= infoDatas.Length)
+            {
+                Close();
+            }
+            else
+            {
+                RefreshInfo();
+            }
         }
 
         private void LevelInfoForm_Paint(object sender, PaintEventArgs e)

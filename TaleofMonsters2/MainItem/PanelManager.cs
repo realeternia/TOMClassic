@@ -11,11 +11,12 @@ namespace TaleofMonsters.MainItem
             MainForm.Instance.DealPanel(levelUpForm);
         }
 
-        public static void ShowLevelInfo(int level)
+        public static void ShowLevelInfo(int oldLevel, int level)
         {
-            if(DataType.Others.LevelInfoBook.GetLevelInfosByLevel(level).Length>0)
+            if (DataType.Others.LevelInfoBook.GetLevelInfosByLevel(oldLevel, level).Length > 0)
             {
                 LevelInfoForm levelInfoForm = new LevelInfoForm();
+                levelInfoForm.OldLevel = oldLevel;
                 levelInfoForm.Level = level;
                 MainForm.Instance.DealPanel(levelInfoForm);
             }

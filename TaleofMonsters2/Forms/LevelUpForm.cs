@@ -104,7 +104,7 @@ namespace TaleofMonsters.Forms
                 MainForm.Instance.RefreshPanel();
                 Close();
 
-                MainItem.PanelManager.ShowLevelInfo(UserProfile.InfoBasic.Level);
+           //     MainItem.PanelManager.ShowLevelInfo(UserProfile.InfoBasic.Level);
             }
         }
 

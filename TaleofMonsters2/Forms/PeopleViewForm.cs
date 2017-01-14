@@ -88,7 +88,7 @@ namespace TaleofMonsters.Forms
             PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(people[realTar].Pid);
             if (peopleConfig.Emethod == "")
             {
-                ControlPlus.MessageBoxEx.Show("目前版暂不开放！");
+                ControlPlus.MessageBoxEx.Show("目前版本暂不开放！");
                 return;
             }
 
