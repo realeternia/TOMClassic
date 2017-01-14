@@ -689,6 +689,13 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         {
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine(string.Format("Lv{0}", Level), "LightBlue", 20);
+            tipData.AddTextNewLine("能量回复比率","White");
+            tipData.AddTextNewLine(string.Format("LP {0}", EnergyGenerator.RateLp.ToString().PadLeft(3, ' ')), "Gold");
+            tipData.AddBar(100, EnergyGenerator.RateLp, Color.Yellow, Color.Gold);
+            tipData.AddTextNewLine(string.Format("PP {0}", EnergyGenerator.RatePp.ToString().PadLeft(3, ' ')), "Red");
+            tipData.AddBar(100, EnergyGenerator.RatePp, Color.Pink, Color.Red);
+            tipData.AddTextNewLine(string.Format("MP {0}", EnergyGenerator.RateMp.ToString().PadLeft(3, ' ')), "Blue");
+            tipData.AddBar(100, EnergyGenerator.RateMp, Color.Cyan, Color.Blue);
 
             if (trapList.Count>0)
             {

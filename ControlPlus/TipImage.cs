@@ -102,6 +102,11 @@ namespace ControlPlus
             datas[datas.Count - 1].Objects.Add(new LineBar(wid, per, start, end));
         }
 
+        public void AddBarTwo(int wid, int per, Color start, Color end)
+        {
+            datas[datas.Count - 1].Objects.Add(new LineTwoBar(wid, per, start, end));
+        }
+
         public void AddLine()
         {
             AddLine(5);
@@ -129,7 +134,7 @@ namespace ControlPlus
                         if (obj is LineText)
                         {
                             LineText text = (obj as LineText);
-                            text.UpdateWid((int) g.MeasureString(text.text, fontInfo).Width);
+                            text.UpdateWid((int) g.MeasureString(text.text, fontInfo).Width+5);
                         }
                     }
                     wid = Math.Max(wid, datas[i].Width);
@@ -341,6 +346,60 @@ namespace ControlPlus
             g.FillRectangle(b1, x, y + 2, rwid * per / 100, height - 8);
             g.DrawRectangle(Pens.Gray, x, y + 2, rwid, height - 8);      
             b1.Dispose();
+        }
+
+        #endregion
+    }
+
+    class LineTwoBar : ILineObject
+    {
+        private int wid;
+        private int per;
+        private Color start;
+        private Color end;
+        public int Off { get; set; }
+
+        public LineTwoBar(int wid, int per, Color start, Color end)
+        {
+            this.wid = wid;
+            this.per = per;
+            this.start = start;
+            this.end = end;
+        }
+
+        #region ILineObject 成员
+
+        public int Width
+        {
+            get
+            {
+                return wid;
+            }
+        }
+
+        public void Draw(Graphics g, int id, ref int x, int y, int twid, int height)
+        {
+            int rmiddle = x+(wid - 10)/2;
+            int rwid = (wid - 10)/2;
+            if (per>0)
+            {
+                LinearGradientBrush b1 = new LinearGradientBrush(new Rectangle(rmiddle, y + 2, rwid, height - 8), start, end, LinearGradientMode.Horizontal);
+                g.FillRectangle(b1, rmiddle, y + 2, rwid * per / 50, height - 8);
+                b1.Dispose();
+            }
+            else if (per < 0)
+            {
+                LinearGradientBrush b1 = new LinearGradientBrush(new Rectangle(rmiddle - rwid, y + 2, rwid, height - 8), end, start, LinearGradientMode.Horizontal);
+                g.FillRectangle(b1, rmiddle - rwid * -per / 50, y + 2, rwid * -per / 50, height - 8);
+                b1.Dispose();
+            }
+            else
+            {
+                Brush b = new SolidBrush(start);
+                g.FillRectangle(b, rmiddle - 1, y + 2, 2, height - 8);
+                b.Dispose();
+            }
+            g.DrawRectangle(Pens.Gray, x, y + 2, rwid*2, height - 8);
         }
 
         #endregion

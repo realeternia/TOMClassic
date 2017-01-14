@@ -219,11 +219,11 @@ namespace TaleofMonsters.Forms
 
                 Font fontDes = new Font("宋体", 10 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
                 e.Graphics.DrawString("领导", fontDes, Brushes.White, 180, 175);
-                e.Graphics.DrawString(GetStarText(weaponConfig.EnergyRate[0] / 8 + 1), fontDes, Brushes.Gold, 210, 175);
+                e.Graphics.DrawString(GetStarText(jobConfig.EnergyRate[0] / 8 + 1), fontDes, Brushes.Gold, 210, 175);
                 e.Graphics.DrawString("力量", fontDes, Brushes.White, 180, 195);
-                e.Graphics.DrawString(GetStarText(weaponConfig.EnergyRate[1] / 8 + 1), fontDes, Brushes.Red, 210, 195);
+                e.Graphics.DrawString(GetStarText(jobConfig.EnergyRate[1] / 8 + 1), fontDes, Brushes.Red, 210, 195);
                 e.Graphics.DrawString("魔力", fontDes, Brushes.White, 180, 215);
-                e.Graphics.DrawString(GetStarText(weaponConfig.EnergyRate[2] / 8 + 1), fontDes, Brushes.Blue, 210, 215);
+                e.Graphics.DrawString(GetStarText(jobConfig.EnergyRate[2] / 8 + 1), fontDes, Brushes.Blue, 210, 215);
                 fontDes.Dispose();
             }
 

@@ -20,6 +20,24 @@ namespace TaleofMonsters.Forms
 {
     internal sealed partial class EquipmentForm : BasePanel
     {
+        private struct JobAddon
+        {
+            public int Lp;
+            public int Pp;
+            public int Mp;
+
+            public int GetAttrByIndex(TowerAttrs attr)
+            {
+                switch (attr)
+                {
+                    case TowerAttrs.Lp: return Lp;
+                    case TowerAttrs.Pp: return Pp;
+                    case TowerAttrs.Mp: return Mp;
+                }
+                return 0;
+            }
+        }
+
         private bool show;
         private int selectTar;
         private Bitmap tempImage;
@@ -33,6 +51,7 @@ namespace TaleofMonsters.Forms
         private Monster heroData;
         private List<Equip> equipDataList = new List<Equip>();
         private Equip vEquip; //所有装备的属性
+        private JobAddon jobInfo;
 
         public EquipmentForm()
         {
@@ -260,6 +279,11 @@ namespace TaleofMonsters.Forms
         {
             equipDataList = EquipBook.GetEquipsList(UserProfile.InfoEquip.Equipon);
             vEquip = EquipBook.GetVirtualEquips(equipDataList);
+            var jobConfig = ConfigData.GetJobConfig(UserProfile.InfoBasic.Job);
+            jobInfo = new JobAddon();
+            jobInfo.Lp += jobConfig.EnergyRate[0];
+            jobInfo.Pp += jobConfig.EnergyRate[1];
+            jobInfo.Mp += jobConfig.EnergyRate[2];
         }
 
         private void EquipmentForm_Paint(object sender, PaintEventArgs e)
@@ -316,9 +340,9 @@ namespace TaleofMonsters.Forms
             DrawAttr(e.Graphics, font, heroData.Spd, 147 + 53*2, 136);
             DrawAttr(e.Graphics, font, heroData.Range, 147 + 53 * 3, 136);
 
-            DrawAttr(e.Graphics, font, vEquip.LpRate, 147, 199);
-            DrawAttr(e.Graphics, font, vEquip.PpRate, 147 + 53, 199);
-            DrawAttr(e.Graphics, font, vEquip.MpRate, 147 + 53 * 2, 199);
+            DrawAttr(e.Graphics, font, vEquip.LpRate + jobInfo.Lp, 147, 199);
+            DrawAttr(e.Graphics, font, vEquip.PpRate + jobInfo.Pp, 147 + 53, 199);
+            DrawAttr(e.Graphics, font, vEquip.MpRate + jobInfo.Mp, 147 + 53 * 2, 199);
 
             font.Dispose();
             font2.Dispose();
@@ -331,11 +355,14 @@ namespace TaleofMonsters.Forms
         {
             var equipAttr = vEquip.GetAttrByIndex((TowerAttrs)(index));
             var attr = heroData.GetAttrByIndex((TowerAttrs)(index));
+            var jobData = jobInfo.GetAttrByIndex((TowerAttrs) (index));
 
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine(HSTypes.I2HeroAttrTip(index), "White", 20);
             tipData.AddLine();
             tipData.AddTextNewLine(string.Format("   基础属性:{0}", attr), "Lime");
+            if (jobData > 0)
+                tipData.AddTextNewLine(string.Format("   职业属性:{0}", jobData), "Pink");
             tipData.AddTextNewLine(string.Format("   来自装备:{0}", equipAttr), "Gold");
             return tipData.Image;
         }

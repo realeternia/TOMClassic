@@ -77,21 +77,24 @@ namespace TaleofMonsters.DataType.Equips
                 EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(TowerAttrs.Hp + 1));
                 tipData.AddTextNewLine(string.Format(eAddon.Format, Hp), HSTypes.I2EaddonColor(eAddon.Rare));
             }
-          
-            if (equipConfig.EnergyRate[0] + equipConfig.EnergyRate[1] + equipConfig.EnergyRate[2] > 0)
+
+            if (equipConfig.Job > 0)//转换职业
             {
                 tipData.AddLine();
-                if (equipConfig.Job > 0)//转换职业
-                {
-                    var jobConfig = ConfigData.GetJobConfig(equipConfig.Job);
-                    tipData.AddTextNewLine(string.Format("转职: {0}", jobConfig.Name), "Pink");
-                }
-                tipData.AddTextNewLine(string.Format("领导 {0}", equipConfig.EnergyRate[0]), "Gold");
-                tipData.AddBar(100, equipConfig.EnergyRate[0], Color.Yellow, Color.Gold);
-                tipData.AddTextNewLine(string.Format("力量 {0}", equipConfig.EnergyRate[1]), "Red");
-                tipData.AddBar(100, equipConfig.EnergyRate[1], Color.Pink, Color.Red);
-                tipData.AddTextNewLine(string.Format("魔力 {0}", equipConfig.EnergyRate[2]), "Blue");
-                tipData.AddBar(100, equipConfig.EnergyRate[2], Color.Cyan, Color.Blue);
+                var jobConfig = ConfigData.GetJobConfig(equipConfig.Job);
+                tipData.AddTextNewLine(string.Format("转职: {0}", jobConfig.Name), "Pink");
+            }
+          
+            if (equipConfig.EnergyRate[0] !=0|| equipConfig.EnergyRate[1] !=0|| equipConfig.EnergyRate[2] != 0)
+            {
+                tipData.AddLine();
+                tipData.AddTextNewLine("能量回复比率修正", "White");
+                tipData.AddTextNewLine(string.Format("LP {0}", equipConfig.EnergyRate[0].ToString().PadLeft(3,' ')), "Gold");
+                tipData.AddBarTwo(100, equipConfig.EnergyRate[0], Color.Yellow, Color.Gold);
+                tipData.AddTextNewLine(string.Format("PP {0}", equipConfig.EnergyRate[1].ToString().PadLeft(3, ' ')), "Red");
+                tipData.AddBarTwo(100, equipConfig.EnergyRate[1], Color.Pink, Color.Red);
+                tipData.AddTextNewLine(string.Format("MP {0}", equipConfig.EnergyRate[2].ToString().PadLeft(3, ' ')), "Blue");
+                tipData.AddBarTwo(100, equipConfig.EnergyRate[2], Color.Cyan, Color.Blue);
             }
             
             if (equipConfig.SpecialSkill > 0)

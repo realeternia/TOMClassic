@@ -65,11 +65,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             base.InitialCards();
 
 #if DEBUG
-            int[] cardToGive = new[] { 51000312 };
-            foreach (var cardId in cardToGive)
-            {
-                CardManager.AddCard(new ActiveCard(cardId, 1, 0));
-            }
+            //int[] cardToGive = new[] { 51000312 };
+            //foreach (var cardId in cardToGive)
+            //{
+            //    CardManager.AddCard(new ActiveCard(cardId, 1, 0));
+            //}
 #endif
         }
 
@@ -84,6 +84,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 {
                     energyData[i] += equipConfig.EnergyRate[i];
                 }
+            
                 if (equipConfig.SpecialSkill > 0)
                 {
                     HeroSkillList.Add(equipConfig.SpecialSkill);

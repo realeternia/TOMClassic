@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Core;
@@ -13,9 +14,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 
         private List<PlayerManaTypes> manaList = new List<PlayerManaTypes>();
 
-        private int rateLp;
-        private int ratePp;
-        private int rateMp;
+        public int RateLp { get; private set; }
+        public int RatePp { get; private set; }
+        public int RateMp { get; private set; }
 
         public int LimitLp { get; set; } //极限值
         public int LimitPp { get; set; }
@@ -27,30 +28,30 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         public void SetRateNpc(PeopleConfig peopleConfig)
         {
             JobConfig jobConfig = ConfigData.GetJobConfig(peopleConfig.Job);
-            rateLp = jobConfig.EnergyRate[0];
-            ratePp = jobConfig.EnergyRate[1];
-            rateMp = jobConfig.EnergyRate[2];
+            RateLp = jobConfig.EnergyRate[0];
+            RatePp = jobConfig.EnergyRate[1];
+            RateMp = jobConfig.EnergyRate[2];
             LimitLp = jobConfig.EnergyLimit[0];
             LimitPp = jobConfig.EnergyLimit[1];
             LimitMp = jobConfig.EnergyLimit[2];
         }
         
-        public void SetRate(int[] rates, int jobId)
+        public void SetRate(int[] rateChange, int jobId)
         {
-            rateLp = rates[0];
-            ratePp = rates[1];
-            rateMp = rates[2];
             JobConfig jobConfig = ConfigData.GetJobConfig(jobId);
+            RateLp = jobConfig.EnergyRate[0] + rateChange[0];
+            RatePp = jobConfig.EnergyRate[1] + rateChange[1];
+            RateMp = jobConfig.EnergyRate[2] + rateChange[2];
             LimitLp = jobConfig.EnergyLimit[0];
             LimitPp = jobConfig.EnergyLimit[1];
             LimitMp = jobConfig.EnergyLimit[2];
 
-            int total = rateLp + ratePp + rateMp;
+            int total = RateLp + RatePp + RateMp;
             if (total > 0 && total != 100)
             {
-                rateLp = rateLp/total*100;
-                ratePp = ratePp / total * 100;
-                rateMp = 100 - rateLp - ratePp;
+                RateLp = Math.Max(0, RateLp/total*100);
+                RatePp = Math.Max(0,RatePp / total * 100);
+                RateMp = 100 - RateLp - RatePp;
             }
         }
 
@@ -65,12 +66,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                 }
 
                 var roll = MathTool.GetRandom(100);
-                if (roll < rateMp)
+                if (roll < RateMp)
                 {
                     manaList.Add(PlayerManaTypes.Mp);
                     continue;
                 }
-                if (roll < rateMp + ratePp)
+                if (roll < RateMp + RatePp)
                 {
                     manaList.Add(PlayerManaTypes.Pp);
                     continue;
