@@ -242,49 +242,45 @@ namespace TaleofMonsters.Forms
 
         private void bitmapButtonSelect_Click(object sender, EventArgs e)
         {
-            var state = UserProfile.InfoTask.GetTaskStateById(TaskConfig.Indexer.Start);
-            if (state == 1)
-            {
-                UserProfile.InfoTask.SetTaskStateById(TaskConfig.Indexer.Start, 2);//新人任务完成
-                UserProfile.InfoEquip.DirectAddEquipOn(selectWeaponId);
+            UserProfile.InfoRecord.SetFlag((uint)MemPlayerFlagTypes.SelectJob);
+            UserProfile.InfoEquip.DirectAddEquipOn(selectWeaponId);
 
-                #region 发放奖励
-                
-                EquipConfig selectEquip = ConfigData.GetEquipConfig(selectWeaponId);
-                JobConfig jobConfig = ConfigData.GetJobConfig(selectEquip.Job);
-                Profile user = UserProfile.Profile;
-                if (jobConfig.InitialCards != null)//初始卡牌
+            #region 发放奖励
+
+            EquipConfig selectEquip = ConfigData.GetEquipConfig(selectWeaponId);
+            JobConfig jobConfig = ConfigData.GetJobConfig(selectEquip.Job);
+            Profile user = UserProfile.Profile;
+            if (jobConfig.InitialCards != null)//初始卡牌
+            {
+                foreach (var cardId in jobConfig.InitialCards)
                 {
-                    foreach (var cardId in jobConfig.InitialCards)
+                    if (cardId > 0)
                     {
-                        if (cardId > 0)
-                        {
-                            user.InfoCard.AddCard(cardId);
-                        }
+                        user.InfoCard.AddCard(cardId);
                     }
                 }
-                if (jobConfig.InitialEquip != null)//初始道具
-                {
-                    foreach (var eid in jobConfig.InitialEquip)
-                    {
-                        if (eid > 0)
-                        {
-                            user.InfoEquip.AddEquip(eid);
-                        }
-                    }
-                }
-                if (jobConfig.InitialEquip != null)//初始道具
-                {
-                    foreach (var eid in jobConfig.InitialItem)
-                    {
-                        if (eid > 0)
-                        {
-                            user.InfoBag.AddItem(eid, 1);
-                        }
-                    }
-                }
-                #endregion
             }
+            if (jobConfig.InitialEquip != null)//初始道具
+            {
+                foreach (var eid in jobConfig.InitialEquip)
+                {
+                    if (eid > 0)
+                    {
+                        user.InfoEquip.AddEquip(eid);
+                    }
+                }
+            }
+            if (jobConfig.InitialEquip != null)//初始道具
+            {
+                foreach (var eid in jobConfig.InitialItem)
+                {
+                    if (eid > 0)
+                    {
+                        user.InfoBag.AddItem(eid, 1);
+                    }
+                }
+            }
+            #endregion
             Close();
         }
 

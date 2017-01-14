@@ -17,7 +17,10 @@ namespace TaleofMonsters.MainItem.Quests
             {
                 MainForm.Instance.DealPanel(new ChangeCardForm());
             }
-          
+            else if (e.ParamList[0] == "selectjob")
+            {
+                MainForm.Instance.DealPanel(new SelectJobForm());
+            }
         }
 
         public override void OnFrame(int tick)

@@ -8,9 +8,12 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
 
         public int Line { get; private set; } //行号
 
-        public string Script { get; private set; } //文本
+        public string Script { get; protected set; } //文本
 
         public int Depth { get; private set; } //tab数量
+
+        public bool Disabled { get; set; }
+
         public SceneQuestBlock(string s, int depth, int line)
         {
             Script = s;

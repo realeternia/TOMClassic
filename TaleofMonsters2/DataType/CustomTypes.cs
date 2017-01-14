@@ -252,4 +252,9 @@
         LastQuestionTime = 1004,
         HeroExpPoint = 1100,//经验罐的exp
     }
+
+    internal enum MemPlayerFlagTypes
+    {
+        SelectJob=1,
+    }
 }

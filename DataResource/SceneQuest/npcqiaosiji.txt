@@ -1,3 +1,5 @@
 ﻿s我是谁？我是乔斯基，你的叔叔啊，你傻了啊？
 	a怎么可能，开个玩笑嘛
 		end
+	a|flagno-SelectJob|那我来选择我的职业吧。
+		enpc|selectjob

@@ -113,6 +113,8 @@ namespace TaleofMonsters.Forms
             answerList.Clear();
             foreach (var sceneQuestBlock in interactBlock.Children)
             {
+                if (sceneQuestBlock.Disabled)
+                    continue;
                 answerList.Add(sceneQuestBlock.Script);
             }
         }
