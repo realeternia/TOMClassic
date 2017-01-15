@@ -295,14 +295,21 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                 foreach (var memMapPoint in Cells)
                 {
                     cg.DrawImage(TileBook.GetTileImage(memMapPoint.Tile, CardSize, CardSize), memMapPoint.X, memMapPoint.Y, CardSize, CardSize);
-                    Pen pen = new Pen(Brushes.DarkRed, 1);
-                    cg.DrawRectangle(pen, memMapPoint.X, memMapPoint.Y, CardSize - 1, CardSize);
+
+                    var tileConfig = ConfigData.GetTileConfig(memMapPoint.Tile);
+                    if (tileConfig.ShowBorder)
+                    {
+                        Pen pen = new Pen(Brushes.DarkRed, 1);
+                        cg.DrawRectangle(pen, memMapPoint.X, memMapPoint.Y, CardSize - 1, CardSize);
+                        pen.Dispose();
+                    }
+               
 #if DEBUG
                     Font font = new Font("Arial", 7*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
                     g.DrawString(memMapPoint.Owner.ToString(), font, Brushes.White, memMapPoint.X, memMapPoint.Y+10);
                     font.Dispose();
 #endif
-                    pen.Dispose();
+                
                 }
                 cg.Dispose();
             }
