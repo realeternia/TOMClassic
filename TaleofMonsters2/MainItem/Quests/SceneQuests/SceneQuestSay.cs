@@ -2,8 +2,8 @@
 {
     public class SceneQuestSay : SceneQuestBlock
     {
-        public SceneQuestSay(string s, int depth, int line)
-            : base(s, depth, line)
+        public SceneQuestSay(int eid, string s, int depth, int line)
+            : base(eid, s, depth, line)
         {
 
         }

@@ -25,11 +25,11 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
         }
         #endregion
 
-        private int questId;
+        public int EventId { get; private set; }
         public SceneQuest(int wid, int wx, int wy, int wwidth, int wheight, int info)
             :base(wid,wx,wy,wwidth,wheight)
         {
-            questId = info;
+            EventId = info;
         }
 
         public override bool OnClick()
@@ -50,7 +50,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             {
                 BeginEvent();
 
-                var config = ConfigData.GetSceneQuestConfig(questId);
+                var config = ConfigData.GetSceneQuestConfig(EventId);
                 if (!config.TriggerMulti)
                 {
                     SetEnable(false);
@@ -60,12 +60,12 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 
         private void BeginEvent()
         {
-            if (questId == 0)
+            if (EventId == 0)
             {
                 return;
             }
 
-            NpcTalkForm sw = new NpcTalkForm {EventId = questId};
+            NpcTalkForm sw = new NpcTalkForm {EventId = EventId};
             WiseOpen(sw);
         }
 
@@ -73,7 +73,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
         {
             base.Draw(g, target);
 
-            if (Disabled && questId == 0)
+            if (Disabled && EventId == 0)
             {
                 return;
             }
@@ -85,7 +85,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             if (Disabled)
             {
                 g.DrawImage(markQuest, destRect, 0, 0, markQuest.Width, markQuest.Height, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
-                var config = ConfigData.GetSceneQuestConfig(questId);
+                var config = ConfigData.GetSceneQuestConfig(EventId);
                 g.DrawImage(SceneBook.GetSceneQuestImage(config.Id), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
             }
             else
@@ -93,7 +93,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                 g.DrawImage(markQuest, destRect, 0, 0, markQuest.Width, markQuest.Height, GraphicsUnit.Pixel);
                 if (MapSetting)
                 {
-                    var config = ConfigData.GetSceneQuestConfig(questId);
+                    var config = ConfigData.GetSceneQuestConfig(EventId);
                     g.DrawImage(SceneBook.GetSceneQuestImage(config.Id), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel);
                 }
             }

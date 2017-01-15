@@ -72,6 +72,7 @@ namespace TaleofMonsters.Controler.GM
                 }
             }
             catch (FormatException) { }
+            catch (IndexOutOfRangeException) { }
         }
     }
 }

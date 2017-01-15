@@ -64,7 +64,8 @@ namespace TaleofMonsters.MainItem.Scenes
             vRegion.AddRegion(new SubVirtualRegion(6, xOff - 60 + 82*4, 13, 80, 20));
             vRegion.AddRegion(new SubVirtualRegion(7, xOff - 60 + 82*5, 13, 80, 20));
             
-            vRegion.AddRegion(new SubVirtualRegion(10, 0, 0, 150, 50));
+            vRegion.AddRegion(new SubVirtualRegion(10, 0, 0, 150, 50));//人物头像
+            vRegion.AddRegion(new SubVirtualRegion(11, width - 145, 3, 115, 32));//地点
             vRegion.RegionEntered += virtualRegion_RegionEntered;
             vRegion.RegionLeft += virtualRegion_RegionLeft;
         }
@@ -201,6 +202,11 @@ namespace TaleofMonsters.MainItem.Scenes
                 Image image = GetPlayerImage();
                 tooltip.Show(image, parent, 0,50);
             }
+            else if (id == 11)
+            {
+                Image image = GetSceneImage();
+                tooltip.Show(image, parent, width - image.Width, 35);
+            }
             else if (id < 10)
             {
                 var resName = HSTypes.I2Resource(id - 1);
@@ -223,8 +229,7 @@ namespace TaleofMonsters.MainItem.Scenes
             g.DrawImage(mainTopRes, (width-688)/2, 4, 688, 37);//688是图片尺寸
             g.DrawImage(mainTopTitle, width-145, 3, 115, 32);
             g.DrawImage(mainBottom, 0, height-35, width, 35);
-
-
+            
             if (UserProfile.Profile == null || UserProfile.InfoBasic.MapId == 0)
             {
                 return;
@@ -330,6 +335,38 @@ namespace TaleofMonsters.MainItem.Scenes
                 }
                 token.Dispose();
             }
+        }
+
+        private int GetDisableEventCount(int eid)
+        {
+            int count = 0;
+            foreach (var sceneObject in sceneItems)
+            {
+                var sceQuest = sceneObject as SceneQuest;
+                if (sceQuest != null && sceQuest.EventId == eid && sceneObject.Disabled)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        private Image GetSceneImage()
+        {
+            var config = ConfigData.GetSceneConfig(UserProfile.InfoBasic.MapId);
+            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+            tipData.AddTextNewLine(string.Format("{0}(Lv{1})", sceneName, config.Level), "LightBlue", 20);
+            tipData.AddLine(2);
+            tipData.AddTextNewLine(string.Format("格子:{0}", sceneItems.Count), "White");
+            for (int i = 0; i < config.Quest.Count; i++)
+            {
+                var questConfig = ConfigData.GetSceneQuestConfig(config.Quest[i].Id);
+                var happend = GetDisableEventCount(config.Quest[i].Id);
+                var evtLevel = questConfig.Level == 0 ? config.Level : questConfig.Level;
+                tipData.AddTextNewLine(string.Format(" {0}Lv{3}({1}/{2})", questConfig.Name,
+                    happend, config.Quest[i].Value, evtLevel), happend == config.Quest[i].Value ? "DimGray" : "Lime");
+            }
+            return tipData.Image;
         }
 
         private Image GetPlayerImage()

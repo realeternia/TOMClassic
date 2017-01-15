@@ -2,8 +2,8 @@
 {
     public class SceneQuestRollItem : SceneQuestBlock
     {
-        public SceneQuestRollItem(string s, int depth, int line)
-            : base(s, depth, line)
+        public SceneQuestRollItem(int eid, string s, int depth, int line)
+            : base(eid, s, depth, line)
         {
 
         }

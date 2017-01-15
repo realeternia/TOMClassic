@@ -7,8 +7,8 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
         public string Type { get; set; }
         public List<string> ParamList { get; set; }
 
-        public SceneQuestEvent(string s, int depth, int line)
-            : base(s, depth, line)
+        public SceneQuestEvent(int eid, string s, int depth, int line)
+            : base(eid, s, depth, line)
         {
             string[] datas = Script.Split('|');
             Type = datas[0];

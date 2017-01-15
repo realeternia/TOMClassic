@@ -42,7 +42,7 @@ namespace TaleofMonsters.Forms
                 eventLevel = config.Level;
             else
                 eventLevel = ConfigData.GetSceneConfig(UserProfile.InfoBasic.MapId).Level;
-            interactBlock = SceneManager.GetQuestData(config.Script);
+            interactBlock = SceneManager.GetQuestData(EventId, config.Script);
             answerList = new List<string>();
             SetupQuestItem();
         }
