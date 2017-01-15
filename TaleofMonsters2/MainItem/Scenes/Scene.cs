@@ -45,7 +45,7 @@ namespace TaleofMonsters.MainItem.Scenes
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
         private MovingData movingData = new MovingData();
 
-        private const float ChessMoveAnimTime =0.5f;//旗子跳跃的动画世界
+        private const float ChessMoveAnimTime =0.5f;//旗子跳跃的动画时间
 
         public Scene(Control p, int w, int h)
         {
@@ -65,7 +65,7 @@ namespace TaleofMonsters.MainItem.Scenes
             vRegion.AddRegion(new SubVirtualRegion(7, xOff - 60 + 82*5, 13, 80, 20));
             
             vRegion.AddRegion(new SubVirtualRegion(10, 0, 0, 150, 50));//人物头像
-            vRegion.AddRegion(new SubVirtualRegion(11, width - 145, 3, 115, 32));//地点
+            vRegion.AddRegion(new SubVirtualRegion(11, width - 145, 3, 115, 32));//场景信息
             vRegion.RegionEntered += virtualRegion_RegionEntered;
             vRegion.RegionLeft += virtualRegion_RegionLeft;
         }

@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus;
+using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User;
@@ -18,21 +19,15 @@ namespace TaleofMonsters.Forms
         private int baseY = 250;
         private int pointerY;
         private string selectName;
-        private Image worldMap;
+        private Image worldMap; 
+        private HSCursor myCursor;
 
         public WorldMapViewForm()
         {
             InitializeComponent();
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
             bitmapButtonClose.NoUseDrawNine = true;
-            this.bitmapButtonLeft.ImageNormal = PicLoader.Read("ButtonBitmap", "PreButton.JPG");
-            bitmapButtonLeft.NoUseDrawNine = true;
-            this.bitmapButtonRight.ImageNormal = PicLoader.Read("ButtonBitmap", "NextButton.JPG");
-            bitmapButtonRight.NoUseDrawNine = true;
-            this.bitmapButtonUp.ImageNormal = PicLoader.Read("ButtonBitmap", "UpButton.JPG");
-            bitmapButtonUp.NoUseDrawNine = true;
-            this.bitmapButtonDown.ImageNormal = PicLoader.Read("ButtonBitmap", "DownButton.JPG");
-            bitmapButtonDown.NoUseDrawNine = true;
+            myCursor = new HSCursor(this);
         }
 
         internal override void Init(int width, int height)
@@ -40,11 +35,8 @@ namespace TaleofMonsters.Forms
             base.Init(width, height);
             worldMap = PicLoader.Read("Map", "worldmap.JPG");
             Graphics g = Graphics.FromImage(worldMap);
-            foreach (SceneMapIconConfig mapIconConfig in ConfigData.SceneMapIconDict.Values)
+            foreach (var mapIconConfig in ConfigData.SceneMapIconDict.Values)
             {
-                if (mapIconConfig.Level > UserProfile.InfoBasic.Level)
-                    continue;
-
                 if (mapIconConfig.Icon=="")
                     continue;
 
@@ -67,59 +59,14 @@ namespace TaleofMonsters.Forms
             }
         }
 
-        private void UpdateButtonState()
-        {
-            bitmapButtonLeft.Enabled = baseX > 0;
-            bitmapButtonRight.Enabled = baseX < worldMap.Width - 750;
-            bitmapButtonUp.Enabled = baseY > 0;
-            bitmapButtonDown.Enabled = baseY < worldMap.Height - 500;
-        }
-
-        private void bitmapButtonLeft_Click(object sender, EventArgs e)
-        {
-            baseX -= 50;
-            if (baseX < 0) baseX = 0;
-            UpdateButtonState();
-            Invalidate();
-        }
-
-        private void bitmapButtonUp_Click(object sender, EventArgs e)
-        {
-            baseY -= 50;
-            if (baseY < 0) baseY = 0;
-            UpdateButtonState();
-            Invalidate();
-        }
-
-        private void bitmapButtonRight_Click(object sender, EventArgs e)
-        {
-            baseX += 50;
-            if (baseX > worldMap.Width - 750) baseX = worldMap.Width - 750;
-            UpdateButtonState();
-            Invalidate();
-        }
-
-        private void bitmapButtonDown_Click(object sender, EventArgs e)
-        {
-            baseY += 50;
-            if (baseY > worldMap.Height - 500) baseY = worldMap.Height - 500;
-            UpdateButtonState();
-            Invalidate();
-        }
-
         private void WorldMapViewForm_MouseMove(object sender, MouseEventArgs e)
         {
             int truex = e.X - 15;
             int truey = e.Y - 35;
 
             string newSel = "";
-            foreach (SceneMapIconConfig mapIconConfig in ConfigData.SceneMapIconDict.Values)
+            foreach (var mapIconConfig in ConfigData.SceneMapIconDict.Values)
             {
-                if (mapIconConfig.Level > UserProfile.InfoBasic.Level)
-                {
-                    continue;
-                }
-
                 if (truex > mapIconConfig.IconX - baseX && truey > mapIconConfig.IconY - baseY && truex < mapIconConfig.IconX - baseX + mapIconConfig.IconWidth && truey < mapIconConfig.IconY - baseY + mapIconConfig.IconHeight)
                 {
                     newSel = mapIconConfig.Icon;
@@ -130,11 +77,49 @@ namespace TaleofMonsters.Forms
                 selectName = newSel;
                 Invalidate();
             }
+
+            if (mouseHold)
+            {
+                if (MathTool.GetDistance(e.Location, dragStartPos)>3)
+                {
+                    baseX -= e.Location.X-dragStartPos.X;
+                    baseY -= e.Location.Y - dragStartPos.Y;
+                    baseX = MathTool.Clamp(baseX, 0, worldMap.Width - 750);
+                    baseY = MathTool.Clamp(baseY, 0, worldMap.Height - 500);
+                    dragStartPos = e.Location;
+                    Invalidate();
+                }
+                dragStartPos = e.Location;
+            }
+            else
+            {
+                dragStartPos = e.Location;
+            }
+        }
+
+        private bool mouseHold;
+        private Point dragStartPos;
+        private void WorldMapViewForm_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseHold = false;
+            myCursor.ChangeCursor("default");
+        }
+
+        private void WorldMapViewForm_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouseHold = true;
+            myCursor.ChangeCursor("hand"); 
+            dragStartPos = e.Location;
         }
 
         private void WorldMapViewForm_Click(object sender, EventArgs e)
         {
-            foreach (SceneMapIconConfig mapIconConfig in ConfigData.SceneMapIconDict.Values)
+            if (selectName =="")
+            {
+                return;
+            }
+
+            foreach (var mapIconConfig in ConfigData.SceneMapIconDict.Values)
             {
                 if (mapIconConfig.Icon == selectName && mapIconConfig.Id != UserProfile.InfoBasic.MapId)
                 {
@@ -176,7 +161,7 @@ namespace TaleofMonsters.Forms
             Image tit = PicLoader.Read("Map", "title.PNG");
             e.Graphics.DrawImage(tit, 30, 45, 126, 44);
             tit.Dispose();
-            foreach (SceneMapIconConfig mapIconConfig in ConfigData.SceneMapIconDict.Values)
+            foreach (var mapIconConfig in ConfigData.SceneMapIconDict.Values)
             {
                 if (mapIconConfig.Icon == selectName)
                 {
@@ -212,5 +197,6 @@ namespace TaleofMonsters.Forms
                 }
             }
         }
+
     }
 }
