@@ -524,6 +524,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Map\mini.map" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scene\tatamuviliage.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scene\smallforest.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scene\farm.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
