@@ -358,13 +358,13 @@ namespace TaleofMonsters.MainItem.Scenes
             tipData.AddTextNewLine(string.Format("{0}(Lv{1})", sceneName, config.Level), "LightBlue", 20);
             tipData.AddLine(2);
             tipData.AddTextNewLine(string.Format("格子:{0}", sceneItems.Count), "White");
-            for (int i = 0; i < config.Quest.Count; i++)
+            foreach (var questData in SceneManager.GetQuestConfigData(UserProfile.InfoBasic.MapId))
             {
-                var questConfig = ConfigData.GetSceneQuestConfig(config.Quest[i].Id);
-                var happend = GetDisableEventCount(config.Quest[i].Id);
+                var questConfig = ConfigData.GetSceneQuestConfig(questData.Id);
+                var happend = GetDisableEventCount(questData.Id);
                 var evtLevel = questConfig.Level == 0 ? config.Level : questConfig.Level;
                 tipData.AddTextNewLine(string.Format(" {0}Lv{3}({1}/{2})", questConfig.Name,
-                    happend, config.Quest[i].Value, evtLevel), happend == config.Quest[i].Value ? "DimGray" : "Lime");
+                    happend, questData.Value, evtLevel), happend == questData.Value ? "DimGray" : "Lime");
             }
             return tipData.Image;
         }

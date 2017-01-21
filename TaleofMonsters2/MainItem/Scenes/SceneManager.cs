@@ -98,13 +98,12 @@ namespace TaleofMonsters.MainItem.Scenes
 
             if (reason != SceneFreshReason.Load || UserProfile.Profile.InfoWorld.PosInfos == null || UserProfile.Profile.InfoWorld.PosInfos.Count <= 0)
             {//重新生成
-                var sceneConfig = ConfigData.GetSceneConfig(id);
                 List<int> questList = new List<int>();
-                for (int i = 0; i < sceneConfig.Quest.Count; i++)
+                foreach (var questData in GetQuestConfigData(id) )
                 {
-                    for (int j = 0; j < sceneConfig.Quest[i].Value; j++)
+                    for (int j = 0; j < questData.Value; j++)
                     {
-                        questList.Add(sceneConfig.Quest[i].Id);
+                        questList.Add(questData.Id);
                     }
                 }
                 ListTool.Fill(questList, 0, questCellCount);
@@ -176,6 +175,31 @@ namespace TaleofMonsters.MainItem.Scenes
         {
             int differ = Math.Abs(id1 - id2);
             return differ == 1 || differ == 1000;
+        }
+
+        /// <summary>
+        /// 获取一站地图的随机任务列表
+        /// </summary>
+        public static List<RLIdValue> GetQuestConfigData(int mapId)
+        {
+            var config = ConfigData.GetSceneConfig(mapId);
+            List<RLIdValue> datas = new List<RLIdValue>();
+            for (int i = 0; i < config.Quest.Count; i++)
+                datas.Add(config.Quest[i]);
+            if (config.QPortal > 0)//地磁反转
+                datas.Add(new RLIdValue { Id = 42000002, Value = config.QPortal });
+            if (config.QCardChange > 0)//卡牌商人
+                datas.Add(new RLIdValue { Id = 42000003, Value = config.QCardChange });
+            if (config.QPiece > 0)//素材商人
+                datas.Add(new RLIdValue { Id = 42000004, Value = config.QPiece });
+            if (config.QMerchant > 0)//商人
+                datas.Add(new RLIdValue { Id = 42000007, Value = config.QMerchant });
+            if (config.QDoctor > 0)//医生
+                datas.Add(new RLIdValue { Id = 42000005, Value = config.QDoctor });
+            if (config.QAngel > 0)//天使
+                datas.Add(new RLIdValue { Id = 42000006, Value = config.QAngel });
+
+            return datas;
         }
 
         public static SceneQuestBlock GetQuestData(int eventId, int level, string name)
