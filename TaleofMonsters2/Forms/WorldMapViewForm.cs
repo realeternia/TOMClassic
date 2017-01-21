@@ -44,6 +44,14 @@ namespace TaleofMonsters.Forms
                 Rectangle destRect = new Rectangle(mapIconConfig.IconX, mapIconConfig.IconY, mapIconConfig.IconWidth, mapIconConfig.IconHeight);
                 g.DrawImage(image, destRect, 0, 0, mapIconConfig.IconWidth, mapIconConfig.IconHeight, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
                 image.Dispose();
+
+                if (mapIconConfig.Id == UserProfile.InfoBasic.MapId)
+                {
+                    baseX = mapIconConfig.IconX - 750/2+30;
+                    baseY = mapIconConfig.IconY - 500 / 2+30;
+                    baseX = MathTool.Clamp(baseX, 0, worldMap.Width - 750);
+                    baseY = MathTool.Clamp(baseY, 0, worldMap.Height - 500);
+                }
             }
             g.Dispose();
 

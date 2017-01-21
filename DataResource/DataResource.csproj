@@ -554,6 +554,24 @@
   <ItemGroup>
     <EmbeddedResource Include="Scene\riverold.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scene\gerdin.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scene\fogvalley.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scene\riverside.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scene\orevalley.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scene\woodviliage.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scene\moonforest.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
