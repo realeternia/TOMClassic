@@ -178,7 +178,7 @@ namespace TaleofMonsters.MainItem.Scenes
             return differ == 1 || differ == 1000;
         }
 
-        public static SceneQuestBlock GetQuestData(int eventId, string name)
+        public static SceneQuestBlock GetQuestData(int eventId, int level, string name)
         {
             Dictionary<int, SceneQuestBlock> levelCachDict = new Dictionary<int, SceneQuestBlock>();//存下每一深度的最后节点
             SceneQuestBlock root = null;
@@ -194,10 +194,10 @@ namespace TaleofMonsters.MainItem.Scenes
                 SceneQuestBlock data;
                 switch (type)
                 {
-                    case 's': data = new SceneQuestSay(eventId, script, lineDepth, lineCount); break;
-                    case 'a': data = new SceneQuestAnswer(eventId, script, lineDepth, lineCount); break;
-                    case 'e': data = new SceneQuestEvent(eventId, script, lineDepth, lineCount); break;
-                    case 'r': data = new SceneQuestRollItem(eventId, script, lineDepth, lineCount); break;
+                    case 's': data = new SceneQuestSay(eventId, level, script, lineDepth, lineCount); break;
+                    case 'a': data = new SceneQuestAnswer(eventId, level, script, lineDepth, lineCount); break;
+                    case 'e': data = new SceneQuestEvent(eventId, level, script, lineDepth, lineCount); break;
+                    case 'r': data = new SceneQuestRollItem(eventId, level, script, lineDepth, lineCount); break;
                     default: throw new Exception(string.Format("GetQuestData unknown type {0} {1}", name, lineCount));
                 }
 

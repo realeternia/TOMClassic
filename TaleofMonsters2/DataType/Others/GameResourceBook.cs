@@ -15,73 +15,73 @@ namespace TaleofMonsters.DataType.Others
         /// <summary>
         /// 场景剧情获得金币
         /// </summary>
-        public static uint InGoldSceneQuest(int level, int rate)
+        public static uint InGoldSceneQuest(int level, int rate, bool noRandom = false)
         {
             double[] factor = new[] {0.2, 0.5, 0.5, 1, 1, 1.5, 2.2};
-            rate = (int)(rate*factor[MathTool.GetRandom(factor.Length)]);
+            rate = (int)(rate*(noRandom?1: factor[MathTool.GetRandom(factor.Length)]));
             return (uint)((level + 5)*rate/100);
         }
         /// <summary>
         /// 场景剧情消耗金币
         /// </summary>
-        public static uint OutGoldSceneQuest(int level, int rate)
+        public static uint OutGoldSceneQuest(int level, int rate, bool noRandom = false)
         {
             double[] factor = new[] { 0.5, 1, 1, 1.5};
-            rate = (int)(rate * factor[MathTool.GetRandom(factor.Length)]);
+            rate = (int)(rate * (noRandom ? 1 : factor[MathTool.GetRandom(factor.Length)]));
             return (uint)((level+1) * rate/100);
         }
         /// <summary>
         /// 场景剧情获得食物
         /// </summary>
-        public static uint InFoodSceneQuest(int rate)
+        public static uint InFoodSceneQuest(int rate, bool noRandom = false)
         {
             double[] factor = new[] { 0.5, 1, 1, 1.5 };
-            rate = (int)(rate * factor[MathTool.GetRandom(factor.Length)]);
+            rate = (int)(rate * (noRandom ? 1 : factor[MathTool.GetRandom(factor.Length)]));
             return (uint)(10 * rate / 100);
         }
         /// <summary>
         /// 场景剧情消耗食物
         /// </summary>
-        public static uint OutFoodSceneQuest(int rate)
+        public static uint OutFoodSceneQuest(int rate, bool noRandom = false)
         {
             double[] factor = new[] { 0.5, 1, 1, 1.5 };
-            rate = (int)(rate * factor[MathTool.GetRandom(factor.Length)]);
+            rate = (int)(rate * (noRandom ? 1 : factor[MathTool.GetRandom(factor.Length)]));
             return (uint)(8 * rate / 100);
         }
         /// <summary>
         /// 场景剧情获得健康
         /// </summary>
-        public static uint InHealthSceneQuest(int rate)
+        public static uint InHealthSceneQuest(int rate, bool noRandom = false)
         {
             double[] factor = new[] { 0.5, 0.5, 1, 1, 2 };
-            rate = (int)(rate * factor[MathTool.GetRandom(factor.Length)]);
+            rate = (int)(rate * (noRandom ? 1 : factor[MathTool.GetRandom(factor.Length)]));
             return (uint)(10 * rate / 100);
         }
         /// <summary>
         /// 场景剧情消耗健康
         /// </summary>
-        public static uint OutHealthSceneQuest(int rate)
+        public static uint OutHealthSceneQuest(int rate, bool noRandom = false)
         {
             double[] factor = new[] { 0.5, 0.5, 1, 1, 2 };
-            rate = (int)(rate * factor[MathTool.GetRandom(factor.Length)]);
+            rate = (int)(rate * (noRandom ? 1 : factor[MathTool.GetRandom(factor.Length)]));
             return (uint)(10 * rate / 100);
         }
         /// <summary>
         /// 场景剧情获得精神
         /// </summary>
-        public static uint InMentalSceneQuest(int rate)
+        public static uint InMentalSceneQuest(int rate, bool noRandom = false)
         {
             double[] factor = new[] { 0.2, 0.2, 0.5, 0.5, 1, 1, 2, 3 };
-            rate = (int)(rate * factor[MathTool.GetRandom(factor.Length)]);
+            rate = (int)(rate * (noRandom ? 1 : factor[MathTool.GetRandom(factor.Length)]));
             return (uint)(15 * rate / 100);
         }
         /// <summary>
         /// 场景剧情消耗精神
         /// </summary>
-        public static uint OutMentalSceneQuest(int rate)
+        public static uint OutMentalSceneQuest(int rate, bool noRandom = false)
         {
             double[] factor = new[] { 0.2, 0.2, 0.5, 0.5, 1, 1, 2, 3 };
-            rate = (int)(rate * factor[MathTool.GetRandom(factor.Length)]);
+            rate = (int)(rate * (noRandom ? 1 : factor[MathTool.GetRandom(factor.Length)]));
             return (uint)(15 * rate / 100);
         }
         /// <summary>

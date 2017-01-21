@@ -6,6 +6,8 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
     {
         protected int eventId;
 
+        protected int level;
+
         public List<SceneQuestBlock> Children { get; private set; }
 
         public int Line { get; private set; } //行号
@@ -16,9 +18,10 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
 
         public bool Disabled { get; set; }
 
-        public SceneQuestBlock(int eid, string s, int depth, int line)
+        public SceneQuestBlock(int eid, int lv, string s, int depth, int line)
         {
             eventId = eid;
+            level = lv;
             Script = s;
             Depth = depth;
             Line = line;
