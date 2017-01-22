@@ -47,13 +47,13 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
                         goldNeed = GameResourceBook.OutGoldSceneQuest(level, -config.TradeGold * multi, true);
                     uint foodNeed = 0;
                     if (config.TradeFood < 0)
-                        foodNeed = GameResourceBook.OutFoodSceneQuest(-config.TradeFood * multi, true);
+                        foodNeed = Math.Min(100, GameResourceBook.OutFoodSceneQuest(-config.TradeFood * multi, true));
                     uint healthNeed = 0;
                     if (config.TradeHealth < 0)
-                        healthNeed = GameResourceBook.OutHealthSceneQuest(-config.TradeHealth * multi, true);
+                        healthNeed = Math.Min(100, GameResourceBook.OutHealthSceneQuest(-config.TradeHealth * multi, true));
                     uint mentalNeed = 0;
                     if (config.TradeMental < 0)
-                        mentalNeed = GameResourceBook.OutMentalSceneQuest(-config.TradeMental * multi, true);
+                        mentalNeed = Math.Min(100, GameResourceBook.OutMentalSceneQuest(-config.TradeMental * multi, true));
                     Disabled = !UserProfile.Profile.InfoBag.HasResource(GameResourceType.Gold, goldNeed)||
                             UserProfile.Profile.InfoBasic.FoodPoint < foodNeed ||
                              UserProfile.Profile.InfoBasic.HealthPoint < healthNeed ||
@@ -64,13 +64,13 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
                         goldAdd = GameResourceBook.InGoldSceneQuest(level, config.TradeGold * multi, true);
                     uint foodAdd = 0;
                     if (config.TradeFood > 0)
-                        foodAdd = GameResourceBook.InFoodSceneQuest(config.TradeFood * multi, true);
+                        foodAdd = Math.Min(100, GameResourceBook.InFoodSceneQuest(config.TradeFood * multi, true));
                     uint healthAdd = 0;
                     if (config.TradeHealth > 0)
-                        healthAdd = GameResourceBook.InHealthSceneQuest(config.TradeHealth * multi, true);
+                        healthAdd = Math.Min(100, GameResourceBook.InHealthSceneQuest(config.TradeHealth * multi, true));
                     uint mentalAdd = 0;
                     if (config.TradeMental > 0)
-                        mentalAdd = GameResourceBook.InMentalSceneQuest(config.TradeMental * multi, true);
+                        mentalAdd = Math.Min(100, GameResourceBook.InMentalSceneQuest(config.TradeMental * multi, true));
                     Script = string.Format("增加{0}(消耗{1})",
                         GetTradeStr(goldAdd, foodAdd, healthAdd, mentalAdd),
                         GetTradeStr(goldNeed, foodNeed, healthNeed, mentalNeed));

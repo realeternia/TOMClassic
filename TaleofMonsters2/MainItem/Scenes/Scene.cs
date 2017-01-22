@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
 using NarlonLib.Drawing;
+using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
@@ -87,14 +88,16 @@ namespace TaleofMonsters.MainItem.Scenes
             backPicture = PicLoader.Read("Scene", string.Format("{0}.JPG", sceneConfig.Url));
             sceneName = sceneConfig.Name;
 
-            GenerateMiniMap(mapid, sceneConfig.WindowX, sceneConfig.WindowY);
+            GenerateMiniMap(mapid, MathTool.Clamp(sceneConfig.IconX - 110,0, 1688-300), 
+                MathTool.Clamp(sceneConfig.IconY - 110, 0, 1121 - 300));
 
             UserProfile.InfoBasic.MapId = mapid;
-
-            SystemMenuManager.ResetIconState(); //reset main icon state
+            
+            SystemMenuManager.ResetIconState(); //reset main icon state todo remove check
 
             sceneItems = SceneManager.RefreshSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, isWarp ? SceneManager.SceneFreshReason.Warp : SceneManager.SceneFreshReason.Load );
-
+            if (UserProfile.InfoBasic.Position == 0)
+                UserProfile.InfoBasic.Position = sceneItems[0].Id;
             parent.Invalidate();
         }
 
@@ -103,7 +106,7 @@ namespace TaleofMonsters.MainItem.Scenes
             Image allMap = PicLoader.Read("Map", "worldmap.JPG"); //生成世界地图
             Graphics g = Graphics.FromImage(allMap);
             Font font = new Font("微软雅黑", 18*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            foreach (var mapIconConfig in ConfigData.SceneMapIconDict.Values)
+            foreach (var mapIconConfig in ConfigData.SceneDict.Values)
             {
                 if (mapIconConfig.IconX < wx || mapIconConfig.IconX > wx + 300 || mapIconConfig.IconY < wy || mapIconConfig.IconY > wy + 300)
                     continue;

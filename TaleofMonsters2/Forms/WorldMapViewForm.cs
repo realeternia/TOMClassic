@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
@@ -22,6 +23,8 @@ namespace TaleofMonsters.Forms
         private Image worldMap; 
         private HSCursor myCursor;
 
+        private Dictionary<int, Size> iconSizeDict = new Dictionary<int, Size>();
+
         public WorldMapViewForm()
         {
             InitializeComponent();
@@ -35,14 +38,15 @@ namespace TaleofMonsters.Forms
             base.Init(width, height);
             worldMap = PicLoader.Read("Map", "worldmap.JPG");
             Graphics g = Graphics.FromImage(worldMap);
-            foreach (var mapIconConfig in ConfigData.SceneMapIconDict.Values)
+            foreach (var mapIconConfig in ConfigData.SceneDict.Values)
             {
                 if (mapIconConfig.Icon=="")
                     continue;
 
                 Image image = PicLoader.Read("MapIcon", string.Format("{0}.PNG", mapIconConfig.Icon));
-                Rectangle destRect = new Rectangle(mapIconConfig.IconX, mapIconConfig.IconY, mapIconConfig.IconWidth, mapIconConfig.IconHeight);
-                g.DrawImage(image, destRect, 0, 0, mapIconConfig.IconWidth, mapIconConfig.IconHeight, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
+                iconSizeDict[mapIconConfig.Id] = new Size(image.Width, image.Height);
+                Rectangle destRect = new Rectangle(mapIconConfig.IconX, mapIconConfig.IconY, image.Width, image.Height);
+                g.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
                 image.Dispose();
 
                 if (mapIconConfig.Id == UserProfile.InfoBasic.MapId)
@@ -73,9 +77,13 @@ namespace TaleofMonsters.Forms
             int truey = e.Y - 35;
 
             string newSel = "";
-            foreach (var mapIconConfig in ConfigData.SceneMapIconDict.Values)
+            foreach (var mapIconConfig in ConfigData.SceneDict.Values)
             {
-                if (truex > mapIconConfig.IconX - baseX && truey > mapIconConfig.IconY - baseY && truex < mapIconConfig.IconX - baseX + mapIconConfig.IconWidth && truey < mapIconConfig.IconY - baseY + mapIconConfig.IconHeight)
+                if (mapIconConfig.Icon == "")
+                    continue;
+
+                var iconSize = iconSizeDict[mapIconConfig.Id];
+                if (truex > mapIconConfig.IconX - baseX && truey > mapIconConfig.IconY - baseY && truex < mapIconConfig.IconX - baseX + iconSize.Width && truey < mapIconConfig.IconY - baseY + iconSize.Height)
                 {
                     newSel = mapIconConfig.Icon;
                 }
@@ -127,7 +135,7 @@ namespace TaleofMonsters.Forms
                 return;
             }
 
-            foreach (var mapIconConfig in ConfigData.SceneMapIconDict.Values)
+            foreach (var mapIconConfig in ConfigData.SceneDict.Values)
             {
                 if (mapIconConfig.Icon == selectName && mapIconConfig.Id != UserProfile.InfoBasic.MapId)
                 {
@@ -140,6 +148,7 @@ namespace TaleofMonsters.Forms
                     {
                         if (UserProfile.InfoBag.PayDiamond(10))
                         {
+                            UserProfile.InfoBasic.Position = 0;//如果是0，后面流程会随机一个位置
                             Scene.Instance.ChangeMap(mapIconConfig.Id, true);
                             Close();
                         }
@@ -169,14 +178,18 @@ namespace TaleofMonsters.Forms
             Image tit = PicLoader.Read("Map", "title.PNG");
             e.Graphics.DrawImage(tit, 30, 45, 126, 44);
             tit.Dispose();
-            foreach (var mapIconConfig in ConfigData.SceneMapIconDict.Values)
+            foreach (var mapIconConfig in ConfigData.SceneDict.Values)
             {
+                if (mapIconConfig.Icon == "")
+                    continue;
+
                 if (mapIconConfig.Icon == selectName)
                 {
+                    var iconSize = iconSizeDict[mapIconConfig.Id];
                     int x = mapIconConfig.IconX;
                     int y = mapIconConfig.IconY;
-                    int width = mapIconConfig.IconWidth;
-                    int height = mapIconConfig.IconHeight;
+                    int width = iconSize.Width;
+                    int height = iconSize.Height;
 
                     if (x > baseX && y > baseY && x + width < baseX + 750 && y + height < baseY + 500)
                     {

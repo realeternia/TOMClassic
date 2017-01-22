@@ -200,15 +200,6 @@ namespace TaleofMonsters.MainItem
                 case SystemMenuIds.TournamentViewForm:
                     MainForm.Instance.DealPanel(new TournamentViewForm());
                     break;
-                case SystemMenuIds.AddDayForm:
-                    if (MessageBoxEx2.Show("是否花5钻石增加20点饱腹值？") == DialogResult.OK)
-                    {
-                        if (UserProfile.InfoBag.PayDiamond(5))
-                        {
-                            UserProfile.InfoBasic.AddFood(20);
-                        }
-                    }
-                    break;
                 case SystemMenuIds.TreasureWheelForm:
                     MainForm.Instance.DealPanel(new TreasureWheelForm());
                     break;
@@ -316,7 +307,7 @@ namespace TaleofMonsters.MainItem
         MergeWeaponForm = 35,
         CardShopViewForm = 36,
         TournamentViewForm = 37,
-        AddDayForm = 38,
+       // AddDayForm = 38,
         TreasureWheelForm = 39,
         ExpBottle = 40,
         QuestionForm = 41,

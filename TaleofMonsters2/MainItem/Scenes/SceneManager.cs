@@ -38,97 +38,12 @@ namespace TaleofMonsters.MainItem.Scenes
             var cachedSpecialData = new Dictionary<int, DbSceneSpecialPosData>();
             var filePath = ConfigData.GetSceneConfig(id).TilePath;
 
-#region 读取文件信息
-            StreamReader sr = new StreamReader(DataLoader.Read("Scene", string.Format("{0}.txt", filePath)));
-            int xoff = int.Parse(sr.ReadLine().Split('=')[1])*mapWidth/1422;
-            int yoff = int.Parse(sr.ReadLine().Split('=')[1])*mapHeight/855+50;//50为固定偏移
-            int wid = int.Parse(sr.ReadLine().Split('=')[1]);
-            int height = int.Parse(sr.ReadLine().Split('=')[1]);
-
-            int cellWidth = GameConstants.SceneTileStandardWidth * mapWidth/1422;
-            int cellHeight = GameConstants.SceneTileStandardHeight * mapHeight / 855;
-            int questCellCount = 0;
-            for (int i = 0; i < height; i++)
-            {
-                string[] data = sr.ReadLine().Split('\t');
-                for (int j = 0; j < wid; j++)
-                {
-                    int val = int.Parse(data[j]);
-                    if (val ==0)
-                    {
-                        continue;
-                    }
-
-                    int lineOff = (int)(cellWidth*(height-i-1)* GameConstants.SceneTileGradient);
-                    ScenePosData so = new ScenePosData
-                    {
-                        Id = val,
-                        X = xoff + j*cellWidth + lineOff,
-                        Y = yoff + i*cellHeight,
-                        Width = cellWidth,
-                        Height = cellHeight
-                    };
-                    cachedMapData.Add(so);
-                }
-            }
-
-            string line;
-            while ((line = sr.ReadLine())!=null)
-            {
-                string[] data = line.Split('\t');
-                if (data.Length < 2)
-                    continue;
-
-                var posData = new DbSceneSpecialPosData();
-                posData.Id = int.Parse(data[0]);
-                posData.Type = data[1];
-                posData.MapSetting = true;
-                if (posData.Type == "Warp")
-                    posData.Disabled = reason == SceneFreshReason.Warp;//传送门默认是关闭的
-                if (data.Length > 2)
-                    posData.Info = int.Parse(data[2]);
-                if (data.Length > 3)
-                    posData.Info2 = int.Parse(data[3]);
-                cachedSpecialData[posData.Id] = posData;
-            }
-            sr.Close();
-
-            questCellCount = cachedMapData.Count - cachedSpecialData.Count;
-            #endregion
+            LoadSceneFile(mapWidth, mapHeight, reason, filePath, cachedMapData, cachedSpecialData);
+            var questCellCount = cachedMapData.Count - cachedSpecialData.Count;
 
             if (reason != SceneFreshReason.Load || UserProfile.Profile.InfoWorld.PosInfos == null || UserProfile.Profile.InfoWorld.PosInfos.Count <= 0)
             {//重新生成
-                List<int> questList = new List<int>();
-                foreach (var questData in GetQuestConfigData(id) )
-                {
-                    for (int j = 0; j < questData.Value; j++)
-                    {
-                        questList.Add(questData.Id);
-                    }
-                }
-                ListTool.Fill(questList, 0, questCellCount);
-                ListTool.RandomShuffle(questList);
-
-                var posList = new List<DbSceneSpecialPosData>();
-                int index = 0;
-                foreach (var scenePosData in cachedMapData)
-                {
-                    DbSceneSpecialPosData specialData;
-                    cachedSpecialData.TryGetValue(scenePosData.Id, out specialData);
-
-                    if (specialData == null)
-                    {
-                        specialData = new DbSceneSpecialPosData(); //随机一个出来
-                        specialData.Id = scenePosData.Id;
-                        specialData.Type = "Quest";
-                        specialData.Info = questList[index++];
-                    }
-                    cachedSpecialData[specialData.Id] = specialData;
-
-                    posList.Add(specialData);
-                }
-
-                UserProfile.Profile.InfoWorld.PosInfos = posList;
+                GenerateSceneRandomInfo(id, questCellCount, cachedMapData, cachedSpecialData);
             }
             else
             {//从存档加载
@@ -169,6 +84,110 @@ namespace TaleofMonsters.MainItem.Scenes
             }
 
             return sceneObjects;
+        }
+
+        private static void LoadSceneFile(int mapWidth, int mapHeight, SceneFreshReason reason, string filePath, List<ScenePosData> cachedMapData, Dictionary<int, DbSceneSpecialPosData> cachedSpecialData)
+        {
+            StreamReader sr = new StreamReader(DataLoader.Read("Scene", string.Format("{0}.txt", filePath)));
+            int xoff = int.Parse(sr.ReadLine().Split('=')[1])*mapWidth/1422;
+            int yoff = int.Parse(sr.ReadLine().Split('=')[1])*mapHeight/855 + 50; //50为固定偏移
+            int wid = int.Parse(sr.ReadLine().Split('=')[1]);
+            int height = int.Parse(sr.ReadLine().Split('=')[1]);
+
+            int cellWidth = GameConstants.SceneTileStandardWidth*mapWidth/1422;
+            int cellHeight = GameConstants.SceneTileStandardHeight*mapHeight/855;
+            int questCellCount = 0;
+            for (int i = 0; i < height; i++)
+            {
+                string[] data = sr.ReadLine().Split('\t');
+                for (int j = 0; j < wid; j++)
+                {
+                    int val = int.Parse(data[j]);
+                    if (val == 0)
+                    {
+                        continue;
+                    }
+
+                    int lineOff = (int) (cellWidth*(height - i - 1)*GameConstants.SceneTileGradient);
+                    ScenePosData so = new ScenePosData
+                    {
+                        Id = val,
+                        X = xoff + j*cellWidth + lineOff,
+                        Y = yoff + i*cellHeight,
+                        Width = cellWidth,
+                        Height = cellHeight
+                    };
+                    cachedMapData.Add(so);
+                }
+            }
+
+            string line;
+            while ((line = sr.ReadLine()) != null)
+            {
+                string[] data = line.Split('\t');
+                if (data.Length < 2)
+                    continue;
+
+                var posData = new DbSceneSpecialPosData();
+                posData.Id = int.Parse(data[0]);
+                posData.Type = data[1];
+                posData.MapSetting = true;
+                if (posData.Type == "Warp")
+                    posData.Disabled = reason == SceneFreshReason.Warp; //传送门默认是关闭的
+                if (data.Length > 2)
+                    posData.Info = int.Parse(data[2]);
+                if (data.Length > 3)
+                    posData.Info2 = int.Parse(data[3]);
+                cachedSpecialData[posData.Id] = posData;
+            }
+            sr.Close();
+        }
+
+        private static void GenerateSceneRandomInfo(int id, int questCellCount, List<ScenePosData> cachedMapData, Dictionary<int, DbSceneSpecialPosData> cachedSpecialData)
+        {
+            List<int> randQuestList = new List<int>();
+            foreach (var questData in GetQuestConfigData(id))
+            {
+                for (int j = 0; j < questData.Value; j++)
+                {
+                    randQuestList.Add(questData.Id);
+                }
+            }
+
+            bool needRandomize = randQuestList.Count > 0;
+            if (needRandomize)
+            {
+                ListTool.Fill(randQuestList, 0, questCellCount);
+                ListTool.RandomShuffle(randQuestList);
+            }
+            
+            var posList = new List<DbSceneSpecialPosData>();
+            int index = 0;
+            foreach (var scenePosData in cachedMapData)
+            {
+                DbSceneSpecialPosData specialData;
+                cachedSpecialData.TryGetValue(scenePosData.Id, out specialData);
+
+                if (specialData == null)//表示不是预设的格子
+                {
+                    specialData = new DbSceneSpecialPosData();
+                    specialData.Id = scenePosData.Id;
+                    if (needRandomize)
+                    {
+                        specialData.Type = "Quest";
+                        specialData.Info = randQuestList[index++];    //随机一个出来
+                    }
+                    else
+                    {
+                        specialData.Type = "Tile";
+                    }
+                }
+                cachedSpecialData[specialData.Id] = specialData;
+
+                posList.Add(specialData);
+            }
+
+            UserProfile.Profile.InfoWorld.PosInfos = posList;
         }
 
         public static bool CanMove(int id1, int id2)

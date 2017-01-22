@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Control;
 using NarlonLib.Drawing;
@@ -57,7 +58,7 @@ namespace TaleofMonsters.MainItem.Quests
             }
             if (config.TradeFood>0)
             {
-                var foodGet = GameResourceBook.InFoodSceneQuest(config.TradeFood * multi, true);
+                var foodGet = Math.Min(100, GameResourceBook.InFoodSceneQuest(config.TradeFood * multi, true));
                 if (foodGet > 0)
                 {
                     UserProfile.Profile.InfoBasic.AddFood(foodGet);
@@ -70,7 +71,7 @@ namespace TaleofMonsters.MainItem.Quests
             }
             else if (config.TradeFood < 0)
             {
-                var foodLoss = GameResourceBook.OutFoodSceneQuest(-config.TradeFood * multi, true);
+                var foodLoss = Math.Min(100, GameResourceBook.OutFoodSceneQuest(-config.TradeFood * multi, true));
                 if (foodLoss > 0)
                 {
                     UserProfile.Profile.InfoBasic.SubFood(foodLoss);
@@ -81,7 +82,7 @@ namespace TaleofMonsters.MainItem.Quests
             }
             if (config.TradeHealth>0)
             {
-                var healthGet = GameResourceBook.InHealthSceneQuest(config.TradeHealth * multi, true);
+                var healthGet = Math.Min(100, GameResourceBook.InHealthSceneQuest(config.TradeHealth * multi, true));
                 if (healthGet > 0)
                 {
                     UserProfile.Profile.InfoBasic.AddHealth(healthGet);
@@ -94,7 +95,7 @@ namespace TaleofMonsters.MainItem.Quests
             }
             else if (config.TradeHealth < 0)
             {
-                var healthLoss = GameResourceBook.OutHealthSceneQuest(-config.TradeHealth * multi, true);
+                var healthLoss = Math.Min(100, GameResourceBook.OutHealthSceneQuest(-config.TradeHealth * multi, true));
                 if (healthLoss > 0)
                 {
                     UserProfile.Profile.InfoBasic.SubHealth(healthLoss);
@@ -105,7 +106,7 @@ namespace TaleofMonsters.MainItem.Quests
             }
             if (config.TradeMental>0)
             {
-                var mentalGet = GameResourceBook.InMentalSceneQuest(config.TradeMental * multi, true);
+                var mentalGet = Math.Min(100, GameResourceBook.InMentalSceneQuest(config.TradeMental * multi, true));
                 if (mentalGet > 0)
                 {
                     UserProfile.Profile.InfoBasic.AddMental(mentalGet);
@@ -118,7 +119,7 @@ namespace TaleofMonsters.MainItem.Quests
             }
             else if (config.TradeMental<0)
             {
-                var mentalLoss = GameResourceBook.OutMentalSceneQuest(-config.TradeMental * multi, true);
+                var mentalLoss = Math.Min(100, GameResourceBook.OutMentalSceneQuest(-config.TradeMental * multi, true));
                 if (mentalLoss > 0)
                 {
                     UserProfile.Profile.InfoBasic.SubMental(mentalLoss);
