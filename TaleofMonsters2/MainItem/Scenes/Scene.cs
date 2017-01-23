@@ -92,6 +92,7 @@ namespace TaleofMonsters.MainItem.Scenes
                 MathTool.Clamp(sceneConfig.IconY - 110, 0, 1121 - 300));
 
             UserProfile.InfoBasic.MapId = mapid;
+            UserProfile.Profile.OnSwitchScene();
             
             SystemMenuManager.ResetIconState(); //reset main icon state todo remove check
 

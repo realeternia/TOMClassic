@@ -1,67 +1,65 @@
-﻿using ConfigDatas;
+﻿using System;
+using ConfigDatas;
+using NarlonLib.Core;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType.User.Db;
 
 namespace TaleofMonsters.DataType.User
 {
     public class InfoEquip
     {
-        [FieldIndex(Index = 1)] public int[] Equipon;
+        [FieldIndex(Index = 1)] public DbEquip[] Equipon;
 
-        [FieldIndex(Index = 2)] public int[] Equipoff;
+        [FieldIndex(Index = 2)] public DbEquip[] Equipoff;
 
         public InfoEquip()
         {
-            Equipon = new int[4];
-            Equipoff = new int[60];
-        }
-
-        /// <summary>
-        /// 直接把一件装备穿上，初始阶段使用
-        /// </summary>
-        /// <param name="id"></param>
-        public void DirectAddEquipOn(int id)
-        {
-            EquipConfig equipConfig = ConfigData.GetEquipConfig(id);
-            Equipon[equipConfig.Position - 1] = id;
-            OnEquipOn(id);
+            Equipon = new DbEquip[GameConstants.EquipOnCount];
+            Equipoff = new DbEquip[GameConstants.EquipOffCount];
+            for (int i = 0; i < Equipon.Length; i++)
+                Equipon[i] = new DbEquip();
+            for (int i = 0; i < Equipoff.Length; i++)
+                Equipoff[i] = new DbEquip();
         }
         
-        public void AddEquip(int id)
+        public void AddEquip(int id, int minuteLast)
         {
             EquipConfig equipConfig = ConfigData.GetEquipConfig(id);
             MainForm.Instance.AddTip(string.Format("|获得装备-|{0}|{1}", HSTypes.I2QualityColor(equipConfig.Quality), equipConfig.Name), "White");
 
-            for (int i = 0; i < 36; i++)
+            for (int i = 0; i < GameConstants.EquipOffCount; i++)
             {
-                if (Equipoff[i] == 0)
+                if (Equipoff[i].BaseId == 0)
                 {
-                    Equipoff[i] = id;
+                    Equipoff[i].BaseId = id;
+                    Equipoff[i].Dura = equipConfig.Durable;
+                    Equipoff[i].ExpireTime = minuteLast <= 0 ? 0 : TimeTool.GetNowUnixTime() + minuteLast*60;
                     return;
                 }
             }
         }
 
-        public void DeleteEquip(int id)
-        {
-            for (int i = 0; i < 60; i++)
-            {
-                if (Equipoff[i] == id)
-                {
-                    Equipoff[i] = 0;
-                    return;
-                }
-            }
-        }
+        //public void DeleteEquip(int id)
+        //{
+        //    for (int i = 0; i < GameConstants.EquipOffCount; i++)
+        //    {
+        //        if (Equipoff[i] == id)
+        //        {
+        //            Equipoff[i] = 0;
+        //            return;
+        //        }
+        //    }
+        //}
 
         public int GetBlankEquipPos()
         {
             int i;
-            for (i = 0; i < 60; i++)
+            for (i = 0; i < GameConstants.EquipOffCount; i++)
             {
-                if (Equipoff[i] == 0)
+                if (Equipoff[i].BaseId == 0)
                     break;
             }
-            if (i == 60)//没有空格了
+            if (i == GameConstants.EquipOffCount)//没有空格了
                 return -1;
             return i;
         }
@@ -69,9 +67,9 @@ namespace TaleofMonsters.DataType.User
         public int GetEquipCount(int id)
         {
             int count = 0;
-            for (int i = 0; i < 60; i++)
+            for (int i = 0; i < GameConstants.EquipOffCount; i++)
             {
-                if (Equipoff[i] == id)
+                if (Equipoff[i].BaseId == id)
                 {
                     count++;
                 }
@@ -79,21 +77,24 @@ namespace TaleofMonsters.DataType.User
             return count;
         }
 
-        public void OnEquipOn(int id)
+        /// <summary>
+        /// 检查下装备耐久和过期情况，适当删除
+        /// </summary>
+        public void CheckExpireAndDura()
         {
-            EquipConfig equipConfig = ConfigData.GetEquipConfig(id);
-            if (equipConfig.Job > 0)
+            foreach (var equip in Equipon)
             {
-                UserProfile.InfoBasic.Job = equipConfig.Job;
+                if (equip.BaseId > 0 && equip.Dura > 0)
+                    equip.Dura--;
+                if (equip.ExpireTime > 0 && TimeTool.GetNowUnixTime() > equip.ExpireTime)
+                    equip.Reset();
             }
-        }
-
-        public void OnEquipOff(int id)
-        {
-            EquipConfig equipConfig = ConfigData.GetEquipConfig(id);
-            if (equipConfig.Job > 0)
+            foreach (var equip in Equipoff)
             {
-                UserProfile.InfoBasic.Job = JobConfig.Indexer.NewBie;//变成职业新手！
+                if (equip.BaseId > 0 && equip.Dura > 0)
+                    equip.Dura--;
+                if (equip.ExpireTime > 0 && TimeTool.GetNowUnixTime() > equip.ExpireTime)
+                    equip.Reset();
             }
         }
     }

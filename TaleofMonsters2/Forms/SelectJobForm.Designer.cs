@@ -31,6 +31,7 @@ namespace TaleofMonsters.Forms
         private void InitializeComponent()
         {
             this.bitmapButtonSelect = new NarlonLib.Control.BitmapButton();
+            this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
             this.SuspendLayout();
             // 
             // bitmapButtonSelect
@@ -52,15 +53,33 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonSelect.UseVisualStyleBackColor = true;
             this.bitmapButtonSelect.Click += new System.EventHandler(this.bitmapButtonSelect_Click);
             // 
+            // bitmapButtonClose
+            // 
+            this.bitmapButtonClose.BorderColor = System.Drawing.Color.DarkBlue;
+            this.bitmapButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bitmapButtonClose.IconImage = null;
+            this.bitmapButtonClose.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonClose.IconXY = new System.Drawing.Point(0, 0);
+            this.bitmapButtonClose.ImageNormal = null;
+            this.bitmapButtonClose.Location = new System.Drawing.Point(475, 13);
+            this.bitmapButtonClose.Name = "bitmapButtonClose";
+            this.bitmapButtonClose.NoUseDrawNine = false;
+            this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
+            this.bitmapButtonClose.TabIndex = 31;
+            this.bitmapButtonClose.TextOffX = 0;
+            this.bitmapButtonClose.UseVisualStyleBackColor = true;
+            this.bitmapButtonClose.Click += new System.EventHandler(this.bitmapButtonClose_Click);
+            // 
             // SelectJobForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.bitmapButtonClose);
             this.Controls.Add(this.bitmapButtonSelect);
             this.DoubleBuffered = true;
             this.Name = "SelectJobForm";
             this.Size = new System.Drawing.Size(513, 362);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.SkillForm_Paint);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.SelectJobForm_Paint);
             this.ResumeLayout(false);
 
         }
@@ -68,6 +87,6 @@ namespace TaleofMonsters.Forms
         #endregion
 
         private BitmapButton bitmapButtonSelect;
-
+        private BitmapButton bitmapButtonClose;
     }
 }

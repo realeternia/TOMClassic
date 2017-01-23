@@ -220,7 +220,7 @@ namespace TaleofMonsters.DataType.Tasks
                     if (taskConfig.Item[i].Value == 1)
                         user.InfoBag.AddItem(taskConfig.Item[i].Id, 1);
                     else
-                        user.InfoEquip.AddEquip(taskConfig.Item[i].Id);
+                        user.InfoEquip.AddEquip(taskConfig.Item[i].Id, 60);
                 }
             }
             user.InfoBag.AddResource(res.ToArray());

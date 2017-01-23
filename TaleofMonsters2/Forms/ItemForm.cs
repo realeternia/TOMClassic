@@ -257,10 +257,14 @@ namespace TaleofMonsters.Forms
                         IntPair thing = UserProfile.InfoBag.Items[baseid + i];
                         if (thing.Type != 0)
                         {
-                            int max = ConfigData.GetHItemConfig(thing.Type).MaxPile;
+                            var itemConfig = ConfigData.GetHItemConfig(thing.Type);
                             g.DrawImage(HItemBook.GetHItemImage(thing.Type), (i % 10) * 31.2F + 5, imul * 31.8F + 3, 30.0F, 30.0F);
                             g.DrawString(thing.Value.ToString(), font, Brushes.Black, (i % 10) * 31.2F + 8, imul * 31.8F + 14);
-                            g.DrawString(thing.Value.ToString(), font, thing.Value == max ? Brushes.Tomato : Brushes.White, (i % 10) * 31.2F + 7, imul * 31.8F + 13);
+                            g.DrawString(thing.Value.ToString(), font, thing.Value == itemConfig.MaxPile ? Brushes.Tomato : Brushes.White, (i % 10) * 31.2F + 7, imul * 31.8F + 13);
+
+                            var pen = new Pen(Color.FromName(HSTypes.I2RareColor(itemConfig.Rare)), 2);
+                            g.DrawRectangle(pen, (i % 10) * 31.2F + 5, imul * 31.8F + 3, 30.0F, 30.0F);
+                            pen.Dispose();
                         }
                     }
                     else

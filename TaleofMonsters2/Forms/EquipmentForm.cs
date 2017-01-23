@@ -13,6 +13,7 @@ using TaleofMonsters.Forms.Items.Regions;
 using ConfigDatas;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;
+using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
 using TaleofMonsters.MainItem;
 
@@ -56,18 +57,20 @@ namespace TaleofMonsters.Forms
         public EquipmentForm()
         {
             InitializeComponent();
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
+            bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
+            bitmapButtonJob.ImageNormal = PicLoader.Read("ButtonBitmap", "LearnButton.JPG");
+
             vRegion = new VirtualRegion(this);
-            var r1 = new PictureRegion(1, 413, 69, 64, 64, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipon[0]);
+            var r1 = new PictureRegion(1, 413, 69, 64, 64, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipon[0].BaseId);
             r1.AddDecorator(new RegionBorderDecorator(Color.Yellow));//头盔
             vRegion.AddRegion(r1);
-            r1 = new PictureRegion(2, 374, 151, 40, 40, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipon[1]);
+            r1 = new PictureRegion(2, 374, 151, 40, 40, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipon[1].BaseId);
             r1.AddDecorator(new RegionBorderDecorator(Color.Yellow));//武器
             vRegion.AddRegion(r1);
-            r1 = new PictureRegion(3, 425, 151, 40, 40, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipon[2]);
+            r1 = new PictureRegion(3, 425, 151, 40, 40, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipon[2].BaseId);
             r1.AddDecorator(new RegionBorderDecorator(Color.Yellow));//防具
             vRegion.AddRegion(r1);
-            r1 = new PictureRegion(4, 476, 151, 40, 40, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipon[3]);
+            r1 = new PictureRegion(4, 476, 151, 40, 40, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipon[3].BaseId);
             r1.AddDecorator(new RegionBorderDecorator(Color.Yellow));//饰品
             vRegion.AddRegion(r1);
 
@@ -79,9 +82,9 @@ namespace TaleofMonsters.Forms
             vRegion.AddRegion(new SubVirtualRegion(15, 200, 170, 46, 44));
             vRegion.AddRegion(new SubVirtualRegion(16, 253, 170, 46, 44));
 
-            for (int i = 0; i < 60; i++)
+            for (int i = 0; i < GameConstants.EquipOffCount; i++)
             {
-                var region = new PictureRegion(20 + i, 38 + (i % 15) * 32, 227 + (i / 15) * 32, 32, 32, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipoff[i]);
+                var region = new PictureRegion(20 + i, 38 + (i % 15) * 32, 227 + (i / 15) * 32, 32, 32, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipoff[i].BaseId);
              //   region.AddDecorator(new RegionBorderDecorator(region, Color.Yellow));
                 vRegion.AddRegion(region);
             }
@@ -107,6 +110,8 @@ namespace TaleofMonsters.Forms
             heroData.UpgradeToLevel(ConfigData.GetLevelExpConfig(UserProfile.Profile.InfoBasic.Level).TowerLevel);
             RefreshEquip();
             show = true;
+
+            bitmapButtonJob.Visible = UserProfile.InfoRecord.CheckFlag((uint) MemPlayerFlagTypes.SelectJob);
         }
 
         private void pictureBoxClose_Click(object sender, EventArgs e)
@@ -124,22 +129,27 @@ namespace TaleofMonsters.Forms
             Image image = null;
             if (id < 10)
             {
-                if (UserProfile.InfoEquip.Equipon[id - 1] != 0)
+                var itemId = UserProfile.InfoEquip.Equipon[id-1].BaseId;
+                if (itemId != 0)
                 {
-                    Equip equip = new Equip(UserProfile.InfoEquip.Equipon[id - 1]);
+                    Equip equip = new Equip(itemId);
+                    equip.Dura = UserProfile.InfoEquip.Equipon[id - 1].Dura;
+                    equip.ExpireTime = UserProfile.InfoEquip.Equipon[id - 1].ExpireTime;
                     image = equip.GetPreview();
                 }
             }
             else if (id < 20)
             {
-
                 image = GetAttrPreview(id-10);
             }
             else if(id>=20)
             {
-                if (UserProfile.InfoEquip.Equipoff[id - 20] != 0)
+                var itemId = UserProfile.InfoEquip.Equipoff[id - 20].BaseId;
+                if (itemId != 0)
                 {
-                    Equip equip = new Equip(UserProfile.InfoEquip.Equipoff[id - 20]);
+                    Equip equip = new Equip(itemId);
+                    equip.Dura = UserProfile.InfoEquip.Equipoff[id - 20].Dura;
+                    equip.ExpireTime = UserProfile.InfoEquip.Equipoff[id - 20].ExpireTime;
                     image = equip.GetPreview();
                 }
             }
@@ -169,7 +179,7 @@ namespace TaleofMonsters.Forms
                 {
                     if (selectTar != -1)//穿上装备
                     {
-                        EquipConfig equipConfig = ConfigData.GetEquipConfig(UserProfile.InfoEquip.Equipoff[selectTar]);
+                        EquipConfig equipConfig = ConfigData.GetEquipConfig(UserProfile.InfoEquip.Equipoff[selectTar].BaseId);
                         if (!EquipBook.CanEquip(equipConfig.Id))
                         {
                             AddFlowCenter("等级不足", "Red");
@@ -178,12 +188,11 @@ namespace TaleofMonsters.Forms
                         {
                             if (equipConfig.Position == id)
                             {
-                                int oldid = UserProfile.InfoEquip.Equipon[id - 1];
+                                var oldItem = UserProfile.InfoEquip.Equipon[id - 1];
                                 UserProfile.InfoEquip.Equipon[id - 1] = UserProfile.InfoEquip.Equipoff[selectTar];
-                                vRegion.SetRegionKey(id, UserProfile.InfoEquip.Equipon[id - 1]);
-                                UserProfile.InfoEquip.Equipoff[selectTar] = oldid;
-                                vRegion.SetRegionKey(selectTar + 20, oldid);
-                                UserProfile.InfoEquip.OnEquipOn(UserProfile.InfoEquip.Equipon[id - 1]);//触发事件
+                                vRegion.SetRegionKey(id, UserProfile.InfoEquip.Equipon[id - 1].BaseId);
+                                UserProfile.InfoEquip.Equipoff[selectTar] = oldItem;
+                                vRegion.SetRegionKey(selectTar + 20, oldItem.BaseId);
                                 RefreshEquip();
                                 selectTar = -1;
                                 myCursor.ChangeCursor("default");
@@ -196,10 +205,9 @@ namespace TaleofMonsters.Forms
                         if (i == -1)//没有空格了
                             return;
                         UserProfile.InfoEquip.Equipoff[i] = UserProfile.InfoEquip.Equipon[id - 1];
-                        vRegion.SetRegionKey(i + 20, UserProfile.InfoEquip.Equipoff[i]);
-                        UserProfile.InfoEquip.Equipon[id - 1] = 0;
+                        vRegion.SetRegionKey(i + 20, UserProfile.InfoEquip.Equipoff[i].BaseId);
+                        UserProfile.InfoEquip.Equipon[id - 1] = new DbEquip();
                         vRegion.SetRegionKey(id, 0);
-                        UserProfile.InfoEquip.OnEquipOff(UserProfile.InfoEquip.Equipoff[i]);//触发事件
                         RefreshEquip();
                     }
                 }
@@ -208,9 +216,9 @@ namespace TaleofMonsters.Forms
                     var tar = id - 20;
                     if (selectTar == -1)
                     {
-                        if (UserProfile.InfoEquip.Equipoff[tar] != 0)
+                        if (UserProfile.InfoEquip.Equipoff[tar].BaseId != 0)
                         {
-                            var icon = ConfigData.GetEquipConfig(UserProfile.InfoEquip.Equipoff[tar]).Url;
+                            var icon = ConfigData.GetEquipConfig(UserProfile.InfoEquip.Equipoff[tar].BaseId).Url;
                             myCursor.ChangeCursor("Equip", string.Format("{0}.JPG", icon), 40, 40);
                             selectTar = tar;
                             tooltip.Hide(this);
@@ -219,22 +227,22 @@ namespace TaleofMonsters.Forms
                     else
                     {
                         myCursor.ChangeCursor("default");
-                        if (UserProfile.InfoEquip.Equipoff[tar] == 0)//移动
+                        if (UserProfile.InfoEquip.Equipoff[tar].BaseId == 0)//移动
                         {
                             UserProfile.InfoEquip.Equipoff[tar] = UserProfile.InfoEquip.Equipoff[selectTar];
-                            UserProfile.InfoEquip.Equipoff[selectTar] = 0;
+                            UserProfile.InfoEquip.Equipoff[selectTar] = new DbEquip();
 
-                            vRegion.SetRegionKey(tar + 20, UserProfile.InfoEquip.Equipoff[tar]);
+                            vRegion.SetRegionKey(tar + 20, UserProfile.InfoEquip.Equipoff[tar].BaseId);
                             vRegion.SetRegionKey(selectTar + 20, 0);
                         }
                         else//交换
                         {
-                            int oldid = UserProfile.InfoEquip.Equipoff[tar];
+                            var oldItem = UserProfile.InfoEquip.Equipoff[tar];
                             UserProfile.InfoEquip.Equipoff[tar] = UserProfile.InfoEquip.Equipoff[selectTar];
-                            UserProfile.InfoEquip.Equipoff[selectTar] = oldid;
+                            UserProfile.InfoEquip.Equipoff[selectTar] = oldItem;
 
-                            vRegion.SetRegionKey(tar + 20, UserProfile.InfoEquip.Equipoff[tar]);
-                            vRegion.SetRegionKey(selectTar + 20, UserProfile.InfoEquip.Equipoff[selectTar]);
+                            vRegion.SetRegionKey(tar + 20, UserProfile.InfoEquip.Equipoff[tar].BaseId);
+                            vRegion.SetRegionKey(selectTar + 20, UserProfile.InfoEquip.Equipoff[selectTar].BaseId);
                         }
                         selectTar = -1;
                     }
@@ -250,7 +258,7 @@ namespace TaleofMonsters.Forms
 
                     popMenuEquip.Clear();
                     #region 构建菜单
-                    if (UserProfile.InfoEquip.Equipoff[tar] != 0)
+                    if (UserProfile.InfoEquip.Equipoff[tar].BaseId != 0)
                     {
                         popMenuEquip.AddItem("decompose", "分解", "Red");
                     }
@@ -266,7 +274,7 @@ namespace TaleofMonsters.Forms
 
         public void MenuRefresh(int id)
         {
-            vRegion.SetRegionKey(id + 20, UserProfile.InfoEquip.Equipoff[id]);
+            vRegion.SetRegionKey(id + 20, UserProfile.InfoEquip.Equipoff[id].BaseId);
             Invalidate();
         }
 
@@ -277,7 +285,7 @@ namespace TaleofMonsters.Forms
 
         private void RefreshEquip()
         {
-            equipDataList = EquipBook.GetEquipsList(UserProfile.InfoEquip.Equipon);
+            equipDataList = EquipBook.GetEquipsList(Array.ConvertAll(UserProfile.InfoEquip.Equipon,equip=>equip.BaseId));
             vEquip = EquipBook.GetVirtualEquips(equipDataList);
             var jobConfig = ConfigData.GetJobConfig(UserProfile.InfoBasic.Job);
             jobInfo = new JobAddon();
@@ -370,6 +378,11 @@ namespace TaleofMonsters.Forms
         private void DrawAttr(Graphics g, Font font, int totalV, int x, int y)
         {
             g.DrawString(totalV.ToString(), font, Brushes.White, GetX(g, totalV.ToString(), font, x, 45), y);
+        }
+
+        private void bitmapButtonJob_Click(object sender, EventArgs e)
+        {
+            MainForm.Instance.DealPanel(new SelectJobForm());
         }
     }
 }

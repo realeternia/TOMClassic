@@ -31,29 +31,48 @@ namespace TaleofMonsters.Forms
         private void InitializeComponent()
         {
             this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
+            this.bitmapButtonJob = new NarlonLib.Control.BitmapButton();
             this.SuspendLayout();
             // 
             // bitmapButtonClose
             // 
             this.bitmapButtonClose.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButtonClose.Image = null;
-            
-            
+            this.bitmapButtonClose.IconImage = null;
+            this.bitmapButtonClose.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonClose.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonClose.ImageNormal = null;
-            
             this.bitmapButtonClose.Location = new System.Drawing.Point(508, 6);
             this.bitmapButtonClose.Name = "bitmapButtonClose";
+            this.bitmapButtonClose.NoUseDrawNine = false;
             this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
             this.bitmapButtonClose.TabIndex = 25;
-            this.bitmapButtonClose.Text = "";
+            this.bitmapButtonClose.TextOffX = 0;
             this.bitmapButtonClose.UseVisualStyleBackColor = true;
             this.bitmapButtonClose.Click += new System.EventHandler(this.pictureBoxClose_Click);
+            // 
+            // bitmapButtonJob
+            // 
+            this.bitmapButtonJob.BorderColor = System.Drawing.Color.DarkBlue;
+            this.bitmapButtonJob.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bitmapButtonJob.IconImage = null;
+            this.bitmapButtonJob.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonJob.IconXY = new System.Drawing.Point(0, 0);
+            this.bitmapButtonJob.ImageNormal = null;
+            this.bitmapButtonJob.Location = new System.Drawing.Point(28, 189);
+            this.bitmapButtonJob.Name = "bitmapButtonJob";
+            this.bitmapButtonJob.NoUseDrawNine = false;
+            this.bitmapButtonJob.Size = new System.Drawing.Size(28, 28);
+            this.bitmapButtonJob.TabIndex = 26;
+            this.bitmapButtonJob.TextOffX = 0;
+            this.bitmapButtonJob.UseVisualStyleBackColor = true;
+            this.bitmapButtonJob.Click += new System.EventHandler(this.bitmapButtonJob_Click);
             // 
             // EquipmentForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.bitmapButtonJob);
             this.Controls.Add(this.bitmapButtonClose);
             this.DoubleBuffered = true;
             this.Name = "EquipmentForm";
@@ -66,5 +85,6 @@ namespace TaleofMonsters.Forms
         #endregion
 
         private BitmapButton bitmapButtonClose;
+        private BitmapButton bitmapButtonJob;
     }
 }

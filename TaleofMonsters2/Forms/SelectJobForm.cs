@@ -12,6 +12,7 @@ using TaleofMonsters.DataType.HeroSkills;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.Forms.Items.Core;
 using ConfigDatas;
+using TaleofMonsters.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
 using TaleofMonsters.DataType.User;
@@ -24,8 +25,8 @@ namespace TaleofMonsters.Forms
         private NLPageSelector nlPageSelector1;
         private int pageid;
         private int baseid;
-        private List<int> weaponIdList;
-        private int selectWeaponId;
+        private List<int> jobIdList;
+        private int selectJobId;
         private VirtualRegion virtualRegion;
         private ColorWordRegion jobDes;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
@@ -35,8 +36,9 @@ namespace TaleofMonsters.Forms
         public SelectJobForm()
         {
             InitializeComponent();
-            NeedBlackForm = true;
-            this.bitmapButtonSelect.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
+
+            bitmapButtonSelect.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
             bitmapButtonSelect.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             bitmapButtonSelect.ForeColor = Color.White;
             bitmapButtonSelect.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("oth2");
@@ -69,25 +71,23 @@ namespace TaleofMonsters.Forms
         internal override void Init(int width, int height)
         {
             base.Init(width, height);
-            weaponIdList = new List<int>();
-            for (int i = EquipConfig.Indexer.InitJobEquipStart; i <= EquipConfig.Indexer.InitJobEquipEnd; i++)//循环初始给的装备
+            jobIdList = new List<int>();
+            foreach (var jobConfig in ConfigData.JobDict.Values)
             {
-                EquipConfig selectEquip = ConfigData.GetEquipConfig(i);
-                JobConfig jobConfig = ConfigData.GetJobConfig(selectEquip.Job);
-                if (jobConfig.isSpecial)
+                if (jobConfig.IsSpecial)
                     continue;
-                weaponIdList.Add(i);
+                jobIdList.Add(jobConfig.Id);
             }
-            nlPageSelector1.TotalPage = (weaponIdList.Count + 7) / 8;
+            nlPageSelector1.TotalPage = (jobIdList.Count + 7) / 8;
             RefreshInfo();
         }
 
         private void RefreshInfo()
         {
             selectPanel.ClearContent();
-            for (int i = baseid; i < Math.Min(baseid + 8, weaponIdList.Count); i++)
+            for (int i = baseid; i < Math.Min(baseid + 8, jobIdList.Count); i++)
             {
-                selectPanel.AddContent(weaponIdList[i]);
+                selectPanel.AddContent(jobIdList[i]);
             }
            
             selectPanel.SelectIndex = 0;
@@ -95,64 +95,81 @@ namespace TaleofMonsters.Forms
 
         private void selectPanel_SelectedIndexChanged()
         {
-            selectWeaponId = weaponIdList[baseid + selectPanel.SelectIndex];
-            EquipConfig selectEquip = ConfigData.GetEquipConfig(selectWeaponId);
-            JobConfig jobConfig = ConfigData.GetJobConfig(selectEquip.Job);
+            selectJobId = jobIdList[baseid + selectPanel.SelectIndex];
+            JobConfig jobConfig = ConfigData.GetJobConfig(selectJobId);
             jobDes.Text = jobConfig.Des;
-            virtualRegion.SetRegionKey(1, selectEquip.SpecialSkill);
+            virtualRegion.SetRegionKey(1, jobConfig.SkillId);
             for (int i = 2; i < 5; i++)//把后面的物件都清除下
             {
                 virtualRegion.SetRegionKey(i, 0);
             }
             cellTypeList.Clear();
-            int imgIndex = 2;
-            if (jobConfig.InitialCards != null)//初始卡牌
+
+            if (!UserProfile.Profile.InfoRecord.CheckFlag((uint)MemPlayerFlagTypes.SelectJob))
             {
-                foreach (var cardId in jobConfig.InitialCards)
+#region 显示第一次选职业的奖励
+                int imgIndex = 2;
+                if (jobConfig.InitialCards != null)//初始卡牌
                 {
-                    if (cardId > 0)
+                    foreach (var cardId in jobConfig.InitialCards)
                     {
-                        virtualRegion.SetRegionType(imgIndex, PictureRegionCellType.Card);
-                        virtualRegion.SetRegionKey(imgIndex++, cardId);
-                        cellTypeList.Add(PictureRegionCellType.Card);
+                        if (cardId > 0)
+                        {
+                            virtualRegion.SetRegionType(imgIndex, PictureRegionCellType.Card);
+                            virtualRegion.SetRegionKey(imgIndex++, cardId);
+                            cellTypeList.Add(PictureRegionCellType.Card);
+                        }
                     }
                 }
-            }
-            if (jobConfig.InitialEquip != null)//初始道具
-            {
-                foreach (var eid in jobConfig.InitialEquip)
+                if (jobConfig.InitialEquip != null)//初始道具
                 {
-                    if (eid > 0)
+                    foreach (var eid in jobConfig.InitialEquip)
                     {
-                        virtualRegion.SetRegionType(imgIndex, PictureRegionCellType.Equip);
-                        virtualRegion.SetRegionKey(imgIndex++, eid);
-                        cellTypeList.Add(PictureRegionCellType.Equip);
+                        if (eid > 0)
+                        {
+                            virtualRegion.SetRegionType(imgIndex, PictureRegionCellType.Equip);
+                            virtualRegion.SetRegionKey(imgIndex++, eid);
+                            cellTypeList.Add(PictureRegionCellType.Equip);
+                        }
                     }
                 }
-            }
-            if (jobConfig.InitialEquip != null)//初始道具
-            {
-                foreach (var eid in jobConfig.InitialItem)
+                if (jobConfig.InitialEquip != null)//初始道具
                 {
-                    if (eid > 0)
+                    foreach (var eid in jobConfig.InitialItem)
                     {
-                        virtualRegion.SetRegionType(imgIndex, PictureRegionCellType.Item);
-                        virtualRegion.SetRegionKey(imgIndex++, eid);
-                        cellTypeList.Add(PictureRegionCellType.Item);
+                        if (eid > 0)
+                        {
+                            virtualRegion.SetRegionType(imgIndex, PictureRegionCellType.Item);
+                            virtualRegion.SetRegionKey(imgIndex++, eid);
+                            cellTypeList.Add(PictureRegionCellType.Item);
+                        }
                     }
                 }
+#endregion
             }
+
+            bitmapButtonSelect.Visible = !jobConfig.InitialLocked ||
+                                         UserProfile.Profile.InfoBasic.AvailJobList.Contains(selectJobId);
             Invalidate();
         }
 
         private void selectPanel_DrawCell(Graphics g, int info, int xOff, int yOff)
         {
-            var equipConfig = ConfigData.GetEquipConfig(info);
-            var img = DataType.Equips.EquipBook.GetEquipImage(info);
+            var jobConfig = ConfigData.GetJobConfig(info);
+            var img = HSIcons.GetIconsByEName("job" + jobConfig.JobIndex);
             g.DrawImage(img, 14 + xOff, 4 + yOff, 28, 28);
             Font font = new Font("微软雅黑", 11.25F*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            g.DrawString(equipConfig.Name, font, Brushes.White, 58 + xOff, 6 + yOff);
+            g.DrawString(jobConfig.Name, font, Brushes.White, 58 + xOff, 6 + yOff);
             font.Dispose();
+
+            if (jobConfig.InitialLocked && !UserProfile.Profile.InfoBasic.AvailJobList.Contains(info))
+            {
+                Brush b = new SolidBrush(Color.FromArgb(150, Color.Black));
+                g.FillRectangle(b, xOff, yOff, 154, selectPanel.ItemHeight);
+
+                var lockIcon = HSIcons.GetIconsByEName("oth4");
+                g.DrawImage(lockIcon, 65 + xOff, 6 + yOff, 24, 24);
+            }
         }
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
@@ -198,23 +215,22 @@ namespace TaleofMonsters.Forms
             return "★★★★★★★★★★".Substring(0, Math.Min(count, 9));
         }
 
-        private void SkillForm_Paint(object sender, PaintEventArgs e)
+        private void SelectJobForm_Paint(object sender, PaintEventArgs e)
         {
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
             Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString("选择武器", font, Brushes.White, Width / 2 - 40, 8);
+            e.Graphics.DrawString("选择职业", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
 
             jobDes.Draw(e.Graphics);
             virtualRegion.Draw(e.Graphics);
             
-            if (selectWeaponId > 0)
+            if (selectJobId > 0)
             {
-                var weaponConfig = ConfigData.GetEquipConfig(selectWeaponId);
-                var jobConfig = ConfigData.GetJobConfig(weaponConfig.Job);
+                var jobConfig = ConfigData.GetJobConfig(selectJobId);
                 Font font1 = new Font("宋体", 12 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-                e.Graphics.DrawString("对应职业:"+jobConfig.Name, font1, Brushes.Gold, 180, 45);
+                e.Graphics.DrawString(jobConfig.Name, font1, Brushes.Gold, 180, 45);
                 font1.Dispose();
 
                 Font fontDes = new Font("宋体", 10 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -242,15 +258,29 @@ namespace TaleofMonsters.Forms
 
         private void bitmapButtonSelect_Click(object sender, EventArgs e)
         {
-            UserProfile.InfoRecord.SetFlag((uint)MemPlayerFlagTypes.SelectJob);
-            UserProfile.InfoEquip.DirectAddEquipOn(selectWeaponId);
+            var jobConfig = ConfigData.GetJobConfig(selectJobId);
+            if (jobConfig.IsSpecial || jobConfig.InitialLocked && !UserProfile.Profile.InfoBasic.AvailJobList.Contains(selectJobId))
+                return;
 
-            #region 发放奖励
+            if (UserProfile.InfoRecord.CheckFlag((uint)MemPlayerFlagTypes.SelectJob))
+            {//转职
+                UserProfile.InfoBasic.Job = selectJobId;
+            }
+            else
+            {//第一次选职业
+                UserProfile.InfoBasic.Job = selectJobId;
+                UserProfile.InfoRecord.SetFlag((uint)MemPlayerFlagTypes.SelectJob);
+                SendJobReward();
+            }
 
-            EquipConfig selectEquip = ConfigData.GetEquipConfig(selectWeaponId);
-            JobConfig jobConfig = ConfigData.GetJobConfig(selectEquip.Job);
+            Close();
+        }
+
+        private void SendJobReward()
+        {
+            JobConfig jobConfig = ConfigData.GetJobConfig(selectJobId);
             Profile user = UserProfile.Profile;
-            if (jobConfig.InitialCards != null)//初始卡牌
+            if (jobConfig.InitialCards != null) //初始卡牌
             {
                 foreach (var cardId in jobConfig.InitialCards)
                 {
@@ -260,17 +290,17 @@ namespace TaleofMonsters.Forms
                     }
                 }
             }
-            if (jobConfig.InitialEquip != null)//初始道具
+            if (jobConfig.InitialEquip != null) //初始道具
             {
                 foreach (var eid in jobConfig.InitialEquip)
                 {
                     if (eid > 0)
                     {
-                        user.InfoEquip.AddEquip(eid);
+                        user.InfoEquip.AddEquip(eid, 60);
                     }
                 }
             }
-            if (jobConfig.InitialEquip != null)//初始道具
+            if (jobConfig.InitialEquip != null) //初始道具
             {
                 foreach (var eid in jobConfig.InitialItem)
                 {
@@ -280,9 +310,11 @@ namespace TaleofMonsters.Forms
                     }
                 }
             }
-            #endregion
-            Close();
         }
 
+        private void bitmapButtonClose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

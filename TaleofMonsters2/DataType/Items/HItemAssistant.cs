@@ -58,7 +58,7 @@ namespace TaleofMonsters.DataType.Items
                 }
                 else if (item.Type == 2)
                 {
-                    UserProfile.InfoEquip.AddEquip(item.Id);
+                    UserProfile.InfoEquip.AddEquip(item.Id, 0);
                 }
                 else if (item.Type == 3)
                 {

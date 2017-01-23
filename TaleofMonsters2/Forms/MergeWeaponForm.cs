@@ -112,7 +112,7 @@ namespace TaleofMonsters.Forms
                 UserProfile.InfoBag.DeleteItem(pairValue.Type, pairValue.Value);
             }
 
-            UserProfile.InfoEquip.AddEquip(equipConfig.Id);
+            UserProfile.InfoEquip.AddEquip(equipConfig.Id, 0);
         }
 
         private void buttonBuy_Click(object sender, EventArgs e)

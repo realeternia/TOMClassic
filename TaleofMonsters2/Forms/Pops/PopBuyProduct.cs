@@ -111,7 +111,7 @@ namespace TaleofMonsters.Forms.Pops
                 }
                 else
                 {
-                    UserProfile.InfoEquip.AddEquip(itemid);
+                    UserProfile.InfoEquip.AddEquip(itemid, 0);
                 }
 
                 Close();

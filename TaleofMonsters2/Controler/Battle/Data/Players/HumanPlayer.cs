@@ -30,7 +30,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             Cards = new ActiveCards(cd);
 
             int[] energyRate = {0, 0, 0};
-            CalculateEquipAndSkill(UserProfile.InfoEquip.Equipon, energyRate);
+            int[] equipOn = Array.ConvertAll(UserProfile.InfoEquip.Equipon, a => a.BaseId);
+            CalculateEquipAndSkill(equipOn, energyRate);
             EnergyGenerator.SetRate(energyRate, UserProfile.InfoBasic.Job);
 
             InitBase();
@@ -87,7 +88,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             
                 if (equipConfig.SpecialSkill > 0)
                 {
-                    HeroSkillList.Add(equipConfig.SpecialSkill);
+                    HeroSkillList.Add(equipConfig.SpecialSkill); //添加装备附带的技能
                 }
             }
             State.UpdateAttr(addon.Atk, addon.Hp);

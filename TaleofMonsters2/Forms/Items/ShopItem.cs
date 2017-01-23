@@ -121,7 +121,7 @@ namespace TaleofMonsters.Forms.Items
             }
             else if (itemType == 2)
             {
-                UserProfile.InfoEquip.AddEquip(itemId);
+                UserProfile.InfoEquip.AddEquip(itemId, 0);
             }
         }
 

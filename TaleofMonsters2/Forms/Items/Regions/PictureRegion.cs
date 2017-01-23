@@ -45,6 +45,13 @@ namespace TaleofMonsters.Forms.Items.Regions
                 else if (type == PictureRegionCellType.Equip)
                 {
                     img = DataType.Equips.EquipBook.GetEquipImage(nid);
+                    action = () =>
+                    {
+                        var equipConfig = ConfigData.GetEquipConfig(nid);
+                        var pen = new Pen(Color.FromName(HSTypes.I2QualityColor(equipConfig.Quality)), 2);
+                        g.DrawRectangle(pen, X, Y, Width, Height);
+                        pen.Dispose();
+                    };
                 }
                 else if (type == PictureRegionCellType.Card)
                 {

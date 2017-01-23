@@ -2,22 +2,25 @@
 using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.HeroSkills;
-using TaleofMonsters.DataType.User;
 using System.Drawing;
+using NarlonLib.Core;
 
 namespace TaleofMonsters.DataType.Equips
 {
     internal class Equip
     {
-        public int TemplateId;//装备的id
+        public int TemplateId { get; set; }//装备的id
         private const int AttrFactor = 10;//相当于装备属性是怪属性的10%
 
-        public int Atk;//实际的攻击力
-        public int Hp;
+        public int Atk { get; set; }//实际的攻击力
+        public int Hp { get; set; }
 
-        public int LpRate;
-        public int PpRate;
-        public int MpRate;
+        public int LpRate { get; set; }
+        public int PpRate { get; set; }
+        public int MpRate { get; set; }
+
+        public int Dura { get; set; } //实际的耐久值
+        public int ExpireTime { get; set; } //过期时间
 
         public Equip()
         {
@@ -77,13 +80,6 @@ namespace TaleofMonsters.DataType.Equips
                 EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(TowerAttrs.Hp + 1));
                 tipData.AddTextNewLine(string.Format(eAddon.Format, Hp), HSTypes.I2EaddonColor(eAddon.Rare));
             }
-
-            if (equipConfig.Job > 0)//转换职业
-            {
-                tipData.AddLine();
-                var jobConfig = ConfigData.GetJobConfig(equipConfig.Job);
-                tipData.AddTextNewLine(string.Format("转职: {0}", jobConfig.Name), "Pink");
-            }
           
             if (equipConfig.EnergyRate[0] !=0|| equipConfig.EnergyRate[1] !=0|| equipConfig.EnergyRate[2] != 0)
             {
@@ -114,7 +110,26 @@ namespace TaleofMonsters.DataType.Equips
                 }
             }
             tipData.AddLine();
-            tipData.AddTextNewLine(string.Format("需要等级:{0}", equipConfig.LvNeed), UserProfile.InfoBasic.Level < equipConfig.LvNeed ? "Red" : "Gray");
+            if (Dura > 0)//实例化了
+            {
+                tipData.AddTextNewLine(string.Format("耐久:{0}/{1}", Dura, equipConfig.Durable), "White");
+            }
+            else
+            {
+                tipData.AddTextNewLine(string.Format("最大耐久:{0}", equipConfig.Durable), "White");
+            }
+            if (ExpireTime > 0)//存在过期
+            {
+                var expireTime = TimeTool.UnixTimeToDateTime(ExpireTime);
+                if (DateTime.Now >= expireTime.AddSeconds(-60))
+                    tipData.AddTextNewLine("即将过期", "Red");
+                else
+                {
+                    var timeDiffer = expireTime - DateTime.Now;
+                    tipData.AddTextNewLine(string.Format("过期:{0}天{1}时{2}分", timeDiffer.Days, timeDiffer.Hours, timeDiffer.Minutes), "White");
+                }
+            }
+            tipData.AddLine();
             tipData.AddTextNewLine(string.Format("出售价格:{0}", equipConfig.Value), "Yellow");
             tipData.AddImage(HSIcons.GetIconsByEName("res1"));
             tipData.AddImageXY(EquipBook.GetEquipImage(TemplateId), 8, 8, 48, 48, 7, 24, 32, 32);

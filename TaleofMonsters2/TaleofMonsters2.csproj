@@ -155,6 +155,7 @@
     <Compile Include="Controler\World\WorldInfoManager.cs" />
     <Compile Include="DataType\Drops\DropBook.cs" />
     <Compile Include="DataType\Peoples\PeopleFightReason.cs" />
+    <Compile Include="DataType\User\Db\DbEquip.cs" />
     <Compile Include="DataType\User\Db\DbDeckCard.cs" />
     <Compile Include="DataType\User\Db\DbSceneSpecialPosData.cs" />
     <Compile Include="Forms\Items\Regions\ComplexRegion.cs" />

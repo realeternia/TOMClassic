@@ -119,6 +119,8 @@ namespace TaleofMonsters.Controler.Battle
             }
             show = true;
             Reward();
+
+            UserProfile.Profile.InfoEquip.CheckExpireAndDura();
         }
 
         private void Reward()

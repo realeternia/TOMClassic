@@ -115,6 +115,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             Mp = 3;
             Pp = 3;
             EnergyGenerator.Next(0);
+
+            var jobConfig = ConfigData.GetJobConfig(Job);
+            if (jobConfig.SkillId > 0)
+            {
+                HeroSkillList.Add(jobConfig.SkillId);//添加职业技能
+            }
         }
 
         public void Update(bool isFast, float pastRound, int round)

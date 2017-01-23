@@ -175,6 +175,11 @@ namespace TaleofMonsters.DataType.User
             InfoBasic.LastLoginTime = TimeTool.DateTimeToUnixTime(DateTime.Now);
         }
 
+        public void OnSwitchScene()
+        {
+            InfoEquip.CheckExpireAndDura();
+        }
+
         public void OnNewDay()
         {
             UserProfile.Profile.InfoMinigame.Clear();

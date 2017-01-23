@@ -87,6 +87,7 @@ namespace TaleofMonsters.Core
             register.Register(typeof(InfoAchieve), 6);
             register.Register(typeof(InfoEquip), 7);
             register.Register(typeof(DbFarmState), 8);
+            register.Register(typeof(DbEquip), 9);
             register.Register(typeof(DbCardProduct), 10);
             register.Register(typeof(InfoMinigame), 11);
             register.Register(typeof(InfoSkill), 12);

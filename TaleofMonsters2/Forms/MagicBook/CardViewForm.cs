@@ -95,7 +95,7 @@ namespace TaleofMonsters.Forms.MagicBook
                     comboBoxValue.Items.Add("全部");
                     foreach (var configData in ConfigData.JobDict.Values)
                     {
-                        if (!configData.isSpecial)
+                        if (!configData.IsSpecial)
                             comboBoxValue.Items.Add(configData.Color +"|"+ configData.Name);
                     } break;
                 case "元素":

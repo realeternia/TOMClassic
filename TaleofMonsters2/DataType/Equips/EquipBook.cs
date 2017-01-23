@@ -25,9 +25,6 @@ namespace TaleofMonsters.DataType.Equips
             List<int> datas = new List<int>();
             foreach (var equipConfig in ConfigData.EquipDict.Values)
             {
-                if (equipConfig.LvNeed > level + 5 || equipConfig.LvNeed < level - 5)
-                    continue;
-
                 datas.Add(equipConfig.Id);//返回所有
             }
             return datas.ToArray();
@@ -35,13 +32,6 @@ namespace TaleofMonsters.DataType.Equips
 
         public static bool CanEquip(int id)
         {
-            EquipConfig equipConfig = ConfigData.GetEquipConfig(id);
-
-            if (UserProfile.InfoBasic.Level < equipConfig.LvNeed)
-            {
-                return false;
-            }
-
             return true;
         }
 

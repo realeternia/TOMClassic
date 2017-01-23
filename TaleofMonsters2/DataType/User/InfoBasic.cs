@@ -1,4 +1,5 @@
-﻿using ConfigDatas;
+﻿using System.Collections.Generic;
+using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Achieves;
 using TaleofMonsters.DataType.Others;
@@ -21,6 +22,7 @@ namespace TaleofMonsters.DataType.User
         [FieldIndex(Index = 23)] public int Position;
         [FieldIndex(Index = 24)] public uint HealthPoint; //健康度
         [FieldIndex(Index = 25)] public uint MentalPoint; //精神
+        [FieldIndex(Index = 26)] public List<int> AvailJobList = new List<int>(); //解锁职业列表
 
         public void AddExp(int ex)
         {
