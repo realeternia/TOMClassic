@@ -9,27 +9,21 @@ namespace TaleofMonsters.DataType.User.Db
         [FieldIndex(Index = 1)]
         public int Target;//武器id
         [FieldIndex(Index =2)]
-        public List<List<IntPair>> Methods;//公式
+        public List<IntPair> Methods;//公式
 
         public DbMergeData()
         {
-            Methods = new List<List<IntPair>>();
+            Methods = new List<IntPair>();
         }
 
-        public void Add(List<IntPair> mthd)
+        public void Set(List<IntPair> mthd)
         {
-            Methods.Add(mthd);
+            Methods = mthd;
         }
 
         public int Count
         {
             get { return Methods.Count; }
-        }
-
-        public List<IntPair> this[int index]
-        {
-            get { return Methods[index]; }
-            set { Methods[index] = value; }
         }
     }
 

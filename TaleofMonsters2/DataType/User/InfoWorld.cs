@@ -236,7 +236,7 @@ namespace TaleofMonsters.DataType.User
         public DbMergeData[] GetAllMergeData()
         {
             int time = TimeTool.DateTimeToUnixTime(DateTime.Now);
-            if (MergeMethods == null || UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastMergeTime) < time - GameConstants.MergeWeaponDura)
+           // if (MergeMethods == null || UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastMergeTime) < time - GameConstants.MergeWeaponDura)
             {
                 int[] ids = EquipBook.GetCanMergeId(UserProfile.InfoBasic.Level);
                 List<int> newids = new List<int>(ids);
@@ -257,12 +257,10 @@ namespace TaleofMonsters.DataType.User
             EquipConfig equipConfig = ConfigData.GetEquipConfig(mid);
             DbMergeData mthds = new DbMergeData();
             mthds.Target = mid;
-            int mcount = GetMethodCount(equipConfig.Quality);
-            for (int i = 0; i < mcount; i++)
             {
                 List<IntPair> mthd = new List<IntPair>();
                 int icount = GetItemCount(equipConfig.Level);
-                int itrare = MathTool.GetRandom(Math.Max(1, equipConfig.Quality*2-1), equipConfig.Quality*2+1);//第一个素材品质和装备品质挂钩
+                int itrare = MathTool.GetRandom(Math.Max(1, equipConfig.Quality * 2 - 1), equipConfig.Quality * 2 + 1);//第一个素材品质和装备品质挂钩
                 Dictionary<int, bool> existFormula = new Dictionary<int, bool>();
                 for (int j = 0; j < icount; j++)
                 {
@@ -289,32 +287,18 @@ namespace TaleofMonsters.DataType.User
                     }
                 }
 
-                mthds.Add(mthd);
+                mthds.Set(mthd);
             }
             return mthds;
         }
 
-        private int GetMethodCount(int quality)
-        {
-            int rt = 0;
-            switch (quality)
-            {
-                case EquipQualityTypes.Common: rt = 1; break;
-                case EquipQualityTypes.Good: rt = 1; break;
-                case EquipQualityTypes.Excel: rt = 2; break;
-                case EquipQualityTypes.Epic: rt = 2; break;
-                case EquipQualityTypes.Legend: rt = 2; break;
-            }
-            return rt;
-        }
-
         private int GetItemCount(int elevel)
         {
-            if (elevel < 10)
+            if (elevel < 3)
             {
                 return 2;
             }
-            if (elevel < 18)
+            if (elevel < 5)
             {
                 return 3;
             }
@@ -325,7 +309,7 @@ namespace TaleofMonsters.DataType.User
         private int GetItemCountByEquipLevel(int elevel, int rare)
         {
             int[] levelp = { 1, 2, 3, 4, 6, 10, 14, 20 };
-            return elevel*MathTool.GetRandom(8, 12)/10/levelp[rare];
+            return elevel*2*MathTool.GetRandom(8, 12)/10/levelp[rare];
         }
 
         public void UpdatePosEnable(int id, bool isEnable)

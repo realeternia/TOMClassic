@@ -20,7 +20,6 @@ namespace TaleofMonsters.Forms
 {
     internal sealed partial class MergeWeaponForm : BasePanel
     {
-        private int targetMethodId;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
         private VirtualRegion virtualRegion;
         private int[] itemCounts;
@@ -75,8 +74,6 @@ namespace TaleofMonsters.Forms
 
         private void selectPanel_SelectedIndexChanged()
         {
-            targetMethodId = 0;
-
             UpdateMethod();
         }
 
@@ -95,24 +92,17 @@ namespace TaleofMonsters.Forms
             font.Dispose();
         }
 
-        private void buttonChange_Click(object sender, EventArgs e)
-        {
-            targetMethodId = (targetMethodId + 1) % currentInfo.Count;
-
-            UpdateMethod();
-        }
-
-        private void DoMerge(int index)
+        private void DoMerge()
         {
             EquipConfig equipConfig = ConfigData.GetEquipConfig(currentInfo.Target);
 
             UserProfile.InfoBag.SubResource(GameResourceType.Stone, GameResourceBook.OutStoneMerge(equipConfig.Quality + 1, equipConfig.Level));
-            foreach (IntPair pairValue in currentInfo[index])
+            foreach (IntPair pairValue in currentInfo.Methods)
             {
                 UserProfile.InfoBag.DeleteItem(pairValue.Type, pairValue.Value);
             }
 
-            UserProfile.InfoEquip.AddEquip(equipConfig.Id, 0);
+            UserProfile.InfoEquip.AddEquip(equipConfig.Id, 60*3);
         }
 
         private void buttonBuy_Click(object sender, EventArgs e)
@@ -121,7 +111,7 @@ namespace TaleofMonsters.Forms
                 return;
 
             EquipConfig equipConfig = ConfigData.GetEquipConfig(currentInfo.Target);
-            foreach (IntPair pairValue in currentInfo[targetMethodId])
+            foreach (IntPair pairValue in currentInfo.Methods)
             {
                 if (UserProfile.InfoBag.GetItemCount(pairValue.Type) < pairValue.Value)
                 {
@@ -135,7 +125,7 @@ namespace TaleofMonsters.Forms
                 return;
             }
 
-            DoMerge(targetMethodId);
+            DoMerge();
             UpdateMethod();
         }
 
@@ -161,7 +151,7 @@ namespace TaleofMonsters.Forms
             itemCounts[0] = UserProfile.InfoEquip.GetEquipCount(equipConfig.Id);
 
             int index = 1;
-            foreach (IntPair pair in currentInfo[targetMethodId])
+            foreach (IntPair pair in currentInfo.Methods)
             {
                 virtualRegion.SetRegionKey(index+1, pair.Type);
                 itemCounts[index] = UserProfile.InfoBag.GetItemCount(pair.Type);
@@ -234,7 +224,7 @@ namespace TaleofMonsters.Forms
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
             Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString(" 合成 ", font, Brushes.White, Width / 2 - 40, 8);
+            e.Graphics.DrawString(" 锻造 ", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
 
             if (currentInfo == null)
@@ -257,7 +247,7 @@ namespace TaleofMonsters.Forms
 
             int[] imgOff = {200,410,270,340};
             int index = 1;
-            foreach (var pair in currentInfo[targetMethodId])
+            foreach (var pair in currentInfo.Methods)
             {
                 var imgOffX = imgOff[index - 1];
                 Brush brush = new SolidBrush(Color.FromName(HSTypes.I2RareColor(ConfigData.GetHItemConfig(pair.Type).Rare)));

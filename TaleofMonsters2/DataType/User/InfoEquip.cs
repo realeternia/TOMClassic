@@ -80,19 +80,23 @@ namespace TaleofMonsters.DataType.User
         /// <summary>
         /// 检查下装备耐久和过期情况，适当删除
         /// </summary>
-        public void CheckExpireAndDura()
+        public void CheckExpireAndDura(bool checkOnly)
         {
             foreach (var equip in Equipon)
             {
-                if (equip.BaseId > 0 && equip.Dura > 0)
+                if (!checkOnly && equip.BaseId > 0 && equip.Dura > 0)
                     equip.Dura--;
+                if (equip.BaseId > 0 && equip.Dura == 0)
+                    equip.Reset();
                 if (equip.ExpireTime > 0 && TimeTool.GetNowUnixTime() > equip.ExpireTime)
                     equip.Reset();
             }
             foreach (var equip in Equipoff)
             {
-                if (equip.BaseId > 0 && equip.Dura > 0)
+                if (!checkOnly && equip.BaseId > 0 && equip.Dura > 0)
                     equip.Dura--;
+                if (equip.BaseId > 0 && equip.Dura == 0)
+                    equip.Reset();
                 if (equip.ExpireTime > 0 && TimeTool.GetNowUnixTime() > equip.ExpireTime)
                     equip.Reset();
             }

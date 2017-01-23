@@ -41,6 +41,11 @@ namespace TaleofMonsters.Controler.GM
                             res.Gold = int.Parse(data[1]);
                             UserProfile.InfoBag.AddResource(res.ToArray());
                         } break;
+                    case "res": if (data.Length == 2)
+                    {
+                        int v = int.Parse(data[1]);
+                            UserProfile.InfoBag.AddResource(new int[] { 0, v, v, v, v, v, v });
+                        } break;
                     case "dmd": if (data.Length == 2) UserProfile.InfoBag.AddDiamond(int.Parse(data[1])); break;
                     case "tsk": if (data.Length == 2) UserProfile.InfoTask.BeginTask(int.Parse(data[1])); break;
                     case "acv": if (data.Length == 2) UserProfile.Profile.InfoAchieve.SetAchieve(int.Parse(data[1])); break;

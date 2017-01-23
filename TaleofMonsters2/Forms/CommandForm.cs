@@ -69,6 +69,11 @@ namespace TaleofMonsters.Forms
                 cmd = "gold";
                 hint = "获得黄金[p1]";
             }
+            if (textBoxTitle.Text.Contains("res"))
+            {
+                cmd = "res";
+                hint = "获得资源[p1]";
+            }
             if (textBoxTitle.Text.Contains("dmd"))
             {
                 cmd = "dmd";

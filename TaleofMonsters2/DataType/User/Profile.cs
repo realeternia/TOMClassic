@@ -177,7 +177,7 @@ namespace TaleofMonsters.DataType.User
 
         public void OnSwitchScene()
         {
-            InfoEquip.CheckExpireAndDura();
+            InfoEquip.CheckExpireAndDura(true);
         }
 
         public void OnNewDay()

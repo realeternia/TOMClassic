@@ -161,6 +161,13 @@
     <Compile Include="Forms\Items\Regions\ComplexRegion.cs" />
     <Compile Include="Forms\Items\Regions\Decorators\RegionCoverDecorator.cs" />
     <Compile Include="Forms\Items\Regions\ImageRegion.cs" />
+    <Compile Include="Forms\EquipComposeForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\EquipComposeForm.Designer.cs">
+      <DependentUpon>EquipComposeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Items\EquipComposeItem.cs" />
     <Compile Include="MainItem\Quests\TalkEventItem.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemEnd.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemNpc.cs" />
@@ -857,6 +864,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CardBagForm.resx">
       <DependentUpon>CardBagForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EquipComposeForm.resx">
+      <DependentUpon>EquipComposeForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">

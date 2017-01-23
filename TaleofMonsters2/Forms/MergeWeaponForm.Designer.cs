@@ -32,7 +32,6 @@ namespace TaleofMonsters.Forms
         {
             this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.buttonChange = new System.Windows.Forms.Button();
             this.buttonBuy = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -57,21 +56,6 @@ namespace TaleofMonsters.Forms
             // 
             this.columnHeader1.Width = 130;
             // 
-            // buttonChange
-            // 
-            this.buttonChange.BackColor = System.Drawing.Color.DarkBlue;
-            this.buttonChange.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonChange.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonChange.Font = new System.Drawing.Font("微软雅黑", 13.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.buttonChange.ForeColor = System.Drawing.Color.Lime;
-            this.buttonChange.Location = new System.Drawing.Point(295, 210);
-            this.buttonChange.Name = "buttonChange";
-            this.buttonChange.Size = new System.Drawing.Size(62, 26);
-            this.buttonChange.TabIndex = 31;
-            this.buttonChange.Text = "切换";
-            this.buttonChange.UseVisualStyleBackColor = false;
-            this.buttonChange.Click += new System.EventHandler(this.buttonChange_Click);
-            // 
             // buttonBuy
             // 
             this.buttonBuy.BackColor = System.Drawing.Color.DarkBlue;
@@ -91,7 +75,6 @@ namespace TaleofMonsters.Forms
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
-            this.Controls.Add(this.buttonChange);
             this.Controls.Add(this.buttonBuy);
             this.Controls.Add(this.bitmapButtonClose);
             this.DoubleBuffered = true;
@@ -106,7 +89,6 @@ namespace TaleofMonsters.Forms
 
         private BitmapButton bitmapButtonClose;
         private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.Button buttonChange;
         private System.Windows.Forms.Button buttonBuy;
     }
 }
