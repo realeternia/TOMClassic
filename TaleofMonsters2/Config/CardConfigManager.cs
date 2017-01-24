@@ -294,7 +294,7 @@ namespace TaleofMonsters.Config
 
             foreach (var cardConfigData in cardConfigDataDict.Values)
             {
-                var cardType = (int)CardAssistant.GetCardType(cardConfigData.Id);
+                var cardType = (int)ConfigIdManager.GetCardType(cardConfigData.Id);
                 if (!cardConfigData.IsSpecial)
                 {
                     typeCardDict[cardType].Add(cardConfigData.Id, cardConfigData.Quality);

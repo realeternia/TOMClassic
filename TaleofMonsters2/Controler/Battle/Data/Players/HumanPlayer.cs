@@ -77,7 +77,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         private void CalculateEquipAndSkill(int[] equipids, int[] energyData)
         {
             var equipList = EquipBook.GetEquipsList(equipids);
-            var addon = EquipBook.GetVirtualEquips(equipList);
             foreach (var equip in equipList)
             {
                 EquipConfig equipConfig = ConfigData.GetEquipConfig(equip.TemplateId);
@@ -86,13 +85,14 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                     energyData[i] += equipConfig.EnergyRate[i];
                 }
             
-                if (equipConfig.SpecialSkill > 0)
+                if (equipConfig.HeroSkillId > 0)
                 {
-                    HeroSkillList.Add(equipConfig.SpecialSkill); //添加装备附带的技能
+                    HeroSkillList.Add(equipConfig.HeroSkillId); //添加装备附带的技能
                 }
             }
-            State.UpdateAttr(addon.Atk, addon.Hp);
-            State.UpdateSkills(new int[0], new int[0]);
+
+            var addon = EquipBook.GetVirtualEquips(equipList);
+            State.UpdateAttr(addon);
         }
     }
 }

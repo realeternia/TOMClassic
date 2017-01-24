@@ -7,6 +7,7 @@ using ControlPlus;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.MainItem.Scenes;
@@ -200,7 +201,7 @@ namespace TaleofMonsters.Forms
                         e.Graphics.DrawImage(image, destRect2, 0, 0, width, height, GraphicsUnit.Pixel);
                         image.Dispose();
 
-                        image = SceneManager.GetPreview(mapIconConfig.Id);
+                        image = GetPreview(mapIconConfig.Id);
                         int tx = x - baseX + width;
                         if (tx > 750 - image.Width)
                         {
@@ -219,5 +220,34 @@ namespace TaleofMonsters.Forms
             }
         }
 
+        private static Image GetPreview(int id)
+        {
+            SceneConfig sceneConfig = ConfigData.GetSceneConfig(id);
+
+            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+            tipData.AddTextNewLine(sceneConfig.Name, "Lime", 20);
+            tipData.AddTextNewLine(string.Format("地图等级: {0}", sceneConfig.Level), "White");
+
+            string[] icons = SceneBook.GetNPCIconsOnMap(id);
+            if (icons.Length > 0)
+            {
+                tipData.AddTextNewLine("设施", "Green");
+                foreach (string icon in icons)
+                {
+                    tipData.AddImage(HSIcons.GetIconsByEName(icon));
+                }
+            }
+
+            if (sceneConfig.Func != "")
+            {
+                tipData.AddTextNewLine("特色", "Pink");
+                string[] funcs = sceneConfig.Func.Split(';');
+                foreach (string fun in funcs)
+                {
+                    tipData.AddImage(HSIcons.GetIconsByEName(string.Format("npc{0}", fun.ToLower())));
+                }
+            }
+            return tipData.Image;
+        }
     }
 }

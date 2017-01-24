@@ -3,7 +3,6 @@ using System.Drawing;
 using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
-using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.DataType.Equips
 {
@@ -59,6 +58,8 @@ namespace TaleofMonsters.DataType.Equips
             {
                 vEquip.Atk += equip.Atk;
                 vEquip.Hp += equip.Hp;
+                vEquip.Spd += equip.Spd;
+                vEquip.Range += equip.Range;
                 vEquip.MpRate += equip.MpRate;
                 vEquip.PpRate += equip.PpRate;
                 vEquip.LpRate += equip.LpRate;

@@ -6,7 +6,6 @@ using NarlonLib.Math;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.World;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Cards.Spells;
 using TaleofMonsters.DataType.Cards.Weapons;
@@ -31,7 +30,7 @@ namespace TaleofMonsters.DataType.User
         [FieldIndex(Index = 6)]
         public List<DbMergeData> MergeMethods;
         [FieldIndex(Index = 7)]
-        public List<DbSceneSpecialPosData> PosInfos;
+        public List<DbSceneSpecialPosData> PosInfos; //记录当前场景随机后的格子信息
 
 
         public InfoWorld()
@@ -56,7 +55,7 @@ namespace TaleofMonsters.DataType.User
             List<DbCardProduct> pros = new List<DbCardProduct>();
             foreach (DbCardProduct cardProduct in CardProducts)
             {
-                if (CardAssistant.GetCardType(cardProduct.Cid) == type)
+                if (ConfigIdManager.GetCardType(cardProduct.Cid) == type)
                     pros.Add(cardProduct);
             }
 
@@ -236,7 +235,7 @@ namespace TaleofMonsters.DataType.User
         public DbMergeData[] GetAllMergeData()
         {
             int time = TimeTool.DateTimeToUnixTime(DateTime.Now);
-           // if (MergeMethods == null || UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastMergeTime) < time - GameConstants.MergeWeaponDura)
+            if (MergeMethods == null || UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastMergeTime) < time - GameConstants.MergeWeaponDura)
             {
                 int[] ids = EquipBook.GetCanMergeId(UserProfile.InfoBasic.Level);
                 List<int> newids = new List<int>(ids);

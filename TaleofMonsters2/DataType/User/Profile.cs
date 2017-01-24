@@ -132,6 +132,25 @@ namespace TaleofMonsters.DataType.User
             return 0;
         }
 
+        public void OnCreate(int constellation, int bldType, int headId)
+        {
+            Pid = WorldInfoManager.GetPlayerPid();
+            Name = UserProfile.ProfileName;
+            InfoBasic.Job = JobConfig.Indexer.NewBie;
+            InfoBasic.Constellation = constellation + 1;
+            InfoBasic.BloodType = bldType + 1;
+            InfoBasic.Face = headId;
+            InfoBasic.Level = 1;
+            InfoBasic.MapId = SceneConfig.Indexer.BornMapId;
+            InfoBasic.Position = 1001;
+            InfoBasic.HealthPoint = 100;
+            InfoBasic.MentalPoint = 100;
+            InfoBasic.FoodPoint = 100;
+            InfoBag.BagCount = 50;
+            InfoEquip.AddEquipCompose(21200101);
+            InfoEquip.AddEquipCompose(21300101);
+        }
+
         public void OnKillMonster(int tlevel, int trace, int ttype)
         {
             InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalKillByType + ttype, 1);

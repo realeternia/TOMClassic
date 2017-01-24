@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using NarlonLib.Control;
 using NarlonLib.Drawing;
+using TaleofMonsters.Config;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Drops;
 using TaleofMonsters.DataType.Items;
@@ -101,9 +102,20 @@ namespace TaleofMonsters.MainItem.Quests
             {
                 if (config.RewardItem > 0)
                 {
-                    UserProfile.InfoBag.AddItem(config.RewardItem, 1);
-                    vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25, 60, 60,
-                        PictureRegionCellType.Item, config.RewardItem));
+                    var isEquip = ConfigIdManager.IsEquip(config.RewardItem);
+                    if (isEquip)
+                    {
+                        UserProfile.InfoEquip.AddEquip(config.RewardItem, 60);
+                        vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25, 60, 60,
+                            PictureRegionCellType.Equip, config.RewardItem));
+                    }
+                    else
+                    {
+                        UserProfile.InfoBag.AddItem(config.RewardItem, 1);
+                        vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25, 60, 60,
+                            PictureRegionCellType.Item, config.RewardItem));
+                    }
+             
                     index++;
                 }
                 if (config.RewardDrop > 0)
@@ -111,9 +123,19 @@ namespace TaleofMonsters.MainItem.Quests
                     var itemList = DropBook.GetDropItemList(config.RewardDrop);
                     foreach (var itemId in itemList)
                     {
-                        UserProfile.InfoBag.AddItem(itemId, 1);
-                        vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25, 60, 60,
-                            PictureRegionCellType.Item, itemId));
+                        var isEquip = ConfigIdManager.IsEquip(config.RewardItem);
+                        if (isEquip)
+                        {
+                            UserProfile.InfoEquip.AddEquip(itemId, 60);
+                            vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25,
+                                60, 60, PictureRegionCellType.Equip, itemId));
+                        }
+                        else
+                        {
+                            UserProfile.InfoBag.AddItem(itemId, 1);
+                            vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25,
+                                60, 60, PictureRegionCellType.Item, itemId));
+                        }
                         index++;
                     }
                 }

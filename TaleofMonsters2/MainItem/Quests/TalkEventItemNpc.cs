@@ -21,6 +21,10 @@ namespace TaleofMonsters.MainItem.Quests
             {
                 MainForm.Instance.DealPanel(new SelectJobForm());
             }
+            else if (e.ParamList[0] == "merge")
+            {
+                MainForm.Instance.DealPanel(new MergeWeaponForm());
+            }
         }
 
         public override void OnFrame(int tick)

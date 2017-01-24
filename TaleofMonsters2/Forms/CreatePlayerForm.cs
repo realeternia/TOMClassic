@@ -6,7 +6,6 @@ using NarlonLib.Control;
 using NarlonLib.Drawing;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.Controler.World;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.Decks;
@@ -87,19 +86,7 @@ namespace TaleofMonsters.Forms
         private Profile CreateProfile()
         {
             Profile profile = new Profile();
-            profile.Pid = WorldInfoManager.GetPlayerPid();
-            profile.Name = UserProfile.ProfileName;
-            profile.InfoBasic.Job = JobConfig.Indexer.NewBie;
-            profile.InfoBasic.Constellation = constellation + 1;
-            profile.InfoBasic.BloodType = bldType + 1;
-            profile.InfoBasic.Face = headId;
-            profile.InfoBasic.Level = 1;
-            profile.InfoBasic.MapId = SceneConfig.Indexer.BornMapId;
-            profile.InfoBasic.Position = 1001;
-            profile.InfoBasic.HealthPoint = 100;
-            profile.InfoBasic.MentalPoint = 100;
-            profile.InfoBasic.FoodPoint = 100;
-            profile.InfoBag.BagCount = 50;
+            profile.OnCreate(constellation, bldType, headId);
             return profile;
         }
 

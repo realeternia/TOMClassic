@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using ConfigDatas;
 using NarlonLib.Math;
@@ -203,8 +202,16 @@ namespace TaleofMonsters.MainItem.Scenes
         {
             var config = ConfigData.GetSceneConfig(mapId);
             List<RLIdValue> datas = new List<RLIdValue>();
-            for (int i = 0; i < config.Quest.Count; i++)
-                datas.Add(config.Quest[i]);
+            if (!string.IsNullOrEmpty(config.Quest))
+            {
+                string[] infos = config.Quest.Split('|');
+                foreach (var info in infos)
+                {
+                    string[] questData = info.Split(';');
+                    datas.Add(new RLIdValue { Id = SceneBook.GetSceneQuestByName(questData[0]),
+                        Value = int.Parse(questData[1]) });
+                }
+            }
             if (config.QPortal > 0)//地磁反转
                 datas.Add(new RLIdValue { Id = 42000002, Value = config.QPortal });
             if (config.QCardChange > 0)//卡牌商人
@@ -274,34 +281,5 @@ namespace TaleofMonsters.MainItem.Scenes
             return tabCount;
         }
 
-        public static Image GetPreview(int id)
-        {
-            SceneConfig sceneConfig = ConfigData.GetSceneConfig(id);
-
-            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
-            tipData.AddTextNewLine(sceneConfig.Name, "Lime", 20);
-            tipData.AddTextNewLine(string.Format("地图等级: {0}", sceneConfig.Level), "White");
-
-            string[] icons = SceneBook.GetNPCIconsOnMap(id);
-            if (icons.Length > 0)
-            {
-                tipData.AddTextNewLine("设施", "Green");
-                foreach (string icon in icons)
-                {
-                    tipData.AddImage(HSIcons.GetIconsByEName(icon));
-                }
-            }
-
-            if (sceneConfig.Func != "")
-            {
-                tipData.AddTextNewLine("特色", "Pink");
-                string[] funcs = sceneConfig.Func.Split(';');
-                foreach (string fun in funcs)
-                {
-                    tipData.AddImage(HSIcons.GetIconsByEName(string.Format("npc{0}", fun.ToLower())));
-                }
-            }
-            return tipData.Image;
-        }
     }
 }

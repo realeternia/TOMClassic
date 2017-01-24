@@ -51,7 +51,7 @@ namespace TaleofMonsters.DataType.Cards
 
         public static Image GetCardImage(int cid, int width, int height)
         {
-            switch (GetCardType(cid))
+            switch (ConfigIdManager.GetCardType(cid))
             {
                 case CardTypes.Monster: return MonsterBook.GetMonsterImage(cid, width, height);
                 case CardTypes.Weapon: return WeaponBook.GetWeaponImage(cid, width, height);
@@ -62,24 +62,13 @@ namespace TaleofMonsters.DataType.Cards
 
         public static Card GetCard(int cid)
         {
-            switch (GetCardType(cid))
+            switch (ConfigIdManager.GetCardType(cid))
             {
                 case CardTypes.Monster: return new MonsterCard(new Monster(cid));
                 case CardTypes.Weapon: return new WeaponCard(new Weapon(cid));
                 case CardTypes.Spell: return new SpellCard(new Spell(cid));
             }
             return SpecialCards.NullCard;
-        }
-
-        internal static CardTypes GetCardType(int cid)
-        {
-            switch (cid / 1000000)
-            {
-                case 51: return CardTypes.Monster;
-                case 52: return CardTypes.Weapon;
-                case 53: return CardTypes.Spell;
-            }
-            return CardTypes.Null;
         }
 
         private static float[] rangePunish = new float[] { 1.3f, 1, 0.75f, 0.68f, 0.62f, 0.56f, 0.52f, 0.48f, 0.44f, 0.42f, 0.4f, 0.38f, 0.36f };

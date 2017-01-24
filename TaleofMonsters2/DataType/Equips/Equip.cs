@@ -4,16 +4,22 @@ using TaleofMonsters.Core;
 using TaleofMonsters.DataType.HeroSkills;
 using System.Drawing;
 using NarlonLib.Core;
+using TaleofMonsters.DataType.Cards.Monsters;
+using TaleofMonsters.DataType.Skills;
+using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.DataType.Equips
 {
     internal class Equip
     {
         public int TemplateId { get; set; }//装备的id
-        private const int AttrFactor = 10;//相当于装备属性是怪属性的10%
+
+        private int level;
 
         public int Atk { get; set; }//实际的攻击力
         public int Hp { get; set; }
+        public int Spd { get; set; }
+        public int Range { get; set; }
 
         public int LpRate { get; set; }
         public int PpRate { get; set; }
@@ -21,6 +27,9 @@ namespace TaleofMonsters.DataType.Equips
 
         public int Dura { get; set; } //实际的耐久值
         public int ExpireTime { get; set; } //过期时间
+
+        public int CommonSkillId { get; set; }
+        public int CommonSkillRate { get; set; }
 
         public Equip()
         {
@@ -33,32 +42,24 @@ namespace TaleofMonsters.DataType.Equips
             UpgradeToLevel();
         }
 
-        public int GetAttrByIndex(TowerAttrs attr)
-        {
-            switch (attr)
-            {
-                case TowerAttrs.Atk: return Atk;
-                case TowerAttrs.Hp: return Hp;
-                case TowerAttrs.Mp: return MpRate;
-                case TowerAttrs.Pp: return PpRate;
-                case TowerAttrs.Lp: return LpRate;
-            }
-            return 0;
-        }
-
         public void UpgradeToLevel()
         {
             EquipConfig equipConfig = ConfigData.GetEquipConfig(TemplateId);
             LpRate = equipConfig.EnergyRate[0];
             PpRate = equipConfig.EnergyRate[1];
             MpRate = equipConfig.EnergyRate[2];
-            int qual = equipConfig.Quality;
-            int addonFactor = ConfigData.GetLevelExpConfig(equipConfig.Level).EquipAddon;
-            int standardValue = (35 + qual * 5) * addonFactor / 50 * AttrFactor / 100;
-            if (equipConfig.AtkP > 0)
-                Atk = Math.Max(1, standardValue * (100 + equipConfig.AtkP) / 100); //200
-            if (equipConfig.VitP > 0)
-                Hp = Math.Max(5, standardValue * (100 + equipConfig.VitP) / 100 * 5); //200
+
+            level = ConfigData.GetLevelExpConfig(UserProfile.Profile.InfoBasic.Level).TowerLevel;
+            var heroData = new Monster(MonsterConfig.Indexer.KingTowerId);
+            heroData.UpgradeToLevel(level);
+            Atk = heroData.Atk * equipConfig.AtkR / 100;
+            Hp = heroData.Hp * equipConfig.VitR / 100;
+
+            Spd = equipConfig.Spd;
+            Range = equipConfig.Range;
+
+            CommonSkillId = equipConfig.CommonSkillId;
+            CommonSkillRate = equipConfig.CommonSkillRate;
         }
 
         public Image GetPreview()
@@ -72,15 +73,25 @@ namespace TaleofMonsters.DataType.Equips
             tipData.AddTextNewLine("", "White");
             if (Atk > 0)
             {
-                EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int) (TowerAttrs.Atk+ 1));
-                tipData.AddTextNewLine(string.Format(eAddon.Format, Atk), HSTypes.I2EaddonColor(eAddon.Rare));
+                EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int) (EquipAttrs.AtkRate+ 1));
+                tipData.AddTextNewLine(string.Format(eAddon.Format, equipConfig.AtkR), HSTypes.I2EaddonColor(eAddon.Rare));
             }
             if (Hp > 0)
             {
-                EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(TowerAttrs.Hp + 1));
-                tipData.AddTextNewLine(string.Format(eAddon.Format, Hp), HSTypes.I2EaddonColor(eAddon.Rare));
+                EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(EquipAttrs.HpRate + 1));
+                tipData.AddTextNewLine(string.Format(eAddon.Format, equipConfig.VitR), HSTypes.I2EaddonColor(eAddon.Rare));
             }
-          
+            if (Spd > 0)
+            {
+                EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(EquipAttrs.Spd + 1));
+                tipData.AddTextNewLine(string.Format(eAddon.Format, equipConfig.Spd), HSTypes.I2EaddonColor(eAddon.Rare));
+            }
+            if (Range > 0)
+            {
+                EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(EquipAttrs.Range + 1));
+                tipData.AddTextNewLine(string.Format(eAddon.Format, equipConfig.Range), HSTypes.I2EaddonColor(eAddon.Rare));
+            }
+
             if (equipConfig.EnergyRate[0] !=0|| equipConfig.EnergyRate[1] !=0|| equipConfig.EnergyRate[2] != 0)
             {
                 tipData.AddLine();
@@ -93,12 +104,28 @@ namespace TaleofMonsters.DataType.Equips
                 tipData.AddBarTwo(100, equipConfig.EnergyRate[2], Color.Cyan, Color.Blue);
             }
             
-            if (equipConfig.SpecialSkill > 0)
+            if (equipConfig.HeroSkillId > 0)
             {
                 tipData.AddLine();
-                tipData.AddImageNewLine(HeroSkillBook.GetHeroSkillImage(equipConfig.SpecialSkill));
-                HeroSkillConfig skillConfig = ConfigData.GetHeroSkillConfig(equipConfig.SpecialSkill);
+                tipData.AddImageNewLine(HeroSkillBook.GetHeroSkillImage(equipConfig.HeroSkillId));
+                HeroSkillConfig skillConfig = ConfigData.GetHeroSkillConfig(equipConfig.HeroSkillId);
                 string tp = string.Format("{0}:{1}", skillConfig.Name, skillConfig.Des);
+                if (tp.Length > 12)
+                {
+                    tipData.AddText(tp.Substring(0, 11), "White");
+                    tipData.AddTextNewLine(tp.Substring(11), "White");
+                }
+                else
+                {
+                    tipData.AddText(tp, "White");
+                }
+            }
+            if (equipConfig.CommonSkillId > 0)
+            {
+                tipData.AddLine();
+                tipData.AddImageNewLine(SkillBook.GetSkillImage(equipConfig.CommonSkillId));
+                var skillConfig = ConfigData.GetSkillConfig(equipConfig.CommonSkillId);
+                string tp = string.Format("{0}(被动)({2}%):{1}", skillConfig.Name, skillConfig.GetDescript(level), equipConfig.CommonSkillRate);
                 if (tp.Length > 12)
                 {
                     tipData.AddText(tp.Substring(0, 11), "White");

@@ -37,7 +37,7 @@ namespace TaleofMonsters.DataType.User
             int count = 0;
             foreach (var cd in Cards.Values)
             {
-                if (CardAssistant.GetCardType(cd.BaseId) == type)
+                if (ConfigIdManager.GetCardType(cd.BaseId) == type)
                 {
                     count++;
                 }

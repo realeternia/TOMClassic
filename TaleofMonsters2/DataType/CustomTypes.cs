@@ -214,15 +214,12 @@
         Equip,
         Skill,//技能给技能
     }
-    internal enum TowerAttrs
+    internal enum EquipAttrs
     {
-        Atk,
-        Hp,
+        AtkRate,
+        HpRate,
         Spd,
-        Range,
-        Lp,
-        Pp,
-        Mp
+        Range
     }
 
     internal enum MemPlayerRecordTypes

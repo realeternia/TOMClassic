@@ -51,6 +51,19 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             return skills;
         }
 
+        public void AddSkillBeforeInit(int sid,  int rate, SkillSourceTypes type)
+        {
+            Skill skill = new Skill(sid);
+            skill.UpgradeToLevel(self.Level);
+            MemBaseSkill skillbase = new MemBaseSkill(skill, rate);
+            skillbase.Type = type;
+            skillbase.Level = self.Level;
+            skillbase.Self = self;
+            Skills.Add(skillbase);
+
+            Skills.Add(skillbase);
+        }
+
         public void AddSkill(int sid, int slevel, int rate, SkillSourceTypes type)
         {
             foreach (MemBaseSkill memSkill in Skills)

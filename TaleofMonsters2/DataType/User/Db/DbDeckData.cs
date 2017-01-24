@@ -126,7 +126,7 @@ namespace TaleofMonsters.DataType.User.Db
             {
                 if (CardIds[i] != -1)
                 {
-                    var cardType = CardAssistant.GetCardType(CardIds[i]);
+                    var cardType = ConfigIdManager.GetCardType(CardIds[i]);
                     if (cardType == CardTypes.Monster)
                     {
                         Mcount = Mcount + 1;

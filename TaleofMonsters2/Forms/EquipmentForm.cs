@@ -26,17 +26,6 @@ namespace TaleofMonsters.Forms
             public int Lp;
             public int Pp;
             public int Mp;
-
-            public int GetAttrByIndex(TowerAttrs attr)
-            {
-                switch (attr)
-                {
-                    case TowerAttrs.Lp: return Lp;
-                    case TowerAttrs.Pp: return Pp;
-                    case TowerAttrs.Mp: return Mp;
-                }
-                return 0;
-            }
         }
 
         private bool show;
@@ -345,8 +334,8 @@ namespace TaleofMonsters.Forms
 
             DrawAttr(e.Graphics, font, heroData.Atk + vEquip.Atk, 147, 136);
             DrawAttr(e.Graphics, font, heroData.Hp + vEquip.Hp, 147 + 53, 136);
-            DrawAttr(e.Graphics, font, heroData.Spd, 147 + 53*2, 136);
-            DrawAttr(e.Graphics, font, heroData.Range, 147 + 53 * 3, 136);
+            DrawAttr(e.Graphics, font, heroData.Spd + vEquip.Spd, 147 + 53*2, 136);
+            DrawAttr(e.Graphics, font, heroData.Range + vEquip.Range, 147 + 53 * 3, 136);
 
             DrawAttr(e.Graphics, font, vEquip.LpRate + jobInfo.Lp, 147, 199);
             DrawAttr(e.Graphics, font, vEquip.PpRate + jobInfo.Pp, 147 + 53, 199);
@@ -361,9 +350,9 @@ namespace TaleofMonsters.Forms
 
         private Image GetAttrPreview(int index)
         {
-            var equipAttr = vEquip.GetAttrByIndex((TowerAttrs)(index));
-            var attr = heroData.GetAttrByIndex((TowerAttrs)(index));
-            var jobData = jobInfo.GetAttrByIndex((TowerAttrs) (index));
+            var equipAttr = GetEquipAttr(index);
+            var attr = GetMonsterAttrByIndex(index);
+            var jobData = GetAttrByIndex(index);
 
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine(HSTypes.I2HeroAttrTip(index), "White", 20);
@@ -373,6 +362,44 @@ namespace TaleofMonsters.Forms
                 tipData.AddTextNewLine(string.Format("   职业属性:{0}", jobData), "Pink");
             tipData.AddTextNewLine(string.Format("   来自装备:{0}", equipAttr), "Gold");
             return tipData.Image;
+        }
+
+        public int GetMonsterAttrByIndex(int attr)
+        {
+            switch (attr)
+            {
+                case 0: return heroData.Atk; 
+                case 1: return heroData.Hp;
+                case 2: return heroData.Spd;
+                case 3: return heroData.Range;
+            }
+            return 0;
+        }
+
+        private int GetEquipAttr(int index)
+        {
+            switch (index)
+            {
+                case 0: return vEquip.Atk;
+                case 1: return vEquip.Hp;
+                case 2: return vEquip.Spd;
+                case 3: return vEquip.Range;
+                case 4: return vEquip.MpRate;
+                case 5: return vEquip.PpRate;
+                case 6: return vEquip.LpRate;
+            }
+            return 0;
+        }
+
+        public int GetAttrByIndex(int attr)
+        {
+            switch (attr)
+            {
+                case 4: return jobInfo.Mp;
+                case 5: return jobInfo.Pp;
+                case 6: return jobInfo.Lp;
+            }
+            return 0;
         }
 
         private void DrawAttr(Graphics g, Font font, int totalV, int x, int y)

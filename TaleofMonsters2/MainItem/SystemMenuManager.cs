@@ -181,9 +181,6 @@ namespace TaleofMonsters.MainItem
                 case SystemMenuIds.EquipComposeForm:
                     MainForm.Instance.DealPanel(new EquipComposeForm());
                     break;
-                case SystemMenuIds.MergeWeaponForm:
-                    MainForm.Instance.DealPanel(new MergeWeaponForm());
-                    break;
                 case SystemMenuIds.MagicBookViewForm:
                     MainForm.Instance.DealPanel(new MagicBookViewForm());
                     break;
@@ -308,7 +305,7 @@ namespace TaleofMonsters.MainItem
         MagicBookViewForm = 32,
         WorldMapViewForm = 33,
         ConnectForm = 34,
-        MergeWeaponForm = 35,
+      //  MergeWeaponForm = 35,
         CardShopViewForm = 36,
         TournamentViewForm = 37,
        // AddDayForm = 38,

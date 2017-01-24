@@ -28,7 +28,7 @@ namespace TaleofMonsters.DataType.Decks
         {
             get
             {
-                if (CardAssistant.GetCardType(BaseId) != CardTypes.Spell)
+                if (ConfigIdManager.GetCardType(BaseId) != CardTypes.Spell)
                 {
                     return 0;
                 }
@@ -40,7 +40,7 @@ namespace TaleofMonsters.DataType.Decks
         {
             get
             {
-                if (CardAssistant.GetCardType(BaseId) != CardTypes.Monster)
+                if (ConfigIdManager.GetCardType(BaseId) != CardTypes.Monster)
                 {
                     return 0;
                 }
@@ -52,7 +52,7 @@ namespace TaleofMonsters.DataType.Decks
         {
             get
             {
-                if (CardAssistant.GetCardType(BaseId) != CardTypes.Weapon)
+                if (ConfigIdManager.GetCardType(BaseId) != CardTypes.Weapon)
                 {
                     return 0;
                 }

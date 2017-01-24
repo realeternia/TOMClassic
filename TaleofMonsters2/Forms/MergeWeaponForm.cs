@@ -90,6 +90,13 @@ namespace TaleofMonsters.Forms
             font = new Font("宋体", 10F * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             g.DrawString("Lv" + equipConfig.Level, font, Brushes.DimGray, 50 + xOff + 10, 5 + yOff + 24);
             font.Dispose();
+
+            if (UserProfile.InfoEquip.EquipComposeAvail.Contains(info))
+            {
+                var img = PicLoader.Read("System", "Learn.PNG");
+                g.DrawImage(img, xOff + 10, 3 + yOff, img.Width, img.Height);
+                img.Dispose();
+            }
         }
 
         private void DoMerge()
@@ -103,6 +110,7 @@ namespace TaleofMonsters.Forms
             }
 
             UserProfile.InfoEquip.AddEquip(equipConfig.Id, 60*3);
+            UserProfile.InfoEquip.AddEquipCompose(equipConfig.Id);
         }
 
         private void buttonBuy_Click(object sender, EventArgs e)
@@ -224,7 +232,7 @@ namespace TaleofMonsters.Forms
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
             Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString(" 锻造 ", font, Brushes.White, Width / 2 - 40, 8);
+            e.Graphics.DrawString(" 试炼 ", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
 
             if (currentInfo == null)

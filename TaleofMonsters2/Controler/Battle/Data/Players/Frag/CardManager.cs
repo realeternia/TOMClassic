@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Math;
+using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
@@ -236,7 +237,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         {
             foreach (ActiveCard activeCard in cards)
             {
-                if (type != 0 && CardAssistant.GetCardType(activeCard.CardId) != (CardTypes)type)
+                if (type != 0 && ConfigIdManager.GetCardType(activeCard.CardId) != (CardTypes)type)
                 {
                     continue;
                 }

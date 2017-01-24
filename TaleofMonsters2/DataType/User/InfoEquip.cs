@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Core;
 using TaleofMonsters.Core;
@@ -12,6 +13,8 @@ namespace TaleofMonsters.DataType.User
 
         [FieldIndex(Index = 2)] public DbEquip[] Equipoff;
 
+        [FieldIndex(Index = 3)] public List<int> EquipComposeAvail;
+
         public InfoEquip()
         {
             Equipon = new DbEquip[GameConstants.EquipOnCount];
@@ -20,6 +23,7 @@ namespace TaleofMonsters.DataType.User
                 Equipon[i] = new DbEquip();
             for (int i = 0; i < Equipoff.Length; i++)
                 Equipoff[i] = new DbEquip();
+            EquipComposeAvail = new List<int>();
         }
         
         public void AddEquip(int id, int minuteLast)
@@ -101,5 +105,14 @@ namespace TaleofMonsters.DataType.User
                     equip.Reset();
             }
         }
+
+        public void AddEquipCompose(int eid)
+        {
+            if (!EquipComposeAvail.Contains(eid))
+            {
+                EquipComposeAvail.Add(eid);
+            }
+        }
+
     }
 }

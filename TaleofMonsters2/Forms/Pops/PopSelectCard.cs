@@ -85,7 +85,7 @@ namespace TaleofMonsters.Forms.Pops
             List<DeckCard> cards = new List<DeckCard>();
             foreach (int cid in cids)
             {
-                if ((int)CardAssistant.GetCardType(cid)== fil_type)
+                if ((int)ConfigIdManager.GetCardType(cid)== fil_type)
                 {
                     DeckCard card = new DeckCard(UserProfile.InfoCard.GetDeckCardById(cid));
                     cards.Add(card);

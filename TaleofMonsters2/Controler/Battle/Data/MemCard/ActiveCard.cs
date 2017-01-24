@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Decks;
 using ConfigDatas;
+using TaleofMonsters.Config;
 using TaleofMonsters.DataType;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemCard
@@ -93,7 +94,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         {
             get
             {
-                return CardAssistant.GetCardType(Card.BaseId);
+                return ConfigIdManager.GetCardType(Card.BaseId);
             }
         }
         

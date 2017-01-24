@@ -86,7 +86,7 @@
         public static string I2EaddonColor(int id)
         {
             string[] rt = { "Gray", "White", "Green", "DodgerBlue", "Violet", "Orange", "Red" };
-            return "Cyan";
+            return rt[id];
         }
 
         //道具的稀有度

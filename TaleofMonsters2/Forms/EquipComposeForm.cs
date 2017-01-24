@@ -4,10 +4,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items;
-using TaleofMonsters.DataType.HeroSkills;
 using TaleofMonsters.Forms.Items.Core;
 
 namespace TaleofMonsters.Forms
@@ -49,8 +47,9 @@ namespace TaleofMonsters.Forms
         private void InitEquips(int level)
         {
             equipIdList = new List<int>();
-            foreach (var equipConfig in ConfigData.EquipDict.Values)
+            foreach (var eid in UserProfile.Profile.InfoEquip.EquipComposeAvail)
             {
+                var equipConfig = ConfigData.GetEquipConfig(eid);
                 if (equipConfig.Level == level)
                     equipIdList.Add(equipConfig.Id);
             }

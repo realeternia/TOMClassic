@@ -61,13 +61,13 @@ namespace TaleofMonsters.Forms
             this.buttonBuy.BackColor = System.Drawing.Color.DarkBlue;
             this.buttonBuy.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonBuy.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonBuy.Font = new System.Drawing.Font("微软雅黑", 13.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.buttonBuy.Font = new System.Drawing.Font("Microsoft YaHei", 13.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.buttonBuy.ForeColor = System.Drawing.Color.White;
             this.buttonBuy.Location = new System.Drawing.Point(423, 398);
             this.buttonBuy.Name = "buttonBuy";
             this.buttonBuy.Size = new System.Drawing.Size(62, 26);
             this.buttonBuy.TabIndex = 30;
-            this.buttonBuy.Text = "锻造";
+            this.buttonBuy.Text = "试炼";
             this.buttonBuy.UseVisualStyleBackColor = false;
             this.buttonBuy.Click += new System.EventHandler(this.buttonBuy_Click);
             // 

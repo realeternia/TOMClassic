@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
+    <Compile Include="Config\ConfigIdManager.cs" />
     <Compile Include="Controler\Battle\AIStrategy.cs">
     </Compile>
     <Compile Include="Controler\Battle\Components\CardSelector.cs">

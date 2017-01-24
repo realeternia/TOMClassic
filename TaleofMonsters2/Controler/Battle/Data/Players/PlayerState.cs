@@ -1,7 +1,7 @@
-﻿using ConfigDatas;
-using NarlonLib.Core;
+﻿using NarlonLib.Core;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Equips;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
 {
@@ -11,31 +11,19 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
     internal class PlayerState
     {
         public AutoDictionary<int, int> skills = new AutoDictionary<int, int>();
-        private int atkAddon; //来自装备的属性加成，加给主基地
-        private int hpAddon; //来自装备的属性加成
 
-        private AutoDictionary<int, int> MonsterTypeCounts = new AutoDictionary<int, int>();//属性类型为key
+        private Equip equipAddon;//来自装备的属性加成
+
+        private AutoDictionary<int, int> monsterTypeCounts = new AutoDictionary<int, int>();//属性类型为key
 
         public PlayerState()
         {
+            equipAddon = new Equip();
         }
 
-        public void UpdateAttr(int atk, int life)
+        public void UpdateAttr(Equip equip)
         {
-            atkAddon = atk;
-            hpAddon = life;
-        }
-
-        public void UpdateSkills(int[] sidArray, int[] svalueArray)
-        {
-            for (int i = 0; i < sidArray.Length; i ++)
-            {
-                var sid = sidArray[i];
-                switch (ConfigData.GetEquipAddonConfig(sid).Type)
-                {
-                    //todo save the data
-                }
-            }
+            equipAddon = equip;
         }
 
         public void CheckMonsterEvent(bool isAdd, LiveMonster mon)
@@ -44,35 +32,38 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             {
                 if (mon.IsHero)
                 {
-                    if (atkAddon > 0)
+                    if (equipAddon.Atk > 0)
+                        mon.Atk.Source += equipAddon.Atk;    
+                    if (equipAddon.Hp > 0)
                     {
-                        mon.Atk.Source += atkAddon;    
+                        mon.MaxHp.Source += equipAddon.Hp;
+                        mon.AddHp(equipAddon.Hp);//顺便把hp也加上
                     }
-                    if (hpAddon > 0)
-                    {
-                        mon.MaxHp.Source += hpAddon;
-                        mon.AddHp(hpAddon);//顺便把hp也加上
-                    }
-                    
+                    if (equipAddon.Spd > 0)
+                        mon.Spd.Source += equipAddon.Spd;
+                    if (equipAddon.Range > 0)
+                        mon.Avatar.Range += equipAddon.Range;
+                    if (equipAddon.CommonSkillId > 0)
+                        mon.SkillManager.AddSkillBeforeInit(equipAddon.CommonSkillId, equipAddon.CommonSkillRate, SkillSourceTypes.Equip);
                 }
 
                 //if (Avatar.MonsterConfig.Type != (int)CardTypeSub.Hero)
                 //    EAddonBook.UpdateMonsterData(this, OwnerPlayer.State.Monsterskills.Keys(), OwnerPlayer.State.Monsterskills.Values());
-                MonsterTypeCounts[(int) MonsterCountTypes.Total]++;
-                MonsterTypeCounts[mon.Attr + 10]++;
-                MonsterTypeCounts[mon.Type + 20]++;
+                monsterTypeCounts[(int) MonsterCountTypes.Total]++;
+                monsterTypeCounts[mon.Attr + 10]++;
+                monsterTypeCounts[mon.Type + 20]++;
             }
             else
             {
-                MonsterTypeCounts[(int)MonsterCountTypes.Total]--;
-                MonsterTypeCounts[mon.Attr + 10]--;
-                MonsterTypeCounts[mon.Type + 20]--;
+                monsterTypeCounts[(int)MonsterCountTypes.Total]--;
+                monsterTypeCounts[mon.Attr + 10]--;
+                monsterTypeCounts[mon.Type + 20]--;
             }
         }
 
         public int GetMonsterCountByType(MonsterCountTypes type)
         {
-            return MonsterTypeCounts[(int)type];
+            return monsterTypeCounts[(int)type];
         }
     }
 }
