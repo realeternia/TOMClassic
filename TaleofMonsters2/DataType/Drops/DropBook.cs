@@ -52,7 +52,7 @@ namespace TaleofMonsters.DataType.Drops
                 sum += qualRate[i];
                 if (roll < sum)
                 {
-                    resultQual = i + 1;
+                    resultQual = i;
                     break;
                 }
             }

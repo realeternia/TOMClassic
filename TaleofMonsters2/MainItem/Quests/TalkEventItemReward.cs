@@ -5,6 +5,7 @@ using NarlonLib.Drawing;
 using TaleofMonsters.Config;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Drops;
+using TaleofMonsters.DataType.Equips;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
@@ -123,7 +124,7 @@ namespace TaleofMonsters.MainItem.Quests
                     var itemList = DropBook.GetDropItemList(config.RewardDrop);
                     foreach (var itemId in itemList)
                     {
-                        var isEquip = ConfigIdManager.IsEquip(config.RewardItem);
+                        var isEquip = ConfigIdManager.IsEquip(itemId);
                         if (isEquip)
                         {
                             UserProfile.InfoEquip.AddEquip(itemId, 60);
@@ -169,6 +170,12 @@ namespace TaleofMonsters.MainItem.Quests
                     if (regionType == PictureRegionCellType.Item)
                     {
                         Image image = HItemBook.GetPreview(key);
+                        tooltip.Show(image, parent, x, y);
+                    }
+                    if (regionType == PictureRegionCellType.Equip)
+                    {
+                        Equip equip = new Equip(key);
+                        Image image = equip.GetPreview();
                         tooltip.Show(image, parent, x, y);
                     }
                 }
