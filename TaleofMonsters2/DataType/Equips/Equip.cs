@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.HeroSkills;
@@ -28,8 +29,7 @@ namespace TaleofMonsters.DataType.Equips
         public int Dura { get; set; } //实际的耐久值
         public int ExpireTime { get; set; } //过期时间
 
-        public int CommonSkillId { get; set; }
-        public int CommonSkillRate { get; set; }
+        public List<RLIdValue> CommonSkillList = new List<RLIdValue>();
 
         public Equip()
         {
@@ -58,8 +58,10 @@ namespace TaleofMonsters.DataType.Equips
             Spd = equipConfig.Spd;
             Range = equipConfig.Range;
 
-            CommonSkillId = equipConfig.CommonSkillId;
-            CommonSkillRate = equipConfig.CommonSkillRate;
+            if (equipConfig.CommonSkillId > 0)
+            {
+                CommonSkillList.Add(new RLIdValue {Id = equipConfig.CommonSkillId, Value = equipConfig.CommonSkillRate});
+            }
         }
 
         public Image GetPreview()

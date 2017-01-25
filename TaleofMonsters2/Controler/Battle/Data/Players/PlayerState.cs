@@ -43,8 +43,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                         mon.Spd.Source += equipAddon.Spd;
                     if (equipAddon.Range > 0)
                         mon.Avatar.Range += equipAddon.Range;
-                    if (equipAddon.CommonSkillId > 0)
-                        mon.SkillManager.AddSkillBeforeInit(equipAddon.CommonSkillId, equipAddon.CommonSkillRate, SkillSourceTypes.Equip);
+                    if (equipAddon.CommonSkillList.Count > 0)
+                        mon.SkillManager.AddSkillBeforeInit(equipAddon.CommonSkillList, SkillSourceTypes.Equip);
                 }
 
                 //if (Avatar.MonsterConfig.Type != (int)CardTypeSub.Hero)
