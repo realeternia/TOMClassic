@@ -11,6 +11,7 @@ using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;
+using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.MainItem.Scenes.SceneObjects;
@@ -405,6 +406,24 @@ namespace TaleofMonsters.MainItem.Scenes
         public void RandomPortal()
         {
             UserProfile.InfoBasic.Position = sceneItems[MathTool.GetRandom(sceneItems.Count)].Id;
+            parent.Invalidate();
+        }
+
+        public void QuestNext(string qname)
+        {
+            while (true)
+            {
+                int index = MathTool.GetRandom(sceneItems.Count);
+                var targetCell = sceneItems[index];
+                if (!targetCell.CanBeReplaced())
+                    continue;
+                int qId = SceneBook.GetSceneQuestByName(qname);
+                sceneItems[index] =
+                    new SceneQuest(targetCell.Id, targetCell.X, targetCell.Y, targetCell.Width, targetCell.Height, qId);
+                sceneItems[index].MapSetting = true;
+                break;
+            }
+           
             parent.Invalidate();
         }
     }

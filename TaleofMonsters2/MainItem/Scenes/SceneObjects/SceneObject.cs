@@ -67,6 +67,11 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             UserProfile.Profile.InfoBasic.Position = Id;
         }
 
+        public virtual bool CanBeReplaced()
+        {
+            return true;
+        }
+
         public virtual void Draw(Graphics g, int target)
         {
             Color tileColor = Color.White;

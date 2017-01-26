@@ -42,6 +42,10 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             Scene.Instance.ChangeMap(targetMap, true);
         }
 
+        public override bool CanBeReplaced()
+        {
+            return false;
+        }
         public override void Draw(Graphics g, int target)
         {
             base.Draw(g, target);
@@ -63,6 +67,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             Font fontName = new Font("ËÎÌו", 11*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             g.DrawString(targetName, fontName, Brushes.Black, X - drawWidth / 2 + Width / 8 + 2, Y - drawHeight / 2 + 1);
             g.DrawString(targetName, fontName, Disabled ? Brushes.Gray : Brushes.Wheat, X - drawWidth / 2 + Width / 8, Y - drawHeight / 2);
+            fontName.Dispose();
             markQuest.Dispose();
         }
     }
