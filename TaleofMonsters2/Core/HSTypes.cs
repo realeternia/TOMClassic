@@ -126,6 +126,12 @@
             return rt[id];
         }
 
+        public static string I2QuestDangerColor(int id)
+        {
+            string[] rt = { "White", "Yellow", "Orange","Red" };
+            return rt[id];
+        }
+
         public static string I2LevelInfoType(int id)
         {
             string[] rt = { "", "新功能", "新活动" };

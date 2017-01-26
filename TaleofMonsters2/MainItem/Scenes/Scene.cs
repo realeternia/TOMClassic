@@ -368,7 +368,7 @@ namespace TaleofMonsters.MainItem.Scenes
                 var happend = GetDisableEventCount(questData.Id);
                 var evtLevel = questConfig.Level == 0 ? config.Level : questConfig.Level;
                 tipData.AddTextNewLine(string.Format(" {0}Lv{3}({1}/{2})", questConfig.Name,
-                    happend, questData.Value, evtLevel), happend == questData.Value ? "DimGray" : "Lime");
+                    happend, questData.Value, evtLevel), happend == questData.Value ? "DimGray" : HSTypes.I2QuestDangerColor(questConfig.Danger));
             }
             return tipData.Image;
         }
