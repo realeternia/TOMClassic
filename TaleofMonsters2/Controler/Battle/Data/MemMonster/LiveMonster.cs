@@ -895,7 +895,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void AddMaxHp(double value)
         {
-            if (Avatar.MonsterConfig.IsBuilding)
+            if (Avatar.MonsterConfig.IsBuilding && value < 0)
             {
                 BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", Position, 0, "Gold", 26, 0, 0, 1, 15), false);
                 return;
