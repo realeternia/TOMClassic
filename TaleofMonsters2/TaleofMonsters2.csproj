@@ -184,6 +184,7 @@
     <Compile Include="MainItem\Quests\TalkEventItemReward.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemTeleportEnable.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemTrade.cs" />
+    <Compile Include="MainItem\Quests\TalkEventItemPortal.cs" />
     <Compile Include="MainItem\Scenes\SceneObjects\SceneWarp.cs" />
     <Compile Include="MainItem\Scenes\SceneObjects\SceneQuest.cs" />
     <Compile Include="MainItem\Scenes\SceneObjects\SceneTile.cs" />

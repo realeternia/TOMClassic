@@ -401,5 +401,11 @@ namespace TaleofMonsters.MainItem.Scenes
             }
             parent.Invalidate();
         }
+
+        public void RandomPortal()
+        {
+            UserProfile.InfoBasic.Position = sceneItems[MathTool.GetRandom(sceneItems.Count)].Id;
+            parent.Invalidate();
+        }
     }
 }

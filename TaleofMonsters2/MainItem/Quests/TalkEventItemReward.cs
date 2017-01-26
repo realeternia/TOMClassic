@@ -28,12 +28,15 @@ namespace TaleofMonsters.MainItem.Quests
             vRegion.RegionEntered += virtualRegion_RegionEntered;
             vRegion.RegionLeft += virtualRegion_RegionLeft;
 
-            DoReward();
+            int index = 1;
+            for (int i = 0; i < GetMulti(); i++)
+            {
+                DoReward(ref index);
+            }
         }
 
-        private void DoReward()
+        private void DoReward(ref int index)
         {
-            int index = 1;
             if (IsBonusAvail("gold"))
             {
                 var goldGet = GameResourceBook.InGoldSceneQuest(level, config.RewardGold);
@@ -145,19 +148,34 @@ namespace TaleofMonsters.MainItem.Quests
 
         private bool IsBonusAvail(string tp)
         {
-            if (evt.ParamList.Count == 0)
-            {
-                return true;
-            }
-
             foreach (var item in evt.ParamList)
             {
                 if (item == tp)
                 {
                     return true;
                 }
+                if (item != "x2" || item != "x3")
+                {
+                    return false;
+                }
             }
-            return false;
+            return true;
+        }
+
+        private int GetMulti()
+        {
+            foreach (var item in evt.ParamList)
+            {
+                if (item == "x2")
+                {
+                    return 2;
+                }
+                if (item == "x3")
+                {
+                    return 3;
+                }
+            }
+            return 1;
         }
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)

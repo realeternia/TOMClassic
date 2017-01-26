@@ -23,6 +23,7 @@ namespace TaleofMonsters.MainItem.Quests
                 case "punish": return new TalkEventItemPunish(eventId, level, c, r, e); 
                 case "reset": return new TalkEventItemReset(eventId, level, r, e);
                 case "teleport": return new TalkEventItemTeleportEnable(eventId, level, r, e);
+                case "portal": return new TalkEventItemPortal(eventId, level, r, e);
                 case "npc": return new TalkEventItemNpc(eventId, level, r, e);
                 case "nd": return new TalkEventItemEnd(eventId, level, r, e);
                 default: return new TalkEventItem(eventId, level, r, e); 
