@@ -78,38 +78,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Deck\aisiter.dek" />
-    <EmbeddedResource Include="Deck\aolai.dek" />
-    <EmbeddedResource Include="Deck\baludi.dek" />
-    <EmbeddedResource Include="Deck\beilukai.dek" />
-    <EmbeddedResource Include="Deck\cheng.dek" />
-    <EmbeddedResource Include="Deck\dragons.dek" />
-    <EmbeddedResource Include="Deck\gailu.dek" />
-    <EmbeddedResource Include="Deck\haima.dek" />
-    <EmbeddedResource Include="Deck\jiangshi.dek" />
-    <EmbeddedResource Include="Deck\kedi.dek" />
-    <EmbeddedResource Include="Deck\kulou.dek" />
-    <EmbeddedResource Include="Deck\kuloufashi.dek" />
-    <EmbeddedResource Include="Deck\lang.dek" />
-    <EmbeddedResource Include="Deck\laoshu.dek" />
-    <EmbeddedResource Include="Deck\leiluo.dek" />
-    <EmbeddedResource Include="Deck\luka.dek" />
-    <EmbeddedResource Include="Deck\machines.dek" />
-    <EmbeddedResource Include="Deck\milanda.dek" />
-    <EmbeddedResource Include="Deck\neifuni.dek" />
-    <EmbeddedResource Include="Deck\plants.dek" />
-    <EmbeddedResource Include="Deck\powderwar.dek" />
-    <EmbeddedResource Include="Deck\rand.dek" />
-    <EmbeddedResource Include="Deck\saen.dek" />
-    <EmbeddedResource Include="Deck\saibasi.dek" />
-    <EmbeddedResource Include="Deck\sainisi.dek" />
-    <EmbeddedResource Include="Deck\self.dek" />
-    <EmbeddedResource Include="Deck\tanisi.dek" />
-    <EmbeddedResource Include="Deck\weia.dek" />
-    <EmbeddedResource Include="Deck\wuya.dek" />
-    <EmbeddedResource Include="Deck\youqi.dek" />
-    <EmbeddedResource Include="Deck\zombies.dek" />
-    <EmbeddedResource Include="Deck\zombiesv2.dek" />
     <EmbeddedResource Include="Effect\arrow.eff" />
     <EmbeddedResource Include="Effect\aurora.eff" />
     <EmbeddedResource Include="Effect\awaylight.eff" />
@@ -214,124 +182,25 @@
     <EmbeddedResource Include="Maze\hightower.maz" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Deck\rookie.dek" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Maze\mountaininner.maz" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Maze\oldcity.maz" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Deck\nanami.dek" />
-    <EmbeddedResource Include="Deck\node.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\yuexiuya.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\masha.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\feichong.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\artrom.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\zeno.dek" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Effect\firestorm.eff" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\lakar.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\youling.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\shuishashou.dek" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Maze\door.maz" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Deck\mogu.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\xiezi.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\element1.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\element2.dek" />
-    <EmbeddedResource Include="Deck\element3.dek" />
-    <EmbeddedResource Include="Deck\element4.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\chick.dek" />
-    <EmbeddedResource Include="Deck\frog.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\honglang.dek" />
-    <EmbeddedResource Include="Deck\shijiu.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\goblin.dek" />
-    <EmbeddedResource Include="Deck\shujin.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\honglong.dek" />
-    <EmbeddedResource Include="Deck\shita.dek" />
-    <EmbeddedResource Include="Deck\xixuegui.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\lanlong.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\zilong.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\fdemon.dek" />
-    <EmbeddedResource Include="Deck\hydra.dek" />
-    <EmbeddedResource Include="Deck\soul.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\langren.dek" />
-    <EmbeddedResource Include="Deck\laohu.dek" />
-    <EmbeddedResource Include="Deck\qingting.dek" />
-    <EmbeddedResource Include="Deck\xiyiren.dek" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Maze\ruin.maz" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\narsas.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\narlon.dek" />
-    <EmbeddedResource Include="Deck\viga.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\frik.dek" />
-    <EmbeddedResource Include="Deck\viktor.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\cai.dek" />
-    <EmbeddedResource Include="Deck\clab.dek" />
-    <EmbeddedResource Include="Deck\lock.dek" />
-    <EmbeddedResource Include="Deck\shera.dek" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Effect\eclipse.eff" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Effect\gravity.eff" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\aistear.dek" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Effect\test.eff" />
@@ -397,9 +266,6 @@
     <EmbeddedResource Include="Effect\watertile.eff" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Deck\kings.dek" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Effect\redflash.eff" />
   </ItemGroup>
   <ItemGroup>
@@ -413,20 +279,7 @@
     <EmbeddedResource Include="Effect\cover3.eff" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Deck\blank.dek" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Map\doublec.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\ling.dek" />
-    <EmbeddedResource Include="Deck\yaslani.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\test.dek" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deck\test2e.dek" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -604,6 +457,91 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SceneQuest\ruintown2.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\aisiter.txt" />
+    <EmbeddedResource Include="Deck\aistear.txt" />
+    <EmbeddedResource Include="Deck\aolai.txt" />
+    <EmbeddedResource Include="Deck\artrom.txt" />
+    <EmbeddedResource Include="Deck\baludi.txt" />
+    <EmbeddedResource Include="Deck\beilukai.txt" />
+    <EmbeddedResource Include="Deck\blank.txt" />
+    <EmbeddedResource Include="Deck\cai.txt" />
+    <EmbeddedResource Include="Deck\cheng.txt" />
+    <EmbeddedResource Include="Deck\chick.txt" />
+    <EmbeddedResource Include="Deck\clab.txt" />
+    <EmbeddedResource Include="Deck\dragons.txt" />
+    <EmbeddedResource Include="Deck\element1.txt" />
+    <EmbeddedResource Include="Deck\element2.txt" />
+    <EmbeddedResource Include="Deck\element3.txt" />
+    <EmbeddedResource Include="Deck\element4.txt" />
+    <EmbeddedResource Include="Deck\fdemon.txt" />
+    <EmbeddedResource Include="Deck\feichong.txt" />
+    <EmbeddedResource Include="Deck\frik.txt" />
+    <EmbeddedResource Include="Deck\frog.txt" />
+    <EmbeddedResource Include="Deck\gailu.txt" />
+    <EmbeddedResource Include="Deck\goblin.txt" />
+    <EmbeddedResource Include="Deck\haima.txt" />
+    <EmbeddedResource Include="Deck\honglang.txt" />
+    <EmbeddedResource Include="Deck\honglong.txt" />
+    <EmbeddedResource Include="Deck\hydra.txt" />
+    <EmbeddedResource Include="Deck\jiangshi.txt" />
+    <EmbeddedResource Include="Deck\kedi.txt" />
+    <EmbeddedResource Include="Deck\kings.txt" />
+    <EmbeddedResource Include="Deck\kulou.txt" />
+    <EmbeddedResource Include="Deck\kuloufashi.txt" />
+    <EmbeddedResource Include="Deck\lakar.txt" />
+    <EmbeddedResource Include="Deck\lang.txt" />
+    <EmbeddedResource Include="Deck\langren.txt" />
+    <EmbeddedResource Include="Deck\lanlong.txt" />
+    <EmbeddedResource Include="Deck\laohu.txt" />
+    <EmbeddedResource Include="Deck\laoshu.txt" />
+    <EmbeddedResource Include="Deck\leiluo.txt" />
+    <EmbeddedResource Include="Deck\ling.txt" />
+    <EmbeddedResource Include="Deck\lock.txt" />
+    <EmbeddedResource Include="Deck\luka.txt" />
+    <EmbeddedResource Include="Deck\machines.txt" />
+    <EmbeddedResource Include="Deck\masha.txt" />
+    <EmbeddedResource Include="Deck\milanda.txt" />
+    <EmbeddedResource Include="Deck\mogu.txt" />
+    <EmbeddedResource Include="Deck\nanami.txt" />
+    <EmbeddedResource Include="Deck\narlon.txt" />
+    <EmbeddedResource Include="Deck\narsas.txt" />
+    <EmbeddedResource Include="Deck\neifuni.txt" />
+    <EmbeddedResource Include="Deck\node.txt" />
+    <EmbeddedResource Include="Deck\plants.txt" />
+    <EmbeddedResource Include="Deck\powderwar.txt" />
+    <EmbeddedResource Include="Deck\qingting.txt" />
+    <EmbeddedResource Include="Deck\rand.txt" />
+    <EmbeddedResource Include="Deck\rookie.txt" />
+    <EmbeddedResource Include="Deck\saen.txt" />
+    <EmbeddedResource Include="Deck\saibasi.txt" />
+    <EmbeddedResource Include="Deck\sainisi.txt" />
+    <EmbeddedResource Include="Deck\self.txt" />
+    <EmbeddedResource Include="Deck\shera.txt" />
+    <EmbeddedResource Include="Deck\shijiu.txt" />
+    <EmbeddedResource Include="Deck\shita.txt" />
+    <EmbeddedResource Include="Deck\shuishashou.txt" />
+    <EmbeddedResource Include="Deck\shujin.txt" />
+    <EmbeddedResource Include="Deck\soul.txt" />
+    <EmbeddedResource Include="Deck\tanisi.txt" />
+    <EmbeddedResource Include="Deck\test.txt" />
+    <EmbeddedResource Include="Deck\test2e.txt" />
+    <EmbeddedResource Include="Deck\viga.txt" />
+    <EmbeddedResource Include="Deck\viktor.txt" />
+    <EmbeddedResource Include="Deck\weia.txt" />
+    <EmbeddedResource Include="Deck\wuya.txt" />
+    <EmbeddedResource Include="Deck\xiezi.txt" />
+    <EmbeddedResource Include="Deck\xixuegui.txt" />
+    <EmbeddedResource Include="Deck\xiyiren.txt" />
+    <EmbeddedResource Include="Deck\yaslani.txt" />
+    <EmbeddedResource Include="Deck\youling.txt" />
+    <EmbeddedResource Include="Deck\youqi.txt" />
+    <EmbeddedResource Include="Deck\yuexiuya.txt" />
+    <EmbeddedResource Include="Deck\zeno.txt" />
+    <EmbeddedResource Include="Deck\zilong.txt" />
+    <EmbeddedResource Include="Deck\zombies.txt" />
+    <EmbeddedResource Include="Deck\zombiesv2.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
