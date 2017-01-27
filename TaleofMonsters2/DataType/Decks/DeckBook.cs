@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using ConfigDatas;
 using TaleofMonsters.Config;
@@ -69,6 +70,10 @@ namespace TaleofMonsters.DataType.Decks
                         pickMethod = infos[2];
                     }
                     cardId = CheckRandom(catalog, keyId, pickMethod, starCount);
+                }
+                else
+                {
+                    throw new ApplicationException("card type error " + tpStr + "@" + name);
                 }
 
                 starCount[CardConfigManager.GetCardConfig(cardId).Star]++;

@@ -468,7 +468,6 @@
     <EmbeddedResource Include="Deck\blank.txt" />
     <EmbeddedResource Include="Deck\cai.txt" />
     <EmbeddedResource Include="Deck\cheng.txt" />
-    <EmbeddedResource Include="Deck\chick.txt" />
     <EmbeddedResource Include="Deck\clab.txt" />
     <EmbeddedResource Include="Deck\dragons.txt" />
     <EmbeddedResource Include="Deck\element1.txt" />
@@ -478,7 +477,6 @@
     <EmbeddedResource Include="Deck\fdemon.txt" />
     <EmbeddedResource Include="Deck\feichong.txt" />
     <EmbeddedResource Include="Deck\frik.txt" />
-    <EmbeddedResource Include="Deck\frog.txt" />
     <EmbeddedResource Include="Deck\gailu.txt" />
     <EmbeddedResource Include="Deck\goblin.txt" />
     <EmbeddedResource Include="Deck\haima.txt" />
@@ -542,6 +540,10 @@
     <EmbeddedResource Include="Deck\zilong.txt" />
     <EmbeddedResource Include="Deck\zombies.txt" />
     <EmbeddedResource Include="Deck\zombiesv2.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Deck\shanzei.txt" />
+    <EmbeddedResource Include="Deck\tufei.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

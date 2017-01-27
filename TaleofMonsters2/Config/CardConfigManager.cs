@@ -103,7 +103,7 @@ namespace TaleofMonsters.Config
         private static Dictionary<int, CardInfoList> jobCardDict; //职业卡组列表
         private static Dictionary<int, CardInfoList> attrCardDict; //属性卡组列表
         private static Dictionary<int, CardInfoList> raceCardDict; //种族卡组列表
-        private static Dictionary<int, CardInfoList> typeCardDict; //生物/武器/法术
+        private static Dictionary<int, CardInfoList> typeCardDict; //生物/武器/法术 1/2/3
 
         public static int MonsterTotal { get; set; }
         public static int MonsterAvail { get; set; }
