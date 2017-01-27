@@ -86,13 +86,6 @@ namespace TaleofMonsters.DataType.Items
             return true;
         }
 
-        public static bool UsePcard(ItemConsumerConfig itemConfig)
-        {
-            UserProfile.InfoRival.SetRivalAvail(itemConfig.PeopleId);
-
-            return true;
-        }
-
         public static bool UseScard(ItemConsumerConfig itemConfig)
         {
             var form = MainForm.Instance.FindForm(typeof(CardBagForm));

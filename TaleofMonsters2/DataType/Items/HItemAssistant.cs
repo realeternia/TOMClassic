@@ -22,8 +22,6 @@ namespace TaleofMonsters.DataType.Items
                     return Consumer.UseOre(consumerConfig);
                 if (itemConfig.SubType == HItemTypes.Item)
                     return Consumer.UseItem(consumerConfig);
-                if (itemConfig.SubType == HItemTypes.People)
-                    return Consumer.UsePcard(consumerConfig);
                 if (itemConfig.SubType == HItemTypes.RandomCard)
                     return Consumer.UseScard(consumerConfig);
             }
