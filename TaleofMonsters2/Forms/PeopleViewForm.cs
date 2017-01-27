@@ -25,7 +25,7 @@ namespace TaleofMonsters.Forms
         private List<DbRivalState> people;
         private VirtualRegion virtualRegion;
 
-        private int[] types;
+        private List<int> types;
 
         public PeopleViewForm()
         {
@@ -43,7 +43,7 @@ namespace TaleofMonsters.Forms
                 virtualRegion.AddRegion(region);
             }
             types = GetPeopleAvailTypes();
-            for (int i = 0; i < types.Length; i++)
+            for (int i = 0; i < types.Count; i++)
             {
                 int xoff = i * 26 + 19;
                 int yoff = 125;
@@ -65,7 +65,7 @@ namespace TaleofMonsters.Forms
             bitmapButtonFight.IconSize = new Size(18, 18);
             bitmapButtonFight.IconXY = new Point(5, 5);
             bitmapButtonFight.TextOffX = 8;
-            if (types.Length>0)
+            if (types.Count>0)
             {
                 virtualRegion.SetRegionState(30, RegionState.Rectangled);
                 Bind(types[0]);
@@ -97,7 +97,7 @@ namespace TaleofMonsters.Forms
             PeopleBook.Fight(peopleConfig.Id, peopleConfig.BattleMap, peopleConfig.Level, parm, null, null, null);
         }
 
-        private static int[] GetPeopleAvailTypes()
+        private static List<int> GetPeopleAvailTypes()
         {
             List<int> typeLists = new List<int>();
             foreach (var person in UserProfile.InfoRival.Rivals.Values)
@@ -112,7 +112,7 @@ namespace TaleofMonsters.Forms
                 }
             }
             typeLists.Sort();
-            return typeLists.ToArray();
+            return typeLists;
         }
 
         private void Bind(int type)
@@ -183,7 +183,7 @@ namespace TaleofMonsters.Forms
                 else if (id >= 30)
                 {
                     int realtype = types[id - 30];
-                    for (int i = 0; i < types.Length; i++)
+                    for (int i = 0; i < types.Count; i++)
                     {
                         virtualRegion.SetRegionState(i + 30, RegionState.Free);    
                     }                    
@@ -197,6 +197,8 @@ namespace TaleofMonsters.Forms
         private void FastBind(int id)
         {
             PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(id);
+            if (!types.Contains(peopleConfig.Type))
+                return;
             Bind(peopleConfig.Type);
             virtualRegion.SetRegionKey(1, id);
             for (int i = 0; i < people.Count; i++)

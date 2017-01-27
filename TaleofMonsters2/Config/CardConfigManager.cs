@@ -4,7 +4,6 @@ using NarlonLib.Log;
 using NarlonLib.Math;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards;
 
 namespace TaleofMonsters.Config
 {

@@ -29,13 +29,13 @@ namespace TaleofMonsters.Forms.Items.Core
         public static void Draw(Graphics g, string head, int width, int height)
         {
             g.DrawImage(topleft, 0, 0, 50, 50);
-            drawMore(g, top, 50, 0, width - 100, 50);
+            DrawMore(g, top, 50, 0, width - 100, 50);
             g.DrawImage(topright, width - 50, 0, 50, 50);
-            drawMore(g, right, width - 50, 50, 50, height - 100);
+            DrawMore(g, right, width - 50, 50, 50, height - 100);
             g.DrawImage(bottomright, width - 50, height - 50, 50, 50);
-            drawMore(g, bottom, 50, height - 50, width - 100, 50);
+            DrawMore(g, bottom, 50, height - 50, width - 100, 50);
             g.DrawImage(bottomleft, 0, height - 50, 50, 50);
-            drawMore(g, left, 0, 50, 50, height - 100);
+            DrawMore(g, left, 0, 50, 50, height - 100);
 
             g.FillRectangle(Brushes.Black, 50, 50, width - 100, height - 100);
 
@@ -48,7 +48,7 @@ namespace TaleofMonsters.Forms.Items.Core
             }
         }
 
-        private static void drawMore(Graphics g, Image img, int x, int y, int width, int height)
+        private static void DrawMore(Graphics g, Image img, int x, int y, int width, int height)
         {
             if (img.Width < width)
             {
