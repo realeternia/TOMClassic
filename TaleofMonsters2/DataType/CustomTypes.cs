@@ -248,6 +248,8 @@
        // LastNpcPieceTime = 1003,
         LastQuestionTime = 1004,
         HeroExpPoint = 1100,//经验罐的exp
+
+        SceneQuestRandPeopleId = 1101,
     }
 
     internal enum MemPlayerFlagTypes

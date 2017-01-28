@@ -13,6 +13,19 @@ namespace TaleofMonsters.DataType.Peoples
 {
     internal static class PeopleBook
     {
+        public static int GetRandomPeopleId(int levelMin, int levelMax)
+        {
+            List<int> ids = new List<int>();
+            foreach (var peopleData in ConfigData.PeopleDict.Values)
+            {
+                if (peopleData.InRandomQuest && peopleData.Level>=levelMin && peopleData.Level<=levelMax)
+                {
+                    ids.Add(peopleData.Id);
+                }
+            }
+            return ids[MathTool.GetRandom(ids.Count)];
+        }
+
         public static Image GetPreview(int id)
         {
             PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(id);

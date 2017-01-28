@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Peoples;
+using TaleofMonsters.DataType.User;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
 
 namespace TaleofMonsters.MainItem.Quests
@@ -22,6 +24,10 @@ namespace TaleofMonsters.MainItem.Quests
             {
                 parm.RuleAddon = (PeopleFightRuleAddon)Enum.Parse(typeof (PeopleFightRuleAddon), evt.ParamList[0]);
                 parm.RuleLevel = int.Parse(evt.ParamList[1]);
+            }
+            if (enemyId == 1)//特殊处理标记
+            {
+                enemyId = UserProfile.InfoRecord.GetRecordById((int) MemPlayerRecordTypes.SceneQuestRandPeopleId);
             }
             PeopleBook.Fight(enemyId, config.BattleMap, level, parm, winCallback, failCallback, failCallback);
         }

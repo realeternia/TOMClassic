@@ -2,6 +2,7 @@
 using ConfigDatas;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;
+using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.MainItem.Quests.SceneQuests
@@ -74,6 +75,13 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
                     Script = string.Format("增加{0}(消耗{1})",
                         GetTradeStr(goldAdd, foodAdd, healthAdd, mentalAdd),
                         GetTradeStr(goldNeed, foodNeed, healthNeed, mentalNeed));
+                }
+                else if (parms[0] == "hasrival")
+                {
+                    int pid = PeopleBook.GetRandomPeopleId(level - 3, level + 3);
+                    Disabled = UserProfile.InfoRival.GetRivalState(pid).Avail;
+                    UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.SceneQuestRandPeopleId, pid);
+                    Script = string.Format("偶遇了{0}，我们来切磋一下吧",ConfigData.GetPeopleConfig(pid).Name);
                 }
             }
         }
