@@ -6,6 +6,7 @@ using NarlonLib.Log;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.User.Db;
@@ -65,13 +66,20 @@ namespace TaleofMonsters.MainItem.Scenes
                     switch (specialData.Type)
                     {
                         case "Quest":
-                            so = new SceneQuest(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Info); break;
+                            so = new SceneQuest(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Info); 
+                              so.Disabled = specialData.Disabled; break;
                         case "Warp":
-                            so = new SceneWarp(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Info, specialData.Info2); break;
+                            so = new SceneWarp(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Info, specialData.Info2);
+                            so.Disabled = specialData.Disabled;
+                            if (ConfigData.GetSceneConfig(id).Type == SceneTypes.Common && reason == SceneFreshReason.Warp)
+                            {
+                                specialData.Disabled = true;
+                                so.Disabled = true;//如果是切场景，切到战斗场景，所有传送门自动关闭
+                            }
+                            break;
                         default:
                             so = new SceneTile(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height); break;
                     }
-                    so.Disabled = specialData.Disabled;
                     so.MapSetting = specialData.MapSetting;
                 }
                 else
@@ -96,7 +104,6 @@ namespace TaleofMonsters.MainItem.Scenes
 
             int cellWidth = GameConstants.SceneTileStandardWidth*mapWidth/1422;
             int cellHeight = GameConstants.SceneTileStandardHeight*mapHeight/855;
-            int questCellCount = 0;
             for (int i = 0; i < height; i++)
             {
                 string[] data = sr.ReadLine().Split('\t');
@@ -132,8 +139,6 @@ namespace TaleofMonsters.MainItem.Scenes
                 posData.Id = int.Parse(data[0]);
                 posData.Type = data[1];
                 posData.MapSetting = true;
-                if (posData.Type == "Warp")
-                    posData.Disabled = reason == SceneFreshReason.Warp; //传送门默认是关闭的
                 if (data.Length > 2)
                     posData.Info = int.Parse(data[2]);
                 if (data.Length > 3)
@@ -154,7 +159,7 @@ namespace TaleofMonsters.MainItem.Scenes
                 }
             }
 
-            bool needRandomize = randQuestList.Count > 0;
+            bool needRandomize = ConfigData.GetSceneConfig(id).Type == SceneTypes.Common;
             if (needRandomize)
             {
                 if (randQuestList.Count > questCellCount)

@@ -356,6 +356,19 @@ namespace TaleofMonsters.MainItem.Scenes
             return count;
         }
 
+        public int GetWarpPosByMapId(int mapId)
+        {
+            foreach (var sceneObject in sceneItems)
+            {
+                var warp = sceneObject as SceneWarp;
+                if (warp != null && warp.TargetMap == mapId)
+                {
+                    return warp.Id;
+                }
+            }
+            return 0;
+        }
+
         private Image GetSceneImage()
         {
             var config = ConfigData.GetSceneConfig(UserProfile.InfoBasic.MapId);

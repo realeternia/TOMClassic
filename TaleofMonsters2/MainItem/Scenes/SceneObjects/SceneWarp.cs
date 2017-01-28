@@ -8,14 +8,12 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 { 
     internal class SceneWarp : SceneObject
     {
-        private int targetMap;
-        private int targetPos;
+        public int TargetMap { get; private set; }
 
         public SceneWarp(int wid, int wx, int wy, int wwidth, int wheight, int info, int info2)
             : base(wid, wx, wy, wwidth, wheight)
         {
-            targetMap = info;
-            targetPos = info2;
+            TargetMap = info;
         }
 
         private bool CanWarp()
@@ -38,8 +36,9 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                 return;
             }
 
-            UserProfile.InfoBasic.Position = targetPos;
-            Scene.Instance.ChangeMap(targetMap, true);
+            int lastMapId = UserProfile.InfoBasic.MapId;
+            Scene.Instance.ChangeMap(TargetMap, true);
+            UserProfile.InfoBasic.Position = Scene.Instance.GetWarpPosByMapId(lastMapId);
         }
 
         public override bool CanBeReplaced()
@@ -63,7 +62,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                 g.DrawImage(markQuest, destRect, 0, 0, markQuest.Width, markQuest.Height, GraphicsUnit.Pixel);
             }
 
-            var targetName = ConfigData.GetSceneConfig(targetMap).Name;
+            var targetName = ConfigData.GetSceneConfig(TargetMap).Name;
             Font fontName = new Font("ËÎÌו", 11*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             g.DrawString(targetName, fontName, Brushes.Black, X - drawWidth / 2 + Width / 8 + 2, Y - drawHeight / 2 + 1);
             g.DrawString(targetName, fontName, Disabled ? Brushes.Gray : Brushes.Wheat, X - drawWidth / 2 + Width / 8, Y - drawHeight / 2);

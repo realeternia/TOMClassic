@@ -137,11 +137,17 @@
         public const int Cup8 = 2;
         public const int Cup16 = 3;
     }
+    internal static class SceneTypes
+    {
+        public const int Town = 1;
+        public const int Common = 2;
+    }
+
     internal static class SceneQuestTypes
     {
         public const int Common = 1;
-        public const int MapSetting = 1;
-        public const int Hidden = 2;
+        public const int MapSetting = 2;
+        public const int Hidden = 3;
     }
 
     internal enum RegionTypes
