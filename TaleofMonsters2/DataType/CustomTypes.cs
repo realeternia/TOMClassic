@@ -267,5 +267,6 @@
     internal enum MemPlayerFlagTypes
     {
         SelectJob=1,
+        Saiba=2,
     }
 }

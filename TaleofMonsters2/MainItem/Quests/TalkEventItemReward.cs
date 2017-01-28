@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Control;
 using NarlonLib.Drawing;
@@ -117,6 +118,13 @@ namespace TaleofMonsters.MainItem.Quests
                     vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25,
                         60, 60, PictureRegionCellType.People, rivalId));
                     index++;
+                }
+            }
+            if (IsBonusAvail("flag"))
+            {
+                if (!string.IsNullOrEmpty(config.Flag))
+                {
+                    UserProfile.InfoRecord.SetFlag((uint)((MemPlayerFlagTypes)Enum.Parse(typeof(MemPlayerFlagTypes), config.Flag)));
                 }
             }
             if (IsBonusAvail("item"))
