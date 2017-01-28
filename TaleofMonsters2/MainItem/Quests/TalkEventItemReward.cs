@@ -8,6 +8,7 @@ using TaleofMonsters.DataType.Drops;
 using TaleofMonsters.DataType.Equips;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Others;
+using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
@@ -102,6 +103,16 @@ namespace TaleofMonsters.MainItem.Quests
                     index++;
                 }
             }
+            if (IsBonusAvail("rival"))
+            {
+                if (config.RivalId > 0)
+                {
+                    UserProfile.InfoRival.SetRivalAvail(config.RivalId);
+                    vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25,
+                        60, 60, PictureRegionCellType.People, config.RivalId));
+                    index++;
+                }
+            }
             if (IsBonusAvail("item"))
             {
                 if (config.RewardItem > 0)
@@ -190,10 +201,15 @@ namespace TaleofMonsters.MainItem.Quests
                         Image image = HItemBook.GetPreview(key);
                         tooltip.Show(image, parent, x, y);
                     }
-                    if (regionType == PictureRegionCellType.Equip)
+                    else if (regionType == PictureRegionCellType.Equip)
                     {
                         Equip equip = new Equip(key);
                         Image image = equip.GetPreview();
+                        tooltip.Show(image, parent, x, y);
+                    }
+                    else if (regionType == PictureRegionCellType.People)
+                    {
+                        Image image = PeopleBook.GetPreview(key);
                         tooltip.Show(image, parent, x, y);
                     }
                 }
