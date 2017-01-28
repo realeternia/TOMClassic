@@ -137,6 +137,12 @@
         public const int Cup8 = 2;
         public const int Cup16 = 3;
     }
+    internal static class SceneQuestTypes
+    {
+        public const int Common = 1;
+        public const int MapSetting = 1;
+        public const int Hidden = 2;
+    }
 
     internal enum RegionTypes
     {

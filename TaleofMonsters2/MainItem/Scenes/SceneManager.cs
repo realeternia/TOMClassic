@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using ConfigDatas;
+using NarlonLib.Log;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
@@ -156,7 +157,15 @@ namespace TaleofMonsters.MainItem.Scenes
             bool needRandomize = randQuestList.Count > 0;
             if (needRandomize)
             {
-                ListTool.Fill(randQuestList, 0, questCellCount);
+                if (randQuestList.Count > questCellCount)
+                {
+                    randQuestList.RemoveRange(questCellCount, randQuestList.Count - questCellCount);
+                    NLog.Warn(string.Format("GenerateSceneRandomInfo id={0} size too big {1}", id, randQuestList.Count));
+                }
+                else
+                {
+                    ListTool.Fill(randQuestList, 0, questCellCount);
+                }
                 ListTool.RandomShuffle(randQuestList);
             }
             
@@ -202,16 +211,6 @@ namespace TaleofMonsters.MainItem.Scenes
         {
             var config = ConfigData.GetSceneConfig(mapId);
             List<RLIdValue> datas = new List<RLIdValue>();
-            if (!string.IsNullOrEmpty(config.Quest))
-            {
-                string[] infos = config.Quest.Split('|');
-                foreach (var info in infos)
-                {
-                    string[] questData = info.Split(';');
-                    datas.Add(new RLIdValue { Id = SceneBook.GetSceneQuestByName(questData[0]),
-                        Value = int.Parse(questData[1]) });
-                }
-            }
             if (config.QPortal > 0)//地磁反转
                 datas.Add(new RLIdValue { Id = 42000002, Value = config.QPortal });
             if (config.QCardChange > 0)//卡牌商人
@@ -224,6 +223,31 @@ namespace TaleofMonsters.MainItem.Scenes
                 datas.Add(new RLIdValue { Id = 42000005, Value = config.QDoctor });
             if (config.QAngel > 0)//天使
                 datas.Add(new RLIdValue { Id = 42000006, Value = config.QAngel });
+
+            if (!string.IsNullOrEmpty(config.Quest))
+            {
+                string[] infos = config.Quest.Split('|');
+                foreach (var info in infos)
+                {
+                    string[] questData = info.Split(';');
+                    datas.Add(new RLIdValue { Id = SceneBook.GetSceneQuestByName(questData[0]),
+                        Value = int.Parse(questData[1]) });
+                }
+            }
+            if (!string.IsNullOrEmpty(config.QuestRandom))
+            {
+                string[] infos = config.Quest.Split('|');
+                foreach (var info in infos)
+                {
+                    string[] questData = info.Split(';');
+                    int rate = int.Parse(questData[1]);
+                    if (MathTool.GetRandom(100)<rate)//概率事件
+                    {
+                        datas.Add(new RLIdValue { Id = SceneBook.GetSceneQuestByName(questData[0]),
+                                Value = 1 });
+                    }
+                }
+            }
 
             return datas;
         }
