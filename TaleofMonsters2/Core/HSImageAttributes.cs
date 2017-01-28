@@ -1,15 +1,11 @@
+using System.Drawing.Imaging;
+
 namespace TaleofMonsters.Core
 {
     internal static class HSImageAttributes
     {
-        static System.Drawing.Imaging.ColorMatrix cm;
-
-        static System.Drawing.Imaging.ImageAttributes toGray;
-
-        public static System.Drawing.Imaging.ImageAttributes ToGray
-        {
-            get { return toGray; }
-        }
+        public static ImageAttributes ToGray { get; private set; }
+        public static ImageAttributes ToRed { get; private set; }
 
         static HSImageAttributes()
         {
@@ -25,9 +21,20 @@ namespace TaleofMonsters.Core
             new   float[]   {0,   0,   0,   1,   0},                  
             new   float[]   {0,   0,   0,   0,   1}
             };
-            cm = new System.Drawing.Imaging.ColorMatrix(matrix);
-            toGray = new System.Drawing.Imaging.ImageAttributes();
-            toGray.SetColorMatrix(cm);
+            ColorMatrix cm = new ColorMatrix(matrix);
+            ToGray = new ImageAttributes();
+            ToGray.SetColorMatrix(cm);
+
+            matrix = new float[][] { 
+            new   float[]   {1,   0,   0,   0,   0},                
+            new   float[]   {0,  0.6f,   0,   0,   0},                
+            new   float[]   {0,   0,  0.6f,   0,   0},                
+            new   float[]   {0,   0,   0,   1,   0},                  
+            new   float[]   {0,   0,   0,   0,   1}
+            };
+            cm = new ColorMatrix(matrix);
+            ToRed = new ImageAttributes();
+            ToRed.SetColorMatrix(cm);
         }
 
     }

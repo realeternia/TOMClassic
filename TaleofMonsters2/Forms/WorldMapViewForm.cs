@@ -39,21 +39,22 @@ namespace TaleofMonsters.Forms
             base.Init(width, height);
             worldMap = PicLoader.Read("Map", "worldmap.JPG");
             Graphics g = Graphics.FromImage(worldMap);
-            foreach (var mapIconConfig in ConfigData.SceneDict.Values)
+            foreach (var sceneConfig in ConfigData.SceneDict.Values)
             {
-                if (mapIconConfig.Icon=="")
+                if (sceneConfig.Icon=="")
                     continue;
 
-                Image image = PicLoader.Read("MapIcon", string.Format("{0}.PNG", mapIconConfig.Icon));
-                iconSizeDict[mapIconConfig.Id] = new Size(image.Width, image.Height);
-                Rectangle destRect = new Rectangle(mapIconConfig.IconX, mapIconConfig.IconY, image.Width, image.Height);
-                g.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
+                Image image = PicLoader.Read("MapIcon", string.Format("{0}.PNG", sceneConfig.Icon));
+                iconSizeDict[sceneConfig.Id] = new Size(image.Width, image.Height);
+                Rectangle destRect = new Rectangle(sceneConfig.IconX, sceneConfig.IconY, image.Width, image.Height);
+                g.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, 
+                    sceneConfig.Level > UserProfile.InfoBasic.Level ? HSImageAttributes.ToRed : HSImageAttributes.ToGray);
                 image.Dispose();
 
-                if (mapIconConfig.Id == UserProfile.InfoBasic.MapId)
+                if (sceneConfig.Id == UserProfile.InfoBasic.MapId)
                 {
-                    baseX = mapIconConfig.IconX - 750/2+30;
-                    baseY = mapIconConfig.IconY - 500 / 2+30;
+                    baseX = sceneConfig.IconX - 750/2+30;
+                    baseY = sceneConfig.IconY - 500 / 2+30;
                     baseX = MathTool.Clamp(baseX, 0, worldMap.Width - 750);
                     baseY = MathTool.Clamp(baseY, 0, worldMap.Height - 500);
                 }
@@ -226,7 +227,7 @@ namespace TaleofMonsters.Forms
 
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine(sceneConfig.Name, "Lime", 20);
-            tipData.AddTextNewLine(string.Format("地图等级: {0}", sceneConfig.Level), "White");
+            tipData.AddTextNewLine(string.Format("地图等级: {0}", sceneConfig.Level), sceneConfig.Level>UserProfile.InfoBasic.Level?"Red": "White");
 
             string[] icons = SceneBook.GetNPCIconsOnMap(id);
             if (icons.Length > 0)

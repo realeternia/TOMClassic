@@ -20,6 +20,7 @@ namespace TaleofMonsters.Core
 
         public const int SceneLevelNeed = 2000;
         public const int SceneAPNotEnough = 2001;
+        public const int SceneWarpNeedActive = 2002;
 
         public const int BagNotEnoughDimond = 3000;
 

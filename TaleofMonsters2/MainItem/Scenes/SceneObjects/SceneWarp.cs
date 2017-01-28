@@ -16,23 +16,20 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             TargetMap = info;
         }
 
-        private bool CanWarp()
-        {
-            if (Disabled)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
         public override void MoveEnd()
         {
             base.MoveEnd();
 
-            if (!CanWarp())
+            if (Disabled)
             {
-                MainForm.Instance.AddTip(HSErrorTypes.GetDescript(HSErrorTypes.SceneLevelNeed), "Red");
+                MainForm.Instance.AddTip(HSErrorTypes.GetDescript(HSErrorTypes.SceneWarpNeedActive), "Red");
+                return;
+            }
+
+            int sceneLevel = ConfigData.GetSceneConfig(TargetMap).Level;
+            if (sceneLevel > UserProfile.InfoBasic.Level)
+            {
+                MainForm.Instance.AddTip(string.Format(HSErrorTypes.GetDescript(HSErrorTypes.SceneLevelNeed), sceneLevel), "Red");
                 return;
             }
 
@@ -63,9 +60,16 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             }
 
             var targetName = ConfigData.GetSceneConfig(TargetMap).Name;
+            int sceneLevel = ConfigData.GetSceneConfig(TargetMap).Level;
+            Brush brush = Brushes.Wheat;
+            if (sceneLevel > UserProfile.InfoBasic.Level)
+            {
+                targetName = "µÈ¼¶" + sceneLevel;
+                brush = Brushes.Red;
+            }
             Font fontName = new Font("ËÎÌå", 11*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            g.DrawString(targetName, fontName, Brushes.Black, X - drawWidth / 2 + Width / 8 + 2, Y - drawHeight / 2 + 1);
-            g.DrawString(targetName, fontName, Disabled ? Brushes.Gray : Brushes.Wheat, X - drawWidth / 2 + Width / 8, Y - drawHeight / 2);
+            g.DrawString(targetName, fontName, Brushes.Black, X - drawWidth / 2 + Width / 8 + 1, Y - drawHeight / 2 + 1);
+            g.DrawString(targetName, fontName, Disabled ? Brushes.Gray : brush, X - drawWidth / 2 + Width / 8, Y - drawHeight / 2);
             fontName.Dispose();
             markQuest.Dispose();
         }
