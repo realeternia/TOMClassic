@@ -60,6 +60,10 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
             {
                 Disabled = Scene.Instance.HasSceneItemWithName(parms[1]);
             }
+            else if (parms[0] == "questfin")
+            {
+                Disabled = !Scene.Instance.IsSceneAllQuestOpened();
+            }
             else if (parms[0] == "cantrade")
             {
                 int multi = int.Parse(parms[1]);

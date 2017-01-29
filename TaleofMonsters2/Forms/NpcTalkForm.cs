@@ -20,7 +20,7 @@ namespace TaleofMonsters.Forms
 
         private ColorWordRegion colorWord;//问题区域
         private SceneQuestConfig config;
-        private List<string> answerList; //回答区
+        private List<SceneQuestBlock> answerList; //回答区
         private TalkEventItem evtItem; //事件交互区
 
         public int EventId { get; set; }
@@ -43,7 +43,7 @@ namespace TaleofMonsters.Forms
             else
                 eventLevel = ConfigData.GetSceneConfig(UserProfile.InfoBasic.MapId).Level;
             interactBlock = SceneManager.GetQuestData(EventId, eventLevel, config.Script);
-            answerList = new List<string>();
+            answerList = new List<SceneQuestBlock>();
             SetupQuestItem();
         }
 
@@ -64,7 +64,8 @@ namespace TaleofMonsters.Forms
                     else if (interactBlock == null)
                     {
                         answerList.Clear();
-                        answerList.Add("结束");
+                        var block = new SceneQuestBlock(EventId, eventLevel, "结束", 999, 999);
+                        answerList.Add(block);
                     }
                 }
                 Invalidate();
@@ -88,7 +89,7 @@ namespace TaleofMonsters.Forms
                     return;
                 }
 
-                interactBlock = interactBlock.Children[tar]; //对话换页
+                interactBlock = answerList[tar]; //对话换页
                 evtItem = null;
                 if (interactBlock.Children.Count == 1 && interactBlock.Children[0] is SceneQuestSay)
                 {
@@ -116,7 +117,7 @@ namespace TaleofMonsters.Forms
             {
                 if (sceneQuestBlock.Disabled)
                     continue;
-                answerList.Add(sceneQuestBlock.Script);
+                answerList.Add(sceneQuestBlock);
             }
         }
 
@@ -152,7 +153,7 @@ namespace TaleofMonsters.Forms
                         {
                             e.Graphics.FillRectangle(Brushes.DarkBlue, 10, id * 20 + Height - 10 - answerList.Count * 20, Width - 20, 20);
                         }
-                        e.Graphics.DrawString(word, font, Brushes.Wheat, 22, id * 20 + Height - 10 - answerList.Count * 20 + 2);
+                        e.Graphics.DrawString(word.Script, font, Brushes.Wheat, 22, id * 20 + Height - 10 - answerList.Count * 20 + 2);
 
                         id++;
                     }

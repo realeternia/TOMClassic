@@ -386,6 +386,19 @@ namespace TaleofMonsters.MainItem.Scenes
             return false;
         }
 
+        public bool IsSceneAllQuestOpened()
+        {
+            foreach (var sceneObject in sceneItems)
+            {
+                var quest = sceneObject as SceneQuest;
+                if (quest != null && quest.EventId > 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         private Image GetSceneImage()
         {
             var config = ConfigData.GetSceneConfig(UserProfile.InfoBasic.MapId);

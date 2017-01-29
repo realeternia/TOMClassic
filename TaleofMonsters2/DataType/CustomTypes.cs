@@ -268,5 +268,6 @@
     {
         SelectJob=1,
         Saiba=2,
+        Aolai=3
     }
 }
