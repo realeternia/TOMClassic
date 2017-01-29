@@ -241,7 +241,7 @@ namespace TaleofMonsters.MainItem.Scenes
             }
             if (!string.IsNullOrEmpty(config.QuestRandom))
             {
-                string[] infos = config.Quest.Split('|');
+                string[] infos = config.QuestRandom.Split('|');
                 foreach (var info in infos)
                 {
                     string[] questData = info.Split(';');
