@@ -5,7 +5,6 @@ using ConfigDatas;
 using ControlPlus;
 using NarlonLib.Control;
 using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.DataType.Tasks;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
@@ -33,7 +32,7 @@ namespace TaleofMonsters.Forms
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
             int id = 1;
-            tids = TaskBook.GetTaskByLevels();
+         //   tids = TaskBook.GetTaskByLevels();
             foreach (int tid in tids)
             {
                 TaskConfig taskConfig = ConfigData.GetTaskConfig(tid);
@@ -53,7 +52,7 @@ namespace TaleofMonsters.Forms
             {
                 if (UserProfile.InfoBag.PayDiamond(5))
                 {
-                    UserProfile.InfoTask.EndTask(selectTid);
+                  //  UserProfile.InfoTask.EndTask(selectTid);
                 }
             }
         }
@@ -62,10 +61,10 @@ namespace TaleofMonsters.Forms
         {
             if (id > 0)
             {
-                if (UserProfile.InfoTask.GetTaskStateById(key) > 0)
+              //  if (UserProfile.InfoTask.GetTaskStateById(key) > 0)
                 {
-                    Image image = TaskBook.GetPreview(key);
-                    tooltip.Show(image, this, x, y);
+                  //  Image image = TaskBook.GetPreview(key);
+                  //  tooltip.Show(image, this, x, y);
                 }
             }
         }
@@ -100,7 +99,7 @@ namespace TaleofMonsters.Forms
                 if (fid!=0)
                 {
                     RLXY dest = ConfigData.GetTaskConfig(fid).Position;
-                    Pen pen = new Pen(UserProfile.InfoTask.GetTaskStateById(tid) > 0 ? Color.Lime : Color.Gray, 2);
+                    Pen pen = new Pen(Color.Lime, 2);
                     int yoff = 3;
                     if (src.Y!=dest.Y)
                     {

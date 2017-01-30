@@ -95,11 +95,6 @@ namespace TaleofMonsters.Forms.MiniGame
 
         public void EndGame()
         {
-            if (!UserProfile.Profile.InfoMinigame.Has(type))
-            {
-                UserProfile.Profile.InfoMinigame.Add(type);
-            }
-
             string hint;
             if (!isFail && sci >= 5000)
             {

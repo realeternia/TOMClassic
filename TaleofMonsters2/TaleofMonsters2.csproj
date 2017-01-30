@@ -212,7 +212,6 @@
     <Compile Include="DataType\HeroSkills\HeroSkillAttrBook.cs" />
     <Compile Include="DataType\Others\GameResourceBook.cs" />
     <Compile Include="DataType\Others\LevelInfoBook.cs" />
-    <Compile Include="DataType\Tasks\TaskState.cs" />
     <Compile Include="DataType\User\InfoAchieve.cs" />
     <Compile Include="DataType\User\InfoBag.cs" />
     <Compile Include="DataType\User\InfoBasic.cs" />
@@ -220,11 +219,10 @@
     <Compile Include="DataType\User\InfoEquip.cs" />
     <Compile Include="DataType\User\InfoFarm.cs" />
     <Compile Include="DataType\User\InfoMaze.cs" />
-    <Compile Include="DataType\User\InfoMinigame.cs" />
+    <Compile Include="DataType\User\InfoQuest.cs" />
     <Compile Include="DataType\User\InfoRecord.cs" />
     <Compile Include="DataType\User\InfoRival.cs" />
     <Compile Include="DataType\User\InfoSkill.cs" />
-    <Compile Include="DataType\User\InfoTask.cs" />
     <Compile Include="DataType\User\Db\DbMergeData.cs" />
     <Compile Include="DataType\Others\Question.cs" />
     <Compile Include="DataType\Others\QuestionBook.cs" />
@@ -969,7 +967,6 @@
     <Compile Include="Forms\TaskForm.Designer.cs">
       <DependentUpon>TaskForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataType\Tasks\TaskBook.cs" />
     <Compile Include="DataType\Others\TileBook.cs" />
     <Compile Include="Controler\Battle\Components\TimeViewer.cs">
       <SubType>UserControl</SubType>

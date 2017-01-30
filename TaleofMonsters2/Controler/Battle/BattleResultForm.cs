@@ -135,7 +135,7 @@ namespace TaleofMonsters.Controler.Battle
                 UserProfile.InfoRival.AddRivalState(rightId, true);
                 UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalWin, 1);
                 UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.ContinueWin, 1);
-                UserProfile.InfoTask.UpdateTaskAddonWin(rightId, BattleManager.Instance.PlayerManager.RightPlayer.Level, 1);
+             //   UserProfile.InfoTask.UpdateTaskAddonWin(rightId, BattleManager.Instance.PlayerManager.RightPlayer.Level, 1);
             }
             else
             {

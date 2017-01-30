@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using AltSerialize;
-using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.Others;
-using TaleofMonsters.DataType.Tasks;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.Forms.TourGame;
@@ -89,13 +87,12 @@ namespace TaleofMonsters.Core
             register.Register(typeof(DbFarmState), 8);
             register.Register(typeof(DbEquip), 9);
             register.Register(typeof(DbCardProduct), 10);
-            register.Register(typeof(InfoMinigame), 11);
+            register.Register(typeof(InfoQuest), 11);
             register.Register(typeof(InfoSkill), 12);
             register.Register(typeof(MatchResult), 13);
             register.Register(typeof(InfoFarm), 14);
             register.Register(typeof(DbSceneSpecialPosData), 16);
             register.Register(typeof(DbDeckData), 18);
-            register.Register(typeof(InfoTask), 19);
             register.Register(typeof(InfoMaze), 20);
             register.Register(typeof(DbMergeData), 21);
             register.Register(typeof(DbRivalState), 23);
@@ -106,7 +103,6 @@ namespace TaleofMonsters.Core
             register.Register(typeof(InfoRecord), 28);
             register.Register(typeof(InfoCard), 29);
             register.Register(typeof(GameResource), 30);
-            register.Register(typeof(TaskState), 31);
 
             //在此处上面添加
             // register.RegisterEnum<CardProductMarkTypes>(23);

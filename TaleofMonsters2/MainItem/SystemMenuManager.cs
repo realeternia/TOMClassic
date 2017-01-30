@@ -220,14 +220,6 @@ namespace TaleofMonsters.MainItem
                     MainForm.Instance.DealPanel(new FarmForm());
                     break;
                 case SystemMenuIds.GameUpToNumber:
-                    if (UserProfile.Profile.InfoMinigame.Has((int)id))
-                    {
-                        if (MessageBoxEx2.Show("是否花5钻石再试一次?") != DialogResult.OK || !UserProfile.InfoBag.PayDiamond(5))
-                        {
-                            return;
-                        }
-                        UserProfile.Profile.InfoMinigame.Remove((int)id);
-                    }
                     PanelManager.ShowGameWindow(id);
                     break;
                 case SystemMenuIds.GameIconsCatch:

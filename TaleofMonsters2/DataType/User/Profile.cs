@@ -22,8 +22,6 @@ namespace TaleofMonsters.DataType.User
         public InfoCard InfoCard;
          [FieldIndex(Index = 6)]
         public InfoSkill InfoSkill;
-         [FieldIndex(Index = 7)]
-        public InfoTask InfoTask;
          [FieldIndex(Index = 8)]
         public InfoRival InfoRival;
          [FieldIndex(Index = 9)]
@@ -31,7 +29,7 @@ namespace TaleofMonsters.DataType.User
          [FieldIndex(Index = 10)]
          public InfoEquip InfoEquip;
         [FieldIndex(Index = 11)]
-        public InfoMinigame InfoMinigame;
+        public InfoQuest InfoQuest;
          [FieldIndex(Index = 12)]
          public InfoRecord InfoRecord;
          [FieldIndex(Index = 13)]
@@ -47,12 +45,11 @@ namespace TaleofMonsters.DataType.User
             InfoBag = new InfoBag();
             InfoEquip = new InfoEquip();
             InfoCard = new InfoCard();
-            InfoTask = new InfoTask();
             InfoSkill = new InfoSkill();
             InfoRival=new InfoRival();
             InfoFarm=new InfoFarm();
             InfoMaze=new InfoMaze();
-            InfoMinigame=new InfoMinigame();
+            InfoQuest=new InfoQuest();
             InfoRecord=new InfoRecord();
             InfoAchieve=new InfoAchieve();
             InfoWorld = new InfoWorld();
@@ -74,7 +71,6 @@ namespace TaleofMonsters.DataType.User
                 case 4: return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.TotalSummon);
                 case 5: return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.TotalWeapon);
                 case 6: return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.TotalSpell);
-                case 7: return InfoTask.GetTaskDoneCount();
                 case 8: return InfoRival.GetRivalAvailCount();
                 case 9: return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.TotalOnline);
                 case 11: return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.TotalPick);
@@ -201,8 +197,6 @@ namespace TaleofMonsters.DataType.User
 
         public void OnNewDay()
         {
-            UserProfile.Profile.InfoMinigame.Clear();
-
             int inter = TimeTool.DateTimeToUnixTime(DateTime.Now) - InfoBasic.LastLoginTime;
             InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalOnline, inter / 60);
             InfoBasic.LastLoginTime = TimeTool.DateTimeToUnixTime(DateTime.Now);

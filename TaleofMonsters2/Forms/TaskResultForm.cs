@@ -10,7 +10,6 @@ using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Others;
-using TaleofMonsters.DataType.Tasks;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Equips;
@@ -94,8 +93,8 @@ namespace TaleofMonsters.Forms
 
         private void buttonClose_Click(object sender, EventArgs e)
         {
-            TaskBook.Award(taskId);
-            UserProfile.InfoTask.EndTask(taskId);
+       //     TaskBook.Award(taskId);
+       //     UserProfile.InfoTask.EndTask(taskId);
             Close();
         }
 
@@ -120,10 +119,10 @@ namespace TaleofMonsters.Forms
                 TaskConfig taskConfig = ConfigData.GetTaskConfig(taskId);
                 e.Graphics.DrawString(taskConfig.Name, font, Brushes.White, 101, 51);
                 GameResource ges = GameResource.Parse(taskConfig.Resource);
-                ges.Add(GameResourceType.Gold, TaskBook.GetMoneyReal(taskId));
+            //    ges.Add(GameResourceType.Gold, TaskBook.GetMoneyReal(taskId));
                 int[] res = ges.ToArray();
                 e.Graphics.DrawString(string.Format("{0}", ges.Gold), font2, Brushes.White, 155, 103);
-                e.Graphics.DrawString(string.Format("{0}", TaskBook.GetExpReal(taskId)), font2, Brushes.White, 155, 123);
+                e.Graphics.DrawString(string.Format("{0}", 111), font2, Brushes.White, 155, 123);
                 for (int i = 0; i < 6; i++)
                 {
                     e.Graphics.DrawString(res[i + 1].ToString(), font2, Brushes.Pink, 135 + 68 * i, 159);

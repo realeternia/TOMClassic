@@ -54,14 +54,14 @@ namespace TaleofMonsters.DataType.Mazes
 
             int dtype = cond[0];
             int dinfo = cond[1];
-            if (dtype == 0)
-            {
-                return UserProfile.InfoTask.GetTaskStateById(dinfo) == 0;
-            }
-            if (dtype == 1)
-            {
-                return UserProfile.InfoTask.GetTaskStateById(dinfo) == 1;
-            }
+            //if (dtype == 0)
+            //{
+            //    return UserProfile.InfoTask.GetTaskStateById(dinfo) == 0;
+            //}
+            //if (dtype == 1)
+            //{
+            //    return UserProfile.InfoTask.GetTaskStateById(dinfo) == 1;
+            //}
 
             return false;
         }
@@ -76,7 +76,7 @@ namespace TaleofMonsters.DataType.Mazes
             }
             else if (type == "task")
             {
-                UserProfile.InfoTask.SetTaskStateById(infos[0], 2);
+            //    UserProfile.InfoTask.SetTaskStateById(infos[0], 2);
                 panel.AddFlowCenter(string.Format("任务{0}达成", ConfigData.GetTaskConfig(infos[0]).Name), "White");
             }
             else if (type == "mon")

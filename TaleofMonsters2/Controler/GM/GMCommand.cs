@@ -47,7 +47,6 @@ namespace TaleofMonsters.Controler.GM
                             UserProfile.InfoBag.AddResource(new int[] { 0, v, v, v, v, v, v });
                         } break;
                     case "dmd": if (data.Length == 2) UserProfile.InfoBag.AddDiamond(int.Parse(data[1])); break;
-                    case "tsk": if (data.Length == 2) UserProfile.InfoTask.BeginTask(int.Parse(data[1])); break;
                     case "acv": if (data.Length == 2) UserProfile.Profile.InfoAchieve.SetAchieve(int.Parse(data[1])); break;
                     case "view": if (data.Length == 3) PeopleBook.ViewMatch(int.Parse(data[1]), int.Parse(data[2]), "default", TileConfig.Indexer.DefaultTile); break;
                     case "fbat": if (data.Length == 3)

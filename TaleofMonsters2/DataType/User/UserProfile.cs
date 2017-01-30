@@ -33,11 +33,6 @@ namespace TaleofMonsters.DataType.User
             get { return Profile.InfoSkill; }
         }
 
-        public static InfoTask InfoTask
-        {
-            get { return Profile.InfoTask; }
-        }
-
         public static InfoRival InfoRival
         {
             get { return Profile.InfoRival; }
@@ -46,6 +41,11 @@ namespace TaleofMonsters.DataType.User
         public static InfoRecord InfoRecord
         {
             get { return Profile.InfoRecord; }
+        }
+
+        public static InfoQuest InfoQuest
+        {
+            get { return Profile.InfoQuest; }
         }
 
         public static InfoWorld InfoWorld
