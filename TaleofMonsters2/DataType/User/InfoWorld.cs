@@ -322,5 +322,28 @@ namespace TaleofMonsters.DataType.User
                 }
             }
         }
+        public void UpdatePosInfo(int id, int info, bool mapsetting)
+        {
+            foreach (var posData in PosInfos)
+            {
+                if (posData.Id == id)
+                {
+                    posData.Info = info;
+                    posData.MapSetting = mapsetting;
+                    break;
+                }
+            }
+        }
+        public void UpdatePosMapSetting(int id, bool mapsetting)
+        {
+            foreach (var posData in PosInfos)
+            {
+                if (posData.Id == id)
+                {
+                    posData.MapSetting = mapsetting;
+                    break;
+                }
+            }
+        }
     }
 }

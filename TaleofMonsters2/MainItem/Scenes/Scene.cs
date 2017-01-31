@@ -496,6 +496,7 @@ namespace TaleofMonsters.MainItem.Scenes
                     new SceneQuest(targetCell.Id, targetCell.X, targetCell.Y, targetCell.Width, targetCell.Height, qId);
                 sceneItems[index].MapSetting = true;
                 UserProfile.InfoBasic.Position = targetCell.Id;
+                UserProfile.InfoWorld.UpdatePosInfo(targetCell.Id, qId, true);
                 parent.Invalidate();
                 break;
             }
@@ -516,6 +517,7 @@ namespace TaleofMonsters.MainItem.Scenes
                 sceneItems[index] =
                     new SceneQuest(targetCell.Id, targetCell.X, targetCell.Y, targetCell.Width, targetCell.Height, qId);
                 sceneItems[index].MapSetting = true;
+                UserProfile.InfoWorld.UpdatePosInfo(targetCell.Id, qId, true);
                 break;
             }
            

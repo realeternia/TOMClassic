@@ -57,7 +57,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                 }
                 else
                 {//多次触发都变成预设
-                    MapSetting = true;
+                    SetMapSetting(true);
                 }
             }
         }

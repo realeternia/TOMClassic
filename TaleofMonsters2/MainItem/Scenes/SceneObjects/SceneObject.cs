@@ -30,6 +30,13 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             UserProfile.Profile.InfoWorld.UpdatePosEnable(Id, isEnable);
         }
 
+        public void SetMapSetting(bool isSet)
+        {
+            MapSetting = isSet;
+
+            UserProfile.Profile.InfoWorld.UpdatePosMapSetting(Id, isSet);
+        }
+
         public bool IsMouseIn(int mx, int my)
         {
             if (my < Y + Height / 2 - Height || my > Y + Height / 2)
