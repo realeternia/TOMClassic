@@ -57,7 +57,7 @@ namespace TaleofMonsters.MainItem.Quests
            // g.DrawRectangle(Pens.White, pos);
 
             Font font = new Font("宋体", 11 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            g.DrawString("奖励", font, Brushes.White, pos.X + 3, pos.Y + 3);
+            g.DrawString("请等待", font, Brushes.White, pos.X + 3, pos.Y + 3);
             font.Dispose();
 
             g.DrawLine(Pens.Wheat, pos.X + 3, pos.Y + 3 + 20, pos.X + 3 + 400, pos.Y + 3 + 20);
