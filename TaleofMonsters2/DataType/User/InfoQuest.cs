@@ -6,33 +6,33 @@ namespace TaleofMonsters.DataType.User
     public class InfoQuest
     {
         [FieldIndex(Index = 2)]
-        private readonly Dictionary<int, int> sceneQuestReplace;
+        public Dictionary<int, int> SceneQuestReplace;
 
         public InfoQuest()
         {
-            sceneQuestReplace = new Dictionary<int, int>();
+            SceneQuestReplace = new Dictionary<int, int>();
         }
 
         public int CheckReplace(int qid)
         {
-            if (sceneQuestReplace.ContainsKey(qid))
+            if (SceneQuestReplace.ContainsKey(qid))
             {
-                return sceneQuestReplace[qid];
+                return SceneQuestReplace[qid];
             }
             return qid;
         }
 
         public void AddReplace(int qid, int replaceId)
         {
-            foreach (var picked in sceneQuestReplace)
+            foreach (var picked in SceneQuestReplace)
             {
                 if (picked.Value == qid)
                 {
-                    sceneQuestReplace[picked.Key] = replaceId;//级联更新
+                    SceneQuestReplace[picked.Key] = replaceId;//级联更新
                     return;
                 }
             }
-            sceneQuestReplace[qid] = replaceId;
+            SceneQuestReplace[qid] = replaceId;
         }
     }
 }

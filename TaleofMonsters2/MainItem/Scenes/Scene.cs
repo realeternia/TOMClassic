@@ -391,7 +391,7 @@ namespace TaleofMonsters.MainItem.Scenes
             foreach (var sceneObject in sceneItems)
             {
                 var quest = sceneObject as SceneQuest;
-                if (quest != null && quest.EventId > 0)
+                if (quest != null && !quest.MapSetting && !quest.Disabled)
                 {
                     return false;
                 }

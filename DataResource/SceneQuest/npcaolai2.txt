@@ -1,0 +1,13 @@
+﻿s守护着庄稼地也不是一项容易的工作，你是无法体会到的
+	a确实
+		end
+	a|rivalavailno|我想挑战你。
+		efight
+			r0
+				s你太弱了，小朋友。
+					a继续
+						end
+			r1
+				s你击败了对手，你非常满意。
+					a继续
+						ereward

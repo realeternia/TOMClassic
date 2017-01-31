@@ -66,11 +66,11 @@ namespace TaleofMonsters.MainItem.Scenes
                     switch (specialData.Type)
                     {
                         case "Quest":
-                            var resultId = UserProfile.InfoQuest.CheckReplace(scenePosData.Id);
-                            so = new SceneQuest(resultId, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Info); 
+                            var questId = UserProfile.InfoQuest.CheckReplace(specialData.Info);
+                            so = new SceneQuest(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, questId); 
                               so.Disabled = specialData.Disabled; break;
                         case "Warp":
-                            so = new SceneWarp(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Info, specialData.Info2);
+                            so = new SceneWarp(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Info);
                             so.Disabled = specialData.Disabled;
                             if (ConfigData.GetSceneConfig(id).Type == SceneTypes.Common && reason == SceneFreshReason.Warp)
                             {
