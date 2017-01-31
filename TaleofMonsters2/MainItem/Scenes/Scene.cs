@@ -369,6 +369,18 @@ namespace TaleofMonsters.MainItem.Scenes
             return 0;
         }
 
+        public SceneObject GetObjectByPos(int pos)
+        {
+            foreach (var sceneObject in sceneItems)
+            {
+                if (sceneObject != null && sceneObject.Id == pos)
+                {
+                    return sceneObject;
+                }
+            }
+            return null;
+        }
+
         public bool HasSceneItemWithName(string name)
         {
             foreach (var sceneObject in sceneItems)
@@ -454,12 +466,50 @@ namespace TaleofMonsters.MainItem.Scenes
             parent.Invalidate();
         }
 
-        public void QuestNext(string qname)
-        {
+        public void HiddenWay()
+        {    
+            int fromId = UserProfile.InfoBasic.Position;
+            foreach (var sceneObject in sceneItems)
+            {
+                if (sceneObject is SceneQuest)
+                {
+                    var config = ConfigData.GetSceneQuestConfig((sceneObject as SceneQuest).EventId);
+                    if (config.Ename == "hiddeway" && sceneObject.Id != fromId)
+                    {
+                        UserProfile.InfoBasic.Position = sceneObject.Id;
+                        parent.Invalidate();
+                        return;
+                    }
+                }
+            }
+
             while (true)
             {
                 int index = MathTool.GetRandom(sceneItems.Count);
                 var targetCell = sceneItems[index];
+                if (targetCell.Id == fromId)
+                    continue;
+                if (!targetCell.CanBeReplaced())
+                    continue;
+                int qId = SceneBook.GetSceneQuestByName("hiddeway");
+                sceneItems[index] =
+                    new SceneQuest(targetCell.Id, targetCell.X, targetCell.Y, targetCell.Width, targetCell.Height, qId);
+                sceneItems[index].MapSetting = true;
+                UserProfile.InfoBasic.Position = targetCell.Id;
+                parent.Invalidate();
+                break;
+            }
+        }
+
+        public void QuestNext(string qname)
+        {
+            int fromId = UserProfile.InfoBasic.Position;
+            while (true)
+            {
+                int index = MathTool.GetRandom(sceneItems.Count);
+                var targetCell = sceneItems[index];
+                if (targetCell.Id == fromId)
+                    continue;
                 if (!targetCell.CanBeReplaced())
                     continue;
                 int qId = SceneBook.GetSceneQuestByName(qname);

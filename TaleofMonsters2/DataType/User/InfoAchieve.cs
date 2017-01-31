@@ -5,24 +5,24 @@ namespace TaleofMonsters.DataType.User
 {
     public class InfoAchieve
     {
-        [FieldIndex(Index = 1)] private Dictionary<int, bool> achieves;
+        [FieldIndex(Index = 1)] public Dictionary<int, bool> Achieves;
 
         public InfoAchieve()
         {
-            achieves = new Dictionary<int, bool>();
+            Achieves = new Dictionary<int, bool>();
         }
 
         public void SetAchieve(int id)
         {
-            if (!achieves.ContainsKey(id))
+            if (!Achieves.ContainsKey(id))
             {
-                achieves.Add(id, true);
+                Achieves.Add(id, true);
             }
         }
 
         public bool GetAchieve(int id)
         {
-            if (achieves.ContainsKey(id))
+            if (Achieves.ContainsKey(id))
             {
                 return true;
             }

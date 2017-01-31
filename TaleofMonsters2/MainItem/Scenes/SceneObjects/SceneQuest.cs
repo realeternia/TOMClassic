@@ -55,6 +55,10 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                 {
                     SetEnable(false);
                 }
+                else
+                {//多次触发都变成预设
+                    MapSetting = true;
+                }
             }
         }
 
