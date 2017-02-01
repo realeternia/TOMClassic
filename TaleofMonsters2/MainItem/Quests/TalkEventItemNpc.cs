@@ -25,6 +25,10 @@ namespace TaleofMonsters.MainItem.Quests
             {
                 MainForm.Instance.DealPanel(new MergeWeaponForm());
             }
+            else if (e.ParamList[0] == "farm")
+            {
+                MainForm.Instance.DealPanel(new FarmForm());
+            }
         }
 
         public override void OnFrame(int tick)
