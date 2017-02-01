@@ -1,6 +1,7 @@
 using System.Drawing;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.MainItem.Blesses;
 
 namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 {
@@ -55,14 +56,15 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                 return false;
             }
 
-            if (UserProfile.Profile.InfoBasic.FoodPoint >= GameConstants.SceneMoveCost)
+            uint moveCost = BlessManager.GetSceneMove(GameConstants.SceneMoveCost);
+            if (UserProfile.Profile.InfoBasic.FoodPoint >= moveCost)
             {
-                UserProfile.InfoBasic.SubFood(GameConstants.SceneMoveCost);
-                UserProfile.InfoBasic.AddHealth(GameConstants.SceneMoveCost);
+                UserProfile.InfoBasic.SubFood(moveCost);
+                UserProfile.InfoBasic.AddHealth(moveCost);
             }
             else
             {
-                UserProfile.InfoBasic.SubHealth(GameConstants.SceneMoveCost*2);
+                UserProfile.InfoBasic.SubHealth(moveCost * 2);
             }
             
 
@@ -72,6 +74,8 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
         public virtual void MoveEnd()
         {
             UserProfile.Profile.InfoBasic.Position = Id;
+
+            BlessManager.OnMove();
         }
 
         public virtual bool CanBeReplaced()

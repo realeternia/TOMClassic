@@ -109,6 +109,11 @@ namespace TaleofMonsters.Forms
                 cmd = "cure";
                 hint = "回复所有的健康，食物和精神";
             }
+            if (textBoxTitle.Text.Contains("bls"))
+            {
+                cmd = "bls";
+                hint = "添加一个祝福/诅咒[p1]";
+            }
             Invalidate();
         }
 

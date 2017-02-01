@@ -7,6 +7,7 @@ using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.Forms;
+using TaleofMonsters.MainItem.Blesses;
 using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.Controler.GM
@@ -74,6 +75,8 @@ namespace TaleofMonsters.Controler.GM
                         MainForm.Instance.DealPanel(sw); break;
                     case "cure": UserProfile.InfoBasic.MentalPoint=100; UserProfile.InfoBasic.HealthPoint=100;
                         UserProfile.InfoBasic.FoodPoint = 100;break;
+                    case "bls": if (data.Length == 2)
+                        BlessManager.AddBless(int.Parse(data[1]), 10); break;
                 }
             }
             catch (FormatException) { }

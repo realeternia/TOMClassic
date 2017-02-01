@@ -14,6 +14,7 @@ using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Regions;
+using TaleofMonsters.MainItem.Blesses;
 using TaleofMonsters.MainItem.Scenes.SceneObjects;
 
 namespace TaleofMonsters.MainItem.Scenes
@@ -68,6 +69,12 @@ namespace TaleofMonsters.MainItem.Scenes
             
             vRegion.AddRegion(new SubVirtualRegion(10, 0, 0, 150, 50));//人物头像
             vRegion.AddRegion(new SubVirtualRegion(11, width - 145, 3, 115, 32));//场景信息
+
+            for (int i = 0; i < 10; i++)
+            {//bless
+                vRegion.AddRegion(new PictureRegion(20+i, i*60+10, 55, 50, 50, PictureRegionCellType.Bless, 0));
+            }
+
             vRegion.RegionEntered += virtualRegion_RegionEntered;
             vRegion.RegionLeft += virtualRegion_RegionLeft;
         }
@@ -79,6 +86,20 @@ namespace TaleofMonsters.MainItem.Scenes
             mainTopTitle = PicLoader.Read("System", "MainTopTitle.PNG");
             mainBottom = PicLoader.Read("System", "MainBottom.JPG");
             miniBack = PicLoader.Read("System", "MiniBack.PNG");
+        }
+
+        private void OnBlessChange()
+        {
+            for (int i = 0; i < 10; i++)
+            {//bless
+                vRegion.SetRegionKey(20 + i, 0);
+            }
+            int index = 0;
+            foreach (var key in UserProfile.InfoWorld.Blesses.Keys)
+            {
+                vRegion.SetRegionKey(20 + index++, key);
+            }
+            parent.Invalidate(new Rectangle(10, 55, 600,50));
         }
 
         public void ChangeMap(int mapid, bool isWarp)
@@ -94,6 +115,9 @@ namespace TaleofMonsters.MainItem.Scenes
 
             UserProfile.InfoBasic.MapId = mapid;
             UserProfile.Profile.OnSwitchScene();
+
+            OnBlessChange();
+            BlessManager.Update = OnBlessChange;
             
             SystemMenuManager.ResetIconState(); //reset main icon state todo remove check
 
@@ -202,7 +226,15 @@ namespace TaleofMonsters.MainItem.Scenes
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
-            if (id == 10)
+            if (id >= 20)
+            {
+                if (key > 0)
+                {
+                    Image image = BlessManager.GetBlessImage(key);
+                    tooltip.Show(image, parent, x, y);
+                }
+            }
+            else if (id == 10)
             {
                 Image image = GetPlayerImage();
                 tooltip.Show(image, parent, 0,50);
@@ -302,6 +334,8 @@ namespace TaleofMonsters.MainItem.Scenes
 
             g.DrawImage(miniMap, width-160, 43, 150, 150);
             g.DrawImage(miniBack, width - 190, 38, 185, 160);
+
+            vRegion.Draw(g);
 
             DrawCellAndToken(g);
         }

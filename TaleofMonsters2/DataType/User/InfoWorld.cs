@@ -31,6 +31,8 @@ namespace TaleofMonsters.DataType.User
         public List<DbMergeData> MergeMethods;
         [FieldIndex(Index = 7)]
         public List<DbSceneSpecialPosData> PosInfos; //记录当前场景随机后的格子信息
+        [FieldIndex(Index = 8)]
+        public Dictionary<int, int> Blesses;
 
 
         public InfoWorld()
@@ -40,6 +42,7 @@ namespace TaleofMonsters.DataType.User
             Ranks = new Dictionary<int, int>();
             MergeMethods = new List<DbMergeData>();
             PosInfos = new List<DbSceneSpecialPosData>();
+            Blesses = new Dictionary<int, int>();
         }
 
         internal DbCardProduct[] GetCardProductsByType(CardTypes type)

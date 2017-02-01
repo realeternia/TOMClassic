@@ -94,6 +94,10 @@ namespace TaleofMonsters.Forms.Items.Regions
                         pen.Dispose();
                     };
                 }
+                else if (type == PictureRegionCellType.Bless)
+                {
+                    img = DataType.Blesses.BlessBook.GetBlessImage(nid);
+                }
 
                 if (img != null)
                 {
@@ -157,5 +161,6 @@ namespace TaleofMonsters.Forms.Items.Regions
         Task,
         CardQual,
         Job,
+        Bless,
     }
 }
