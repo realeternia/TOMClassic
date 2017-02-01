@@ -360,7 +360,7 @@
     <EmbeddedResource Include="SceneQuest\collector.txt" />
     <EmbeddedResource Include="SceneQuest\mushroom.txt" />
     <EmbeddedResource Include="SceneQuest\oldtree.txt" />
-    <EmbeddedResource Include="SceneQuest\sandpile.txt" />
+    <EmbeddedResource Include="SceneQuest\orehole.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SceneQuest\piecer.txt" />
@@ -575,6 +575,9 @@
   <ItemGroup>
     <EmbeddedResource Include="SceneQuest\sandflow.txt" />
     <EmbeddedResource Include="SceneQuest\swamp.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SceneQuest\coldwind.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
