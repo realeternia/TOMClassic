@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using ConfigDatas;
-using ControlPlus;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms;
 using TaleofMonsters.Forms.Items.Core;
@@ -30,7 +29,7 @@ namespace TaleofMonsters.MainItem
         {
             flows = new List<RiverFlow>();
             flows.Add(new RiverFlow(width-138, height-55, 50, 50, 4, IconDirections.RightToLeft));
-            flows.Add(new RiverFlow(10, 50, 50, 50, 5, IconDirections.LeftToRight));
+       //     flows.Add(new RiverFlow(10, 50, 50, 50, 5, IconDirections.LeftToRight));
             flows.Add(new RiverFlow(width-54, 200, 50, 50, 5, IconDirections.UpToDown));
 
             menuItems = new List<ToolBarItemData>();
@@ -302,8 +301,6 @@ namespace TaleofMonsters.MainItem
         ExpBottle = 40,
         QuestionForm = 41,
       // FarmForm = 42,
-        //ChangeCard = 1000,
-        //BuyPiece = 1001,
         GameUpToNumber = 1100,
         GameIconsCatch = 1101,
         GameBattleRobot = 1102,
