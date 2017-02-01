@@ -339,7 +339,6 @@
     <Compile Include="Controler\Battle\Data\MemFlow\FlowSkillInfo.cs" />
     <Compile Include="Controler\Battle\Data\MemFlow\FlowResourceInfo.cs" />
     <Compile Include="DataType\Equips\Addons\EAddonBook.cs" />
-    <Compile Include="DataType\Items\HItemAssistant.cs" />
     <Compile Include="DataType\Others\JobBook.cs" />
     <Compile Include="DataType\Maps\BattleMap.cs" />
     <Compile Include="DataType\Maps\BattleMapBook.cs" />

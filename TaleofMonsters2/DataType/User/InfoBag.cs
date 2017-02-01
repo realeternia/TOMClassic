@@ -166,7 +166,7 @@ namespace TaleofMonsters.DataType.User
             if (pickItem.Value <= 0)
                 return;
 
-            if (HItemAssistant.UseItemsById(pickItem.Type, type))
+            if (Consumer.UseItemsById(pickItem.Type, type))
             {
                 pickItem.Value--;
                 if (pickItem.Value <= 0)

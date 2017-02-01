@@ -12,7 +12,7 @@ namespace TaleofMonsters.DataType.Items
     {
         private static Dictionary<int, List<int>> rareMidDict;
 
-        public static int GetRandRareMid(int rare)
+        public static int GetRandRareItemId(int rare)
         {
             if (rareMidDict == null)
             {
@@ -30,7 +30,8 @@ namespace TaleofMonsters.DataType.Items
                 }
             }
 
-            return rareMidDict[rare][MathTool.GetRandom(rareMidDict[rare].Count)];
+            var rareList = rareMidDict[rare];
+            return rareList[MathTool.GetRandom(rareList.Count)];
         }
 
         public static Image GetHItemImage(int id)

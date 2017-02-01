@@ -266,13 +266,13 @@ namespace TaleofMonsters.DataType.User
                     IntPair pv = new IntPair();
                     if (j == 0)
                     {
-                        pv.Type = HItemBook.GetRandRareMid(itrare);
+                        pv.Type = HItemBook.GetRandRareItemId(itrare);
                         pv.Value = GetItemCountByEquipLevel(equipConfig.Level, itrare) + 1;
                     }
                     else
                     {
                         int nrare = MathTool.GetRandom(Math.Max(1, itrare - 3), itrare);
-                        pv.Type = HItemBook.GetRandRareMid(nrare);
+                        pv.Type = HItemBook.GetRandRareItemId(nrare);
                         pv.Value = Math.Max(1, GetItemCountByEquipLevel(equipConfig.Level, nrare));
                     }
                     if (existFormula.ContainsKey(pv.Type))

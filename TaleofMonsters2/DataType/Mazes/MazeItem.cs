@@ -29,7 +29,7 @@ namespace TaleofMonsters.DataType.Mazes
             if (type == "ritem")
             {
                 type = "item";
-                infos[0] = HItemBook.GetRandRareMid(infos[0]);
+                infos[0] = HItemBook.GetRandRareItemId(infos[0]);
             }
             else if (type == "rmon")
             {
