@@ -12,7 +12,7 @@ namespace TaleofMonsters.DataType.User
         public InfoFarm()
         {
             DbFarmState = new DbFarmState[GameConstants.PlayFarmCount];
-            DbFarmState[0] = new DbFarmState(0, 0);
+            DbFarmState[0] = new DbFarmState(0, 0);//≥ı ºÀÕ1∆¨ÃÔ
             for (int i = 1; i < DbFarmState.Length; i++)
             {
                 DbFarmState[i] = new DbFarmState(-1, 0);
@@ -46,10 +46,11 @@ namespace TaleofMonsters.DataType.User
         {
             for (int i = 0; i < 9; i++)
             {
-                if (DbFarmState[i].Type == 0)
+                var targetCell = DbFarmState[i];
+                if (targetCell.Type == 0)
                 {
-                    DbFarmState[i].Type = type;
-                    DbFarmState[i].Time = TimeTool.DateTimeToUnixTime(DateTime.Now) + dura;
+                    targetCell.Type = type;
+                    targetCell.Time = TimeTool.DateTimeToUnixTime(DateTime.Now) + dura;
                     return true;
                 }
             }

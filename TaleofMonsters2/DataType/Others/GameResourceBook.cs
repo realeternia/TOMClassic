@@ -120,6 +120,13 @@ namespace TaleofMonsters.DataType.Others
             return (uint)((float)level * 5 * Math.Sqrt(qual));
         }
         /// <summary>
+        /// 消耗木材建设农场
+        /// </summary>
+        public static uint OutWoodBuildFarm(uint cost)
+        {
+            return cost;
+        }
+        /// <summary>
         /// 分解装备获得石材
         /// </summary>
         public static uint InStoneEquipDecompose(int qual, int level)

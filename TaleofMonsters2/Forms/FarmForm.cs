@@ -5,6 +5,8 @@ using ControlPlus;
 using NarlonLib.Core;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.Forms.Items.Core;
@@ -81,12 +83,18 @@ namespace TaleofMonsters.Forms
                 DbFarmState timeState = UserProfile.Profile.InfoFarm.GetFarmState(newsel);
                 if (timeState.Type == -1)
                 {
-                    int pricecount = UserProfile.Profile.InfoFarm.GetFarmAvailCount() * 50;
-                    if (MessageBoxEx2.Show(string.Format("是否花{0}钻石开启额外农田?", pricecount)) == DialogResult.OK)
+                    var pricecount = GameResourceBook.OutWoodBuildFarm(
+                        (uint)UserProfile.Profile.InfoFarm.GetFarmAvailCount() * 50);
+                    if (MessageBoxEx2.Show(string.Format("是否花{0}木材开启额外农田?", pricecount)) == DialogResult.OK)
                     {
-                        if (UserProfile.InfoBag.PayDiamond(pricecount))
+                        if (UserProfile.InfoBag.HasResource(GameResourceType.Lumber, pricecount))
                         {
+                            UserProfile.InfoBag.SubResource(GameResourceType.Lumber, pricecount);
                             UserProfile.Profile.InfoFarm.SetFarmState(newsel, new DbFarmState(0, 0));
+                        }
+                        else
+                        {
+                            AddFlowCenter("资源不足", "Red");
                         }
                     }
                 }
