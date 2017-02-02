@@ -29,6 +29,10 @@ namespace TaleofMonsters.MainItem.Quests
             {
                 MainForm.Instance.DealPanel(new FarmForm());
             }
+            else if (e.ParamList[0] == "bless")
+            {
+                MainForm.Instance.DealPanel(new BlessForm());
+            }
         }
 
         public override void OnFrame(int tick)
