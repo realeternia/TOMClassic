@@ -10,6 +10,7 @@ using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Blesses;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
@@ -231,7 +232,7 @@ namespace TaleofMonsters.MainItem.Scenes
             {
                 if (key > 0)
                 {
-                    Image image = BlessManager.GetBlessImage(key);
+                    Image image = BlessBook.GetPreview(key);
                     tooltip.Show(image, parent, x, y);
                 }
             }

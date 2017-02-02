@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
 using NarlonLib.Math;
+using TaleofMonsters.DataType.Blesses;
 using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.MainItem.Blesses
@@ -15,24 +16,6 @@ namespace TaleofMonsters.MainItem.Blesses
 
         public static BlessUpdateMethod Update = null;
 
-        private static Dictionary<int, List<int>> activeBlessDict = new Dictionary<int, List<int>>();
-        private static Dictionary<int, List<int>> negativeBlessDict = new Dictionary<int, List<int>>();
-
-        static BlessManager()
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                activeBlessDict[i] = new List<int>();
-                negativeBlessDict[i] = new List<int>();
-            }
-            foreach (var blessConfig in ConfigData.BlessDict.Values)
-            {
-                if (blessConfig.Type == 1)
-                    activeBlessDict[blessConfig.Level].Add(blessConfig.Id);
-                else
-                    negativeBlessDict[blessConfig.Level].Add(blessConfig.Id);
-            }
-        }
 
         public static void OnChangeMap()
         {
@@ -61,14 +44,18 @@ namespace TaleofMonsters.MainItem.Blesses
             RebuildCache();
         }
 
-        public static int GetRandomBlessLevel(bool isActive, int level)
+        public static List<int> GetNegtiveBless()
         {
-            List<int> toCheck;
-            if (isActive)
-                toCheck = activeBlessDict[level];
-            else
-                toCheck = negativeBlessDict[level];
-            return toCheck[MathTool.GetRandom(toCheck.Count)];
+            List<int> datas = new List<int>();
+            foreach (var bless in UserProfile.InfoWorld.Blesses)
+            {
+                var blessConfig = ConfigData.GetBlessConfig(bless.Key);
+                if (blessConfig.Type == 2)
+                {
+                    datas.Add(blessConfig.Id);
+                }
+            }
+            return datas;
         }
 
         private static void RebuildCache()
@@ -187,18 +174,5 @@ namespace TaleofMonsters.MainItem.Blesses
             get { return cache.FightFailSubMental; }
         }
 
-        public static Image GetBlessImage(int key)
-        {
-            var config = ConfigData.GetBlessConfig(key);
-            var lastTime = 0;
-            if (UserProfile.InfoWorld.Blesses.ContainsKey(key))
-                lastTime = UserProfile.InfoWorld.Blesses[key];
-            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
-            tipData.AddTextNewLine(config.Name, config.Type == 1? "Green":"Red", 20);
-            tipData.AddLine(2);
-            tipData.AddTextNewLine(config.Descript, "White");
-            tipData.AddTextNewLine(string.Format("剩余回合{0}", lastTime), "White");
-            return tipData.Image;
-        }
     }
 }

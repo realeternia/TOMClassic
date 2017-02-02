@@ -120,6 +120,13 @@ namespace TaleofMonsters.DataType.Others
             return (uint)((float)level * 5 * Math.Sqrt(qual));
         }
         /// <summary>
+        /// 分解装备获得石材
+        /// </summary>
+        public static uint InStoneEquipDecompose(int qual, int level)
+        {
+            return Math.Max(1, (uint)((float)level * 2 * Math.Sqrt(qual)));
+        }
+        /// <summary>
         /// 消耗木材建设农场
         /// </summary>
         public static uint OutWoodBuildFarm(uint cost)
@@ -127,11 +134,11 @@ namespace TaleofMonsters.DataType.Others
             return cost;
         }
         /// <summary>
-        /// 分解装备获得石材
+        /// 消耗水银购买祝福
         /// </summary>
-        public static uint InStoneEquipDecompose(int qual, int level)
+        public static uint OutMercuryBlessBuy(int level)
         {
-            return Math.Max(1, (uint)((float)level * 2 * Math.Sqrt(qual)));
+            return (uint)(5*level);
         }
     }
 }

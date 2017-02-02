@@ -242,7 +242,7 @@
 
         LastCardShopTime = 1000,
         LastMergeTime = 1001,
-       // LastCardChangeTime = 1002,
+        LastBlessShopTime = 1002,
        // LastNpcPieceTime = 1003,
         LastQuestionTime = 1004,
         HeroExpPoint = 1100,//经验罐的exp

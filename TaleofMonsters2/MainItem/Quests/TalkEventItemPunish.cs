@@ -4,6 +4,7 @@ using NarlonLib.Control;
 using NarlonLib.Drawing;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Blesses;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Regions;
@@ -135,7 +136,7 @@ namespace TaleofMonsters.MainItem.Quests
         {
             if (config.PunishBlessLevel > 0)
             {
-                var blessId = BlessManager.GetRandomBlessLevel(false, config.PunishBlessLevel);
+                var blessId = BlessBook.GetRandomBlessLevel(false, config.PunishBlessLevel);
                 BlessManager.AddBless(blessId, GameConstants.QuestBlessTime);
                 vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25,
                                                        60, 60, PictureRegionCellType.Bless, blessId));
@@ -153,7 +154,7 @@ namespace TaleofMonsters.MainItem.Quests
                     var regionType = region.GetVType();
                     if (regionType == PictureRegionCellType.Bless)
                     {
-                        Image image = BlessManager.GetBlessImage(key);
+                        Image image = BlessBook.GetPreview(key);
                         tooltip.Show(image, parent, x, y);
                     }
                 }

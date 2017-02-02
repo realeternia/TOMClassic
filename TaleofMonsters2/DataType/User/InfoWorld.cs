@@ -33,6 +33,8 @@ namespace TaleofMonsters.DataType.User
         public List<DbSceneSpecialPosData> PosInfos; //记录当前场景随机后的格子信息
         [FieldIndex(Index = 8)]
         public Dictionary<int, int> Blesses;
+        [FieldIndex(Index = 9)]
+        public List<int> BlessShopItems;
 
 
         public InfoWorld()
@@ -43,6 +45,7 @@ namespace TaleofMonsters.DataType.User
             MergeMethods = new List<DbMergeData>();
             PosInfos = new List<DbSceneSpecialPosData>();
             Blesses = new Dictionary<int, int>();
+            BlessShopItems = new List<int>();
         }
 
         internal DbCardProduct[] GetCardProductsByType(CardTypes type)
@@ -347,6 +350,29 @@ namespace TaleofMonsters.DataType.User
                     break;
                 }
             }
+        }
+
+        internal List<int> GetBlessShopData()
+        {
+            int time = TimeTool.DateTimeToUnixTime(DateTime.Now);
+            if (BlessShopItems == null || UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastBlessShopTime) < time - GameConstants.BlessShopDura)
+            {
+                BlessShopItems = new List<int>();
+
+                BlessShopItems.Clear();
+                foreach (var blessData in ConfigData.BlessDict.Values)
+                {
+                    if (blessData.Type == 1)
+                    {
+                        BlessShopItems.Add(blessData.Id);
+                    }
+                }
+                ListTool.RandomShuffle(BlessShopItems);
+                BlessShopItems = BlessShopItems.GetRange(0, 5);
+                UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastBlessShopTime, TimeManager.GetTimeOnNextInterval(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastBlessShopTime), time, GameConstants.BlessShopDura));
+            }
+
+            return BlessShopItems;
         }
     }
 }
