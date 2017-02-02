@@ -1,3 +1,4 @@
+using System;
 using System.Drawing;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User;
@@ -56,7 +57,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                 return false;
             }
 
-            uint moveCost = BlessManager.GetSceneMove(GameConstants.SceneMoveCost);
+            uint moveCost = (uint)Math.Max(0, GameConstants.SceneMoveCost+BlessManager.SceneMove);
             if (UserProfile.Profile.InfoBasic.FoodPoint >= moveCost)
             {
                 UserProfile.InfoBasic.SubFood(moveCost);
@@ -67,7 +68,6 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                 UserProfile.InfoBasic.SubHealth(moveCost * 2);
             }
             
-
             return true;
         }
 

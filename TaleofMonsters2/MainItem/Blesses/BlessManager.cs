@@ -10,7 +10,14 @@ namespace TaleofMonsters.MainItem.Blesses
     {
         internal delegate void BlessUpdateMethod();
 
+        private static BlessConfig cache;
+
         public static BlessUpdateMethod Update = null;
+
+        public static void Init()
+        {
+            RebuildCache();
+        }
 
         public static void AddBless(int id, int time)
         {
@@ -19,6 +26,7 @@ namespace TaleofMonsters.MainItem.Blesses
             {
                 Update();
             }
+            RebuildCache();
         }
 
         public static void RemoveBless(int id)
@@ -27,6 +35,28 @@ namespace TaleofMonsters.MainItem.Blesses
             if (Update != null)
             {
                 Update();
+            }
+            RebuildCache();
+        }
+
+        private static void RebuildCache()
+        {
+            cache = new BlessConfig();
+            foreach (var key in UserProfile.InfoWorld.Blesses.Keys)
+            {
+                var config = ConfigData.GetBlessConfig(key);
+                cache.MoveFoodChange += config.MoveFoodChange;
+                cache.PunishFoodMulti += config.PunishFoodMulti;
+                cache.PunishGoldMulti += config.PunishGoldMulti;
+                cache.PunishHealthMulti += config.PunishHealthMulti;
+                cache.PunishMentalMulti += config.PunishMentalMulti;
+                cache.RewardExpMulti += config.RewardExpMulti;
+                cache.RewardFoodMulti += config.RewardFoodMulti;
+                cache.RewardGoldMulti += config.RewardGoldMulti;
+                cache.RewardHealthMulti += config.RewardHealthMulti;
+                cache.RewardMentalMulti += config.RewardMentalMulti;
+                cache.RollWinAddGold += config.RollWinAddGold;
+                cache.RollFailSubHealth += config.RollFailSubHealth;
             }
         }
 
@@ -49,14 +79,54 @@ namespace TaleofMonsters.MainItem.Blesses
             }
         }
 
-        public static uint GetSceneMove(int based)
+        public static int SceneMove
         {
-            foreach (var key in UserProfile.InfoWorld.Blesses.Keys)
-            {
-                var config = ConfigData.GetBlessConfig(key);
-                based += config.MoveFoodChange;
-            }
-            return (uint)Math.Max(0,based);
+            get { return cache.MoveFoodChange; }
+        }
+
+        public static int PunishFoodMulti
+        {
+            get { return cache.PunishFoodMulti; }
+        }
+        public static int PunishGoldMulti
+        {
+            get { return cache.PunishGoldMulti; }
+        }
+        public static int PunishHealthMulti
+        {
+            get { return cache.PunishHealthMulti; }
+        }
+        public static int PunishMentalMulti
+        {
+            get { return cache.PunishMentalMulti; }
+        }
+        public static int RewardExpMulti
+        {
+            get { return cache.RewardExpMulti; }
+        }
+        public static int RewardFoodMulti
+        {
+            get { return cache.RewardFoodMulti; }
+        }
+        public static int RewardGoldMulti
+        {
+            get { return cache.RewardGoldMulti; }
+        }
+        public static int RewardHealthMulti
+        {
+            get { return cache.RewardHealthMulti; }
+        }
+        public static int RewardMentalMulti
+        {
+            get { return cache.RewardMentalMulti; }
+        }
+        public static int RollWinAddGold
+        {
+            get { return cache.RollWinAddGold; }
+        }
+        public static int RollFailSubHealth
+        {
+            get { return cache.RollFailSubHealth; }
         }
 
         public static Image GetBlessImage(int key)

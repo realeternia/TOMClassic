@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Drawing;
 using NarlonLib.Math;
+using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Others;
+using TaleofMonsters.DataType.User;
+using TaleofMonsters.MainItem.Blesses;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
 
 namespace TaleofMonsters.MainItem.Quests
@@ -43,15 +47,38 @@ namespace TaleofMonsters.MainItem.Quests
                 }
                 if (Math.Abs(rollItemSpeedX) <= 1)
                 {
-                    if (result == null)
+                    OnStop();
+                }
+            }
+        }
+
+        private void OnStop()
+        {
+            if (result == null)
+            {
+                RunningState = TalkEventState.Finish;
+                int frameSize = (pos.Width - 20)/evt.ParamList.Count;
+                result = evt.ChooseTarget(rollItemX/frameSize);
+
+                if (BlessManager.RollFailSubHealth > 0 && evt.ParamList[rollItemX/frameSize].Contains("失败"))
+                {
+                    var healthSub = GameResourceBook.OutHealthSceneQuest(BlessManager.RollFailSubHealth*100);
+                    if (healthSub > 0)
                     {
-                        RunningState = TalkEventState.Finish;
-                        int frameSize = (pos.Width-20) / evt.ParamList.Count;
-                        result = evt.ChooseTarget(rollItemX / frameSize);
+                        UserProfile.Profile.InfoBasic.SubHealth(healthSub);
+                    }
+                } 
+                if (BlessManager.RollWinAddGold > 0 && evt.ParamList[rollItemX / frameSize].Contains("成功"))
+                {
+                    var goldAdd = GameResourceBook.InGoldSceneQuest(level, BlessManager.RollWinAddGold * 100);
+                    if (goldAdd > 0)
+                    {
+                        UserProfile.Profile.InfoBag.AddResource(GameResourceType.Gold, goldAdd);
                     }
                 }
             }
         }
+
         public override void Draw(Graphics g)
         {
            // g.DrawRectangle(Pens.White, pos);

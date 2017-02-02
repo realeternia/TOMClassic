@@ -88,20 +88,6 @@ namespace TaleofMonsters.MainItem.Scenes
             miniBack = PicLoader.Read("System", "MiniBack.PNG");
         }
 
-        private void OnBlessChange()
-        {
-            for (int i = 0; i < 10; i++)
-            {//bless
-                vRegion.SetRegionKey(20 + i, 0);
-            }
-            int index = 0;
-            foreach (var key in UserProfile.InfoWorld.Blesses.Keys)
-            {
-                vRegion.SetRegionKey(20 + index++, key);
-            }
-            parent.Invalidate(new Rectangle(10, 55, 600,50));
-        }
-
         public void ChangeMap(int mapid, bool isWarp)
         {
             if (backPicture != null)
@@ -116,6 +102,7 @@ namespace TaleofMonsters.MainItem.Scenes
             UserProfile.InfoBasic.MapId = mapid;
             UserProfile.Profile.OnSwitchScene();
 
+            BlessManager.Init();
             OnBlessChange();
             BlessManager.Update = OnBlessChange;
             
@@ -125,6 +112,20 @@ namespace TaleofMonsters.MainItem.Scenes
             if (UserProfile.InfoBasic.Position == 0)
                 UserProfile.InfoBasic.Position = sceneItems[0].Id;
             parent.Invalidate();
+        }
+
+        private void OnBlessChange()
+        {
+            for (int i = 0; i < 10; i++)
+            {//bless
+                vRegion.SetRegionKey(20 + i, 0);
+            }
+            int index = 0;
+            foreach (var key in UserProfile.InfoWorld.Blesses.Keys)
+            {
+                vRegion.SetRegionKey(20 + index++, key);
+            }
+            parent.Invalidate(new Rectangle(10, 55, 600, 50));
         }
 
         private void GenerateMiniMap(int mapid, int wx, int wy)

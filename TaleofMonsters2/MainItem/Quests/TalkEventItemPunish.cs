@@ -6,12 +6,14 @@ using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Regions;
+using TaleofMonsters.MainItem.Blesses;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
 
 namespace TaleofMonsters.MainItem.Quests
 {
     internal class TalkEventItemPunish : TalkEventItem
     {
+        private delegate void PunishAction(ref int index);
         private Control parent;
         private VirtualRegion vRegion; 
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
@@ -24,56 +26,20 @@ namespace TaleofMonsters.MainItem.Quests
             vRegion.RegionEntered += virtualRegion_RegionEntered;
             vRegion.RegionLeft += virtualRegion_RegionLeft;
 
-            int index = 1; 
-            for (int i = 0; i < GetMulti(); i++)
-            {
-                DoPunish(ref index);
-            }
+            int index = 1;
+            DoPunish(ref index, "gold", GetMulti() + BlessManager.PunishGoldMulti, PunishGold);
+            DoPunish(ref index, "food", GetMulti() + BlessManager.PunishFoodMulti, PunishFood);
+            DoPunish(ref index, "health", GetMulti() + BlessManager.PunishHealthMulti, PunishHealth);
+            DoPunish(ref index, "mental", GetMulti() + BlessManager.PunishMentalMulti, PunishMental);
         }
 
-        private void DoPunish(ref int index)
+        private void DoPunish(ref int index, string type, int times, PunishAction action)
         {
-            if (IsBonusAvail("gold"))
+            if (IsBonusAvail(type))
             {
-                var goldLoss = GameResourceBook.OutGoldSceneQuest(level, config.PunishGold);
-                if (goldLoss > 0)
+                for (int i = 0; i < times; i++)
                 {
-                    UserProfile.Profile.InfoBag.SubResource(GameResourceType.Gold, goldLoss);
-                    var pictureRegion = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Gold, (int)-goldLoss);
-                    vRegion.AddRegion(pictureRegion);
-                    index++;
-                }
-            }
-            if (IsBonusAvail("food"))
-            {
-                var foodLoss = GameResourceBook.OutFoodSceneQuest(config.PunishFood);
-                if (foodLoss > 0)
-                {
-                    UserProfile.Profile.InfoBasic.SubFood(foodLoss);
-                    var pictureRegion = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Food, (int)-foodLoss);
-                    vRegion.AddRegion(pictureRegion);
-                    index++;
-                }
-            }
-            if (IsBonusAvail("health"))
-            {
-                var healthLoss = GameResourceBook.OutHealthSceneQuest(config.PunishHealth);
-                if (healthLoss > 0)
-                {
-                    UserProfile.Profile.InfoBasic.SubHealth(healthLoss);
-                    var pictureRegion = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Health, (int)-healthLoss);
-                    vRegion.AddRegion(pictureRegion);
-                    index++;
-                }
-            } if (IsBonusAvail("mental"))
-            {
-                var mentalLoss = GameResourceBook.OutMentalSceneQuest(config.PunishMental);
-                if (mentalLoss > 0)
-                {
-                    UserProfile.Profile.InfoBasic.SubMental(mentalLoss);
-                    var pictureRegion = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Mental, (int)-mentalLoss);
-                    vRegion.AddRegion(pictureRegion);
-                    index++;
+                    action(ref index);    
                 }
             }
         }
@@ -109,6 +75,61 @@ namespace TaleofMonsters.MainItem.Quests
             }
             return 1;
         }
+
+        #region 各种惩罚
+        
+        private void PunishMental(ref int index)
+        {
+            var mentalLoss = GameResourceBook.OutMentalSceneQuest(config.PunishMental);
+            if (mentalLoss > 0)
+            {
+                UserProfile.Profile.InfoBasic.SubMental(mentalLoss);
+                var pictureRegion = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25),
+                                                                     60, ImageRegionCellType.Mental, (int) -mentalLoss);
+                vRegion.AddRegion(pictureRegion);
+                index++;
+            }
+        }
+
+        private void PunishHealth(ref int index)
+        {
+            var healthLoss = GameResourceBook.OutHealthSceneQuest(config.PunishHealth);
+            if (healthLoss > 0)
+            {
+                UserProfile.Profile.InfoBasic.SubHealth(healthLoss);
+                var pictureRegion = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25),
+                                                                     60, ImageRegionCellType.Health, (int) -healthLoss);
+                vRegion.AddRegion(pictureRegion);
+                index++;
+            }
+        }
+
+        private void PunishFood(ref int index)
+        {
+            var foodLoss = GameResourceBook.OutFoodSceneQuest(config.PunishFood);
+            if (foodLoss > 0)
+            {
+                UserProfile.Profile.InfoBasic.SubFood(foodLoss);
+                var pictureRegion = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25),
+                                                                     60, ImageRegionCellType.Food, (int) -foodLoss);
+                vRegion.AddRegion(pictureRegion);
+                index++;
+            }
+        }
+
+        private void PunishGold(ref int index)
+        {
+            var goldLoss = GameResourceBook.OutGoldSceneQuest(level, config.PunishGold);
+            if (goldLoss > 0)
+            {
+                UserProfile.Profile.InfoBag.SubResource(GameResourceType.Gold, goldLoss);
+                var pictureRegion = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25),
+                                                                     60, ImageRegionCellType.Gold, (int) -goldLoss);
+                vRegion.AddRegion(pictureRegion);
+                index++;
+            }
+        }
+        #endregion
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
