@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
+using NarlonLib.Math;
 using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.MainItem.Blesses
@@ -14,13 +15,34 @@ namespace TaleofMonsters.MainItem.Blesses
 
         public static BlessUpdateMethod Update = null;
 
-        public static void Init()
+        private static Dictionary<int, List<int>> activeBlessDict = new Dictionary<int, List<int>>();
+        private static Dictionary<int, List<int>> negativeBlessDict = new Dictionary<int, List<int>>();
+
+        static BlessManager()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                activeBlessDict[i] = new List<int>();
+                negativeBlessDict[i] = new List<int>();
+            }
+            foreach (var blessConfig in ConfigData.BlessDict.Values)
+            {
+                if (blessConfig.Type == 1)
+                    activeBlessDict[blessConfig.Level].Add(blessConfig.Id);
+                else
+                    negativeBlessDict[blessConfig.Level].Add(blessConfig.Id);
+            }
+        }
+
+        public static void OnChangeMap()
         {
             RebuildCache();
         }
 
         public static void AddBless(int id, int time)
         {
+            if (UserProfile.InfoWorld.Blesses.Count >= 10) //最大10个bless
+                return;
             UserProfile.InfoWorld.Blesses[id] = time;
             if (Update != null)
             {
@@ -37,6 +59,16 @@ namespace TaleofMonsters.MainItem.Blesses
                 Update();
             }
             RebuildCache();
+        }
+
+        public static int GetRandomBlessLevel(bool isActive, int level)
+        {
+            List<int> toCheck;
+            if (isActive)
+                toCheck = activeBlessDict[level];
+            else
+                toCheck = negativeBlessDict[level];
+            return toCheck[MathTool.GetRandom(toCheck.Count)];
         }
 
         private static void RebuildCache()

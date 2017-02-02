@@ -102,7 +102,7 @@ namespace TaleofMonsters.MainItem.Scenes
             UserProfile.InfoBasic.MapId = mapid;
             UserProfile.Profile.OnSwitchScene();
 
-            BlessManager.Init();
+            BlessManager.OnChangeMap();
             OnBlessChange();
             BlessManager.Update = OnBlessChange;
             

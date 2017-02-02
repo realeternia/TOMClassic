@@ -22,6 +22,7 @@ namespace TaleofMonsters.Core
         public const int PlayFarmCount = 9;
 
         public const int SceneMoveCost = 2;
+        public const int QuestBlessTime = 30;//30步长
 
         public const int BattleInitialCardCount = 3; //战斗开始时的卡牌数
         public const int RoundTime = 8000;//一个回合多少ms，一个回合给一张卡

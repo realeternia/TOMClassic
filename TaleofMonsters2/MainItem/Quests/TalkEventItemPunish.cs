@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using NarlonLib.Control;
 using NarlonLib.Drawing;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
@@ -31,6 +32,7 @@ namespace TaleofMonsters.MainItem.Quests
             DoPunish(ref index, "food", GetMulti() + BlessManager.PunishFoodMulti, PunishFood);
             DoPunish(ref index, "health", GetMulti() + BlessManager.PunishHealthMulti, PunishHealth);
             DoPunish(ref index, "mental", GetMulti() + BlessManager.PunishMentalMulti, PunishMental);
+            DoPunish(ref index, "bless", 1, PunishBless);
         }
 
         private void DoPunish(ref int index, string type, int times, PunishAction action)
@@ -129,10 +131,33 @@ namespace TaleofMonsters.MainItem.Quests
                 index++;
             }
         }
+        private void PunishBless(ref int index)
+        {
+            if (config.PunishBlessLevel > 0)
+            {
+                var blessId = BlessManager.GetRandomBlessLevel(false, config.PunishBlessLevel);
+                BlessManager.AddBless(blessId, GameConstants.QuestBlessTime);
+                vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25,
+                                                       60, 60, PictureRegionCellType.Bless, blessId));
+                index++;
+            }
+        }
         #endregion
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
+            {
+                var region = vRegion.GetRegion(id) as PictureRegion;
+                if (region != null)
+                {
+                    var regionType = region.GetVType();
+                    if (regionType == PictureRegionCellType.Bless)
+                    {
+                        Image image = BlessManager.GetBlessImage(key);
+                        tooltip.Show(image, parent, x, y);
+                    }
+                }
+            }
             {
                 var region = vRegion.GetRegion(id) as ImageRegion;
                 if (region != null)

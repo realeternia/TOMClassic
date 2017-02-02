@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using NarlonLib.Control;
 using NarlonLib.Drawing;
 using TaleofMonsters.Config;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Drops;
 using TaleofMonsters.DataType.Equips;
@@ -40,6 +41,7 @@ namespace TaleofMonsters.MainItem.Quests
             DoReward(ref index, "exp", GetMulti() + BlessManager.RewardExpMulti, RewardExp);
             DoReward(ref index, "rival", 1, RewardRival);
             DoReward(ref index, "flag", 1, RewardFlag);
+            DoReward(ref index, "bless", 1, RewardBless);
             DoReward(ref index, "item", 1, RewardItem);
         }
 
@@ -143,6 +145,18 @@ namespace TaleofMonsters.MainItem.Quests
             }
         }
 
+        private void RewardBless(ref int index)
+        {
+            if (config.RewardBlessLevel > 0)
+            {
+                var blessId = BlessManager.GetRandomBlessLevel(true, config.RewardBlessLevel);
+                BlessManager.AddBless(blessId, GameConstants.QuestBlessTime);
+                vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25,
+                                                       60, 60, PictureRegionCellType.Bless, blessId));
+                index++;
+            }
+        }
+
         private void RewardRival(ref int index)
         {
             if (config.RivalId > 0)
@@ -242,6 +256,11 @@ namespace TaleofMonsters.MainItem.Quests
                     {
                         Equip equip = new Equip(key);
                         Image image = equip.GetPreview();
+                        tooltip.Show(image, parent, x, y);
+                    }
+                    else if (regionType == PictureRegionCellType.Bless)
+                    {
+                        Image image = BlessManager.GetBlessImage(key);
                         tooltip.Show(image, parent, x, y);
                     }
                     else if (regionType == PictureRegionCellType.People)
