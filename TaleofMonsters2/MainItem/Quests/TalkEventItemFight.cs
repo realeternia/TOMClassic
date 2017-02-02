@@ -2,8 +2,10 @@
 using System.Drawing;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.MainItem.Blesses;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
 
 namespace TaleofMonsters.MainItem.Quests
@@ -16,8 +18,8 @@ namespace TaleofMonsters.MainItem.Quests
             : base(evtId, level, r, e)
         {
             int enemyId = config.EnemyId;
-            HsActionCallback winCallback = () => { result = evt.ChooseTarget(1); isEndFight = true; };
-            HsActionCallback failCallback = () => { result = evt.ChooseTarget(0); isEndFight = true; };
+            HsActionCallback winCallback = OnWin;
+            HsActionCallback failCallback = OnFail;
             var parm = new PeopleFightParm();
             parm.Reason = PeopleFightReason.SceneQuest;
             if (evt.ParamList.Count > 1)
@@ -29,7 +31,54 @@ namespace TaleofMonsters.MainItem.Quests
             {
                 enemyId = UserProfile.InfoRecord.GetRecordById((int) MemPlayerRecordTypes.SceneQuestRandPeopleId);
             }
-            PeopleBook.Fight(enemyId, config.BattleMap, level, parm, winCallback, failCallback, failCallback);
+            int fightLevel = level + BlessManager.FightLevelChange;
+            PeopleBook.Fight(enemyId, config.BattleMap, fightLevel, parm, winCallback, failCallback, failCallback);
+        }
+
+        private void OnFail()
+        {
+            result = evt.ChooseTarget(0);
+            isEndFight = true;
+
+            if (BlessManager.FightFailSubHealth > 0)
+            {
+                var healthSub = GameResourceBook.OutHealthSceneQuest(BlessManager.FightFailSubHealth * 100);
+                if (healthSub > 0)
+                {
+                    UserProfile.Profile.InfoBasic.SubHealth(healthSub);
+                }
+            }
+            if (BlessManager.FightFailSubMental > 0)
+            {
+                var mentalSub = GameResourceBook.OutMentalSceneQuest(BlessManager.FightFailSubMental * 100);
+                if (mentalSub > 0)
+                {
+                    UserProfile.Profile.InfoBasic.SubMental(mentalSub);
+                }
+            }
+        }
+
+        private void OnWin()
+        {
+            result = evt.ChooseTarget(1);
+            isEndFight = true;
+
+            if (BlessManager.FightWinAddHealth > 0)
+            {
+                var healthAdd = GameResourceBook.InHealthSceneQuest(BlessManager.FightWinAddHealth * 100);
+                if (healthAdd > 0)
+                {
+                    UserProfile.Profile.InfoBasic.AddHealth(healthAdd);
+                }
+            }
+            if (BlessManager.FightWinAddExp > 0)
+            {
+                var expAdd = GameResourceBook.InExpSceneQuest(level, BlessManager.FightWinAddExp * 100);
+                if (expAdd > 0)
+                {
+                    UserProfile.Profile.InfoBasic.AddExp((int)expAdd);
+                }
+            }
         }
 
         public override void OnFrame(int tick)

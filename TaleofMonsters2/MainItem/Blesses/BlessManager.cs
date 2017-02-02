@@ -57,6 +57,11 @@ namespace TaleofMonsters.MainItem.Blesses
                 cache.RewardMentalMulti += config.RewardMentalMulti;
                 cache.RollWinAddGold += config.RollWinAddGold;
                 cache.RollFailSubHealth += config.RollFailSubHealth;
+                cache.FightLevelChange += config.FightLevelChange;
+                cache.FightWinAddExp += config.FightWinAddExp;
+                cache.FightWinAddHealth += config.FightWinAddHealth;
+                cache.FightFailSubHealth += config.FightFailSubHealth;
+                cache.FightFailSubMental += config.FightFailSubMental;
             }
         }
 
@@ -127,6 +132,27 @@ namespace TaleofMonsters.MainItem.Blesses
         public static int RollFailSubHealth
         {
             get { return cache.RollFailSubHealth; }
+        }
+        public static int FightLevelChange
+        {
+            get { return cache.FightLevelChange; }
+        }
+
+        public static int FightWinAddExp
+        {
+            get { return cache.FightWinAddExp; }
+        }
+        public static int FightWinAddHealth
+        {
+            get { return cache.FightWinAddHealth; }
+        }
+        public static int FightFailSubHealth
+        {
+            get { return cache.FightFailSubHealth; }
+        }
+        public static int FightFailSubMental
+        {
+            get { return cache.FightFailSubMental; }
         }
 
         public static Image GetBlessImage(int key)
