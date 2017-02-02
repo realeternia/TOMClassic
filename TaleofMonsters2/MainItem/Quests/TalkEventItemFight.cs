@@ -31,7 +31,7 @@ namespace TaleofMonsters.MainItem.Quests
             {
                 enemyId = UserProfile.InfoRecord.GetRecordById((int) MemPlayerRecordTypes.SceneQuestRandPeopleId);
             }
-            int fightLevel = level + BlessManager.FightLevelChange;
+            int fightLevel = Math.Max(1, level + BlessManager.FightLevelChange);
             PeopleBook.Fight(enemyId, config.BattleMap, fightLevel, parm, winCallback, failCallback, failCallback);
         }
 
