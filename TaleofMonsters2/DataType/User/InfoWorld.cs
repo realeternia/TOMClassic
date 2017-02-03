@@ -35,6 +35,8 @@ namespace TaleofMonsters.DataType.User
         public Dictionary<int, int> Blesses;
         [FieldIndex(Index = 9)]
         public List<int> BlessShopItems;
+        [FieldIndex(Index = 10)]
+        public List<int> SavedDungeonQuests;
 
 
         public InfoWorld()
@@ -46,6 +48,7 @@ namespace TaleofMonsters.DataType.User
             PosInfos = new List<DbSceneSpecialPosData>();
             Blesses = new Dictionary<int, int>();
             BlessShopItems = new List<int>();
+            SavedDungeonQuests = new List<int>();
         }
 
         internal DbCardProduct[] GetCardProductsByType(CardTypes type)

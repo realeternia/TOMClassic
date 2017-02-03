@@ -14,30 +14,30 @@ namespace TaleofMonsters.DataType.User
         public int Pid;
         [FieldIndex(Index = 2)]
         public string Name;
-         [FieldIndex(Index = 3)]
+        [FieldIndex(Index = 3)]
         public InfoBasic InfoBasic;
-         [FieldIndex(Index = 4)]
+        [FieldIndex(Index = 4)]
         public InfoBag InfoBag;
-         [FieldIndex(Index = 5)]
+        [FieldIndex(Index = 5)]
         public InfoCard InfoCard;
-         [FieldIndex(Index = 6)]
+        [FieldIndex(Index = 6)]
         public InfoSkill InfoSkill;
-         [FieldIndex(Index = 8)]
+        [FieldIndex(Index = 8)]
         public InfoRival InfoRival;
-         [FieldIndex(Index = 9)]
+        [FieldIndex(Index = 9)]
         public InfoFarm InfoFarm;
-         [FieldIndex(Index = 10)]
-         public InfoEquip InfoEquip;
+        [FieldIndex(Index = 10)]
+        public InfoEquip InfoEquip;
         [FieldIndex(Index = 11)]
         public InfoQuest InfoQuest;
-         [FieldIndex(Index = 12)]
-         public InfoRecord InfoRecord;
-         [FieldIndex(Index = 13)]
-         public InfoAchieve InfoAchieve;
-         [FieldIndex(Index = 14)]
+        [FieldIndex(Index = 12)]
+        public InfoRecord InfoRecord;
+        [FieldIndex(Index = 13)]
+        public InfoAchieve InfoAchieve;
+        [FieldIndex(Index = 14)]
         public InfoWorld InfoWorld;
-         [FieldIndex(Index = 15)]
-         public InfoMaze InfoMaze;
+        [FieldIndex(Index = 15)]
+        public InfoMaze InfoMaze;
 
         public Profile()
         {

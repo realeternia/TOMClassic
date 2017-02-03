@@ -50,8 +50,8 @@ namespace TaleofMonsters.DataType.Blesses
             TipImage tipData = new TipImage();
             tipData.AddTextNewLine(config.Name, config.Type == 1 ? "Green" : "Red", 20);
             tipData.AddLine(2);
-            tipData.AddTextNewLine(config.Descript, "White");
-            tipData.AddTextNewLine(String.Format("剩余回合{0}", lastTime), "White");
+            tipData.AddTextLines(config.Descript, "White", 15, true);
+            tipData.AddTextNewLine(String.Format("剩余步数{0}", lastTime), "Wheat");
             return tipData.Image;
         }
         

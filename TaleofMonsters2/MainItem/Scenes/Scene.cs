@@ -17,6 +17,7 @@ using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.MainItem.Blesses;
 using TaleofMonsters.MainItem.Scenes.SceneObjects;
+using TaleofMonsters.MainItem.Scenes.SceneRules;
 
 namespace TaleofMonsters.MainItem.Scenes
 {
@@ -42,6 +43,9 @@ namespace TaleofMonsters.MainItem.Scenes
         private List<SceneObject> sceneItems; //场景中的物件，各种npc等
         private string sceneName;
         private Control parent;
+
+        public ISceneRule Rule { get; set; }
+        public int StartPos { get; set; } //传送后指定地点
 
         private int width, height;// 场景的宽度和高度
 
@@ -97,8 +101,7 @@ namespace TaleofMonsters.MainItem.Scenes
             backPicture = PicLoader.Read("Scene", string.Format("{0}.JPG", sceneConfig.Url));
             sceneName = sceneConfig.Name;
 
-            GenerateMiniMap(mapid, MathTool.Clamp(sceneConfig.IconX - 110,0, 1688-300), 
-                MathTool.Clamp(sceneConfig.IconY - 110, 0, 1121 - 300));
+            GenerateMiniMap(mapid, MathTool.Clamp(sceneConfig.IconX - 110,0, 1688-300), MathTool.Clamp(sceneConfig.IconY - 110, 0, 1121 - 300));
 
             UserProfile.InfoBasic.MapId = mapid;
             UserProfile.Profile.OnSwitchScene();
@@ -109,8 +112,22 @@ namespace TaleofMonsters.MainItem.Scenes
             
             SystemMenuManager.ResetIconState(); //reset main icon state todo remove check
 
+            if (sceneConfig.Type == SceneTypes.Dungeon)
+            {
+                Rule = new SceneRuleDungeon();
+            }
+            else if (sceneConfig.Type == SceneTypes.Town)
+            {
+                Rule = new SceneRuleTown();
+            }
+            else
+            {
+                Rule = new SceneRuleCommon();
+            }
+            Rule.Init(mapid);
+
             sceneItems = SceneManager.RefreshSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, isWarp ? SceneManager.SceneFreshReason.Warp : SceneManager.SceneFreshReason.Load );
-            if (UserProfile.InfoBasic.Position == 0)
+            if (UserProfile.InfoBasic.Position == 0)//兜底处理
                 UserProfile.InfoBasic.Position = sceneItems[0].Id;
             parent.Invalidate();
         }
@@ -403,6 +420,17 @@ namespace TaleofMonsters.MainItem.Scenes
                 }
             }
             return 0;
+        }
+        public int GetWarpPosByStartPos()
+        {
+            foreach (var sceneObject in sceneItems)
+            {
+                if (sceneObject.Id == StartPos)
+                {
+                    return sceneObject.Id;
+                }
+            }
+            return sceneItems[MathTool.GetRandom(sceneItems.Count)].Id; //随机给一个
         }
 
         public SceneObject GetObjectByPos(int pos)

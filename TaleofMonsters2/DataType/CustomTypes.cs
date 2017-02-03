@@ -127,6 +127,7 @@
     {
         public const int Town = 1;
         public const int Common = 2;
+        public const int Dungeon = 3;
     }
 
     internal static class SceneQuestTypes
@@ -248,6 +249,7 @@
         HeroExpPoint = 1100,//经验罐的exp
 
         SceneQuestRandPeopleId = 1101,
+        DungeonQuestOffside = 1102,
     }
 
     internal enum MemPlayerFlagTypes

@@ -181,6 +181,7 @@
     <Compile Include="MainItem\Quests\TalkEventItem.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemEnd.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemNpc.cs" />
+    <Compile Include="MainItem\Quests\TalkEventItemChangeMap.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemReset.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemPunish.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemRoll.cs" />
@@ -199,6 +200,10 @@
     <Compile Include="MainItem\Scenes\SceneObjects\SceneWarp.cs" />
     <Compile Include="MainItem\Scenes\SceneObjects\SceneQuest.cs" />
     <Compile Include="MainItem\Scenes\SceneObjects\SceneTile.cs" />
+    <Compile Include="MainItem\Scenes\SceneRules\ISceneRule.cs" />
+    <Compile Include="MainItem\Scenes\SceneRules\SceneRuleTown.cs" />
+    <Compile Include="MainItem\Scenes\SceneRules\SceneRuleDungeon.cs" />
+    <Compile Include="MainItem\Scenes\SceneRules\SceneRuleCommon.cs" />
     <Compile Include="ThirdParty\fmod.cs" />
     <Compile Include="DataType\Buffs\BuffImmuneGroup.cs" />
     <Compile Include="DataType\CustomTypes.cs" />

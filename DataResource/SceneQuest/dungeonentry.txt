@@ -1,0 +1,5 @@
+﻿s是否进入到副本中
+	a继续
+		echangemap
+	a我再考虑下
+		end

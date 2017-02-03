@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using ConfigDatas;
-using NarlonLib.Log;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
@@ -39,7 +38,7 @@ namespace TaleofMonsters.MainItem.Scenes
             var cachedSpecialData = new Dictionary<int, DbSceneSpecialPosData>();
             var filePath = ConfigData.GetSceneConfig(id).TilePath;
 
-            LoadSceneFile(mapWidth, mapHeight, reason, filePath, cachedMapData, cachedSpecialData);
+            LoadSceneFile(mapWidth, mapHeight, filePath, cachedMapData, cachedSpecialData);
             var questCellCount = cachedMapData.Count - cachedSpecialData.Count;
 
             if (reason != SceneFreshReason.Load || UserProfile.Profile.InfoWorld.PosInfos == null || UserProfile.Profile.InfoWorld.PosInfos.Count <= 0)
@@ -95,14 +94,34 @@ namespace TaleofMonsters.MainItem.Scenes
             return sceneObjects;
         }
 
-        private static void LoadSceneFile(int mapWidth, int mapHeight, SceneFreshReason reason, string filePath, List<ScenePosData> cachedMapData, Dictionary<int, DbSceneSpecialPosData> cachedSpecialData)
+        private static void LoadSceneFile(int mapWidth, int mapHeight, string filePath, List<ScenePosData> cachedMapData, Dictionary<int, DbSceneSpecialPosData> cachedSpecialData)
         {
             StreamReader sr = new StreamReader(DataLoader.Read("Scene", string.Format("{0}.txt", filePath)));
-            int xoff = int.Parse(sr.ReadLine().Split('=')[1])*mapWidth/1422;
-            int yoff = int.Parse(sr.ReadLine().Split('=')[1])*mapHeight/855 + 50; //50为固定偏移
-            int wid = int.Parse(sr.ReadLine().Split('=')[1]);
-            int height = int.Parse(sr.ReadLine().Split('=')[1]);
+            int xoff = 0, yoff = 0, wid = 0, height = 0;
 
+            string line;
+            while ((line = sr.ReadLine())!= null)
+            {
+                string[] datas = line.Split('=');
+                string tp = datas[0].Trim();
+                string parm = datas[1].Trim();
+                switch (tp)
+                {
+                    case "startx": xoff= int.Parse(parm) * mapWidth / 1422; break;
+                    case "starty": yoff = int.Parse(parm) * mapHeight / 855 + 50; break; //50为固定偏移
+                    case "width": wid = int.Parse(parm); break;
+                    case "height": height = int.Parse(parm); break;
+                    case "startpos": Scene.Instance.StartPos = int.Parse(parm); break;
+                    case "data": ReadBody(sr, mapWidth, mapHeight, cachedMapData, cachedSpecialData, wid, height, xoff, yoff); break;
+                }
+            }
+                     
+            sr.Close();
+        }
+
+        private static void ReadBody(StreamReader sr, int mapWidth, int mapHeight, List<ScenePosData> cachedMapData, Dictionary<int, DbSceneSpecialPosData> cachedSpecialData, 
+            int wid, int height, int xoff, int yoff)
+        {
             int cellWidth = GameConstants.SceneTileStandardWidth*mapWidth/1422;
             int cellHeight = GameConstants.SceneTileStandardHeight*mapHeight/855;
             for (int i = 0; i < height; i++)
@@ -146,35 +165,13 @@ namespace TaleofMonsters.MainItem.Scenes
                     posData.Info2 = int.Parse(data[3]);
                 cachedSpecialData[posData.Id] = posData;
             }
-            sr.Close();
         }
 
         private static void GenerateSceneRandomInfo(int id, int questCellCount, List<ScenePosData> cachedMapData, Dictionary<int, DbSceneSpecialPosData> cachedSpecialData)
         {
             List<int> randQuestList = new List<int>();
-            foreach (var questData in GetQuestConfigData(id))
-            {
-                for (int j = 0; j < questData.Value; j++)
-                {
-                    randQuestList.Add(questData.Id);
-                }
-            }
+            Scene.Instance.Rule.Generate(randQuestList, questCellCount);
 
-            bool needRandomize = ConfigData.GetSceneConfig(id).Type == SceneTypes.Common;
-            if (needRandomize)
-            {
-                if (randQuestList.Count > questCellCount)
-                {
-                    randQuestList.RemoveRange(questCellCount, randQuestList.Count - questCellCount);
-                    NLog.Warn(string.Format("GenerateSceneRandomInfo id={0} size too big {1}", id, randQuestList.Count));
-                }
-                else
-                {
-                    ListTool.Fill(randQuestList, 0, questCellCount);
-                }
-                ListTool.RandomShuffle(randQuestList);
-            }
-            
             var posList = new List<DbSceneSpecialPosData>();
             int index = 0;
             foreach (var scenePosData in cachedMapData)
@@ -186,7 +183,7 @@ namespace TaleofMonsters.MainItem.Scenes
                 {
                     specialData = new DbSceneSpecialPosData();
                     specialData.Id = scenePosData.Id;
-                    if (needRandomize)
+                    if (randQuestList.Count > index)
                     {
                         specialData.Type = "Quest";
                         specialData.Info = randQuestList[index++];    //随机一个出来
