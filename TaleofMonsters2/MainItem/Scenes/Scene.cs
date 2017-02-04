@@ -151,13 +151,15 @@ namespace TaleofMonsters.MainItem.Scenes
             Image allMap = PicLoader.Read("Map", "worldmap.JPG"); //生成世界地图
             Graphics g = Graphics.FromImage(allMap);
             Font font = new Font("微软雅黑", 18*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            foreach (var mapIconConfig in ConfigData.SceneDict.Values)
+            foreach (var sceneConfig in ConfigData.SceneDict.Values)
             {
-                if (mapIconConfig.IconX < wx || mapIconConfig.IconX > wx + 300 || mapIconConfig.IconY < wy || mapIconConfig.IconY > wy + 300)
+                if (sceneConfig.Icon == "")
                     continue;
-                string tname = ConfigData.GetSceneConfig(mapIconConfig.Id).Name;
-                g.DrawString(tname, font, Brushes.Black, mapIconConfig.IconX + 2, mapIconConfig.IconY + 21);
-                g.DrawString(tname, font, mapIconConfig.Id == mapid ? Brushes.Lime : Brushes.White, mapIconConfig.IconX, mapIconConfig.IconY + 20);
+                if (sceneConfig.IconX < wx || sceneConfig.IconX > wx + 300 || sceneConfig.IconY < wy || sceneConfig.IconY > wy + 300)
+                    continue;
+                string tname = ConfigData.GetSceneConfig(sceneConfig.Id).Name;
+                g.DrawString(tname, font, Brushes.Black, sceneConfig.IconX + 2, sceneConfig.IconY + 21);
+                g.DrawString(tname, font, sceneConfig.Id == mapid ? Brushes.Lime : Brushes.White, sceneConfig.IconX, sceneConfig.IconY + 20);
             }
             font.Dispose();
             g.Dispose();

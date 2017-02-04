@@ -124,6 +124,7 @@ namespace TaleofMonsters.MainItem.Scenes
         {
             int cellWidth = GameConstants.SceneTileStandardWidth*mapWidth/1422;
             int cellHeight = GameConstants.SceneTileStandardHeight*mapHeight/855;
+            Dictionary<int, List<ScenePosData>> randomGroup = new Dictionary<int, List<ScenePosData>>();
             for (int i = 0; i < height; i++)
             {
                 string[] data = sr.ReadLine().Split('\t');
@@ -144,9 +145,24 @@ namespace TaleofMonsters.MainItem.Scenes
                         Width = cellWidth,
                         Height = cellHeight
                     };
-                    cachedMapData.Add(so);
+                    if (val < 1000) //随机组
+                    {
+                        so.Id = (height - i)*1000 + j + 1;
+                        if (!randomGroup.ContainsKey(val))
+                            randomGroup[val] = new List<ScenePosData>();
+                        randomGroup[val].Add(so);
+                    }
+                    else
+                    {
+                        cachedMapData.Add(so);
+                    }
                 }
             }
+
+            RandomSequence r = new RandomSequence(randomGroup.Count);
+            for (int i = 0; i < Math.Ceiling(randomGroup.Keys.Count*0.5f); i++)
+                foreach (var randPos in randomGroup[r.NextNumber()+1])
+                    cachedMapData.Add(randPos);
 
             string line;
             while ((line = sr.ReadLine()) != null)

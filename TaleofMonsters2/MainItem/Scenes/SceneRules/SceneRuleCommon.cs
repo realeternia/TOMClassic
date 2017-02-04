@@ -26,20 +26,16 @@ namespace TaleofMonsters.MainItem.Scenes.SceneRules
                 }
             }
 
-            bool needRandomize = ConfigData.GetSceneConfig(mapId).Type == SceneTypes.Common;
-            if (needRandomize)
+            if (randQuestList.Count > questCellCount)
             {
-                if (randQuestList.Count > questCellCount)
-                {
-                    randQuestList.RemoveRange(questCellCount, randQuestList.Count - questCellCount);
-                    NLog.Warn(string.Format("Generate id={0} size too big {1}", mapId, randQuestList.Count));
-                }
-                else
-                {
-                    ListTool.Fill(randQuestList, 0, questCellCount);
-                }
-                ListTool.RandomShuffle(randQuestList);
+                randQuestList.RemoveRange(questCellCount, randQuestList.Count - questCellCount);
+                NLog.Warn(string.Format("Generate id={0} size too big {1}", mapId, randQuestList.Count));
             }
+            else
+            {
+                ListTool.Fill(randQuestList, 0, questCellCount);
+            }
+            ListTool.RandomShuffle(randQuestList);
         }
     }
 }
