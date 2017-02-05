@@ -256,6 +256,7 @@
     {
         SelectJob=1,
         Saiba=2,
-        Aolai=3
+        Aolai=3,
+        Qiongqi=4,
     }
 }

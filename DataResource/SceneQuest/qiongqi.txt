@@ -1,0 +1,19 @@
+﻿s走到了森林的最深处，你发现了远古神兽穷奇，看来一场大战已经无法避免
+	a准备战斗
+		efight
+			r0
+				s对手太强大了，还好，你看准机会暂时躲过了穷奇的追杀。
+					a继续
+						epunish
+			r1
+				s经历了殊死一搏，你击败了穷奇。
+					a|flagno-Qiongqi|太棒了
+						ereward
+							s之后你发现了一条暗道，可以离开这个迷宫
+								a走进去
+									echangemap
+					a|flag-Qiongqi|这次相比之前，轻松不少。
+						ereward|exp
+							s你找到了之前那条暗道，离开了这个迷宫
+								a走进去
+									echangemap
