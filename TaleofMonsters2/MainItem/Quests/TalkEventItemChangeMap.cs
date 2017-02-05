@@ -11,7 +11,7 @@ namespace TaleofMonsters.MainItem.Quests
             : base(evtId, level, r, e)
         {
             Scene.Instance.ChangeMap(config.SceneId, true);
-            UserProfile.InfoBasic.Position = Scene.Instance.GetWarpPosByStartPos(); //如果没配置了出生点，就随机一个点
+            UserProfile.InfoBasic.Position = Scene.Instance.GetStartPos(); //如果没配置了出生点，就随机一个点
         }
 
         public override bool AutoClose()

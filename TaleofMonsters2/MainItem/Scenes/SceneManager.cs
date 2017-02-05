@@ -115,7 +115,8 @@ namespace TaleofMonsters.MainItem.Scenes
                     case "starty": yoff = int.Parse(parm) * mapHeight / 855 + 50; break; //50为固定偏移
                     case "width": wid = int.Parse(parm); break;
                     case "height": height = int.Parse(parm); break;
-                    case "startpos": Scene.Instance.StartPos = int.Parse(parm); break;
+                    case "startpoint": Scene.Instance.StartPos = int.Parse(parm); break;
+                    case "revivepoint": Scene.Instance.RevivePos = int.Parse(parm); break;
                     case "data": ReadBody(sr, mapWidth, mapHeight, r, cachedMapData, cachedSpecialData, wid, height, xoff, yoff); break;
                 }
             }

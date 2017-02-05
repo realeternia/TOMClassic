@@ -62,6 +62,7 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public ISceneRule Rule { get; set; }
         public int StartPos { get; set; } //传送后指定地点
+        public int RevivePos { get; set; } //复活点
 
         private int width, height;// 场景的宽度和高度
 
@@ -230,6 +231,9 @@ namespace TaleofMonsters.MainItem.Scenes
                 var goldSub = (uint)Math.Ceiling((double)UserProfile.InfoBag.Resource.Gold / 5);
                 MessageBoxEx.Show(string.Format("你死了，失去了{0}的金钱", goldSub));
                 UserProfile.Profile.OnDie();
+                var config = ConfigData.GetSceneConfig(UserProfile.InfoBasic.MapId);
+                ChangeMap(config.ReviveScene, true);
+                UserProfile.InfoBasic.Position = GetRevivePos();
             }
         }
         
@@ -458,11 +462,22 @@ namespace TaleofMonsters.MainItem.Scenes
             }
             return 0;
         }
-        public int GetWarpPosByStartPos()
+        public int GetStartPos()
         {
             foreach (var sceneObject in sceneItems)
             {
                 if (sceneObject.Id == StartPos)
+                {
+                    return sceneObject.Id;
+                }
+            }
+            return sceneItems[MathTool.GetRandom(sceneItems.Count)].Id; //随机给一个
+        }
+        public int GetRevivePos()
+        {
+            foreach (var sceneObject in sceneItems)
+            {
+                if (sceneObject.Id == RevivePos)
                 {
                     return sceneObject.Id;
                 }

@@ -2,6 +2,7 @@ startx=150
 starty=600
 width=12
 height=3
+revivepoint=1001
 data=1
 0	0	0	3004	0	0	0	0	0	0	0	0
 0	0	0	2004	0	0	0	0	0	0	0	0

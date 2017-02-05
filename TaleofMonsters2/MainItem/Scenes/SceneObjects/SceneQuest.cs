@@ -44,6 +44,10 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                     SetMapSetting(true);
                 }
             }
+            else
+            {
+                Scene.Instance.OnEventFinish();
+            }
         }
 
         private void BeginEvent()

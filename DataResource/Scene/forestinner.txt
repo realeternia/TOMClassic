@@ -2,7 +2,7 @@ startx=150
 starty=600
 width=12
 height=3
-startpos=1007
+startpoint=1007
 data=1
 3001	1	1	0	0	0	0	0	0	0	0	0
 2	0	1	0	0	0	0	0	0	0	0	0
