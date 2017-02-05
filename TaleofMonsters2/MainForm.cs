@@ -30,7 +30,6 @@ namespace TaleofMonsters
         private int timeTick;
         private int timeMinutes;
         private long lastMouseMoveTime;
-        private string mouseStr;
         public static MainForm Instance { get; private set; }
 
         public MainForm()
@@ -157,11 +156,6 @@ namespace TaleofMonsters
             }
 
             Scene.Instance.CheckMouseMove(e.X, e.Y);
-
-#if DEBUG
-            mouseStr = string.Format("{0},{1}", e.X - 35, e.Y - 85);
-            tabPageGame.Invalidate(new Rectangle(10, tabPageGame.Height-40, 100, 30));
-#endif
         }
 
         private void MainForm_MouseClick(object sender, MouseEventArgs e)
@@ -307,10 +301,6 @@ namespace TaleofMonsters
                                         tabPageGame.Invalidate();
                                     }
                                 }
-                                else
-                                {
-                                    tabPageGame.Invalidate(new Rectangle(10, 8, 130, 18));
-                                }
                             }
                         }
 
@@ -344,11 +334,7 @@ namespace TaleofMonsters
             try
             {
                 Scene.Instance.Paint(e.Graphics, timeMinutes);
-#if DEBUG
-                Font font = new Font("微软雅黑", 12 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-                e.Graphics.DrawString(mouseStr, font, Brushes.White, 10, tabPageGame.Height - 60);
-                font.Dispose();
-#endif
+
                 SystemMenuManager.DrawAll(e.Graphics);
                 MainTipManager.DrawAll(e.Graphics);
             }

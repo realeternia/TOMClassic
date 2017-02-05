@@ -73,8 +73,6 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 
         public virtual void MoveEnd()
         {
-            UserProfile.Profile.InfoBasic.Position = Id;
-
             BlessManager.OnMove();
         }
 

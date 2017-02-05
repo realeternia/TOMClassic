@@ -8,6 +8,11 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             : base(wid, wx, wy, wwidth, wheight)
         {
         }
+        public override void MoveEnd()
+        {
+            base.MoveEnd();
+            Scene.Instance.OnEventFinish();
+        }
 
         public override void Draw(Graphics g, int target)
         {

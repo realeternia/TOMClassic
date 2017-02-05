@@ -9,22 +9,6 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 { 
     internal class SceneQuest : SceneObject
     {
-        #region Î¯ÍÐ
-        delegate void CloseFormCallback(NpcTalkForm f);
-        private void WiseOpen(NpcTalkForm f)
-        {
-            if (MainForm.Instance.InvokeRequired)
-            {
-                CloseFormCallback d = MainForm.Instance.DealPanel;
-                MainForm.Instance.Invoke(d, new object[] {f });
-            }
-            else
-            {
-                MainForm.Instance.DealPanel(f);
-            }
-        }
-        #endregion
-
         public int EventId { get; private set; }
         public SceneQuest(int wid, int wx, int wy, int wwidth, int wheight, int info)
             :base(wid,wx,wy,wwidth,wheight)
@@ -69,8 +53,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                 return;
             }
 
-            NpcTalkForm sw = new NpcTalkForm {EventId = EventId};
-            WiseOpen(sw);
+            MainForm.Instance.DealPanel(new NpcTalkForm { EventId = EventId });
         }
 
         public override bool CanBeReplaced()

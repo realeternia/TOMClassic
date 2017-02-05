@@ -79,6 +79,7 @@ namespace TaleofMonsters.Forms
                 if (interactBlock == null)//一般是最后一选了
                 {
                     Close();
+                    Scene.Instance.OnEventFinish();
                     return;
                 }
 
@@ -104,6 +105,7 @@ namespace TaleofMonsters.Forms
                 if (evtItem != null && evtItem.AutoClose())
                 {
                     Close();
+                    Scene.Instance.OnEventFinish();
                 }
                 this.Invalidate();
             }

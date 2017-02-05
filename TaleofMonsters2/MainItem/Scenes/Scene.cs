@@ -23,6 +23,21 @@ namespace TaleofMonsters.MainItem.Scenes
 {
     internal class Scene
     {
+        #region 委托
+        delegate void TimelySceneCallback(SceneObject f);
+        private void TimelyCheck(SceneObject f)
+        {
+            if (MainForm.Instance.InvokeRequired)
+            {
+                TimelySceneCallback d = OnMoveEnd;
+                MainForm.Instance.Invoke(d, new object[] { f });
+            }
+            else
+            {
+                OnMoveEnd(f);
+            }
+        }
+        #endregion
         private class MovingData
         {
             public float Time { get; set; }
@@ -180,7 +195,7 @@ namespace TaleofMonsters.MainItem.Scenes
         {
             if (movingData.Time > 0)
             {
-                movingData.Time -= timePast;
+                movingData.Time = Math.Max(0, movingData.Time - timePast);
                 var x = movingData.Source.X/2 + movingData.Dest.X/2;
                 var y = movingData.Source.Y/2 + movingData.Dest.Y/2;
                 parent.Invalidate(new Rectangle(x - 200, y - 200, 400, 400));
@@ -192,9 +207,26 @@ namespace TaleofMonsters.MainItem.Scenes
                     foreach (var sceneObject in sceneItems)
                     {
                         if (sceneObject.Id == movingData.DestId)
-                            sceneObject.MoveEnd();
+                        {
+                            UserProfile.Profile.InfoBasic.Position = sceneObject.Id;
+                            TimelyCheck(sceneObject);
+                            parent.Invalidate();
+                        }
                     }
                 }
+            } 
+        }
+
+        private static void OnMoveEnd(SceneObject o)
+        {
+            o.MoveEnd();
+        }
+
+        public void OnEventFinish()
+        {
+            if (UserProfile.InfoBasic.HealthPoint <= 0 || UserProfile.InfoBasic.MentalPoint <= 0)
+            {
+                UserProfile.InfoBasic.OnDie();
             }
         }
         

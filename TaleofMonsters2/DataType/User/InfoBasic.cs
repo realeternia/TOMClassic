@@ -132,5 +132,11 @@ namespace TaleofMonsters.DataType.User
             }
           
         }
+
+        public void OnDie()
+        {
+            HealthPoint = 50;
+            MentalPoint = 50;
+        }
     }
 }
