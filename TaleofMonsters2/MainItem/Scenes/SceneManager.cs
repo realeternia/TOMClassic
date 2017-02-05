@@ -38,15 +38,18 @@ namespace TaleofMonsters.MainItem.Scenes
             var cachedSpecialData = new Dictionary<int, DbSceneSpecialPosData>();
             var filePath = ConfigData.GetSceneConfig(id).TilePath;
 
-            LoadSceneFile(mapWidth, mapHeight, filePath, cachedMapData, cachedSpecialData);
-            var questCellCount = cachedMapData.Count - cachedSpecialData.Count;
-
             if (reason != SceneFreshReason.Load || UserProfile.Profile.InfoWorld.PosInfos == null || UserProfile.Profile.InfoWorld.PosInfos.Count <= 0)
             {//重新生成
+                UserProfile.InfoBasic.DungeonRandomSeed = MathTool.GetRandom(int.MaxValue);
+                Random r = new Random(UserProfile.InfoBasic.DungeonRandomSeed);
+                LoadSceneFile(mapWidth, mapHeight, filePath, r, cachedMapData, cachedSpecialData);
+                var questCellCount = cachedMapData.Count - cachedSpecialData.Count;
                 GenerateSceneRandomInfo(id, questCellCount, cachedMapData, cachedSpecialData);
             }
             else
             {//从存档加载
+                Random r = new Random(UserProfile.InfoBasic.DungeonRandomSeed);
+                LoadSceneFile(mapWidth, mapHeight, filePath, r, cachedMapData, cachedSpecialData);
                 foreach (var posData in UserProfile.Profile.InfoWorld.PosInfos)
                 {
                     cachedSpecialData[posData.Id] = posData;
@@ -94,7 +97,8 @@ namespace TaleofMonsters.MainItem.Scenes
             return sceneObjects;
         }
 
-        private static void LoadSceneFile(int mapWidth, int mapHeight, string filePath, List<ScenePosData> cachedMapData, Dictionary<int, DbSceneSpecialPosData> cachedSpecialData)
+        private static void LoadSceneFile(int mapWidth, int mapHeight, string filePath, Random r,
+            List<ScenePosData> cachedMapData, Dictionary<int, DbSceneSpecialPosData> cachedSpecialData)
         {
             StreamReader sr = new StreamReader(DataLoader.Read("Scene", string.Format("{0}.txt", filePath)));
             int xoff = 0, yoff = 0, wid = 0, height = 0;
@@ -112,14 +116,15 @@ namespace TaleofMonsters.MainItem.Scenes
                     case "width": wid = int.Parse(parm); break;
                     case "height": height = int.Parse(parm); break;
                     case "startpos": Scene.Instance.StartPos = int.Parse(parm); break;
-                    case "data": ReadBody(sr, mapWidth, mapHeight, cachedMapData, cachedSpecialData, wid, height, xoff, yoff); break;
+                    case "data": ReadBody(sr, mapWidth, mapHeight, r, cachedMapData, cachedSpecialData, wid, height, xoff, yoff); break;
                 }
             }
                      
             sr.Close();
         }
 
-        private static void ReadBody(StreamReader sr, int mapWidth, int mapHeight, List<ScenePosData> cachedMapData, Dictionary<int, DbSceneSpecialPosData> cachedSpecialData, 
+        private static void ReadBody(StreamReader sr, int mapWidth, int mapHeight, Random r,
+            List<ScenePosData> cachedMapData, Dictionary<int, DbSceneSpecialPosData> cachedSpecialData, 
             int wid, int height, int xoff, int yoff)
         {
             int cellWidth = GameConstants.SceneTileStandardWidth*mapWidth/1422;
@@ -159,11 +164,11 @@ namespace TaleofMonsters.MainItem.Scenes
                 }
             }
 
-            RandomSequence r = new RandomSequence(randomGroup.Count);
-            for (int i = 0; i < Math.Ceiling(randomGroup.Keys.Count*0.5f); i++)
-                foreach (var randPos in randomGroup[r.NextNumber()+1])
+            RandomSequence rs = new RandomSequence(randomGroup.Count, r);
+            for (int i = 0; i < Math.Ceiling(randomGroup.Keys.Count * 0.5f); i++)
+                foreach (var randPos in randomGroup[rs.NextNumber() + 1])
                     cachedMapData.Add(randPos);
-
+            
             string line;
             while ((line = sr.ReadLine()) != null)
             {

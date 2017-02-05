@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace NarlonLib.Math
@@ -7,10 +8,16 @@ namespace NarlonLib.Math
         private List<int> numberList;
         private int count;
         private int lastNumber;
+        private Random rd;
 
         public RandomSequence(int count)
         {
             this.count = count;
+        }
+        public RandomSequence(int count, Random r)
+        {
+            this.count = count;
+            rd = r;
         }
 
         public int NextNumber()
@@ -22,7 +29,15 @@ namespace NarlonLib.Math
                     datas[i] = i;
 
                 numberList= new List<int>(datas);
-                ListTool.RandomShuffle(numberList);
+                if (rd == null)
+                {
+                    ListTool.RandomShuffle(numberList);
+                }
+                else
+                {
+                    ListTool.RandomShuffle(numberList, rd);
+                }
+                
                 lastNumber = 0;
             }
             else

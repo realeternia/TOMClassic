@@ -18,6 +18,7 @@ namespace TaleofMonsters.DataType.User
         [FieldIndex(Index = 18)] public int AttrPoint;
         [FieldIndex(Index = 19)] public int LastLoginTime;
         [FieldIndex(Index = 20)] public uint FoodPoint; //饱腹值
+        [FieldIndex(Index = 21)] public int DungeonRandomSeed;
         [FieldIndex(Index = 22)] public int LastRival; //上一个peopleview的对手id
         [FieldIndex(Index = 23)] public int Position;
         [FieldIndex(Index = 24)] public uint HealthPoint; //健康度
