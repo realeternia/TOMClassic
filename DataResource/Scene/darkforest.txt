@@ -2,6 +2,7 @@ startx=150
 starty=440
 width=12
 height=5
+startpoint=5005
 data=1
 0	0	0	0	5005	0	0	0	0	0	0	0
 0	0	0	0	4005	0	0	0	0	0	0	0

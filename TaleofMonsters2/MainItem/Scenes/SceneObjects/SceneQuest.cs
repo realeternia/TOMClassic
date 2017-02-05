@@ -103,14 +103,20 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                 g.DrawImage(markQuest, destRect, 0, 0, markQuest.Width, markQuest.Height, GraphicsUnit.Pixel);
                 if (MapSetting)
                 {
+                    g.DrawImage(SceneBook.GetSceneQuestImage(EventId), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel);
                     var config = ConfigData.GetSceneQuestConfig(EventId);
-                    g.DrawImage(SceneBook.GetSceneQuestImage(config.Id), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel);
-
                     var targetName = config.Name;
                     Font fontName = new Font("ËÎÌו", 11 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
                     g.DrawString(targetName, fontName, Brushes.Black, X - drawWidth / 2 + Width / 8 + 2, Y - drawHeight / 2 + 1);
                     g.DrawString(targetName, fontName, Brushes.Wheat, X - drawWidth / 2 + Width / 8, Y - drawHeight / 2);
                     fontName.Dispose();
+                }
+                else
+                {
+#if DEBUG
+                    if(EventId > 0)
+                    g.DrawImage(SceneBook.GetSceneQuestImage(EventId), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel);
+#endif
                 }
             }
 

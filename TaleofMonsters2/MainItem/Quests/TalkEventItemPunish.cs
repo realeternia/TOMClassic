@@ -34,6 +34,11 @@ namespace TaleofMonsters.MainItem.Quests
             DoPunish(ref index, "health", GetMulti() + BlessManager.PunishHealthMulti, PunishHealth);
             DoPunish(ref index, "mental", GetMulti() + BlessManager.PunishMentalMulti, PunishMental);
             DoPunish(ref index, "bless", 1, PunishBless);
+
+            if (evt.Children.Count > 0)
+            {
+                result = evt.Children[0];//应该是一个say
+            }
         }
 
         private void DoPunish(ref int index, string type, int times, PunishAction action)

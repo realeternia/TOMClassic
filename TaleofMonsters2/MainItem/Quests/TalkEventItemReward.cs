@@ -44,6 +44,11 @@ namespace TaleofMonsters.MainItem.Quests
             DoReward(ref index, "flag", 1, RewardFlag);
             DoReward(ref index, "bless", 1, RewardBless);
             DoReward(ref index, "item", 1, RewardItem);
+
+            if (evt.Children.Count > 0)
+            {
+                result = evt.Children[0];//应该是一个say
+            }
         }
 
         private void DoReward(ref int index, string type, int times, RewardAction action)
