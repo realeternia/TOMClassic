@@ -201,5 +201,12 @@ namespace TaleofMonsters.DataType.User
             InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalOnline, inter / 60);
             InfoBasic.LastLoginTime = TimeTool.DateTimeToUnixTime(DateTime.Now);
         }
+
+        public void OnDie()
+        {
+            InfoBasic.HealthPoint = 50;
+            InfoBasic.MentalPoint = 50;
+            InfoBag.SubResource(GameResourceType.Gold, (uint)Math.Ceiling((double)InfoBag.Resource.Gold/5));
+        }
     }
 }

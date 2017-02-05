@@ -101,12 +101,6 @@
     <Compile Include="Control\ImageTooltip.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Control\MessageBoxEx.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Control\MessageBoxEx.Designer.cs">
-      <DependentUpon>MessageBoxEx.cs</DependentUpon>
-    </Compile>
     <Compile Include="Control\PopedCotainer.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -164,10 +158,6 @@
     <EmbeddedResource Include="Control\ImageTooltip.resx">
       <DependentUpon>ImageTooltip.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Control\MessageBoxEx.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>MessageBoxEx.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Control\PopedCotainer.resx">
       <DependentUpon>PopedCotainer.cs</DependentUpon>

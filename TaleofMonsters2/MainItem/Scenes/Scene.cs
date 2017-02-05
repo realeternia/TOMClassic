@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using ConfigDatas;
+using ControlPlus;
 using NarlonLib.Control;
 using NarlonLib.Drawing;
 using NarlonLib.Math;
@@ -226,7 +227,9 @@ namespace TaleofMonsters.MainItem.Scenes
         {
             if (UserProfile.InfoBasic.HealthPoint <= 0 || UserProfile.InfoBasic.MentalPoint <= 0)
             {
-                UserProfile.InfoBasic.OnDie();
+                var goldSub = (uint)Math.Ceiling((double)UserProfile.InfoBag.Resource.Gold / 5);
+                MessageBoxEx.Show(string.Format("你死了，失去了{0}的金钱", goldSub));
+                UserProfile.Profile.OnDie();
             }
         }
         
