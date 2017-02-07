@@ -8,6 +8,7 @@ using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Cards.Spells;
 using TaleofMonsters.DataType.Cards.Weapons;
 using TaleofMonsters.DataType.Decks;
+using TaleofMonsters.DataType.Drops;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms;
 
@@ -30,8 +31,8 @@ namespace TaleofMonsters.DataType.Items
                     return UseItem(consumerConfig);
                 if (itemConfig.SubType == HItemTypes.RandomCard)
                     return UseRandomCard(consumerConfig);
-                if (itemConfig.SubType == HItemTypes.RandomItem)
-                    return UseRandomItem(consumerConfig);
+                if (itemConfig.SubType == HItemTypes.DropItem)
+                    return UseDropItem(consumerConfig);
             }
             else if (useMethod == HItemTypes.Fight)
             {
@@ -131,29 +132,23 @@ namespace TaleofMonsters.DataType.Items
 
             return true;
         }
-        public static bool UseRandomItem(ItemConsumerConfig itemConfig)
+        public static bool UseDropItem(ItemConsumerConfig itemConfig)
         {
-            for (int i = 0; i < itemConfig.RandomItemCount; i++)
+            if (itemConfig.DropId > 0)
             {
-                int sum = 0;
-                foreach (var r in itemConfig.RandomItemRate)
+                var itemList = DropBook.GetDropItemList(itemConfig.DropId);
+                foreach (var itemId in itemList)
                 {
-                    sum += r;
-                }
-                int roll = MathTool.GetRandom(sum);
-                int rare = 0;
-                sum = 0;
-                for (int j = 0; j < itemConfig.RandomItemRate.Length; j++)
-                {
-                    sum += itemConfig.RandomItemRate[j];
-                    if (roll < sum)
+                    var isEquip = ConfigIdManager.IsEquip(itemId);
+                    if (isEquip)
                     {
-                        rare = j+1;
-                        break;
+                        UserProfile.InfoEquip.AddEquip(itemId, 60);
+                    }
+                    else
+                    {
+                        UserProfile.InfoBag.AddItem(itemId, 1);
                     }
                 }
-
-                UserProfile.InfoBag.AddItem(HItemBook.GetRandRareItemId(rare), 1);
             }
 
             return true;
@@ -161,30 +156,14 @@ namespace TaleofMonsters.DataType.Items
 
         private static bool UseGift(int id)
         {
-            RLIItemRateCountList items = ConfigData.GetItemGiftConfig(id).Items;
+            var items = ConfigData.GetItemGiftConfig(id).Items;
 
             int roll = MathTool.GetRandom(1, 101);
             for (int i = 0; i < items.Count; i++)
             {
-                RLIItemRateCount item = items[i];
+                var item = items[i];
 
-                if (roll < item.RollMin || roll > item.RollMax)
-                    continue;
-                if (item.Type == 1)
-                {
-                    UserProfile.InfoBag.AddItem(item.Id, item.Count);
-                }
-                else if (item.Type == 2)
-                {
-                    UserProfile.InfoEquip.AddEquip(item.Id, 0);
-                }
-                else if (item.Type == 3)
-                {
-                    if (CardConfigManager.GetCardConfig(item.Id).Id>0)
-                    {
-                        UserProfile.InfoCard.AddCard(item.Id);
-                    }
-                }
+                UserProfile.InfoBag.AddItem(item.Id, item.Value);
             }
 
             return true;

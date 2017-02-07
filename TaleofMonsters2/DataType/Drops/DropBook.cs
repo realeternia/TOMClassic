@@ -2,6 +2,7 @@
 using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.DataType.Equips;
+using TaleofMonsters.DataType.Items;
 
 namespace TaleofMonsters.DataType.Drops
 {
@@ -21,6 +22,10 @@ namespace TaleofMonsters.DataType.Drops
                 else if (dropConfig.EquipLevel > 0)
                 {
                     DropEquips(dropConfig.EquipLevel, items);
+                }
+                else if(dropConfig.RandomItemRate.Length > 0)
+                {
+                    DropLevelItems(dropConfig.RandomItemRate, items);
                 }
             }
             return items;
@@ -65,6 +70,29 @@ namespace TaleofMonsters.DataType.Drops
             }
             
             items.Add(resultItemId);
+        }
+
+        private static void DropLevelItems(int[] itemLevelRate, List<int> items)
+        {
+            int sum = 0;
+            foreach (var r in itemLevelRate)
+            {
+                sum += r;
+            }
+            int roll = MathTool.GetRandom(sum);
+            int rare = 0;
+            sum = 0;
+            for (int j = 0; j < itemLevelRate.Length; j++)
+            {
+                sum += itemLevelRate[j];
+                if (roll < sum)
+                {
+                    rare = j + 1;
+                    break;
+                }
+            }
+
+            items.Add(HItemBook.GetRandRareItemId(HItemRandomGroups.Fight, rare));
         }
     }
 }

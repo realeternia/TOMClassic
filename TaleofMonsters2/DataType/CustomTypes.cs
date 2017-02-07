@@ -79,10 +79,18 @@
         public const int Gift = 12;
         public const int Item = 13;
       //  public const int Ore = 14;
-        public const int RandomItem = 15;
+        public const int DropItem = 15;
         public const int RandomCard = 16;
         public const int Seed = 17;
     }
+
+    internal static class HItemRandomGroups
+    {
+        public const int None = 0;
+        public const int Gather = 1;
+        public const int Fight = 2;
+    }
+
     internal enum BuffEffectTypes
     {
         NoAction = 2,
@@ -178,7 +186,6 @@
         TypeLight = 15,
         TypeDark = 16,
 
-        RaceGoblin = 20,
         RaceDevil = 21,
         RaceMachine = 22,
         RaceSpirit = 23,
@@ -193,7 +200,9 @@
         RaceFish = 32,
         RaceElement = 33,
         RacePlant = 34,
-        RaceHero = 35,
+        RaceGoblin = 35,
+        RaceTotem = 36,
+        RaceHero = 55,
     }
     internal enum QuestionTypes
     {

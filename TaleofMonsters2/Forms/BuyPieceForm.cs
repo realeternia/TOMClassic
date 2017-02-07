@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using ControlPlus;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.Forms.Items;
 using TaleofMonsters.DataType.User;
@@ -183,7 +184,7 @@ namespace TaleofMonsters.Forms
         {
             NpcPieceData piece = new NpcPieceData();
             int rare = MathTool.GetRandom(Math.Max(index / 2, 1), index / 2 + 3);
-            piece.Id = HItemBook.GetRandRareItemId(rare);
+            piece.Id = HItemBook.GetRandRareItemId(HItemRandomGroups.Fight, rare);
             piece.Count = MathTool.GetRandom((8 - rare) / 2, 8 - rare);
 
             return piece;

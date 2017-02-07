@@ -10,27 +10,29 @@ namespace TaleofMonsters.DataType.Items
 {
     internal static class HItemBook
     {
-        private static Dictionary<int, List<int>> rareMidDict;
+        private static Dictionary<int, Dictionary<int, List<int>>> rareMidDict;//随机组，稀有度
 
-        public static int GetRandRareItemId(int rare)
+        public static int GetRandRareItemId(int group, int rare)
         {
             if (rareMidDict == null)
             {
-                rareMidDict = new Dictionary<int, List<int>>();
-                foreach (HItemConfig hItemConfig in ConfigData.HItemDict.Values)
+                rareMidDict = new Dictionary<int, Dictionary<int, List<int>>>();
+                rareMidDict[1] = new Dictionary<int, List<int>>();
+                rareMidDict[2] = new Dictionary<int, List<int>>();//目前只有2个随机组
+                foreach (var hItemConfig in ConfigData.HItemDict.Values)
                 {
-                    if (hItemConfig.IsRandom)
+                    if (hItemConfig.RandomGroup > 0)
                     {
-                        if (!rareMidDict.ContainsKey(hItemConfig.Rare))
+                        if (!rareMidDict[group].ContainsKey(hItemConfig.Rare))
                         {
-                            rareMidDict.Add(hItemConfig.Rare, new List<int>());
+                            rareMidDict[group].Add(hItemConfig.Rare, new List<int>());
                         }
-                        rareMidDict[hItemConfig.Rare].Add(hItemConfig.Id);
+                        rareMidDict[group][hItemConfig.Rare].Add(hItemConfig.Id);
                     }
                 }
             }
 
-            var rareList = rareMidDict[rare];
+            var rareList = rareMidDict[group][rare];
             return rareList[MathTool.GetRandom(rareList.Count)];
         }
 
@@ -45,22 +47,6 @@ namespace TaleofMonsters.DataType.Items
                 ImageManager.AddImage(fname, image);
             }
             return ImageManager.GetImage(fname);
-        }
-
-        public static bool IsGiftHasCard(int id)
-        {
-            foreach (ItemGiftConfig itemGiftConfig in ConfigData.ItemGiftDict.Values)
-            {
-                for (int i = 0; i < itemGiftConfig.Items.Count; i++)
-                {
-                    if (itemGiftConfig.Items[i].Id == id && itemGiftConfig.Items[i].Type==3)
-                    {
-                        return true;
-                    }
-                }
-
-            }
-            return false;
         }
 
         public static Image GetPreview(int id)
