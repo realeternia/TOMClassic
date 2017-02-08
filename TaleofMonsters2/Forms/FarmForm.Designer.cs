@@ -54,7 +54,7 @@ namespace TaleofMonsters.Forms
             // miniItemView1
             // 
             this.miniItemView1.BackColor = System.Drawing.Color.Black;
-            this.miniItemView1.ItemType = 17;
+            this.miniItemView1.ItemSubType = 17;
             this.miniItemView1.Location = new System.Drawing.Point(533, 272);
             this.miniItemView1.Name = "miniItemView1";
             this.miniItemView1.Size = new System.Drawing.Size(72, 142);

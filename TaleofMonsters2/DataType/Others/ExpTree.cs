@@ -13,5 +13,9 @@ namespace TaleofMonsters.DataType.Others
         {
             return ConfigDatas.ConfigData.GetLevelExpConfig(level).CardExp;
         }
+        public static double GetResourceFactor(int level)
+        {
+            return ConfigDatas.ConfigData.GetLevelExpConfig(level).ResouceFactor;
+        }
     }
 }

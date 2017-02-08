@@ -5,6 +5,7 @@ using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType.Others;
 
 namespace TaleofMonsters.DataType.Items
 {
@@ -100,7 +101,7 @@ namespace TaleofMonsters.DataType.Items
                 tipData.AddText(string.Format("{0:0}%  ", (float)consumerConfig.RandomCardRate[2] * 100 / totalRate), "White");
                 tipData.AddLine();
             }
-            tipData.AddTextNewLine(string.Format("出售价格:{0}", hItemConfig.Value), "Yellow");
+            tipData.AddTextNewLine(string.Format("出售价格:{0}", GameResourceBook.InGoldSellItem(hItemConfig.Rare, hItemConfig.ValueFactor)), "Yellow");
             tipData.AddImage(HSIcons.GetIconsByEName("res1"));
             tipData.AddImageXY(GetHItemImage(id), 8, 8, 48, 48, 7, 24, 32, 32);
 

@@ -5,6 +5,7 @@ using NarlonLib.Control;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Items;
+using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Regions;
 
@@ -76,7 +77,8 @@ namespace TaleofMonsters.Forms.Items
                 itemCount = piece.Count;
                 bitmapButtonBuy.Visible = !piece.Used;
                 virtualRegion.SetRegionKey(1, itemId);
-                price = ConfigDatas.ConfigData.GetHItemConfig(itemId).Value * piece.Count * 3;//素材价格x3
+                var itmConfig = ConfigData.GetHItemConfig(itemId);
+                price = (int)GameResourceBook.OutGoldSellItem(itmConfig.Rare, itmConfig.ValueFactor) * piece.Count * 2;//素材价格x2
                 show = true;
             }
             else

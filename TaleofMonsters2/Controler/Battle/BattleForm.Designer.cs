@@ -96,7 +96,7 @@ namespace TaleofMonsters.Controler.Battle
             // 
             this.miniItemView1.BackColor = System.Drawing.Color.Black;
             this.miniItemView1.Enabled = false;
-            this.miniItemView1.ItemType = 11;
+            this.miniItemView1.ItemSubType = 11;
             this.miniItemView1.Location = new System.Drawing.Point(832, 519);
             this.miniItemView1.Name = "miniItemView1";
             this.miniItemView1.Size = new System.Drawing.Size(72, 135);

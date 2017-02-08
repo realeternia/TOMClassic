@@ -9,7 +9,7 @@ namespace TaleofMonsters.Forms
 {
     internal sealed partial class NpcShopForm : BasePanel
     {
-        private RLIdValue[] items;
+        private int[] items;
         private int page;
         private ShopItem[] itemControls;
         private ControlPlus.NLPageSelector nlPageSelector1;
@@ -31,7 +31,7 @@ namespace TaleofMonsters.Forms
             base.Init(width, height);
 
             var shopInfo = ConfigData.GetNpcShopConfig(ShopId);
-            items = new RLIdValue[shopInfo.SellTable.Count];
+            items = new int[shopInfo.SellTable.Length];
             for (int i = 0; i < items.Length; i++)
             {
                 items[i] = shopInfo.SellTable[i];
@@ -43,20 +43,20 @@ namespace TaleofMonsters.Forms
                 itemControls[i].Init(shopInfo.MoneyType);
             }
             nlPageSelector1.TotalPage = (items.Length - 1) / 6 + 1;
-            refreshInfo();
+            RefreshInfo();
         }
 
-        private void refreshInfo()
+        private void RefreshInfo()
         {
             for (int i = 0; i < 6; i++)
             {
                 if (page*6 + i < items.Length)
                 {
-                    itemControls[i].RefreshData(items[page*6 + i].Id, items[page*6 + i].Value);
+                    itemControls[i].RefreshData(items[page*6 + i]);
                 }
                 else
                 {
-                    itemControls[i].RefreshData(0, 0);
+                    itemControls[i].RefreshData(0);
                 }
             }
         }
@@ -89,7 +89,7 @@ namespace TaleofMonsters.Forms
         private void nlPageSelector1_PageChange(int pg)
         {
             page = pg;
-            refreshInfo();
+            RefreshInfo();
         }
     }
 }

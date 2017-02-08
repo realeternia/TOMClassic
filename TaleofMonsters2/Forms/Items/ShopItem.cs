@@ -2,11 +2,13 @@
 using System.Drawing;
 using ConfigDatas;
 using NarlonLib.Control;
+using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Equips;
 using TaleofMonsters.DataType.Items;
+using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Regions;
 
@@ -15,7 +17,6 @@ namespace TaleofMonsters.Forms.Items
     internal class ShopItem
     {
         private int itemId;
-        private int itemType;
         private int priceType;//货币类型
         private int price;
         private bool show;
@@ -55,25 +56,27 @@ namespace TaleofMonsters.Forms.Items
             virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
 
-        public void RefreshData(int id, int type)
+        public void RefreshData(int id)
         {
             bitmapButtonBuy.Visible = id != 0;
             show = id != 0;
             itemId = id;
-            itemType = type;
             if (id != 0)
             {
+                var isEquip = ConfigIdManager.IsEquip(id);
                 virtualRegion.SetRegionKey(1, id);
-                virtualRegion.SetRegionType(1, type == 1 ? PictureRegionCellType.Item : PictureRegionCellType.Equip);
+                virtualRegion.SetRegionType(1, !isEquip ? PictureRegionCellType.Item : PictureRegionCellType.Equip);
+                if (!isEquip)
+                {
+                    var itmConfig = ConfigData.GetHItemConfig(itemId);
+                    price = (int)GameResourceBook.OutGoldSellItem(itmConfig.Rare, itmConfig.ValueFactor);
+                }
+                else
+                {
+                    price = ConfigData.GetEquipConfig(itemId).Value;
+                }
             }
-            if (itemType == 1)
-            {
-                price = ConfigData.GetHItemConfig(itemId).Value;
-            }
-            else
-            {                
-                price = ConfigData.GetEquipConfig(itemId).Value;
-            }
+
             if (priceType > 0) //非金币购买
             {
                 price = price / 10 + 1;
@@ -88,7 +91,8 @@ namespace TaleofMonsters.Forms.Items
             if (info == 1 && itemId > 0)
             {
                 Image image = null;
-                if (itemType == 1)
+                var isEquip = ConfigIdManager.IsEquip(itemId);
+                if (!isEquip)
                 {
                     image = HItemBook.GetPreview(itemId);
                 }
@@ -115,11 +119,12 @@ namespace TaleofMonsters.Forms.Items
             }
 
             UserProfile.InfoBag.SubResource((GameResourceType) priceType, (uint)price);
-            if (itemType == 1)
+            var isEquip = ConfigIdManager.IsEquip(itemId);
+            if (!isEquip)
             {
                 UserProfile.InfoBag.AddItem(itemId, 1);
             }
-            else if (itemType == 2)
+            else
             {
                 UserProfile.InfoEquip.AddEquip(itemId, 0);
             }
@@ -132,7 +137,8 @@ namespace TaleofMonsters.Forms.Items
             if (show)
             {
                 Font font = new Font("微软雅黑", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-                if (itemType == 1)
+                var isEquip = ConfigIdManager.IsEquip(itemId);
+                if (!isEquip)
                 {
                     HItemConfig itemConfig = ConfigData.GetHItemConfig(itemId);
 

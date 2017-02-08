@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType.User;
 using NarlonLib.Control;
+using TaleofMonsters.Config;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Equips;
 using TaleofMonsters.Core;
@@ -14,7 +15,6 @@ namespace TaleofMonsters.Forms.Pops
     internal partial class PopBuyProduct : Form
     {
         private int itemid;
-        private int itemtype;
         private int itemprice;
         private int count;
         private string fontcolor;
@@ -35,7 +35,8 @@ namespace TaleofMonsters.Forms.Pops
         {
             count = 1;
             textBoxTotal.Text = (count * itemprice).ToString();
-            if (itemtype == 1)
+            var isEquip = ConfigIdManager.IsEquip(itemid);
+            if (!isEquip)
             {
                 fontcolor = HSTypes.I2RareColor(ConfigDatas.ConfigData.GetHItemConfig(itemid).Rare);
             }
@@ -56,7 +57,8 @@ namespace TaleofMonsters.Forms.Pops
         void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
             Image image = null;
-            if (itemtype == 1)
+            var isEquip = ConfigIdManager.IsEquip(itemid);
+            if (!isEquip)
             {
                 image = HItemBook.GetPreview(itemid);
             }
@@ -73,7 +75,8 @@ namespace TaleofMonsters.Forms.Pops
             virtualRegion.Draw(e.Graphics);
 
             string itemname;
-            if (itemtype == 1)
+            var isEquip = ConfigIdManager.IsEquip(itemid);
+            if (!isEquip)
             {
                 itemname = ConfigDatas.ConfigData.GetHItemConfig(itemid).Name;
             }
@@ -91,13 +94,14 @@ namespace TaleofMonsters.Forms.Pops
             e.Graphics.DrawImage(HSIcons.GetIconsByEName("res8"), 212, 140, 16, 16);
         }
 
-        public static void Show(int id, int type, int price)
+        public static void Show(int id, int price)
         {
+            var isEquip = ConfigIdManager.IsEquip(id);
+
             PopBuyProduct mb = new PopBuyProduct();
             mb.itemid = id;
-            mb.itemtype = type;
             mb.itemprice = price;
-            mb.virtualRegion.AddRegion(new PictureRegion(1, 68, 44, 40, 40, type == 1 ? PictureRegionCellType.Item : PictureRegionCellType.Equip, id));
+            mb.virtualRegion.AddRegion(new PictureRegion(1, 68, 44, 40, 40, !isEquip ? PictureRegionCellType.Item : PictureRegionCellType.Equip, id));
             mb.ShowDialog();
         }
 
@@ -105,7 +109,8 @@ namespace TaleofMonsters.Forms.Pops
         {
             if (UserProfile.InfoBag.PayDiamond(itemprice * count))
             {
-                if (itemtype == 1)
+                var isEquip = ConfigIdManager.IsEquip(itemid);
+                if (!isEquip)
                 {
                     UserProfile.InfoBag.AddItem(itemid, count);
                 }

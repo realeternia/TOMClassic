@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Items;
@@ -52,18 +53,20 @@ namespace TaleofMonsters.Forms.Items
             if (itemPos >= 0)
             {
                 Font font = new Font("Aril", 11*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+                int itemId = UserProfile.InfoBag.Items[itemPos].Type;
                 if (enable)
                 {
-                    g.DrawImage(HItemBook.GetHItemImage(UserProfile.InfoBag.Items[itemPos].Type), x + 3, y + 3, 32, 32);
+                    g.DrawImage(HItemBook.GetHItemImage(itemId), x + 3, y + 3, 32, 32);
                 }
                 else
                 {
                     Rectangle ret = new Rectangle(x + 3, y + 3, 32, 32);
-                    g.DrawImage(HItemBook.GetHItemImage(UserProfile.InfoBag.Items[itemPos].Type), ret, 0, 0, 64, 64, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
+                    g.DrawImage(HItemBook.GetHItemImage(itemId), ret, 0, 0, 64, 64, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
                 }
 
-                g.DrawString(UserProfile.InfoBag.Items[itemPos].Value.ToString(), font, Brushes.Black, x + 4, y + 4);
-                g.DrawString(UserProfile.InfoBag.Items[itemPos].Value.ToString(), font, Brushes.White, x + 3, y + 3);
+                int count = UserProfile.InfoBag.Items[itemPos].Value;
+                g.DrawString(count.ToString(), font, Brushes.Black, x + 4, y + 4);
+                g.DrawString(count.ToString(), font, Brushes.White, x + 3, y + 3);
 
                 if (percent>1)
                 {

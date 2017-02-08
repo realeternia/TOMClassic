@@ -9,6 +9,8 @@ using TaleofMonsters.DataType.Items;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Pops;
 using ConfigDatas;
+using TaleofMonsters.Config;
+using TaleofMonsters.DataType.Others;
 
 namespace TaleofMonsters.Forms.Items
 {
@@ -55,14 +57,14 @@ namespace TaleofMonsters.Forms.Items
         {
             productId = id;
             GameShopConfig gameShopConfig = ConfigData.GetGameShopConfig(id);
-
             bitmapButtonBuy.Visible = id != 0;
             show = id != 0;
 
             if (id != 0)
             {
                 virtualRegion.SetRegionKey(1, gameShopConfig.ItemId);
-                virtualRegion.SetRegionType(1, gameShopConfig.Type == 1 ? PictureRegionCellType.Item : PictureRegionCellType.Equip);
+                var isEquip = ConfigIdManager.IsEquip(gameShopConfig.ItemId);
+                virtualRegion.SetRegionType(1, !isEquip ? PictureRegionCellType.Item : PictureRegionCellType.Equip);
             }
 
             parent.Invalidate(new Rectangle(x, y, width, height));
@@ -75,7 +77,8 @@ namespace TaleofMonsters.Forms.Items
             {
                 GameShopConfig gameShopConfig = ConfigData.GetGameShopConfig(productId);
                 Image image =null;
-                if (gameShopConfig.Type == 1)
+                var isEquip = ConfigIdManager.IsEquip(gameShopConfig.ItemId);
+                if (!isEquip)
                 {
                     image = HItemBook.GetPreview(gameShopConfig.ItemId);
                 }
@@ -98,7 +101,8 @@ namespace TaleofMonsters.Forms.Items
         {
             GameShopConfig gameShopConfig = ConfigData.GetGameShopConfig(productId);
             var itmConfig = ConfigData.GetHItemConfig(gameShopConfig.ItemId);
-            PopBuyProduct.Show(gameShopConfig.ItemId, gameShopConfig.Type,Math.Max(1, itmConfig.Value/GameConstants.DiamondToGold));
+            var itemPrice = GameResourceBook.OutGoldSellItem(itmConfig.Rare, itmConfig.ValueFactor);
+            PopBuyProduct.Show(gameShopConfig.ItemId, (int)Math.Max(1, itemPrice / GameConstants.DiamondToGold));
         }
 
         public void Draw(Graphics g)
@@ -112,7 +116,8 @@ namespace TaleofMonsters.Forms.Items
                 GameShopConfig gameShopConfig = ConfigData.GetGameShopConfig(productId);
                 string name;
                 string fontcolor;
-                if (gameShopConfig.Type == 1)
+                var isEquip = ConfigIdManager.IsEquip(gameShopConfig.ItemId);
+                if (!isEquip)
                 {
                     HItemConfig itemConfig = ConfigData.GetHItemConfig(gameShopConfig.ItemId);
                     name = itemConfig.Name;
@@ -129,7 +134,8 @@ namespace TaleofMonsters.Forms.Items
                 g.DrawString(name, fontsong, brush, x + 76, y + 9);
                 brush.Dispose();
                 var itmConfig = ConfigData.GetHItemConfig(gameShopConfig.ItemId);
-                g.DrawString(string.Format("{0,3:D}", Math.Max(1, itmConfig.Value / GameConstants.DiamondToGold)), fontsong, Brushes.PaleTurquoise, x + 80, y + 37);
+                var price = GameResourceBook.OutGoldSellItem(itmConfig.Rare, itmConfig.ValueFactor);
+                g.DrawString(string.Format("{0,3:D}", Math.Max(1, price / GameConstants.DiamondToGold)), fontsong, Brushes.PaleTurquoise, x + 80, y + 37);
                 fontsong.Dispose();
                 g.DrawImage(HSIcons.GetIconsByEName("res8"), x + 110, y + 35, 16, 16);
 

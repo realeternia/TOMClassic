@@ -185,7 +185,9 @@ namespace TaleofMonsters.DataType.User
             var pickItem = Items[pos];
             if (pickItem.Type > 0 && pickItem.Value > 0)
             {
-                uint money = (uint)(ConfigData.GetHItemConfig(pickItem.Type).Value * pickItem.Value);
+                var config = ConfigData.GetHItemConfig(pickItem.Type);
+                uint sellPrice = GameResourceBook.InGoldSellItem(config.Rare, config.ValueFactor);
+                uint money = (uint)(sellPrice * pickItem.Value);
                 AddResource(GameResourceType.Gold, money);
             }
             ClearItemAllByPos(pos);

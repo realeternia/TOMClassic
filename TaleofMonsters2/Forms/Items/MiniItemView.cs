@@ -20,7 +20,6 @@ namespace TaleofMonsters.Forms.Items
         private HSCursor myCursor;
         private List<int> ids;
         private MiniItemViewItem[] items;
-        private int itemType;
         private const int cellCount = 6;
         private const int cdCount = 11;
         private int[] cds;
@@ -32,11 +31,7 @@ namespace TaleofMonsters.Forms.Items
             myCursor = new HSCursor(this);
         }
 
-        public int ItemType
-        {
-            get { return itemType; }
-            set { itemType = value; }
-        }
+        public int ItemSubType { get; set; } //只有某一子类别的道具可以进入这个背包
 
         public void Init()
         {
@@ -67,7 +62,7 @@ namespace TaleofMonsters.Forms.Items
                 if (UserProfile.InfoBag.Items[i].Type != 0)
                 {
                     HItemConfig itemConfig = ConfigData.GetHItemConfig(UserProfile.InfoBag.Items[i].Type);
-                    if (itemConfig.SubType == itemType && itemConfig.IsUsable)
+                    if (itemConfig.SubType == ItemSubType && itemConfig.IsUsable)
                     {
                         ids.Add(i);
                     }
@@ -183,7 +178,7 @@ namespace TaleofMonsters.Forms.Items
                     cds[itemConfig.CdGroup] = CdGroup.GetCDTime(itemConfig.CdGroup);
                 }
                 int count = UserProfile.InfoBag.Items[tar].Value;
-                UserProfile.InfoBag.UseItemByPos(tar, itemType);
+                UserProfile.InfoBag.UseItemByPos(tar, ItemSubType);
                 if (count == 1)
                 {
                     RefreshList();
