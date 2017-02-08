@@ -20,7 +20,8 @@ namespace TaleofMonsters.Forms
         private bool isDirty;
         private bool show;
         private int tar;
-        private int selectTar;
+        private int rightSelectTar; //右键目标
+        private int leftSelectTar;//左键目标
         private int baseid;
         private Bitmap tempImage;
         private ImageToolTip tooltip = SystemToolTip.Instance;
@@ -41,7 +42,7 @@ namespace TaleofMonsters.Forms
 
             tempImage = new Bitmap(324, 324);
             baseid = 0;
-            tar = selectTar = -1;
+            tar = leftSelectTar = rightSelectTar = -1;
             myCursor = new HSCursor(this);
 
             popMenuItem = new PopMenuItem();
@@ -61,7 +62,8 @@ namespace TaleofMonsters.Forms
         private void RefreshFrame()
         {
             tar = -1;
-            selectTar = -1;
+            rightSelectTar = -1;
+            leftSelectTar = -1;
             tooltip.Hide(this);
             myCursor.ChangeCursor("default");
             isDirty = true;
@@ -123,7 +125,7 @@ namespace TaleofMonsters.Forms
 
             if (e.Button == MouseButtons.Left)
             {
-                if (selectTar == -1)
+                if (leftSelectTar == -1)
                 {
                     if (baseid + tar < UserProfile.InfoBag.BagCount)
                     {
@@ -131,7 +133,7 @@ namespace TaleofMonsters.Forms
                         {
                             HItemConfig itemConfig = ConfigData.GetHItemConfig(UserProfile.InfoBag.Items[baseid + tar].Type);
                             myCursor.ChangeCursor("Item", String.Format("{0}.JPG", itemConfig.Url), 40, 40);
-                            selectTar = tar;
+                            leftSelectTar = tar;
                             tooltip.Hide(this);
                         }
                     }
@@ -163,36 +165,36 @@ namespace TaleofMonsters.Forms
                     {
                         if (UserProfile.InfoBag.Items[baseid + tar].Type == 0)
                         {
-                            UserProfile.InfoBag.Items[baseid + tar].Type = UserProfile.InfoBag.Items[baseid + selectTar].Type;
-                            UserProfile.InfoBag.Items[baseid + selectTar].Type = 0;
-                            UserProfile.InfoBag.Items[baseid + tar].Value = UserProfile.InfoBag.Items[baseid + selectTar].Value;
-                            UserProfile.InfoBag.Items[baseid + selectTar].Value = 0;
+                            UserProfile.InfoBag.Items[baseid + tar].Type = UserProfile.InfoBag.Items[baseid + leftSelectTar].Type;
+                            UserProfile.InfoBag.Items[baseid + leftSelectTar].Type = 0;
+                            UserProfile.InfoBag.Items[baseid + tar].Value = UserProfile.InfoBag.Items[baseid + leftSelectTar].Value;
+                            UserProfile.InfoBag.Items[baseid + leftSelectTar].Value = 0;
                         }
                         else
                         {
                             int oldid = UserProfile.InfoBag.Items[baseid + tar].Type;
-                            UserProfile.InfoBag.Items[baseid + tar].Type = UserProfile.InfoBag.Items[baseid + selectTar].Type;
-                            UserProfile.InfoBag.Items[baseid + selectTar].Type = oldid;
+                            UserProfile.InfoBag.Items[baseid + tar].Type = UserProfile.InfoBag.Items[baseid + leftSelectTar].Type;
+                            UserProfile.InfoBag.Items[baseid + leftSelectTar].Type = oldid;
                             int oldcount = UserProfile.InfoBag.Items[baseid + tar].Value;
-                            UserProfile.InfoBag.Items[baseid + tar].Value = UserProfile.InfoBag.Items[baseid + selectTar].Value;
-                            UserProfile.InfoBag.Items[baseid + selectTar].Value = oldcount;
+                            UserProfile.InfoBag.Items[baseid + tar].Value = UserProfile.InfoBag.Items[baseid + leftSelectTar].Value;
+                            UserProfile.InfoBag.Items[baseid + leftSelectTar].Value = oldcount;
                         }
                     }
-                    selectTar = -1;
+                    leftSelectTar = -1;
                 }
                 isDirty = true;
                 Invalidate(new Rectangle(6, 36, 324, 324));
             }
             else if (e.Button == MouseButtons.Right)
             {
-                selectTar = tar;
+                rightSelectTar = tar;
                 tooltip.Hide(this);
 
-                if (selectTar == -1)
+                if (rightSelectTar == -1)
                     return;
 
                 popMenuItem.Clear();
-                HItemConfig itemConfig = ConfigData.GetHItemConfig(UserProfile.InfoBag.Items[baseid + selectTar].Type);
+                HItemConfig itemConfig = ConfigData.GetHItemConfig(UserProfile.InfoBag.Items[baseid + rightSelectTar].Type);
 
                 #region 构建菜单
                 if (itemConfig.IsUsable)
@@ -208,7 +210,7 @@ namespace TaleofMonsters.Forms
                 #endregion
 
                 popMenuItem.AutoResize();
-                popMenuItem.ItemIndex = baseid + selectTar;
+                popMenuItem.ItemIndex = baseid + rightSelectTar;
                 popContainer.Show(this, e.Location.X, e.Location.Y);  
             }
         }
@@ -222,7 +224,7 @@ namespace TaleofMonsters.Forms
             if (itemConfig.IsUsable && itemConfig.SubType != HItemTypes.Fight)
             {
                 UserProfile.InfoBag.UseItemByPos(baseid + tar, HItemTypes.Common);
-                selectTar = -1;
+                leftSelectTar = -1;
                 myCursor.ChangeCursor("default");
                 isDirty = true;
                 Invalidate(new Rectangle(6, 36, 324, 324));
@@ -278,8 +280,6 @@ namespace TaleofMonsters.Forms
             }
             e.Graphics.DrawImage(tempImage, 6, 36);
             int rect = tar;
-            if (tar == -1 && selectTar >= 0)
-                rect = selectTar;
             if (rect >= 0)
             {
                 if (baseid + rect < UserProfile.InfoBag.BagCount)

@@ -177,6 +177,12 @@
       <DependentUpon>EquipComposeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Items\EquipComposeItem.cs" />
+    <Compile Include="Forms\ItemPackageForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\ItemPackageForm.Designer.cs">
+      <DependentUpon>ItemPackageForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainItem\Blesses\BlessManager.cs" />
     <Compile Include="MainItem\Quests\TalkEventItem.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemEnd.cs" />
@@ -887,6 +893,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EquipComposeForm.resx">
       <DependentUpon>EquipComposeForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ItemPackageForm.resx">
+      <DependentUpon>ItemPackageForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">

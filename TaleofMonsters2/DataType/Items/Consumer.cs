@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Config;
@@ -137,6 +138,7 @@ namespace TaleofMonsters.DataType.Items
             if (itemConfig.DropId > 0)
             {
                 var itemList = DropBook.GetDropItemList(itemConfig.DropId);
+                var countList = new List<int>();
                 foreach (var itemId in itemList)
                 {
                     var isEquip = ConfigIdManager.IsEquip(itemId);
@@ -148,7 +150,11 @@ namespace TaleofMonsters.DataType.Items
                     {
                         UserProfile.InfoBag.AddItem(itemId, 1);
                     }
+                    countList.Add(1);
                 }
+                var form = new ItemPackageForm();
+                ((ItemPackageForm)form).SetItem(itemList.ToArray(), countList.ToArray());
+                MainForm.Instance.DealPanel(form);
             }
 
             return true;
@@ -157,15 +163,18 @@ namespace TaleofMonsters.DataType.Items
         private static bool UseGift(int id)
         {
             var items = ConfigData.GetItemGiftConfig(id).Items;
-
-            int roll = MathTool.GetRandom(1, 101);
+            List<int> itemList = new List<int>();
+            List<int> countList = new List<int>();
             for (int i = 0; i < items.Count; i++)
             {
                 var item = items[i];
-
                 UserProfile.InfoBag.AddItem(item.Id, item.Value);
+                itemList.Add(item.Id);
+                countList.Add(item.Value);
             }
-
+            var form = new ItemPackageForm();
+            ((ItemPackageForm)form).SetItem(itemList.ToArray(), countList.ToArray());
+            MainForm.Instance.DealPanel(form);
             return true;
         }
     }
