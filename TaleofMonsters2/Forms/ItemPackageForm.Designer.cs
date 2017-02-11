@@ -57,7 +57,7 @@ namespace TaleofMonsters.Forms
             this.Controls.Add(this.bitmapButtonClose);
             this.DoubleBuffered = true;
             this.Name = "ItemPackageForm";
-            this.Size = new System.Drawing.Size(210, 231);
+            this.Size = new System.Drawing.Size(204, 227);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.ItemPackageForm_Paint);
             this.ResumeLayout(false);
 

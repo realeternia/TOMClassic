@@ -35,8 +35,8 @@ namespace TaleofMonsters.Forms
             itemPos = new int[itemIds.Length * 2];
             for (int i = 0; i < itemIds.Length; i++)
             {
-                itemPos[i * 2] = 20 + 60 * (i%3);
-                itemPos[i * 2 + 1] = 40 + 60 * (i / 3);
+                itemPos[i * 2] = 20 + 55 * (i%3);
+                itemPos[i * 2 + 1] = 46 + 55 * (i / 3);
             }
 
             for (int i = 0; i < itemIds.Length; i++)
@@ -61,6 +61,10 @@ namespace TaleofMonsters.Forms
         private void ItemPackageForm_Paint(object sender, PaintEventArgs e)
         {
             BorderPainter.Draw(e.Graphics, "", Width, Height);
+
+            Image img = PicLoader.Read("System", "ItemBackDown2.JPG");
+            e.Graphics.DrawImage(img, 10, 35, 185, 185);
+            img.Dispose();
 
             vRegion.Draw(e.Graphics);
 
