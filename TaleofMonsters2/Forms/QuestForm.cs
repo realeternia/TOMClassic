@@ -5,11 +5,13 @@ using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus;
 using NarlonLib.Control;
+using NarlonLib.Drawing;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
+using TaleofMonsters.Forms.Items.Regions.Decorators;
 
 namespace TaleofMonsters.Forms
 {
@@ -19,7 +21,7 @@ namespace TaleofMonsters.Forms
         private VirtualRegion virtualRegion;
         private NLSelectPanel selectPanel;
         private ColorWordRegion colorWord;
-        private List<int> items;
+        private List<int> questIds;
 
         public QuestForm()
         {
@@ -34,10 +36,13 @@ namespace TaleofMonsters.Forms
             virtualRegion = new VirtualRegion(this);
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
-            virtualRegion.AddRegion(new PictureRegion(1, 650, 84, 50, 50, PictureRegionCellType.SceneQuest, 0));
-            virtualRegion.AddRegion(new PictureRegion(2, 650, 144, 50, 50, PictureRegionCellType.SceneQuest, 0));
-            virtualRegion.AddRegion(new PictureRegion(3, 650, 204, 50, 50, PictureRegionCellType.SceneQuest, 0));
-            
+            for (int i = 0; i < 3; i++)
+            {
+                var region = new PictureRegion(i + 1, 650, 84 + 60*i, 50, 50, PictureRegionCellType.SceneQuest, 0);
+                region.AddDecorator(new RegionBorderDecorator(Color.Lime));
+                virtualRegion.AddRegion(region); 
+            }
+          
             selectPanel = new NLSelectPanel(10, 84, 154, 400, this);
             selectPanel.ItemHeight = 30;
             selectPanel.SelectIndexChanged += selectPanel_SelectedIndexChanged;
@@ -51,7 +56,6 @@ namespace TaleofMonsters.Forms
             base.Init(width, height);
 
             comboBoxType.SelectedIndex = 0;
-            //RefreshInfo(1);
         }
 
         private void buttonClose_Click(object sender, EventArgs e)
@@ -61,9 +65,9 @@ namespace TaleofMonsters.Forms
 
         private void RefreshInfo(int index)
         {
-            items = QuestBook.GetQuestIdByChapter(index);
+            questIds = QuestBook.GetQuestIdByChapter(index);
             selectPanel.ClearContent();
-            foreach (var itm in items)
+            foreach (var itm in questIds)
             {
                 selectPanel.AddContent(itm);
             }
@@ -80,7 +84,7 @@ namespace TaleofMonsters.Forms
                 return;
             }
 
-            var questConfig = ConfigData.GetQuestConfig(items[selectPanel.SelectIndex]);
+            var questConfig = ConfigData.GetQuestConfig(questIds[selectPanel.SelectIndex]);
             colorWord.Text = questConfig.Descript;
 
             virtualRegion.SetRegionKey(1,0);
@@ -102,7 +106,7 @@ namespace TaleofMonsters.Forms
          //   g.DrawImage(SceneQuestBook.GetEquipImage(info), 5 + xOff, 5 + yOff, 40, 40);
             Font font = new Font("微软雅黑", 11.25F * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             int offX = 40 + xOff;
-            if (selectPanel.SelectIndex >= 0 && items[selectPanel.SelectIndex] == info)
+            if (selectPanel.SelectIndex >= 0 && questIds[selectPanel.SelectIndex] == info)
                 offX += 15;
             g.DrawString(questConfig.Name, font, Brushes.White, offX, 5 + yOff);
             font.Dispose();
@@ -110,14 +114,32 @@ namespace TaleofMonsters.Forms
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
-            if (id > 0)
+            if (selectPanel.SelectIndex < 0 || selectPanel.SelectIndex >= questIds.Count)
             {
-              //  if (UserProfile.InfoTask.GetTaskStateById(key) > 0)
-                {
-                  //  Image image = TaskBook.GetPreview(key);
-                  //  tooltip.Show(image, this, x, y);
-                }
+                return;
             }
+
+            var questConfig = ConfigData.GetQuestConfig(questIds[selectPanel.SelectIndex]);
+            string sceneQuestId = "";
+            string subContext = "";
+            if (id ==1)
+            {
+                sceneQuestId = questConfig.Quest1;
+                subContext = questConfig.SubDescript1;
+            }
+            if (id == 2)
+            {
+                sceneQuestId = questConfig.Quest2;
+                subContext = questConfig.SubDescript2;
+            }
+            if (id == 3)
+            {
+                sceneQuestId = questConfig.Quest3;
+                subContext = questConfig.SubDescript3;
+            }
+            var name = ConfigData.GetSceneQuestConfig(SceneBook.GetSceneQuestByName(sceneQuestId)).Name;
+            Image image = DrawTool.GetImageByString(name, subContext, 150, Color.White);
+            tooltip.Show(image, this, x, y);
         }
 
         private void virtualRegion_RegionLeft()

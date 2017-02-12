@@ -20,7 +20,7 @@ namespace TaleofMonsters.Forms.Items.Regions.Decorators
         {
             using (Pen pen = new Pen(lineColor))
             {
-                g.DrawRectangle(pen, x, y, width-2, height-2);
+                g.DrawRectangle(pen, x, y, width-1, height-1);
             }
         }
     }
