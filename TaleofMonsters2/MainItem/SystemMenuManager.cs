@@ -169,7 +169,7 @@ namespace TaleofMonsters.MainItem
                     MainForm.Instance.DealPanel(new GameShopViewForm());
                     break;
                 case SystemMenuIds.TaskForm:
-                    MainForm.Instance.DealPanel(new TaskForm());
+                    MainForm.Instance.DealPanel(new QuestForm());
                     break;
                 case SystemMenuIds.EquipmentForm:
                     MainForm.Instance.DealPanel(new EquipmentForm());

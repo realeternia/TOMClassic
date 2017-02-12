@@ -74,11 +74,6 @@ namespace TaleofMonsters.DataType.Mazes
                 HItemConfig itemConfig = ConfigData.GetHItemConfig(infos[0]);
                 panel.AddFlowCenter(string.Format("获得{0}x1", itemConfig.Name), HSTypes.I2RareColor(itemConfig.Rare));
             }
-            else if (type == "task")
-            {
-            //    UserProfile.InfoTask.SetTaskStateById(infos[0], 2);
-                panel.AddFlowCenter(string.Format("任务{0}达成", ConfigData.GetTaskConfig(infos[0]).Name), "White");
-            }
             else if (type == "mon")
             {
                 PeopleBook.Fight(infos[0], "oneline", mlevel + infos[1], new PeopleFightParm(), success, fail,null);

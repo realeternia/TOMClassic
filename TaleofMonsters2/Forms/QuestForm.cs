@@ -11,14 +11,14 @@ using TaleofMonsters.Forms.Items.Regions;
 
 namespace TaleofMonsters.Forms
 {
-    internal sealed partial class TaskForm : BasePanel
+    internal sealed partial class QuestForm : BasePanel
     {
         private int selectTid = -1;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
         private VirtualRegion virtualRegion;
         private int[] tids;
 
-        public TaskForm()
+        public QuestForm()
         {
             InitializeComponent();
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
@@ -35,8 +35,8 @@ namespace TaleofMonsters.Forms
          //   tids = TaskBook.GetTaskByLevels();
             foreach (int tid in tids)
             {
-                TaskConfig taskConfig = ConfigData.GetTaskConfig(tid);
-                virtualRegion.AddRegion(new PictureRegion(id, 24 + taskConfig.Position.X * 32, 82 + taskConfig.Position.Y * 32, 28, 28, PictureRegionCellType.Task, tid));
+             //   TaskConfig taskConfig = ConfigData.GetTaskConfig(tid);
+             //   virtualRegion.AddRegion(new PictureRegion(id, 24 + taskConfig.Position.X * 32, 82 + taskConfig.Position.Y * 32, 28, 28, PictureRegionCellType.Task, tid));
                 id++;
             }
         }
@@ -93,25 +93,25 @@ namespace TaleofMonsters.Forms
 
             foreach (int tid in tids)
             {
-                TaskConfig taskConfig = ConfigData.GetTaskConfig(tid);
-                RLXY src = taskConfig.Position;
-                int fid = taskConfig.Former;
-                if (fid!=0)
-                {
-                    RLXY dest = ConfigData.GetTaskConfig(fid).Position;
-                    Pen pen = new Pen(Color.Lime, 2);
-                    int yoff = 3;
-                    if (src.Y!=dest.Y)
-                    {
-                        yoff = -3;
-                        e.Graphics.DrawLine(pen, 22 + dest.X * 32 + 16, 80 + 32 * src.Y + 16 + yoff, 22 + dest.X * 32 + 16, 80 + 32 * dest.Y + 16);
-                    }
-                    if (src.X != dest.X)
-                    {
-                        e.Graphics.DrawLine(pen, 22 + dest.X * 32 + 16, 80 + 32 * src.Y + 16 + yoff, 22 + src.X * 32 + 16, 80 + 32 * src.Y + 16 + yoff);
-                    }
-                    pen.Dispose();
-                }
+                //TaskConfig taskConfig = ConfigData.GetTaskConfig(tid);
+                //RLXY src = taskConfig.Position;
+                //int fid = taskConfig.Former;
+                //if (fid!=0)
+                //{
+                //    RLXY dest = ConfigData.GetTaskConfig(fid).Position;
+                //    Pen pen = new Pen(Color.Lime, 2);
+                //    int yoff = 3;
+                //    if (src.Y!=dest.Y)
+                //    {
+                //        yoff = -3;
+                //        e.Graphics.DrawLine(pen, 22 + dest.X * 32 + 16, 80 + 32 * src.Y + 16 + yoff, 22 + dest.X * 32 + 16, 80 + 32 * dest.Y + 16);
+                //    }
+                //    if (src.X != dest.X)
+                //    {
+                //        e.Graphics.DrawLine(pen, 22 + dest.X * 32 + 16, 80 + 32 * src.Y + 16 + yoff, 22 + src.X * 32 + 16, 80 + 32 * src.Y + 16 + yoff);
+                //    }
+                //    pen.Dispose();
+                //}
             }
 
             virtualRegion.Draw(e.Graphics);

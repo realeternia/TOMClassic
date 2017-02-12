@@ -932,9 +932,9 @@
       <SubType>Designer</SubType>
       <DependentUpon>NpcTalkForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\TaskForm.resx">
+    <EmbeddedResource Include="Forms\QuestForm.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>TaskForm.cs</DependentUpon>
+      <DependentUpon>QuestForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controler\Battle\Components\TimeViewer.resx">
       <SubType>Designer</SubType>
@@ -954,10 +954,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controler\Battle\BattleResultForm.resx">
       <DependentUpon>BattleResultForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\TaskResultForm.resx">
-      <DependentUpon>TaskResultForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -989,11 +985,11 @@
     <Compile Include="Forms\NpcTalkForm.Designer.cs">
       <DependentUpon>NpcTalkForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\TaskForm.cs">
+    <Compile Include="Forms\QuestForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\TaskForm.Designer.cs">
-      <DependentUpon>TaskForm.cs</DependentUpon>
+    <Compile Include="Forms\QuestForm.Designer.cs">
+      <DependentUpon>QuestForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DataType\Others\TileBook.cs" />
     <Compile Include="Controler\Battle\Components\TimeViewer.cs">
@@ -1029,12 +1025,6 @@
     </Compile>
     <Compile Include="Controler\Battle\BattleResultForm.Designer.cs">
       <DependentUpon>BattleResultForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\TaskResultForm.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Forms\TaskResultForm.Designer.cs">
-      <DependentUpon>TaskResultForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainItem\ToolBarItemData.cs" />
   </ItemGroup>

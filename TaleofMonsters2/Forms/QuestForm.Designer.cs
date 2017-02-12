@@ -3,7 +3,7 @@ using NarlonLib.Control;
 
 namespace TaleofMonsters.Forms
 {
-    sealed partial class TaskForm
+    sealed partial class QuestForm
     {
         /// <summary>
         /// 必需的设计器变量。
