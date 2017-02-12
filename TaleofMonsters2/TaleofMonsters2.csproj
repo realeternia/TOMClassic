@@ -157,6 +157,7 @@
     <Compile Include="DataType\Blesses\BlessBook.cs" />
     <Compile Include="DataType\Drops\DropBook.cs" />
     <Compile Include="DataType\Peoples\PeopleFightReason.cs" />
+    <Compile Include="DataType\Quests\QuestBook.cs" />
     <Compile Include="DataType\User\Db\DbEquip.cs" />
     <Compile Include="DataType\User\Db\DbDeckCard.cs" />
     <Compile Include="DataType\User\Db\DbSceneSpecialPosData.cs" />

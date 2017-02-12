@@ -98,7 +98,10 @@ namespace TaleofMonsters.Forms.Items.Regions
                 {
                     img = DataType.Blesses.BlessBook.GetBlessImage(nid);
                 }
-
+                else if (type == PictureRegionCellType.SceneQuest)
+                {
+                    img = SceneBook.GetSceneQuestImage(nid);
+                }
                 if (img != null)
                 {
                     if (Scale == 1)
@@ -158,9 +161,9 @@ namespace TaleofMonsters.Forms.Items.Regions
         Achieve,
         HeroSkill,
         People,
-        Task,
         CardQual,
         Job,
         Bless,
+        SceneQuest
     }
 }

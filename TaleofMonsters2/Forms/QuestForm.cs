@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus;
 using NarlonLib.Control;
 using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.DataType.Quests;
+using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 
@@ -13,10 +15,11 @@ namespace TaleofMonsters.Forms
 {
     internal sealed partial class QuestForm : BasePanel
     {
-        private int selectTid = -1;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
         private VirtualRegion virtualRegion;
-        private int[] tids;
+        private NLSelectPanel selectPanel;
+        private ColorWordRegion colorWord;
+        private List<int> items;
 
         public QuestForm()
         {
@@ -31,14 +34,24 @@ namespace TaleofMonsters.Forms
             virtualRegion = new VirtualRegion(this);
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
-            int id = 1;
-         //   tids = TaskBook.GetTaskByLevels();
-            foreach (int tid in tids)
-            {
-             //   TaskConfig taskConfig = ConfigData.GetTaskConfig(tid);
-             //   virtualRegion.AddRegion(new PictureRegion(id, 24 + taskConfig.Position.X * 32, 82 + taskConfig.Position.Y * 32, 28, 28, PictureRegionCellType.Task, tid));
-                id++;
-            }
+            virtualRegion.AddRegion(new PictureRegion(1, 650, 84, 50, 50, PictureRegionCellType.SceneQuest, 0));
+            virtualRegion.AddRegion(new PictureRegion(2, 650, 144, 50, 50, PictureRegionCellType.SceneQuest, 0));
+            virtualRegion.AddRegion(new PictureRegion(3, 650, 204, 50, 50, PictureRegionCellType.SceneQuest, 0));
+            
+            selectPanel = new NLSelectPanel(10, 84, 154, 400, this);
+            selectPanel.ItemHeight = 30;
+            selectPanel.SelectIndexChanged += selectPanel_SelectedIndexChanged;
+            selectPanel.DrawCell += new NLSelectPanel.SelectPanelCellDrawHandler(selectPanel_DrawCell);
+
+            colorWord = new ColorWordRegion(190, 84, 440, "微软雅黑", 11, Color.White);
+        }
+
+        internal override void Init(int width, int height)
+        {
+            base.Init(width, height);
+
+            comboBoxType.SelectedIndex = 0;
+            //RefreshInfo(1);
         }
 
         private void buttonClose_Click(object sender, EventArgs e)
@@ -46,15 +59,53 @@ namespace TaleofMonsters.Forms
             Close();
         }
 
-        private void bitmapButtonRefresh_Click(object sender, EventArgs e)
+        private void RefreshInfo(int index)
         {
-            if (MessageBoxEx2.Show("是否花5钻石立刻完成任务?") == DialogResult.OK)
+            items = QuestBook.GetQuestIdByChapter(index);
+            selectPanel.ClearContent();
+            foreach (var itm in items)
             {
-                if (UserProfile.InfoBag.PayDiamond(5))
-                {
-                  //  UserProfile.InfoTask.EndTask(selectTid);
-                }
+                selectPanel.AddContent(itm);
             }
+            selectPanel.SelectIndex = 0;
+
+            Invalidate(selectPanel.Rectangle);
+           // UpdateMethod();
+        }
+
+        private void selectPanel_SelectedIndexChanged()
+        {
+            if (selectPanel.SelectIndex < 0)
+            {
+                return;
+            }
+
+            var questConfig = ConfigData.GetQuestConfig(items[selectPanel.SelectIndex]);
+            colorWord.Text = questConfig.Descript;
+
+            virtualRegion.SetRegionKey(1,0);
+            virtualRegion.SetRegionKey(2, 0);
+            virtualRegion.SetRegionKey(3, 0);
+            if (!string.IsNullOrEmpty(questConfig.Quest1))
+                virtualRegion.SetRegionKey(1, SceneBook.GetSceneQuestByName(questConfig.Quest1));
+            if (!string.IsNullOrEmpty(questConfig.Quest2))
+                virtualRegion.SetRegionKey(2, SceneBook.GetSceneQuestByName(questConfig.Quest2));
+            if (!string.IsNullOrEmpty(questConfig.Quest3))
+                virtualRegion.SetRegionKey(3, SceneBook.GetSceneQuestByName(questConfig.Quest3));
+
+            Invalidate();
+        }
+
+        private void selectPanel_DrawCell(Graphics g, int info, int xOff, int yOff)
+        {
+            QuestConfig questConfig = ConfigData.GetQuestConfig(info);
+         //   g.DrawImage(SceneQuestBook.GetEquipImage(info), 5 + xOff, 5 + yOff, 40, 40);
+            Font font = new Font("微软雅黑", 11.25F * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+            int offX = 40 + xOff;
+            if (selectPanel.SelectIndex >= 0 && items[selectPanel.SelectIndex] == info)
+                offX += 15;
+            g.DrawString(questConfig.Name, font, Brushes.White, offX, 5 + yOff);
+            font.Dispose();
         }
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
@@ -79,42 +130,17 @@ namespace TaleofMonsters.Forms
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
             Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString(" 任务 ", font, Brushes.White, Width / 2 - 40, 8);
+            e.Graphics.DrawString(" 传记 ", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
 
-            for (int i = 0; i < 11; i++)
-            {
-                e.Graphics.DrawLine(Pens.Gray, 22 + i*32, 80, 22 + i*32, 80 + 320);
-            }
-            for (int i = 0; i < 11; i++)
-            {
-                e.Graphics.DrawLine(Pens.Gray, 22, 80 + i * 32, 22 + 320, 80 + i * 32);
-            }
-
-            foreach (int tid in tids)
-            {
-                //TaskConfig taskConfig = ConfigData.GetTaskConfig(tid);
-                //RLXY src = taskConfig.Position;
-                //int fid = taskConfig.Former;
-                //if (fid!=0)
-                //{
-                //    RLXY dest = ConfigData.GetTaskConfig(fid).Position;
-                //    Pen pen = new Pen(Color.Lime, 2);
-                //    int yoff = 3;
-                //    if (src.Y!=dest.Y)
-                //    {
-                //        yoff = -3;
-                //        e.Graphics.DrawLine(pen, 22 + dest.X * 32 + 16, 80 + 32 * src.Y + 16 + yoff, 22 + dest.X * 32 + 16, 80 + 32 * dest.Y + 16);
-                //    }
-                //    if (src.X != dest.X)
-                //    {
-                //        e.Graphics.DrawLine(pen, 22 + dest.X * 32 + 16, 80 + 32 * src.Y + 16 + yoff, 22 + src.X * 32 + 16, 80 + 32 * src.Y + 16 + yoff);
-                //    }
-                //    pen.Dispose();
-                //}
-            }
+            colorWord.Draw(e.Graphics);
 
             virtualRegion.Draw(e.Graphics);
+        }
+
+        private void comboBoxType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefreshInfo(comboBoxType.SelectedIndex + 1);
         }
 
     }
