@@ -145,6 +145,10 @@ namespace TaleofMonsters.MainItem.Quests
             {
                 UserProfile.InfoRecord.SetFlag((uint) ((MemPlayerFlagTypes) Enum.Parse(typeof (MemPlayerFlagTypes), config.Flag)));
             }
+            if (config.QuestId > 0)
+            {
+                UserProfile.InfoQuest.SetQuest(config.QuestId);
+            }
             if (config.ReplaceId > 0)
             {
                 UserProfile.InfoQuest.AddReplace(config.Id, config.ReplaceId);
