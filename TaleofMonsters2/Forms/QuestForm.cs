@@ -137,9 +137,12 @@ namespace TaleofMonsters.Forms
                 sceneQuestId = questConfig.Quest3;
                 subContext = questConfig.SubDescript3;
             }
-            var name = ConfigData.GetSceneQuestConfig(SceneBook.GetSceneQuestByName(sceneQuestId)).Name;
-            Image image = DrawTool.GetImageByString(name, subContext, 150, Color.White);
-            tooltip.Show(image, this, x, y);
+            if (!string.IsNullOrEmpty(sceneQuestId))
+            {
+                var name = ConfigData.GetSceneQuestConfig(SceneBook.GetSceneQuestByName(sceneQuestId)).Name;
+                Image image = DrawTool.GetImageByString(name, subContext, 150, Color.White);
+                tooltip.Show(image, this, x, y);
+            }
         }
 
         private void virtualRegion_RegionLeft()

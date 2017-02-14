@@ -104,6 +104,8 @@ namespace TaleofMonsters.Forms.Items.Core
                     case "R": return Color.Red;
                     case "G": return Color.Green;
                     case "B": return Color.RoyalBlue;
+                    case "P": return Color.MediumPurple;
+                    case "Y": return Color.Yellow;
                 }
             }
             return Color.FromName(cname);
