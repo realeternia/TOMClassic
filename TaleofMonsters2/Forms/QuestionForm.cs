@@ -37,7 +37,7 @@ namespace TaleofMonsters.Forms
             base.Init(width, height);
 
             Question qes = QuestionBook.GetQuestion();
-            colorWord.Text = qes.info;
+            colorWord.UpdateText(qes.info);
             radioButton1.Text = qes.GetAns(0);
             radioButton2.Text = qes.GetAns(1);
             radioButton3.Text = qes.GetAns(2);

@@ -9,9 +9,10 @@ namespace TaleofMonsters.Forms.Items.Core
         private int width;
         private string fontname;
         private int fontsize;
-        private string text;
+        private string[] lines;
         private Color fcolor;
-        private bool bold;
+
+        private float chapterOffset = 25;
 
         public ColorWordRegion(int x, int y, int width, string fontname, int fontsize, Color fcolor)
         {
@@ -20,58 +21,63 @@ namespace TaleofMonsters.Forms.Items.Core
             this.width = width;
             this.fontname = fontname;
             this.fontsize = fontsize;
-            this.fcolor = fcolor;           
+            this.fcolor = fcolor;
+
+            chapterOffset = fontsize*2+6;
         }
 
-        public string Text
-        {
-            set { text = value; }
-        }
+        public bool Bold { get; set; }
 
-        public bool Bold
+        public void UpdateText(string info)
         {
-            set { bold = value; }
+            lines = info.Split('$'); //·Ö¶Î
         }
 
         public void Draw(Graphics g)
         {
-            if(text == null)
+            if(lines == null)
                 return;
 
             int line = 0;
             float linewid = 0;
             Color color = fcolor;
-            if (text.IndexOf('|') >= 0)
+            foreach (var lineData in lines)
             {
-                string[] infos = text.Split('|');
-                for (int i = 0; i < infos.Length; i++)
+                linewid = chapterOffset; //¶ÎÂäÆ«ÒÆ
+                if (lineData.IndexOf('|') >= 0)
                 {
-                    if ((i%2)==0)
+                    string[] infos = lineData.Split('|');
+                    for (int i = 0; i < infos.Length; i++)
                     {
-                        if (infos[i] == "")
+                        if ((i % 2) == 0)
                         {
-                            color = fcolor;
+                            if (infos[i] == "")
+                            {
+                                color = fcolor;
+                            }
+                            else
+                            {
+                                color = FromColorName(infos[i]);
+                            }
                         }
                         else
                         {
-                            color = Color.FromName(infos[i]);
+                            DrawSub(g, infos[i], color, ref line, ref linewid);
                         }
                     }
-                    else
-                    {
-                        DrawSub(g, infos[i], color, ref line, ref linewid);
-                    }
                 }
+                else
+                {
+                    DrawSub(g, lineData, color, ref line, ref linewid);
+                }
+                line++;
             }
-            else
-            {
-                DrawSub(g, text, color,ref line,ref linewid);
-            }
+          
         }
 
         private void DrawSub(Graphics g, string s, Color color, ref int line, ref float linewid)
         {
-            Font font = new Font(fontname, fontsize*1.33f, bold ? FontStyle.Bold : FontStyle.Regular, GraphicsUnit.Pixel);
+            Font font = new Font(fontname, fontsize*1.33f, Bold ? FontStyle.Bold : FontStyle.Regular, GraphicsUnit.Pixel);
             for (int i = 0; i < s.Length; i++)
             {
                 string schr = s.Substring(i, 1);
@@ -87,6 +93,20 @@ namespace TaleofMonsters.Forms.Items.Core
                 linewid += textwid;
             }
             font.Dispose();
+        }
+
+        private static Color FromColorName(string cname)
+        {
+            if (cname.Length == 1) //¼òÐ´
+            {
+                switch (cname)
+                {
+                    case "R": return Color.Red;
+                    case "G": return Color.Green;
+                    case "B": return Color.RoyalBlue;
+                }
+            }
+            return Color.FromName(cname);
         }
     }
 }

@@ -113,7 +113,7 @@ namespace TaleofMonsters.Forms
 
         private void SetupQuestItem()
         {
-            colorWord.Text = interactBlock.Script;
+            colorWord.UpdateText(interactBlock.Script);
             answerList.Clear();
             foreach (var sceneQuestBlock in interactBlock.Children)
             {

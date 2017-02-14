@@ -67,7 +67,7 @@ namespace TaleofMonsters.Forms
             bitmapButtonFresh.NoUseDrawNine = true;
             colorWord = new ColorWordRegion(12, 38, 384, "微软雅黑", 11, Color.White);
             colorWord.Bold = true;
-            colorWord.Text = "|每|Red|24小时||随机更新5条交换公式，交换公式的|Lime|背景颜色||决定交换公式的最高品质。";
+            colorWord.UpdateText("|每|Red|24小时||随机更新5条交换公式，交换公式的|Lime|背景颜色||决定交换公式的最高品质。");
         }
 
         private void pictureBoxCancel_Click(object sender, EventArgs e)

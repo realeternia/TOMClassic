@@ -29,7 +29,7 @@ namespace TaleofMonsters.Forms.Items
             show = id > 0;
             if (id > 0)
             {
-                colorWord.Text = ConfigData.GetLevelInfoConfig(id).Des;
+                colorWord.UpdateText(ConfigData.GetLevelInfoConfig(id).Des);
             }
             parent.Invalidate(new Rectangle(x, y, width, height));
         }

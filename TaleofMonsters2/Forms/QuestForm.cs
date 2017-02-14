@@ -85,7 +85,7 @@ namespace TaleofMonsters.Forms
             }
 
             var questConfig = ConfigData.GetQuestConfig(questIds[selectPanel.SelectIndex]);
-            colorWord.Text = questConfig.Descript;
+            colorWord.UpdateText(questConfig.Descript);
 
             virtualRegion.SetRegionKey(1,0);
             virtualRegion.SetRegionKey(2, 0);
