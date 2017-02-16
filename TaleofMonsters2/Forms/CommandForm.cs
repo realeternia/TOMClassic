@@ -114,6 +114,11 @@ namespace TaleofMonsters.Forms
                 cmd = "bls";
                 hint = "添加一个祝福/诅咒[p1]";
             }
+            if (textBoxTitle.Text.Contains("qst"))
+            {
+                cmd = "qst";
+                hint = "设置当前任务为[p1]";
+            }
             Invalidate();
         }
 

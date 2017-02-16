@@ -77,6 +77,8 @@ namespace TaleofMonsters.Controler.GM
                         UserProfile.InfoBasic.FoodPoint = 100;break;
                     case "bls": if (data.Length == 2)
                         BlessManager.AddBless(int.Parse(data[1]), 10); break;
+                    case "qst":if (data.Length == 2)
+                        UserProfile.InfoQuest.SetQuest(int.Parse(data[1])); break;
                 }
             }
             catch (FormatException) { }

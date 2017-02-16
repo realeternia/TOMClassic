@@ -9,6 +9,7 @@ using NarlonLib.Drawing;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.Scenes;
+using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
@@ -85,18 +86,24 @@ namespace TaleofMonsters.Forms
             }
 
             var questConfig = ConfigData.GetQuestConfig(questIds[selectPanel.SelectIndex]);
+            if (!UserProfile.InfoQuest.IsQuestFinish(questConfig.Id))
+            {
+                return;
+            }
+            
             colorWord.UpdateText(questConfig.Descript);
 
             virtualRegion.SetRegionKey(1,0);
             virtualRegion.SetRegionKey(2, 0);
             virtualRegion.SetRegionKey(3, 0);
+
             if (!string.IsNullOrEmpty(questConfig.Quest1))
                 virtualRegion.SetRegionKey(1, SceneBook.GetSceneQuestByName(questConfig.Quest1));
             if (!string.IsNullOrEmpty(questConfig.Quest2))
                 virtualRegion.SetRegionKey(2, SceneBook.GetSceneQuestByName(questConfig.Quest2));
             if (!string.IsNullOrEmpty(questConfig.Quest3))
                 virtualRegion.SetRegionKey(3, SceneBook.GetSceneQuestByName(questConfig.Quest3));
-
+            
             Invalidate();
         }
 
@@ -108,7 +115,15 @@ namespace TaleofMonsters.Forms
             int offX = 40 + xOff;
             if (selectPanel.SelectIndex >= 0 && questIds[selectPanel.SelectIndex] == info)
                 offX += 15;
-            g.DrawString(questConfig.Name, font, Brushes.White, offX, 5 + yOff);
+            if (UserProfile.InfoQuest.IsQuestFinish(questConfig.Id))
+            {
+                g.DrawString(questConfig.Name, font, Brushes.White, offX, 5 + yOff);
+            }
+            else
+            {
+                g.DrawString("???", font, Brushes.DarkGray, offX, 5 + yOff);
+            }
+            
             font.Dispose();
         }
 
@@ -120,6 +135,11 @@ namespace TaleofMonsters.Forms
             }
 
             var questConfig = ConfigData.GetQuestConfig(questIds[selectPanel.SelectIndex]);
+            if (!UserProfile.InfoQuest.IsQuestFinish(questConfig.Id))
+            {
+                return;
+            }
+
             string sceneQuestId = "";
             string subContext = "";
             if (id ==1)

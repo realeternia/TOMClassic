@@ -101,11 +101,11 @@ namespace TaleofMonsters.Forms.Items.Core
             {
                 switch (cname)
                 {
-                    case "R": return Color.Red;
-                    case "G": return Color.Green;
-                    case "B": return Color.RoyalBlue;
-                    case "P": return Color.MediumPurple;
-                    case "Y": return Color.Yellow;
+                    case "R": return Color.Red;  //怪物
+                    case "G": return Color.Green; //人物，npc
+                    case "B": return Color.RoyalBlue; //场景
+                    case "P": return Color.MediumPurple; //幻兽
+                    case "Y": return Color.Yellow; //道具
                 }
             }
             return Color.FromName(cname);

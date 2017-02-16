@@ -50,11 +50,11 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
             }
             else if (parms[0] == "questno")
             {
-                Disabled = UserProfile.InfoQuest.IsQuestFinish(int.Parse(parms[1]));
+                Disabled = UserProfile.InfoQuest.IsQuestFinish(config.QuestId);
             }
             else if (parms[0] == "quest")
             {
-                Disabled = !UserProfile.InfoQuest.IsQuestFinish(int.Parse(parms[1]));
+                Disabled = !UserProfile.InfoQuest.IsQuestFinish(config.QuestId);
             }
             else if (parms[0] == "rivalavail")
             {
