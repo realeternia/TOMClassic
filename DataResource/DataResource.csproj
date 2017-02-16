@@ -615,6 +615,15 @@
   <ItemGroup>
     <EmbeddedResource Include="SceneQuest\icedream.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scene\persepalace1.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scene\persepalace3.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scene\persepalace2.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
