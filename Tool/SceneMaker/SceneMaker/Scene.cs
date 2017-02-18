@@ -56,7 +56,10 @@ namespace SceneMaker
 
         public void Paint(Graphics g, int timeMinutes)
         {
-            g.DrawImage(backPicture, 0, 50, width, height - 35);
+            if (backPicture != null)
+            {
+                g.DrawImage(backPicture, 0, 50, width, height - 35);
+            }
             g.DrawImage(mainTop, 0, 0, width, 50);
             g.DrawImage(mainTopRes, (width - 688) / 2, 4, 688, 37);//688是图片尺寸
             g.DrawImage(mainTopTitle, width - 145, 3, 115, 32);
@@ -94,6 +97,8 @@ namespace SceneMaker
 
         private void DrawCellAndToken(Graphics g)
         {
+            if(sceneItems == null)
+                return;
             foreach (SceneObject obj in sceneItems)
             {
                 obj.Draw(g, 0);

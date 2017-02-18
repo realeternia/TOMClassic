@@ -16,8 +16,8 @@ namespace SceneMaker
             Width = 1152;
             Height = 720;
             Scene.Instance = new Scene(this, 1152 - 15, 720 - 35);
-            Scene.Instance.ChangeMap("./Scene/default.txt", true);
-            Scene.Instance.ChangeBg("./Scene/default.JPG");
+       //     Scene.Instance.ChangeMap("./Scene/default.txt", true);
+       //     Scene.Instance.ChangeBg("./Scene/default.JPG");
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
