@@ -8,13 +8,11 @@ namespace DeckManager
     public struct CardDescript
     {
         public int id;
-        public int level;
-        public int rare;
-        public CardDescript(int id, int level, int rare)
+        public string tip;
+        public CardDescript(int id, string tip)
         {
             this.id = id;
-            this.level = level;
-            this.rare = rare;
+            this.tip = tip;
         }
 
     }
