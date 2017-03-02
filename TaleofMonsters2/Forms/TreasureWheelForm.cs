@@ -31,7 +31,7 @@ namespace TaleofMonsters.Forms
             bitmapButtonC1.IconSize = new Size(16, 16);
             bitmapButtonC1.IconXY = new Point(4, 5);
             bitmapButtonC1.TextOffX = 8;
-            backImage = PicLoader.Read("MiniGame", "t4.JPG");
+            backImage = PicLoader.Read("System", "WheelBack.JPG");
 
             points= new Point[18];
 #region 初始化位置

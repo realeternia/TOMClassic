@@ -33,7 +33,7 @@ namespace TaleofMonsters.Forms
             bitmapButtonC3.IconSize = new Size(16, 16);
             bitmapButtonC3.IconXY = new Point(4, 6);
             bitmapButtonC3.TextOffX = 8;
-            backImage = PicLoader.Read("MiniGame", "t3.JPG");
+            backImage = PicLoader.Read("System", "BottleBack.JPG");
         }
 
         internal override void Init(int width, int height)
