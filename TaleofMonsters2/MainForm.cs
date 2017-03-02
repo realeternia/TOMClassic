@@ -28,7 +28,6 @@ namespace TaleofMonsters
         public int panelCount;
         private Thread workThread;
         private int timeTick;
-        private int timeMinutes;
         private long lastMouseMoveTime;
         public static MainForm Instance { get; private set; }
 
@@ -106,7 +105,6 @@ namespace TaleofMonsters
                 SoundManager.PlayBGM("TOM001.mp3");
                 Scene.Instance.ChangeMap(UserProfile.InfoBasic.MapId, false);
                 UserProfile.Profile.OnLogin();
-                timeMinutes = (int) DateTime.Now.TimeOfDay.TotalMinutes;
             }
             page = pg;
             viewStack1.SelectedIndex = page;
@@ -285,23 +283,6 @@ namespace TaleofMonsters
                             {
                                 tabPageGame.Invalidate();
                             }
-
-                            if (UserProfile.Profile != null)
-                            {
-                                int time = (int)DateTime.Now.TimeOfDay.TotalMinutes;
-                                if (timeMinutes == 0 || time != timeMinutes)
-                                {
-                                    if (timeMinutes == 0 || (time % 60) == 0)
-                                    {
-                                        timeMinutes = time;
-                                        if (time == 0)
-                                        {
-                                            UserProfile.Profile.OnNewDay();
-                                        }
-                                        tabPageGame.Invalidate();
-                                    }
-                                }
-                            }
                         }
 
                         Scene.Instance.TimeGo(0.05f);
@@ -333,7 +314,7 @@ namespace TaleofMonsters
         {
             try
             {
-                Scene.Instance.Paint(e.Graphics, timeMinutes);
+                Scene.Instance.Paint(e.Graphics);
 
                 SystemMenuManager.DrawAll(e.Graphics);
                 MainTipManager.DrawAll(e.Graphics);

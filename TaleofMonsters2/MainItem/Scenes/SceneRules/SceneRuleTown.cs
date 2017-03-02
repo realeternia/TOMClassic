@@ -5,7 +5,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneRules
 {
     public class SceneRuleTown : ISceneRule
     {
-        public void Init(int id)
+        public void Init(int id, int minute)
         {
             UserProfile.InfoWorld.SavedDungeonQuests.Clear();
         }

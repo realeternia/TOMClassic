@@ -137,7 +137,7 @@ namespace TaleofMonsters.DataType.User
             InfoBasic.BloodType = bldType + 1;
             InfoBasic.Face = headId;
             InfoBasic.Level = 1;
-            InfoBasic.MapId = SceneConfig.Indexer.BornMapId;
+            InfoBasic.MapId = 13010001;
             InfoBasic.Position = 1001;
             InfoBasic.HealthPoint = 100;
             InfoBasic.MentalPoint = 100;

@@ -29,7 +29,7 @@ namespace TaleofMonsters.MainItem
         {
             flows = new List<RiverFlow>();
             flows.Add(new RiverFlow(width-138, height-55, 50, 50, 4, IconDirections.RightToLeft));
-       //     flows.Add(new RiverFlow(10, 50, 50, 50, 5, IconDirections.LeftToRight));
+       //     flows.Add(new RiverFlow(10, 50, 50, 50, 5, IconDirections.LeftToRight)); bless system conflict
             flows.Add(new RiverFlow(width-54, 200, 50, 50, 5, IconDirections.UpToDown));
 
             menuItems = new List<ToolBarItemData>();

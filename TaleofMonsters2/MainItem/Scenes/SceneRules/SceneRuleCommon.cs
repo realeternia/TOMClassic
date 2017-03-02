@@ -2,7 +2,6 @@
 using ConfigDatas;
 using NarlonLib.Log;
 using NarlonLib.Math;
-using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.MainItem.Scenes.SceneRules
@@ -10,15 +9,18 @@ namespace TaleofMonsters.MainItem.Scenes.SceneRules
     public class SceneRuleCommon : ISceneRule
     {
         private int mapId;
-        public void Init(int id)
+        private int minutes;
+
+        public void Init(int id, int minute)
         {
             mapId = id;
             UserProfile.InfoWorld.SavedDungeonQuests.Clear();
+            minutes = minute;
         }
 
         public void Generate(List<int> randQuestList, int questCellCount)
         {
-            foreach (var questData in SceneManager.GetQuestConfigData(mapId))
+            foreach (var questData in SceneManager.GetQuestConfigData(mapId, minutes))
             {
                 for (int j = 0; j < questData.Value; j++)
                 {

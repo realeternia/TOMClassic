@@ -97,6 +97,7 @@ namespace TaleofMonsters.MainItem.Scenes
             return sceneObjects;
         }
 
+
         private static void LoadSceneFile(int mapWidth, int mapHeight, string filePath, Random r,
             List<ScenePosData> cachedMapData, Dictionary<int, DbSceneSpecialPosData> cachedSpecialData)
         {
@@ -232,7 +233,7 @@ namespace TaleofMonsters.MainItem.Scenes
         /// <summary>
         /// 获取一站地图的随机任务列表
         /// </summary>
-        public static List<RLIdValue> GetQuestConfigData(int mapId)
+        public static List<RLIdValue> GetQuestConfigData(int mapId, int minutes)
         {
             var config = ConfigData.GetSceneConfig(mapId);
             List<RLIdValue> datas = new List<RLIdValue>();
@@ -255,8 +256,9 @@ namespace TaleofMonsters.MainItem.Scenes
                 foreach (var info in infos)
                 {
                     string[] questData = info.Split(';');
-                    datas.Add(new RLIdValue { Id = SceneBook.GetSceneQuestByName(questData[0]),
-                        Value = int.Parse(questData[1]) });
+                    int qid = SceneBook.GetSceneQuestByName(questData[0]);
+                    if(IsQuestAvail(qid, minutes))
+                        datas.Add(new RLIdValue { Id = qid, Value = int.Parse(questData[1]) });
                 }
             }
             if (!string.IsNullOrEmpty(config.QuestRandom))
@@ -268,13 +270,43 @@ namespace TaleofMonsters.MainItem.Scenes
                     int rate = int.Parse(questData[1]);
                     if (MathTool.GetRandom(100)<rate)//概率事件
                     {
-                        datas.Add(new RLIdValue { Id = SceneBook.GetSceneQuestByName(questData[0]),
-                                Value = 1 });
+                        int qid = SceneBook.GetSceneQuestByName(questData[0]);
+                        if (IsQuestAvail(qid, minutes))
+                            datas.Add(new RLIdValue { Id = qid, Value = 1 });
                     }
                 }
             }
 
             return datas;
+        }
+
+        public static List<RLIdValue> GetDungeonQuestConfigData(int mapId, int minutes)
+        {
+            var config = ConfigData.GetSceneConfig(mapId);
+            List<RLIdValue> datas = new List<RLIdValue>();
+            if (!string.IsNullOrEmpty(config.QuestDungeon))
+            {
+                string[] infos = config.QuestDungeon.Split('|');
+                foreach (var info in infos)
+                {
+                    string[] questData = info.Split(';');
+                    int qid = SceneBook.GetSceneQuestByName(questData[0]);
+                    if (IsQuestAvail(qid, minutes))
+                        datas.Add(new RLIdValue {Id = qid, Value = int.Parse(questData[1])});
+                }
+            }
+            return datas;
+        }
+
+        private static bool IsQuestAvail(int qid, int minutes)
+        {
+            var questConfig = ConfigData.GetSceneQuestConfig(qid);
+            if (questConfig.TriggerHourBegin == questConfig.TriggerHourEnd)
+                return true;
+            if (questConfig.TriggerHourEnd > questConfig.TriggerHourBegin)
+                return minutes >= questConfig.TriggerHourBegin && minutes < questConfig.TriggerHourEnd;
+            else //后半夜到第二天
+                return minutes < questConfig.TriggerHourEnd || minutes >= questConfig.TriggerHourBegin;
         }
 
         public static SceneQuestBlock GetQuestData(int eventId, int level, string name)
