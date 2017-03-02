@@ -1,4 +1,5 @@
-﻿using TaleofMonsters.Forms;
+﻿using ConfigDatas;
+using TaleofMonsters.Forms;
 using TaleofMonsters.Forms.MiniGame;
 
 namespace TaleofMonsters.MainItem
@@ -16,20 +17,27 @@ namespace TaleofMonsters.MainItem
             }
         }
 
-        public static void ShowGameWindow(SystemMenuIds wid)
+        public static void ShowGameWindow(int id)
         {
-            switch (wid)
+            var config = ConfigData.GetMinigameConfig(id);
+            MGBase basePanel = null;
+            switch ((SystemMenuIds)config.WindowId)
             {
                 case SystemMenuIds.GameUpToNumber:
-                    MainForm.Instance.DealPanel(new MGUpToNumber());break;
+                    basePanel = new MGUpToNumber();break;
                 case SystemMenuIds.GameBattleRobot:
-                    MainForm.Instance.DealPanel(new MGBattleRobot());break;
+                    basePanel = new MGBattleRobot();break;
                 case SystemMenuIds.GameIconsCatch:
-                    MainForm.Instance.DealPanel(new MGIconsCatch());break;
+                    basePanel = new MGIconsCatch();break;
                 case SystemMenuIds.GameThreeBody:
-                    MainForm.Instance.DealPanel(new MGThreeBody()); break;
+                    basePanel =new MGThreeBody(); break;
                 case SystemMenuIds.GameSeven:
-                    MainForm.Instance.DealPanel(new MGSeven()); break;
+                    basePanel = new MGSeven(); break;
+            }
+            if (basePanel != null)
+            {
+                basePanel.SetMinigameId(id);
+                MainForm.Instance.DealPanel(basePanel);
             }
         }
     }

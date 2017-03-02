@@ -218,17 +218,6 @@ namespace TaleofMonsters.MainItem
                 case SystemMenuIds.MinigameForm:
                     MainForm.Instance.DealPanel(new MinigameForm());
                     break;
-                case SystemMenuIds.GameUpToNumber:
-                    PanelManager.ShowGameWindow(id);
-                    break;
-                case SystemMenuIds.GameIconsCatch:
-                    goto case SystemMenuIds.GameUpToNumber;
-                case SystemMenuIds.GameBattleRobot:
-                    goto case SystemMenuIds.GameUpToNumber;
-                case SystemMenuIds.GameThreeBody:
-                    goto case SystemMenuIds.GameUpToNumber;
-                case SystemMenuIds.GameSeven:
-                    goto case SystemMenuIds.GameUpToNumber;
             }
         }
 

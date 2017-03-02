@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
@@ -49,8 +48,7 @@ namespace TaleofMonsters.Forms
         {
             if (button == MouseButtons.Left && id > 0)
             {
-                var config = ConfigData.GetMinigameConfig(id);
-                SystemMenuManager.CheckItemClick((SystemMenuIds)config.WindowId);
+                PanelManager.ShowGameWindow(id);
             }
         }
 

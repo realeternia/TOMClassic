@@ -3,31 +3,23 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Math;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using ControlPlus;
+using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType.User;
-using TaleofMonsters.Forms.Items.Core;
-using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms.MiniGame
 {
-    internal partial class MGIconsCatch : BasePanel, IMinigameForm
+    internal partial class MGIconsCatch : MGBase
     {
         private List<int> answers = new List<int>();
         private List<int> results = new List<int>();
         private int realanswer;
         private int tempanswer;
         private int srcValue;
-        private bool show;
-        private int type;
-
-        private const int xoff = 11;
-        private const int yoff = 129;
 
         public MGIconsCatch()
         {
-            type = (int)SystemMenuIds.GameIconsCatch;
             InitializeComponent();
         }
 
@@ -35,28 +27,51 @@ namespace TaleofMonsters.Forms.MiniGame
         {
             base.Init(width, height);
             #region 按钮图片
-            this.bitmapButtonC1.ImageNormal = HSIcons.GetIconsByEName("atr0");
-            this.bitmapButtonC2.ImageNormal = HSIcons.GetIconsByEName("atr1");
-            this.bitmapButtonC3.ImageNormal = HSIcons.GetIconsByEName("atr2");
-            this.bitmapButtonC4.ImageNormal = HSIcons.GetIconsByEName("atr3");
-            this.bitmapButtonC5.ImageNormal = HSIcons.GetIconsByEName("atr4");
-            this.bitmapButtonC6.ImageNormal = HSIcons.GetIconsByEName("atr5");
-            this.bitmapButtonC7.ImageNormal = HSIcons.GetIconsByEName("atr6");
-            this.bitmapButtonC8.ImageNormal = HSIcons.GetIconsByEName("atr7");
-            this.bitmapButtonC9.ImageNormal = HSIcons.GetIconsByEName("atr8");
+            bitmapButtonC1.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            this.bitmapButtonC1.IconImage = HSIcons.GetIconsByEName("rac1");
+            this.bitmapButtonC1.IconXY = new Point(4,4);
+            this.bitmapButtonC1.IconSize = new Size(20,20);
+            bitmapButtonC2.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            this.bitmapButtonC2.IconImage = HSIcons.GetIconsByEName("rac2");
+            this.bitmapButtonC2.IconXY = new Point(4, 4);
+            this.bitmapButtonC2.IconSize = new Size(20, 20);
+            bitmapButtonC3.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            this.bitmapButtonC3.IconImage = HSIcons.GetIconsByEName("rac3");
+            this.bitmapButtonC3.IconXY = new Point(4, 4);
+            this.bitmapButtonC3.IconSize = new Size(20, 20);
+            bitmapButtonC4.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            this.bitmapButtonC4.IconImage = HSIcons.GetIconsByEName("rac4");
+            this.bitmapButtonC4.IconXY = new Point(4, 4);
+            this.bitmapButtonC4.IconSize = new Size(20, 20);
+            bitmapButtonC5.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            this.bitmapButtonC5.IconImage = HSIcons.GetIconsByEName("rac5");
+            this.bitmapButtonC5.IconXY = new Point(4, 4);
+            this.bitmapButtonC5.IconSize = new Size(20, 20);
+            bitmapButtonC6.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            this.bitmapButtonC6.IconImage = HSIcons.GetIconsByEName("rac6");
+            this.bitmapButtonC6.IconXY = new Point(4, 4);
+            this.bitmapButtonC6.IconSize = new Size(20, 20);
+            bitmapButtonC7.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            this.bitmapButtonC7.IconImage = HSIcons.GetIconsByEName("rac7");
+            this.bitmapButtonC7.IconXY = new Point(4, 4);
+            this.bitmapButtonC7.IconSize = new Size(20, 20);
+            bitmapButtonC8.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            this.bitmapButtonC8.IconImage = HSIcons.GetIconsByEName("rac8");
+            this.bitmapButtonC8.IconXY = new Point(4, 4);
+            this.bitmapButtonC8.IconSize = new Size(20, 20);
+            bitmapButtonC9.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            this.bitmapButtonC9.IconImage = HSIcons.GetIconsByEName("rac9");
+            this.bitmapButtonC9.IconXY = new Point(4, 4);
+            this.bitmapButtonC9.IconSize = new Size(20, 20);
             #endregion
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
             this.customScrollbar1.Minimum = 0;
             this.customScrollbar1.LargeChange = 17;
             this.customScrollbar1.Maximum = (answers.Count - 10) + customScrollbar1.LargeChange;
             this.customScrollbar1.SmallChange = 3;
             this.customScrollbar1.Value = 0;
-            show = true;
-
-            RestartGame();
         }
 
-        public void RestartGame()
+        public override void RestartGame()
         {
             int[] data ={ 1, 2, 3, 4, 5, 6, 7, 8, 9 };
             for (int i = 0; i < 100; i++)
@@ -78,7 +93,7 @@ namespace TaleofMonsters.Forms.MiniGame
             Invalidate(new Rectangle(xoff, yoff, 310, 200 + 30));
         }
 
-        public void EndGame()
+        public override void EndGame()
         {
             string hint;
             if (realanswer == tempanswer)
@@ -194,7 +209,7 @@ namespace TaleofMonsters.Forms.MiniGame
             for (int i = 0; i < 4; i++)
             {
                 int v = GetByteFromInt(data1, i);
-                g.DrawImage(HSIcons.GetIconsByEName("atr" + (v - 1)), i * 20 + 66+xoff, line * 20 + 1+yoff, 18, 18);
+                g.DrawImage(HSIcons.GetIconsByEName(v == 0 ? "npc2" : "rac" + v), i * 20 + 66+xoff, line * 20 + 1+yoff, 18, 18);
             }
             Font font = new Font("微软雅黑", 11*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             g.DrawString(id < 100 ? (id + 1).ToString() : "当前", font, Brushes.White, 10 + xoff, line * 20 + 1 + yoff);
@@ -218,18 +233,9 @@ namespace TaleofMonsters.Forms.MiniGame
             }
         }
 
-        private void bitmapButtonClose_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
         private void MGIconsCatch_Paint(object sender, PaintEventArgs e)
         {
-            BorderPainter.Draw(e.Graphics, "", Width, Height);
-
-            Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString("魔幻符号", font, Brushes.White, 140, 8);
-            font.Dispose();
+            DrawBase(e.Graphics);
 
             if (!show)
                 return;

@@ -31,7 +31,6 @@ namespace TaleofMonsters.Forms.MiniGame
         {
             this.colorLabel1 = new NarlonLib.Control.ColorLabel();
             this.bitmapButtonC1 = new NarlonLib.Control.BitmapButton();
-            this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
             this.bitmapButtonC2 = new NarlonLib.Control.BitmapButton();
             this.bitmapButtonC3 = new NarlonLib.Control.BitmapButton();
             this.bitmapButtonC4 = new NarlonLib.Control.BitmapButton();
@@ -61,22 +60,6 @@ namespace TaleofMonsters.Forms.MiniGame
             this.bitmapButtonC1.Tag = "1";
             this.bitmapButtonC1.UseVisualStyleBackColor = true;
             this.bitmapButtonC1.Click += new System.EventHandler(this.bitmapButtonC1_Click);
-            // 
-            // bitmapButtonClose
-            // 
-            this.bitmapButtonClose.BorderColor = System.Drawing.Color.DarkBlue;
-            this.bitmapButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButtonClose.Image = null;
-            
-            
-            this.bitmapButtonClose.ImageNormal = null;
-            
-            this.bitmapButtonClose.Location = new System.Drawing.Point(306, 15);
-            this.bitmapButtonClose.Name = "bitmapButtonClose";
-            this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
-            this.bitmapButtonClose.TabIndex = 39;
-            this.bitmapButtonClose.UseVisualStyleBackColor = true;
-            this.bitmapButtonClose.Click += new System.EventHandler(this.bitmapButtonClose_Click);
             // 
             // bitmapButtonC2
             // 
@@ -127,7 +110,6 @@ namespace TaleofMonsters.Forms.MiniGame
             this.Controls.Add(this.bitmapButtonC4);
             this.Controls.Add(this.bitmapButtonC3);
             this.Controls.Add(this.bitmapButtonC2);
-            this.Controls.Add(this.bitmapButtonClose);
             this.Controls.Add(this.colorLabel1);
             this.Controls.Add(this.bitmapButtonC1);
             this.DoubleBuffered = true;
@@ -142,7 +124,6 @@ namespace TaleofMonsters.Forms.MiniGame
 
         private BitmapButton bitmapButtonC1;
         private ColorLabel colorLabel1;
-        private BitmapButton bitmapButtonClose;
         private BitmapButton bitmapButtonC2;
         private BitmapButton bitmapButtonC3;
         private BitmapButton bitmapButtonC4;

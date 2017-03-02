@@ -4,15 +4,13 @@ using System.Windows.Forms;
 using NarlonLib.Math;
 using ControlPlus;
 using TaleofMonsters.DataType.User;
-using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
-using TaleofMonsters.MainItem;
 using TaleofMonsters.Forms.Items.Regions;
 
 namespace TaleofMonsters.Forms.MiniGame
 {
-    internal partial class MGThreeBody : BasePanel, IMinigameForm
+    internal partial class MGThreeBody : MGBase
     {
         private const int WorkWater = 1;
         private const int WorkDry = 2;
@@ -21,10 +19,6 @@ namespace TaleofMonsters.Forms.MiniGame
         private const int WorkSci = 5;
 
         private VirtualRegion virtualRegion;
-
-        private bool show;
-        private Image backImage;
-        private int type;
 
         private int eraGoodBad;
         private int eraBadGood;
@@ -37,12 +31,8 @@ namespace TaleofMonsters.Forms.MiniGame
         private int selectWork;
         private bool isFail;
 
-        private const int xoff = 11;
-        private const int yoff = 129;
-
         public MGThreeBody()
         {
-            type = (int)SystemMenuIds.GameThreeBody;
             InitializeComponent();
 
             virtualRegion = new VirtualRegion(this);
@@ -71,16 +61,9 @@ namespace TaleofMonsters.Forms.MiniGame
             bitmapButtonC1.IconSize = new Size(16, 16);
             bitmapButtonC1.IconXY = new Point(4, 5);
             bitmapButtonC1.TextOffX = 8;
-
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
-
-            backImage = PicLoader.Read("MiniGame", "t5.JPG");
-            show = true;
-
-            RestartGame();
         }
 
-        public void RestartGame()
+        public override void RestartGame()
         {
             eraGoodBad = MathTool.GetRandom(6, 15);
             eraBadGood = MathTool.GetRandom(6, 15);
@@ -93,7 +76,7 @@ namespace TaleofMonsters.Forms.MiniGame
             ChangeWork(WorkPopu);            
         }
 
-        public void EndGame()
+        public override void EndGame()
         {
             string hint;
             if (!isFail && sci >= 5000)
@@ -236,29 +219,12 @@ namespace TaleofMonsters.Forms.MiniGame
             }
         }
 
-        private void bitmapButtonClose_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void DrawShadeText(Graphics g, string text, Font font, Brush Brush, int x, int y)
-        {
-            g.DrawString(text, font, Brushes.Black, x + 1, y + 1);
-            g.DrawString(text, font, Brush, x, y);
-        }
-
         private void MGUpToNumber_Paint(object sender, PaintEventArgs e)
         {
-            BorderPainter.Draw(e.Graphics, "", Width, Height);
-
-            Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString("三体", font, Brushes.White, 150, 8);
-            font.Dispose();
+            DrawBase(e.Graphics);
 
             if (!show)
                 return;
-
-            e.Graphics.DrawImage(backImage, xoff, yoff, 324, 244);
 
             Image img = PicLoader.Read("MiniGame.Planet", string.Format("star{0}.PNG", isGoodEra ? 1 : 2));
             e.Graphics.DrawImage(img, 50 + xoff, 50 + yoff, 100, 100);
@@ -266,7 +232,7 @@ namespace TaleofMonsters.Forms.MiniGame
 
             virtualRegion.Draw(e.Graphics);
 
-            font = new Font("宋体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+            var font = new Font("宋体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             DrawShadeText(e.Graphics, string.Format("{0}({1})", isGoodEra ? "恒纪元" : "乱纪元", GetState()), font, isGoodEra?Brushes.Lime: Brushes.OrangeRed, xoff + 165, 35 + yoff);
             DrawShadeText(e.Graphics, string.Format("人口 {0}({1})", population, populationDry), font, Brushes.White, xoff+165, 65+yoff);
             DrawShadeText(e.Graphics, string.Format("食物 {0}", food), font, Brushes.White, xoff + 165, 95 + yoff);

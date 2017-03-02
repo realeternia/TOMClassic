@@ -190,6 +190,12 @@
     <Compile Include="Forms\ItemPackageForm.Designer.cs">
       <DependentUpon>ItemPackageForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MiniGame\MGBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MiniGame\MGBase.Designer.cs">
+      <DependentUpon>MGBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainItem\Blesses\BlessManager.cs" />
     <Compile Include="MainItem\Quests\TalkEventItem.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemEnd.cs" />
@@ -765,6 +771,10 @@
     <EmbeddedResource Include="Forms\MiniGame\MGIconsCatch.resx">
       <SubType>Designer</SubType>
       <DependentUpon>MGIconsCatch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MiniGame\MGBase.resx">
+      <DependentUpon>MGBase.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MiniGame\MGUpToNumber.resx">
       <DependentUpon>MGUpToNumber.cs</DependentUpon>

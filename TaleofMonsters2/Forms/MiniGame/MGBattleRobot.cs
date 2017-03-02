@@ -4,16 +4,12 @@ using System.Windows.Forms;
 using NarlonLib.Math;
 using ControlPlus;
 using TaleofMonsters.DataType.User;
-using TaleofMonsters.Forms.Items.Core;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms.MiniGame
 {
-    internal partial class MGBattleRobot : BasePanel
+    internal partial class MGBattleRobot : MGBase
     {
-        private bool show;
-        private Image backImage;
         private int hp;
         private int[,] attrs;
         private int ehp;
@@ -24,9 +20,6 @@ namespace TaleofMonsters.Forms.MiniGame
         private int lastact;
         private int lasteact;
 
-        private const int xoff = 11;
-        private const int yoff = 129;
-
         public MGBattleRobot()
         {
             type = (int)SystemMenuIds.GameBattleRobot;
@@ -36,25 +29,15 @@ namespace TaleofMonsters.Forms.MiniGame
         internal override void Init(int width, int height)
         {
             base.Init(width, height);
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
-            backImage = PicLoader.Read("MiniGame", "t2.JPG");
-            show = true;
-
-            RestartGame();
         }
 
-        public void SetMinigameId(int id)
-        {
-            
-        }
-
-        public void RestartGame()
+        public override void RestartGame()
         {
             InitAttrs();
             Invalidate(new Rectangle(xoff, yoff, 324, 244));
         }
 
-        public void EndGame()
+        public override void EndGame()
         {
             string hint;
             if (hp > 0)
@@ -184,31 +167,15 @@ namespace TaleofMonsters.Forms.MiniGame
                 EndGame();
             }
         }
-        private void bitmapButtonClose_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void DrawShadeText(Graphics g, string text, Font font, Brush Brush, int x, int y)
-        {
-            g.DrawString(text, font, Brushes.Black, x + 1, y + 1);
-            g.DrawString(text, font, Brush, x, y);         
-        }
 
         private void MGBattleRobot_Paint(object sender, PaintEventArgs e)
         {
-            BorderPainter.Draw(e.Graphics, "", Width, Height);
-
-            Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString("机器人大战", font, Brushes.White, 140, 8);
-            font.Dispose();
+            DrawBase(e.Graphics);
 
             if (!show)
                 return;
 
-            e.Graphics.DrawImage(backImage, xoff, yoff, 324, 244);
-
-            font = new Font("宋体", 11*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+            Font font = new Font("宋体", 11*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             DrawShadeText(e.Graphics, "我方机器人", font, Brushes.Wheat, 20+xoff, 11+yoff);
             DrawShadeText(e.Graphics, string.Format("生  命 {0}", hp > 0 ? hp : 0), font, Brushes.Lime, 20+xoff, 40+yoff);
             SolidBrush sb = new SolidBrush(Color.FromArgb(160, Color.Blue));

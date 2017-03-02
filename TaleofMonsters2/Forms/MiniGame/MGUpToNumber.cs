@@ -4,20 +4,14 @@ using System.Windows.Forms;
 using NarlonLib.Math;
 using ControlPlus;
 using TaleofMonsters.DataType.User;
-using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
-using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms.MiniGame
 {
-    internal partial class MGUpToNumber : BasePanel, IMinigameForm
+    internal partial class MGUpToNumber : MGBase
     {
-        private bool show;
-        private Image backImage;
-        private int type;
-
         private VirtualRegion virtualRegion;
 
         private int[] itemRequired;
@@ -25,12 +19,8 @@ namespace TaleofMonsters.Forms.MiniGame
         private int level;
         private bool isFail;
 
-        private const int xoff=11;
-        private const int yoff=129;
-
         public MGUpToNumber()
         {
-            type = (int)SystemMenuIds.GameUpToNumber;
             InitializeComponent();
 
             virtualRegion = new VirtualRegion(this);
@@ -58,15 +48,11 @@ namespace TaleofMonsters.Forms.MiniGame
             bitmapButtonC1.IconSize = new Size(16, 16);
             bitmapButtonC1.IconXY = new Point(4, 5);
             bitmapButtonC1.TextOffX = 8;
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
-            backImage = PicLoader.Read("MiniGame", "t1.JPG");
-            show = true;
 
             itemRequired = new int[] {8, 5, 4, 15};
-            RestartGame();
         }
 
-        public void RestartGame()
+        public override void RestartGame()
         {
             itemGet = new int[4];
             level = 0;
@@ -74,7 +60,7 @@ namespace TaleofMonsters.Forms.MiniGame
             ChangeFood(1);
         }
 
-        public void EndGame()
+        public override void EndGame()
         {
             string hint;
             if (!isFail && GetPoints()>=100)
@@ -158,33 +144,16 @@ namespace TaleofMonsters.Forms.MiniGame
             Invalidate(new Rectangle(xoff, yoff, 324, 244));
         }
 
-        private void bitmapButtonClose_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void DrawShadeText(Graphics g, string text, Font font, Brush Brush, int x, int y)
-        {
-            g.DrawString(text, font, Brushes.Black, x + 1, y + 1);
-            g.DrawString(text, font, Brush, x, y);
-        }
-
         private void MGUpToNumber_Paint(object sender, PaintEventArgs e)
         {
-            BorderPainter.Draw(e.Graphics, "", Width, Height);
-
-            Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString("烹饪", font, Brushes.White, 150, 8);
-            font.Dispose();
+            DrawBase(e.Graphics);
 
             if (!show)
                 return;
 
-            e.Graphics.DrawImage(backImage, xoff, yoff, 324, 244);
-
             virtualRegion.Draw(e.Graphics);
 
-            font = new Font("宋体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+            var font = new Font("宋体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             DrawShadeText(e.Graphics, string.Format("牛肉x{0}", itemRequired[0]), font, level == 0 ? Brushes.LightGreen : Brushes.White, xoff+5, 20+yoff);
             DrawShadeText(e.Graphics, string.Format("蜂蜜x{0}", itemRequired[1]), font, level == 1 ? Brushes.LightGreen : Brushes.White, xoff + 5, 50 + yoff);
             DrawShadeText(e.Graphics, string.Format("黄油x{0}", itemRequired[2]), font, level == 2 ? Brushes.LightGreen : Brushes.White, xoff + 5, 80 + yoff);

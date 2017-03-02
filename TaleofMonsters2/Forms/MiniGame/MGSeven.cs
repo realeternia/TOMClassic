@@ -5,13 +5,11 @@ using System.Windows.Forms;
 using NarlonLib.Math;
 using ControlPlus;
 using TaleofMonsters.DataType.User;
-using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms.MiniGame
 {
-    internal partial class MGSeven : BasePanel, IMinigameForm
+    internal partial class MGSeven : MGBase
     {
         delegate void CalculateMethod();
         private void BeginCalculateResult()
@@ -26,10 +24,37 @@ namespace TaleofMonsters.Forms.MiniGame
                 CalculateResult();
             }
         }
+        private class IconCell
+        {
+            public int Index;
+            public float Y;
+            public float X;
 
-        private bool show;
-        private Image backImage;
-        private int type;
+            public void Draw(Graphics g, int yMin, int yMax)
+            {
+                if (Y + 64 < yMin || Y > yMax)
+                {
+                    return;
+                }
+
+                Image img = PicLoader.Read("MiniGame.Seven", string.Format("g{0}.PNG", Index));
+                if (Y >= yMin && Y + 64 < yMax) //画整个
+                {
+                    g.DrawImage(img, X, Y, 64, 64);
+                }
+                else if (Y < yMin) //下半个
+                {
+                    g.DrawImage(img, new RectangleF(X, yMin, 64, 64 + Y - yMin), new RectangleF(0, yMin - Y, 64, 64 + Y - yMin), GraphicsUnit.Pixel);
+                }
+                else if (Y + 64 > yMax) //上半个
+                {
+                    float yAdd = yMax - Y;
+                    g.DrawImage(img, new RectangleF(X, yMax - yAdd, 64, yAdd), new RectangleF(0, 0, 64, yAdd), GraphicsUnit.Pixel);
+                }
+
+                img.Dispose();
+            }
+        }
 
         private const float MinSpeed = 0.3f;
 
@@ -46,12 +71,8 @@ namespace TaleofMonsters.Forms.MiniGame
 
         private bool isFail;
 
-        private const int xoff = 11;
-        private const int yoff = 129;
-
         public MGSeven()
         {
-            type = (int)SystemMenuIds.GameSeven;
             InitializeComponent();
         }
 
@@ -90,12 +111,6 @@ namespace TaleofMonsters.Forms.MiniGame
             bitmapButtonC4.IconXY = new Point(4, 5);
             bitmapButtonC4.TextOffX = 8;
             bitmapButtonC4.Text = @"停止";
-
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
-            backImage = PicLoader.Read("MiniGame", "t6.JPG");
-            show = true;
-
-            RestartGame();
         }
 
         internal override void OnFrame(int tick)
@@ -158,7 +173,7 @@ namespace TaleofMonsters.Forms.MiniGame
             Invalidate(new Rectangle(xoff, yoff, 324, 244));
         }
 
-        public void RestartGame()
+        public override void RestartGame()
         {
             #region 初始化各个元素
 
@@ -242,7 +257,7 @@ namespace TaleofMonsters.Forms.MiniGame
             return nearItem;
         }
 
-        public void EndGame()
+        public override void EndGame()
         {
             string hint;
             if (!isFail)
@@ -294,23 +309,12 @@ namespace TaleofMonsters.Forms.MiniGame
             c3Stop = true;
         }
 
-        private void bitmapButtonClose_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
         private void MGUpToNumber_Paint(object sender, PaintEventArgs e)
         {
-            BorderPainter.Draw(e.Graphics, "", Width, Height);
-
-            Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString("SEVEN", font, Brushes.White, 150, 8);
-            font.Dispose();
+            DrawBase(e.Graphics);
 
             if (!show)
                 return;
-
-            e.Graphics.DrawImage(backImage, xoff, yoff, 324, 244);
 
             foreach (IconCell iconCell in c1ItemList)
             {
@@ -328,35 +332,4 @@ namespace TaleofMonsters.Forms.MiniGame
 
     }
 
-    internal class IconCell
-    {
-        public int Index;
-        public float Y;
-        public float X;
-
-        public void Draw(Graphics g, int yMin, int yMax)
-        {
-            if (Y+64 < yMin || Y>yMax)
-            {
-                return;
-            }
-
-            Image img = PicLoader.Read("MiniGame.Seven", string.Format("g{0}.PNG", Index));
-            if (Y >= yMin && Y+64 < yMax) //画整个
-            {
-                g.DrawImage(img, X, Y, 64, 64);    
-            }
-            else if (Y< yMin) //下半个
-            {
-                g.DrawImage(img, new RectangleF(X, yMin, 64, 64 + Y - yMin), new RectangleF(0, yMin - Y, 64, 64 + Y - yMin), GraphicsUnit.Pixel);
-            }
-            else if (Y + 64 > yMax) //上半个
-            {
-                float yAdd = yMax - Y;
-                g.DrawImage(img, new RectangleF(X, yMax - yAdd, 64, yAdd), new RectangleF(0, 0, 64, yAdd), GraphicsUnit.Pixel);
-            }
-            
-            img.Dispose();
-        }
-    }
 }
