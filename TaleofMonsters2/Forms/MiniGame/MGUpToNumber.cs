@@ -12,7 +12,7 @@ using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms.MiniGame
 {
-    internal partial class MGUpToNumber : BasePanel
+    internal partial class MGUpToNumber : BasePanel, IMinigameForm
     {
         private bool show;
         private Image backImage;
@@ -71,13 +71,13 @@ namespace TaleofMonsters.Forms.MiniGame
             itemGet = new int[4];
             level = 0;
             isFail = false;
-            changeFood(1);
+            ChangeFood(1);
         }
 
         public void EndGame()
         {
             string hint;
-            if (!isFail && getPoints()>=100)
+            if (!isFail && GetPoints()>=100)
             {
                 hint = "获得了游戏胜利";
                 UserProfile.InfoBag.AddDiamond(10);
@@ -110,7 +110,7 @@ namespace TaleofMonsters.Forms.MiniGame
                 isFail = true;
                 EndGame();
             }
-            else if(getPoints()>=100)
+            else if(GetPoints()>=100)
             {
                 EndGame();
             }
@@ -121,14 +121,14 @@ namespace TaleofMonsters.Forms.MiniGame
                     int rlevel = (i + level)%4;
                     if (itemGet[rlevel] != itemRequired[rlevel])
                     {
-                        changeFood(rlevel + 1);
+                        ChangeFood(rlevel + 1);
                         break;
                     }
                 }
             }
         }
 
-        private int getPoints()
+        private int GetPoints()
         {
             int[] marks = {5, 4, 5, 2};
             int mk = 0;
@@ -143,11 +143,11 @@ namespace TaleofMonsters.Forms.MiniGame
         {
             if (button == MouseButtons.Left)
             {
-                changeFood(id);
+                ChangeFood(id);
             }
         }
 
-        private void changeFood(int id)
+        private void ChangeFood(int id)
         {
             level = id - 1;
             for (int i = 0; i < 4; i++)
@@ -202,7 +202,7 @@ namespace TaleofMonsters.Forms.MiniGame
             }
 
             font = new Font("宋体", 26*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            DrawShadeText(e.Graphics,string.Format(string.Format("{0}/100",getPoints())), font, Brushes.Gold, 105+xoff, 140+yoff);
+            DrawShadeText(e.Graphics,string.Format(string.Format("{0}/100",GetPoints())), font, Brushes.Gold, 105+xoff, 140+yoff);
             font.Dispose();
         }
     }

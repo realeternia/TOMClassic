@@ -215,6 +215,9 @@ namespace TaleofMonsters.MainItem
                 case SystemMenuIds.QuestionForm:
                     MainForm.Instance.DealPanel(new QuestionForm());
                     break;
+                case SystemMenuIds.MinigameForm:
+                    MainForm.Instance.DealPanel(new MinigameForm());
+                    break;
                 case SystemMenuIds.GameUpToNumber:
                     PanelManager.ShowGameWindow(id);
                     break;
@@ -300,7 +303,7 @@ namespace TaleofMonsters.MainItem
         TreasureWheelForm = 39,
         ExpBottle = 40,
         QuestionForm = 41,
-      // FarmForm = 42,
+        MinigameForm = 42,
         GameUpToNumber = 1100,
         GameIconsCatch = 1101,
         GameBattleRobot = 1102,

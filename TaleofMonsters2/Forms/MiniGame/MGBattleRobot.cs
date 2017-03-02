@@ -43,6 +43,11 @@ namespace TaleofMonsters.Forms.MiniGame
             RestartGame();
         }
 
+        public void SetMinigameId(int id)
+        {
+            
+        }
+
         public void RestartGame()
         {
             InitAttrs();

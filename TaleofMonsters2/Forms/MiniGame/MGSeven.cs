@@ -11,7 +11,7 @@ using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms.MiniGame
 {
-    internal partial class MGSeven : BasePanel
+    internal partial class MGSeven : BasePanel, IMinigameForm
     {
         delegate void CalculateMethod();
         private void BeginCalculateResult()

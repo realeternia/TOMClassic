@@ -12,7 +12,7 @@ using TaleofMonsters.Forms.Items.Regions;
 
 namespace TaleofMonsters.Forms.MiniGame
 {
-    internal partial class MGThreeBody : BasePanel
+    internal partial class MGThreeBody : BasePanel, IMinigameForm
     {
         private const int WorkWater = 1;
         private const int WorkDry = 2;

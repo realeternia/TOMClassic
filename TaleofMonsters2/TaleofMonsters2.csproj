@@ -161,6 +161,12 @@
     <Compile Include="DataType\User\Db\DbEquip.cs" />
     <Compile Include="DataType\User\Db\DbDeckCard.cs" />
     <Compile Include="DataType\User\Db\DbSceneSpecialPosData.cs" />
+    <Compile Include="Forms\MinigameForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MinigameForm.Designer.cs">
+      <DependentUpon>MinigameForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\BlessForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -687,6 +693,10 @@
     <Compile Include="ThirdParty\fmod_errors.cs" />
     <EmbeddedResource Include="Controler\Battle\Components\CardSelector.resx">
       <DependentUpon>CardSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MinigameForm.resx">
+      <DependentUpon>MinigameForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\BlessForm.resx">
       <DependentUpon>BlessForm.cs</DependentUpon>

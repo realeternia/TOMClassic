@@ -12,7 +12,7 @@ using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms.MiniGame
 {
-    internal partial class MGIconsCatch : BasePanel
+    internal partial class MGIconsCatch : BasePanel, IMinigameForm
     {
         private List<int> answers = new List<int>();
         private List<int> results = new List<int>();
