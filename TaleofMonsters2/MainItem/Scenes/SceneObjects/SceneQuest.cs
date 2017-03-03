@@ -1,4 +1,4 @@
-using System.Drawing;
+Ôªøusing System.Drawing;
 using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
@@ -40,7 +40,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                     SetEnable(false);
                 }
                 else
-                {//∂‡¥Œ¥•∑¢∂º±‰≥…‘§…Ë
+                {//Â§öÊ¨°Ëß¶ÂèëÈÉΩÂèòÊàêÈ¢ÑËÆæ
                     SetMapSetting(true);
                 }
             }
@@ -93,7 +93,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                     g.DrawImage(SceneBook.GetSceneQuestImage(EventId), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel);
                     var config = ConfigData.GetSceneQuestConfig(EventId);
                     var targetName = config.Name;
-                    Font fontName = new Font("ÀŒÃÂ", 11 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+                    Font fontName = new Font("ÂÆã‰Ωì", 11 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
                     g.DrawString(targetName, fontName, Brushes.Black, X - drawWidth / 2 + Width / 8 + 2, Y - drawHeight / 2 + 1);
                     g.DrawString(targetName, fontName, Brushes.Wheat, X - drawWidth / 2 + Width / 8, Y - drawHeight / 2);
                     fontName.Dispose();

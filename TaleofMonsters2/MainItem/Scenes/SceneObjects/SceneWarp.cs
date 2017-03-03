@@ -1,4 +1,4 @@
-using System.Drawing;
+ï»¿using System.Drawing;
 using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
@@ -66,10 +66,10 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             Brush brush = Brushes.Wheat;
             if (sceneLevel > UserProfile.InfoBasic.Level)
             {
-                targetName = "µÈ¼¶" + sceneLevel;
+                targetName = "ç­‰çº§" + sceneLevel;
                 brush = Brushes.Red;
             }
-            Font fontName = new Font("ËÎÌå", 11*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+            Font fontName = new Font("å®‹ä½“", 11*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             g.DrawString(targetName, fontName, Brushes.Black, X - drawWidth / 2 + Width / 8 + 1, Y - drawHeight / 2 + 1);
             g.DrawString(targetName, fontName, Disabled ? Brushes.Gray : brush, X - drawWidth / 2 + Width / 8, Y - drawHeight / 2);
             fontName.Dispose();

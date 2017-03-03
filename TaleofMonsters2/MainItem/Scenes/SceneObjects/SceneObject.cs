@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User;

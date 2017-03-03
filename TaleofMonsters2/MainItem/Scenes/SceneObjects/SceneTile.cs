@@ -1,4 +1,4 @@
-using System.Drawing;
+ï»¿using System.Drawing;
 
 namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 {
@@ -19,7 +19,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             base.Draw(g, target);
 
 #if DEBUG
-            Font font = new Font("Î¢ÈíÑÅºÚ", 12 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+            Font font = new Font("å¾®è½¯é›…é»‘", 12 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             g.DrawString(Id.ToString(), font, Brushes.Black, X + 1, Y + 1);
             g.DrawString(Id.ToString(), font, Brushes.White, X, Y);
             font.Dispose();

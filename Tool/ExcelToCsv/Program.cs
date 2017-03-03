@@ -105,7 +105,7 @@ namespace ExcelToCsv
 
         private static void WriteConfigData(string loadStr)
         {
-            StreamWriter swTotal = new StreamWriter("./ConfigData/ConfigData.cs", false, Encoding.Default);
+            StreamWriter swTotal = new StreamWriter("./ConfigData/ConfigData.cs", false, Encoding.UTF8);
 
             swTotal.WriteLine("using System;");
             swTotal.WriteLine("using System.Collections.Generic;");
@@ -125,7 +125,7 @@ namespace ExcelToCsv
 
         private static void CopeFile(string keyname, FileInfo fileInfo)
         {
-            StreamWriter swTotal = new StreamWriter(string.Format("./ConfigData/ConfigData{0}.cs", keyname), false, Encoding.Default);
+            StreamWriter swTotal = new StreamWriter(string.Format("./ConfigData/ConfigData{0}.cs", keyname), false, Encoding.UTF8);
             swTotal.WriteLine("using System;");
             swTotal.WriteLine("using System.Collections.Generic;");
             swTotal.WriteLine("using NarlonLib.Math;");
@@ -189,7 +189,7 @@ namespace ExcelToCsv
             swTotal.Close();
 
             //再写各个类定义文件
-            StreamWriter sw = new StreamWriter(string.Format("./ConfigData/{0}.cs", keyname), false, Encoding.Default);
+            StreamWriter sw = new StreamWriter(string.Format("./ConfigData/{0}.cs", keyname), false, Encoding.UTF8);
          
             object[] infos = datas.Tables[0].Rows[0].ItemArray;
             object[] types = datas.Tables[0].Rows[1].ItemArray;
