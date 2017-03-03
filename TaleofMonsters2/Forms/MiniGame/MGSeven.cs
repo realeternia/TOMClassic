@@ -11,19 +11,6 @@ namespace TaleofMonsters.Forms.MiniGame
 {
     internal partial class MGSeven : MGBase
     {
-        delegate void CalculateMethod();
-        private void BeginCalculateResult()
-        {
-            if (InvokeRequired)
-            {
-                CalculateMethod aus = new CalculateMethod(BeginCalculateResult);
-                Invoke(aus, null);
-            }
-            else
-            {
-                CalculateResult();
-            }
-        }
         private class IconCell
         {
             public int Index;
@@ -216,7 +203,7 @@ namespace TaleofMonsters.Forms.MiniGame
             isFail = false;
         }
 
-        private void CalculateResult()
+        protected override void CalculateResult()
         {
             if (c1Stop && c2Stop && c3Stop &&c1Speed == 0f && c2Speed == 0f && c3Speed == 0)
             {

@@ -71,6 +71,13 @@ namespace TaleofMonsters.Forms
             base.OnMouseMove(e);
         }
 
+        public virtual void OnHsKeyUp(KeyEventArgs e)
+        {
+        }
+        public virtual void OnHsKeyDown(KeyEventArgs e)
+        {
+        }
+
         internal void AddFlow(string text, string color, int x, int y)
         {
             FlowData fw = new FlowData();

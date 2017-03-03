@@ -298,5 +298,6 @@ namespace TaleofMonsters.MainItem
         GameBattleRobot = 1102,
         GameThreeBody = 1103,
         GameSeven = 1104,
+        GameRussiaBlock = 1105,
     }
 }

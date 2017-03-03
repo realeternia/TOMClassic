@@ -8,11 +8,25 @@ namespace TaleofMonsters.Forms.MiniGame
 {
     internal partial class MGBase : BasePanel
     {
+        delegate void CalculateMethod();
+        protected void BeginCalculateResult()
+        {
+            if (InvokeRequired)
+            {
+                CalculateMethod aus = new CalculateMethod(BeginCalculateResult);
+                Invoke(aus, null);
+            }
+            else
+            {
+                CalculateResult();
+            }
+        }
+
         protected bool show;
         private Image backImage;
         private int type;
-        protected const int xoff = 11;
-        protected const int yoff = 129;
+        protected int xoff = 11;
+        protected int yoff = 129;
 
         private string playName = "";
 
@@ -48,6 +62,10 @@ namespace TaleofMonsters.Forms.MiniGame
         public virtual void EndGame()
         {
 
+        }
+
+        protected virtual void CalculateResult()
+        {//为了跨线程结算使用
         }
 
 

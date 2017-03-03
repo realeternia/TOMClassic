@@ -33,6 +33,8 @@ namespace TaleofMonsters.MainItem
                     basePanel =new MGThreeBody(); break;
                 case SystemMenuIds.GameSeven:
                     basePanel = new MGSeven(); break;
+                case SystemMenuIds.GameRussiaBlock:
+                    basePanel = new MGRussiaBlock(); break;
             }
             if (basePanel != null)
             {

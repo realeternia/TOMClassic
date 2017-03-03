@@ -80,7 +80,7 @@ namespace TaleofMonsters
             // 
             this.bitmapButtonExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.bitmapButtonExit.BorderColor = System.Drawing.Color.Black;
-            this.bitmapButtonExit.Font = new System.Drawing.Font("微软雅黑", 13.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.bitmapButtonExit.Font = new System.Drawing.Font("Microsoft YaHei", 13.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.bitmapButtonExit.ForeColor = System.Drawing.Color.White;
             this.bitmapButtonExit.IconImage = null;
             this.bitmapButtonExit.IconSize = new System.Drawing.Size(0, 0);
@@ -100,7 +100,7 @@ namespace TaleofMonsters
             // 
             this.bitmapButtonLogin.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.bitmapButtonLogin.BorderColor = System.Drawing.Color.Black;
-            this.bitmapButtonLogin.Font = new System.Drawing.Font("微软雅黑", 13.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.bitmapButtonLogin.Font = new System.Drawing.Font("Microsoft YaHei", 13.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.bitmapButtonLogin.ForeColor = System.Drawing.Color.White;
             this.bitmapButtonLogin.IconImage = null;
             this.bitmapButtonLogin.IconSize = new System.Drawing.Size(0, 0);
@@ -120,7 +120,7 @@ namespace TaleofMonsters
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
+            this.label2.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
             this.label2.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.label2.Location = new System.Drawing.Point(329, 456);
             this.label2.Name = "label2";
@@ -132,7 +132,7 @@ namespace TaleofMonsters
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
+            this.label1.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
             this.label1.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.label1.Location = new System.Drawing.Point(329, 410);
             this.label1.Name = "label1";
@@ -146,7 +146,7 @@ namespace TaleofMonsters
             this.buttonConnect.BackColor = System.Drawing.Color.DarkBlue;
             this.buttonConnect.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonConnect.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonConnect.Font = new System.Drawing.Font("微软雅黑", 13.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
+            this.buttonConnect.Font = new System.Drawing.Font("Microsoft YaHei", 13.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
             this.buttonConnect.ForeColor = System.Drawing.Color.White;
             this.buttonConnect.Location = new System.Drawing.Point(864, 543);
             this.buttonConnect.Name = "buttonConnect";
@@ -162,7 +162,7 @@ namespace TaleofMonsters
             this.buttonRegister.BackColor = System.Drawing.Color.DarkBlue;
             this.buttonRegister.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonRegister.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonRegister.Font = new System.Drawing.Font("微软雅黑", 13.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
+            this.buttonRegister.Font = new System.Drawing.Font("Microsoft YaHei", 13.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
             this.buttonRegister.ForeColor = System.Drawing.Color.White;
             this.buttonRegister.Location = new System.Drawing.Point(864, 508);
             this.buttonRegister.Name = "buttonRegister";
@@ -177,7 +177,7 @@ namespace TaleofMonsters
             this.textBoxPasswd.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.textBoxPasswd.BackColor = System.Drawing.Color.Silver;
             this.textBoxPasswd.Enabled = false;
-            this.textBoxPasswd.Font = new System.Drawing.Font("宋体", 10F);
+            this.textBoxPasswd.Font = new System.Drawing.Font("SimSun", 10F);
             this.textBoxPasswd.Location = new System.Drawing.Point(416, 451);
             this.textBoxPasswd.MaxLength = 16;
             this.textBoxPasswd.Name = "textBoxPasswd";
@@ -189,7 +189,7 @@ namespace TaleofMonsters
             // 
             this.textBoxName.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.textBoxName.BackColor = System.Drawing.Color.PowderBlue;
-            this.textBoxName.Font = new System.Drawing.Font("宋体", 10F);
+            this.textBoxName.Font = new System.Drawing.Font("SimSun", 10F);
             this.textBoxName.Location = new System.Drawing.Point(416, 405);
             this.textBoxName.MaxLength = 16;
             this.textBoxName.Name = "textBoxName";
@@ -224,6 +224,7 @@ namespace TaleofMonsters
             this.Text = "幻兽传说";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyUp);
             this.viewStack1.ResumeLayout(false);
             this.tabPageLogin.ResumeLayout(false);

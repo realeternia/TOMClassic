@@ -166,7 +166,21 @@ namespace TaleofMonsters
         {
             if (viewStack1.SelectedIndex == 1)
             {
+                foreach (var basePanel in panelList)
+                {
+                    basePanel.OnHsKeyUp(e);
+                }
                 SystemMenuManager.CheckHotKey(e.KeyCode);
+            }
+        }
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (viewStack1.SelectedIndex == 1)
+            {
+                foreach (var basePanel in panelList)
+                {
+                    basePanel.OnHsKeyDown(e);
+                }
             }
         }
 
@@ -324,5 +338,6 @@ namespace TaleofMonsters
                 NLog.Error(err);
             }
         }
+
     }
 }
