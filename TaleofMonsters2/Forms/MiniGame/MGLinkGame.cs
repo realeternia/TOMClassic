@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using ControlPlus;
+using NarlonLib.Math;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Controler.Loader;
 
@@ -64,7 +65,7 @@ namespace TaleofMonsters.Forms.MiniGame
         {
             isFail = false;
             mark = 0;
-            InitIcons();
+            InitIconArray();
         }
 
         public override void EndGame()
@@ -92,7 +93,7 @@ namespace TaleofMonsters.Forms.MiniGame
             Close();
         }
 
-        public void InitIcons()
+        private void InitIconArray()
         {
             for (int i = 0; i < ColumnCount+2; i++)
             {
@@ -105,21 +106,21 @@ namespace TaleofMonsters.Forms.MiniGame
             {
                 for (int j = 0; j < RowCount; j++)
                 {
-                    iconArray[i + 1, j + 1] = ((i + j * ColumnCount)/2)%16;
+                    iconArray[i + 1, j + 1] = ((i + j * ColumnCount)/2)%16+1;
                 }
             }
-            Random r = new Random(DateTime.Now.Millisecond);
-            int sel = (r.Next() % 16);
-            int symid = (r.Next() % 6) + 1;
-            iconArray[(sel % ColumnCount) + 1, sel / ColumnCount * 4 + 1] = 20 + symid;
-            iconArray[(sel % ColumnCount) + 1, sel / ColumnCount * 4 + 2] = 20 + symid;
-            symid = (r.Next() % 6) + 1;
-            iconArray[(sel % ColumnCount) + 1, sel / ColumnCount * 4 + 3] = 20 + symid;
-            iconArray[(sel % ColumnCount) + 1, sel / ColumnCount * 4 + 4] = 20 + symid;
+            for (int i = 0; i < 4; i++)
+            {
+                int sel = (MathTool.GetRandom(0, int.MaxValue) % (RowCount*ColumnCount))/2*2; //取偶
+                int symid = (MathTool.GetRandom(0, int.MaxValue) % 6) + 1;
+                iconArray[(sel % ColumnCount) + 1, sel / ColumnCount + 1] = 20 + symid;
+                iconArray[(sel % ColumnCount) + 1 + 1, sel / ColumnCount + 1] = 20 + symid;
+            }
 
             for (int i = 0; i < 1000; i++)
             {
-                Swap(r.Next() % ColumnCount, r.Next() % RowCount, r.Next() % ColumnCount, r.Next() % RowCount);
+                Swap(MathTool.GetRandom(0, int.MaxValue) % ColumnCount, MathTool.GetRandom(0, int.MaxValue) % RowCount,
+                   MathTool.GetRandom(0, int.MaxValue) % ColumnCount, MathTool.GetRandom(0, int.MaxValue) % RowCount);
             }
             timeOver = false;
             Invalidate();
@@ -157,7 +158,7 @@ namespace TaleofMonsters.Forms.MiniGame
                 else
                 {
                     if (FindPath(click, cur, CheckMethod.Try))
-                    {
+                    {//消除
                         AddMark(iconArray[click % totalColumn, click / totalColumn]);
                         iconArray[click % totalColumn, click / totalColumn] = 0;
                         iconArray[cur % totalColumn, cur / totalColumn] = 0;
@@ -197,12 +198,12 @@ namespace TaleofMonsters.Forms.MiniGame
         }
 
         #region 寻找匹配
-        private bool FindPath(int click, int cur, CheckMethod method)
+        private bool FindPath(int click, int matchTarget, CheckMethod method)
         {
             bool f = false;
             int mindis = 999999;
-            int lastnode = -1;
-            if (GetIconArray(click) != GetIconArray(cur))
+            int lastNodeIndex = -1;
+            if (GetIconArray(click) != GetIconArray(matchTarget))
             {
                 return false;
             }
@@ -217,67 +218,23 @@ namespace TaleofMonsters.Forms.MiniGame
                     {
                         for (int k = list[j].Value - 1, dis = 0; k >= list[j].Value - (list[j].Value % totalColumn); k--, dis++)
                         {
-                            if (k == cur && list[j].Distance + dis < mindis)
-                            {
-                                mindis = list[j].Distance + dis;
-                                lastnode = j;
-                                f = true;
-                            }
-                            if (GetIconArray(k) > 0)
+                            if (TryCell(matchTarget, k, list, j, dis, ref mindis, ref lastNodeIndex, ref f)) 
                                 break;
-                            else
-                            {
-                                if (!ContainV(list, k))
-                                    list.Add(new LinkUnit(k, list[j].Depth + 1, list[j].Distance + dis, j));
-                            }
                         }
                         for (int k = list[j].Value + 1, dis = 0; k <= list[j].Value - (list[j].Value % totalColumn) + totalColumn-1; k++, dis++)
                         {
-                            if (k == cur && list[j].Distance + dis < mindis)
-                            {
-                                mindis = list[j].Distance + dis;
-                                lastnode = j;
-                                f = true;
-                            }
-                            if (GetIconArray(k) > 0)
+                            if (TryCell(matchTarget, k, list, j, dis, ref mindis, ref lastNodeIndex, ref f)) 
                                 break;
-                            else
-                            {
-                                if (!ContainV(list, k))
-                                    list.Add(new LinkUnit(k, list[j].Depth + 1, list[j].Distance + dis, j));
-                            }
                         }
                         for (int k = list[j].Value - totalColumn, dis = 0; k >= 0; k -= totalColumn, dis++)
                         {
-                            if (k == cur && list[j].Distance + dis < mindis)
-                            {
-                                mindis = list[j].Distance + dis;
-                                lastnode = j;
-                                f = true;
-                            }
-                            if (GetIconArray(k) > 0)
+                            if (TryCell(matchTarget, k, list, j, dis, ref mindis, ref lastNodeIndex, ref f)) 
                                 break;
-                            else
-                            {
-                                if (!ContainV(list, k))
-                                    list.Add(new LinkUnit(k, list[j].Depth + 1, list[j].Distance + dis, j));
-                            }
                         }
                         for (int k = list[j].Value + totalColumn, dis = 0; k <= 99; k += totalColumn, dis++)
                         {
-                            if (k == cur && list[j].Distance + dis < mindis)
-                            {
-                                mindis = list[j].Distance + dis;
-                                lastnode = j;
-                                f = true;
-                            }
-                            if (GetIconArray(k) > 0)
+                            if (TryCell(matchTarget, k, list, j, dis, ref mindis, ref lastNodeIndex, ref f)) 
                                 break;
-                            else
-                            {
-                                if (!ContainV(list, k))
-                                    list.Add(new LinkUnit(k, list[j].Depth + 1, list[j].Distance + dis, j));
-                            }
                         }
                     }
                 }
@@ -288,32 +245,55 @@ namespace TaleofMonsters.Forms.MiniGame
 
             if (method == CheckMethod.Try)
             {
-                Graphics g = this.CreateGraphics();
-
-                if (lastnode <= 0)
-                {
-                    DrawLine(g, cur, click);
-                }
-                else
-                {
-                    int target = cur;
-                    int source = list[lastnode].Value;
-                    lastnode = list[lastnode].Parent;
-                    do
-                    {
-                        DrawLine(g, source, target);
-                        target = source;
-                        source = list[lastnode].Value;
-                        lastnode = list[lastnode].Parent;
-                    } while (lastnode != -1);
-                    DrawLine(g, source, target);
-                }
+                DrawMatchLine(click, matchTarget, lastNodeIndex, list);
             }
 
             return true;
         }
+
+        private bool TryCell(int matchTarget, int picked, List<LinkUnit> list, int j, int dis, ref int mindis, ref int lastnode, ref bool f)
+        {
+            if (picked == matchTarget && list[j].Distance + dis < mindis)
+            {
+                mindis = list[j].Distance + dis;
+                lastnode = j;
+                f = true;
+            }
+            if (GetIconArray(picked) > 0)
+                return true;
+            else
+            {
+                if (!ContainV(list, picked))
+                    list.Add(new LinkUnit(picked, list[j].Depth + 1, list[j].Distance + dis, j));
+            }
+            return false;
+        }
+
         #endregion
 
+        private void DrawMatchLine(int click, int matchTarget, int lastNodeIndex, List<LinkUnit> list)
+        {
+            Graphics g = this.CreateGraphics();
+
+            if (lastNodeIndex <= 0)
+            {
+                DrawLine(g, matchTarget, click);
+            }
+            else
+            {
+                int target = matchTarget;
+                int source = list[lastNodeIndex].Value;
+                lastNodeIndex = list[lastNodeIndex].Parent;
+                do
+                {
+                    DrawLine(g, source, target);
+                    target = source;
+                    source = list[lastNodeIndex].Value;
+                    lastNodeIndex = list[lastNodeIndex].Parent;
+                } while (lastNodeIndex != -1);
+                DrawLine(g, source, target);
+            }
+        }
         private void DrawLine(Graphics g, int source, int target)
         {
             int totalColumn = ColumnCount + 2;
@@ -401,9 +381,6 @@ namespace TaleofMonsters.Forms.MiniGame
                     }
                     if (FindPath(i1 + j1 * totalColumn, i2 + j2 * totalColumn, CheckMethod.Test))
                     {
-                        //iconArray[i1, j1] = 0;
-                        //iconArray[i2, j2] = 0;
-                        //Invalidate();
                         return true;
                     }
                 }
@@ -431,7 +408,7 @@ namespace TaleofMonsters.Forms.MiniGame
         }
 
 
-        private void MGUpToNumber_Paint(object sender, PaintEventArgs e)
+        private void MGLinkGame_Paint(object sender, PaintEventArgs e)
         {
             DrawBase(e.Graphics);
 
@@ -448,7 +425,7 @@ namespace TaleofMonsters.Forms.MiniGame
             }
             if (cur != -1)
             {
-                Pen p = new Pen(Brushes.Red, 4);
+                Pen p = new Pen(Brushes.Red, 3);
                 e.Graphics.DrawRectangle(p, new Rectangle(new Point(xoff + (cur % (ColumnCount + 2)) * imageSize + margin, yoff + (cur / (ColumnCount + 2)) * imageSize + margin), new Size(imageSize, imageSize)));
             }
         }

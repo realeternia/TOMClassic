@@ -50,7 +50,7 @@ namespace TaleofMonsters.Forms.MiniGame
             this.Controls.Add(this.colorLabel1);
             this.Name = "MGLinkGame";
             this.Size = new System.Drawing.Size(745, 511);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.MGUpToNumber_Paint);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.MGLinkGame_Paint);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LinkGamePanel_MouseClick);
             this.Controls.SetChildIndex(this.colorLabel1, 0);
             this.ResumeLayout(false);
