@@ -119,7 +119,7 @@ namespace TaleofMonsters.Forms.MiniGame
                     lastPressCheckTime = tick;
                     if (keyDownPressed)
                     {
-                        pastTime += 10;
+                        pastTime += 20;
                     }
                     else if (keyLeftPressed || keyRightPressed)
                     {
@@ -140,7 +140,7 @@ namespace TaleofMonsters.Forms.MiniGame
             }
 
             pastTime++; //自然下落
-            if (pastTime >= 10)
+            while (pastTime >= 10)
             {
                 pastTime -= 10;
 
@@ -431,6 +431,13 @@ namespace TaleofMonsters.Forms.MiniGame
                 if (!CanChange())
                     targetDirect = (targetDirect - 1) % 4;
                 Invalidate(new Rectangle(xoff, yoff, 190, 380));
+            } 
+            if (e.KeyCode == Keys.J)
+            {
+                targetDirect = (targetDirect - 1) % 4;
+                if (!CanChange())
+                    targetDirect = (targetDirect + 1) % 4;
+                Invalidate(new Rectangle(xoff, yoff, 190, 380));
             }
         }
         public override void OnHsKeyDown(KeyEventArgs e)
@@ -453,6 +460,11 @@ namespace TaleofMonsters.Forms.MiniGame
         {
             mark += add;
             Invalidate(new Rectangle(xoff + ColumnCount * CellSize + 20, yoff + 100, 100, 40));
+            if (mark >= 20000)
+            {
+                isFail = false;
+                EndGame();
+            }
         }
         private void bitmapButtonC1_Click(object sender, System.EventArgs e)
         {

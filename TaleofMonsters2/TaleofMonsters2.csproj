@@ -202,6 +202,12 @@
     <Compile Include="Forms\MiniGame\MGRussiaBlock.Designer.cs">
       <DependentUpon>MGRussiaBlock.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MiniGame\MGLinkGame.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MiniGame\MGLinkGame.Designer.cs">
+      <DependentUpon>MGLinkGame.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainItem\Blesses\BlessManager.cs" />
     <Compile Include="MainItem\Quests\TalkEventItem.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemEnd.cs" />
@@ -800,6 +806,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MiniGame\MGSeven.resx">
       <DependentUpon>MGSeven.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MiniGame\MGLinkGame.resx">
+      <DependentUpon>MGLinkGame.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Pops\PopDeckChangeName.resx">

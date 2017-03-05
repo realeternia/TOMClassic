@@ -88,7 +88,7 @@ namespace TaleofMonsters.Forms.MiniGame
                 return;
 
             Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            g.DrawString(playName, font, Brushes.White, 150, 8);
+            g.DrawString(playName, font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
             
             if(backImage != null)
