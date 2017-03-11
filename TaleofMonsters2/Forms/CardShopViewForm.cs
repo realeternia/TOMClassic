@@ -60,7 +60,7 @@ namespace TaleofMonsters.Forms
 
             SoundManager.PlayBGM("TOM003.mp3");
             IsChangeBgm = true;
-            OnFrame(0);
+            OnFrame(0, 0);
         }
 
         private void RefreshInfo()
@@ -122,9 +122,9 @@ namespace TaleofMonsters.Forms
         }
 
         delegate void ChangeShopCallback(int shelf);
-        internal override void OnFrame(int tick)
+        internal override void OnFrame(int tick, float timePass)
         {
-            base.OnFrame(tick);
+            base.OnFrame(tick, timePass);
             foreach (CardShopItem cardShopItem in itemControls)
             {
                 cardShopItem.OnFrame();

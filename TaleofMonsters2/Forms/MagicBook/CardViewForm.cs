@@ -69,7 +69,7 @@ namespace TaleofMonsters.Forms.MagicBook
             ChangeCards();
         }
 
-        internal override void OnFrame(int tick)
+        internal override void OnFrame(int tick, float timePass)
         {
             cardDetail.OnFrame();
         }

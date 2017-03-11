@@ -22,7 +22,7 @@ namespace TaleofMonsters.Forms.MiniGame
 
         private int[,] cellMap;
 
-        private bool isStart;
+        private bool isPlaying;
         bool isFail = false;
         private Point targetPos;
         private BlockType targetType;
@@ -59,11 +59,11 @@ namespace TaleofMonsters.Forms.MiniGame
             SystemMenuManager.IsHotkeyEnabled = false;//防止乱弹界面
         }
 
-        internal override void OnFrame(int tick)
+        internal override void OnFrame(int tick, float timePass)
         {
-            base.OnFrame(tick);
+            base.OnFrame(tick, timePass);
 
-            if (isStart)
+            if (isPlaying)
             {
                 TimelyMoveBlock(tick);
                 Invalidate(new Rectangle(xoff, yoff, 190 + 4, 380 + 4));
@@ -72,6 +72,7 @@ namespace TaleofMonsters.Forms.MiniGame
 
         public override void RestartGame()
         {
+            isPlaying = true;
             cellMap = new int[ColumnCount, RowCount];
             nextType = 0;
             NewBlock();
@@ -95,14 +96,14 @@ namespace TaleofMonsters.Forms.MiniGame
             {
                 hint = "你输了";
             }
-            isStart = false;
+            isPlaying = false;
 
             if (MessageBoxEx2.Show(hint + ",是否花5钻石再试一次?") == DialogResult.OK)
             {
                 if (UserProfile.InfoBag.PayDiamond(5))
                 {
                     RestartGame();
-                    isStart = true;
+                    isPlaying = true;
                     return;
                 }
             }
@@ -468,10 +469,10 @@ namespace TaleofMonsters.Forms.MiniGame
         }
         private void bitmapButtonC1_Click(object sender, System.EventArgs e)
         {
-            if (!isStart)
+            if (!isPlaying)
             {
-                isStart = true;
-                Invalidate();
+                RestartGame();
+                bitmapButtonC1.Visible = false;
             }
         }
 
@@ -487,7 +488,7 @@ namespace TaleofMonsters.Forms.MiniGame
             e.Graphics.DrawString(mark.ToString(), font, Brushes.White, xoff + ColumnCount * CellSize + 20, yoff + 120);
             font.Dispose();
 
-            if (!show || !isStart)
+            if (!show || !isPlaying)
                 return;
             
             //for (int i = 0; i <= RowCount; i++)

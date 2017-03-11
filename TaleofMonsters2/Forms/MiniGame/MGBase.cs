@@ -40,8 +40,6 @@ namespace TaleofMonsters.Forms.MiniGame
             base.Init(width, height);
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
             show = true;
-
-            RestartGame();
         }
         public void SetMinigameId(int id)
         {

@@ -48,9 +48,9 @@ namespace TaleofMonsters.Forms
             }
         }
 
-        internal override void OnFrame(int tick)
+        internal override void OnFrame(int tick, float timePass)
         {
-            base.OnFrame(tick);
+            base.OnFrame(tick, timePass);
         }
 
         private void buttonClose_Click(object sender, EventArgs e)

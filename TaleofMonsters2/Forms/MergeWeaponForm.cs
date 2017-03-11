@@ -53,7 +53,7 @@ namespace TaleofMonsters.Forms
         {
             base.Init(width, height);
             RefreshInfo();
-            OnFrame(0);
+            OnFrame(0, 0);
         }
 
         private void RefreshInfo()
@@ -209,9 +209,9 @@ namespace TaleofMonsters.Forms
         }
 
         delegate void RefreshInfoCallback();
-        internal override void OnFrame(int tick)
+        internal override void OnFrame(int tick, float timePass)
         {
-            base.OnFrame(tick);
+            base.OnFrame(tick, timePass);
             if ((tick % 6) == 0)
             {
                 TimeSpan span = TimeTool.UnixTimeToDateTime(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastMergeTime) + GameConstants.MergeWeaponDura) - DateTime.Now;

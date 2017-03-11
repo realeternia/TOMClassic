@@ -61,11 +61,6 @@ namespace TaleofMonsters.Forms.MiniGame
         public MGSeven()
         {
             InitializeComponent();
-        }
-
-        internal override void Init(int width, int height)
-        {
-            base.Init(width, height);
             this.bitmapButtonC1.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
             bitmapButtonC1.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             bitmapButtonC1.ForeColor = Color.White;
@@ -100,9 +95,16 @@ namespace TaleofMonsters.Forms.MiniGame
             bitmapButtonC4.Text = @"停止";
         }
 
-        internal override void OnFrame(int tick)
+        internal override void Init(int width, int height)
         {
-            base.OnFrame(tick);
+            base.Init(width, height);
+            
+            RestartGame();
+        }
+
+        internal override void OnFrame(int tick, float timePass)
+        {
+            base.OnFrame(tick, timePass);
             if ((tick%5) == 0)
             {
                 if (c1Stop)

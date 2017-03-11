@@ -39,12 +39,26 @@ namespace TaleofMonsters.Forms.MiniGame
         private Image[] iconTypes = new Bitmap[30];
         private int[,] iconArray = new int[ColumnCount + 2, RowCount+2];
         private int cur = -1;
-        private bool timeOver = false;
+        private float timeLeft;
         private int mark = 0;
+        private bool isPlaying;
+        private const int RoundTime = 120;
+        private const double ComboTime = 1.5;
+
+        private DateTime lastHitTime;
+        private int winLevelCount; //连胜回合数
 
         public MGLinkGame()
         {
             InitializeComponent();
+            this.bitmapButtonC1.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            bitmapButtonC1.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            bitmapButtonC1.ForeColor = Color.White;
+            bitmapButtonC1.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("rot1");
+            bitmapButtonC1.IconSize = new Size(16, 16);
+            bitmapButtonC1.IconXY = new Point(4, 5);
+            bitmapButtonC1.TextOffX = 8;
+            bitmapButtonC1.Text = @"开始";
             for (int i = 0; i < 16; i++)
             {
                 iconTypes[i] = PicLoader.Read("MiniGame.LinkGame", String.Format("{0}.JPG", i + 1));
@@ -60,26 +74,45 @@ namespace TaleofMonsters.Forms.MiniGame
         {
             base.Init(width, height);
         }
+        internal override void OnFrame(int tick, float timePass)
+        {
+            base.OnFrame(tick, timePass);
+
+            if (isPlaying && timeLeft > 0)
+            {
+                timeLeft -= timePass;
+                Invalidate(new Rectangle(xoff + 550, yoff + 70, 100, 20));
+
+                BeginCalculateResult();
+            }
+        }
 
         public override void RestartGame()
         {
+            lastHitTime = DateTime.Now;
             isFail = false;
+            timeLeft = RoundTime;
             mark = 0;
+            isPlaying = true;
             InitIconArray();
+
+            Invalidate();
         }
 
         public override void EndGame()
         {
+            isPlaying = false;
+
             string hint="";
-            //if (!isFail && GetPoints()>=100)
-            //{
-            //    hint = "获得了游戏胜利";
-            //    UserProfile.InfoBag.AddDiamond(10);
-            //}
-            //else
-            //{
-            //    hint = "你输了";
-            //}
+            if (!isFail)
+            {
+                hint = "获得了游戏胜利";
+                UserProfile.InfoBag.AddDiamond(10);
+            }
+            else
+            {
+                hint = "你输了";
+            }
 
             if (MessageBoxEx2.Show(hint + ",是否花5钻石再试一次?") == DialogResult.OK)
             {
@@ -122,8 +155,15 @@ namespace TaleofMonsters.Forms.MiniGame
                 Swap(MathTool.GetRandom(0, int.MaxValue) % ColumnCount, MathTool.GetRandom(0, int.MaxValue) % RowCount,
                    MathTool.GetRandom(0, int.MaxValue) % ColumnCount, MathTool.GetRandom(0, int.MaxValue) % RowCount);
             }
-            timeOver = false;
-            Invalidate();
+        }
+
+        protected override void CalculateResult()
+        {
+            if (timeLeft <= 0)
+            {
+                isFail = true;
+                EndGame();
+            }
         }
 
         private void Swap(int i1, int j1, int i2, int j2)
@@ -135,7 +175,7 @@ namespace TaleofMonsters.Forms.MiniGame
 
         private void LinkGamePanel_MouseClick(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left && !timeOver)
+            if (e.Button == MouseButtons.Left && isPlaying)
             {
                 int totalColumn = ColumnCount + 2;
                 int realX = e.X - xoff;
@@ -163,19 +203,33 @@ namespace TaleofMonsters.Forms.MiniGame
                         iconArray[click % totalColumn, click / totalColumn] = 0;
                         iconArray[cur % totalColumn, cur / totalColumn] = 0;
                         //  Sounder s = new Sounder("ok");
-                        Thread.Sleep(200);
+
+                        if (DateTime.Now.Subtract(lastHitTime).TotalSeconds < ComboTime)
+                        {
+                            timeLeft += (float)DateTime.Now.Subtract(lastHitTime).TotalSeconds; //这一步不算时间
+                        }
+
+                        lastHitTime = DateTime.Now;
+                        Thread.Sleep(100);
                     }
                     else
-                    {
+                     {
                         //   Sounder s = new Sounder("err");
                     }
                     cur = -1;
                 }
-                if (HasWin())
+                if (FinishLevel())
                 {
-                    isFail = false;
-                    EndGame();
-                    return;
+                    InitIconArray(); //下一关
+                    winLevelCount ++;
+                    if (winLevelCount < 5)
+                    {
+                        timeLeft += (float)RoundTime * 0.75f * (5-winLevelCount)/5;
+                    }
+                    else
+                    {
+                        timeLeft += (float)RoundTime * 0.75f / 10;
+                    }
                 }
                 while (!GameAvail())
                     Resort();
@@ -231,7 +285,7 @@ namespace TaleofMonsters.Forms.MiniGame
                             if (TryCell(matchTarget, k, list, j, dis, ref mindis, ref lastNodeIndex, ref f)) 
                                 break;
                         }
-                        for (int k = list[j].Value + totalColumn, dis = 0; k <= 99; k += totalColumn, dis++)
+                        for (int k = list[j].Value + totalColumn, dis = 0; k < totalColumn * (RowCount+2); k += totalColumn, dis++)
                         {
                             if (TryCell(matchTarget, k, list, j, dis, ref mindis, ref lastNodeIndex, ref f)) 
                                 break;
@@ -306,7 +360,7 @@ namespace TaleofMonsters.Forms.MiniGame
         /// <summary>
         /// 判断游戏是否结束
         /// </summary>
-        private bool HasWin()
+        private bool FinishLevel()
         {
             for (int i = 1; i < 1+ColumnCount; i++)
             {
@@ -398,19 +452,38 @@ namespace TaleofMonsters.Forms.MiniGame
                 case 22: mark += 150; break;
                 case 23: mark += 40 * 3; break;
                 case 24: mark += 40 * 5; break;
+                case 25: timeLeft += 5; break;
+                case 26: timeLeft += 10; break;
             }
-            Invalidate();
-            if (mark >= 20000)
+            Invalidate(new Rectangle(xoff + 550, yoff + 70, 100, 20)); //刷时间
+            Invalidate(new Rectangle(xoff + 550, yoff + 120, 100, 20)); //刷分数
+            if (mark >= 10000)
             {
                 isFail = false;
                 EndGame();
             }
         }
 
-
+        private void bitmapButtonC1_Click(object sender, EventArgs e)
+        {
+            if (timeLeft <= 0)
+            {
+                RestartGame();
+                bitmapButtonC1.Visible = false;
+            }
+        }
+        
         private void MGLinkGame_Paint(object sender, PaintEventArgs e)
         {
             DrawBase(e.Graphics);
+
+            Font font = new Font("宋体", 11);
+            e.Graphics.DrawString("时间剩余", font, Brushes.White, xoff + 550, yoff + 50);
+            e.Graphics.DrawString(string.Format("{0:0}:{1:00}", (int)(timeLeft/60), (int)timeLeft % 60), font, Brushes.White, xoff + 550, yoff + 70);
+
+            e.Graphics.DrawString("得分", font, Brushes.White, xoff +550, yoff + 100);
+            e.Graphics.DrawString(mark.ToString(), font, Brushes.White, xoff + 550, yoff + 120);
+            font.Dispose();
 
             if (!show)
                 return;
@@ -429,5 +502,6 @@ namespace TaleofMonsters.Forms.MiniGame
                 e.Graphics.DrawRectangle(p, new Rectangle(new Point(xoff + (cur % (ColumnCount + 2)) * imageSize + margin, yoff + (cur / (ColumnCount + 2)) * imageSize + margin), new Size(imageSize, imageSize)));
             }
         }
+
     }
 }

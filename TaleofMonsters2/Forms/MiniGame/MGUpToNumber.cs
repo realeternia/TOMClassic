@@ -22,7 +22,13 @@ namespace TaleofMonsters.Forms.MiniGame
         public MGUpToNumber()
         {
             InitializeComponent();
-
+            this.bitmapButtonC1.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            bitmapButtonC1.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            bitmapButtonC1.ForeColor = Color.White;
+            bitmapButtonC1.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("res2");
+            bitmapButtonC1.IconSize = new Size(16, 16);
+            bitmapButtonC1.IconXY = new Point(4, 5);
+            bitmapButtonC1.TextOffX = 8;
             virtualRegion = new VirtualRegion(this);
             for (int i = 0; i < 4; i++)
             {
@@ -41,15 +47,9 @@ namespace TaleofMonsters.Forms.MiniGame
         internal override void Init(int width, int height)
         {
             base.Init(width, height);
-            this.bitmapButtonC1.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
-            bitmapButtonC1.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            bitmapButtonC1.ForeColor = Color.White;
-            bitmapButtonC1.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("res2");
-            bitmapButtonC1.IconSize = new Size(16, 16);
-            bitmapButtonC1.IconXY = new Point(4, 5);
-            bitmapButtonC1.TextOffX = 8;
-
+            
             itemRequired = new int[] {8, 5, 4, 15};
+            RestartGame();
         }
 
         public override void RestartGame()

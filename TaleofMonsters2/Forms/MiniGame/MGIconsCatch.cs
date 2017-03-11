@@ -69,6 +69,8 @@ namespace TaleofMonsters.Forms.MiniGame
             this.customScrollbar1.Maximum = (answers.Count - 10) + customScrollbar1.LargeChange;
             this.customScrollbar1.SmallChange = 3;
             this.customScrollbar1.Value = 0;
+
+            RestartGame();
         }
 
         public override void RestartGame()

@@ -42,9 +42,9 @@ namespace TaleofMonsters.Forms
         }
 
         delegate void RefreshCallback();
-        internal override void OnFrame(int tick)
+        internal override void OnFrame(int tick, float timePass)
         {
-            base.OnFrame(tick);
+            base.OnFrame(tick, timePass);
             if ((tick % 6) == 0)
             {
                 TimeSpan span = TimeTool.UnixTimeToDateTime(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastBlessShopTime) + GameConstants.BlessShopDura) - DateTime.Now;

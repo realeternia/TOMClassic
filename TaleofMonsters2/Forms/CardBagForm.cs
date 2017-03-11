@@ -71,9 +71,9 @@ namespace TaleofMonsters.Forms
             Width = 135* cardCount + 20;
         }
 
-        internal override void OnFrame(int tick)
+        internal override void OnFrame(int tick, float timePass)
         {
-            base.OnFrame(tick);
+            base.OnFrame(tick, timePass);
 
             for (int i = 0; i < cardCount; i++)
             {

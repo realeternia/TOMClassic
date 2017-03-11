@@ -94,9 +94,9 @@ namespace TaleofMonsters.Forms
             myCursor = new HSCursor(this);
         }
 
-        internal override void OnFrame(int tick)
+        internal override void OnFrame(int tick, float timePass)
         {
-            base.OnFrame(tick);
+            base.OnFrame(tick, timePass);
             if ((tick % 6) == 0)
             {
                 heroAct = ((++heroAct)%4);

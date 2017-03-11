@@ -43,7 +43,7 @@ namespace TaleofMonsters.Forms
                 changeControls[i].Init(i);
             }
             RefreshInfo();
-            OnFrame(0);
+            OnFrame(0, 0);
         }
 
         private void RefreshInfo()

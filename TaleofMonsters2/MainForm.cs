@@ -285,7 +285,7 @@ namespace TaleofMonsters
                         {
                             if (control is BasePanel)
                             {
-                                (control as BasePanel).OnFrame(timeTick);
+                                (control as BasePanel).OnFrame(timeTick, 0.05f);
                             }
                         }
 

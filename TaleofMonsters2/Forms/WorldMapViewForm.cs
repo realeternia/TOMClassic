@@ -64,7 +64,7 @@ namespace TaleofMonsters.Forms
             showImage = true;
         }
 
-        internal override void OnFrame(int tick)
+        internal override void OnFrame(int tick, float timePass)
         {
             if ((tick % 10) == 0)
             {

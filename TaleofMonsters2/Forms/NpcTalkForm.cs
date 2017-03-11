@@ -47,9 +47,9 @@ namespace TaleofMonsters.Forms
             SetupQuestItem();
         }
 
-        internal override void OnFrame(int tick)
+        internal override void OnFrame(int tick, float timePass)
         {
-            base.OnFrame(tick);
+            base.OnFrame(tick, timePass);
 
             if (evtItem != null && evtItem.RunningState == TalkEventItem.TalkEventState.Running)
             {

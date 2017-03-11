@@ -115,7 +115,7 @@ namespace TaleofMonsters.Forms.MagicBook
             Invalidate(new Rectangle(65, 35, cardWidth * xCount, cardHeight * yCount));
         }
 
-        internal override void OnFrame(int tick)
+        internal override void OnFrame(int tick, float timePass)
         {
             cardDetail.OnFrame();
         }

@@ -29,6 +29,8 @@ namespace TaleofMonsters.Forms.MiniGame
         internal override void Init(int width, int height)
         {
             base.Init(width, height);
+
+            RestartGame();
         }
 
         public override void RestartGame()

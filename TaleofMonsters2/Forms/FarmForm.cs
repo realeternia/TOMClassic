@@ -121,7 +121,7 @@ namespace TaleofMonsters.Forms
 
         }
 
-        internal override void OnFrame(int tick)
+        internal override void OnFrame(int tick, float timePass)
         {
             if (tick % 6 == 0)
             {

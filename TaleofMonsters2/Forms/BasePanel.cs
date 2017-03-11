@@ -30,7 +30,7 @@ namespace TaleofMonsters.Forms
             Paint += new PaintEventHandler(BasePanel_Paint);
         }
 
-        internal virtual void OnFrame(int tick)
+        internal virtual void OnFrame(int tick, float timePass)
         {
             if (flows.Count>0)
             {

@@ -174,9 +174,9 @@ namespace TaleofMonsters.Controler.Battle
             isGamePaused = true;
         }
         
-        internal override void OnFrame(int tick)
+        internal override void OnFrame(int tick, float timePass)
         {
-            base.OnFrame(tick);
+            base.OnFrame(tick, timePass);
 
             fpsList.Add(DateTime.Now);//fps计算
             while (fpsList.Count > 11)
