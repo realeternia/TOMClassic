@@ -38,10 +38,10 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public EnergyGenerator EnergyGenerator { get; set; }
         public SpikeManager SpikeManager { get; set; }
         public CardManager CardManager { get; private set; }
+        public TrapHolder TrapHolder { get; private set; }
 
         public double SpellEffectAddon { get; set; }//法术牌效果加成
 
-        private List<Trap> trapList = new List<Trap>();
         private bool isPlayerControl; //是否玩家控制
 
         public List<int> HeroSkillList = new List<int>();
@@ -106,6 +106,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             CardManager = new CardManager(this);
             EnergyGenerator = new EnergyGenerator();
             SpikeManager = new SpikeManager(this);
+            TrapHolder = new TrapHolder();
             State = new PlayerState();
         }
 
@@ -257,7 +258,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             AddPp(-selectCard.Pp);
 
             var rival = Rival as Player;
-            if (rival.CheckTrapOnUseCard(selectCard, location, rival, this))
+            if (rival.TrapHolder.CheckTrapOnUseCard(selectCard, location, rival, this))
             {
                 return false;
             }
@@ -343,7 +344,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 }
 
                 var rival = Rival as Player;
-                rival.CheckTrapOnSummon(newMon, rival, this);
+                rival.TrapHolder.CheckTrapOnSummon(newMon, rival, this);
             }
             catch (Exception e)
             {
@@ -441,63 +442,15 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             CardManager.DeleteCardAt(SelectId);
         }
 
-        #region 陷阱
         public void AddTrap(int id, int lv, double rate, int damage, double help)
         {
-            trapList.Add(new Trap {Id = id, Level = lv, Rate = rate, Damage = damage, Help = help});
+            TrapHolder.AddTrap(id, lv, rate, damage, help);
         }
 
         public void RemoveRandomTrap()
         {
-            if (trapList.Count > 0)
-                trapList.RemoveAt(MathTool.GetRandom(trapList.Count));
+            TrapHolder.RemoveRandomTrap();
         }
-
-        private void RemoveTrap(int id)
-        {
-            trapList.RemoveAll(s => s.Id == id);
-        }
-
-        private bool CheckTrapOnUseCard(ActiveCard selectCard, Point location, IPlayer left, IPlayer right)
-        {
-            foreach (var trap in trapList)
-            {
-                var trapConfig = ConfigData.GetSpellTrapConfig(trap.Id);
-                if (trapConfig.EffectUse != null)
-                {
-                    if (MathTool.GetRandom(100) < trap.Rate && trapConfig.EffectUse(left, right, trap, selectCard.CardId, (int)selectCard.CardType))
-                    {
-                        RemoveTrap(trap.Id);
-                        NLog.Debug(string.Format("RemoveTrap UseCard id={0} cardId={1}", trap.Id, selectCard.CardId));
-                        BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(trapConfig.UnitEffect), location, false));
-
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        private void CheckTrapOnSummon(IMonster mon, IPlayer left, IPlayer right)
-        {
-            foreach (var trap in trapList)
-            {
-                var trapConfig = ConfigData.GetSpellTrapConfig(trap.Id);
-                if (trapConfig.EffectSummon != null)
-                {
-                    if (MathTool.GetRandom(100) < trap.Rate && trapConfig.EffectSummon(left, right, trap, mon, trap.Level))
-                    {
-                        RemoveTrap(trap.Id);
-                        NLog.Debug(string.Format("RemoveTrap Summon id={0} cardId={1}", trap.Id, mon.Id));
-                        BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(trapConfig.UnitEffect), mon as LiveMonster, false));
-                        return;
-                    }
-                }
-            }
-        }
-
-        #endregion
 
         public void AddSpellMissile(IMonster target, ISpell spell, Point mouse, string effect)
         {
@@ -703,24 +656,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             tipData.AddTextNewLine(string.Format("MP {0}", EnergyGenerator.RateMp.ToString().PadLeft(3, ' ')), "Blue");
             tipData.AddBar(100, EnergyGenerator.RateMp, Color.Cyan, Color.Blue);
 
-            if (trapList.Count>0)
-            {
-                tipData.AddLine();
-                tipData.AddTextNewLine("陷阱", "White");
-                foreach (var trap in trapList)
-                {
-                    var trapConfig = ConfigData.GetSpellTrapConfig(trap.Id);
-                    if (isPlayerControl)
-                    {
-                        tipData.AddTextNewLine(trapConfig.Name, "Lime");
-                        tipData.AddText(string.Format("Lv{0} {1:0.0}%", trap.Level, trap.Rate), "White");
-                    }
-                    else
-                    {
-                        tipData.AddTextNewLine("???", "Red");
-                    }
-                }
-            }
+            TrapHolder.GenerateImage(tipData, isPlayerControl);
             
             var rival = Rival as Player;
             if (rival.HasHolyWord("witcheye"))
