@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Core;
@@ -123,7 +124,7 @@ namespace TaleofMonsters.Forms
             }
         }
 
-        private void TalkWindow_Paint(object sender, PaintEventArgs e)
+        private void NpcTalkForm_Paint(object sender, PaintEventArgs e)
         {
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
@@ -155,7 +156,15 @@ namespace TaleofMonsters.Forms
                         {
                             e.Graphics.FillRectangle(Brushes.DarkBlue, 10, id * 20 + Height - 10 - answerList.Count * 20, Width - 20, 20);
                         }
-                        e.Graphics.DrawString(word.Script, font, Brushes.Wheat, 22, id * 20 + Height - 10 - answerList.Count * 20 + 2);
+
+                        int textOff = 20;
+                        if (!string.IsNullOrEmpty(word.Prefix))
+                        {
+                            if(word.Prefix.StartsWith("quest"))
+                                e.Graphics.DrawImage(HSIcons.GetIconsByEName("npc5"), textOff, id * 20 + Height - 10 - answerList.Count * 20 + 2, 18, 18);
+                            textOff += 20;
+                        }
+                        e.Graphics.DrawString(word.Script, font, Brushes.Wheat, textOff, id * 20 + Height - 10 - answerList.Count * 20 + 2);
 
                         id++;
                     }

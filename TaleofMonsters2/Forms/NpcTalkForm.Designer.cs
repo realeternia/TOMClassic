@@ -37,7 +37,7 @@
             this.DoubleBuffered = true;
             this.Name = "NpcTalkForm";
             this.Size = new System.Drawing.Size(596, 459);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.TalkWindow_Paint);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.NpcTalkForm_Paint);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NpcTalkForm_MouseClick);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.NpcTalkForm_MouseMove);
             this.ResumeLayout(false);

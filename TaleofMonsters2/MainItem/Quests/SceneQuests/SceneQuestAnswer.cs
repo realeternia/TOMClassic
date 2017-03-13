@@ -30,6 +30,10 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
                         return; //有一个条件不满足就结束
                     }
                 }
+                if (infos.Length > 1)
+                {
+                    Prefix = infos[1];
+                }
             }
         }
 
