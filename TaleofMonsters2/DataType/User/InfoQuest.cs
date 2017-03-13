@@ -22,6 +22,10 @@ namespace TaleofMonsters.DataType.User
 
         public void SetQuest(int qid)
         {
+            if (qid <= QuestId)
+            {
+                return;
+            }
             QuestId = qid;
         }
 

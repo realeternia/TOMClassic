@@ -240,7 +240,16 @@ namespace TaleofMonsters.MainItem.Scenes
 
         private static void OnMoveEnd(SceneObject o)
         {
-            o.MoveEnd();
+            try //因为这一步会被invoke，所以单独套一层try
+            {
+                o.MoveEnd();
+            }
+            catch (Exception e)
+            {
+                NarlonLib.Log.NLog.Error(e);
+                throw;
+            }
+            
         }
 
         public void OnEventFinish()

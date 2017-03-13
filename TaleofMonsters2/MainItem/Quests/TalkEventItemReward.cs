@@ -143,15 +143,19 @@ namespace TaleofMonsters.MainItem.Quests
         {
             if (!string.IsNullOrEmpty(config.Flag))
             {
-                UserProfile.InfoRecord.SetFlag((uint) ((MemPlayerFlagTypes) Enum.Parse(typeof (MemPlayerFlagTypes), config.Flag)));
+                var flagKey = (uint) (MemPlayerFlagTypes) Enum.Parse(typeof (MemPlayerFlagTypes), config.Flag);
+                if (!UserProfile.InfoRecord.CheckFlag(flagKey))
+                {
+                    UserProfile.InfoRecord.SetFlag(flagKey);
+                    if (config.ReplaceId.Length > 0)
+                    {
+                        UserProfile.InfoQuest.AddReplace(config.ReplaceId[0], config.ReplaceId[1]);
+                    }
+                }
             }
             if (config.QuestId > 0)
             {
                 UserProfile.InfoQuest.SetQuest(config.QuestId);
-            }
-            if (config.ReplaceId > 0)
-            {
-                UserProfile.InfoQuest.AddReplace(config.Id, config.ReplaceId);
             }
         }
 

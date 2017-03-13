@@ -41,12 +41,12 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
             if (parms[0] == "flagno")
             {
                 Disabled = UserProfile.InfoRecord.CheckFlag(
-                        (uint) ((MemPlayerFlagTypes) Enum.Parse(typeof (MemPlayerFlagTypes), parms[1])));
+                        (uint) (MemPlayerFlagTypes) Enum.Parse(typeof (MemPlayerFlagTypes), parms[1]));
             }
             else if (parms[0] == "flag")
             {
                 Disabled = !UserProfile.InfoRecord.CheckFlag(
-                        (uint) ((MemPlayerFlagTypes) Enum.Parse(typeof (MemPlayerFlagTypes), parms[1])));
+                        (uint) (MemPlayerFlagTypes) Enum.Parse(typeof (MemPlayerFlagTypes), parms[1]));
             }
             else if (parms[0] == "questno")
             {
@@ -55,6 +55,10 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
             else if (parms[0] == "quest")
             {
                 Disabled = !UserProfile.InfoQuest.IsQuestFinish(config.QuestNeed);
+            }
+            else if (parms[0] == "questeq")
+            {
+                Disabled = UserProfile.InfoQuest.QuestId != config.QuestNeed;
             }
             else if (parms[0] == "rivalavail")
             {

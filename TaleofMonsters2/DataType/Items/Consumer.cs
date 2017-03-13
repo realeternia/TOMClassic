@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using ConfigDatas;
-using NarlonLib.Math;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Tool;
@@ -59,11 +58,18 @@ namespace TaleofMonsters.DataType.Items
             {
                 UserProfile.InfoBasic.AddExp(itemConfig.GainExp);
             }
-            if (itemConfig.GainAp > 0)
+            if (itemConfig.GainFood > 0)
             {
-                UserProfile.InfoBasic.AddFood((uint)itemConfig.GainAp);
+                UserProfile.InfoBasic.AddFood((uint)itemConfig.GainFood);
             }
-
+            if (itemConfig.GainHealth > 0)
+            {
+                UserProfile.InfoBasic.AddHealth((uint)itemConfig.GainHealth);
+            }
+            if (itemConfig.GainMental > 0)
+            {
+                UserProfile.InfoBasic.AddMental((uint)itemConfig.GainMental);
+            }
             return true;
         }
 
