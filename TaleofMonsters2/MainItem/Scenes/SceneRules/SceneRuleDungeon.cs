@@ -9,16 +9,14 @@ namespace TaleofMonsters.MainItem.Scenes.SceneRules
     public class SceneRuleDungeon : ISceneRule
     {
         private int mapId;
-        private int minutes;
         
         public void Init(int id, int minute)
         {
             mapId = id;
-            minutes = minute;
             if (UserProfile.InfoWorld.SavedDungeonQuests.Count == 0)
             {
                 UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.DungeonQuestOffside, 0);
-                foreach (var questData in SceneManager.GetDungeonQuestConfigData(mapId, minute))
+                foreach (var questData in SceneManager.GetDungeonQuestConfigData(mapId))
                 {
                     for (int j = 0; j < questData.Value; j++)
                     {
@@ -31,7 +29,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneRules
 
         public void Generate(List<int> randQuestList, int questCellCount)
         {
-            foreach (var questData in SceneManager.GetQuestConfigData(mapId, minutes))
+            foreach (var questData in SceneManager.GetQuestConfigData(mapId))
             {
                 for (int j = 0; j < questData.Value; j++)
                 {

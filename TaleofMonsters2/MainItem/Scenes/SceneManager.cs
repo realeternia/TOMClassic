@@ -4,8 +4,8 @@ using System.IO;
 using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.User.Db;
@@ -16,7 +16,7 @@ namespace TaleofMonsters.MainItem.Scenes
 {
     internal static class SceneManager
     {
-        private struct ScenePosData
+        internal struct ScenePosData
         {
             public int Id;
             public int X;
@@ -38,18 +38,20 @@ namespace TaleofMonsters.MainItem.Scenes
             var cachedSpecialData = new Dictionary<int, DbSceneSpecialPosData>();
             var filePath = ConfigData.GetSceneConfig(id).TilePath;
 
+            List<DbSceneSpecialPosData> specialDataList = new List<DbSceneSpecialPosData>();
             if (reason != SceneFreshReason.Load || UserProfile.Profile.InfoWorld.PosInfos == null || UserProfile.Profile.InfoWorld.PosInfos.Count <= 0)
             {//重新生成
                 UserProfile.InfoBasic.DungeonRandomSeed = MathTool.GetRandom(int.MaxValue);
                 Random r = new Random(UserProfile.InfoBasic.DungeonRandomSeed);
-                LoadSceneFile(mapWidth, mapHeight, filePath, r, cachedMapData, cachedSpecialData);
+                SceneQuestBook.LoadSceneFile(mapWidth, mapHeight, filePath, r, cachedMapData, specialDataList);
+                FilterSpecialData(specialDataList, cachedSpecialData);
                 var questCellCount = cachedMapData.Count - cachedSpecialData.Count;
                 GenerateSceneRandomInfo(id, questCellCount, cachedMapData, cachedSpecialData);
             }
             else
             {//从存档加载
                 Random r = new Random(UserProfile.InfoBasic.DungeonRandomSeed);
-                LoadSceneFile(mapWidth, mapHeight, filePath, r, cachedMapData, cachedSpecialData);
+                SceneQuestBook.LoadSceneFile(mapWidth, mapHeight, filePath, r, cachedMapData, specialDataList);
                 foreach (var posData in UserProfile.Profile.InfoWorld.PosInfos)
                 {
                     cachedSpecialData[posData.Id] = posData;
@@ -68,8 +70,7 @@ namespace TaleofMonsters.MainItem.Scenes
                     switch (specialData.Type)
                     {
                         case "Quest":
-                            var questId = UserProfile.InfoQuest.CheckReplace(specialData.Info);
-                            so = new SceneQuest(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, questId); 
+                            so = new SceneQuest(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Info); 
                               so.Disabled = specialData.Disabled; break;
                         case "Warp":
                             so = new SceneWarp(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Info);
@@ -97,96 +98,17 @@ namespace TaleofMonsters.MainItem.Scenes
             return sceneObjects;
         }
 
-
-        private static void LoadSceneFile(int mapWidth, int mapHeight, string filePath, Random r,
-            List<ScenePosData> cachedMapData, Dictionary<int, DbSceneSpecialPosData> cachedSpecialData)
+        private static void FilterSpecialData(List<DbSceneSpecialPosData> specialDataList, 
+            Dictionary<int, DbSceneSpecialPosData> cachedSpecialData)
         {
-            StreamReader sr = new StreamReader(DataLoader.Read("Scene", string.Format("{0}.txt", filePath)));
-            int xoff = 0, yoff = 0, wid = 0, height = 0;
-
-            string line;
-            while ((line = sr.ReadLine())!= null)
+            foreach (var specialPosData in specialDataList)
             {
-                string[] datas = line.Split('=');
-                string tp = datas[0].Trim();
-                string parm = datas[1].Trim();
-                switch (tp)
+                if (specialPosData.Type == "Quest")
                 {
-                    case "startx": xoff= int.Parse(parm) * mapWidth / 1422; break;
-                    case "starty": yoff = int.Parse(parm) * mapHeight / 855 + 50; break; //50为固定偏移
-                    case "width": wid = int.Parse(parm); break;
-                    case "height": height = int.Parse(parm); break;
-                    case "startpoint": Scene.Instance.StartPos = int.Parse(parm); break;
-                    case "revivepoint": Scene.Instance.RevivePos = int.Parse(parm); break;
-                    case "data": ReadBody(sr, mapWidth, mapHeight, r, cachedMapData, cachedSpecialData, wid, height, xoff, yoff); break;
-                }
-            }
-                     
-            sr.Close();
-        }
-
-        private static void ReadBody(StreamReader sr, int mapWidth, int mapHeight, Random r,
-            List<ScenePosData> cachedMapData, Dictionary<int, DbSceneSpecialPosData> cachedSpecialData, 
-            int wid, int height, int xoff, int yoff)
-        {
-            int cellWidth = GameConstants.SceneTileStandardWidth*mapWidth/1422;
-            int cellHeight = GameConstants.SceneTileStandardHeight*mapHeight/855;
-            Dictionary<int, List<ScenePosData>> randomGroup = new Dictionary<int, List<ScenePosData>>();
-            for (int i = 0; i < height; i++)
-            {
-                string[] data = sr.ReadLine().Split('\t');
-                for (int j = 0; j < wid; j++)
-                {
-                    int val = int.Parse(data[j]);
-                    if (val == 0)
-                    {
+                    if (!SceneQuestBook.IsQuestAvail(specialPosData.Info))
                         continue;
-                    }
-
-                    int lineOff = (int) (cellWidth*(height - i - 1)*GameConstants.SceneTileGradient);
-                    ScenePosData so = new ScenePosData
-                    {
-                        Id = val,
-                        X = xoff + j*cellWidth + lineOff,
-                        Y = yoff + i*cellHeight,
-                        Width = cellWidth,
-                        Height = cellHeight
-                    };
-                    if (val < 1000) //随机组
-                    {
-                        so.Id = (height - i)*1000 + j + 1;
-                        if (!randomGroup.ContainsKey(val))
-                            randomGroup[val] = new List<ScenePosData>();
-                        randomGroup[val].Add(so);
-                    }
-                    else
-                    {
-                        cachedMapData.Add(so);
-                    }
                 }
-            }
-
-            RandomSequence rs = new RandomSequence(randomGroup.Count, r);
-            for (int i = 0; i < Math.Ceiling(randomGroup.Keys.Count * 0.5f); i++)
-                foreach (var randPos in randomGroup[rs.NextNumber() + 1])
-                    cachedMapData.Add(randPos);
-            
-            string line;
-            while ((line = sr.ReadLine()) != null)
-            {
-                string[] data = line.Split('\t');
-                if (data.Length < 2)
-                    continue;
-
-                var posData = new DbSceneSpecialPosData();
-                posData.Id = int.Parse(data[0]);
-                posData.Type = data[1];
-                posData.MapSetting = true;
-                if (data.Length > 2)
-                    posData.Info = int.Parse(data[2]);
-                if (data.Length > 3)
-                    posData.Info2 = int.Parse(data[3]);
-                cachedSpecialData[posData.Id] = posData;
+                cachedSpecialData[specialPosData.Id] = specialPosData;
             }
         }
 
@@ -233,7 +155,7 @@ namespace TaleofMonsters.MainItem.Scenes
         /// <summary>
         /// 获取一站地图的随机任务列表
         /// </summary>
-        public static List<RLIdValue> GetQuestConfigData(int mapId, int minutes)
+        public static List<RLIdValue> GetQuestConfigData(int mapId)
         {
             var config = ConfigData.GetSceneConfig(mapId);
             List<RLIdValue> datas = new List<RLIdValue>();
@@ -257,7 +179,7 @@ namespace TaleofMonsters.MainItem.Scenes
                 {
                     string[] questData = info.Split(';');
                     int qid = SceneBook.GetSceneQuestByName(questData[0]);
-                    if(IsQuestAvail(qid, minutes))
+                    if(SceneQuestBook.IsQuestAvail(qid))
                         datas.Add(new RLIdValue { Id = qid, Value = int.Parse(questData[1]) });
                 }
             }
@@ -271,7 +193,7 @@ namespace TaleofMonsters.MainItem.Scenes
                     if (MathTool.GetRandom(100)<rate)//概率事件
                     {
                         int qid = SceneBook.GetSceneQuestByName(questData[0]);
-                        if (IsQuestAvail(qid, minutes))
+                        if (SceneQuestBook.IsQuestAvail(qid))
                             datas.Add(new RLIdValue { Id = qid, Value = 1 });
                     }
                 }
@@ -280,7 +202,7 @@ namespace TaleofMonsters.MainItem.Scenes
             return datas;
         }
 
-        public static List<RLIdValue> GetDungeonQuestConfigData(int mapId, int minutes)
+        public static List<RLIdValue> GetDungeonQuestConfigData(int mapId)
         {
             var config = ConfigData.GetSceneConfig(mapId);
             List<RLIdValue> datas = new List<RLIdValue>();
@@ -291,23 +213,13 @@ namespace TaleofMonsters.MainItem.Scenes
                 {
                     string[] questData = info.Split(';');
                     int qid = SceneBook.GetSceneQuestByName(questData[0]);
-                    if (IsQuestAvail(qid, minutes))
+                    if (SceneQuestBook.IsQuestAvail(qid))
                         datas.Add(new RLIdValue {Id = qid, Value = int.Parse(questData[1])});
                 }
             }
             return datas;
         }
 
-        private static bool IsQuestAvail(int qid, int minutes)
-        {
-            var questConfig = ConfigData.GetSceneQuestConfig(qid);
-            if (questConfig.TriggerHourBegin == questConfig.TriggerHourEnd)
-                return true;
-            if (questConfig.TriggerHourEnd > questConfig.TriggerHourBegin)
-                return minutes >= questConfig.TriggerHourBegin && minutes < questConfig.TriggerHourEnd;
-            else //后半夜到第二天
-                return minutes < questConfig.TriggerHourEnd || minutes >= questConfig.TriggerHourBegin;
-        }
 
         public static SceneQuestBlock GetQuestData(int eventId, int level, string name)
         {

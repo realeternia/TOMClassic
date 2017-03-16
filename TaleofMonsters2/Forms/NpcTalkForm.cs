@@ -160,9 +160,16 @@ namespace TaleofMonsters.Forms
                         int textOff = 20;
                         if (!string.IsNullOrEmpty(word.Prefix))
                         {
-                            if(word.Prefix.StartsWith("quest"))
-                                e.Graphics.DrawImage(HSIcons.GetIconsByEName("npc5"), textOff, id * 20 + Height - 10 - answerList.Count * 20 + 2, 18, 18);
-                            textOff += 20;
+                            string icon = "";
+                            if (word.Prefix.StartsWith("quest"))
+                                icon = "npc5";
+                            if (word.Prefix.StartsWith("rival"))
+                                icon = "tsk1";
+                            if (icon != "")
+                            {
+                                e.Graphics.DrawImage(HSIcons.GetIconsByEName(icon), textOff, id * 20 + Height - 10 - answerList.Count * 20 + 2, 18, 18);
+                                textOff += 20;
+                            }
                         }
                         e.Graphics.DrawString(word.Script, font, Brushes.Wheat, textOff, id * 20 + Height - 10 - answerList.Count * 20 + 2);
 

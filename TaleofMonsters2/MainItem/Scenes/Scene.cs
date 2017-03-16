@@ -62,15 +62,14 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public ISceneRule Rule { get; set; }
         public int StartPos { get; set; } //传送后指定地点
-        public int RevivePos { get; set; } //复活点
+        public int RevivePos { get; set; }
 
+        public int TimeMinutes { get; private set; }
         private int width, height;// 场景的宽度和高度
 
         private VirtualRegion vRegion;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
         private MovingData movingData = new MovingData();
-
-        private int timeMinutes; //当前时间的分钟数
 
         private const float ChessMoveAnimTime =0.5f;//旗子跳跃的动画时间
 
@@ -143,8 +142,8 @@ namespace TaleofMonsters.MainItem.Scenes
             {
                 Rule = new SceneRuleCommon();
             }
-            timeMinutes = (int)DateTime.Now.TimeOfDay.TotalMinutes;
-            Rule.Init(mapid, timeMinutes);
+            TimeMinutes = (int)DateTime.Now.TimeOfDay.TotalMinutes;
+            Rule.Init(mapid, TimeMinutes);
             sceneItems = SceneManager.RefreshSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, isWarp ? SceneManager.SceneFreshReason.Warp : SceneManager.SceneFreshReason.Load );
             if (UserProfile.InfoBasic.Position == 0)//兜底处理
                 UserProfile.InfoBasic.Position = sceneItems[0].Id;
@@ -223,11 +222,11 @@ namespace TaleofMonsters.MainItem.Scenes
             if (UserProfile.Profile != null)
             {
                 int time = (int)DateTime.Now.TimeOfDay.TotalMinutes;
-                if (timeMinutes == 0 || time != timeMinutes)
+                if (TimeMinutes == 0 || time != TimeMinutes)
                 {
-                    if (timeMinutes == 0 || (time % 60) == 0)
+                    if (TimeMinutes == 0 || (time % 60) == 0)
                     {
-                        timeMinutes = time;
+                        TimeMinutes = time;
                         if (time == 0)
                         {
                             UserProfile.Profile.OnNewDay();
@@ -385,13 +384,13 @@ namespace TaleofMonsters.MainItem.Scenes
             g.DrawRectangle(Pens.DarkGray, 55, 19, 100, 5);
             b1.Dispose();
 
-            if (timeMinutes >= 960 && timeMinutes < 1080)
+            if (TimeMinutes >= 960 && TimeMinutes < 1080)
             {
                 Brush yellow = new SolidBrush(Color.FromArgb(50, 255, 200, 0));
                 g.FillRectangle(yellow, 0, 50, width, height);
                 yellow.Dispose();
             }
-            else if (timeMinutes < 360 || timeMinutes >= 1080) //18点到6点
+            else if (TimeMinutes < 360 || TimeMinutes >= 1080) //18点到6点
             {
                 Brush blue = new SolidBrush(Color.FromArgb(120, 0, 0, 150));
                 g.FillRectangle(blue, 0, 50, width, height);
@@ -562,7 +561,7 @@ namespace TaleofMonsters.MainItem.Scenes
             tipData.AddTextNewLine(string.Format("{0}(Lv{1})", sceneName, config.Level), "LightBlue", 20);
             tipData.AddLine(2);
             tipData.AddTextNewLine(string.Format("格子:{0}", sceneItems.Count), "White");
-            foreach (var questData in SceneManager.GetQuestConfigData(UserProfile.InfoBasic.MapId, timeMinutes))
+            foreach (var questData in SceneManager.GetQuestConfigData(UserProfile.InfoBasic.MapId))
             {
                 var questConfig = ConfigData.GetSceneQuestConfig(questData.Id);
                 if (questConfig.Type == SceneQuestTypes.Hidden)

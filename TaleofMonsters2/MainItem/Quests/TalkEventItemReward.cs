@@ -147,10 +147,6 @@ namespace TaleofMonsters.MainItem.Quests
                 if (!UserProfile.InfoRecord.CheckFlag(flagKey))
                 {
                     UserProfile.InfoRecord.SetFlag(flagKey);
-                    if (config.ReplaceId.Length > 0)
-                    {
-                        UserProfile.InfoQuest.AddReplace(config.ReplaceId[0], config.ReplaceId[1]);
-                    }
                 }
             }
             if (config.QuestId > 0)
