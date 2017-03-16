@@ -264,8 +264,9 @@
     internal enum MemPlayerFlagTypes
     {
         SelectJob=1,
-        Saiba=2,
+        Qiaqia=2,
         Aolai=3,
-        Qiongqi=4,
+        Qiongqi =4,
+        AolaiFight=5,
     }
 }

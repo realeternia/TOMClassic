@@ -106,6 +106,7 @@ namespace TaleofMonsters.Forms.Items.Core
                     case "B": return Color.RoyalBlue; //场景
                     case "P": return Color.MediumPurple; //幻兽
                     case "Y": return Color.Yellow; //道具
+                    case "O": return Color.DarkGoldenrod; //事件
                 }
             }
             return Color.FromName(cname);

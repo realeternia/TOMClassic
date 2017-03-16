@@ -56,7 +56,7 @@ namespace TaleofMonsters.Forms
                 else
                 {
                     showType = 1;
-                    BeginInvoke(new RefreshCallback(Refresh));
+                    BeginInvoke(new RefreshCallback(RefreshPage));
                 }
             }
         }
@@ -85,7 +85,7 @@ namespace TaleofMonsters.Forms
             Invalidate(new Rectangle(9, 35, 66, 30*5));
         }
 
-        public void Refresh()
+        public void RefreshPage()
         {
             ChangeType(showType);
         }

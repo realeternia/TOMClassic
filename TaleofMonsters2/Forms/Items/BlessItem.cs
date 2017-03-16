@@ -6,7 +6,6 @@ using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Blesses;
-using TaleofMonsters.DataType.Equips;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Regions;
@@ -131,7 +130,7 @@ namespace TaleofMonsters.Forms.Items
                 parent.AddFlowCenter("移除成功", "Lime");
             }
 
-            (parent as BlessForm).Refresh();
+            (parent as BlessForm).RefreshPage();
             parent.Invalidate();
         }
 

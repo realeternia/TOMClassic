@@ -173,7 +173,7 @@ namespace TaleofMonsters.Forms.MiniGame
             Invalidate(new Rectangle(xoff, yoff, 310, 200 + 30));
         }
 
-        private void CalculateResult()
+        protected override void CalculateResult()
         {
             if (realanswer == tempanswer || answers.Count >= 14)
             {
