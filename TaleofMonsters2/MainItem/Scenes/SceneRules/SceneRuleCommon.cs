@@ -2,6 +2,7 @@
 using ConfigDatas;
 using NarlonLib.Log;
 using NarlonLib.Math;
+using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.MainItem.Scenes.SceneRules
@@ -18,7 +19,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneRules
 
         public void Generate(List<int> randQuestList, int questCellCount)
         {
-            foreach (var questData in SceneManager.GetQuestConfigData(mapId))
+            foreach (var questData in SceneQuestBook.GetQuestConfigData(mapId))
             {
                 for (int j = 0; j < questData.Value; j++)
                 {

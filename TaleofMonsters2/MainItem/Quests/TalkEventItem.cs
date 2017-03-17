@@ -24,6 +24,7 @@ namespace TaleofMonsters.MainItem.Quests
                 case "reset": return new TalkEventItemReset(eventId, level, r, e);
                 case "teleport": return new TalkEventItemTeleportEnable(eventId, level, r, e);
                 case "portal": return new TalkEventItemPortal(eventId, level, r, e);
+                case "move": return new TalkEventItemMove(eventId, level, r, e);
                 case "hiddenway": return new TalkEventItemHiddenWay(eventId, level, r, e);
                 case "next": return new TalkEventItemNext(eventId, level, r, e);
                 case "changemap": return new TalkEventItemChangeMap(eventId, level, r, e);

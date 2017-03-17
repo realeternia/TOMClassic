@@ -13,6 +13,7 @@ using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Blesses;
 using TaleofMonsters.DataType.Others;
+using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Regions;
@@ -561,7 +562,7 @@ namespace TaleofMonsters.MainItem.Scenes
             tipData.AddTextNewLine(string.Format("{0}(Lv{1})", sceneName, config.Level), "LightBlue", 20);
             tipData.AddLine(2);
             tipData.AddTextNewLine(string.Format("格子:{0}", sceneItems.Count), "White");
-            foreach (var questData in SceneManager.GetQuestConfigData(UserProfile.InfoBasic.MapId))
+            foreach (var questData in SceneQuestBook.GetQuestConfigData(UserProfile.InfoBasic.MapId))
             {
                 var questConfig = ConfigData.GetSceneQuestConfig(questData.Id);
                 if (questConfig.Type == SceneQuestTypes.Hidden)
@@ -606,6 +607,12 @@ namespace TaleofMonsters.MainItem.Scenes
         public void RandomPortal()
         {
             UserProfile.InfoBasic.Position = sceneItems[MathTool.GetRandom(sceneItems.Count)].Id;
+            parent.Invalidate();
+        }
+
+        public void MoveTo(int target)
+        {
+            UserProfile.InfoBasic.Position = target;
             parent.Invalidate();
         }
 

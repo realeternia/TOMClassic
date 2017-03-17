@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Core;
@@ -43,7 +44,7 @@ namespace TaleofMonsters.Forms
                 eventLevel = config.Level;
             else
                 eventLevel = ConfigData.GetSceneConfig(UserProfile.InfoBasic.MapId).Level;
-            interactBlock = SceneManager.GetQuestData(EventId, eventLevel, config.Script);
+            interactBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, config.Script);
             answerList = new List<SceneQuestBlock>();
             SetupQuestItem();
         }

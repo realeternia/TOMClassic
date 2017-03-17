@@ -230,6 +230,7 @@
     <Compile Include="MainItem\Quests\TalkEventItemPortal.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemNext.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemHiddenWay.cs" />
+    <Compile Include="MainItem\Quests\TalkEventItemMove.cs" />
     <Compile Include="MainItem\Scenes\SceneObjects\SceneWarp.cs" />
     <Compile Include="MainItem\Scenes\SceneObjects\SceneQuest.cs" />
     <Compile Include="MainItem\Scenes\SceneObjects\SceneTile.cs" />

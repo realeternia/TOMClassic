@@ -648,6 +648,20 @@
   <ItemGroup>
     <EmbeddedResource Include="SceneQuest\npcwoodhouse.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SceneQuest\stonebarrier.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scene\viliage1.txt" />
+    <EmbeddedResource Include="Scene\viliage2.txt" />
+    <EmbeddedResource Include="Scene\viliage3.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SceneQuest\npckedi.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SceneQuest\dungeonexit.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

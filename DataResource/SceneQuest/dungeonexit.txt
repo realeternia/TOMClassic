@@ -1,0 +1,5 @@
+﻿s从这里可以离开迷宫，是否继续
+	a|quest|是的，离开
+		echangemap
+	a我再考虑下
+		end

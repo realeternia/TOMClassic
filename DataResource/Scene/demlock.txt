@@ -2,6 +2,8 @@ startx=100
 starty=370
 width=12
 height=6
+startpoint=3001
+revivepoint=3001
 data=1
 0	0	0	0	0	0	6007	0	0	0	0	0
 0	0	0	0	0	0	5007	0	0	0	0	0
@@ -13,3 +15,4 @@ data=1
 6007	Warp	13010015
 3007	Quest	42030006
 2001	Quest	42020004
+4001	Quest	42050005
