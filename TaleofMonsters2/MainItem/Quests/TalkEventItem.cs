@@ -21,16 +21,9 @@ namespace TaleofMonsters.MainItem.Quests
                 case "reward": return new TalkEventItemReward(eventId, level, c, r, e);
                 case "trade": return new TalkEventItemTrade(eventId, level, c, r, e); 
                 case "punish": return new TalkEventItemPunish(eventId, level, c, r, e); 
-                case "reset": return new TalkEventItemReset(eventId, level, r, e);
-                case "teleport": return new TalkEventItemTeleportEnable(eventId, level, r, e);
-                case "portal": return new TalkEventItemPortal(eventId, level, r, e);
-                case "move": return new TalkEventItemMove(eventId, level, r, e);
-                case "hiddenway": return new TalkEventItemHiddenWay(eventId, level, r, e);
-                case "next": return new TalkEventItemNext(eventId, level, r, e);
-                case "changemap": return new TalkEventItemChangeMap(eventId, level, r, e);
                 case "npc": return new TalkEventItemNpc(eventId, level, r, e);
                 case "nd": return new TalkEventItemEnd(eventId, level, r, e);
-                default: return new TalkEventItem(eventId, level, r, e); 
+                default: return new TalkEventItemAction(eventId, level, r, e); 
             }
         }
 
