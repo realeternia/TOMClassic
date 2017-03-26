@@ -9,14 +9,10 @@ namespace TaleofMonsters.DataType.User.Db
 {
     public class DbTournamentData
     {
-        [FieldIndex(Index = 1)]
-        public int Id;
-        [FieldIndex(Index = 2)]
-        public bool Engage;
-        [FieldIndex(Index = 3)]
-        public int[] Pids;
-        [FieldIndex(Index = 4)]
-        public MatchResult[] Results;
+        [FieldIndex(Index = 1)] public int Id;
+        [FieldIndex(Index = 2)] public bool Engage;
+        [FieldIndex(Index = 3)] public int[] Pids;
+        [FieldIndex(Index = 4)] public MatchResult[] Results;
 
         private int currentMid;
         private int currentRvId;
@@ -95,7 +91,7 @@ namespace TaleofMonsters.DataType.User.Db
             List<int[]> ranks = new List<int[]>();
             for (int i = 0; i < Pids.Length; i++)
             {
-                int[] dat = new int[] { 0, 0, 0, 0 };
+                int[] dat = new int[] {0, 0, 0, 0};
                 dat[0] = Pids[i];
                 foreach (MatchResult matchResult in Results)
                 {
@@ -129,13 +125,14 @@ namespace TaleofMonsters.DataType.User.Db
             {
                 if (ranks[i][0] == -1)
                 {
-                    if (tournamentConfig.Resource[i].Id== 99)
+                    if (tournamentConfig.Resource[i].Id == 99)
                     {
                         UserProfile.InfoBag.AddDiamond(tournamentConfig.Resource[i].Value);
                     }
                     else
                     {
-                        UserProfile.InfoBag.AddResource((GameResourceType)tournamentConfig.Resource[i].Id, (uint)tournamentConfig.Resource[i].Value);
+                        UserProfile.InfoBag.AddResource((GameResourceType) tournamentConfig.Resource[i].Id,
+                            (uint) tournamentConfig.Resource[i].Value);
                     }
                 }
             }

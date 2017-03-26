@@ -8,6 +8,12 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 {
     internal abstract class SceneObject
     {
+        [Flags]
+        internal enum ScenePosFlagType
+        {
+            Detected = 1 //可以看到所有格子
+        }
+
         public readonly int Id;
         public readonly int X;
         public readonly int Y;
@@ -15,6 +21,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
         public readonly int Height;
         public bool Disabled { get; set; }
         public bool MapSetting { get; set; }
+        public uint Flag { get; set; }
 
         public SceneObject(int wid, int wx, int wy, int wwidth, int wheight)
         {
@@ -37,6 +44,16 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             MapSetting = isSet;
 
             UserProfile.Profile.InfoWorld.UpdatePosMapSetting(Id, isSet);
+        }
+        public void AddFlag(ScenePosFlagType flagType)
+        {
+            Flag |= (uint)flagType;
+
+            UserProfile.Profile.InfoWorld.UpdatePosFlag(Id, Flag);
+        }
+        public bool HasFlag(ScenePosFlagType flagType)
+        {
+            return (Flag & (uint)flagType) != 0;
         }
 
         public bool IsMouseIn(int mx, int my)

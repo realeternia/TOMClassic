@@ -23,7 +23,6 @@ namespace TaleofMonsters.MainItem.Quests
                     UserProfile.InfoBasic.Position = Scene.Instance.GetStartPos(); //如果没配置了出生点，就随机一个点
                     break;
             }
-                    Scene.Instance.EnableTeleport();
         }
 
         public override bool AutoClose()

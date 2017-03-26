@@ -195,8 +195,8 @@ namespace TaleofMonsters
             tabPageGame.Invalidate();
         }
 
-        public void RefreshPanel()
-        {
+        public void RefreshView()
+        {//有的时候需要整天刷新一次
             tabPageGame.Invalidate();
         }
 

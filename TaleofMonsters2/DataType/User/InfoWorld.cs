@@ -331,14 +331,13 @@ namespace TaleofMonsters.DataType.User
                 }
             }
         }
-        public void UpdatePosInfo(int id, int info, bool mapsetting)
+        public void UpdatePosInfo(int id, int info)
         {
             foreach (var posData in PosInfos)
             {
                 if (posData.Id == id)
                 {
                     posData.Info = info;
-                    posData.MapSetting = mapsetting;
                     break;
                 }
             }
@@ -350,6 +349,17 @@ namespace TaleofMonsters.DataType.User
                 if (posData.Id == id)
                 {
                     posData.MapSetting = mapsetting;
+                    break;
+                }
+            }
+        }
+        public void UpdatePosFlag(int id, uint flag)
+        {
+            foreach (var posData in PosInfos)
+            {
+                if (posData.Id == id)
+                {
+                    posData.Flag = flag;
                     break;
                 }
             }

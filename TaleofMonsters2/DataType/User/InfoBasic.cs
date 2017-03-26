@@ -45,7 +45,7 @@ namespace TaleofMonsters.DataType.User
                 }
 
                 MainItem.SystemMenuManager.ResetIconState();
-                MainForm.Instance.RefreshPanel();
+                MainForm.Instance.RefreshView();
 
                 MainItem.PanelManager.ShowLevelInfo(oldLevel, UserProfile.InfoBasic.Level);
             }

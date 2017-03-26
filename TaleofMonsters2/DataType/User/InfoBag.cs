@@ -171,6 +171,7 @@ namespace TaleofMonsters.DataType.User
                 pickItem.Value--;
                 if (pickItem.Value <= 0)
                     pickItem.Type = 0;
+                MainForm.Instance.RefreshView();
             }
         }
 

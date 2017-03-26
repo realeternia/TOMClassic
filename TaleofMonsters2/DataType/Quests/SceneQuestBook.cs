@@ -101,8 +101,6 @@ namespace TaleofMonsters.DataType.Quests
                 posData.MapSetting = true;
                 if (data.Length > 2)
                     posData.Info = Int32.Parse(data[2]);
-                if (data.Length > 3)
-                    posData.Info2 = Int32.Parse(data[3]);
                 cachedSpecialData.Add(posData);
             }
         }

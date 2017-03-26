@@ -57,30 +57,31 @@ namespace TaleofMonsters.MainItem.Scenes
             List<SceneObject> sceneObjects = new List<SceneObject>();
             foreach (var scenePosData in cachedMapData)
             {
-                DbSceneSpecialPosData specialData;
-                cachedSpecialData.TryGetValue(scenePosData.Id, out specialData);
+                DbSceneSpecialPosData cachedData;
+                cachedSpecialData.TryGetValue(scenePosData.Id, out cachedData);
 
                 SceneObject so;
-                if (specialData != null)
+                if (cachedData != null)
                 {
-                    switch (specialData.Type)
+                    switch (cachedData.Type)
                     {
                         case "Quest":
-                            so = new SceneQuest(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Info); 
-                              so.Disabled = specialData.Disabled; break;
+                            so = new SceneQuest(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, cachedData.Info); 
+                              so.Disabled = cachedData.Disabled; break;
                         case "Warp":
-                            so = new SceneWarp(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, specialData.Info);
-                            so.Disabled = specialData.Disabled;
+                            so = new SceneWarp(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, cachedData.Info);
+                            so.Disabled = cachedData.Disabled;
                             if (ConfigData.GetSceneConfig(id).Type == SceneTypes.Common && reason == SceneFreshReason.Warp)
                             {
-                                specialData.Disabled = true;
+                                cachedData.Disabled = true;
                                 so.Disabled = true;//如果是切场景，切到战斗场景，所有传送门自动关闭
                             }
                             break;
                         default:
                             so = new SceneTile(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height); break;
                     }
-                    so.MapSetting = specialData.MapSetting;
+                    so.Flag = cachedData.Flag;
+                    so.MapSetting = cachedData.MapSetting;
                 }
                 else
                 {

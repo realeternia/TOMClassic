@@ -11,6 +11,7 @@ using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.Drops;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms;
+using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.DataType.Items
 {
@@ -70,6 +71,10 @@ namespace TaleofMonsters.DataType.Items
             {
                 UserProfile.InfoBasic.AddMental((uint)itemConfig.GainMental);
             }
+            if (!String.IsNullOrEmpty(itemConfig.Instruction))
+            {
+                CheckInstruction(itemConfig.Instruction);
+            }
             return true;
         }
 
@@ -110,6 +115,7 @@ namespace TaleofMonsters.DataType.Items
             {
                 player.AddHolyWord(itemConfig.HolyWord);
             }
+
             if (itemConfig.AttrAddAfterSummon != null && itemConfig.AttrAddAfterSummon.Length>0)
             {
                 player.AddMonsterAddon(itemConfig.AttrAddAfterSummon);
@@ -182,6 +188,14 @@ namespace TaleofMonsters.DataType.Items
             ((ItemPackageForm)form).SetItem(itemList.ToArray(), countList.ToArray());
             MainForm.Instance.DealPanel(form);
             return true;
+        }
+
+        private static void CheckInstruction(string ins)
+        {
+            switch (ins)
+            {
+                case "detectall": Scene.Instance.DetectAll(); break;
+            }
         }
     }
 }

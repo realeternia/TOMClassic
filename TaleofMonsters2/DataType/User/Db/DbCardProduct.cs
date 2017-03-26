@@ -8,16 +8,13 @@ namespace TaleofMonsters.DataType.User.Db
 {
     public class DbCardProduct
     {
-        [FieldIndex(Index = 1)]
-        public int Id;
-        [FieldIndex(Index = 2)]
-        public int Cid;
-        [FieldIndex(Index = 3)]
-        public int Mark; //CardProductMarkTypes
+        [FieldIndex(Index = 1)] public int Id;
+        [FieldIndex(Index = 2)] public int Cid;
+        [FieldIndex(Index = 3)] public int Mark; //CardProductMarkTypes
 
         public DbCardProduct()
         {
-            
+
         }
 
         public DbCardProduct(int id, int cid, int mark)
@@ -35,7 +32,7 @@ namespace TaleofMonsters.DataType.User.Db
 
                 GameResource res = new GameResource();
                 res.Gold = cardData.Star*30;
-                var markType = (CardProductMarkTypes)Mark;
+                var markType = (CardProductMarkTypes) Mark;
                 if (markType == CardProductMarkTypes.Sale)
                 {
                     res.Gold = MathTool.GetRound(res.Gold, 20);
@@ -46,14 +43,14 @@ namespace TaleofMonsters.DataType.User.Db
                 }
                 else if (markType == CardProductMarkTypes.Hot)
                 {
-                    res.Gold = res.Gold * 8 / 10;
+                    res.Gold = res.Gold*8/10;
                 }
                 else if (markType == CardProductMarkTypes.Only)
                 {
                     res.Gold = 300;
                 }
                 int qual = cardData.Quality + 1;
-                res.Add(GameResourceType.Gem, (int)GameResourceBook.OutGemCardBuy(qual));
+                res.Add(GameResourceType.Gem, (int) GameResourceBook.OutGemCardBuy(qual));
                 return res;
             }
         }
