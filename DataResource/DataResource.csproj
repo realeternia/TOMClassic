@@ -677,6 +677,15 @@
   <ItemGroup>
     <EmbeddedResource Include="SceneQuest\earthcrack.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SceneQuest\torch.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SceneQuest\crystalball.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SceneQuest\lighthouse.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

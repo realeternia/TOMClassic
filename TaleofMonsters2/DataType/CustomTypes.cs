@@ -268,5 +268,6 @@
         Aolai=3,
         Qiongqi =4,
         AolaiFight=5,
+        Kedi=6
     }
 }

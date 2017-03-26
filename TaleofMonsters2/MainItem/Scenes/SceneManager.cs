@@ -145,8 +145,13 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public static bool CanMove(int id1, int id2)
         {
+            return GetDistance(id1, id2) == 1;
+        }
+
+        public static int GetDistance(int id1, int id2)
+        {
             int differ = Math.Abs(id1 - id2);
-            return differ == 1 || differ == 1000;
+            return differ/1000 + (differ % 1000);
         }
     }
 }

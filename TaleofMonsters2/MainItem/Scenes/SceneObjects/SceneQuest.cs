@@ -100,8 +100,14 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                 }
                 else
                 {
-                    if(EventId > 0 && HasFlag(ScenePosFlagType.Detected))
-                        g.DrawImage(SceneBook.GetSceneQuestImage(EventId), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel);
+                    if (HasFlag(ScenePosFlagType.Detected))
+                    {
+                        if(EventId > 0)
+                            g.DrawImage(SceneBook.GetSceneQuestImage(EventId), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel);
+                        else
+                            g.DrawImage(markQuest, destRect, 0, 0, markQuest.Width, markQuest.Height, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
+                    }
+                        
                 }
             }
 

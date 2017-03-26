@@ -686,5 +686,34 @@ namespace TaleofMonsters.MainItem.Scenes
                 }
             }
         }
+
+        public void DetectNear(int range)
+        {
+            foreach (var sceneObject in sceneItems)
+            {
+                if (sceneObject is SceneQuest && SceneManager.GetDistance(sceneObject.Id, UserProfile.InfoBasic.Position) <= range)
+                {
+                    sceneObject.AddFlag(SceneObject.ScenePosFlagType.Detected);
+                }
+            }
+        }
+        public void DetectRandom(int count)
+        {
+            List<SceneObject> toChoose = new List<SceneObject>();
+            foreach (var sceneObject in sceneItems)
+            {
+                if (sceneObject is SceneQuest && !sceneObject.Disabled && 
+                    !sceneObject.MapSetting && !sceneObject.HasFlag(SceneObject.ScenePosFlagType.Detected))
+                {
+                    toChoose.Add(sceneObject);
+                }
+            }
+
+            var results = NLRandomPicker<SceneObject>.RandomPickN(toChoose, (uint)count);
+            foreach (var sceneObject in results)
+            {
+                sceneObject.AddFlag(SceneObject.ScenePosFlagType.Detected);
+            }
+        }
     }
 }
