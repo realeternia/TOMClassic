@@ -431,14 +431,29 @@ namespace TaleofMonsters.MainItem.Scenes
         private void DrawCellAndToken(Graphics g)
         {
             SceneObject possessCell = null;
+            SceneObject selectTarget = null;
             foreach (SceneObject obj in sceneItems)
             {
-                obj.Draw(g, cellTar);
+                if (obj.Id == cellTar)
+                {
+                    selectTarget = obj;
+                }
+                else
+                {//先绘制非目标
+                    obj.Draw(g, false);
+                }
+                
                 if (obj.Id == UserProfile.Profile.InfoBasic.Position)
                 {
                     possessCell = obj;
                 }
             }
+
+            if (selectTarget != null)
+            {
+                selectTarget.Draw(g, true);
+            }
+
 
             if (possessCell != null)
             {

@@ -66,9 +66,9 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             return config.Ename != "magnet";
         }
 
-        public override void Draw(Graphics g, int target)
+        public override void Draw(Graphics g, bool isTarget)
         {
-            base.Draw(g, target);
+            base.Draw(g, isTarget);
 
             if (Disabled && EventId == 0)
             {

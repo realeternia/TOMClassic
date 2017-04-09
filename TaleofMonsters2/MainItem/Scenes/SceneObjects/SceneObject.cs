@@ -98,12 +98,12 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             return true;
         }
 
-        public virtual void Draw(Graphics g, int target)
+        public virtual void Draw(Graphics g, bool isTarget)
         {
             Color tileColor = Color.White;
             Color lineColor = Color.DimGray;
 
-            if (target == Id)
+            if (isTarget)
             {
                 if (SceneManager.CanMove(Id, UserProfile.Profile.InfoBasic.Position))
                 {

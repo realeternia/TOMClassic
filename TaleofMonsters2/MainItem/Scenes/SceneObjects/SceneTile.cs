@@ -14,9 +14,9 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             Scene.Instance.OnEventFinish();
         }
 
-        public override void Draw(Graphics g, int target)
+        public override void Draw(Graphics g, bool isTarget)
         {
-            base.Draw(g, target);
+            base.Draw(g, isTarget);
 
 #if DEBUG
             Font font = new Font("微软雅黑", 12 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);

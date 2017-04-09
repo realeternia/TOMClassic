@@ -44,9 +44,9 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
         {
             return false;
         }
-        public override void Draw(Graphics g, int target)
+        public override void Draw(Graphics g, bool isTarget)
         {
-            base.Draw(g, target);
+            base.Draw(g, isTarget);
 
             Image markQuest = PicLoader.Read("Map", "SymWarp.PNG");
             int drawWidth = markQuest.Width * Width / GameConstants.SceneTileStandardWidth;
