@@ -71,6 +71,10 @@ namespace TaleofMonsters.DataType.Items
             {
                 UserProfile.InfoBasic.AddMental((uint)itemConfig.GainMental);
             }
+            if (itemConfig.MoveAdd > 0)
+            {
+                UserProfile.InfoBasic.SetSceneMove(itemConfig.MoveAdd, itemConfig.MoveRound);
+            }
             if (!String.IsNullOrEmpty(itemConfig.Instruction))
             {
                 CheckInstruction(itemConfig.Instruction);

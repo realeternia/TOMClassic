@@ -143,15 +143,16 @@ namespace TaleofMonsters.MainItem.Scenes
             UserProfile.Profile.InfoWorld.PosInfos = posList;
         }
 
-        public static bool CanMove(int id1, int id2)
+        public static bool CanPlayerMove(int id1, int id2)
         {
-            return GetDistance(id1, id2) == 1;
+            var dis = GetDistance(id1, id2);
+            return dis > 0 && dis <= UserProfile.InfoBasic.GetSceneMove();
         }
 
         public static int GetDistance(int id1, int id2)
         {
-            int differ = Math.Abs(id1 - id2);
-            return differ/1000 + (differ % 1000);
+            int differ = Math.Abs(id1/1000 - id2/1000) + Math.Abs(id1 % 1000 - id2 % 1000);
+            return differ;
         }
     }
 }

@@ -69,7 +69,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 
         public virtual bool OnClick()
         {
-            if (!SceneManager.CanMove(Id, UserProfile.Profile.InfoBasic.Position))
+            if (!SceneManager.CanPlayerMove(Id, UserProfile.Profile.InfoBasic.Position))
             {
                 return false;
             }
@@ -84,7 +84,8 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             {
                 UserProfile.InfoBasic.SubHealth(moveCost * 2);
             }
-            
+            UserProfile.InfoBasic.CheckSceneMove();
+
             return true;
         }
 
@@ -105,7 +106,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 
             if (isTarget)
             {
-                if (SceneManager.CanMove(Id, UserProfile.Profile.InfoBasic.Position))
+                if (SceneManager.CanPlayerMove(Id, UserProfile.Profile.InfoBasic.Position))
                 {
                     tileColor = Color.Yellow;
                     lineColor = Color.Orange;
