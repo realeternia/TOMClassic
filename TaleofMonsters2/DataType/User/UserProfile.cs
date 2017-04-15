@@ -1,5 +1,6 @@
 ﻿using TaleofMonsters.Core;
 using System.IO;
+using TaleofMonsters.Controler.World;
 
 namespace TaleofMonsters.DataType.User
 {
@@ -72,6 +73,8 @@ namespace TaleofMonsters.DataType.User
 
         public static void SaveToDB()
         {
+            WorldInfoManager.Save();
+
             FileStream fs = new FileStream(string.Format("./Save/{0}.db", ProfileName), FileMode.OpenOrCreate);
             var dts= DbSerializer.CustomTypeToBytes(Profile, typeof(Profile));
             fs.Write(dts, 0, dts.Length);

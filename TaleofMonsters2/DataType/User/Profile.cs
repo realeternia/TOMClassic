@@ -193,6 +193,7 @@ namespace TaleofMonsters.DataType.User
         public void OnSwitchScene()
         {
             InfoEquip.CheckExpireAndDura(true);
+            UserProfile.SaveToDB();//每次切场景存个档
         }
 
         public void OnNewDay()

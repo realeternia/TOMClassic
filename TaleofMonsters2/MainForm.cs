@@ -134,7 +134,6 @@ namespace TaleofMonsters
         {
             if (viewStack1.SelectedIndex == 1)
             {
-                WorldInfoManager.Save();
                 UserProfile.Profile.OnLogout();
                 UserProfile.SaveToDB();
             }

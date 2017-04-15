@@ -60,7 +60,7 @@ namespace TaleofMonsters.Forms.Items.Regions
                     {
                         var cardData = CardConfigManager.GetCardConfig(nid);
                         string cardBorder = DataType.Cards.CardAssistant.GetCardBorder(cardData);
-                        g.DrawImage(PicLoader.Read("Border", cardBorder), X + 2, Y + 2, Width - 4, Height - 4);
+                        g.DrawImage(PicLoader.Read("Border", cardBorder), X, Y, Width, Height);
                     };
                 }
                 else if (type == PictureRegionCellType.SkillAttr)
