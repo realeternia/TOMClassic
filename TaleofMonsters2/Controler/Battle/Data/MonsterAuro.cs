@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using ConfigDatas;
-using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType;
@@ -14,7 +13,6 @@ namespace TaleofMonsters.Controler.Battle.Data
         private int buffId; //buff id
         private int level; //buff等级
 
-        private int range = -1; //范围
         private string target;
         private int targetMonsterId; //特定怪id
         private int starMin = 0; //最小星级影响
@@ -43,12 +41,6 @@ namespace TaleofMonsters.Controler.Battle.Data
             return this;
         }
 
-        public IMonsterAuro SetRange(int rg)
-        {
-            range = rg;
-            return this;
-        }
-
         public IMonsterAuro SetMid(int mid)
         {
             targetMonsterId = mid;
@@ -66,12 +58,13 @@ namespace TaleofMonsters.Controler.Battle.Data
 
         public void CheckAuroState()
         {
-            int size = BattleManager.Instance.MemMap.CardSize;
             foreach (LiveMonster mon in BattleManager.Instance.MonsterQueue.Enumerator)
             {
                 if (mon.IsGhost || mon.Id == self.Id)
                     continue;
-                if (target[0] != 'A' && ((BattleTargetManager.IsSpellEnemyMonster(target[0]) && self.IsLeft != mon.IsLeft) || (BattleTargetManager.IsSpellFriendMonster(target[0]) && self.IsLeft == mon.IsLeft)))
+                if (target[0] != 'A'
+                    && ((BattleTargetManager.IsSpellEnemyMonster(target[0]) && self.IsLeft == mon.IsLeft)
+                    || (BattleTargetManager.IsSpellFriendMonster(target[0]) && self.IsLeft != mon.IsLeft)))
                     continue;
                 if (targetMonsterId != 0 && mon.Avatar.Id != targetMonsterId)
                     continue;
@@ -80,10 +73,6 @@ namespace TaleofMonsters.Controler.Battle.Data
                 if (raceList.Count > 0 && !raceList.Contains((CardTypeSub)mon.Avatar.MonsterConfig.Type))
                     continue;
                 if (attrList.Count > 0 && !attrList.Contains((CardElements)mon.Avatar.MonsterConfig.Attr))
-                    continue;
-
-                int truedis = MathTool.GetDistance(self.Position, mon.Position);
-                if (range != -1 && range*size/10 <= truedis)
                     continue;
 
                 mon.AddBuff(buffId, level, 0.05);
