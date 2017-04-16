@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Control;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
@@ -19,6 +20,8 @@ namespace TaleofMonsters.Controler.Battle.Components
         private int clickIndex = -1;//从1开始
         private int realCardNum = 0;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
+
+        private Point savedMousePos = new Point(0);
 
         public CardsArray()
         {
@@ -72,22 +75,8 @@ namespace TaleofMonsters.Controler.Battle.Components
                 }
             }
 
-            if (realCardNum <= 6)
-            {
-                for (int i = 0; i < pCards.Length; i++)
-                {
-                    cards[i].Size.Width = 120;
-                    cards[i].Location.X = 120*i+4*i+4;
-                }
-            }
-            else
-            {
-                for (int i = 0; i < pCards.Length; i++)
-                {
-                    cards[i].Size.Width = (754 - (realCardNum + 1) * 4 - 120) / (realCardNum-1);
-                    cards[i].Location.X = cards[i].Size.Width * i+4*i+4;
-                }
-            }
+            ResizeElements();
+
             Invalidate();
         }
 
@@ -145,40 +134,16 @@ namespace TaleofMonsters.Controler.Battle.Components
                 return;
             }
 
+            savedMousePos = e.Location;
+            ResizeElements();
+
+
             int newIndex = -1;
-            int xOff = 0;
-
-            for (int i = 0; i < 10; i++)
-            {
-                var targetCard = cards[i];
-                if (realCardNum > 6)
-                {
-                    targetCard.Size.Width = (754 - (realCardNum + 1) * 4 - 120) / (realCardNum - 1);
-                    xOff += 4;
-                }
-                else
-                {
-                    targetCard.Size.Width = 120;
-                    xOff += 4;
-                }
-                targetCard.Location.X = xOff;
-                xOff += targetCard.Size.Width;
-
-                if (e.X > targetCard.Location.X && e.X < targetCard.Location.X + targetCard.Size.Width)
-                {
-                    if (realCardNum > 6)
-                    {
-                        xOff += 120 - targetCard.Size.Width;
-                    }
-                    targetCard.Size.Width = 120;
-                }
-            }
-
             for (int i = 0; i < 10; i++)
             {
                 var targetCard = cards[i];
                 targetCard.MouseOn = false;
-                if (e.X > targetCard.Location.X && e.X < targetCard.Location.X + targetCard.Size.Width)
+                if (savedMousePos.X > targetCard.Location.X && savedMousePos.X < targetCard.Location.X + targetCard.Size.Width)
                 {
                     newIndex = i + 1;
                     targetCard.MouseOn = true;
@@ -195,14 +160,47 @@ namespace TaleofMonsters.Controler.Battle.Components
                     var card = CardAssistant.GetCard(targetCard.ACard.CardId);
                     card.SetData(targetCard.ACard);
                     var image = card.GetPreview(CardPreviewType.Normal, new int[0]);
-                    tooltip.Show(image, this, targetCard.Location.X, targetCard.Location.Y-image.Height-5);
+                    tooltip.Show(image, this, targetCard.Location.X, targetCard.Location.Y - image.Height - 5);
                 }
+
                 Invalidate();
             }
         }
 
+        private void ResizeElements()
+        {
+            int xOff = 0;
+            for (int i = 0; i < 10; i++)
+            {
+                var targetCard = cards[i];
+                if (realCardNum > 6)
+                {
+                    targetCard.Size.Width = (754 - (realCardNum + 1)*4 - 120)/(realCardNum - 1);
+                    xOff += 4;
+                }
+                else
+                {
+                    targetCard.Size.Width = 120;
+                    xOff += 4;
+                }
+                targetCard.Location.X = xOff;
+                xOff += targetCard.Size.Width;
+
+                if (mouseIndex == i+1)
+                {
+                    if (realCardNum > 6)
+                    {
+                        xOff += 120 - targetCard.Size.Width;
+                    }
+                    targetCard.Size.Width = 120;
+                }
+            }
+
+        }
+
         private void CardsArray_MouseLeave(object sender, EventArgs e)
         {
+         //   mouseIndex = -1;
             tooltip.Hide(this);
         }
 
