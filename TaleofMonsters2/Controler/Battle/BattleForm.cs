@@ -69,7 +69,7 @@ namespace TaleofMonsters.Controler.Battle
 
         private VirtualRegion vRegion;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
-        private MagicRegion magicRegion = new MagicRegion();
+        private MagicRegion magicRegion = new MagicRegion(); //可能会绘制多次
         private CardVisualRegion visualRegion = new CardVisualRegion(); //怪物选中后的地图效果
 
         private List<DateTime> fpsList = new List<DateTime>();
@@ -244,7 +244,7 @@ namespace TaleofMonsters.Controler.Battle
                     BattleManager.Instance.Draw(g, magicRegion, visualRegion, mouseX, mouseY, isMouseIn);
                     
                     LiveMonster target = BattleLocationManager.GetPlaceMonster(mouseX, mouseY);
-                    if (target != null && isMouseIn && magicRegion.Type == RegionTypes.None)
+                    if (target != null && isMouseIn && !magicRegion.Active)
                     {
                         target.LiveMonsterToolTip.DrawCardToolTips(g);
                     }
@@ -352,7 +352,6 @@ namespace TaleofMonsters.Controler.Battle
 
         private void panelBattle_MouseLeave(object sender, EventArgs e)
         {
-            magicRegion.Type = RegionTypes.None;
             mouseX = -1;
             isMouseIn = false;
         }
@@ -360,8 +359,7 @@ namespace TaleofMonsters.Controler.Battle
         private void CheckCursor()
         {
             string cursorname = "default";
-            magicRegion.Type = RegionTypes.None;
-          
+            magicRegion.Active = false;
             if (leftSelectCard != null)
             {
                 if (leftSelectCard.CardType == CardTypes.Monster)
@@ -369,11 +367,7 @@ namespace TaleofMonsters.Controler.Battle
                     if (BattleLocationManager.IsPlaceCanSummon(leftSelectCard.CardId, mouseX, mouseY, true))
                     {
                         cursorname = "summon";
-                        var skillConfig = MonsterBook.GetAreaSkill(leftSelectCard.CardId);
-                        if (skillConfig != null)
-                        {
-                            magicRegion.Update(skillConfig);
-                        }
+                        magicRegion.Active = true;
                     }
                     else
                     {
@@ -404,8 +398,8 @@ namespace TaleofMonsters.Controler.Battle
                         SpellConfig spellConfig = ConfigData.GetSpellConfig(leftSelectCard.CardId);
                         if (BattleLocationManager.IsPlaceCanCast(mouseX, mouseY, spellConfig.Target))
                         {
+                            magicRegion.Active = true;
                             cursorname ="cast";
-                            magicRegion.Update(spellConfig);
                         }
                         else
                         {
@@ -450,6 +444,7 @@ namespace TaleofMonsters.Controler.Battle
                 visualRegion.Update(leftSelectCard.CardId);
             else
                 visualRegion.Update(0);
+            OnSelectCardChange();
             panelState.Invalidate();
         }
 
@@ -458,6 +453,37 @@ namespace TaleofMonsters.Controler.Battle
             if (showGround)
             {
                 //todo 可以用来画其他东西
+            }
+        }
+
+        private void OnSelectCardChange()
+        {
+            magicRegion.Clear();
+            if (leftSelectCard != null)
+            {
+                if (leftSelectCard.CardType == CardTypes.Monster)
+                {
+                    var monsterConfig = ConfigData.GetMonsterConfig(leftSelectCard.CardId);
+                    magicRegion.Add(RegionTypes.Circle, monsterConfig.Range, Color.Magenta);
+                    var skillConfig = MonsterBook.GetAreaSkill(leftSelectCard.CardId);
+                    if (skillConfig != null)
+                    {
+                        var type = BattleTargetManager.GetRegionType(skillConfig.Target[2]);
+                        if (type != RegionTypes.None)
+                        {
+                            magicRegion.Add(type, skillConfig.Range, MagicRegion.GetTargetColor(skillConfig.Target[1]));
+                        }
+                    }
+                }
+                else if (leftSelectCard.CardType == CardTypes.Spell)
+                {
+                    var spellConfig = ConfigData.GetSpellConfig(leftSelectCard.CardId);
+                    var type = BattleTargetManager.GetRegionType(spellConfig.Target[2]);
+                    if (type != RegionTypes.None)
+                    {
+                        magicRegion.Add(type, spellConfig.Range, MagicRegion.GetTargetColor(spellConfig.Target[1]));
+                    }
+                }
             }
         }
 
@@ -514,6 +540,7 @@ namespace TaleofMonsters.Controler.Battle
                 leftSelectCard = new ActiveCard(heroSkillConfig.CardId, (byte)levelConfig.HeroSkillLevel, 0);
                 leftSelectCard.IsHeroSkill = true;
                 panelState.Invalidate();
+                OnSelectCardChange();
             }
         }
 

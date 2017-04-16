@@ -87,14 +87,14 @@ namespace TaleofMonsters.Controler.Battle.Tool
         {
             MemMap.Draw(g);//画地图
             visualRegion.Draw(g);
-            if (magicRegion.Type != RegionTypes.None && isMouseIn)
+            if (magicRegion.Active && isMouseIn)
                 magicRegion.Draw(g, RoundMark, mouseX, mouseY);
             for (int i = 0; i < MonsterQueue.Count; i++)
             {
                 LiveMonster monster = MonsterQueue[i];
                 Color color = Color.White;
                 if (isMouseIn)
-                    color = magicRegion.GetColor(monster, mouseX, mouseY);
+                    color = magicRegion.GetMonsterColor(monster, mouseX, mouseY);
                 monster.DrawOnBattle(g, color);//画怪物
             }
 
