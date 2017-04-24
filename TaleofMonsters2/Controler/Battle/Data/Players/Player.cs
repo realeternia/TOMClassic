@@ -495,6 +495,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void GetNextNCard(IMonster mon, int n)
         {
+            if (CardManager.GetCardNumber() >= GameConstants.CardSlotMaxCount)
+                return;
+
             if (IsLeft)
             {
                 Point startPoint = new Point(BattleManager.Instance.MemMap.StageWidth / 2, BattleManager.Instance.MemMap.StageHeight / 2);
