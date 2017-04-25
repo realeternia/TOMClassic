@@ -66,11 +66,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             base.InitialCards();
 
 #if DEBUG
-            //int[] cardToGive = new[] { 51000312 };
-            //foreach (var cardId in cardToGive)
-            //{
-            //    CardManager.AddCard(new ActiveCard(cardId, 1, 0));
-            //}
+            int[] cardToGive = new[] { 51000300, 51000300, 51000300, 51000300, 51000300, 51000300 };
+            foreach (var cardId in cardToGive)
+            {
+                CardManager.AddCard(new ActiveCard(cardId, 1, 0));
+            }
 #endif
         }
 

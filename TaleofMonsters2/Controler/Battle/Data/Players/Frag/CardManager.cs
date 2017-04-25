@@ -6,7 +6,6 @@ using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 {
@@ -33,6 +32,14 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                 {
                     AddCard(next);
                 }
+                else
+                {
+                    self.OnGetCardFail(true); //卡组抽完有惩罚
+                }
+            }
+            else
+            {
+                self.OnGetCardFail(false);//手牌满了有惩罚
             }
         }
         private void SetCard(int id, ActiveCard card)
@@ -124,12 +131,17 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         }
 
         /// <summary>
-        /// 把第几张牌替换成下一张卡片
+        /// 把第几张牌替换成下一张卡片,初始化使用
         /// </summary>
         /// <param name="index">偏移</param>
-        public void GetNextCardAt(int index)
+        public void RedrawCardAt(int index)
         {
-            cards[index - 1] = self.Cards.GetNextCard();
+            var newCard = self.Cards.ReplaceCard(cards[index - 1]);
+            if (newCard == ActiveCards.NoneCard)
+            {
+                return;
+            }
+            cards[index - 1] = newCard;
             if (self.CardsDesk != null)
             {
                 self.CardsDesk.UpdateSlot(cards);

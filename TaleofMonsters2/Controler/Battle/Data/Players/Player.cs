@@ -17,6 +17,7 @@ using TaleofMonsters.Controler.Battle.Data.MemSpell;
 using NarlonLib.Log;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
+using TaleofMonsters.Controler.Battle.DataTent;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Cards.Spells;
@@ -631,6 +632,14 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             unit.AddHp(hp);
         }
 
+        public void OnGetCardFail(bool noCard)
+        {
+            BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect("longly"), Tower as LiveMonster, true));
+            Tower.OnMagicDamage(null, Tower.MaxHp.Source / 10, (int)CardElements.None);
+            BattleManager.Instance.FlowWordQueue.Add(new FlowErrInfo(noCard ? HSErrorTypes.CardOutPunish :
+                HSErrorTypes.CardFullPunish, Tower.Position, 0, 3), false);
+        }
+
         public virtual List<int> GetInitialMonster()
         {
             return new List<int>();
@@ -651,6 +660,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         {
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine(string.Format("Lv{0}", Level), "LightBlue", 20);
+            tipData.AddTextNewLine(string.Format("卡牌 {0}/{1}", Cards.LeftCount, GameConstants.DeckCardCount), "LightBlue", 20);
             tipData.AddTextNewLine("能量回复比率","White");
             tipData.AddTextNewLine(string.Format("LP {0}", EnergyGenerator.RateLp.ToString().PadLeft(3, ' ')), "Gold");
             tipData.AddBar(100, EnergyGenerator.RateLp, Color.Yellow, Color.Gold);

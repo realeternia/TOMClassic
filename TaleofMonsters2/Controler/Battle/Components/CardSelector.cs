@@ -77,7 +77,7 @@ namespace TaleofMonsters.Controler.Battle.Components
                 {
                     if (!keepCard[i])
                     {
-                        player.CardManager.GetNextCardAt(i + 1);
+                        player.CardManager.RedrawCardAt(i + 1);
                     }
                 }
                 InstallCards();

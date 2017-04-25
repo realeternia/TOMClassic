@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NarlonLib.Math;
 using TaleofMonsters.Config;
@@ -11,6 +12,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         private int index;
         private List<ActiveCard> cards;
         internal static ActiveCard NoneCard = new ActiveCard();
+
+        public int LeftCount
+        {
+            get { return Math.Max(0, cards.Count - index); }
+        }
 
         private ActiveCards()
         {
@@ -36,20 +42,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
             index = 0;
         }
 
-        public int GetAvgLevel()
-        {
-            if (cards == null)
-            {
-                return 0;
-            }
-            int cardLvTotal = 0;
-            foreach (var activeCard in cards)
-            {
-                cardLvTotal += activeCard.Level;
-            }
-            return cardLvTotal/cards.Count;
-        }
-
         internal ActiveCards GetCopy()
         {
             ActiveCards tcards = new ActiveCards();
@@ -69,8 +61,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
             }
 
             int rt = index;
-            if (++index >= cards.Count)
-                index = 0;
+            if (rt >= cards.Count)
+            {
+                return NoneCard;
+            }
+            index++;
 
             if (CardConfigManager.GetCardConfig(cards[rt].CardId).Id == 0)
             {//卡牌配置可能已经过期，用下一个卡
@@ -79,6 +74,19 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
             }
 
             return cards[rt];
+        }
+
+        internal ActiveCard ReplaceCard(ActiveCard card)
+        {
+            if (LeftCount <= 0)
+            {
+                return NoneCard;
+            }
+
+            var targetIndex = index + MathTool.GetRandom(LeftCount);
+            var target = cards[targetIndex];
+            cards[targetIndex] = card;
+            return target;
         }
     }
 }

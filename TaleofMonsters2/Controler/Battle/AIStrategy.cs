@@ -20,7 +20,7 @@ namespace TaleofMonsters.Controler.Battle
                 var card = cds[i];
                 if (card.Card.Star>3)//把3费以上卡都换掉
                 {
-                    player.CardManager.GetNextCardAt(i + 1);
+                    player.CardManager.RedrawCardAt(i + 1);
                 }
             }
 
