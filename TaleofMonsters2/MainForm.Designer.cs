@@ -206,7 +206,7 @@ namespace TaleofMonsters
             this.tabPageGame.Size = new System.Drawing.Size(986, 658);
             this.tabPageGame.TabIndex = 1;
             this.tabPageGame.Text = "Game";
-            this.tabPageGame.Paint += new System.Windows.Forms.PaintEventHandler(this.MainForm_Paint);
+            this.tabPageGame.Paint += new System.Windows.Forms.PaintEventHandler(this.tabPageGame_Paint);
             this.tabPageGame.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseClick);
             this.tabPageGame.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseMove);
             // 

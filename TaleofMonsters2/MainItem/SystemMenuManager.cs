@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using ConfigDatas;
+using TaleofMonsters.Controler.GM;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.MagicBook;
+using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.MainItem 
 {
@@ -18,6 +20,8 @@ namespace TaleofMonsters.MainItem
         public static bool IsHotkeyEnabled { get; set; }
 
         public static int MenuTar { get; private set; }
+
+        public static bool GMMode { get; private set; }
 
         static SystemMenuManager()
         {
@@ -33,7 +37,7 @@ namespace TaleofMonsters.MainItem
             flows.Add(new RiverFlow(width-54, 200, 50, 50, 5, IconDirections.UpToDown));
 
             menuItems = new List<ToolBarItemData>();
-            foreach (MainIconConfig mainIconConfig in ConfigData.MainIconDict.Values)
+            foreach (var mainIconConfig in ConfigData.MainIconDict.Values)
             {
                 menuItems.Add(new ToolBarItemData(mainIconConfig.Id, width, height));
             }
@@ -41,13 +45,13 @@ namespace TaleofMonsters.MainItem
 
         private static void Reload()
         {
-            foreach (RiverFlow riverFlow in flows)
+            foreach (var riverFlow in flows)
             {
                 riverFlow.Reset();
             }
 
             activeItems = new List<ToolBarItemData>();
-            foreach (ToolBarItemData toolBarItemData in menuItems)
+            foreach (var toolBarItemData in menuItems)
             {
                 int itemFlow = toolBarItemData.MainIconConfig.Flow;
                 if (!toolBarItemData.Enable || itemFlow == -1 || UserProfile.InfoBasic.Level < toolBarItemData.MainIconConfig.Level)
@@ -67,7 +71,7 @@ namespace TaleofMonsters.MainItem
 
         public static bool UpdateToolbar(int mouseX, int mouseY)
         {
-            foreach (ToolBarItemData item in activeItems)
+            foreach (var item in activeItems)
             {
                 if (item.InRegion(mouseX, mouseY))
                 {
@@ -89,7 +93,7 @@ namespace TaleofMonsters.MainItem
 
         public static void ResetIconState()
         {
-            foreach (ToolBarItemData toolBarItemData in menuItems)
+            foreach (var toolBarItemData in menuItems)
             {
                 if (toolBarItemData.Id >= 1000)
                 {
@@ -112,7 +116,7 @@ namespace TaleofMonsters.MainItem
 
         private static void SetIconEnable(SystemMenuIds id, bool enable)
         {
-            foreach (ToolBarItemData toolBarItemData in menuItems)
+            foreach (var toolBarItemData in menuItems)
             {
                 if ((SystemMenuIds)toolBarItemData.Id == id)
                 {
@@ -124,7 +128,7 @@ namespace TaleofMonsters.MainItem
 
         public static void UpdateAll(Control parent)
          {
-             foreach (ToolBarItemData item in activeItems)
+             foreach (var item in activeItems)
              {
                  item.Update(parent);
              }
@@ -132,7 +136,7 @@ namespace TaleofMonsters.MainItem
 
         public static void DrawAll(System.Drawing.Graphics g)
         {
-            foreach (ToolBarItemData item in activeItems)
+            foreach (var item in activeItems)
             {
                 item.Draw(g, MenuTar);
             }
@@ -140,7 +144,7 @@ namespace TaleofMonsters.MainItem
 
         public static void CheckItemClick(SystemMenuIds id)
         {
-            foreach (ToolBarItemData toolBarItemData in activeItems)
+            foreach (var toolBarItemData in activeItems)
             {
                 if ((SystemMenuIds)toolBarItemData.Id == id && toolBarItemData.InCD)
                 {
@@ -189,10 +193,6 @@ namespace TaleofMonsters.MainItem
                 case SystemMenuIds.ConnectForm:
                     MainForm.Instance.DealPanel(new ConnectForm());
                     break;
-                case SystemMenuIds.CommandForm:
-                    CommandForm cmf = new CommandForm();
-                    cmf.ShowDialog();
-                    break;
                 case SystemMenuIds.CardShopViewForm:
                     MainForm.Instance.DealPanel(new CardShopViewForm());
                     break;
@@ -228,6 +228,12 @@ namespace TaleofMonsters.MainItem
                 return;
             }
 
+            if (GMMode && key != Keys.Oemtilde)
+            {
+                GMCodeZone.OnKeyDown(key);
+                return;
+            }
+
             switch (key)
             {
                 case Keys.Escape:
@@ -260,10 +266,9 @@ namespace TaleofMonsters.MainItem
                 case Keys.A:
                     CheckItemClick(SystemMenuIds.AchieveViewForm);
                     break;
-                case Keys.G:
-#if DEBUG
-                    CheckItemClick(SystemMenuIds.CommandForm);
-#endif
+                case Keys.Oemtilde:
+                    GMMode = !GMMode;
+                    MainForm.Instance.RefreshView();
                     break;
             }
         }
@@ -281,7 +286,6 @@ namespace TaleofMonsters.MainItem
         EquipComposeForm = 10,
         ItemForm = 11,
         EquipmentForm = 12,
-        CommandForm = 31,
         MagicBookViewForm = 32,
         WorldMapViewForm = 33,
         ConnectForm = 34,

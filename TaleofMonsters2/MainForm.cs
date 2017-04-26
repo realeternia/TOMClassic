@@ -10,6 +10,7 @@ using ControlPlus;
 using NarlonLib.Core;
 using NarlonLib.Log;
 using TaleofMonsters.Config;
+using TaleofMonsters.Controler.GM;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.World;
 using TaleofMonsters.Core;
@@ -329,7 +330,7 @@ namespace TaleofMonsters
             font.Dispose();
         }
 
-        private void MainForm_Paint(object sender, PaintEventArgs e)
+        private void tabPageGame_Paint(object sender, PaintEventArgs e)
         {
             try
             {
@@ -337,6 +338,11 @@ namespace TaleofMonsters
 
                 SystemMenuManager.DrawAll(e.Graphics);
                 MainTipManager.DrawAll(e.Graphics);
+
+                if (SystemMenuManager.GMMode)
+                {
+                    GMCodeZone.Paint(e.Graphics, tabPageGame.Width, tabPageGame.Height);
+                }
             }
             catch (Exception err)
             {

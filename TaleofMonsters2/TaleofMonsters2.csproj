@@ -225,6 +225,7 @@
     <Compile Include="MainItem\Quests\TalkEventItemReward.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemAction.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemTrade.cs" />
+    <Compile Include="Controler\GM\GMCodeZone.cs" />
     <Compile Include="MainItem\Scenes\SceneObjects\SceneWarp.cs" />
     <Compile Include="MainItem\Scenes\SceneObjects\SceneQuest.cs" />
     <Compile Include="MainItem\Scenes\SceneObjects\SceneTile.cs" />
@@ -579,12 +580,6 @@
     <Compile Include="Forms\WorldMapViewForm.Designer.cs">
       <DependentUpon>WorldMapViewForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\CommandForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\CommandForm.Designer.cs">
-      <DependentUpon>CommandForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\AchieveViewForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -867,10 +862,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\WorldMapViewForm.resx">
       <DependentUpon>WorldMapViewForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\CommandForm.resx">
-      <DependentUpon>CommandForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AchieveViewForm.resx">
