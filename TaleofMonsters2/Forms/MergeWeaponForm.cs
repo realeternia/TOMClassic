@@ -49,7 +49,7 @@ namespace TaleofMonsters.Forms
             selectPanel.DrawCell += new NLSelectPanel.SelectPanelCellDrawHandler(selectPanel_DrawCell);
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
             RefreshInfo();
@@ -209,7 +209,7 @@ namespace TaleofMonsters.Forms
         }
 
         delegate void RefreshInfoCallback();
-        internal override void OnFrame(int tick, float timePass)
+        public override void OnFrame(int tick, float timePass)
         {
             base.OnFrame(tick, timePass);
             if ((tick % 6) == 0)

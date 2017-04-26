@@ -24,7 +24,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
             miniItemView1.Init();
@@ -121,7 +121,7 @@ namespace TaleofMonsters.Forms
 
         }
 
-        internal override void OnFrame(int tick, float timePass)
+        public override void OnFrame(int tick, float timePass)
         {
             if (tick % 6 == 0)
             {

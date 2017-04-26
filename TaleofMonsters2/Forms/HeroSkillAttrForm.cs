@@ -25,7 +25,7 @@ namespace TaleofMonsters.Forms
             nlPageSelector1.PageChange += nlPageSelector1_PageChange;
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
             skills = HeroSkillAttrBook.GetAvailSkills(UserProfile.InfoBasic.Level);
@@ -37,10 +37,10 @@ namespace TaleofMonsters.Forms
                 skillControls[i].Init(i);
             }
             nlPageSelector1.TotalPage = (skills.Length-1)/9 + 1;
-            refreshInfo();
+            RefreshInfo();
         }
 
-        private void refreshInfo()
+        private void RefreshInfo()
         {
             for (int i = 0; i < 9; i++)
             {
@@ -77,7 +77,7 @@ namespace TaleofMonsters.Forms
         private void nlPageSelector1_PageChange(int pg)
         {
             page = pg;
-            refreshInfo();
+            RefreshInfo();
         }
     }
 }

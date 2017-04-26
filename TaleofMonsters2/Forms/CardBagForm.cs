@@ -39,7 +39,7 @@ namespace TaleofMonsters.Forms
             vRegion.RegionClicked += OnVRegionClick;
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
 
@@ -71,7 +71,7 @@ namespace TaleofMonsters.Forms
             Width = 135* cardCount + 20;
         }
 
-        internal override void OnFrame(int tick, float timePass)
+        public override void OnFrame(int tick, float timePass)
         {
             base.OnFrame(tick, timePass);
 

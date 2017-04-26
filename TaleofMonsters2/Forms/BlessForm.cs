@@ -29,7 +29,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButton2.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack3.PNG");
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
             blessControls = new BlessItem[12];
@@ -42,7 +42,7 @@ namespace TaleofMonsters.Forms
         }
 
         delegate void RefreshCallback();
-        internal override void OnFrame(int tick, float timePass)
+        public override void OnFrame(int tick, float timePass)
         {
             base.OnFrame(tick, timePass);
             if ((tick % 6) == 0)

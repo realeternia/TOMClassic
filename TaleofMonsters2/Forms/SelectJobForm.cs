@@ -39,7 +39,7 @@ namespace TaleofMonsters.Forms
             bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
 
             bitmapButtonSelect.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
-            bitmapButtonSelect.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            bitmapButtonSelect.Font = new Font("宋体", 8*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             bitmapButtonSelect.ForeColor = Color.White;
             bitmapButtonSelect.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("oth2");
             bitmapButtonSelect.IconSize = new Size(16, 16);
@@ -66,9 +66,9 @@ namespace TaleofMonsters.Forms
             virtualRegion.AddRegion(new PictureRegion(4, 358, 266, 48, 48, PictureRegionCellType.Card, 0));
             virtualRegion.RegionEntered += virtualRegion_RegionEntered;
             virtualRegion.RegionLeft += virtualRegion_RegionLeft;
-     }
+        }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
             jobIdList = new List<int>();

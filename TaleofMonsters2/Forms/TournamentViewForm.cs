@@ -28,7 +28,7 @@ namespace TaleofMonsters.Forms
             listViewMatchs.Invalidate();
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
             ListViewItem lvm1 = new ListViewItem("总积分榜");

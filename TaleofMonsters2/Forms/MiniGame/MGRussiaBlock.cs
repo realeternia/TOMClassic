@@ -53,13 +53,13 @@ namespace TaleofMonsters.Forms.MiniGame
             xoff += 15;
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
             SystemMenuManager.IsHotkeyEnabled = false;//防止乱弹界面
         }
 
-        internal override void OnFrame(int tick, float timePass)
+        public override void OnFrame(int tick, float timePass)
         {
             base.OnFrame(tick, timePass);
 
@@ -68,6 +68,10 @@ namespace TaleofMonsters.Forms.MiniGame
                 TimelyMoveBlock(tick);
                 Invalidate(new Rectangle(xoff, yoff, 190 + 4, 380 + 4));
             }
+        }
+        public override void OnRemove()
+        {
+            SystemMenuManager.IsHotkeyEnabled = true;
         }
 
         public override void RestartGame()

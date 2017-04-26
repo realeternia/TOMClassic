@@ -34,7 +34,7 @@ namespace TaleofMonsters.Forms
             myCursor = new HSCursor(this);
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
             worldMap = PicLoader.Read("Map", "worldmap.JPG");
@@ -64,7 +64,7 @@ namespace TaleofMonsters.Forms
             showImage = true;
         }
 
-        internal override void OnFrame(int tick, float timePass)
+        public override void OnFrame(int tick, float timePass)
         {
             if ((tick % 10) == 0)
             {

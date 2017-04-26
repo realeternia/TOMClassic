@@ -70,11 +70,11 @@ namespace TaleofMonsters.Forms.MiniGame
             xoff = 0;
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
         }
-        internal override void OnFrame(int tick, float timePass)
+        public override void OnFrame(int tick, float timePass)
         {
             base.OnFrame(tick, timePass);
 

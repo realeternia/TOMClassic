@@ -40,7 +40,7 @@ namespace TaleofMonsters.Forms
             this.DoubleBuffered = true;
             this.Name = "BlackWallForm";
             this.Size = new System.Drawing.Size(595, 442);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.CardShopViewForm_Paint);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.BlackWallForm_Paint);
             this.ResumeLayout(false);
 
         }

@@ -48,7 +48,7 @@ namespace TaleofMonsters.Forms
             }
         }
 
-        internal override void OnFrame(int tick, float timePass)
+        public override void OnFrame(int tick, float timePass)
         {
             base.OnFrame(tick, timePass);
         }

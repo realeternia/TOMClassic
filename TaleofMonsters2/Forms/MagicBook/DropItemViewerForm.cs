@@ -46,7 +46,7 @@ namespace TaleofMonsters.Forms.MagicBook
             nlClickLabel1.Size = new Size(cardWidth * xCount - 20, 23);
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
             show = true;
@@ -62,7 +62,7 @@ namespace TaleofMonsters.Forms.MagicBook
 
             UpdateButtonState();
         }
-        internal override void OnFrame(int tick, float timePass)
+        public override void OnFrame(int tick, float timePass)
         {
             cardDetail.OnFrame();
         }

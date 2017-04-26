@@ -34,7 +34,7 @@ namespace TaleofMonsters.Forms
             vRegion.RegionClicked += VRegion_RegionClicked;
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
         }

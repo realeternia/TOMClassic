@@ -49,7 +49,7 @@ namespace TaleofMonsters.Forms.MagicBook
             comboBoxType.SelectedIndex = 0;
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             #region 智能修正面板元素数量
             int borderX = 783 - cardWidth * xCount;
@@ -74,7 +74,7 @@ namespace TaleofMonsters.Forms.MagicBook
             ChangeCards();
         }
 
-        internal override void OnFrame(int tick, float timePass)
+        public override void OnFrame(int tick, float timePass)
         {
             cardDetail.OnFrame();
         }

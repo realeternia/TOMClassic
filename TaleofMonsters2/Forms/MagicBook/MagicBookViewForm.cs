@@ -41,7 +41,7 @@ namespace TaleofMonsters.Forms.MagicBook
             virtualRegion.AddRegion(region);
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
 

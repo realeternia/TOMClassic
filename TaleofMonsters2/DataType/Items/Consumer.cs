@@ -138,7 +138,7 @@ namespace TaleofMonsters.DataType.Items
         
         private static bool UseRandomCard(ItemConsumerConfig itemConfig)
         {
-            var form = MainForm.Instance.FindForm(typeof(CardBagForm));
+            var form = MainForm.Instance.FindPanel(typeof(CardBagForm));
             if (form != null)//如果打开着开包面板，退出
             {
                 return false;

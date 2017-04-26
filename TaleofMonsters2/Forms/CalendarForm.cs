@@ -23,7 +23,7 @@ namespace TaleofMonsters.Forms
             radioButton4.Image = HSIcons.GetIconsByEName("mth4");
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
             //switch(UserProfile.Profile.time.Season)

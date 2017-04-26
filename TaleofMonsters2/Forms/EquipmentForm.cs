@@ -91,7 +91,7 @@ namespace TaleofMonsters.Forms
             popMenuEquip.Form = this;
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
 

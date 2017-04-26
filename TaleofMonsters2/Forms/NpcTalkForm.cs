@@ -35,7 +35,7 @@ namespace TaleofMonsters.Forms
             colorWord = new ColorWordRegion(160, 38, Width-170, "宋体", 14, Color.White);
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
             showImage = true;
@@ -49,7 +49,7 @@ namespace TaleofMonsters.Forms
             SetupQuestItem();
         }
 
-        internal override void OnFrame(int tick, float timePass)
+        public override void OnFrame(int tick, float timePass)
         {
             base.OnFrame(tick, timePass);
 

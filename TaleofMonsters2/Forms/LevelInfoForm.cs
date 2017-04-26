@@ -17,7 +17,7 @@ namespace TaleofMonsters.Forms
         private int[] infoDatas;
         private int nowIndex;
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
 

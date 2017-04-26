@@ -95,14 +95,14 @@ namespace TaleofMonsters.Forms.MiniGame
             bitmapButtonC4.Text = @"停止";
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
             
             RestartGame();
         }
 
-        internal override void OnFrame(int tick, float timePass)
+        public override void OnFrame(int tick, float timePass)
         {
             base.OnFrame(tick, timePass);
             if ((tick%5) == 0)

@@ -47,7 +47,7 @@ namespace TaleofMonsters.Forms
             vRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClick);
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
             itemControls = new CardShopItem[18];
@@ -122,7 +122,7 @@ namespace TaleofMonsters.Forms
         }
 
         delegate void ChangeShopCallback(int shelf);
-        internal override void OnFrame(int tick, float timePass)
+        public override void OnFrame(int tick, float timePass)
         {
             base.OnFrame(tick, timePass);
             foreach (CardShopItem cardShopItem in itemControls)

@@ -32,7 +32,7 @@ namespace TaleofMonsters.Forms
             bitmapButtonC1.TextOffX = 8;
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
 

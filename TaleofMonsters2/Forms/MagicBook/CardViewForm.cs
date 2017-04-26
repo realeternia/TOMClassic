@@ -46,7 +46,7 @@ namespace TaleofMonsters.Forms.MagicBook
             tempImage = new Bitmap(cardWidth * xCount, cardHeight*yCount);
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             #region 智能修正面板元素数量
             //823,575 x=8,y=5
@@ -69,7 +69,7 @@ namespace TaleofMonsters.Forms.MagicBook
             ChangeCards();
         }
 
-        internal override void OnFrame(int tick, float timePass)
+        public override void OnFrame(int tick, float timePass)
         {
             cardDetail.OnFrame();
         }

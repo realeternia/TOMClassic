@@ -65,7 +65,7 @@ namespace TaleofMonsters.Forms
             virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
 
-        internal override void OnFrame(int tick, float timePass)
+        public override void OnFrame(int tick, float timePass)
         {
             if (fuel < fuelAim && (fuel<40 || (tick%(fuel/8+1)==0)))
             {

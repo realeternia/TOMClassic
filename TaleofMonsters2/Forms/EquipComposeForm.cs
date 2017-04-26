@@ -31,7 +31,7 @@ namespace TaleofMonsters.Forms
             nlPageSelector1.PageChange += nlPageSelector1_PageChange;
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
             equipControls = new EquipComposeItem[9];

@@ -3,34 +3,35 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus; 
 using NarlonLib.Core;
+using NarlonLib.Log;
+using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.World;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms;
 using TaleofMonsters.MainItem;
-using System.Threading;
-using NarlonLib.Log;
-using TaleofMonsters.Config;
 using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters
 {
     internal partial class MainForm : Form
     {
+        public static MainForm Instance { get; private set; }
+
         private HSCursor myCursor;
         private int page;
-        private List<BasePanel> panelList = new List<BasePanel>();
+        private List<BasePanel> panelList = new List<BasePanel>(); //受到esc影响关闭的面板，都在这里
         public int panelCount;
         private Thread workThread;
         private int timeTick;
         private long lastMouseMoveTime;
-        public static MainForm Instance { get; private set; }
-
+        
         public MainForm()
         {
             InitializeComponent();
@@ -201,7 +202,7 @@ namespace TaleofMonsters
 
         public void DealPanel(BasePanel panel)
         {
-            foreach (Control control in tabPageGame.Controls)
+            foreach (var control in tabPageGame.Controls)
             {
                 if (control.GetType() == panel.GetType())
                 {
@@ -210,18 +211,22 @@ namespace TaleofMonsters
                 }
             }
 
+            AddPanel(panel);
+        }
+
+        private void AddPanel(BasePanel panel)
+        {
             if (panel.NeedBlackForm)
             {
                 BlackWallForm.Instance.Init(tabPageGame.Width, tabPageGame.Height);
                 tabPageGame.Controls.Add(BlackWallForm.Instance);
                 BlackWallForm.Instance.BringToFront();
-                SystemMenuManager.IsHotkeyEnabled = false;
             }
             else
             {
                 panelList.Add(panel);
             }
-            panel.Init(tabPageGame.Width, tabPageGame.Height);            
+            panel.Init(tabPageGame.Width, tabPageGame.Height);
             tabPageGame.Controls.Add(panel);
             panel.BringToFront();
             panelCount++;
@@ -235,15 +240,16 @@ namespace TaleofMonsters
             }
             if (panel.NeedBlackForm)
             {
+                BlackWallForm.Instance.OnRemove();
                 tabPageGame.Controls.Remove(BlackWallForm.Instance);
-                SystemMenuManager.IsHotkeyEnabled = true;
             }
+            panel.OnRemove();
             tabPageGame.Controls.Remove(panel);
             panelList.Remove(panel);
             panelCount--;
         }
 
-        public BasePanel FindForm(Type type)
+        public BasePanel FindPanel(Type type)
         {
             foreach (Control control in tabPageGame.Controls)
             {
@@ -280,7 +286,7 @@ namespace TaleofMonsters
                         {
                             timeTick -= 1000;
                         }
-                        foreach (Control control in tabPageGame.Controls)
+                        foreach (var control in tabPageGame.Controls)
                         {
                             if (control is BasePanel)
                             {

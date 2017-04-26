@@ -7,6 +7,15 @@ namespace TaleofMonsters.Forms
 {
     internal class BasePanel : UserControl
     {
+        private class FlowData
+        {
+            public string Text;
+            public string Color;
+            public int X;
+            public int Y;
+            public int Time;
+        }
+
         private long lastMouseMoveTime;
         private List<FlowData> flows;
         protected int formWidth; //部分面板会根据分辨率的变化变幻尺寸
@@ -16,7 +25,7 @@ namespace TaleofMonsters.Forms
 
         public bool NeedBlackForm { get; set; }
 
-        internal virtual void Init(int width, int height)
+        public virtual void Init(int width, int height)
         {
             formWidth = width;
             formHeight = height;
@@ -30,23 +39,23 @@ namespace TaleofMonsters.Forms
             Paint += new PaintEventHandler(BasePanel_Paint);
         }
 
-        internal virtual void OnFrame(int tick, float timePass)
+        public virtual void OnFrame(int tick, float timePass)
         {
             if (flows.Count>0)
             {
                 FlowData[] datas = flows.ToArray();
                 foreach (FlowData flowData in datas)
                 {
-                    flowData.time--;
-                    if (flowData.time<11)
+                    flowData.Time--;
+                    if (flowData.Time<11)
                     {
-                        flowData.y -= 2 + (12-flowData.time)/4*3;
+                        flowData.Y -= 2 + (12-flowData.Time)/4*3;
                     }                    
                 }
 
                 foreach (FlowData flowData in datas)
                 {
-                    if (flowData.time < 0)
+                    if (flowData.Time < 0)
                     {
                         flows.Remove(flowData);
                     }
@@ -55,7 +64,12 @@ namespace TaleofMonsters.Forms
             }
         }
 
-        internal void Close()
+        public virtual void OnRemove()
+        {
+            
+        }
+
+        public void Close()
         {
             MainForm.Instance.RemovePanel(this);
         }
@@ -78,18 +92,18 @@ namespace TaleofMonsters.Forms
         {
         }
 
-        internal void AddFlow(string text, string color, int x, int y)
+        public void AddFlow(string text, string color, int x, int y)
         {
             FlowData fw = new FlowData();
-            fw.text = text;
-            fw.color = color;
-            fw.x = x;
-            fw.y = y;
-            fw.time = 16 + text.Length/2;
+            fw.Text = text;
+            fw.Color = color;
+            fw.X = x;
+            fw.Y = y;
+            fw.Time = 16 + text.Length/2;
             flows.Add(fw);
         }
 
-        internal void AddFlowCenter(string text, string color)
+        public void AddFlowCenter(string text, string color)
         {
             AddFlow(text, color, (Width - GetStringWidth(text))/2, Height/2 - 10);
         }
@@ -111,7 +125,7 @@ namespace TaleofMonsters.Forms
             return (int)wid;
         }
 
-        void BasePanel_Paint(object sender, PaintEventArgs e)
+        private void BasePanel_Paint(object sender, PaintEventArgs e)
         {
             if (flows.Count>0)
             {
@@ -120,12 +134,12 @@ namespace TaleofMonsters.Forms
                 FlowData[] datas = flows.ToArray();
                 foreach (FlowData flowData in datas)
                 {
-                    if (flowData.time>=0)
+                    if (flowData.Time>=0)
                     {
-                        Color cr = Color.FromName(flowData.color);
+                        Color cr = Color.FromName(flowData.Color);
                         SolidBrush sb = new SolidBrush(cr); 
-                        e.Graphics.DrawString(flowData.text, ft, (cr.R + cr.G + cr.B) > 50 ? Brushes.Black : Brushes.White, flowData.x, flowData.y);
-                        e.Graphics.DrawString(flowData.text,ft,sb,flowData.x-1,flowData.y-1);
+                        e.Graphics.DrawString(flowData.Text, ft, (cr.R + cr.G + cr.B) > 50 ? Brushes.Black : Brushes.White, flowData.X, flowData.Y);
+                        e.Graphics.DrawString(flowData.Text,ft,sb,flowData.X-1,flowData.Y-1);
                         sb.Dispose();
                     }
                 }
@@ -134,12 +148,4 @@ namespace TaleofMonsters.Forms
         }
     }
 
-    class FlowData
-    {
-        public string text;
-        public string color;
-        public int x;
-        public int y;
-        public int time;
-    }
 }

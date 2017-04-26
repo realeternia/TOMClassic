@@ -46,7 +46,7 @@ namespace TaleofMonsters.Forms
             colorWord.UpdateText("|每|Red|6小时||随机更新5条购买素材，素材的|Lime|背景颜色||决定素材的最高品质。");
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
 

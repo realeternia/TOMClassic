@@ -173,8 +173,8 @@ namespace TaleofMonsters.Controler.Battle
         {
             isGamePaused = true;
         }
-        
-        internal override void OnFrame(int tick, float timePass)
+
+        public override void OnFrame(int tick, float timePass)
         {
             base.OnFrame(tick, timePass);
 

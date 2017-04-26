@@ -26,7 +26,7 @@ namespace TaleofMonsters.Forms.MiniGame
             InitializeComponent();
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
 

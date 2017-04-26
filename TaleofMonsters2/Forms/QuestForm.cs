@@ -52,7 +52,7 @@ namespace TaleofMonsters.Forms
             colorWord = new ColorWordRegion(190, 84, 440, "微软雅黑", 11, Color.White);
         }
 
-        internal override void Init(int width, int height)
+        public override void Init(int width, int height)
         {
             base.Init(width, height);
 
