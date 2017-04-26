@@ -48,15 +48,15 @@ namespace TaleofMonsters.Controler.Battle.DataTent
 
         public void CheckRoundCard()
         {
-            LeftPlayer.CardManager.GetNextCard();
+            LeftPlayer.DrawNextNCard(1);
             if (LeftPlayer.SpikeManager.HasSpike("doublecard"))
             {
-                LeftPlayer.CardManager.GetNextCard();
+                LeftPlayer.DrawNextNCard(1);
             }
-            RightPlayer.CardManager.GetNextCard();
+            RightPlayer.DrawNextNCard(1);
             if (RightPlayer.SpikeManager.HasSpike("doublecard"))
             {
-                RightPlayer.CardManager.GetNextCard();
+                RightPlayer.DrawNextNCard(1);
             }
         }
     }

@@ -94,7 +94,7 @@ namespace TaleofMonsters.Controler.Battle
 
             cardSelector1.StartClicked += buttonStart_Click;
 #if DEBUG
-            cardList2.Visible = true;
+           // cardList2.Visible = true;
 #endif
             myCursor = new HSCursor(this);
             lifeClock1.Init();
@@ -109,16 +109,6 @@ namespace TaleofMonsters.Controler.Battle
             rightId = rid;
             leftId = lid;
             rightLevel = rlevel;
-            if (leftId > 0)
-            {
-                lifeClock1.SetPlayer(leftId);
-                miniItemView1.Visible = false;
-            }
-            else
-            {
-                lifeClock1.SetPlayer(UserProfile.ProfileName, UserProfile.InfoBasic.Face);
-            }
-            lifeClock2.SetPlayer(rightId);
             mapName = map;
             timeViewer1.Init();
             cardsArray1.Init();
@@ -138,9 +128,16 @@ namespace TaleofMonsters.Controler.Battle
                 vRegion.AddRegion(region);
                 index++;
             }
-
-            lifeClock1.Player = BattleManager.Instance.PlayerManager.LeftPlayer;
-            lifeClock2.Player = BattleManager.Instance.PlayerManager.RightPlayer;
+            if (leftId > 0)
+            {
+                lifeClock1.SetPlayer(BattleManager.Instance.PlayerManager.LeftPlayer, leftId);
+                miniItemView1.Visible = false;
+            }
+            else
+            {
+                lifeClock1.SetPlayer(BattleManager.Instance.PlayerManager.LeftPlayer, UserProfile.ProfileName, UserProfile.InfoBasic.Face);
+            }
+            lifeClock2.SetPlayer(BattleManager.Instance.PlayerManager.RightPlayer, rightId);
             BattleManager.Instance.PlayerManager.LeftPlayer.CardsDesk = cardsArray1;
             BattleManager.Instance.PlayerManager.LeftPlayer.InitialCards();
             BattleManager.Instance.PlayerManager.RightPlayer.CardsDesk = cardList2;

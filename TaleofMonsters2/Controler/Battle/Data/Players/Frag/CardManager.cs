@@ -188,12 +188,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             AddCard(card);
         }
 
-        public void GetNextNCard(int n)
-        {
-            for (int i = 0; i < n; i++)
-                GetNextCard();
-        }
-
         public void CopyRandomNCard(int n, int spellid)
         {
             List<int> indexs = new List<int>();
