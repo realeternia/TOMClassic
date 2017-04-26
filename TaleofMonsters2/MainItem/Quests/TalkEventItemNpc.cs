@@ -11,27 +11,27 @@ namespace TaleofMonsters.MainItem.Quests
         {
             if (e.ParamList[0] == "buypiece")
             {
-                MainForm.Instance.DealPanel(new BuyPieceForm());
+                PanelManager.DealPanel(new BuyPieceForm());
             }
             else if (e.ParamList[0] == "changecard")
             {
-                MainForm.Instance.DealPanel(new ChangeCardForm());
+                PanelManager.DealPanel(new ChangeCardForm());
             }
             else if (e.ParamList[0] == "selectjob")
             {
-                MainForm.Instance.DealPanel(new SelectJobForm());
+                PanelManager.DealPanel(new SelectJobForm());
             }
             else if (e.ParamList[0] == "merge")
             {
-                MainForm.Instance.DealPanel(new MergeWeaponForm());
+                PanelManager.DealPanel(new MergeWeaponForm());
             }
             else if (e.ParamList[0] == "farm")
             {
-                MainForm.Instance.DealPanel(new FarmForm());
+                PanelManager.DealPanel(new FarmForm());
             }
             else if (e.ParamList[0] == "bless")
             {
-                MainForm.Instance.DealPanel(new BlessForm());
+                PanelManager.DealPanel(new BlessForm());
             }
         }
 

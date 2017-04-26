@@ -409,7 +409,7 @@ namespace TaleofMonsters.Forms
 
         private void bitmapButtonJob_Click(object sender, EventArgs e)
         {
-            MainForm.Instance.DealPanel(new SelectJobForm());
+            PanelManager.DealPanel(new SelectJobForm());
         }
     }
 }

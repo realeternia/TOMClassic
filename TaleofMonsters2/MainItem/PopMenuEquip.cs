@@ -22,7 +22,7 @@ namespace TaleofMonsters.MainItem
             if (target.Type == "decompose")
             {
                 var equipConfig = ConfigDatas.ConfigData.GetEquipConfig(UserProfile.InfoEquip.Equipoff[EquipIndex].BaseId);
-                MainForm.Instance.AddTip(string.Format("|分解装备-|{0}|{1}", HSTypes.I2QualityColor(equipConfig.Quality), equipConfig.Name), "White");
+                MainTipManager.AddTip(string.Format("|分解装备-|{0}|{1}", HSTypes.I2QualityColor(equipConfig.Quality), equipConfig.Name), "White");
                 UserProfile.Profile.InfoBag.AddResource(GameResourceType.Stone, GameResourceBook.InStoneEquipDecompose(equipConfig.Quality, equipConfig.Level));
 
                 UserProfile.InfoEquip.Equipoff[EquipIndex] = new DbEquip();

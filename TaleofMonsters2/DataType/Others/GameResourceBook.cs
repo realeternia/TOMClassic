@@ -110,7 +110,7 @@ namespace TaleofMonsters.DataType.Others
         /// </summary>
         public static uint InExpSceneQuest(int level, int rate)
         {
-            return (uint)(ExpTree.GetNextRequired(level)/12 * rate / 100);//todo
+            return (uint)(ExpTree.GetNextRequired(level)/12 * rate / 100);
         }
         /// <summary>
         /// 战斗获得经验值

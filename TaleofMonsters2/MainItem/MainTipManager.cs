@@ -6,9 +6,20 @@ using NarlonLib.Drawing;
 namespace TaleofMonsters.MainItem
 {
     internal static class MainTipManager
-    { 
+    {
+        private struct MainTipData
+        {
+            public string Word;
+            public string Color;
+            public long CreateTime;
+
+            public override string ToString()
+            {
+                return string.Format("{0}:{1}", Color, Word);
+            }
+        }
+
         private static List<MainTipData> tipList = new List<MainTipData>();
- 
         private static int offY;
 
         public static void Init(int formHeight)
@@ -67,10 +78,12 @@ namespace TaleofMonsters.MainItem
 
         public static void AddTip(string newtip, string color)
         {
-            MainTipData sp = new MainTipData();
-            sp.Color = color;
-            sp.Word = newtip;
-            sp.CreateTime = TimeTool.GetNowMiliSecond();
+            MainTipData sp = new MainTipData
+            {
+                Color = color,
+                Word = newtip,
+                CreateTime = TimeTool.GetNowMiliSecond()
+            };
             lock (tipList)
             {
                 tipList.Add(sp);
@@ -79,6 +92,7 @@ namespace TaleofMonsters.MainItem
                     tipList.RemoveAt(0);
                 }
             }
+            MainForm.Instance.RefreshView();
         }
 
         public static bool OnFrame()
@@ -86,7 +100,7 @@ namespace TaleofMonsters.MainItem
             long nowTick = TimeTool.GetNowMiliSecond();
             lock (tipList)
             {
-                foreach (MainTipData pair in tipList)
+                foreach (var pair in tipList)
                 {
                     if (pair.CreateTime < nowTick - 10 * 1000)
                     {

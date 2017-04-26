@@ -6,6 +6,7 @@ using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Achieves;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Others;
+using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.DataType.User
 {
@@ -15,9 +16,6 @@ namespace TaleofMonsters.DataType.User
         [FieldIndex(Index = 2)] public int Diamond;
         [FieldIndex(Index = 3)] public IntPair[] Items;
         [FieldIndex(Index = 4)] public int BagCount;
-
-        [Obsolete("此数据不用存回，但目前罗技有问题")]
-        public AutoDictionary<int, int> tpBonusItem = new AutoDictionary<int, int>();
 
         public InfoBag()
         {
@@ -50,7 +48,7 @@ namespace TaleofMonsters.DataType.User
         public void AddDiamond(int value)
         {
             Diamond += value;
-            MainForm.Instance.AddTip(string.Format("|获得|Cyan|{0}||钻石", value), "White");
+            MainTipManager.AddTip(string.Format("|获得|Cyan|{0}||钻石", value), "White");
         }
 
         public void AddResource(int[] res)
@@ -66,7 +64,7 @@ namespace TaleofMonsters.DataType.User
             for (int i = 0; i < 7; i++)
             {
                 if (res[i] > 0)
-                    MainForm.Instance.AddTip(string.Format("|获得|{0}|{1}||x{2}", HSTypes.I2ResourceColor(i), HSTypes.I2Resource(i), res[i]), "White");
+                    MainTipManager.AddTip(string.Format("|获得|{0}|{1}||x{2}", HSTypes.I2ResourceColor(i), HSTypes.I2Resource(i), res[i]), "White");
             }
 
             AchieveBook.CheckByCheckType("resource");
@@ -77,7 +75,7 @@ namespace TaleofMonsters.DataType.User
             Resource.Add(type, (int)value);
             if (type > 0)
             {
-                MainForm.Instance.AddTip(string.Format("|获得|{0}|{1}||x{2}", HSTypes.I2ResourceColor((int)type), HSTypes.I2Resource((int)type), value), "White");
+                MainTipManager.AddTip(string.Format("|获得|{0}|{1}||x{2}", HSTypes.I2ResourceColor((int)type), HSTypes.I2Resource((int)type), value), "White");
                 AchieveBook.CheckByCheckType("resource"); 
             }
         }
@@ -86,11 +84,11 @@ namespace TaleofMonsters.DataType.User
         {
             if (Diamond < value)
             {
-                MainForm.Instance.AddTip(HSErrorTypes.GetDescript(HSErrorTypes.BagNotEnoughDimond), "Red");
+                MainTipManager.AddTip(HSErrorTypes.GetDescript(HSErrorTypes.BagNotEnoughDimond), "Red");
                 return false;
             }
             Diamond -= value;
-            MainForm.Instance.AddTip(string.Format("|失去了|Cyan|{0}||钻石,账户剩余|Cyan|{1}||钻石", value, Diamond), "White");
+            MainTipManager.AddTip(string.Format("|失去了|Cyan|{0}||钻石,账户剩余|Cyan|{1}||钻石", value, Diamond), "White");
             return true;
         }
 
@@ -114,17 +112,12 @@ namespace TaleofMonsters.DataType.User
         public void AddItem(int id, int num)
         {
             HItemConfig itemConfig = ConfigData.GetHItemConfig(id);
-            MainForm.Instance.AddTip(string.Format("|获得物品-|{0}|{1}||x{2}", HSTypes.I2RareColor(itemConfig.Rare), itemConfig.Name, num), "White");
+            MainTipManager.AddTip(string.Format("|获得物品-|{0}|{1}||x{2}", HSTypes.I2RareColor(itemConfig.Rare), itemConfig.Name, num), "White");
 
             int max = itemConfig.MaxPile;
             if (max <= 0)
             {
                 return;
-            }
-
-            if (tpBonusItem[id] > 0)
-            {
-                tpBonusItem[id] = Math.Max(tpBonusItem[id] - num, 0);
             }
 
             int count = num;
@@ -287,12 +280,6 @@ namespace TaleofMonsters.DataType.User
             for (int i = BagCount; i < newSize; i++)
                 Items[i] = new IntPair();
             BagCount = newSize;
-        }
-
-        [Obsolete("暂时没用的")]
-        public bool IsItemTaskNeed(int itemid)
-        {
-            return tpBonusItem[itemid] > 0;
         }
     }
 }

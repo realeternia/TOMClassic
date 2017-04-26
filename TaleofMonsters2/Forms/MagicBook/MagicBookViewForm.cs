@@ -6,6 +6,7 @@ using TaleofMonsters.Core;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
+using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms.MagicBook
 {
@@ -66,19 +67,19 @@ namespace TaleofMonsters.Forms.MagicBook
             switch (id)
             {
                 case 1:
-                    MainForm.Instance.DealPanel(new CardViewForm());
+                    PanelManager.DealPanel(new CardViewForm());
                     break;
                 case 2:
-                    MainForm.Instance.DealPanel(new MonsterSkillViewForm());
+                    PanelManager.DealPanel(new MonsterSkillViewForm());
                     break;
                 case 3:
-                    MainForm.Instance.DealPanel(new PeopleDeckViewForm());
+                    PanelManager.DealPanel(new PeopleDeckViewForm());
                     break;
                 case 4:
-                    MainForm.Instance.DealPanel(new DropItemViewerForm());
+                    PanelManager.DealPanel(new DropItemViewerForm());
                     break;
                 case 5:
-                    MainForm.Instance.DealPanel(new CardDropViewForm());
+                    PanelManager.DealPanel(new CardDropViewForm());
                     break;
             }
         }

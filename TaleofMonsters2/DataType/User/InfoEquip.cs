@@ -4,6 +4,7 @@ using ConfigDatas;
 using NarlonLib.Core;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User.Db;
+using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.DataType.User
 {
@@ -29,7 +30,7 @@ namespace TaleofMonsters.DataType.User
         public void AddEquip(int id, int minuteLast)
         {
             EquipConfig equipConfig = ConfigData.GetEquipConfig(id);
-            MainForm.Instance.AddTip(string.Format("|获得装备-|{0}|{1}", HSTypes.I2QualityColor(equipConfig.Quality), equipConfig.Name), "White");
+            MainTipManager.AddTip(string.Format("|获得装备-|{0}|{1}", HSTypes.I2QualityColor(equipConfig.Quality), equipConfig.Name), "White");
 
             for (int i = 0; i < GameConstants.EquipOffCount; i++)
             {

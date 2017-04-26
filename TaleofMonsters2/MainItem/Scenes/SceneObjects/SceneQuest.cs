@@ -57,7 +57,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                 return;
             }
 
-            MainForm.Instance.DealPanel(new NpcTalkForm { EventId = EventId });
+            PanelManager.DealPanel(new NpcTalkForm { EventId = EventId });
         }
 
         public override bool CanBeReplaced()

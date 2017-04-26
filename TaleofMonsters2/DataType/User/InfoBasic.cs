@@ -3,6 +3,7 @@ using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Achieves;
 using TaleofMonsters.DataType.Others;
+using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.DataType.User
 {
@@ -35,7 +36,7 @@ namespace TaleofMonsters.DataType.User
             }
 
             Exp += ex;
-            MainForm.Instance.AddTip(string.Format("|获得|Cyan|{0}||点经验值", ex), "White");
+            MainTipManager.AddTip(string.Format("|获得|Cyan|{0}||点经验值", ex), "White");
             AchieveBook.CheckByCheckType("exp");
 
             if (Exp >= ExpTree.GetNextRequired(Level))
@@ -117,7 +118,7 @@ namespace TaleofMonsters.DataType.User
             {
                 MoveBoost = (uint)move;
                 MoveBoostRound = (uint)time;
-                MainForm.Instance.AddTip(string.Format("|场景移动范围|Cyan|{0}||，剩余|Cyan|{1}||回合", move, time), "White");
+                MainTipManager.AddTip(string.Format("|场景移动范围|Cyan|{0}||，剩余|Cyan|{1}||回合", move, time), "White");
             }
         }
 
@@ -134,7 +135,7 @@ namespace TaleofMonsters.DataType.User
             if (MoveBoostRound > 0)
             {
                 MoveBoostRound--;
-                MainForm.Instance.AddTip(string.Format("|场景移动范围|Cyan|{0}||，剩余|Cyan|{1}||回合", MoveBoost, MoveBoostRound), "White");
+                MainTipManager.AddTip(string.Format("|场景移动范围|Cyan|{0}||，剩余|Cyan|{1}||回合", MoveBoost, MoveBoostRound), "White");
             }
         }
 

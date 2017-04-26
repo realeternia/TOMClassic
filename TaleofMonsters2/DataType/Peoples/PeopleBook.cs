@@ -8,6 +8,7 @@ using TaleofMonsters.Controler.Resource;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Pops;
 using TaleofMonsters.Core;
+using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.DataType.Peoples
 {
@@ -102,17 +103,17 @@ namespace TaleofMonsters.DataType.Peoples
             bf.BattleWin = winEvent;
             bf.BattleLose = lossEvent;
             bf.Init(0, pid, map, rlevel, reason);
-            MainForm.Instance.DealPanel(bf);
+            PanelManager.DealPanel(bf);
         }
 
         public static void ViewMatch(int left, int right, string map, int tile)
         {//todo
             //BattleForm bf = new BattleForm();
             //bf.Init(left, right, map, tile);
-            //MainForm.Instance.DealPanel(new BlackWallForm());
+            //PanelManager.DealPanel(new BlackWallForm());
             //bf.ShowDialog();
-            //MainForm.Instance.DealPanel(new BlackWallForm());
-            //MainForm.Instance.DealPanel(new BattleResultForm());
+            //PanelManager.DealPanel(new BlackWallForm());
+            //PanelManager.DealPanel(new BattleResultForm());
         }
     }
 }

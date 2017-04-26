@@ -372,7 +372,6 @@
     <Compile Include="Forms\CardBagForm.Designer.cs">
       <DependentUpon>CardBagForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainItem\MainTipData.cs" />
     <Compile Include="DataType\Achieves\AchieveBook.cs" />
     <Compile Include="DataType\Cards\CardMouseState.cs" />
     <Compile Include="DataType\User\Db\DbDeckData.cs" />

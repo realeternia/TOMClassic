@@ -24,6 +24,7 @@ using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
+using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Controler.Battle
 {
@@ -588,7 +589,7 @@ namespace TaleofMonsters.Controler.Battle
             Close();
             if (BattleManager.Instance.PlayerManager.RightPlayer != null)
             {
-                MainForm.Instance.DealPanel(new BattleResultForm());
+                PanelManager.DealPanel(new BattleResultForm());
             }
             if (BattleManager.Instance.StatisticData.PlayerWin)
             {

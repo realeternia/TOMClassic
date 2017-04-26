@@ -6,6 +6,7 @@ using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.DataType.Achieves
 {
@@ -34,7 +35,7 @@ namespace TaleofMonsters.DataType.Achieves
                     if (UserProfile.Profile.GetAchieveState(ach.Id) >= ach.Condition.Value)
                     {
                         UserProfile.Profile.InfoAchieve.SetAchieve(ach.Id);
-                        MainForm.Instance.AddTip(string.Format("|获得成就-|Gold|{0}", ach.Name), "White");
+                        MainTipManager.AddTip(string.Format("|获得成就-|Gold|{0}", ach.Name), "White");
                         UserProfile.InfoBag.AddDiamond(ach.Money);
                     }
                 }

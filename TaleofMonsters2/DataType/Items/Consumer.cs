@@ -11,6 +11,7 @@ using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.Drops;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms;
+using TaleofMonsters.MainItem;
 using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.DataType.Items
@@ -138,14 +139,14 @@ namespace TaleofMonsters.DataType.Items
         
         private static bool UseRandomCard(ItemConsumerConfig itemConfig)
         {
-            var form = MainForm.Instance.FindPanel(typeof(CardBagForm));
+            var form = PanelManager.FindPanel(typeof(CardBagForm));
             if (form != null)//如果打开着开包面板，退出
             {
                 return false;
             }
             form = new CardBagForm();
             ((CardBagForm)form).SetEffect(itemConfig.Id);
-            MainForm.Instance.DealPanel(form);
+            PanelManager.DealPanel(form);
 
             return true;
         }
@@ -170,7 +171,7 @@ namespace TaleofMonsters.DataType.Items
                 }
                 var form = new ItemPackageForm();
                 ((ItemPackageForm)form).SetItem(itemList.ToArray(), countList.ToArray());
-                MainForm.Instance.DealPanel(form);
+                PanelManager.DealPanel(form);
             }
 
             return true;
@@ -190,7 +191,7 @@ namespace TaleofMonsters.DataType.Items
             }
             var form = new ItemPackageForm();
             ((ItemPackageForm)form).SetItem(itemList.ToArray(), countList.ToArray());
-            MainForm.Instance.DealPanel(form);
+            PanelManager.DealPanel(form);
             return true;
         }
 

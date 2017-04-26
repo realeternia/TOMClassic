@@ -63,21 +63,21 @@ namespace TaleofMonsters.Controler.Battle
             leftId = BattleManager.Instance.PlayerManager.LeftPlayer.PeopleId;
             if (leftId == 0)
             {
-                BattleStatisticData battleStatisticData = BattleManager.Instance.StatisticData;
+                BattleStatisticData statisticData = BattleManager.Instance.StatisticData;
                 PeopleDrop drop = new PeopleDrop(rightId);
                 resource = drop.GetDropResource();
                 PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(rightId);
                 exp = GameResourceBook.InExpFight(UserProfile.InfoBasic.Level, peopleConfig.Level);
 
-                resource[0] = resource[0]*(100 + battleStatisticData.GoldRatePlus)/100;
-                exp = exp*(100 + (uint)battleStatisticData.ExpRatePlus)/100;
+                resource[0] = resource[0]*(100 + statisticData.GoldRatePlus)/100;
+                exp = exp*(100 + (uint)statisticData.ExpRatePlus)/100;
 
                 if (isWin)
                 {
                     var dropItemId = drop.GetDropItem();//获胜可以获得掉落物
                     if (dropItemId != 0)
                     {
-                        battleStatisticData.Items.Insert(0, dropItemId);
+                        statisticData.Items.Insert(0, dropItemId);
                     }
                 }
                 else
@@ -106,11 +106,11 @@ namespace TaleofMonsters.Controler.Battle
                     virtualRegion.AddRegion(pictureRegion);
                 }
 
-                for (int i = 0; i < battleStatisticData.Items.Count; i++)
+                for (int i = 0; i < statisticData.Items.Count; i++)
                 {
-                    rewardItemList.Add(battleStatisticData.Items[i]);
+                    rewardItemList.Add(statisticData.Items[i]);
                     var pos = GetCellPosition();
-                    virtualRegion.AddRegion(new PictureAnimRegion(cellIndex, pos.X, pos.Y, 45, 45, PictureRegionCellType.Item, battleStatisticData.Items[i]));
+                    virtualRegion.AddRegion(new PictureAnimRegion(cellIndex, pos.X, pos.Y, 45, 45, PictureRegionCellType.Item, statisticData.Items[i]));
                 }
             }
             else

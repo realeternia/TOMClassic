@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Core;
+using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms
 {
@@ -29,7 +30,7 @@ namespace TaleofMonsters.Forms
         {
             formWidth = width;
             formHeight = height;
-            Location = new Point((MainForm.Instance.Width - Width) / 2, (MainForm.Instance.Height - Height) / 2);
+            Location = new Point((formWidth - Width) / 2, (formHeight - Height) / 2);
 
             if (Controls.ContainsKey("bitmapButtonClose"))
             {
@@ -71,7 +72,7 @@ namespace TaleofMonsters.Forms
 
         public void Close()
         {
-            MainForm.Instance.RemovePanel(this);
+            PanelManager.RemovePanel(this);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)

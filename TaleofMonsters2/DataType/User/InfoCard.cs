@@ -2,9 +2,9 @@
 using TaleofMonsters.Config;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Achieves;
-using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User.Db;
+using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.DataType.User
 {
@@ -74,7 +74,7 @@ namespace TaleofMonsters.DataType.User
                 Newcards.RemoveAt(0);
 
             AchieveBook.CheckByCheckType("card");
-            MainForm.Instance.AddTip(string.Format("|获得卡片-|{0}|{1}", HSTypes.I2QualityColor(cardData.Quality), cardData.Name), "White");
+            MainTipManager.AddTip(string.Format("|获得卡片-|{0}|{1}", HSTypes.I2QualityColor(cardData.Quality), cardData.Name), "White");
 
             return card;
         }
@@ -92,7 +92,7 @@ namespace TaleofMonsters.DataType.User
                 if (returnResource)
                 {
                     var cardData = CardConfigManager.GetCardConfig(dc.BaseId);
-                    MainForm.Instance.AddTip(string.Format("|分解卡片-|{0}|{1}", HSTypes.I2QualityColor(cardData.Quality), cardData.Name), "White");
+                    MainTipManager.AddTip(string.Format("|分解卡片-|{0}|{1}", HSTypes.I2QualityColor(cardData.Quality), cardData.Name), "White");
                     int qual = CardConfigManager.GetCardConfig(dc.BaseId).Quality + 1;
                     UserProfile.Profile.InfoBag.AddResource(GameResourceType.Gem, GameResourceBook.OutGemCardDecompose(qual));
                 }

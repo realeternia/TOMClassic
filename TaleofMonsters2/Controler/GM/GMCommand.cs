@@ -7,6 +7,7 @@ using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.Forms;
+using TaleofMonsters.MainItem;
 using TaleofMonsters.MainItem.Blesses;
 using TaleofMonsters.MainItem.Scenes;
 
@@ -53,13 +54,13 @@ namespace TaleofMonsters.Controler.GM
                     case "fbat": if (data.Length == 3)
                         {
                             FastBattle.Instance.StartGame(int.Parse(data[1]), int.Parse(data[2]), "default", TileConfig.Indexer.DefaultTile);
-                            MainForm.Instance.AddTip(string.Format("{0} {1}合", FastBattle.Instance.LeftWin ? "左胜" : "右胜", BattleManager.Instance.StatisticData.Round), "White");
+                            MainTipManager.AddTip(string.Format("{0} {1}合", FastBattle.Instance.LeftWin ? "左胜" : "右胜", BattleManager.Instance.StatisticData.Round), "White");
                         } break;
                     case "cbat":
                         if (data.Length == 4)
                         {
                             var result = CardFastBattle.Instance.StartGame(int.Parse(data[1]), int.Parse(data[2]), int.Parse(data[3]));
-                            MainForm.Instance.AddTip(string.Format("{0} {1}合", result, BattleManager.Instance.StatisticData.Round), "White");
+                            MainTipManager.AddTip(string.Format("{0} {1}合", result, BattleManager.Instance.StatisticData.Round), "White");
                         }break;
                     case "scr": if (data.Length == 2)
                         {
@@ -72,7 +73,7 @@ namespace TaleofMonsters.Controler.GM
                         NpcTalkForm sw = new NpcTalkForm();
                         sw.EventId = int.Parse(data[1]);
                         sw.NeedBlackForm = true;
-                        MainForm.Instance.DealPanel(sw); break;
+                        PanelManager.DealPanel(sw); break;
                     case "cure": UserProfile.InfoBasic.MentalPoint=100; UserProfile.InfoBasic.HealthPoint=100;
                         UserProfile.InfoBasic.FoodPoint = 100;break;
                     case "bls": if (data.Length == 2)

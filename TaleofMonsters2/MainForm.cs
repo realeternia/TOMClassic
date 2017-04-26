@@ -27,8 +27,7 @@ namespace TaleofMonsters
 
         private HSCursor myCursor;
         private int page;
-        private List<BasePanel> panelList = new List<BasePanel>(); //受到esc影响关闭的面板，都在这里
-        public int panelCount;
+
         private Thread workThread;
         private int timeTick;
         private long lastMouseMoveTime;
@@ -64,6 +63,7 @@ namespace TaleofMonsters
                 Scene.Instance = new Scene(tabPageGame, tabPageGame.Width, tabPageGame.Height);
                 SystemMenuManager.Load(tabPageGame.Width, tabPageGame.Height);
                 MainTipManager.Init(tabPageGame.Height);
+                PanelManager.Init(tabPageGame.Width, tabPageGame.Height);
                 CardConfigManager.Init();
                 DbSerializer.Init();
                 WorldInfoManager.Load();
@@ -167,10 +167,7 @@ namespace TaleofMonsters
         {
             if (viewStack1.SelectedIndex == 1)
             {
-                foreach (var basePanel in panelList)
-                {
-                    basePanel.OnHsKeyUp(e);
-                }
+                PanelManager.CheckHotKey(e, true);
                 SystemMenuManager.CheckHotKey(e.KeyCode);
             }
         }
@@ -178,10 +175,7 @@ namespace TaleofMonsters
         {
             if (viewStack1.SelectedIndex == 1)
             {
-                foreach (var basePanel in panelList)
-                {
-                    basePanel.OnHsKeyDown(e);
-                }
+                PanelManager.CheckHotKey(e, false);
             }
         }
 
@@ -190,88 +184,32 @@ namespace TaleofMonsters
             Close();
         }
 
-        public void AddTip(string newtip, string color)
-        {
-            MainTipManager.AddTip(newtip, color);
-            tabPageGame.Invalidate();
-        }
-
         public void RefreshView()
         {//有的时候需要整天刷新一次
             tabPageGame.Invalidate();
         }
 
-        public void DealPanel(BasePanel panel)
+        public BasePanel FindPanelAct(Type type)
         {
             foreach (var control in tabPageGame.Controls)
-            {
-                if (control.GetType() == panel.GetType())
-                {
-                    RemovePanel(control as BasePanel);
-                    return;
-                }
-            }
-
-            AddPanel(panel);
-        }
-
-        private void AddPanel(BasePanel panel)
-        {
-            if (panel.NeedBlackForm)
-            {
-                BlackWallForm.Instance.Init(tabPageGame.Width, tabPageGame.Height);
-                tabPageGame.Controls.Add(BlackWallForm.Instance);
-                BlackWallForm.Instance.BringToFront();
-            }
-            else
-            {
-                panelList.Add(panel);
-            }
-            panel.Init(tabPageGame.Width, tabPageGame.Height);
-            tabPageGame.Controls.Add(panel);
-            panel.BringToFront();
-            panelCount++;
-        }
-
-        public void RemovePanel(BasePanel panel)
-        {
-            if (panel.IsChangeBgm)
-            {
-                SoundManager.PlayLastBGM();
-            }
-            if (panel.NeedBlackForm)
-            {
-                BlackWallForm.Instance.OnRemove();
-                tabPageGame.Controls.Remove(BlackWallForm.Instance);
-            }
-            panel.OnRemove();
-            tabPageGame.Controls.Remove(panel);
-            panelList.Remove(panel);
-            panelCount--;
-        }
-
-        public BasePanel FindPanel(Type type)
-        {
-            foreach (Control control in tabPageGame.Controls)
             {
                 if (control.GetType() == type)
                 {
                     return control as BasePanel;
                 }
             }
+
             return null;
         }
 
-        public bool CloseLastPanel()
+        public void AddPanelAct(BasePanel panel)
         {
-            if (panelList.Count <= 0)
-            {
-                return false;
-            }
-
-            RemovePanel(panelList[panelList.Count-1]);
-
-            return true;
+            tabPageGame.Controls.Add(panel);
+            panel.BringToFront();
+        }
+        public void RemovePanelAct(BasePanel panel)
+        {
+            tabPageGame.Controls.Remove(panel);
         }
 
         private void TimeGo()
@@ -309,7 +247,7 @@ namespace TaleofMonsters
                     }
                     catch (Exception e)
                     {
-                        NarlonLib.Log.NLog.Fatal(e);
+                        NLog.Fatal(e);
                         throw;
                     }
                 }
@@ -339,7 +277,7 @@ namespace TaleofMonsters
                 SystemMenuManager.DrawAll(e.Graphics);
                 MainTipManager.DrawAll(e.Graphics);
 
-                if (SystemMenuManager.GMMode)
+                if (SystemMenuManager.GMMode) //希望在最上层，所以必须最后绘制
                 {
                     GMCodeZone.Paint(e.Graphics, tabPageGame.Width, tabPageGame.Height);
                 }

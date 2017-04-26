@@ -155,55 +155,55 @@ namespace TaleofMonsters.MainItem
             switch (id)
             {
                 case SystemMenuIds.SystemMenu:
-                    MainForm.Instance.DealPanel(new SystemMenu());
+                    PanelManager.DealPanel(new SystemMenu());
                     break;
                 case SystemMenuIds.ItemForm:
-                    MainForm.Instance.DealPanel(new ItemForm());
+                    PanelManager.DealPanel(new ItemForm());
                     break;
                 case SystemMenuIds.AchieveViewForm:
-                    MainForm.Instance.DealPanel(new AchieveViewForm());
+                    PanelManager.DealPanel(new AchieveViewForm());
                     break;
                 case SystemMenuIds.PeopleViewForm:
-                    MainForm.Instance.DealPanel(new PeopleViewForm());
+                    PanelManager.DealPanel(new PeopleViewForm());
                     break;
                 case SystemMenuIds.DeckViewForm:
-                    MainForm.Instance.DealPanel(new DeckViewForm());
+                    PanelManager.DealPanel(new DeckViewForm());
                     break;
                 case SystemMenuIds.GameShopViewForm:
-                    MainForm.Instance.DealPanel(new GameShopViewForm());
+                    PanelManager.DealPanel(new GameShopViewForm());
                     break;
                 case SystemMenuIds.TaskForm:
-                    MainForm.Instance.DealPanel(new QuestForm());
+                    PanelManager.DealPanel(new QuestForm());
                     break;
                 case SystemMenuIds.EquipmentForm:
-                    MainForm.Instance.DealPanel(new EquipmentForm());
+                    PanelManager.DealPanel(new EquipmentForm());
                     break;
                 case SystemMenuIds.HeroSkillAttrForm:
-                    MainForm.Instance.DealPanel(new HeroSkillAttrForm());
+                    PanelManager.DealPanel(new HeroSkillAttrForm());
                     break;
                 case SystemMenuIds.EquipComposeForm:
-                    MainForm.Instance.DealPanel(new EquipComposeForm());
+                    PanelManager.DealPanel(new EquipComposeForm());
                     break;
                 case SystemMenuIds.MagicBookViewForm:
-                    MainForm.Instance.DealPanel(new MagicBookViewForm());
+                    PanelManager.DealPanel(new MagicBookViewForm());
                     break;
                 case SystemMenuIds.WorldMapViewForm:
-                    MainForm.Instance.DealPanel(new WorldMapViewForm());
+                    PanelManager.DealPanel(new WorldMapViewForm());
                     break;
                 case SystemMenuIds.ConnectForm:
-                    MainForm.Instance.DealPanel(new ConnectForm());
+                    PanelManager.DealPanel(new ConnectForm());
                     break;
                 case SystemMenuIds.CardShopViewForm:
-                    MainForm.Instance.DealPanel(new CardShopViewForm());
+                    PanelManager.DealPanel(new CardShopViewForm());
                     break;
                 case SystemMenuIds.TournamentViewForm:
-                    MainForm.Instance.DealPanel(new TournamentViewForm());
+                    PanelManager.DealPanel(new TournamentViewForm());
                     break;
                 case SystemMenuIds.TreasureWheelForm:
-                    MainForm.Instance.DealPanel(new TreasureWheelForm());
+                    PanelManager.DealPanel(new TreasureWheelForm());
                     break;
                 case SystemMenuIds.ExpBottle:
-                    MainForm.Instance.DealPanel(new ExpBottleForm());
+                    PanelManager.DealPanel(new ExpBottleForm());
                     //if (MessageBoxEx2.Show("是否花5钻石将时间回到3小时前?") == DialogResult.OK)
                     //{
                     //    if (UserProfile.Profile.PayDiamond(5))
@@ -213,10 +213,10 @@ namespace TaleofMonsters.MainItem
                     //}
                     break;
                 case SystemMenuIds.QuestionForm:
-                    MainForm.Instance.DealPanel(new QuestionForm());
+                    PanelManager.DealPanel(new QuestionForm());
                     break;
                 case SystemMenuIds.MinigameForm:
-                    MainForm.Instance.DealPanel(new MinigameForm());
+                    PanelManager.DealPanel(new MinigameForm());
                     break;
             }
         }
@@ -237,7 +237,7 @@ namespace TaleofMonsters.MainItem
             switch (key)
             {
                 case Keys.Escape:
-                    if (!MainForm.Instance.CloseLastPanel())//如果已经没有面板了，才出
+                    if (!PanelManager.CloseLastPanel())//如果已经没有面板了，才出
                     {
                         CheckItemClick(SystemMenuIds.SystemMenu);
                     }
