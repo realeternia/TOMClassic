@@ -304,5 +304,6 @@ namespace TaleofMonsters.MainItem
         GameSeven = 1104,
         GameRussiaBlock = 1105,
         GameLink = 1106,
+        GameOvercome = 1107,
     }
 }
