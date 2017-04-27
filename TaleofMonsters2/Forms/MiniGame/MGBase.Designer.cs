@@ -30,6 +30,7 @@ namespace TaleofMonsters.Forms.MiniGame
         private void InitializeComponent()
         {
             this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
+            this.bitmapButtonHelp = new NarlonLib.Control.BitmapButton();
             this.SuspendLayout();
             // 
             // bitmapButtonClose
@@ -49,10 +50,29 @@ namespace TaleofMonsters.Forms.MiniGame
             this.bitmapButtonClose.UseVisualStyleBackColor = true;
             this.bitmapButtonClose.Click += new System.EventHandler(this.bitmapButtonClose_Click);
             // 
+            // bitmapButtonHelp
+            // 
+            this.bitmapButtonHelp.BorderColor = System.Drawing.Color.DarkBlue;
+            this.bitmapButtonHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bitmapButtonHelp.IconImage = null;
+            this.bitmapButtonHelp.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonHelp.IconXY = new System.Drawing.Point(0, 0);
+            this.bitmapButtonHelp.ImageNormal = null;
+            this.bitmapButtonHelp.Location = new System.Drawing.Point(276, 15);
+            this.bitmapButtonHelp.Name = "bitmapButtonHelp";
+            this.bitmapButtonHelp.NoUseDrawNine = false;
+            this.bitmapButtonHelp.Size = new System.Drawing.Size(24, 24);
+            this.bitmapButtonHelp.TabIndex = 40;
+            this.bitmapButtonHelp.TextOffX = 0;
+            this.bitmapButtonHelp.UseVisualStyleBackColor = true;
+            this.bitmapButtonHelp.MouseEnter += new System.EventHandler(this.bitmapButtonHelp_MouseEnter);
+            this.bitmapButtonHelp.MouseLeave += new System.EventHandler(this.bitmapButtonHelp_MouseLeave);
+            // 
             // MGBase
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.bitmapButtonHelp);
             this.Controls.Add(this.bitmapButtonClose);
             this.DoubleBuffered = true;
             this.Name = "MGBase";
@@ -63,5 +83,6 @@ namespace TaleofMonsters.Forms.MiniGame
 
         #endregion
         private BitmapButton bitmapButtonClose;
+        private BitmapButton bitmapButtonHelp;
     }
 }

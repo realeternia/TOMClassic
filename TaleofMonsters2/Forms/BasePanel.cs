@@ -36,6 +36,10 @@ namespace TaleofMonsters.Forms
             {
                 Controls["bitmapButtonClose"].Location = new Point(Width - 35, 2);
             }
+            if (Controls.ContainsKey("bitmapButtonHelp"))
+            {
+                Controls["bitmapButtonHelp"].Location = new Point(Width - 62, 2);
+            }
             flows = new List<FlowData>();
             Paint += new PaintEventHandler(BasePanel_Paint);
         }
