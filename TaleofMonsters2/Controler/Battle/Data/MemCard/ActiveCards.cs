@@ -23,7 +23,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
             index = 0;
         }
 
-        internal ActiveCards(DeckCard[] itsCards)
+        public ActiveCards(DeckCard[] itsCards)
         {
             ActiveCard[] tcards = new ActiveCard[GameConstants.DeckCardCount];
             for (int i = 0; i < GameConstants.DeckCardCount; i++)
@@ -42,7 +42,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
             index = 0;
         }
 
-        internal ActiveCards GetCopy()
+        public ActiveCards GetCopy()
         {
             ActiveCards tcards = new ActiveCards();
             tcards.cards = new List<ActiveCard>();
@@ -53,7 +53,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
             return tcards;
         }
 
-        internal ActiveCard GetNextCard()
+        public ActiveCard GetNextCard()
         {
             if (cards.Count == 0)
             {
@@ -76,7 +76,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
             return cards[rt];
         }
 
-        internal ActiveCard ReplaceCard(ActiveCard card)
+        public ActiveCard ReplaceCard(ActiveCard card)
         {
             if (LeftCount <= 0)
             {

@@ -15,27 +15,44 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
     internal class TrapHolder
     {
         private List<Trap> trapList = new List<Trap>();
+        private Player self;
+
+        public TrapHolder(Player p)
+        {
+            self = p;
+        }
+
+        public int Count
+        {
+            get { return trapList.Count; }
+        }
+
         public void AddTrap(int id, int lv, double rate, int damage, double help)
         {
             trapList.Add(new Trap { Id = id, Level = lv, Rate = rate, Damage = damage, Help = help });
+            self.OnTrapChange();
         }
 
         public void RemoveRandomTrap()
         {
             if (trapList.Count > 0)
+            {
                 trapList.RemoveAt(MathTool.GetRandom(trapList.Count));
+                self.OnTrapChange();
+            }
         }
 
-        private void RemoveTrap(Trap trap, SpellTrapConfig config, IPlayer self)
+        private void RemoveTrap(Trap trap, SpellTrapConfig config)
         {
             if (MathTool.GetRandom(100) >= trap.Rate)
             {
                 self.AddMp(-config.ManaCost);
             }
             trapList.RemoveAll(s => s.Id == trap.Id);
+            self.OnTrapChange();
         }
 
-        public bool CheckTrapOnUseCard(ActiveCard selectCard, Point location, IPlayer self, IPlayer rival)
+        public bool CheckTrapOnUseCard(ActiveCard selectCard, Point location, IPlayer rival)
         {
             foreach (var trap in trapList)
             {
@@ -44,7 +61,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                 {
                     if (self.Mp >= trapConfig.ManaCost && trapConfig.EffectUse(self, rival, trap, selectCard.CardId, (int)selectCard.CardType))
                     {
-                        RemoveTrap(trap, trapConfig, self);
+                        RemoveTrap(trap, trapConfig);
                         NLog.Debug(string.Format("RemoveTrap UseCard id={0} cardId={1}", trap.Id, selectCard.CardId));
                         BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(trapConfig.UnitEffect), location, false));
 
@@ -56,7 +73,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             return false;
         }
 
-        public void CheckTrapOnSummon(IMonster mon, IPlayer self, IPlayer rival)
+        public void CheckTrapOnSummon(IMonster mon, IPlayer rival)
         {
             foreach (var trap in trapList)
             {
@@ -65,7 +82,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                 {
                     if (self.Mp >= trapConfig.ManaCost && trapConfig.EffectSummon(self, rival, trap, mon, trap.Level))
                     {
-                        RemoveTrap(trap, trapConfig, self);
+                        RemoveTrap(trap, trapConfig);
                         NLog.Debug(string.Format("RemoveTrap Summon id={0} cardId={1}", trap.Id, mon.Id));
                         BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(trapConfig.UnitEffect), mon as LiveMonster, false));
                         return;

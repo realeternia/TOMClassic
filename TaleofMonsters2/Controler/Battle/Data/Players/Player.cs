@@ -29,6 +29,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
     {
         public delegate void PlayerPointEventHandler();
         public event PlayerPointEventHandler ManaChanged;
+        public event PlayerPointEventHandler CardLeftChanged;
+        public event PlayerPointEventHandler TrapStateChanged;
 
         public delegate void PlayerHeroSkillStateEventHandler(bool active);
         public event PlayerHeroSkillStateEventHandler HeroSkillChanged;
@@ -106,7 +108,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             CardManager = new CardManager(this);
             EnergyGenerator = new EnergyGenerator();
             SpikeManager = new SpikeManager(this);
-            TrapHolder = new TrapHolder();
+            TrapHolder = new TrapHolder(this);
             State = new PlayerState();
         }
 
@@ -178,7 +180,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public virtual void InitialCards()
         {
-            CardManager.GetNextNCard(GameConstants.BattleInitialCardCount);
+            DrawNextNCard(GameConstants.BattleInitialCardCount);
 
             BattleManager.Instance.RuleData.CheckInitialCards(this);
         }
@@ -258,7 +260,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             AddPp(-selectCard.Pp);
 
             var rival = Rival as Player;
-            if (rival.TrapHolder.CheckTrapOnUseCard(selectCard, location, rival, this))
+            if (rival.TrapHolder.CheckTrapOnUseCard(selectCard, location, rival))
             {
                 return false;
             }
@@ -344,7 +346,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 }
 
                 var rival = Rival as Player;
-                rival.TrapHolder.CheckTrapOnSummon(newMon, rival, this);
+                rival.TrapHolder.CheckTrapOnSummon(newMon, rival);
             }
             catch (Exception e)
             {
@@ -505,7 +507,30 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                     startPoint = mon.Position;
                 BattleManager.Instance.EffectQueue.Add(new UIEffect(EffectBook.GetEffect("flycard"), startPoint, new Point(BattleManager.Instance.MemMap.StageWidth / 2, BattleManager.Instance.MemMap.StageHeight), 16, true));
             }
-            CardManager.GetNextNCard(n);
+
+            var cardCount = Cards.LeftCount;
+            for (int i = 0; i < n; i++)
+                CardManager.GetNextCard();
+
+            if (CardLeftChanged != null && cardCount != Cards.LeftCount)
+            {
+                CardLeftChanged();
+            }
+        }
+
+        public void DrawNextNCard(int n)
+        {
+            if (CardManager.GetCardNumber() >= GameConstants.CardSlotMaxCount)
+                return;
+
+            var cardCount = Cards.LeftCount;
+            for (int i = 0; i < n; i++)
+                CardManager.GetNextCard();
+
+            if (CardLeftChanged != null && cardCount != Cards.LeftCount)
+            {
+                CardLeftChanged();
+            }
         }
 
         public void CopyRandomNCard(int n, int spellid)
@@ -644,6 +669,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             return new List<int>();
         }
 
+        public void OnTrapChange()
+        {
+            if (TrapStateChanged != null)
+                TrapStateChanged();
+        }
+
         public void DrawToolTips(Graphics g)
         {
             int x = 0, y = 0;
@@ -659,7 +690,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         {
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine(string.Format("Lv{0}", Level), "LightBlue", 20);
-            tipData.AddTextNewLine(string.Format("卡牌剩余 {0}/{1}", Cards.LeftCount, GameConstants.DeckCardCount), "LightBlue", 20);
             tipData.AddTextNewLine("能量回复比率","White");
             tipData.AddTextNewLine(string.Format("LP {0}", EnergyGenerator.RateLp.ToString().PadLeft(3, ' ')), "Gold");
             tipData.AddBar(100, EnergyGenerator.RateLp, Color.Yellow, Color.Gold);

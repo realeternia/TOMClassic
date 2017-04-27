@@ -83,7 +83,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 {
                     if (Parm.RuleAddon == PeopleFightRuleAddon.Card)
                     {
-                        p.CardManager.GetNextNCard(Parm.RuleLevel);
+                        p.DrawNextNCard(Parm.RuleLevel);
                     }
                 }
             }
