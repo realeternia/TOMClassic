@@ -431,10 +431,6 @@ namespace TaleofMonsters.Forms.MiniGame
             }
             Invalidate(new Rectangle(xoff + 550, yoff + 70, 100, 20)); //刷时间
             Invalidate(new Rectangle(xoff + 550, yoff + 120, 100, 20)); //刷分数
-            if (score >= 10000)
-            {
-                EndGame();
-            }
         }
 
         private void bitmapButtonC1_Click(object sender, EventArgs e)

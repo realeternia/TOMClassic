@@ -44,20 +44,24 @@ namespace TaleofMonsters.Forms.MiniGame
             this.colorLabel1.Name = "colorLabel1";
             this.colorLabel1.Size = new System.Drawing.Size(326, 86);
             this.colorLabel1.TabIndex = 37;
-            this.colorLabel1.Text = "|本游戏是|#ff6600|老虎机||的变种，玩法也非常简单。\r\n|获胜的条件 1.获得至少一个|#ff0000|7||。\r\n|2.获得|#008800|3个相同" +
-    "符号||。\r\n|不能获胜则|#0033cc|失败||。";
+            this.colorLabel1.Text = "|本游戏是|#ff6600|老虎机||的变种，玩法也非常简单。\r\n|转盘一共转动3次，得分由三次相加。\r\n|3个|#ff0000|7||积|#008800|30|" +
+    "|分。\r\n|其他3个|#ff0000|相同符号||积|#008800|20||分。\r\n|否则，按照标识积分。";
             // 
             // bitmapButtonC1
             // 
             this.bitmapButtonC1.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButtonC1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButtonC1.Image = null;
+            this.bitmapButtonC1.IconImage = null;
+            this.bitmapButtonC1.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonC1.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonC1.ImageNormal = null;
             this.bitmapButtonC1.Location = new System.Drawing.Point(150, 376);
             this.bitmapButtonC1.Name = "bitmapButtonC1";
+            this.bitmapButtonC1.NoUseDrawNine = false;
             this.bitmapButtonC1.Size = new System.Drawing.Size(50, 30);
             this.bitmapButtonC1.TabIndex = 27;
             this.bitmapButtonC1.Tag = "1";
+            this.bitmapButtonC1.TextOffX = 0;
             this.bitmapButtonC1.UseVisualStyleBackColor = true;
             this.bitmapButtonC1.Click += new System.EventHandler(this.bitmapButtonC1_Click);
             // 
@@ -65,13 +69,17 @@ namespace TaleofMonsters.Forms.MiniGame
             // 
             this.bitmapButtonC2.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButtonC2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButtonC2.Image = null;
+            this.bitmapButtonC2.IconImage = null;
+            this.bitmapButtonC2.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonC2.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonC2.ImageNormal = null;
             this.bitmapButtonC2.Location = new System.Drawing.Point(150, 376);
             this.bitmapButtonC2.Name = "bitmapButtonC2";
+            this.bitmapButtonC2.NoUseDrawNine = false;
             this.bitmapButtonC2.Size = new System.Drawing.Size(50, 30);
             this.bitmapButtonC2.TabIndex = 40;
             this.bitmapButtonC2.Tag = "1";
+            this.bitmapButtonC2.TextOffX = 0;
             this.bitmapButtonC2.UseVisualStyleBackColor = true;
             this.bitmapButtonC2.Click += new System.EventHandler(this.bitmapButtonC2_Click);
             // 
@@ -79,13 +87,17 @@ namespace TaleofMonsters.Forms.MiniGame
             // 
             this.bitmapButtonC3.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButtonC3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButtonC3.Image = null;
+            this.bitmapButtonC3.IconImage = null;
+            this.bitmapButtonC3.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonC3.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonC3.ImageNormal = null;
             this.bitmapButtonC3.Location = new System.Drawing.Point(60, 376);
             this.bitmapButtonC3.Name = "bitmapButtonC3";
+            this.bitmapButtonC3.NoUseDrawNine = false;
             this.bitmapButtonC3.Size = new System.Drawing.Size(50, 30);
             this.bitmapButtonC3.TabIndex = 41;
             this.bitmapButtonC3.Tag = "1";
+            this.bitmapButtonC3.TextOffX = 0;
             this.bitmapButtonC3.UseVisualStyleBackColor = true;
             this.bitmapButtonC3.Click += new System.EventHandler(this.bitmapButtonC3_Click);
             // 
@@ -93,13 +105,17 @@ namespace TaleofMonsters.Forms.MiniGame
             // 
             this.bitmapButtonC4.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButtonC4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButtonC4.Image = null;
+            this.bitmapButtonC4.IconImage = null;
+            this.bitmapButtonC4.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonC4.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonC4.ImageNormal = null;
             this.bitmapButtonC4.Location = new System.Drawing.Point(239, 376);
             this.bitmapButtonC4.Name = "bitmapButtonC4";
+            this.bitmapButtonC4.NoUseDrawNine = false;
             this.bitmapButtonC4.Size = new System.Drawing.Size(50, 30);
             this.bitmapButtonC4.TabIndex = 42;
             this.bitmapButtonC4.Tag = "1";
+            this.bitmapButtonC4.TextOffX = 0;
             this.bitmapButtonC4.UseVisualStyleBackColor = true;
             this.bitmapButtonC4.Click += new System.EventHandler(this.bitmapButtonC4_Click);
             // 
@@ -112,10 +128,13 @@ namespace TaleofMonsters.Forms.MiniGame
             this.Controls.Add(this.bitmapButtonC2);
             this.Controls.Add(this.colorLabel1);
             this.Controls.Add(this.bitmapButtonC1);
-            this.DoubleBuffered = true;
             this.Name = "MGSeven";
-            this.Size = new System.Drawing.Size(345, 416);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MGSeven_Paint);
+            this.Controls.SetChildIndex(this.bitmapButtonC1, 0);
+            this.Controls.SetChildIndex(this.colorLabel1, 0);
+            this.Controls.SetChildIndex(this.bitmapButtonC2, 0);
+            this.Controls.SetChildIndex(this.bitmapButtonC3, 0);
+            this.Controls.SetChildIndex(this.bitmapButtonC4, 0);
             this.ResumeLayout(false);
 
         }

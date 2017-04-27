@@ -29,20 +29,21 @@ namespace TaleofMonsters.Forms.MiniGame
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MGUpToNumber));
             this.colorLabel1 = new NarlonLib.Control.ColorLabel();
             this.bitmapButtonC1 = new NarlonLib.Control.BitmapButton();
             this.SuspendLayout();
             // 
             // colorLabel1
             // 
-            this.colorLabel1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
+            this.colorLabel1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
             this.colorLabel1.ForeColor = System.Drawing.Color.White;
             this.colorLabel1.Location = new System.Drawing.Point(13, 42);
             this.colorLabel1.Name = "colorLabel1";
             this.colorLabel1.Size = new System.Drawing.Size(326, 86);
             this.colorLabel1.TabIndex = 37;
-            this.colorLabel1.Text = resources.GetString("colorLabel1.Text");
+            this.colorLabel1.Text = "|需要向大锅中添加规定数量的各种食材。\r\n|每次添加时，随机加入|#ff0000|2-5||单位的食材，四种食材每单位的\r\n|分数为|#00cc66|5-4-5-" +
+    "2||。而四种食材需要的上限为|#ff9900|8-5-4-15||。\r\n|如果任意单位食材数量超过要求，则|#0033cc|游戏结束||。\r\n|最终总分达到|" +
+    "#ffcc00|100||分，则|#0033cc|游戏结束||。";
             // 
             // bitmapButtonC1
             // 
@@ -54,6 +55,7 @@ namespace TaleofMonsters.Forms.MiniGame
             this.bitmapButtonC1.ImageNormal = null;
             this.bitmapButtonC1.Location = new System.Drawing.Point(148, 376);
             this.bitmapButtonC1.Name = "bitmapButtonC1";
+            this.bitmapButtonC1.NoUseDrawNine = false;
             this.bitmapButtonC1.Size = new System.Drawing.Size(50, 30);
             this.bitmapButtonC1.TabIndex = 27;
             this.bitmapButtonC1.Tag = "1";
@@ -68,10 +70,10 @@ namespace TaleofMonsters.Forms.MiniGame
             this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.colorLabel1);
             this.Controls.Add(this.bitmapButtonC1);
-            this.DoubleBuffered = true;
             this.Name = "MGUpToNumber";
-            this.Size = new System.Drawing.Size(345, 416);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MGUpToNumber_Paint);
+            this.Controls.SetChildIndex(this.bitmapButtonC1, 0);
+            this.Controls.SetChildIndex(this.colorLabel1, 0);
             this.ResumeLayout(false);
 
         }

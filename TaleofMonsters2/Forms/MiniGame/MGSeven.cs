@@ -55,6 +55,8 @@ namespace TaleofMonsters.Forms.MiniGame
         private bool c2Stop;
         private bool c3Stop;
 
+        private int trialLeft;
+
         public MGSeven()
         {
             InitializeComponent();
@@ -171,7 +173,6 @@ namespace TaleofMonsters.Forms.MiniGame
         public override void RestartGame()
         {
             base.RestartGame();
-
             #region 初始化各个元素
 
             c1ItemList.Clear();
@@ -181,7 +182,7 @@ namespace TaleofMonsters.Forms.MiniGame
             {
                 IconCell ic = new IconCell();
                 ic.Index = i + 1;
-                ic.Y = i*77;
+                ic.Y = i * 77;
                 ic.X = 52;
                 c1ItemList.Add(ic);
             }
@@ -202,7 +203,12 @@ namespace TaleofMonsters.Forms.MiniGame
                 c3ItemList.Add(ic);
             }
             #endregion
+            trialLeft = 3;
+            InitState();
+        }
 
+        private void InitState()
+        {
             bitmapButtonC1.Visible = true;
             bitmapButtonC2.Visible = false;
             bitmapButtonC3.Visible = false;
@@ -222,14 +228,25 @@ namespace TaleofMonsters.Forms.MiniGame
 
                 if (index1 == index2 && index1 == index3)
                 {
-                    score = 30;
+                    if (index1 == 7)//3个7
+                        score += 30;
+                    else
+                        score += 20;
                 }
                 else
                 {
-                    score = index1 + index2 + index3;
+                    score += index1 + index2 + index3;
                 }
 
-                EndGame();
+                trialLeft--;
+                if (trialLeft > 0)
+                {
+                    InitState();
+                }
+                else
+                {
+                    EndGame();
+                }
             }
         }
 
@@ -303,6 +320,10 @@ namespace TaleofMonsters.Forms.MiniGame
             {
                 iconCell.Draw(e.Graphics, yoff + 47, yoff + 216);
             }
+            
+            var font = new Font("宋体", 16 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+            DrawShadeText(e.Graphics, string.Format(string.Format("积分:{0}", score)), font, Brushes.Black, 110 + xoff, 10 + yoff);
+            font.Dispose();
         }
 
     }

@@ -145,8 +145,7 @@ namespace TaleofMonsters.Forms.MiniGame
 
             if (hp <= 0 || ehp <= 0)
             {
-                if (hp > 0)
-                    score = 100;
+                score = Math.Max(0, hp);
                 EndGame();
             }
         }

@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus;
-using NarlonLib.Drawing;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.DataType.User;
 using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms.MiniGame
@@ -65,25 +62,26 @@ namespace TaleofMonsters.Forms.MiniGame
 
         public virtual void EndGame()
         {
-            string hint;
-            if (score >= 50)
-            {
-                hint = "获得了游戏胜利";
-                UserProfile.InfoBag.AddDiamond(10);
-            }
+            string hint = "最终得分" + score;
+            if (score >= config.LvS)
+                hint += ",评级S!!!";
+            else if (score >= config.LvA)
+                hint += ",评级A!";
+            else if (score >= config.LvB)
+                hint += ",评级B";
             else
-            {
-                hint = "你输了";
-            }
+                hint += ",评级C";
 
-            if (MessageBoxEx2.Show(hint + ",是否花5钻石再试一次?") == DialogResult.OK)
-            {
-                if (UserProfile.InfoBag.PayDiamond(5))
-                {
-                    RestartGame();
-                    return;
-                }
-            }
+            MessageBoxEx.Show(hint);
+
+            //if (MessageBoxEx2.Show(hint + ",是否花5钻石再试一次?") == DialogResult.OK)
+            //{
+            //    if (UserProfile.InfoBag.PayDiamond(5))
+            //    {
+            //        RestartGame();
+            //        return;
+            //    }
+            //}
 
             Close();
         }

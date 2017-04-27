@@ -128,7 +128,7 @@ namespace TaleofMonsters.Forms.MiniGame
                 if (fail) //到底了
                 {
                     targetPos.Y--;
-                    AddMark(10);
+                    AddMark(1);
                     CheckCrash();
                     NewBlock();
                 }
@@ -155,7 +155,7 @@ namespace TaleofMonsters.Forms.MiniGame
                     if (!removeLineList.Contains(point.Y))
                     {
                         removeLineList.Add(point.Y);
-                        AddMark(100);
+                        AddMark(10);
                     }
                 }
             }
@@ -438,11 +438,8 @@ namespace TaleofMonsters.Forms.MiniGame
         {
             score += add;
             Invalidate(new Rectangle(xoff + ColumnCount * CellSize + 20, yoff + 100, 100, 40));
-            if (score >= 20000)
-            {
-                EndGame();
-            }
         }
+
         private void bitmapButtonC1_Click(object sender, System.EventArgs e)
         {
             if (!isPlaying)

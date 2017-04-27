@@ -156,7 +156,7 @@ namespace TaleofMonsters.Forms.MiniGame
         {
             if (realanswer == tempanswer)
             {
-                score = 100;
+                score = 120 - answers.Count*5;
                 EndGame();
             }
             else

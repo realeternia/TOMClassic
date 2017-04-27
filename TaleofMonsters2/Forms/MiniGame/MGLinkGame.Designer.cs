@@ -42,7 +42,7 @@ namespace TaleofMonsters.Forms.MiniGame
             this.colorLabel1.Size = new System.Drawing.Size(620, 75);
             this.colorLabel1.TabIndex = 37;
             this.colorLabel1.Text = "|本游戏是经典的|#ff6600|连连看||玩法。\r\n|每放置消除一对物件获得40分，特殊的消除物件还能获得额外的分数和时间奖励。\r\n|每次消除所有物件，会奖励一" +
-    "定的时间，并进入下一关\r\n|获胜的条件 达到|#ff0000|10000||分。\r\n|如果时间走完则|#0033cc|失败||。\r\n";
+    "定的时间，并进入下一关\r\n|如果时间走完则|#0033cc|游戏结束||。\r\n";
             // 
             // bitmapButtonC1
             // 

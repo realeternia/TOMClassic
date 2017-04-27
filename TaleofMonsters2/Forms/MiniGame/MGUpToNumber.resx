@@ -117,11 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="colorLabel1.Text" xml:space="preserve">
-    <value>|需要向大锅中添加规定数量的各种食材。
-|每次添加时，随机加入|#ff0000|2-5||单位的食材，四种食材每单位的
-|分数为|#00cc66|5-4-5-2||。而四种食材需要的上限为|#ff9900|8-5-4-15||。
-|如果任意单位食材数量超过要求，则|#0033cc|失败||。
-|最终总分达到|#ffcc00|100||分，|#ff0000|游戏胜利||；否则|#0033cc|失败||。</value>
-  </data>
 </root>

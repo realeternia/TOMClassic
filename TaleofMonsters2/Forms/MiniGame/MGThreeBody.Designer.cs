@@ -36,7 +36,7 @@ namespace TaleofMonsters.Forms.MiniGame
             // 
             // colorLabel1
             // 
-            this.colorLabel1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
+            this.colorLabel1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
             this.colorLabel1.ForeColor = System.Drawing.Color.White;
             this.colorLabel1.Location = new System.Drawing.Point(13, 42);
             this.colorLabel1.Name = "colorLabel1";
@@ -54,6 +54,7 @@ namespace TaleofMonsters.Forms.MiniGame
             this.bitmapButtonC1.ImageNormal = null;
             this.bitmapButtonC1.Location = new System.Drawing.Point(148, 376);
             this.bitmapButtonC1.Name = "bitmapButtonC1";
+            this.bitmapButtonC1.NoUseDrawNine = false;
             this.bitmapButtonC1.Size = new System.Drawing.Size(50, 30);
             this.bitmapButtonC1.TabIndex = 27;
             this.bitmapButtonC1.Tag = "1";
@@ -68,10 +69,10 @@ namespace TaleofMonsters.Forms.MiniGame
             this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.colorLabel1);
             this.Controls.Add(this.bitmapButtonC1);
-            this.DoubleBuffered = true;
             this.Name = "MGThreeBody";
-            this.Size = new System.Drawing.Size(345, 416);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MGUpToNumber_Paint);
+            this.Controls.SetChildIndex(this.bitmapButtonC1, 0);
+            this.Controls.SetChildIndex(this.colorLabel1, 0);
             this.ResumeLayout(false);
 
         }
