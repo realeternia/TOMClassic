@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using ControlPlus;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.DataType.User;
 using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms.MiniGame
@@ -23,7 +21,6 @@ namespace TaleofMonsters.Forms.MiniGame
         private int[,] cellMap;
 
         private bool isPlaying;
-        bool isFail = false;
         private Point targetPos;
         private BlockType targetType;
         private int targetDirect; //0-3
@@ -37,7 +34,6 @@ namespace TaleofMonsters.Forms.MiniGame
         private bool keyRightPressed;
 
         private int lastPressCheckTime;
-        private int mark;
 
         public MGRussiaBlock()
         {
@@ -76,6 +72,8 @@ namespace TaleofMonsters.Forms.MiniGame
 
         public override void RestartGame()
         {
+            base.RestartGame();
+
             isPlaying = true;
             cellMap = new int[ColumnCount, RowCount];
             nextType = 0;
@@ -84,36 +82,12 @@ namespace TaleofMonsters.Forms.MiniGame
             keyLeftPressed = false;
             keyRightPressed = false;
             lastPressCheckTime = 0;
-            mark = 0;
             Invalidate();
         }
 
         public override void EndGame()
         {
-            string hint;
-            if (!isFail)
-            {
-                hint = "获得了游戏胜利";
-                UserProfile.InfoBag.AddDiamond(10);
-            }
-            else
-            {
-                hint = "你输了";
-            }
-            isPlaying = false;
-
-            if (MessageBoxEx2.Show(hint + ",是否花5钻石再试一次?") == DialogResult.OK)
-            {
-                if (UserProfile.InfoBag.PayDiamond(5))
-                {
-                    RestartGame();
-                    isPlaying = true;
-                    return;
-                }
-            }
-
-            Close();
-            SystemMenuManager.IsHotkeyEnabled = true;
+            base.EndGame();
         }
         private void TimelyMoveBlock(int tick)
         {
@@ -221,7 +195,6 @@ namespace TaleofMonsters.Forms.MiniGame
         {
             if (!CanChange())
             {
-                isFail = true;
                 EndGame();
             }
         }
@@ -463,11 +436,10 @@ namespace TaleofMonsters.Forms.MiniGame
 
         private void AddMark(int add)
         {
-            mark += add;
+            score += add;
             Invalidate(new Rectangle(xoff + ColumnCount * CellSize + 20, yoff + 100, 100, 40));
-            if (mark >= 20000)
+            if (score >= 20000)
             {
-                isFail = false;
                 EndGame();
             }
         }
@@ -489,7 +461,7 @@ namespace TaleofMonsters.Forms.MiniGame
 
             Font font = new Font("宋体", 11);
             e.Graphics.DrawString("得分", font, Brushes.White, xoff + ColumnCount * CellSize + 20, yoff + 100);
-            e.Graphics.DrawString(mark.ToString(), font, Brushes.White, xoff + ColumnCount * CellSize + 20, yoff + 120);
+            e.Graphics.DrawString(score.ToString(), font, Brushes.White, xoff + ColumnCount * CellSize + 20, yoff + 120);
             font.Dispose();
 
             if (!show || !isPlaying)

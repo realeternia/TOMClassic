@@ -115,7 +115,7 @@ namespace TaleofMonsters.Forms.MiniGame
             this.DoubleBuffered = true;
             this.Name = "MGSeven";
             this.Size = new System.Drawing.Size(345, 416);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.MGUpToNumber_Paint);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.MGSeven_Paint);
             this.ResumeLayout(false);
 
         }

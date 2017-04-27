@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using ControlPlus;
 using NarlonLib.Math;
-using TaleofMonsters.DataType.User;
 using TaleofMonsters.Controler.Loader;
 
 namespace TaleofMonsters.Forms.MiniGame
@@ -31,7 +29,6 @@ namespace TaleofMonsters.Forms.MiniGame
             Try, Test
         }
 
-        private bool isFail;
         private const int imageSize = 40;
         private const int margin = 2;
         private const int ColumnCount = 12;
@@ -40,7 +37,6 @@ namespace TaleofMonsters.Forms.MiniGame
         private int[,] iconArray = new int[ColumnCount + 2, RowCount+2];
         private int cur = -1;
         private float timeLeft;
-        private int mark = 0;
         private bool isPlaying;
         private const int RoundTime = 120;
         private const double ComboTime = 1.5;
@@ -89,10 +85,10 @@ namespace TaleofMonsters.Forms.MiniGame
 
         public override void RestartGame()
         {
+            base.RestartGame();
             lastHitTime = DateTime.Now;
-            isFail = false;
             timeLeft = RoundTime;
-            mark = 0;
+            score = 0;
             isPlaying = true;
             InitIconArray();
 
@@ -101,29 +97,8 @@ namespace TaleofMonsters.Forms.MiniGame
 
         public override void EndGame()
         {
+            base.EndGame();
             isPlaying = false;
-
-            string hint="";
-            if (!isFail)
-            {
-                hint = "获得了游戏胜利";
-                UserProfile.InfoBag.AddDiamond(10);
-            }
-            else
-            {
-                hint = "你输了";
-            }
-
-            if (MessageBoxEx2.Show(hint + ",是否花5钻石再试一次?") == DialogResult.OK)
-            {
-                if (UserProfile.InfoBag.PayDiamond(5))
-                {
-                    RestartGame();
-                    return;
-                }
-            }
-
-            Close();
         }
 
         private void InitIconArray()
@@ -161,7 +136,6 @@ namespace TaleofMonsters.Forms.MiniGame
         {
             if (timeLeft <= 0)
             {
-                isFail = true;
                 EndGame();
             }
         }
@@ -445,21 +419,20 @@ namespace TaleofMonsters.Forms.MiniGame
 
         private void AddMark(int ltype)
         {
-            mark += 40;
+            score += 40;
             switch (ltype)
             {
-                case 21: mark += 100; break;
-                case 22: mark += 150; break;
-                case 23: mark += 40 * 3; break;
-                case 24: mark += 40 * 5; break;
+                case 21: score += 100; break;
+                case 22: score += 150; break;
+                case 23: score += 40 * 3; break;
+                case 24: score += 40 * 5; break;
                 case 25: timeLeft += 5; break;
                 case 26: timeLeft += 10; break;
             }
             Invalidate(new Rectangle(xoff + 550, yoff + 70, 100, 20)); //刷时间
             Invalidate(new Rectangle(xoff + 550, yoff + 120, 100, 20)); //刷分数
-            if (mark >= 10000)
+            if (score >= 10000)
             {
-                isFail = false;
                 EndGame();
             }
         }
@@ -482,7 +455,7 @@ namespace TaleofMonsters.Forms.MiniGame
             e.Graphics.DrawString(string.Format("{0:0}:{1:00}", (int)(timeLeft/60), (int)timeLeft % 60), font, Brushes.White, xoff + 550, yoff + 70);
 
             e.Graphics.DrawString("得分", font, Brushes.White, xoff +550, yoff + 100);
-            e.Graphics.DrawString(mark.ToString(), font, Brushes.White, xoff + 550, yoff + 120);
+            e.Graphics.DrawString(score.ToString(), font, Brushes.White, xoff + 550, yoff + 120);
             font.Dispose();
 
             if (!show)

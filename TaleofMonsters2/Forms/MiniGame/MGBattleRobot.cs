@@ -2,8 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Math;
-using ControlPlus;
-using TaleofMonsters.DataType.User;
 using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms.MiniGame
@@ -35,33 +33,14 @@ namespace TaleofMonsters.Forms.MiniGame
 
         public override void RestartGame()
         {
+            base.RestartGame();
             InitAttrs();
             Invalidate(new Rectangle(xoff, yoff, 324, 244));
         }
 
         public override void EndGame()
         {
-            string hint;
-            if (hp > 0)
-            {
-                hint = "获得了游戏胜利";
-                UserProfile.InfoBag.AddDiamond(10);
-            }
-            else
-            {
-                hint = "你输了";
-            }
-
-            if (MessageBoxEx2.Show(hint + ",是否花5钻石再试一次?") == DialogResult.OK)
-            {
-                if (UserProfile.InfoBag.PayDiamond(5))
-                {
-                    RestartGame();
-                    return;
-                }
-            }
-
-            Close();
+            base.EndGame();
         }
 
         private void InitAttrs()
@@ -166,6 +145,8 @@ namespace TaleofMonsters.Forms.MiniGame
 
             if (hp <= 0 || ehp <= 0)
             {
+                if (hp > 0)
+                    score = 100;
                 EndGame();
             }
         }

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Math;
-using ControlPlus;
-using TaleofMonsters.DataType.User;
 using TaleofMonsters.Controler.Loader;
 
 namespace TaleofMonsters.Forms.MiniGame
@@ -43,7 +41,8 @@ namespace TaleofMonsters.Forms.MiniGame
             }
         }
 
-        private const float MinSpeed = 0.3f;
+        private const float MinSpeed = 1f; //开始慢慢移动的速度
+        private const float WalkSpeed = 0.6f; //慢慢移动的速度
 
         private List<IconCell> c1ItemList = new List<IconCell>();
         private List<IconCell> c2ItemList = new List<IconCell>();
@@ -56,11 +55,10 @@ namespace TaleofMonsters.Forms.MiniGame
         private bool c2Stop;
         private bool c3Stop;
 
-        private bool isFail;
-
         public MGSeven()
         {
             InitializeComponent();
+            #region 按钮初始化
             this.bitmapButtonC1.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
             bitmapButtonC1.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             bitmapButtonC1.ForeColor = Color.White;
@@ -93,6 +91,7 @@ namespace TaleofMonsters.Forms.MiniGame
             bitmapButtonC4.IconXY = new Point(4, 5);
             bitmapButtonC4.TextOffX = 8;
             bitmapButtonC4.Text = @"停止";
+            #endregion
         }
 
         public override void Init(int width, int height)
@@ -107,63 +106,72 @@ namespace TaleofMonsters.Forms.MiniGame
             base.OnFrame(tick, timePass);
             if ((tick%5) == 0)
             {
-                if (c1Stop)
+                if (c1Stop && c1Speed > 0)
                 {
                     c1Speed *= 0.8f;
                     if (c1Speed <= MinSpeed)
                     {
-                        c1Speed = 0;
+                        c1Speed = WalkSpeed;
                     }
                 }
-                if (c2Stop)
+                if (c2Stop && c2Speed > 0)
                 {
                     c2Speed *= 0.8f;
                     if (c2Speed <= MinSpeed)
                     {
-                        c2Speed = 0;
+                        c2Speed = WalkSpeed;
                     }
                 }
-                if (c3Stop)
+                if (c3Stop && c3Speed > 0)
                 {
                     c3Speed *= 0.8f;
                     if (c3Speed <= MinSpeed)
                     {
-                        c3Speed = 0;
+                        c3Speed = WalkSpeed;
                     }
                 }
             }
-            foreach (IconCell iconCell in c1ItemList)
+            if (c1Speed > 0)
             {
-                iconCell.Y += 3.2f*c1Speed;
-                if (iconCell.Y>= 400)
-                {
-                    iconCell.Y -= 77*7;
-                }
+                MoveItem(c1ItemList, ref c1Speed);
             }
-            foreach (IconCell iconCell in c2ItemList)
+            if (c2Speed > 0)
             {
-                iconCell.Y += 3.2f * c2Speed;
-                if (iconCell.Y >= 400)
-                {
-                    iconCell.Y -= 77 * 7;
-                }
+                MoveItem(c2ItemList, ref c2Speed);
             }
-            foreach (IconCell iconCell in c3ItemList)
+            if (c3Speed > 0)
             {
-                iconCell.Y += 3.2f * c3Speed;
-                if (iconCell.Y >= 400)
-                {
-                    iconCell.Y -= 77 * 7;
-                }
+                MoveItem(c3ItemList, ref c3Speed);
             }
-            
             BeginCalculateResult();
 
             Invalidate(new Rectangle(xoff, yoff, 324, 244));
         }
 
+        private static void MoveItem(List<IconCell> cells, ref float speed)
+        {
+            foreach (var iconCell in cells)
+            {
+                iconCell.Y += 3.2f* speed;
+                if (iconCell.Y >= 400)
+                {
+                    iconCell.Y -= 77*7;
+                }
+            }
+            if (speed <= MinSpeed)
+            {
+                var val = (cells[0].Y + 77*7)%77; //保证正数
+                if (val > 0 && val < 3)
+                {
+                    speed = 0;
+                }
+            }
+        }
+
         public override void RestartGame()
         {
+            base.RestartGame();
+
             #region 初始化各个元素
 
             c1ItemList.Clear();
@@ -202,12 +210,11 @@ namespace TaleofMonsters.Forms.MiniGame
             c1Stop = false;
             c2Stop = false;
             c3Stop = false;
-            isFail = false;
         }
 
         protected override void CalculateResult()
         {
-            if (c1Stop && c2Stop && c3Stop &&c1Speed == 0f && c2Speed == 0f && c3Speed == 0)
+            if (c1Stop && c2Stop && c3Stop && c1Speed == 0f && c2Speed == 0f && c3Speed == 0)
             {
                 int index1 = FindMin(c1ItemList).Index;
                 int index2 = FindMin(c2ItemList).Index;
@@ -215,15 +222,11 @@ namespace TaleofMonsters.Forms.MiniGame
 
                 if (index1 == index2 && index1 == index3)
                 {
-                    isFail = false;
-                }
-                else if (index1 == 7 || index2==7 || index3 == 7)//出现7直接获胜
-                {
-                    isFail = false;
+                    score = 30;
                 }
                 else
                 {
-                    isFail = true;
+                    score = index1 + index2 + index3;
                 }
 
                 EndGame();
@@ -248,27 +251,7 @@ namespace TaleofMonsters.Forms.MiniGame
 
         public override void EndGame()
         {
-            string hint;
-            if (!isFail)
-            {
-                hint = "获得了游戏胜利";
-                UserProfile.InfoBag.AddDiamond(10);
-            }
-            else
-            {
-                hint = "你输了";
-            }
-
-            if (MessageBoxEx2.Show(hint + ",是否花5钻石再试一次?") == DialogResult.OK)
-            {
-                if (UserProfile.InfoBag.PayDiamond(5))
-                {
-                    RestartGame();
-                    return;
-                }
-            }
-
-            Close();
+            base.EndGame();
         }
 
         private void bitmapButtonC1_Click(object sender, EventArgs e)
@@ -286,34 +269,37 @@ namespace TaleofMonsters.Forms.MiniGame
         private void bitmapButtonC2_Click(object sender, EventArgs e)
         {
             c2Stop = true;
+            bitmapButtonC2.Visible = false;
         }
 
         private void bitmapButtonC3_Click(object sender, EventArgs e)
         {
             c1Stop = true;
+            bitmapButtonC3.Visible = false;
         }
 
         private void bitmapButtonC4_Click(object sender, EventArgs e)
         {
             c3Stop = true;
+            bitmapButtonC4.Visible = false;
         }
 
-        private void MGUpToNumber_Paint(object sender, PaintEventArgs e)
+        private void MGSeven_Paint(object sender, PaintEventArgs e)
         {
             DrawBase(e.Graphics);
 
             if (!show)
                 return;
 
-            foreach (IconCell iconCell in c1ItemList)
-            {
-                iconCell.Draw(e.Graphics, yoff+47,yoff+216);
-            }
-            foreach (IconCell iconCell in c2ItemList)
+            foreach (var iconCell in c1ItemList)
             {
                 iconCell.Draw(e.Graphics, yoff + 47, yoff + 216);
             }
-            foreach (IconCell iconCell in c3ItemList)
+            foreach (var iconCell in c2ItemList)
+            {
+                iconCell.Draw(e.Graphics, yoff + 47, yoff + 216);
+            }
+            foreach (var iconCell in c3ItemList)
             {
                 iconCell.Draw(e.Graphics, yoff + 47, yoff + 216);
             }

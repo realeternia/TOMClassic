@@ -2,8 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Math;
-using ControlPlus;
-using TaleofMonsters.DataType.User;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
 using TaleofMonsters.Forms.Items.Regions;
@@ -26,10 +24,9 @@ namespace TaleofMonsters.Forms.MiniGame
         private int population;
         private int populationDry;
         private int food;
-        private int sci;
+        private int sci; //科技值，同时也是分数
 
         private int selectWork;
-        private bool isFail;
 
         public MGThreeBody()
         {
@@ -66,6 +63,7 @@ namespace TaleofMonsters.Forms.MiniGame
 
         public override void RestartGame()
         {
+            base.RestartGame();
             eraGoodBad = MathTool.GetRandom(6, 15);
             eraBadGood = MathTool.GetRandom(6, 15);
             population = 50;
@@ -73,33 +71,12 @@ namespace TaleofMonsters.Forms.MiniGame
             food = 250;
             sci = 0;
             isGoodEra = true;
-            isFail = false;
             ChangeWork(WorkPopu);            
         }
 
         public override void EndGame()
         {
-            string hint;
-            if (!isFail && sci >= 5000)
-            {
-                hint = "获得了游戏胜利";
-                UserProfile.InfoBag.AddDiamond(10);
-            }
-            else
-            {
-                hint = "你输了";
-            }
-
-            if (MessageBoxEx2.Show(hint + ",是否花5钻石再试一次?") == DialogResult.OK)
-            {
-                if (UserProfile.InfoBag.PayDiamond(5))
-                {
-                    RestartGame();
-                    return;
-                }
-            }
-
-            Close();
+            base.EndGame();
         }
 
         private void ChangeWork(int id)
@@ -203,9 +180,9 @@ namespace TaleofMonsters.Forms.MiniGame
                 food -= Math.Max(10, food/10);
                 population = population*Math.Min(MathTool.GetRandom(eraBadGood) + 60, 99)/100;
             }
-            if ((population + populationDry) <= 0)
+            if (population + populationDry <= 0)
             {
-                isFail = true;
+                score = sci;
                 EndGame();
             }
 

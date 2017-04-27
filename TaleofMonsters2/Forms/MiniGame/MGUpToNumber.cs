@@ -2,8 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Math;
-using ControlPlus;
-using TaleofMonsters.DataType.User;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
@@ -17,7 +15,6 @@ namespace TaleofMonsters.Forms.MiniGame
         private int[] itemRequired;
         private int[] itemGet;
         private int level;
-        private bool isFail;
 
         public MGUpToNumber()
         {
@@ -54,35 +51,15 @@ namespace TaleofMonsters.Forms.MiniGame
 
         public override void RestartGame()
         {
+            base.RestartGame();
             itemGet = new int[4];
             level = 0;
-            isFail = false;
             ChangeFood(1);
         }
 
         public override void EndGame()
         {
-            string hint;
-            if (!isFail && GetPoints()>=100)
-            {
-                hint = "获得了游戏胜利";
-                UserProfile.InfoBag.AddDiamond(10);
-            }
-            else
-            {
-                hint = "你输了";
-            }
-
-            if (MessageBoxEx2.Show(hint + ",是否花5钻石再试一次?") == DialogResult.OK)
-            {
-                if (UserProfile.InfoBag.PayDiamond(5))
-                {
-                    RestartGame();
-                    return;
-                }
-            }
-
-            Close();
+            base.EndGame();
         }
 
         private void bitmapButtonC1_Click(object sender, EventArgs e)
@@ -91,12 +68,8 @@ namespace TaleofMonsters.Forms.MiniGame
             itemGet[level] += get;
             string[] itemNames = {"牛肉","蜂蜜","黄油","水"};
             AddFlowCenter(string.Format("{0}x{1}", itemNames[level], get), "LimeGreen");
-            if (itemGet[level]>itemRequired[level])
-            {
-                isFail = true;
-                EndGame();
-            }
-            else if(GetPoints()>=100)
+            score = GetPoints();
+            if (itemGet[level] > itemRequired[level] || score >= 100)
             {
                 EndGame();
             }

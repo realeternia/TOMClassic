@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 using ConfigDatas;
+using ControlPlus;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.Forms.MiniGame
 {
@@ -29,6 +32,7 @@ namespace TaleofMonsters.Forms.MiniGame
         protected int yoff = 129;
 
         private string playName = "";
+        protected int score;
 
         public MGBase()
         {
@@ -54,12 +58,32 @@ namespace TaleofMonsters.Forms.MiniGame
 
         public virtual void RestartGame()
         {
-
+            score = 0;
         }
 
         public virtual void EndGame()
         {
+            string hint;
+            if (score >= 50)
+            {
+                hint = "获得了游戏胜利";
+                UserProfile.InfoBag.AddDiamond(10);
+            }
+            else
+            {
+                hint = "你输了";
+            }
 
+            if (MessageBoxEx2.Show(hint + ",是否花5钻石再试一次?") == DialogResult.OK)
+            {
+                if (UserProfile.InfoBag.PayDiamond(5))
+                {
+                    RestartGame();
+                    return;
+                }
+            }
+
+            Close();
         }
 
         protected virtual void CalculateResult()

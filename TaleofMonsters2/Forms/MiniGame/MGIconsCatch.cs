@@ -4,9 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Math;
 using TaleofMonsters.Core;
-using ControlPlus;
 using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.Forms.MiniGame
 {
@@ -75,6 +73,7 @@ namespace TaleofMonsters.Forms.MiniGame
 
         public override void RestartGame()
         {
+            base.RestartGame();
             int[] data ={ 1, 2, 3, 4, 5, 6, 7, 8, 9 };
             for (int i = 0; i < 100; i++)
             {
@@ -97,30 +96,10 @@ namespace TaleofMonsters.Forms.MiniGame
 
         public override void EndGame()
         {
-            string hint;
-            if (realanswer == tempanswer)
-            {
-                hint = "获得了游戏胜利";
-                UserProfile.InfoBag.AddDiamond(10);
-            }
-            else
-            {
-                hint = "你输了";
-            }
-
-            if (MessageBoxEx2.Show(hint + ",是否花5钻石再试一次?") == DialogResult.OK)
-            {
-                if (UserProfile.InfoBag.PayDiamond(5))
-                {
-                    RestartGame();
-                    return;
-                }
-            }
-
-            Close();
+            base.EndGame();
         }
 
-        private int GetByteFromInt(int value, int index)
+        private static int GetByteFromInt(int value, int index)
         {
             switch (index)
             {
@@ -132,7 +111,7 @@ namespace TaleofMonsters.Forms.MiniGame
             }
         }
 
-        private bool HasByteFromInt(int value, int index)
+        private static bool HasByteFromInt(int value, int index)
         {
             int data = value;
             while (data > 0)
@@ -175,8 +154,9 @@ namespace TaleofMonsters.Forms.MiniGame
 
         protected override void CalculateResult()
         {
-            if (realanswer == tempanswer || answers.Count >= 14)
+            if (realanswer == tempanswer)
             {
+                score = 100;
                 EndGame();
             }
             else
