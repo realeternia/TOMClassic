@@ -127,7 +127,6 @@
     <Compile Include="Core\NLPriorityQueue.cs" />
     <Compile Include="Core\NLTimer.cs" />
     <Compile Include="Drawing\DrawTool.cs" />
-    <Compile Include="Drawing\ImagePixelEffects.cs" />
     <Compile Include="Drawing\ImagePixelTool.cs" />
     <Compile Include="File\CsvDataReader.cs" />
     <Compile Include="Log\NLog.cs" />

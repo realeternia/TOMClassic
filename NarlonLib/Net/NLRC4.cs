@@ -3,7 +3,7 @@ using System.Text;
 
 namespace NarlonLib.Net
 {
-    public class NLRC4 : UXCryptoBase
+    public class NLRC4 : NLCryptoBase
     {
         private static NLRC4 RC4 = new NLRC4();
 
@@ -74,7 +74,7 @@ namespace NarlonLib.Net
         }
     }
 
-    public class UXCryptoBase
+    public class NLCryptoBase
     {
         /// <summary>
         /// 编码转换器，用于字节码和字符串之间的转换，默认为本机编码
@@ -94,7 +94,7 @@ namespace NarlonLib.Net
         /// <param name="pass">密码</param>
         /// <param name="em">编码模式</param>
         /// <returns>加密后经过编码的字符串</returns>
-        public String Encrypt(String data, String pass, UXCryptoBase.EncoderMode em)
+        public String Encrypt(String data, String pass, NLCryptoBase.EncoderMode em)
         {
             if (data == null || pass == null) return null;
             if (em == EncoderMode.Base64Encoder)
@@ -110,7 +110,7 @@ namespace NarlonLib.Net
         /// <param name="pass">密码</param>
         /// <param name="em">编码模式</param>
         /// <returns>明文</returns>
-        public String Decrypt(String data, String pass, UXCryptoBase.EncoderMode em)
+        public String Decrypt(String data, String pass, NLCryptoBase.EncoderMode em)
         {
             if (data == null || pass == null) return null;
             if (em == EncoderMode.Base64Encoder)

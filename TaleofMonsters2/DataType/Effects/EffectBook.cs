@@ -80,7 +80,7 @@ namespace TaleofMonsters.DataType.Effects
                     case 5: image.RotateFlip(RotateFlipType.Rotate90FlipX); break;
                     case 6: image.RotateFlip(RotateFlipType.Rotate180FlipX); break;
                     case 7: image.RotateFlip(RotateFlipType.Rotate270FlipX); break;
-                    default: ImagePixelTool.Effect((Bitmap)image, (ImagePixelEffects)(type / 10), type % 10); break;
+                    default: ImagePixelTool.Effect((Bitmap)image, (ImagePixelTool.ImagePixelEffects)(type / 10), type % 10); break;
                 }
                 if (flip)
                 {
