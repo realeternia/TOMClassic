@@ -29,7 +29,7 @@ namespace TaleofMonsters.Forms.MiniGame
             virtualRegion = new VirtualRegion(this);
             for (int i = 0; i < 4; i++)
             {
-                ButtonRegion region = new ButtonRegion(i + 1, 60 + 55 * i, 310, 50, 50,"GameUpToNumber1.PNG", "GameUpToNumber1On.PNG");
+                ButtonRegion region = new ButtonRegion(i + 1, 60 + 55 * i, 310, 50, 50, "GameBackNormal1.PNG", "GameBackNormal1On.PNG");
                 region.AddDecorator(new RegionTextDecorator(10, 20, 10));
                 virtualRegion.AddRegion(region);
             }

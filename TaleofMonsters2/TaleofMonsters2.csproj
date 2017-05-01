@@ -216,6 +216,12 @@
     <Compile Include="Forms\MiniGame\MGOvercome.Designer.cs">
       <DependentUpon>MGOvercome.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MiniGame\MGRacing.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MiniGame\MGRacing.Designer.cs">
+      <DependentUpon>MGRacing.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainItem\Blesses\BlessManager.cs" />
     <Compile Include="MainItem\Quests\TalkEventItem.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemEnd.cs" />
@@ -791,6 +797,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MiniGame\MGOvercome.resx">
       <DependentUpon>MGOvercome.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MiniGame\MGRacing.resx">
+      <DependentUpon>MGRacing.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MiniGame\MGUpToNumber.resx">
