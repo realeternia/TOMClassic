@@ -18,7 +18,7 @@ namespace TaleofMonsters.DataType.Cards
             var cardData = CardConfigManager.GetCardConfig(cid);
             int attr = cardData.Attr;//属性决定包边颜色
             g.FillRectangle(PaintTool.GetBrushByAttribute(attr), x + 1, y + 1, width - 2, height - 2);
-            g.DrawImage(img, x + 2 + xDiff, y + 2 + xDiff, width - 4 - xDiff*2, height - 4-yDiff*2);
+            g.DrawImage(img, x + 2 + xDiff, y + 2 + yDiff, width - 4 - xDiff*2, height - 4-yDiff*2);
 
             string cardBorder = GetCardBorder(cardData);
             var imgBack = PicLoader.Read("Border", cardBorder);
