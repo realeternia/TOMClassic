@@ -22,14 +22,14 @@ namespace TaleofMonsters.Forms
         public BlackWallForm()
         {
             InitializeComponent();
-            Width = MainForm.Instance.Width;
-            Height = MainForm.Instance.Height;
         }
 
         public override void Init(int width, int height)
         {
+            Width = width;
+            Height = height;
             base.Init(width, height);
-
+            Location = new Point(0,0); //做一个特殊处理，不自动偏移
             SystemMenuManager.IsHotkeyEnabled = false;
         }
 

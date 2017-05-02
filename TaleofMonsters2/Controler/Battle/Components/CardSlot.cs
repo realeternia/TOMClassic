@@ -4,6 +4,7 @@ using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards;
 
 namespace TaleofMonsters.Controler.Battle.Components
@@ -89,6 +90,15 @@ namespace TaleofMonsters.Controler.Battle.Components
                 g.DrawString("★", font, Brushes.Yellow, x + Size.Width - 15, y + 1 + i * 10);
             }
             font.Dispose();
+
+            var cardData = CardConfigManager.GetCardConfig(Card.CardId);
+            if (Card.GetCardType() == CardTypes.Monster)
+                g.DrawImage(HSIcons.GetIconsByEName("rac" + cardData.TypeSub), x+ Size.Width/2-18, y+90, 16, 16);
+            else if (Card.GetCardType() == CardTypes.Weapon)
+                g.DrawImage(HSIcons.GetIconsByEName("wep" + (cardData.TypeSub-100+1)), x + Size.Width / 2 - 18, y + 90, 16, 16);
+            else if (Card.GetCardType() == CardTypes.Spell)
+                g.DrawImage(HSIcons.GetIconsByEName("spl" + (cardData.TypeSub-200+1)), x + Size.Width / 2 - 18, y + 90, 16, 16);
+            g.DrawImage(HSIcons.GetIconsByEName("atr" + cardData.Attr), x + Size.Width / 2 + 2, y + 90, 16, 16);
 
             font = new Font("宋体", 9*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             var cardName = string.Format("{0}Lv{1}", Card.Name, ACard.Level);
