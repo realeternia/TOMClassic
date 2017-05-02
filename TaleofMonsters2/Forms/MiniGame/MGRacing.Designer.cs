@@ -41,9 +41,9 @@ namespace TaleofMonsters.Forms.MiniGame
             this.colorLabel1.Name = "colorLabel1";
             this.colorLabel1.Size = new System.Drawing.Size(326, 86);
             this.colorLabel1.TabIndex = 37;
-            this.colorLabel1.Text = "|这是一个vsAI玩家的|#ff0000|赛马游戏||。\r\n|游戏由|#ff0000|15||个回合构成。每回合轮选择不同的骑行速度。\r\n|赛道分成|#cc660" +
-    "0|简单、中等和困难||三种，在高难度赛道选择更高速度\r\n|可能会应该事故反而变得低效。\r\n|使用|#0066ff|氮气||虽然可以获得高速，但总是特别危险。\r" +
-    "\n|最终得分=|#ffcc00|领先的距离||。";
+            this.colorLabel1.Text = "|这是一个vsAI玩家的|#ff0000|赛马游戏||。\r\n|游戏由|#ff0000|15||个回合构成。每回合选择不同的骑行速度。\r\n|赛道分成|#cc6600" +
+    "|简单、中等和困难||三种。高速可以用帮助你领先，\r\n|但在高难度赛道可能更容易引起事故并落后。\r\n|使用|#0066ff|氮气||虽然可以获得高速，但总是特别" +
+    "危险。\r\n|最终得分=|#ffcc00|领先的距离||。";
             // 
             // bitmapButtonC1
             // 

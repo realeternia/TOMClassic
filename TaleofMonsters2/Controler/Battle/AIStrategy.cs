@@ -44,7 +44,8 @@ namespace TaleofMonsters.Controler.Battle
             int row = BattleManager.Instance.MemMap.RowCount;
             int size = BattleManager.Instance.MemMap.CardSize;
             bool isLeft = player.IsLeft;
-            var rival = (player == BattleManager.Instance.PlayerManager.LeftPlayer) ? BattleManager.Instance.PlayerManager.RightPlayer : BattleManager.Instance.PlayerManager.LeftPlayer;
+            var rival = player == BattleManager.Instance.PlayerManager.LeftPlayer ? 
+                BattleManager.Instance.PlayerManager.RightPlayer : BattleManager.Instance.PlayerManager.LeftPlayer;
             
             player.CardsDesk.SetSelectId(MathTool.GetRandom(player.CardNumber) + 1);
             if (player.SelectCardId != 0)
@@ -78,13 +79,21 @@ namespace TaleofMonsters.Controler.Battle
                     SpellConfig spellConfig = ConfigData.GetSpellConfig(card.CardId);
                     if (BattleTargetManager.IsSpellUnitTarget(spellConfig.Target))
                     {
+                        var targetStar = -1;
+                        if (tar >= 0)
+                            targetStar = BattleManager.Instance.MonsterQueue[tar].Avatar.MonsterConfig.Star;
                         for (int i = 0; i <BattleManager.Instance.MonsterQueue.Count; i++)
                         {
                             LiveMonster monster =BattleManager.Instance.MonsterQueue[i];
-                            if (!monster.IsGhost && ((monster.IsLeft != isLeft && spellConfig.Target[1] == 'F') || (monster.IsLeft == isLeft && spellConfig.Target[1] != 'F')))
+                            if(monster.IsGhost)
+                                continue;
+                            if ((monster.IsLeft != isLeft && spellConfig.Target[1] != 'F') || (monster.IsLeft == isLeft && spellConfig.Target[1] != 'E'))
                             {
-                                if (tar == -1 || monster.Avatar.MonsterConfig.Star >BattleManager.Instance.MonsterQueue[tar].Avatar.MonsterConfig.Star)
+                                if (tar == -1 || monster.Avatar.MonsterConfig.Star > targetStar)
+                                {
                                     tar = i;
+                                    targetStar = monster.Avatar.MonsterConfig.Star;
+                                }
                             }
                         }
                         if (tar == -1)
