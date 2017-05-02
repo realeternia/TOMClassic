@@ -41,8 +41,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                         if (monster.AddAts())
                         {
                             CheckFight(targetEnemy);
-                            return;
                         }
+                        return;
                     }
                 }
             }
