@@ -168,7 +168,7 @@ namespace TaleofMonsters
             if (viewStack1.SelectedIndex == 1)
             {
                 PanelManager.CheckHotKey(e, true);
-                SystemMenuManager.CheckHotKey(e.KeyCode);
+                SystemMenuManager.CheckHotKey(e);
             }
         }
         private void MainForm_KeyDown(object sender, KeyEventArgs e)

@@ -225,6 +225,7 @@
     <Compile Include="MainItem\Blesses\BlessManager.cs" />
     <Compile Include="MainItem\Quests\TalkEventItem.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemEnd.cs" />
+    <Compile Include="MainItem\Quests\TalkEventItemGame.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemNpc.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemPunish.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemRoll.cs" />

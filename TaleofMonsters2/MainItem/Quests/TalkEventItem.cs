@@ -17,7 +17,8 @@ namespace TaleofMonsters.MainItem.Quests
             switch (e.Type)
             {
                 case "roll": return new TalkEventItemRoll(eventId, level,r, e);
-                case "fight": return new TalkEventItemFight(eventId, level, r, e); 
+                case "fight": return new TalkEventItemFight(eventId, level, r, e);
+                case "game": return new TalkEventItemGame(eventId, level, r, e);
                 case "reward": return new TalkEventItemReward(eventId, level, c, r, e);
                 case "trade": return new TalkEventItemTrade(eventId, level, c, r, e); 
                 case "punish": return new TalkEventItemPunish(eventId, level, c, r, e); 

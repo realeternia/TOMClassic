@@ -221,20 +221,20 @@ namespace TaleofMonsters.MainItem
             }
         }
 
-        public static void CheckHotKey(Keys key)
+        public static void CheckHotKey(KeyEventArgs e)
         {
             if (!IsHotkeyEnabled)
             {
                 return;
             }
 
-            if (GMMode && key != Keys.Oemtilde)
+            if (GMMode && e.KeyCode != Keys.Oemtilde)
             {
-                GMCodeZone.OnKeyDown(key);
+                GMCodeZone.OnKeyDown(e);
                 return;
             }
 
-            switch (key)
+            switch (e.KeyCode)
             {
                 case Keys.Escape:
                     if (!PanelManager.CloseLastPanel())//如果已经没有面板了，才出

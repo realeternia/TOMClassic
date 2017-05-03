@@ -4,6 +4,7 @@ using ConfigDatas;
 using ControlPlus;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.Core;
 using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms.MiniGame
@@ -33,6 +34,9 @@ namespace TaleofMonsters.Forms.MiniGame
         protected int score;
         protected MinigameConfig config;
 
+        private HsActionCallback winEvent;
+        private HsActionCallback failEvent;
+
         public MGBase()
         {
             InitializeComponent();
@@ -53,6 +57,12 @@ namespace TaleofMonsters.Forms.MiniGame
                 backImage = PicLoader.Read("MiniGame", config.BgImage + ".JPG");
             }
             type = config.WindowId;
+        }
+
+        public void SetEvent(HsActionCallback winCallback, HsActionCallback failCallback)
+        {
+            winEvent = winCallback;
+            failEvent = failCallback;
         }
 
         public virtual void RestartGame()
@@ -84,6 +94,14 @@ namespace TaleofMonsters.Forms.MiniGame
             //}
 
             Close();
+            if (score >= config.LvA && winEvent != null)
+            {
+                winEvent();
+            }
+            if (score < config.LvA && failEvent != null)
+            {
+                failEvent();
+            }
         }
 
         protected virtual void CalculateResult()
@@ -94,6 +112,10 @@ namespace TaleofMonsters.Forms.MiniGame
         private void bitmapButtonClose_Click(object sender, EventArgs e)
         {
             Close();
+            if (failEvent != null)
+            {
+                failEvent();
+            }
         }
 
         protected void DrawShadeText(Graphics g, string text, Font font, Brush brush, int x, int y)
