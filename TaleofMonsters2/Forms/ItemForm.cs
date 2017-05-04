@@ -201,7 +201,7 @@ namespace TaleofMonsters.Forms
                 {
                     popMenuItem.AddItem("use", "使用");
                 }
-                if (itemConfig.Id != 0 && itemConfig.IsThrowable)
+                if (itemConfig.Id == 0 || (itemConfig.Id != 0 && itemConfig.IsThrowable))
                 {
                     popMenuItem.AddItem("throw", "丢弃", "Red");
                     popMenuItem.AddItem("sold", "卖出", "Red");

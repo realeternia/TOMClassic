@@ -146,7 +146,7 @@ namespace TaleofMonsters.MainItem.Scenes
             TimeMinutes = (int)DateTime.Now.TimeOfDay.TotalMinutes;
             Rule.Init(mapid, TimeMinutes);
             sceneItems = SceneManager.RefreshSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, isWarp ? SceneManager.SceneFreshReason.Warp : SceneManager.SceneFreshReason.Load );
-            if (UserProfile.InfoBasic.Position == 0)//兜底处理
+            if (UserProfile.InfoBasic.Position == 0 && sceneItems.Count > 0)//兜底处理
                 UserProfile.InfoBasic.Position = sceneItems[0].Id;
             parent.Invalidate();
         }

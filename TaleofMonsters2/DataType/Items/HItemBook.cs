@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
+using NarlonLib.Drawing;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
@@ -53,6 +54,10 @@ namespace TaleofMonsters.DataType.Items
         public static Image GetPreview(int id)
         {
             HItemConfig hItemConfig = ConfigData.GetHItemConfig(id);
+            if (hItemConfig.Id <= 0)
+            {
+                return DrawTool.GetImageByString("unknown", 100);
+            }
 
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine(hItemConfig.Name, HSTypes.I2RareColor(hItemConfig.Rare), 20);
