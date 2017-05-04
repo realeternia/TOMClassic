@@ -348,7 +348,7 @@
     <EmbeddedResource Include="SceneQuest\wolfnest.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SceneQuest\gamble.txt" />
+    <EmbeddedResource Include="SceneQuest\gamegamble.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SceneQuest\fishpool.txt" />

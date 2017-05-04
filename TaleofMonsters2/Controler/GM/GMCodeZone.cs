@@ -51,7 +51,9 @@ namespace TaleofMonsters.Controler.GM
             }
             else
             {
-                command += (char) e.KeyCode;
+                var charData = (char) e.KeyCode;
+                if (charData >= 'a' && charData <= 'z' || charData >= 'A' && charData <= 'Z' || charData >= '0' && charData <= '9' || charData == ' ')
+                    command += charData;
                 command = command.ToLower();
             }
             MainForm.Instance.RefreshView();

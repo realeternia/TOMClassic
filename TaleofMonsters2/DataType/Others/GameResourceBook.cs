@@ -30,7 +30,7 @@ namespace TaleofMonsters.DataType.Others
         /// </summary>
         public static uint InGoldFight(int level, bool isPeople)
         {
-            uint get = (uint)(ExpTree.GetResourceFactor(level)*GoldFactor*2);
+            uint get = (uint) (ExpTree.GetResourceFactor(level)*GoldFactor/2);
             return isPeople ? get : get/2;
         }
         /// <summary>
@@ -39,7 +39,7 @@ namespace TaleofMonsters.DataType.Others
         public static uint InGoldSceneQuest(int level, int rate, bool noRandom = false)
         {
             double[] factor = new[] {0.2, 0.5, 0.5, 1, 1, 1.5, 2.2};
-            rate = (int) (rate*(noRandom ? 1 : factor[MathTool.GetRandom(factor.Length)]))*4;
+            rate = (int) (rate*(noRandom ? 1 : factor[MathTool.GetRandom(factor.Length)]));
             return (uint)(ExpTree.GetResourceFactor(level)*GoldFactor*rate/100);
         }
         /// <summary>
@@ -48,7 +48,7 @@ namespace TaleofMonsters.DataType.Others
         public static uint OutGoldSceneQuest(int level, int rate, bool noRandom = false)
         {
             double[] factor = new[] { 0.5, 1, 1, 1.5};
-            rate = (int) (rate*(noRandom ? 1 : factor[MathTool.GetRandom(factor.Length)]))*3;
+            rate = (int) (rate*(noRandom ? 1 : factor[MathTool.GetRandom(factor.Length)]))*3/4;
             return (uint)(ExpTree.GetResourceFactor(level) * GoldFactor * rate / 100);
         }
         /// <summary>

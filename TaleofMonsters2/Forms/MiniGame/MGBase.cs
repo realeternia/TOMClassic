@@ -11,6 +11,14 @@ namespace TaleofMonsters.Forms.MiniGame
 {
     internal partial class MGBase : BasePanel
     {
+        public class MinigameRank
+        {
+            public static int S = 3;
+            public static int A = 2;
+            public static int B = 1;
+            public static int C = 0;
+        }
+
         delegate void CalculateMethod();
         protected void BeginCalculateResult()
         {
@@ -34,8 +42,7 @@ namespace TaleofMonsters.Forms.MiniGame
         protected int score;
         protected MinigameConfig config;
 
-        private HsActionCallback winEvent;
-        private HsActionCallback failEvent;
+        private HsActionP1Callback resultEvent;
 
         public MGBase()
         {
@@ -59,10 +66,9 @@ namespace TaleofMonsters.Forms.MiniGame
             type = config.WindowId;
         }
 
-        public void SetEvent(HsActionCallback winCallback, HsActionCallback failCallback)
+        public void SetEvent(HsActionP1Callback winCallback)
         {
-            winEvent = winCallback;
-            failEvent = failCallback;
+            resultEvent = winCallback;
         }
 
         public virtual void RestartGame()
@@ -73,14 +79,24 @@ namespace TaleofMonsters.Forms.MiniGame
         public virtual void EndGame()
         {
             string hint = "最终得分" + score;
+            int rank = -1;
             if (score >= config.LvS)
+            {
                 hint += ",评级S!!!";
+                rank = MinigameRank.S;
+            }
             else if (score >= config.LvA)
-                hint += ",评级A!";
+            {
+                hint += ",评级A!"; rank = MinigameRank.A;
+            }
             else if (score >= config.LvB)
-                hint += ",评级B";
+            {
+                hint += ",评级B"; rank = MinigameRank.B;
+            }
             else
-                hint += ",评级C";
+            {
+                hint += ",评级C"; rank = MinigameRank.C;
+            }
 
             MessageBoxEx.Show(hint);
 
@@ -94,13 +110,9 @@ namespace TaleofMonsters.Forms.MiniGame
             //}
 
             Close();
-            if (score >= config.LvA && winEvent != null)
+            if (resultEvent != null)
             {
-                winEvent();
-            }
-            if (score < config.LvA && failEvent != null)
-            {
-                failEvent();
+                resultEvent(rank);
             }
         }
 
@@ -112,9 +124,9 @@ namespace TaleofMonsters.Forms.MiniGame
         private void bitmapButtonClose_Click(object sender, EventArgs e)
         {
             Close();
-            if (failEvent != null)
+            if (resultEvent != null)
             {
-                failEvent();
+                resultEvent(MinigameRank.C);
             }
         }
 

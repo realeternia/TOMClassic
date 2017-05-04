@@ -48,7 +48,7 @@ namespace TaleofMonsters.Forms
         {
             if (button == MouseButtons.Left && id > 0)
             {
-                PanelManager.ShowGameWindow(id, null, null);
+                PanelManager.ShowGameWindow(id, null);
             }
         }
 

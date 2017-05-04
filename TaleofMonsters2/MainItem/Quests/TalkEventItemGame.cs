@@ -11,18 +11,12 @@ namespace TaleofMonsters.MainItem.Quests
             : base(evtId, level, r, e)
         {
             int gameId = config.MiniGameId;
-            PanelManager.ShowGameWindow(gameId, OnWin, OnFail);
+            PanelManager.ShowGameWindow(gameId, OnResult);
         }
 
-        private void OnFail()
+        private void OnResult(int value)
         {
-            result = evt.ChooseTarget(0);
-            isEndGame = true;
-        }
-
-        private void OnWin()
-        {
-            result = evt.ChooseTarget(1);
+            result = evt.ChooseTarget(value); //0,s,1,a,2,b,3,c
             isEndGame = true;
         }
 

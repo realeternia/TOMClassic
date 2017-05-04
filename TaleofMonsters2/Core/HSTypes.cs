@@ -1,6 +1,7 @@
 ﻿namespace TaleofMonsters.Core
 {
     public delegate void HsActionCallback();
+    public delegate void HsActionP1Callback(int type);
 
     internal static class HSTypes
     {
