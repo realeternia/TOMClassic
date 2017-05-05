@@ -144,7 +144,7 @@ namespace TaleofMonsters.DataType.Cards.Spells
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             var cardQual = Config.CardConfigManager.GetCardConfig(CardId).Quality;
             tipData.AddTextNewLine(spell.SpellConfig.Name, HSTypes.I2QualityColor(cardQual), 20);
-            tipData.AddText(string.Format("({0})",spell.SpellConfig.Ename), "MediumAquamarine");
+            tipData.AddText(string.Format("Lv{0}({1})", card.Level, spell.SpellConfig.Ename), "MediumAquamarine");
             tipData.AddTextNewLine(stars.Substring(10 - spell.SpellConfig.Star), "Yellow", 20);
             tipData.AddLine();
             if (spell.SpellConfig.JobId > 0)

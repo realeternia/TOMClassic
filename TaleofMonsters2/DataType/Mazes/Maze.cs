@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
+using TaleofMonsters.Controler.Battle;
 using TaleofMonsters.Core;
 
 namespace TaleofMonsters.DataType.Mazes

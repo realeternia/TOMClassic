@@ -90,7 +90,7 @@ namespace TaleofMonsters.Forms.Items
 
         public void NewTick()
         {
-            foreach (MiniItemViewItem item in items)
+            foreach (var item in items)
             {
                 if (item.itemPos < 0)
                     continue;

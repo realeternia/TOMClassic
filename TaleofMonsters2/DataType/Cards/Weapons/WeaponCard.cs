@@ -211,7 +211,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             var cardQual = Config.CardConfigManager.GetCardConfig(CardId).Quality;
             tipData.AddTextNewLine(weapon.WeaponConfig.Name, HSTypes.I2QualityColor(cardQual), 20);
-            tipData.AddText(string.Format("({0})",weapon.WeaponConfig.Ename), "MediumAquamarine");
+            tipData.AddText(string.Format("Lv{0}({1})", card.Level, weapon.WeaponConfig.Ename), "MediumAquamarine");
             tipData.AddTextNewLine(stars.Substring(10 - weapon.WeaponConfig.Star), "Yellow", 20);
             tipData.AddLine();
             if (weapon.WeaponConfig.JobId > 0)

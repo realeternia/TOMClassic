@@ -136,8 +136,7 @@ namespace TaleofMonsters.Controler.Battle.Components
 
             savedMousePos = e.Location;
             ResizeElements();
-
-
+            
             int newIndex = -1;
             for (int i = 0; i < 10; i++)
             {

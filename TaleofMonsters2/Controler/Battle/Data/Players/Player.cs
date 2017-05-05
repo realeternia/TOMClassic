@@ -35,6 +35,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public delegate void PlayerHeroSkillStateEventHandler(bool active);
         public event PlayerHeroSkillStateEventHandler HeroSkillChanged;
 
+        public delegate void PlayerUseCardEventHandler(int cardId, int level, bool isLeft);
+        public event PlayerUseCardEventHandler OnUseCard;
+
         private float recoverTime;
 
         public EnergyGenerator EnergyGenerator { get; set; }
@@ -266,6 +269,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
 
             SpikeManager.OnUseCard(selectCard.CardType);
+            if (OnUseCard != null)
+                OnUseCard(selectCard.CardId, selectCard.Level, IsLeft);
             
             return true;
         }
@@ -673,51 +678,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         {
             if (TrapStateChanged != null)
                 TrapStateChanged();
-        }
-
-        public void DrawToolTips(Graphics g)
-        {
-            int x = 0, y = 0;
-            var img = GetPlayerImage();
-            if (!IsLeft) //右边那人
-                x = 899 - img.Width;
-         
-            g.DrawImage(img, x, y, img.Width, img.Height);
-            img.Dispose();
-        }
-
-        private Image GetPlayerImage()
-        {
-            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
-            tipData.AddTextNewLine(string.Format("Lv{0}", Level), "LightBlue", 20);
-            tipData.AddTextNewLine("能量回复比率","White");
-            tipData.AddTextNewLine(string.Format("LP {0}", EnergyGenerator.RateLp.ToString().PadLeft(3, ' ')), "Gold");
-            tipData.AddBar(100, EnergyGenerator.RateLp, Color.Yellow, Color.Gold);
-            tipData.AddTextNewLine(string.Format("PP {0}", EnergyGenerator.RatePp.ToString().PadLeft(3, ' ')), "Red");
-            tipData.AddBar(100, EnergyGenerator.RatePp, Color.Pink, Color.Red);
-            tipData.AddTextNewLine(string.Format("MP {0}", EnergyGenerator.RateMp.ToString().PadLeft(3, ' ')), "Blue");
-            tipData.AddBar(100, EnergyGenerator.RateMp, Color.Cyan, Color.Blue);
-
-            TrapHolder.GenerateImage(tipData, isPlayerControl);
-            
-            var rival = Rival as Player;
-            if (rival.HasHolyWord("witcheye"))
-            {
-                tipData.AddLine();
-                tipData.AddTextNewLine("手牌", "White");
-                for (int i = 0; i < 10; i++)
-                {
-                    var card = CardManager.GetDeckCardAt(i);
-                    if (card.CardId > 0)
-                    {
-                        var cardConfig = CardConfigManager.GetCardConfig(card.CardId);
-                        tipData.AddTextNewLine("-", "White");
-                        tipData.AddImage(CardAssistant.GetCardImage(card.CardId, 20, 20));
-                        tipData.AddText(string.Format("{0}({1}★)Lv{2}", cardConfig.Name, cardConfig.Star, card.Level), HSTypes.I2QualityColor(cardConfig.Quality));
-                    }
-                }
-            }
-            return tipData.Image;
         }
     }
 }

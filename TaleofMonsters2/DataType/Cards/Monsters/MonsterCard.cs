@@ -202,7 +202,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             var cardQual = Config.CardConfigManager.GetCardConfig(CardId).Quality;
             tipData.AddTextNewLine(monster.Name, HSTypes.I2QualityColor(cardQual), 20);
-            tipData.AddText(string.Format("({0})",monster.MonsterConfig.Ename), "MediumAquamarine");
+            tipData.AddText(string.Format("Lv{0}({1})", card.Level, monster.MonsterConfig.Ename), "MediumAquamarine");
             tipData.AddTextNewLine(stars.Substring(10 - monster.MonsterConfig.Star), "Yellow", 20);
             tipData.AddLine();
             if (monster.MonsterConfig.JobId > 0)

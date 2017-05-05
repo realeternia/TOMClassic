@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using ConfigDatas;
+using TaleofMonsters.Controler.Battle;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Items;

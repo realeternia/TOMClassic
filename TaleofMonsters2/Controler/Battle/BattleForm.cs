@@ -28,6 +28,8 @@ using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Controler.Battle
 {
+    public delegate void HsActionCallback();
+
     internal sealed partial class BattleForm : BasePanel
     {
         #region 委托
@@ -45,7 +47,7 @@ namespace TaleofMonsters.Controler.Battle
             }
         }
         #endregion
-
+        
         internal HsActionCallback BattleWin;
         internal HsActionCallback BattleLose;
 
@@ -54,7 +56,7 @@ namespace TaleofMonsters.Controler.Battle
         private bool gameEnd;
         private bool isMouseIn;
         private int mouseX, mouseY;
-        private int showPlayerState;
+     //   private int showPlayerState;
         private bool onTurn;
 
         private HSCursor myCursor;
@@ -123,7 +125,7 @@ namespace TaleofMonsters.Controler.Battle
             int index = 0;//初始化英雄技能按钮
             foreach (var skillId in BattleManager.Instance.PlayerManager.LeftPlayer.HeroSkillList)
             {
-                var region = new PictureAnimRegion(index+1, 25, 518+index*45, 40, 40, PictureRegionCellType.HeroSkill, skillId);
+                var region = new PictureAnimRegion(index+1, 25, 538+index*45, 40, 40, PictureRegionCellType.HeroSkill, skillId);
                 region.AddDecorator(new RegionBorderDecorator(Color.Lime));
                 vRegion.AddRegion(region);
                 index++;
@@ -143,7 +145,9 @@ namespace TaleofMonsters.Controler.Battle
             BattleManager.Instance.PlayerManager.RightPlayer.CardsDesk = cardList2;
             BattleManager.Instance.PlayerManager.RightPlayer.InitialCards();
             cardSelector1.Init(BattleManager.Instance.PlayerManager.LeftPlayer);
-            BattleManager.Instance.PlayerManager.LeftPlayer.HeroSkillChanged += LeftPlayer_HeroSkillChanged;
+            BattleManager.Instance.PlayerManager.LeftPlayer.HeroSkillChanged += LeftPlayerHeroSkillChanged;
+            BattleManager.Instance.PlayerManager.LeftPlayer.OnUseCard += cardFlow1.OnPlayerUseCard;
+            BattleManager.Instance.PlayerManager.RightPlayer.OnUseCard += cardFlow1.OnPlayerUseCard;
             cardsArray1.Visible = false;
             miniItemView1.Visible = false;
             vRegion.Visible = false;
@@ -203,6 +207,7 @@ namespace TaleofMonsters.Controler.Battle
                 CheckCursor();
                 miniItemView1.NewTick();
                 timeViewer1.TimeGo(BattleManager.Instance.Round);
+                cardFlow1.NewTick();
 
                 BattleManager.Instance.Next();
             }
@@ -246,10 +251,6 @@ namespace TaleofMonsters.Controler.Battle
                     {
                         target.LiveMonsterToolTip.DrawCardToolTips(g);
                     }
-                    if (showPlayerState == 1)
-                        BattleManager.Instance.PlayerManager.LeftPlayer.DrawToolTips(g);
-                    else if (showPlayerState == 2)
-                        BattleManager.Instance.PlayerManager.RightPlayer.DrawToolTips(g);
 #if !DEBUG
                 if (IsGamePaused)
                 {
@@ -414,27 +415,6 @@ namespace TaleofMonsters.Controler.Battle
             IsGamePaused = !IsGamePaused;
         }
 
-        private void lifeClock1_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.X > 2 && e.X < 60 && e.Y > 2 && e.Y < 66)
-                showPlayerState = 1;
-            else
-                showPlayerState = 0;
-        }
-
-        private void lifeClock1_MouseLeave(object sender, EventArgs e)
-        {
-            showPlayerState = 0;
-        }
-
-        private void lifeClock2_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.X > 320 && e.X < 378 && e.Y > 2 && e.Y < 66)
-                showPlayerState = 2;
-            else
-                showPlayerState = 0;
-        }
-
         private void cardsArray1_SelectionChange(object sender, EventArgs e)
         {
             leftSelectCard = cardsArray1.GetSelectCard();
@@ -443,15 +423,6 @@ namespace TaleofMonsters.Controler.Battle
             else
                 visualRegion.Update(0);
             OnSelectCardChange();
-            panelState.Invalidate();
-        }
-
-        private void panelState_Paint(object sender, PaintEventArgs e)
-        {
-            if (showGround)
-            {
-                //todo 可以用来画其他东西
-            }
         }
 
         private void OnSelectCardChange()
@@ -537,7 +508,6 @@ namespace TaleofMonsters.Controler.Battle
                 LevelExpConfig levelConfig = ConfigData.GetLevelExpConfig(UserProfile.Profile.InfoBasic.Level);
                 leftSelectCard = new ActiveCard(heroSkillConfig.CardId, (byte)levelConfig.HeroSkillLevel, 0);
                 leftSelectCard.IsHeroSkill = true;
-                panelState.Invalidate();
                 OnSelectCardChange();
             }
         }
@@ -556,7 +526,7 @@ namespace TaleofMonsters.Controler.Battle
             tooltip.Hide(this);
         }
 
-        private void LeftPlayer_HeroSkillChanged(bool active)
+        private void LeftPlayerHeroSkillChanged(bool active)
         {
             int index = 0;//初始化英雄技能按钮
             foreach (var skillId in BattleManager.Instance.PlayerManager.LeftPlayer.HeroSkillList)

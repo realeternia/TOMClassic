@@ -4,7 +4,6 @@ using ConfigDatas;
 using ControlPlus;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.Core;
 using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms.MiniGame
@@ -33,6 +32,9 @@ namespace TaleofMonsters.Forms.MiniGame
             }
         }
 
+        public delegate void MinigameResultCallback(int type);
+        private MinigameResultCallback resultEvent;
+
         protected bool show;
         private Image backImage;
         private int type;
@@ -41,8 +43,6 @@ namespace TaleofMonsters.Forms.MiniGame
 
         protected int score;
         protected MinigameConfig config;
-
-        private HsActionP1Callback resultEvent;
 
         public MGBase()
         {
@@ -66,7 +66,7 @@ namespace TaleofMonsters.Forms.MiniGame
             type = config.WindowId;
         }
 
-        public void SetEvent(HsActionP1Callback winCallback)
+        public void SetEvent(MinigameResultCallback winCallback)
         {
             resultEvent = winCallback;
         }

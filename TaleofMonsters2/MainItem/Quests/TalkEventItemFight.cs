@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using TaleofMonsters.Core;
+using TaleofMonsters.Controler.Battle;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Peoples;

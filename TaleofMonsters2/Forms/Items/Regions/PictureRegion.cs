@@ -4,6 +4,7 @@ using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Interface;
 using ConfigDatas;
+using TaleofMonsters.Controler.Battle;
 using TaleofMonsters.DataType.Scenes;
 
 namespace TaleofMonsters.Forms.Items.Regions

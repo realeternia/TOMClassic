@@ -94,6 +94,12 @@
     <Compile Include="Config\ConfigIdManager.cs" />
     <Compile Include="Controler\Battle\AIStrategy.cs">
     </Compile>
+    <Compile Include="Controler\Battle\Components\CardFlow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controler\Battle\Components\CardFlow.Designer.cs">
+      <DependentUpon>CardFlow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controler\Battle\Components\CardSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -713,6 +719,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThirdParty\fmod_dsp.cs" />
     <Compile Include="ThirdParty\fmod_errors.cs" />
+    <EmbeddedResource Include="Controler\Battle\Components\CardFlow.resx">
+      <DependentUpon>CardFlow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controler\Battle\Components\CardSelector.resx">
       <DependentUpon>CardSelector.cs</DependentUpon>
     </EmbeddedResource>

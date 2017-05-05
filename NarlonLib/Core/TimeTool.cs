@@ -19,6 +19,10 @@ namespace NarlonLib.Core
         {
             return (int)(time - start).TotalSeconds;
         }
+        public static DateTime GetNowDateTime()
+        {
+            return DateTime.Now;
+        }
 
         public static int GetNowUnixTime()
         {
@@ -40,6 +44,51 @@ namespace NarlonLib.Core
             DateTime previousTime = UnixTimeToDateTime(targetTime - offset);
             DateTime refreshTime = UnixTimeToDateTime(GetNowUnixTime() - offset);
             return previousTime.Year != refreshTime.Year || previousTime.DayOfYear != refreshTime.DayOfYear;
+        }
+    }
+
+    public class RoundCounter
+    {
+        public int Round { get; set; }
+        private float counter;
+
+        public RoundCounter()
+        {
+            counter = 0;
+        }
+
+        public bool OnTick(float step)
+        {
+            counter += step;
+            if (counter > 1)
+            {
+                counter -= 1;
+                Round++;
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public class TimeCounter
+    {
+        private DateTime lastTime;
+        private readonly float interval;
+
+        public TimeCounter(float interval)
+        {
+            this.interval = interval;
+            lastTime = TimeTool.GetNowDateTime();
+        }
+
+        public bool OnTick()
+        {
+            if (TimeTool.GetNowDateTime().Subtract(lastTime).TotalSeconds > interval)
+            {
+                lastTime = TimeTool.GetNowDateTime();
+                return true;
+            }
+            return false;
         }
     }
 }

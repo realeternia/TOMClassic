@@ -32,7 +32,6 @@ namespace TaleofMonsters.Controler.Battle
         private void InitializeComponent()
         {
             this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
-            this.panelState = new System.Windows.Forms.Panel();
             this.panelBattle = new NarlonLib.Control.DoubleBuffedPanel();
             this.cardSelector1 = new TaleofMonsters.Controler.Battle.Components.CardSelector();
             this.miniItemView1 = new TaleofMonsters.Forms.Items.MiniItemView();
@@ -40,7 +39,8 @@ namespace TaleofMonsters.Controler.Battle
             this.cardsArray1 = new TaleofMonsters.Controler.Battle.Components.CardsArray();
             this.lifeClock2 = new TaleofMonsters.Controler.Battle.Components.LifeClock();
             this.lifeClock1 = new TaleofMonsters.Controler.Battle.Components.LifeClock();
-            this.timeViewer1 = new TimeViewer();
+            this.cardFlow1 = new TaleofMonsters.Controler.Battle.Components.CardFlow();
+  			this.timeViewer1 = new TimeViewer();
             this.panelBattle.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,20 +61,11 @@ namespace TaleofMonsters.Controler.Battle
             this.bitmapButtonClose.UseVisualStyleBackColor = true;
             this.bitmapButtonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
-            // panelState
-            // 
-            this.panelState.BackColor = System.Drawing.Color.Black;
-            this.panelState.Location = new System.Drawing.Point(72, 656);
-            this.panelState.Name = "panelState";
-            this.panelState.Size = new System.Drawing.Size(754, 20);
-            this.panelState.TabIndex = 37;
-            this.panelState.Paint += new System.Windows.Forms.PaintEventHandler(this.panelState_Paint);
-            // 
             // panelBattle
             // 
             this.panelBattle.BackColor = System.Drawing.Color.Black;
             this.panelBattle.Controls.Add(this.cardSelector1);
-            this.panelBattle.Location = new System.Drawing.Point(15, 110);
+            this.panelBattle.Location = new System.Drawing.Point(15, 138);
             this.panelBattle.Name = "panelBattle";
             this.panelBattle.Size = new System.Drawing.Size(900, 400);
             this.panelBattle.TabIndex = 34;
@@ -97,7 +88,7 @@ namespace TaleofMonsters.Controler.Battle
             this.miniItemView1.BackColor = System.Drawing.Color.Black;
             this.miniItemView1.Enabled = false;
             this.miniItemView1.ItemSubType = 11;
-            this.miniItemView1.Location = new System.Drawing.Point(832, 519);
+            this.miniItemView1.Location = new System.Drawing.Point(832, 547);
             this.miniItemView1.Name = "miniItemView1";
             this.miniItemView1.Size = new System.Drawing.Size(72, 135);
             this.miniItemView1.TabIndex = 38;
@@ -117,7 +108,7 @@ namespace TaleofMonsters.Controler.Battle
             // 
             this.cardsArray1.BackColor = System.Drawing.Color.DimGray;
             this.cardsArray1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.cardsArray1.Location = new System.Drawing.Point(72, 518);
+            this.cardsArray1.Location = new System.Drawing.Point(72, 546);
             this.cardsArray1.Name = "cardsArray1";
             this.cardsArray1.Size = new System.Drawing.Size(754, 137);
             this.cardsArray1.TabIndex = 33;
@@ -129,8 +120,6 @@ namespace TaleofMonsters.Controler.Battle
             this.lifeClock2.Name = "lifeClock2";
             this.lifeClock2.Size = new System.Drawing.Size(380, 70);
             this.lifeClock2.TabIndex = 32;
-            this.lifeClock2.MouseLeave += new System.EventHandler(this.lifeClock1_MouseLeave);
-            this.lifeClock2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lifeClock2_MouseMove);
             // 
             // lifeClock1
             // 
@@ -138,8 +127,14 @@ namespace TaleofMonsters.Controler.Battle
             this.lifeClock1.Name = "lifeClock1";
             this.lifeClock1.Size = new System.Drawing.Size(380, 70);
             this.lifeClock1.TabIndex = 31;
-            this.lifeClock1.MouseLeave += new System.EventHandler(this.lifeClock1_MouseLeave);
-            this.lifeClock1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lifeClock1_MouseMove);
+            // 
+            // cardFlow1
+            // 
+            this.cardFlow1.BackColor = System.Drawing.Color.Black;
+            this.cardFlow1.Location = new System.Drawing.Point(15, 110);
+            this.cardFlow1.Name = "cardFlow1";
+            this.cardFlow1.Size = new System.Drawing.Size(900, 25);
+            this.cardFlow1.TabIndex = 39;
             // 
             // timeViewer1
             // 
@@ -148,16 +143,16 @@ namespace TaleofMonsters.Controler.Battle
             this.timeViewer1.Location = new System.Drawing.Point(407, 38);
             this.timeViewer1.Name = "timeViewer1";
             this.timeViewer1.Size = new System.Drawing.Size(117, 66);
-            this.timeViewer1.TabIndex = 35;
+            this.timeViewer1.TabIndex = 40;
             this.timeViewer1.Click += new System.EventHandler(this.timeViewer1_Click);
             // 
             // BattleForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.Controls.Add(this.miniItemView1);
-            this.Controls.Add(this.panelState);
-            this.Controls.Add(this.cardList2);
             this.Controls.Add(this.timeViewer1);
+            this.Controls.Add(this.cardFlow1);
+            this.Controls.Add(this.miniItemView1);
+            this.Controls.Add(this.cardList2);
             this.Controls.Add(this.cardsArray1);
             this.Controls.Add(this.lifeClock2);
             this.Controls.Add(this.lifeClock1);
@@ -165,7 +160,7 @@ namespace TaleofMonsters.Controler.Battle
             this.Controls.Add(this.panelBattle);
             this.DoubleBuffered = true;
             this.Name = "BattleForm";
-            this.Size = new System.Drawing.Size(933, 705);
+            this.Size = new System.Drawing.Size(933, 690);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.BattleForm_Paint);
             this.panelBattle.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -176,13 +171,14 @@ namespace TaleofMonsters.Controler.Battle
 
         private BitmapButton bitmapButtonClose;
         private TaleofMonsters.Forms.Items.MiniItemView miniItemView1;
-        private System.Windows.Forms.Panel panelState;
         private TaleofMonsters.Controler.Battle.Components.CardList cardList2;
-        private TaleofMonsters.Controler.Battle.Components.TimeViewer timeViewer1;
+
         private DoubleBuffedPanel panelBattle;
         private TaleofMonsters.Controler.Battle.Components.CardsArray cardsArray1;
         private TaleofMonsters.Controler.Battle.Components.LifeClock lifeClock2;
         private TaleofMonsters.Controler.Battle.Components.LifeClock lifeClock1;
         private CardSelector cardSelector1;
+        private CardFlow cardFlow1;
+        private TimeViewer timeViewer1;
     }
 }

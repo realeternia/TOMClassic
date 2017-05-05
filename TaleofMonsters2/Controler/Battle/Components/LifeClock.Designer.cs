@@ -32,12 +32,13 @@
             // 
             // LifeClock
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.Name = "LifeClock";
             this.Size = new System.Drawing.Size(300, 70);
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LifeClock_MouseClick);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.LifeClock_Paint);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LifeClock_MouseClick);
+            this.MouseLeave += new System.EventHandler(this.LifeClock_MouseLeave);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.LifeClock_MouseMove);
             this.ResumeLayout(false);
 
         }

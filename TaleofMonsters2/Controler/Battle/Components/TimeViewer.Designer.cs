@@ -36,7 +36,7 @@
             this.BackColor = System.Drawing.Color.Black;
             this.DoubleBuffered = true;
             this.Name = "TimeViewer";
-            this.Size = new System.Drawing.Size(150, 70);
+            this.Size = new System.Drawing.Size(117, 66);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.TimeViewer_Paint);
             this.ResumeLayout(false);
 

@@ -2,10 +2,15 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using System.Security.Cryptography.X509Certificates;
 using ConfigDatas;
+using NarlonLib.Control;
+using NarlonLib.Core;
+using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType.Cards;
 
 namespace TaleofMonsters.Controler.Battle.Components
 {
@@ -14,11 +19,15 @@ namespace TaleofMonsters.Controler.Battle.Components
         internal delegate void LifeClockFigueEventHandler();
         internal event LifeClockFigueEventHandler HeadClicked;
 
+        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
+
         private Player player;
         private Image back;
         private Image head;
         private string nameStr;
         public bool IsLeft { private get; set; }
+
+        private bool mouseIn;
 
         public LifeClock()
         {
@@ -204,6 +213,57 @@ namespace TaleofMonsters.Controler.Battle.Components
             font.Dispose();
         }
 
+        private void LifeClock_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (IsLeft)
+            {
+                if (e.X > 2 && e.X < 60 && e.Y > 2 && e.Y < 66)
+                {
+                    if (!mouseIn)
+                    {
+                        mouseIn = true;
+                        ShowTip();
+                    }
+                }
+                else
+                {
+                    if (mouseIn)
+                    {
+                        mouseIn = false;
+                        tooltip.Hide(this);
+                    }
+                }
+            }
+            else
+            {
+                if (e.X > 320 && e.X < 378 && e.Y > 2 && e.Y < 66)
+                {
+                    if (!mouseIn)
+                    {
+                        mouseIn = true;
+                        ShowTip();
+                    }
+                }
+                else
+                {
+                    if (mouseIn)
+                    {
+                        mouseIn = false;
+                        tooltip.Hide(this);
+                    }
+                }
+            }
+        }
+
+        private void LifeClock_MouseLeave(object sender, System.EventArgs e)
+        {
+            if (mouseIn)
+            {
+                mouseIn = false;
+                tooltip.Hide(this);
+            }
+        }
+
         private void LifeClock_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -218,5 +278,50 @@ namespace TaleofMonsters.Controler.Battle.Components
                 }
             }
         }
+
+        public void ShowTip()
+        {
+            int x = 0, y = 0;
+            var img = GetPlayerImage();
+            if (!IsLeft) //右边那人
+                x = Width - img.Width;
+
+            tooltip.Show(img, this, x, Location.Y+ 40);
+        }
+
+        private Image GetPlayerImage()
+        {
+            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+            tipData.AddTextNewLine(string.Format("Lv{0}", player.Level), "LightBlue", 20);
+            tipData.AddTextNewLine("能量回复比率", "White");
+            tipData.AddTextNewLine(string.Format("LP {0}", player.EnergyGenerator.RateLp.ToString().PadLeft(3, ' ')), "Gold");
+            tipData.AddBar(100, player.EnergyGenerator.RateLp, Color.Yellow, Color.Gold);
+            tipData.AddTextNewLine(string.Format("PP {0}", player.EnergyGenerator.RatePp.ToString().PadLeft(3, ' ')), "Red");
+            tipData.AddBar(100, player.EnergyGenerator.RatePp, Color.Pink, Color.Red);
+            tipData.AddTextNewLine(string.Format("MP {0}", player.EnergyGenerator.RateMp.ToString().PadLeft(3, ' ')), "Blue");
+            tipData.AddBar(100, player.EnergyGenerator.RateMp, Color.Cyan, Color.Blue);
+
+            player.TrapHolder.GenerateImage(tipData, player is HumanPlayer);
+
+            var rival = player.Rival as Player;
+            if (rival.HasHolyWord("witcheye"))
+            {
+                tipData.AddLine();
+                tipData.AddTextNewLine("手牌", "White");
+                for (int i = 0; i < 10; i++)
+                {
+                    var card = player.CardManager.GetDeckCardAt(i);
+                    if (card.CardId > 0)
+                    {
+                        var cardConfig = CardConfigManager.GetCardConfig(card.CardId);
+                        tipData.AddTextNewLine("-", "White");
+                        tipData.AddImage(CardAssistant.GetCardImage(card.CardId, 20, 20));
+                        tipData.AddText(string.Format("{0}({1}★)Lv{2}", cardConfig.Name, cardConfig.Star, card.Level), HSTypes.I2QualityColor(cardConfig.Quality));
+                    }
+                }
+            }
+            return tipData.Image;
+        }
+
     }
 }
