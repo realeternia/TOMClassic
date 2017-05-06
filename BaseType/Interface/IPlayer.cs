@@ -1,3 +1,5 @@
+using System;
+
 namespace ConfigDatas
 {
     public interface IPlayer
@@ -36,7 +38,7 @@ namespace ConfigDatas
         void AddMonster(int cardId, int level, System.Drawing.Point location);
         void ExchangeMonster(IMonster target, int lv);
         void AddResource(int type, int number);
-        void AddTrap(int id, int lv, double rate, int dam, double help);
+        void AddTrap(int id, int spellId, int lv, double rate, int dam, double help);
         void RemoveRandomTrap();
         void AddSpellMissile(IMonster target, ISpell spell, System.Drawing.Point mouse, string effect);
         void AddSpellRowMissile(ISpell spell, int count, System.Drawing.Point mouse, string effect);

@@ -18,7 +18,6 @@ using NarlonLib.Log;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
 using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Cards.Spells;
 using TaleofMonsters.DataType.Cards.Weapons;
 using TaleofMonsters.DataType.Effects;
@@ -37,6 +36,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public delegate void PlayerUseCardEventHandler(int cardId, int level, bool isLeft);
         public event PlayerUseCardEventHandler OnUseCard;
+        public event PlayerUseCardEventHandler OnKillEnemy;
 
         private float recoverTime;
 
@@ -299,9 +299,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             AddResource((GameResourceType)type, number);
         }
 
-        public virtual void OnKillMonster(int dieLevel, int dieStar, Point position)
+        public virtual void OnKillMonster(int id, int dieLevel, int dieStar, Point position)
         {
-
+            if (OnKillEnemy != null)
+            {
+                OnKillEnemy(id, dieLevel, IsLeft);
+            }
         }
 
         public void AddMonster(int cardId, int level,Point location)
@@ -449,9 +452,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             CardManager.DeleteCardAt(SelectId);
         }
 
-        public void AddTrap(int id, int lv, double rate, int damage, double help)
+        public void AddTrap(int id, int spellId, int lv, double rate, int damage, double help)
         {
-            TrapHolder.AddTrap(id, lv, rate, damage, help);
+            TrapHolder.AddTrap(id, spellId, lv, rate, damage, help);
         }
 
         public void RemoveRandomTrap()

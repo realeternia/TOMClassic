@@ -17,6 +17,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         private List<Trap> trapList = new List<Trap>();
         private Player self;
 
+        public event Player.PlayerUseCardEventHandler OnTrapRemove;
+
         public TrapHolder(Player p)
         {
             self = p;
@@ -27,9 +29,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             get { return trapList.Count; }
         }
 
-        public void AddTrap(int id, int lv, double rate, int damage, double help)
+        public void AddTrap(int id, int spellId, int lv, double rate, int damage, double help)
         {
-            trapList.Add(new Trap { Id = id, Level = lv, Rate = rate, Damage = damage, Help = help });
+            trapList.Add(new Trap { Id = id, SpellId = spellId, Level = lv, Rate = rate, Damage = damage, Help = help });
             self.OnTrapChange();
         }
 
@@ -37,8 +39,13 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         {
             if (trapList.Count > 0)
             {
-                trapList.RemoveAt(MathTool.GetRandom(trapList.Count));
+                var trap = trapList[MathTool.GetRandom(trapList.Count)];
+                trapList.Remove(trap);
                 self.OnTrapChange();
+                if (OnTrapRemove != null)
+                {
+                    OnTrapRemove(trap.SpellId, trap.Level, self.IsLeft);
+                }
             }
         }
 
@@ -50,6 +57,10 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             }
             trapList.RemoveAll(s => s.Id == trap.Id);
             self.OnTrapChange();
+            if (OnTrapRemove != null)
+            {
+                OnTrapRemove(trap.SpellId, trap.Level, self.IsLeft);
+            }
         }
 
         public bool CheckTrapOnUseCard(ActiveCard selectCard, Point location, IPlayer rival)

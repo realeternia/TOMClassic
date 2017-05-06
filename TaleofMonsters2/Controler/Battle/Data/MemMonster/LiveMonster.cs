@@ -353,7 +353,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
             SkillManager.CheckRemoveEffect();
             var rival = Rival as Player;
-            rival.OnKillMonster(Level, Avatar.MonsterConfig.Star, Position);
+            rival.OnKillMonster(Avatar.Id, Level, Avatar.MonsterConfig.Star, Position);
 
             MakeSound(false);
         }

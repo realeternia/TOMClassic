@@ -148,6 +148,10 @@ namespace TaleofMonsters.Controler.Battle
             BattleManager.Instance.PlayerManager.LeftPlayer.HeroSkillChanged += LeftPlayerHeroSkillChanged;
             BattleManager.Instance.PlayerManager.LeftPlayer.OnUseCard += cardFlow1.OnPlayerUseCard;
             BattleManager.Instance.PlayerManager.RightPlayer.OnUseCard += cardFlow1.OnPlayerUseCard;
+            BattleManager.Instance.PlayerManager.LeftPlayer.TrapHolder.OnTrapRemove += cardFlow1.OnPlayerTrapTriggered;
+            BattleManager.Instance.PlayerManager.RightPlayer.TrapHolder.OnTrapRemove += cardFlow1.OnPlayerTrapTriggered;
+            BattleManager.Instance.PlayerManager.LeftPlayer.OnKillEnemy += cardFlow1.OnPlayerKillMonster;
+            BattleManager.Instance.PlayerManager.RightPlayer.OnKillEnemy += cardFlow1.OnPlayerKillMonster;
             cardsArray1.Visible = false;
             miniItemView1.Visible = false;
             vRegion.Visible = false;
