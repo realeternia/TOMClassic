@@ -40,7 +40,7 @@
             this.bitmapButton1.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButton1.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButton1.ImageNormal = null;
-            this.bitmapButton1.Location = new System.Drawing.Point(225, 172);
+            this.bitmapButton1.Location = new System.Drawing.Point(395, 305);
             this.bitmapButton1.Name = "bitmapButton1";
             this.bitmapButton1.NoUseDrawNine = false;
             this.bitmapButton1.Size = new System.Drawing.Size(110, 43);
@@ -57,7 +57,7 @@
             this.Controls.Add(this.bitmapButton1);
             this.DoubleBuffered = true;
             this.Name = "CardSelector";
-            this.Size = new System.Drawing.Size(613, 220);
+            this.Size = new System.Drawing.Size(900, 400);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.CardSelector_Paint);
             this.ResumeLayout(false);
 

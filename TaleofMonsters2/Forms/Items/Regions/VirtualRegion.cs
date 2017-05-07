@@ -39,6 +39,11 @@ namespace TaleofMonsters.Forms.Items.Regions
             subRegions.Add(region.Id, region);
         }
 
+        public void ClearRegion()
+        {
+            subRegions.Clear();
+        }
+
         public void SetRegionKey(int id, int value)
         {
             SubVirtualRegion region;

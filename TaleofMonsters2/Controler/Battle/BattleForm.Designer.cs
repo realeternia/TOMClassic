@@ -78,9 +78,9 @@ namespace TaleofMonsters.Controler.Battle
             // cardSelector1
             // 
             this.cardSelector1.BackColor = System.Drawing.Color.Black;
-            this.cardSelector1.Location = new System.Drawing.Point(157, 92);
+            this.cardSelector1.Location = new System.Drawing.Point(0, 1);
             this.cardSelector1.Name = "cardSelector1";
-            this.cardSelector1.Size = new System.Drawing.Size(613, 220);
+            this.cardSelector1.Size = new System.Drawing.Size(900, 400);
             this.cardSelector1.TabIndex = 0;
             // 
             // miniItemView1

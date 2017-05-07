@@ -61,13 +61,13 @@ namespace TaleofMonsters.Controler.Battle.Components
             }
 
             int x = Location.X;
-            int y = 0;
+            int y = Location.Y;
             Color bgColor = IsSelected ? Color.LightGreen : BgColor;
             SolidBrush sb = new SolidBrush(bgColor);
-            g.FillRectangle(sb, new Rectangle(x, 0, Size.Width, Size.Height));
+            g.FillRectangle(sb, new Rectangle(x, y, Size.Width, Size.Height));
             sb.Dispose();
             if (mouse != CardMouseState.MouseOn)
-                y = 10;
+                y += 10;
             CardAssistant.DrawBase(g, Card.CardId, x, y, Size.Width, 120);
 
             if (mouse == CardMouseState.Disable)
@@ -105,8 +105,8 @@ namespace TaleofMonsters.Controler.Battle.Components
             var cardQual = Config.CardConfigManager.GetCardConfig(Card.CardId).Quality;
             var cardColor = Color.FromName(HSTypes.I2QualityColor(cardQual));
             var brush = new SolidBrush(cardColor);
-            g.DrawString(cardName, font, Brushes.Black, x + 1, mouse != CardMouseState.MouseOn ? 117 : 122);
-            g.DrawString(cardName, font,brush, x, mouse != CardMouseState.MouseOn ? 116 : 121);
+            g.DrawString(cardName, font, Brushes.Black, x + 1, mouse != CardMouseState.MouseOn ? y + 107 : y+ 112);
+            g.DrawString(cardName, font,brush, x, mouse != CardMouseState.MouseOn ? y+ 106 :y+ 111);
             font.Dispose();
             brush.Dispose();
 

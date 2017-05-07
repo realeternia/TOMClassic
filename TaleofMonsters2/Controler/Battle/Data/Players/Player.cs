@@ -16,6 +16,7 @@ using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Controler.Battle.Data.MemSpell;
 using NarlonLib.Log;
 using TaleofMonsters.Config;
+using TaleofMonsters.Controler.Battle.Components.CardSelect;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards.Spells;
@@ -37,6 +38,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public delegate void PlayerUseCardEventHandler(int cardId, int level, bool isLeft);
         public event PlayerUseCardEventHandler OnUseCard;
         public event PlayerUseCardEventHandler OnKillEnemy;
+
+        public delegate void ShowCardSelectorEventHandler(Player p, ICardSelectMethod m);
+        public event ShowCardSelectorEventHandler OnShowCardSelector;
 
         private float recoverTime;
 
@@ -516,14 +520,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 BattleManager.Instance.EffectQueue.Add(new UIEffect(EffectBook.GetEffect("flycard"), startPoint, new Point(BattleManager.Instance.MemMap.StageWidth / 2, BattleManager.Instance.MemMap.StageHeight), 16, true));
             }
 
-            var cardCount = Cards.LeftCount;
-            for (int i = 0; i < n; i++)
-                CardManager.GetNextCard();
-
-            if (CardLeftChanged != null && cardCount != Cards.LeftCount)
-            {
-                CardLeftChanged();
-            }
+            DrawNextNCard(n);
         }
 
         public void DrawNextNCard(int n)
@@ -572,10 +569,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public int CardNumber
         {
-            get
-            {
-                return CardManager.GetCardNumber();
-            }
+            get { return CardManager.GetCardNumber(); }
         }
 
         public void ConvertCard(int count, int cardId, int levelChange)
@@ -615,6 +609,18 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             if (cardId != 0)
             {
                 AddCard(mon, cardId, lv);
+            }
+        }
+
+        public void DiscoverCard()
+        {
+            if (isPlayerControl)
+            {
+                CardSelectMethodDiscover discover = new CardSelectMethodDiscover();
+                if (OnShowCardSelector != null)
+                {
+                    OnShowCardSelector(this, discover);
+                }
             }
         }
 

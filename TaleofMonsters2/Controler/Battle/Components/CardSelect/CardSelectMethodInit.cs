@@ -53,6 +53,7 @@ namespace TaleofMonsters.Controler.Battle.Components.CardSelect
                 if (Selector.StartClicked != null)
                 {
                     Selector.StartClicked();
+                    Selector.Hide();
                 }
             }
         }

@@ -19,6 +19,7 @@ using TaleofMonsters.DataType.HeroSkills;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Data.MemMap;
+using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.Forms.Items.Core;
@@ -147,12 +148,17 @@ namespace TaleofMonsters.Controler.Battle
             BattleManager.Instance.PlayerManager.RightPlayer.InitialCards();
             cardSelector1.Init(BattleManager.Instance.PlayerManager.LeftPlayer, new CardSelectMethodInit());
             BattleManager.Instance.PlayerManager.LeftPlayer.HeroSkillChanged += LeftPlayerHeroSkillChanged;
+            BattleManager.Instance.PlayerManager.LeftPlayer.OnShowCardSelector += LeftPlayerShowCardSelector;
             BattleManager.Instance.PlayerManager.LeftPlayer.OnUseCard += cardFlow1.OnPlayerUseCard;
             BattleManager.Instance.PlayerManager.RightPlayer.OnUseCard += cardFlow1.OnPlayerUseCard;
             BattleManager.Instance.PlayerManager.LeftPlayer.TrapHolder.OnTrapRemove += cardFlow1.OnPlayerTrapTriggered;
             BattleManager.Instance.PlayerManager.RightPlayer.TrapHolder.OnTrapRemove += cardFlow1.OnPlayerTrapTriggered;
             BattleManager.Instance.PlayerManager.LeftPlayer.OnKillEnemy += cardFlow1.OnPlayerKillMonster;
             BattleManager.Instance.PlayerManager.RightPlayer.OnKillEnemy += cardFlow1.OnPlayerKillMonster;
+            BattleManager.Instance.MemMap = new MemRowColumnMap(mapName, 0);
+            BattleManager.Instance.MemMap.InitUnit(BattleManager.Instance.PlayerManager.LeftPlayer);
+            BattleManager.Instance.MemMap.InitUnit(BattleManager.Instance.PlayerManager.RightPlayer);
+            showGround = true;
             cardsArray1.Visible = false;
             miniItemView1.Visible = false;
             vRegion.Visible = false;
@@ -160,9 +166,6 @@ namespace TaleofMonsters.Controler.Battle
 
         private void StartGame() //初始化游戏
         {
-            BattleManager.Instance.MemMap = new MemRowColumnMap(mapName, 0);
-            BattleManager.Instance.MemMap.InitUnit(BattleManager.Instance.PlayerManager.LeftPlayer);
-            BattleManager.Instance.MemMap.InitUnit(BattleManager.Instance.PlayerManager.RightPlayer);
             AIStrategy.OnInit(BattleManager.Instance.PlayerManager.RightPlayer);
 
             BattleManager.Instance.StatisticData.StartTime = DateTime.Now;
@@ -172,7 +175,7 @@ namespace TaleofMonsters.Controler.Battle
             miniItemView1.Visible = true;
             vRegion.Visible = true;
             IsGamePaused = false;
-            showGround = true;
+
             Invalidate();
         }
 
@@ -470,7 +473,6 @@ namespace TaleofMonsters.Controler.Battle
         private void buttonStart_Click()
         {
             StartGame();
-            cardSelector1.Hide();
             miniItemView1.Enabled = true;
         }
 
@@ -549,6 +551,11 @@ namespace TaleofMonsters.Controler.Battle
                 index++;
             }
             Invalidate();
+        }
+
+        private void LeftPlayerShowCardSelector(Player p, ICardSelectMethod method)
+        {
+            cardSelector1.Init(p, method);
         }
 
         private void OnGameOver()
