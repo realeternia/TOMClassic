@@ -106,17 +106,11 @@ namespace TaleofMonsters.DataType.Items
 
             if (itemConfig.FightRandomCardType > 0)
             {
-                int cardId = 0;
-                switch (itemConfig.FightRandomCardType)
-                {
-                    case 1: cardId = MonsterBook.GetRandMonsterId(); break;
-                    case 2: cardId = WeaponBook.GetRandWeaponId(); break;
-                    case 3: cardId = SpellBook.GetRandSpellId(); break;
-                }
+                int cardId = CardConfigManager.GetRandomTypeCard(itemConfig.FightRandomCardType);
                 var card = new ActiveCard(new DeckCard(cardId, 1, 0));
                 player.CardManager.AddCard(card);
             }
-            if (!String.IsNullOrEmpty(itemConfig.HolyWord))
+            if (!string.IsNullOrEmpty(itemConfig.HolyWord))
             {
                 player.AddHolyWord(itemConfig.HolyWord);
             }

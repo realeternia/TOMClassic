@@ -584,14 +584,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void AddRandomCard(IMonster mon, int type, int lv)
         {
-            int cardId = 0;
-            switch (type)
+            int cardId = CardConfigManager.GetRandomTypeCard(type);
+            if (cardId != 0)
             {
-                case 1: cardId = MonsterBook.GetRandMonsterId();break;
-                case 2: cardId = WeaponBook.GetRandWeaponId(); break;
-                case 3: cardId = SpellBook.GetRandSpellId(); break;
+                AddCard(mon, cardId, lv);
             }
-            AddCard(mon, cardId, lv);
         }
 
         public void AddRandomCardJob(IMonster mon, int job, int lv)
@@ -612,15 +609,30 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
         }
 
-        public void DiscoverCard()
+        public void DiscoverCardType(IMonster mon, int type, int lv)
+        {
+            List<int> cardIds = new List<int>();
+            for (int i = 0; i < GameConstants.DiscoverCardCount; i++)
+            {
+                int cardId = CardConfigManager.GetRandomTypeCard(type);
+                cardIds.Add(cardId);
+            }
+            DiscoverCard(mon, cardIds.ToArray(), lv);
+        }
+
+        private void DiscoverCard(IMonster mon, int[] cardId, int lv)
         {
             if (isPlayerControl)
             {
-                CardSelectMethodDiscover discover = new CardSelectMethodDiscover();
+                CardSelectMethodDiscover discover = new CardSelectMethodDiscover(cardId, lv);
                 if (OnShowCardSelector != null)
                 {
                     OnShowCardSelector(this, discover);
                 }
+            }
+            else
+            {
+                AIStrategy.Discover(this, mon, cardId, lv);
             }
         }
 

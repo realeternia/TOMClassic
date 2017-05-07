@@ -1,6 +1,5 @@
 ﻿using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Data.Players;
-using TaleofMonsters.Core;
 
 namespace TaleofMonsters.Controler.Battle.Components.CardSelect
 {
@@ -9,6 +8,17 @@ namespace TaleofMonsters.Controler.Battle.Components.CardSelect
         public CardSelector Selector { get; set; }
         private Player player;
         private ActiveCard[] discoverCard;
+        private int cardLevel;
+
+        public CardSelectMethodDiscover(int[] cardId, int lv)
+        {
+            discoverCard = new ActiveCard[cardId.Length];
+            cardLevel = lv;
+            for (int i = 0; i < discoverCard.Length; i++)
+            {
+                discoverCard[i] = new ActiveCard(cardId[i], (byte)cardLevel, 0);
+            }
+        }
 
         public void Init(Player p)
         {
@@ -27,11 +37,6 @@ namespace TaleofMonsters.Controler.Battle.Components.CardSelect
 
         public ActiveCard[] GetCards()
         {
-            discoverCard = new ActiveCard[GameConstants.BattleInitialCardCount+1];
-            for (int i = 0; i < discoverCard.Length; i++)
-            {
-                discoverCard[i] = new ActiveCard(51000056 + i, 1, 0);
-            }
             return discoverCard;
         }
 

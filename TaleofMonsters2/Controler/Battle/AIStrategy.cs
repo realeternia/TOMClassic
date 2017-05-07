@@ -147,5 +147,11 @@ namespace TaleofMonsters.Controler.Battle
                 }
             }
         }
+
+        public static void Discover(Player p, IMonster m, int[] cardId, int lv)
+        {
+            var targetCardId = cardId[MathTool.GetRandom(cardId.Length)]; //随机拿一张
+            p.AddCard(m, targetCardId, lv);
+        }
     }
 }

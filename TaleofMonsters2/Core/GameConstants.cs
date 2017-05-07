@@ -26,6 +26,7 @@ namespace TaleofMonsters.Core
         public const int QuestBlessTime = 30;//30步长
 
         public const int BattleInitialCardCount = 3; //战斗开始时的卡牌数
+        public const int DiscoverCardCount = 3; //发现时的卡牌数量
         public const int RoundTime = 8000;//一个回合多少ms，一个回合给一张卡
         public const float RoundRecoverAddon = 1.5f; //回合的回复倍率
         public const int RoundRecoverDoubleRound = 10; //第几个回合开始恢复加倍

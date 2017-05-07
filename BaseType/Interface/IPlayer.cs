@@ -35,6 +35,8 @@ namespace ConfigDatas
         void AddRandomCardJob(IMonster mon, int jobId, int lv); //按职业给一张随机卡牌
         void AddRandomCardRace(IMonster mon, int race, int lv); //按种族给一张随机卡牌
 
+        void DiscoverCardType(IMonster mon, int type, int lv);
+
         void AddMonster(int cardId, int level, System.Drawing.Point location);
         void ExchangeMonster(IMonster target, int lv);
         void AddResource(int type, int number);
