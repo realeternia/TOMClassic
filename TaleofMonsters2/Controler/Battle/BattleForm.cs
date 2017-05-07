@@ -6,6 +6,7 @@ using ConfigDatas;
 using NarlonLib.Control;
 using NarlonLib.Core;
 using TaleofMonsters.Config;
+using TaleofMonsters.Controler.Battle.Components.CardSelect;
 using TaleofMonsters.Controler.Battle.Data;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
@@ -144,7 +145,7 @@ namespace TaleofMonsters.Controler.Battle
             BattleManager.Instance.PlayerManager.LeftPlayer.InitialCards();
             BattleManager.Instance.PlayerManager.RightPlayer.CardsDesk = cardList2;
             BattleManager.Instance.PlayerManager.RightPlayer.InitialCards();
-            cardSelector1.Init(BattleManager.Instance.PlayerManager.LeftPlayer);
+            cardSelector1.Init(BattleManager.Instance.PlayerManager.LeftPlayer, new CardSelectMethodInit());
             BattleManager.Instance.PlayerManager.LeftPlayer.HeroSkillChanged += LeftPlayerHeroSkillChanged;
             BattleManager.Instance.PlayerManager.LeftPlayer.OnUseCard += cardFlow1.OnPlayerUseCard;
             BattleManager.Instance.PlayerManager.RightPlayer.OnUseCard += cardFlow1.OnPlayerUseCard;

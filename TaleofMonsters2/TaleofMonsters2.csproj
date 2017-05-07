@@ -106,6 +106,8 @@
     <Compile Include="Controler\Battle\Components\CardSelector.Designer.cs">
       <DependentUpon>CardSelector.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controler\Battle\Components\CardSelect\CardSelect\CardSelectMethodInit.cs" />
+    <Compile Include="Controler\Battle\Components\CardSelect\CardSelect\ICardSelectMethod.cs" />
     <Compile Include="Controler\Battle\DataTent\BattleRuleData.cs" />
     <Compile Include="Controler\Battle\DataTent\MissileQueue.cs" />
     <Compile Include="Controler\Battle\Data\CardVisualRegion.cs" />

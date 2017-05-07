@@ -1,9 +1,9 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
+using TaleofMonsters.Controler.Battle.Components.CardSelect;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.Core;
-using TaleofMonsters.Core.Interface;
 using TaleofMonsters.Forms.Items.Regions;
 
 namespace TaleofMonsters.Controler.Battle.Components
@@ -11,16 +11,11 @@ namespace TaleofMonsters.Controler.Battle.Components
     internal partial class CardSelector : UserControl
     {
         internal delegate void CardSelectoreEventHandler();
-        internal event CardSelectoreEventHandler StartClicked;
+        public CardSelectoreEventHandler StartClicked;
 
-        private CardSlot[] cards;
-        private ICardList cardList;
-        private Player player;
-
+        private List<CardSlot> cards;
         private VirtualRegion region;
-        private bool[] keepCard={true,true,true}; //是否保留本卡
-
-        private bool isButtonFirstClick = true;
+        private ICardSelectMethod selectMethod;
 
         public CardSelector()
         {
@@ -31,33 +26,40 @@ namespace TaleofMonsters.Controler.Battle.Components
             region.AddRegion(new SwitchButtonRegion(2, 200, 0, 120, 120, "ErrorButton.PNG", ""));
             region.AddRegion(new SwitchButtonRegion(3, 400, 0, 120, 120, "ErrorButton.PNG", ""));
             region.RegionClicked+=region_RegionClicked;
+
+            bitmapButton1.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+        }
+        public void Init(Player p, ICardSelectMethod method)
+        {
+            selectMethod = method;
+            selectMethod.Selector = this;
+            selectMethod.Init(p);
+            UpdateCards();
+        }
+
+        public void SetRegionParm(int id, bool parm)
+        {
+            if (region != null)
+            {
+                region.SetRegionParm(id, parm);
+            }
         }
 
         private void region_RegionClicked(int id, int x, int y, MouseButtons button)
         {
             if (region != null)
             {
-                keepCard[id - 1] = !keepCard[id - 1];
-                region.SetRegionParm(id, keepCard[id - 1]);
+                selectMethod.RegionClicked(id);
                 Invalidate();
             }
         }
 
-        public void Init(Player p)
+
+        private void UpdateCards()
         {
-            bitmapButton1.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
-
-            player = p;
-            cardList = player.CardsDesk;//hold住cardlist
-
-            cards = new CardSlot[GameConstants.BattleInitialCardCount];
-            InstallCards();
-        }
-
-        private void InstallCards()
-        {
-            var deckCards = cardList.GetAllCard();
-            for (int i = 0; i < GameConstants.BattleInitialCardCount; i++)
+            cards = new List<CardSlot>();
+            var deckCards = selectMethod.GetCards();
+            for (int i = 0; i < deckCards.Length; i++)
             {
                 var card = new CardSlot();
                 card.SetSlotCard(deckCards[i]);
@@ -65,35 +67,22 @@ namespace TaleofMonsters.Controler.Battle.Components
                 card.Size = new Size(120, 120);
                 card.BgColor = Color.Black;
 
-                cards[i] = card;
+                cards.Add(card);
             }
         }
 
         private void buttonStart_Click(object sender, System.EventArgs e)
         {
-            if (isButtonFirstClick)
-            {
-                for (int i = GameConstants.BattleInitialCardCount-1; i >= 0; i--)
-                {
-                    if (!keepCard[i])
-                    {
-                        player.CardManager.RedrawCardAt(i + 1);
-                    }
-                }
-                InstallCards();
-                region = null;
-                isButtonFirstClick = false;
-                bitmapButton1.ForeColor = Color.Red;
-                bitmapButton1.Text = @"进入游戏";
-                Invalidate();
-            }
-            else
-            {
-                if (StartClicked != null)
-                {
-                    StartClicked();
-                }
-            }
+            selectMethod.OnStartButtonClick();
+        }
+
+        public void OnStartReady()
+        {
+            UpdateCards();
+            region = null;
+            bitmapButton1.ForeColor = Color.Red;
+            bitmapButton1.Text = @"进入游戏";
+            Invalidate();
         }
 
         private void CardSelector_Paint(object sender, PaintEventArgs e)
@@ -103,7 +92,7 @@ namespace TaleofMonsters.Controler.Battle.Components
                 return;
             }
 
-            foreach (CardSlot cardSlot in cards)
+            foreach (var cardSlot in cards)
             {
                 if (cardSlot != null)
                 {
