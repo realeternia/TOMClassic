@@ -127,7 +127,7 @@ namespace TaleofMonsters.Controler.Battle.Components
 
         private static int CardIndex; //分配的item id，每个自增
 
-        private int mouseX;
+        private int mouseX = -1;
 
         public CardFlow()
         {
@@ -152,13 +152,16 @@ namespace TaleofMonsters.Controler.Battle.Components
 
         private void CheckSelect()
         {
-            int newIndex = -1;
-            foreach (var cardInfo in cardList)
+            int newIndex = -1; //默认指向不存在
+            if (mouseX != -1)
             {
-                if (mouseX > cardInfo.X && mouseX < cardInfo.X + ItemWidth)
+                foreach (var cardInfo in cardList)
                 {
-                    newIndex = cardInfo.Id;
-                    break;
+                    if (mouseX > cardInfo.X && mouseX < cardInfo.X + ItemWidth)
+                    {
+                        newIndex = cardInfo.Id;
+                        break;
+                    }
                 }
             }
 
