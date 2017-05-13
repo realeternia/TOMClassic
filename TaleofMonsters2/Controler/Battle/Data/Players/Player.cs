@@ -187,7 +187,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public virtual void InitialCards()
         {
-            DrawNextNCard(GameConstants.BattleInitialCardCount);
+            DrawNextNCard(null, GameConstants.BattleInitialCardCount, Frag.AddCardReason.InitCard);
 
             BattleManager.Instance.RuleData.CheckInitialCards(this);
         }
@@ -501,36 +501,26 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public void AddCard(IMonster mon, int cardId, int level)
         {
             CardManager.AddCard(cardId, level, 0);
+            AddCardReason(mon, Frag.AddCardReason.GetCertainCard);
         }
         public void AddCard(IMonster mon, int cardId, int level, int modify)
         {
             CardManager.AddCard(cardId, level, modify);
+            AddCardReason(mon, Frag.AddCardReason.GetCertainCard);
         }
 
         public void GetNextNCard(IMonster mon, int n)
         {
-            if (CardManager.GetCardNumber() >= GameConstants.CardSlotMaxCount)
-                return;
-
-            if (IsLeft)
-            {
-                Point startPoint = new Point(BattleManager.Instance.MemMap.StageWidth / 2, BattleManager.Instance.MemMap.StageHeight / 2);
-                if (mon != null)
-                    startPoint = mon.Position;
-                BattleManager.Instance.EffectQueue.Add(new UIEffect(EffectBook.GetEffect("flycard"), startPoint, new Point(BattleManager.Instance.MemMap.StageWidth / 2, BattleManager.Instance.MemMap.StageHeight), 16, true));
-            }
-
-            DrawNextNCard(n);
+            DrawNextNCard(mon, n, Frag.AddCardReason.DrawCardBySkillOrSpell);
         }
 
-        public void DrawNextNCard(int n)
+        public void DrawNextNCard(IMonster mon, int n, AddCardReason reason)
         {
-            if (CardManager.GetCardNumber() >= GameConstants.CardSlotMaxCount)
-                return;
-
             var cardCount = Cards.LeftCount;
             for (int i = 0; i < n; i++)
                 CardManager.GetNextCard();
+
+            AddCardReason(mon, reason);
 
             if (CardLeftChanged != null && cardCount != Cards.LeftCount)
             {
@@ -587,7 +577,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             int cardId = CardConfigManager.GetRandomTypeCard(type);
             if (cardId != 0)
             {
-                AddCard(mon, cardId, lv);
+                CardManager.AddCard(cardId, lv, 0);
+                AddCardReason(mon, Frag.AddCardReason.RandomCard);
             }
         }
 
@@ -596,7 +587,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             var cardId = CardConfigManager.GetRandomJobCard(job);
             if (cardId != 0)
             {
-                AddCard(mon, cardId, lv);
+                CardManager.AddCard(cardId, lv, 0);
+                AddCardReason(mon, Frag.AddCardReason.RandomCard);
             }
         }
 
@@ -605,7 +597,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             var cardId = CardConfigManager.GetRandomRaceCard(race);
             if (cardId != 0)
             {
-                AddCard(mon, cardId, lv);
+                CardManager.AddCard(cardId, lv, 0);
+                AddCardReason(mon, Frag.AddCardReason.RandomCard);
             }
         }
 
@@ -633,6 +626,40 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             else
             {
                 AIStrategy.Discover(this, mon, cardId, lv);
+            }
+        }
+
+        public void AddDiscoverCard(IMonster mon, int cardId, int level)
+        {
+            CardManager.AddCard(cardId, level, 0);
+            AddCardReason(mon, Frag.AddCardReason.Discover);
+        }
+
+        public void AddCardReason(IMonster mon, AddCardReason reason)
+        {
+            string effName = "";
+            switch (reason)
+            {
+                case Frag.AddCardReason.DrawCardBySkillOrSpell:
+                    effName = "flycard";
+                    break;
+                case Frag.AddCardReason.GetCertainCard:
+                    goto case Frag.AddCardReason.DrawCardBySkillOrSpell;
+                case Frag.AddCardReason.Discover:
+                    effName = "flycard2";
+                    break;
+                case Frag.AddCardReason.RandomCard:
+                    effName = "flycard3";
+                    break;
+            }
+
+            if (IsLeft && !string.IsNullOrEmpty(effName))
+            {
+                Point startPoint = new Point(BattleManager.Instance.MemMap.StageWidth / 2, BattleManager.Instance.MemMap.StageHeight / 2);
+                if (mon != null)
+                    startPoint = mon.Position;
+                BattleManager.Instance.EffectQueue.Add(new UIEffect(EffectBook.GetEffect(effName), startPoint, 
+                    new Point(BattleManager.Instance.MemMap.StageWidth / 2, BattleManager.Instance.MemMap.StageHeight), 16, true));
             }
         }
 

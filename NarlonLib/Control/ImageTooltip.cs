@@ -5,7 +5,7 @@ namespace NarlonLib.Control
 {
     public class ImageToolTip : ToolTip
     {
-        Image image;
+        private Image image;
         private int info;
 
         private void InitializeComponent()
@@ -53,7 +53,10 @@ namespace NarlonLib.Control
         public new void Hide(IWin32Window window) {
             base.Hide(window);
             if (this.image != null)
+            {
                 this.image.Dispose();
+                image = null;
+            }
         }
 
         public void Hide(IWin32Window window, int sinfo)
@@ -62,7 +65,10 @@ namespace NarlonLib.Control
             {
                 base.Hide(window);
                 if (this.image != null)
+                {
                     this.image.Dispose();
+                    image = null;
+                }
             }
         } 
 

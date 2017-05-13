@@ -1,5 +1,6 @@
 ﻿using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.Players;
+using TaleofMonsters.Controler.Battle.Data.Players.Frag;
 
 namespace TaleofMonsters.Controler.Battle.DataTent
 {
@@ -48,15 +49,15 @@ namespace TaleofMonsters.Controler.Battle.DataTent
 
         public void CheckRoundCard()
         {
-            LeftPlayer.DrawNextNCard(1);
+            LeftPlayer.DrawNextNCard(null, 1, AddCardReason.RoundCard);
             if (LeftPlayer.SpikeManager.HasSpike("doublecard"))
             {
-                LeftPlayer.DrawNextNCard(1);
+                LeftPlayer.DrawNextNCard(null, 1, AddCardReason.RoundCard);
             }
-            RightPlayer.DrawNextNCard(1);
+            RightPlayer.DrawNextNCard(null, 1, AddCardReason.RoundCard);
             if (RightPlayer.SpikeManager.HasSpike("doublecard"))
             {
-                RightPlayer.DrawNextNCard(1);
+                RightPlayer.DrawNextNCard(null, 1, AddCardReason.RoundCard);
             }
         }
     }

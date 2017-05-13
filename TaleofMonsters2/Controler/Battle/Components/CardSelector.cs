@@ -1,9 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using NarlonLib.Control;
 using TaleofMonsters.Controler.Battle.Components.CardSelect;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Cards;
+using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.Forms.Items.Regions;
 
 namespace TaleofMonsters.Controler.Battle.Components
@@ -16,6 +20,7 @@ namespace TaleofMonsters.Controler.Battle.Components
         private List<CardSlot> cards;
         private VirtualRegion region;
         private ICardSelectMethod selectMethod;
+        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
 
         private bool canClick;
 
@@ -25,9 +30,12 @@ namespace TaleofMonsters.Controler.Battle.Components
 
             region = new VirtualRegion(this);
             region.RegionClicked+=region_RegionClicked;
+            region.RegionEntered += Region_RegionEntered;
+            region.RegionLeft += Region_RegionLeft;
 
             bitmapButton1.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
         }
+
 
         public void Init(Player p, ICardSelectMethod method)
         {
@@ -65,7 +73,23 @@ namespace TaleofMonsters.Controler.Battle.Components
             }
         }
 
+        private void Region_RegionEntered(int id, int x, int y, int key)
+        {
+            if (cards.Count <= id - 1)
+                return;
 
+            var card = CardAssistant.GetCard(cards[id - 1].ACard.CardId);
+            DeckCard dc = new DeckCard(card.CardId, (byte) cards[id - 1].ACard.Level, 0);
+            card.SetData(dc);
+            var img = card.GetPreview(CardPreviewType.Normal, new int[0]);
+            tooltip.Show(img, this, x, y);
+        }
+
+        private void Region_RegionLeft()
+        {
+            tooltip.Hide(this);
+        }
+        
         private void UpdateCards()
         {
             cards = new List<CardSlot>();

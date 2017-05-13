@@ -31,7 +31,7 @@ namespace TaleofMonsters.Controler.Battle.Components.CardSelect
         public void RegionClicked(int id)
         {
             var targetCard = discoverCard[id-1];
-            player.AddCard(null, targetCard.CardId, targetCard.Level);
+            player.AddDiscoverCard(null, targetCard.CardId, targetCard.Level);
             Selector.Hide();
         }
 
