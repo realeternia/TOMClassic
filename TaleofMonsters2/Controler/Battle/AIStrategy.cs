@@ -6,6 +6,7 @@ using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
+using TaleofMonsters.Controler.Battle.Data.Players.Frag;
 using TaleofMonsters.DataType;
 
 namespace TaleofMonsters.Controler.Battle
@@ -148,10 +149,10 @@ namespace TaleofMonsters.Controler.Battle
             }
         }
 
-        public static void Discover(Player p, IMonster m, int[] cardId, int lv)
+        public static void Discover(Player p, IMonster m, int[] cardId, int lv, DiscoverCardActionType type)
         {
             var targetCardId = cardId[MathTool.GetRandom(cardId.Length)]; //随机拿一张
-            p.AddDiscoverCard(m, targetCardId, lv);
+            p.AddDiscoverCard(m, targetCardId, lv, type);
         }
     }
 }

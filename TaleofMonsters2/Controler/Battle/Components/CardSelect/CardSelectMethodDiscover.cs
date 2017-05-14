@@ -1,5 +1,6 @@
 ﻿using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Data.Players;
+using TaleofMonsters.Controler.Battle.Data.Players.Frag;
 
 namespace TaleofMonsters.Controler.Battle.Components.CardSelect
 {
@@ -10,7 +11,9 @@ namespace TaleofMonsters.Controler.Battle.Components.CardSelect
         private ActiveCard[] discoverCard;
         private int cardLevel;
 
-        public CardSelectMethodDiscover(int[] cardId, int lv)
+        private DiscoverCardActionType discoverType;
+
+        public CardSelectMethodDiscover(int[] cardId, int lv, DiscoverCardActionType type)
         {
             discoverCard = new ActiveCard[cardId.Length];
             cardLevel = lv;
@@ -18,6 +21,7 @@ namespace TaleofMonsters.Controler.Battle.Components.CardSelect
             {
                 discoverCard[i] = new ActiveCard(cardId[i], (byte)cardLevel, 0);
             }
+            discoverType = type;
         }
 
         public void Init(Player p)
@@ -31,7 +35,7 @@ namespace TaleofMonsters.Controler.Battle.Components.CardSelect
         public void RegionClicked(int id)
         {
             var targetCard = discoverCard[id-1];
-            player.AddDiscoverCard(null, targetCard.CardId, targetCard.Level);
+            player.AddDiscoverCard(null, targetCard.CardId, targetCard.Level, discoverType);
             Selector.Hide();
         }
 

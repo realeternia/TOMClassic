@@ -602,7 +602,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
         }
 
-        public void DiscoverCardType(IMonster mon, int type, int lv)
+        public void DiscoverCardType(IMonster mon, int type, int lv, string dtype)
         {
             List<int> cardIds = new List<int>();
             for (int i = 0; i < GameConstants.DiscoverCardCount; i++)
@@ -610,14 +610,24 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 int cardId = CardConfigManager.GetRandomTypeCard(type);
                 cardIds.Add(cardId);
             }
-            DiscoverCard(mon, cardIds.ToArray(), lv);
+            DiscoverCard(mon, cardIds.ToArray(), lv, (DiscoverCardActionType)Enum.Parse(typeof(DiscoverCardActionType), dtype));
+        }
+        public void DiscoverCardRace(IMonster mon, int race, int lv, string dtype)
+        {
+            List<int> cardIds = new List<int>();
+            for (int i = 0; i < GameConstants.DiscoverCardCount; i++)
+            {
+                int cardId = CardConfigManager.GetRandomRaceCard(race);
+                cardIds.Add(cardId);
+            }
+            DiscoverCard(mon, cardIds.ToArray(), lv, (DiscoverCardActionType)Enum.Parse(typeof(DiscoverCardActionType), dtype));
         }
 
-        private void DiscoverCard(IMonster mon, int[] cardId, int lv)
+        private void DiscoverCard(IMonster mon, int[] cardId, int lv, DiscoverCardActionType type)
         {
             if (isPlayerControl)
             {
-                CardSelectMethodDiscover discover = new CardSelectMethodDiscover(cardId, lv);
+                CardSelectMethodDiscover discover = new CardSelectMethodDiscover(cardId, lv, type);
                 if (OnShowCardSelector != null)
                 {
                     OnShowCardSelector(this, discover);
@@ -625,13 +635,17 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
             else
             {
-                AIStrategy.Discover(this, mon, cardId, lv);
+                AIStrategy.Discover(this, mon, cardId, lv, type);
             }
         }
 
-        public void AddDiscoverCard(IMonster mon, int cardId, int level)
+        public void AddDiscoverCard(IMonster mon, int cardId, int level, DiscoverCardActionType type)
         {
-            CardManager.AddCard(cardId, level, 0);
+            switch (type)
+            {
+                case DiscoverCardActionType.AddCard: CardManager.AddCard(cardId, level, 0); break;
+                case DiscoverCardActionType.Add2Cards: CardManager.AddCard(cardId, level, 0); CardManager.AddCard(cardId, level, 0); break;
+            }
             AddCardReason(mon, Frag.AddCardReason.Discover);
         }
 
