@@ -35,11 +35,11 @@ namespace TaleofMonsters.DataType.Cards
             }
             else if (card.Type == CardTypes.Weapon)
             {
-                cardBorder = "border6.PNG";
+                cardBorder = "border5.PNG";
             }
             else
             {
-                cardBorder = "border5.PNG";
+                cardBorder = "border6.PNG";
             }
 
             if (card.Quality == CardQualityTypes.Legend)//传说卡
