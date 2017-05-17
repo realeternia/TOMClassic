@@ -166,6 +166,7 @@
     <Compile Include="Controler\World\TimeManager.cs" />
     <Compile Include="Controler\World\WorldInfoManager.cs" />
     <Compile Include="DataType\Blesses\BlessBook.cs" />
+    <Compile Include="DataType\Cards\DiscoverCardActionType.cs" />
     <Compile Include="DataType\Drops\DropBook.cs" />
     <Compile Include="DataType\Peoples\PeopleFightReason.cs" />
     <Compile Include="DataType\Quests\QuestBook.cs" />
@@ -260,7 +261,7 @@
     <Compile Include="DataType\Buffs\BuffImmuneGroup.cs" />
     <Compile Include="DataType\CustomTypes.cs" />
     <Compile Include="DataType\Equips\Equip.cs" />
-    <Compile Include="DataType\HeroSkills\HeroSkillBook.cs" />
+    <Compile Include="DataType\HeroSkills\HeroPowerBook.cs" />
     <Compile Include="DataType\Items\CdGroup.cs" />
     <Compile Include="Config\CardConfigManager.cs" />
     <Compile Include="Core\DbSerializer.cs" />

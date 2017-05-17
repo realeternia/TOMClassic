@@ -177,7 +177,7 @@ namespace TaleofMonsters.Forms
             Image image = null;
             if (id == 1)
             {//1一定是heroskill
-                image = HeroSkillBook.GetSkillPreview(key);
+                image = HeroPowerBook.GetPreview(key);
             }
             else
             {
