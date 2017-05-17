@@ -78,7 +78,7 @@ namespace TaleofMonsters.Forms.Items.Regions
                 }
                 else if (type == PictureRegionCellType.HeroSkill)
                 {
-                    img = DataType.HeroSkills.HeroSkillBook.GetHeroSkillImage(nid);
+                    img = DataType.HeroSkills.HeroPowerBook.GetImage(nid);
                 }
                 else if (type == PictureRegionCellType.CardQual)
                 {

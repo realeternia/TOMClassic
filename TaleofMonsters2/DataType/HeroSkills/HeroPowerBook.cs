@@ -9,37 +9,37 @@ namespace TaleofMonsters.DataType.HeroSkills
     /// <summary>
     /// 英雄的主动技能
     /// </summary>
-    internal static class HeroSkillBook
+    internal static class HeroPowerBook
     {
-        public static Image GetHeroSkillImage(int id)
+        public static Image GetImage(int id)
         {
-            HeroSkillConfig skillConfig = ConfigData.GetHeroSkillConfig(id);
+            var powerConfig = ConfigData.GetHeroPowerConfig(id);
 
-            string fname = string.Format("HeroSkill/{0}", skillConfig.Icon);
+            string fname = string.Format("HeroSkill/{0}", powerConfig.Icon);
             if (!ImageManager.HasImage(fname))
             {
-                Image image = PicLoader.Read("HeroSkill", string.Format("{0}.JPG", skillConfig.Icon));
+                Image image = PicLoader.Read("HeroSkill", string.Format("{0}.JPG", powerConfig.Icon));
                 ImageManager.AddImage(fname, image);
             }
             return ImageManager.GetImage(fname);
         }
         
-        public static Image GetSkillPreview(int id)
+        public static Image GetPreview(int id)
         {
-            HeroSkillConfig heroSkillConfig = ConfigData.GetHeroSkillConfig(id);
+            var powerConfig = ConfigData.GetHeroPowerConfig(id);
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
-            tipData.AddTextNewLine(heroSkillConfig.Name, "White", 20);
+            tipData.AddTextNewLine(powerConfig.Name, "White", 20);
             tipData.AddLine();
             tipData.AddTextNewLine("英雄技能", "Red");
-            tipData.AddTextLines(heroSkillConfig.Des, "Lime",15,true);
+            tipData.AddTextLines(powerConfig.Des, "Lime",15,true);
             tipData.AddLine();
-            var cost = CardConfigManager.GetCardConfig(heroSkillConfig.CardId).Cost;
+            var cost = CardConfigManager.GetCardConfig(powerConfig.CardId).Cost;
             tipData.AddTextNewLine("消耗：", "White");
-            if (heroSkillConfig.Type == (int)CardTypes.Monster)
+            if (powerConfig.Type == (int)CardTypes.Monster)
             {
                 tipData.AddText(cost + "LP", "Yellow");
             }
-            else if (heroSkillConfig.Type == (int)CardTypes.Weapon)
+            else if (powerConfig.Type == (int)CardTypes.Weapon)
             {
                 tipData.AddText(cost + "PP", "Red");
             }

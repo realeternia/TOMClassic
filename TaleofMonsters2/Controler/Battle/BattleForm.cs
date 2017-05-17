@@ -511,7 +511,7 @@ namespace TaleofMonsters.Controler.Battle
             if (id > 0)
             {
                 var key = vRegion.GetRegion(id).GetKeyValue();
-                HeroSkillConfig heroSkillConfig = ConfigDatas.ConfigData.GetHeroSkillConfig(key);
+                HeroPowerConfig heroSkillConfig = ConfigData.GetHeroPowerConfig(key);
                 LevelExpConfig levelConfig = ConfigData.GetLevelExpConfig(UserProfile.Profile.InfoBasic.Level);
                 leftSelectCard = new ActiveCard(heroSkillConfig.CardId, (byte)levelConfig.HeroSkillLevel, 0);
                 leftSelectCard.IsHeroSkill = true;
@@ -523,7 +523,7 @@ namespace TaleofMonsters.Controler.Battle
         {
             if (id > 0)
             {
-                Image image = HeroSkillBook.GetSkillPreview(key);
+                Image image = HeroPowerBook.GetPreview(key);
                 tooltip.Show(image, this, x, y);
             }
         }

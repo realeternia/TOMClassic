@@ -13,6 +13,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
         int Mov { get; }
         void OnHit();
         void OnHited();
+        void OnRound();
 
         Image GetImage(int width, int height);
 

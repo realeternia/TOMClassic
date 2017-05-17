@@ -38,21 +38,29 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
 
         public void OnHit()
         {
-            if (IsAttackWeapon)
+            if (avatar.WeaponConfig.Type == (int)CardTypeSub.Weapon || avatar.WeaponConfig.Type == (int)CardTypeSub.Scroll)
             {
-                CheckWeaponLife();
+                SubWeaponLife();
             }
         }
         
         public void OnHited()
         {
-            if (!IsAttackWeapon)
+            if (avatar.WeaponConfig.Type == (int)CardTypeSub.Armor)
             {
-                CheckWeaponLife();
+                SubWeaponLife();
             }
         }
 
-        private void CheckWeaponLife()
+        public void OnRound()
+        {
+            if (avatar.WeaponConfig.Type == (int)CardTypeSub.Ring)
+            {
+                SubWeaponLife();
+            }
+        }
+
+        private void SubWeaponLife()
         {
             Life--;
             if (Life == 0)

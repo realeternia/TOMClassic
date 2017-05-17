@@ -109,8 +109,8 @@ namespace TaleofMonsters.DataType.Equips
             if (equipConfig.HeroSkillId > 0)
             {
                 tipData.AddLine();
-                tipData.AddImageNewLine(HeroSkillBook.GetHeroSkillImage(equipConfig.HeroSkillId));
-                HeroSkillConfig skillConfig = ConfigData.GetHeroSkillConfig(equipConfig.HeroSkillId);
+                tipData.AddImageNewLine(HeroPowerBook.GetImage(equipConfig.HeroSkillId));
+                var skillConfig = ConfigData.GetHeroPowerConfig(equipConfig.HeroSkillId);
                 string tp = string.Format("{0}:{1}", skillConfig.Name, skillConfig.Des);
                 if (tp.Length > 12)
                 {
