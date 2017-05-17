@@ -37,6 +37,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
 
         }
 
+        public void OnRound()
+        {
+            
+        }
+
         public CardTypeSub Type
         {
             get { return (CardTypeSub)avatar.MonsterConfig.Type; }

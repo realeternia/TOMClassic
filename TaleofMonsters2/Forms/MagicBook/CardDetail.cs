@@ -212,7 +212,7 @@ namespace TaleofMonsters.Forms.MagicBook
                 WeaponConfig weaponConfig = ConfigData.GetWeaponConfig(cid);
                 if (id == 1)
                 {
-                    Image image = DrawTool.GetImageByString("类型：" + HSTypes.I2CardTypeSub(weaponConfig.Type), 100);
+                    Image image = DrawTool.GetImageByString("类型：" + HSTypes.I2CardTypeSub(weaponConfig.Type) + HSTypes.I2CardTypeDesSub(weaponConfig.Type), 150);
                     tooltip.Show(image, parent, x, y);
                 }
                 else

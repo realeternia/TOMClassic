@@ -370,6 +370,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             {
                 pastRoundTotal -= 1;
                 HpBar.OnRound();
+                if (WeaponId > 0)
+                {
+                    Weapon.OnRound();
+                }
             }
 
             BuffManager.BuffCount();
