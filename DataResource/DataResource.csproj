@@ -128,7 +128,6 @@
     <EmbeddedResource Include="Effect\holy6.eff" />
     <EmbeddedResource Include="Effect\holybolt.eff" />
     <EmbeddedResource Include="Effect\iceball.eff" />
-    <EmbeddedResource Include="Effect\iceball2.eff" />
     <EmbeddedResource Include="Effect\icesharp.eff" />
     <EmbeddedResource Include="Effect\icestorm.eff" />
     <EmbeddedResource Include="Effect\inferno.eff" />
@@ -698,6 +697,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Effect\flycard2.eff" />
     <EmbeddedResource Include="Effect\flycard3.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\fireglare.eff" />
+    <EmbeddedResource Include="Effect\redstar.eff" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
