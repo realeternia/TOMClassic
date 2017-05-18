@@ -203,11 +203,15 @@ namespace TaleofMonsters.Controler.Battle.Data
                     return;
                 }
 
-                SkillInfo.SkillConfig.OnUseCard(Self, caster, cardType, lv);
-                SendSkillIcon(0);
-                if (SkillInfo.SkillConfig.Effect != "")
+                bool success = false;
+                SkillInfo.SkillConfig.OnUseCard(Self, caster, cardType, lv, ref success);
+                if (success)
                 {
-                    BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
+                    SendSkillIcon(0);
+                    if (SkillInfo.SkillConfig.Effect != "")
+                    {
+                        BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
+                    }
                 }
             }
         }

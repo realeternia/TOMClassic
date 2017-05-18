@@ -329,7 +329,7 @@ namespace ExcelToCsv
                 {
                     result = datas[i].ToString() == ""
                                   ? "null"
-                                  : string.Format("delegate(IMonster s, IPlayer p, int type, int lv){{{0}}}", datas[i]);
+                                  : string.Format("delegate(IMonster s, IPlayer p, int type, int lv, ref bool eff){{{0}}}", datas[i]);
                 }
                 else if (typeStr == "SpellEffectDelegate")
                 {
