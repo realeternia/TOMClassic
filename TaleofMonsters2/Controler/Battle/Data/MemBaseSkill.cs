@@ -172,11 +172,6 @@ namespace TaleofMonsters.Controler.Battle.Data
                     return false;
                 }
 
-                if (SkillInfo.SkillConfig.CanBurst!=null&& !SkillInfo.SkillConfig.CanBurst(Self, null, true))
-                {
-                    return false;
-                }
-             
                 if (castRoundAddon < SkillInfo.SkillConfig.SpecialCd)
                 {//in cd 
                     return false;
@@ -197,6 +192,24 @@ namespace TaleofMonsters.Controler.Battle.Data
                 return true;
             }
             return false;
+        }
+
+        public void OnUseCard(IPlayer caster, int cardType, int lv)
+        {
+            if (SkillInfo.SkillConfig.OnUseCard != null)
+            {
+                if (!CheckRate())
+                {
+                    return;
+                }
+
+                SkillInfo.SkillConfig.OnUseCard(Self, caster, cardType, lv);
+                SendSkillIcon(0);
+                if (SkillInfo.SkillConfig.Effect != "")
+                {
+                    BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
+                }
+            }
         }
 
         private void SendSkillIcon(int key)

@@ -22,11 +22,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
         public string Arrow { get { return avatar.WeaponConfig.Arrow; } }
         public int Range { get { return avatar.WeaponConfig.Range; } }
         public int Mov { get { return avatar.WeaponConfig.Mov; } }
-
-        private bool IsAttackWeapon
-        {
-            get { return avatar.WeaponConfig.Type == (int)CardTypeSub.Weapon || avatar.WeaponConfig.Type == (int)CardTypeSub.Scroll; }
-        }
         
         public TrueWeapon(LiveMonster lm, int level, Weapon wpn)
         {

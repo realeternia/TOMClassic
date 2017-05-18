@@ -108,7 +108,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             LeftCount = 0;
             RightCount = 0;
             List<int> removeMids = new List<int>();            
-            foreach (LiveMonster mon in monsters)
+            foreach (var mon in monsters)
             {
                 var rival = mon.Rival as Player;
                 if (rival.DirectDamage > 0)
@@ -164,6 +164,14 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 Add(lm);
             }
             toAdd.Clear();
+        }
+
+        public void OnPlayerUseCard(IPlayer caster, int cardType, int lv)
+        {
+            foreach (var mon in monsters)
+            {
+                mon.SkillManager.CheckUseCard(caster, cardType, lv);
+            }
         }
 
         public void Clear()

@@ -325,6 +325,12 @@ namespace ExcelToCsv
                                   ? "null"
                                   : string.Format("delegate(ITargetMeasurable sp,IMonster s,int lv){{{0}}}", datas[i]);
                 }
+                else if (typeStr == "SkillUseCardHandleDelegate")
+                {
+                    result = datas[i].ToString() == ""
+                                  ? "null"
+                                  : string.Format("delegate(IMonster s, IPlayer p, int type, int lv){{{0}}}", datas[i]);
+                }
                 else if (typeStr == "SpellEffectDelegate")
                 {
                     result = datas[i].ToString() == ""

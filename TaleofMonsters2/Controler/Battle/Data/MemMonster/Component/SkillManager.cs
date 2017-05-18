@@ -69,7 +69,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void AddSkill(int sid, int slevel, int rate, SkillSourceTypes type)
         {
-            foreach (MemBaseSkill memSkill in Skills)
+            foreach (var memSkill in Skills)
             {
                 if (memSkill.SkillId == sid)
                 {
@@ -90,7 +90,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void RemoveSkill(int sid)
         {
-            foreach (MemBaseSkill memSkill in Skills)
+            foreach (var memSkill in Skills)
             {
                 if (memSkill.SkillId == sid)
                 {
@@ -107,7 +107,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void CheckCover(List<ActiveEffect> coverEffectList)
         {
-            foreach (MemBaseSkill memBaseSkill in Skills)//技能造成的特效
+            foreach (var memBaseSkill in Skills)//技能造成的特效
             {
                 if (memBaseSkill.SkillConfig.Cover != "")
                 {
@@ -121,7 +121,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void CheckInitialEffect()
         {
-            foreach (MemBaseSkill skill in Skills.ToArray())
+            foreach (var skill in Skills.ToArray())
             {
                 skill.CheckInitialEffect();
             }
@@ -129,7 +129,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void CheckRemoveEffect()
         {
-            foreach (MemBaseSkill skill in Skills.ToArray())
+            foreach (var skill in Skills.ToArray())
             {
                 skill.CheckRemoveEffect();
             }
@@ -142,7 +142,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 return false;
             }
 
-            foreach (MemBaseSkill skill in Skills.ToArray())
+            foreach (var skill in Skills.ToArray())
             {
                 if (InForget && skill.Type != SkillSourceTypes.Weapon)
                     continue;
@@ -153,6 +153,22 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             return false;
         }
 
+        public void CheckUseCard(IPlayer caster, int cardType, int lv)
+        {
+            if (self.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
+            {
+                return;
+            }
+
+            foreach (var skill in Skills.ToArray())
+            {
+                if (InForget && skill.Type != SkillSourceTypes.Weapon)
+                    continue;
+
+                skill.OnUseCard(caster, cardType, lv);
+            }
+        }
+
         /// <summary>
         /// 判定技能释放状态
         /// </summary>
@@ -161,7 +177,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         /// <param name="isMelee">是否是近战攻击（否则远程）</param>
         public void CheckBurst(LiveMonster src, LiveMonster dest, bool isMelee)
         {
-            foreach (MemBaseSkill skill in Skills.ToArray())
+            foreach (var skill in Skills.ToArray())
             {
                 if (InForget && skill.Type != SkillSourceTypes.Weapon)
                     continue;
@@ -178,7 +194,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         /// <param name="rhit">命中</param>
         public void CheckHit(LiveMonster src, LiveMonster dest, ref int rhit)
         {
-            foreach (MemBaseSkill skill in Skills.ToArray())
+            foreach (var skill in Skills.ToArray())
             {
                 var key = MemBaseSkill.GetBurstKey(src.Id, dest.Id);
                 if (skill.IsBurst(key))
@@ -216,7 +232,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         /// <param name="damage">伤害值</param>
         public void CheckHitEffectAfter(LiveMonster src, LiveMonster dest, HitDamage damage)
         {
-            foreach (MemBaseSkill skill in Skills.ToArray())
+            foreach (var skill in Skills.ToArray())
             {
                 var key = MemBaseSkill.GetBurstKey(src.Id, dest.Id);
                 if (skill.IsBurst(key))
@@ -228,7 +244,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public int GetRoundSkillPercent()
         {
-            foreach (MemBaseSkill skill in Skills.ToArray())
+            foreach (var skill in Skills.ToArray())
             {
                 var round = skill.GetPercent();
                 if (round > 0)

@@ -18,6 +18,7 @@ using NarlonLib.Log;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Components.CardSelect;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
+using TaleofMonsters.Controler.Battle.DataTent;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Cards.Spells;
@@ -274,6 +275,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
 
             SpikeManager.OnUseCard(selectCard.CardType);
+            BattleManager.Instance.MonsterQueue.OnPlayerUseCard(this, (int)selectCard.CardType, selectCard.Level);
             if (OnUseCard != null)
                 OnUseCard(selectCard.CardId, selectCard.Level, IsLeft);
             
