@@ -103,7 +103,6 @@
     <EmbeddedResource Include="Effect\doubleswordhit.eff" />
     <EmbeddedResource Include="Effect\dragonball.eff" />
     <EmbeddedResource Include="Effect\drain.eff" />
-    <EmbeddedResource Include="Effect\electball.eff" />
     <EmbeddedResource Include="Effect\electhit.eff" />
     <EmbeddedResource Include="Effect\etwave.eff" />
     <EmbeddedResource Include="Effect\evilface.eff" />
@@ -701,6 +700,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Effect\fireglare.eff" />
     <EmbeddedResource Include="Effect\redstar.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\blackflash.eff" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Effect\cloudwind.eff" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
