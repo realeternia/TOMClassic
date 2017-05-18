@@ -4,6 +4,7 @@ using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Core;
 using ConfigDatas;
 using TaleofMonsters.DataType.Cards.Monsters;
+using TaleofMonsters.DataType.Formulas;
 
 namespace TaleofMonsters.DataType.Skills
 {
@@ -51,13 +52,13 @@ namespace TaleofMonsters.DataType.Skills
             var realAttackType = MonsterBook.HasTag(src.CardId, "mattack") ? src.Attr : src.AttackType;
             if (realAttackType == 0)//物理攻击
             {
-                var damValue = Math.Max(1, (int)(src.RealAtk*(100-dest.RealDef*GameConstants.DefToRate)/100f * attrRateOn));//至少有1点伤害
+                var damValue = Math.Max(1, (int)(src.RealAtk*(1 - FormulaBook.GetPhyDefRate(dest.RealDef)) * attrRateOn));//至少有1点伤害
                 var noDefDamValue = (int)(src.RealAtk * attrRateOn);
                 damage = new HitDamage(damValue, noDefDamValue, 0, DamageTypes.Physical);
             }
             else
             {
-                var damValue = (int)(src.RealAtk * (100 + src.RealMag * GameConstants.MagToRate) / 100f * attrRateOn);
+                var damValue = (int)(src.RealAtk * (1 + src.RealMag * GameConstants.MagToRate) * (1 - FormulaBook.GetMagDefRate(dest.RealMag)) * attrRateOn);
                 damage = new HitDamage(damValue, damValue, realAttackType, DamageTypes.Magic);
                 dest.CheckMagicDamage(damage);
             }
@@ -103,14 +104,6 @@ namespace TaleofMonsters.DataType.Skills
             if (tileMatching || src.HasSkill(GameConstants.SkillTileId))//地形
             {
                 src.AddBuff(BuffConfig.Indexer.Tile, 1, 0.05);
-            }
-        }
-
-        public static void CheckMagicDamage(LiveMonster dest, HitDamage damage)
-        {
-            if (damage.Dtype == DamageTypes.Magic)
-            {
-                dest.CheckMagicDamage(damage);
             }
         }
 

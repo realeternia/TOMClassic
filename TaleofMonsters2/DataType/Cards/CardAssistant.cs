@@ -12,8 +12,8 @@ namespace TaleofMonsters.DataType.Cards
     {
         public static void DrawBase(Graphics g, int cid, int x, int y, int width, int height)
         {
-            int xDiff = width / 12;
-            int yDiff = height / 12;
+            int xDiff = width / 15;
+            int yDiff = height / 15;
             Image img = GetCardImage(cid, width, height);
             var cardData = CardConfigManager.GetCardConfig(cid);
             int attr = cardData.Attr;//属性决定包边颜色

@@ -39,8 +39,7 @@ namespace TaleofMonsters.Core
         public const int DefaultHitRate = 85;//默认的命中
         public const int CrtToRate = 6;//每点crt实际的暴击率
         public const float DefaultCrtDamage = 1.5f;//默认暴击时的伤害倍率
-        public const int DefToRate = 6;//每点def实际的防御率
-        public const int MagToRate = 10;//每点mag实际的伤害率
+        public const double MagToRate = 0.1;//每点mag实际的伤害率
         public const int SpdToRate = 5;//每点攻速实际的提升率
         public const int HitToRate = 5;//每点命中实际的提升率
         public const int LukToRoll = 100; //每点幸运造成的额外roll点，万分之

@@ -23,6 +23,7 @@ using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards.Weapons;
 using TaleofMonsters.DataType.Decks;
+using TaleofMonsters.DataType.Formulas;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 {
@@ -871,9 +872,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void OnMagicDamage(IMonster source, double damage, int element)
         {
-            var dam = new HitDamage((int) damage, (int) damage, element, DamageTypes.Magic);
+            var damValue = damage *(1 - FormulaBook.GetMagDefRate(RealMag));
+            var dam = new HitDamage((int)damValue, (int)damValue, element, DamageTypes.Magic);
             lastDamagerId = source == null ? 0 : source.Id;
-            SkillAssistant.CheckMagicDamage(this, dam);
+            CheckMagicDamage(dam);
             HpBar.OnDamage(dam);
         }
 

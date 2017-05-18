@@ -1,37 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using ConfigDatas;
-using NarlonLib.Math;
-
-namespace TaleofMonsters.DataType.Formulas
+﻿namespace TaleofMonsters.DataType.Formulas
 {
     internal static class FormulaBook
     {
-        [Obsolete("已经废弃")]
-        public static double GetPhysicalDamage(int atk, int def)
+        public static double GetPhyDefRate(int def)
         {
-            Dictionary<string, string> rules = new Dictionary<string, string>();
-            rules.Add("atk", atk.ToString());
-            rules.Add("def", def.ToString());
-            return MathTool.GetFormulaResult(ConfigData.GetFormulaConfig(FormulaConfig.Indexer.Pdamage).Rule, rules);
+            return def * 0.1/(1 + 0.1* def);
         }
-
-        [Obsolete("已经废弃")]
-        public static double GetMagicDamage(int atk, int def)
+        public static double GetMagDefRate(int mag)
         {
-            Dictionary<string, string> rules = new Dictionary<string, string>();
-            rules.Add("atk", atk.ToString());
-            rules.Add("def", def.ToString());
-            return MathTool.GetFormulaResult(ConfigData.GetFormulaConfig(FormulaConfig.Indexer.Mdamage).Rule, rules);
-        }
-
-        [Obsolete("已经废弃")]
-        public static double GetHitRate(int hit, int dhit)
-        {
-            Dictionary<string, string> rules = new Dictionary<string, string>();
-            rules.Add("hit", hit.ToString());
-            rules.Add("dit", dhit.ToString());
-            return MathTool.GetFormulaResult(ConfigData.GetFormulaConfig(FormulaConfig.Indexer.Hit).Rule, rules);
+            return mag * 0.05 / (1 + 0.05 * mag);
         }
     }
 }
