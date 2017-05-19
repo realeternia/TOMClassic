@@ -204,7 +204,7 @@ namespace TaleofMonsters.Controler.Battle.Data
                 }
 
                 bool success = false;
-                SkillInfo.SkillConfig.OnUseCard(Self, caster, cardType, lv, ref success);
+                SkillInfo.SkillConfig.OnUseCard(SkillInfo, Self, caster, cardType, lv, ref success);
                 if (success)
                 {
                     SendSkillIcon(0);
