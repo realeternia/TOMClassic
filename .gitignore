@@ -85,3 +85,9 @@ obj
 /bin/Debug/TaleofMonsters2.vshost.exe
 /bin/Debug/TaleofMonsters2.vshost.exe.manifest
 /Tool/ExcelToCsv/bin
+/Tool/NLVFS/NLVFS/obj
+/Tool/NLVFS/NLVFS/bin
+/Tool/NLVFS/Packager/bin
+/Tool/NLVFS/Packager/obj
+/Tool/NLVFS/VFSViewer/bin
+/Tool/NLVFS/VFSViewer/obj

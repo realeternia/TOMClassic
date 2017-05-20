@@ -1,8 +1,0 @@
-F:\TOMClassic\Trunk\Tool\NLVFS\NLVFS\bin\Debug\NLVFS.dll
-F:\TOMClassic\Trunk\Tool\NLVFS\NLVFS\bin\Debug\NLVFS.pdb
-F:\TOMClassic\Trunk\Tool\NLVFS\NLVFS\obj\x86\Debug\NLVFS.dll
-F:\TOMClassic\Trunk\Tool\NLVFS\NLVFS\obj\x86\Debug\NLVFS.pdb
-E:\NLVFS\NLVFS\bin\Debug\NLVFS.dll
-E:\NLVFS\NLVFS\bin\Debug\NLVFS.pdb
-E:\NLVFS\NLVFS\obj\x86\Debug\NLVFS.dll
-E:\NLVFS\NLVFS\obj\x86\Debug\NLVFS.pdb
