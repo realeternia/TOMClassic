@@ -1100,10 +1100,6 @@
       <Project>{476BDC7E-6825-43D6-A9DB-DE5C5263515F}</Project>
       <Name>ControlPlus</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataResource\DataResource.csproj">
-      <Project>{B0A31F62-AE2B-4F0B-8EAB-6E646D422BC9}</Project>
-      <Name>DataResource</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NarlonLib\NarlonLib.csproj">
       <Project>{90968C56-07C1-4AB6-9C00-FDBB49031F25}</Project>
       <Name>NarlonLib</Name>

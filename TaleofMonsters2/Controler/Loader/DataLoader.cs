@@ -1,18 +1,27 @@
-using System;
-using System.Reflection;
 using System.IO;
 
 namespace TaleofMonsters.Controler.Loader
 {
-    class DataLoader
+    internal class DataLoader
     {
-        public static Stream Read(String dir, String path)
+        public static void Init()
         {
-            Stream myStream;
+            NLVFS.NLVFS.LoadVfsFile("./DataResource.vfs");
+        }
+
+        public static Stream Read(string dir, string path)
+        {
+            Stream myStream = null;
             try
             {
-                Assembly myAssembly = Assembly.LoadFrom("DataResource.dll");
-                myStream = myAssembly.GetManifestResourceStream(String.Format("DataResource.{0}.{1}", dir, path));
+                try
+                {
+                    myStream = new MemoryStream(NLVFS.NLVFS.LoadFile(string.Format("{0}.{1}", dir, path)));
+                }
+                catch
+                {
+                    NarlonLib.Log.NLog.Error(string.Format("DataLoader.Read error {0}.{1}", dir, path));
+                }
             }
             catch
             {

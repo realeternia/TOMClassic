@@ -68,7 +68,7 @@ namespace NLVFS
             foreach (var path in pathList)
             {
                 FileInfo fileInfo = new FileInfo(path.Path);
-                if (fileInfo.Extension.ToUpper() == ".JPG" || fileInfo.Extension.ToUpper() == ".PNG")
+              //  if (fileInfo.Extension.ToUpper() == ".JPG" || fileInfo.Extension.ToUpper() == ".PNG")
                 {
                     ReadFile(path);
                 }

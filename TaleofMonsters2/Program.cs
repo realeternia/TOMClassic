@@ -15,6 +15,7 @@ namespace TaleofMonsters
         static void Main()
         {
             NLog.Start(LogTargets.File);
+            DataLoader.Init();
             PicLoader.Init(); 
             SoundManager.Init();
             Application.EnableVisualStyles();
