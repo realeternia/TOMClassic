@@ -44,7 +44,18 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
 
         private void GenerateImg()
         {
-            var img = MissileBook.GetImage(config.Image + (frameOffset / config.FrameTime)% config.FrameCount);
+            angle = (angle + 360) % 360;
+            var imgId = config.Image + (frameOffset/config.FrameTime)%config.FrameCount;
+            Image img = null;
+            if (angle > 90 && angle < 270)
+            {
+                img = MissileBook.GetImage(imgId, true);
+            }
+            else
+            {
+                img = MissileBook.GetImage(imgId, false);
+            }
+
             effectImg = DrawTool.Rotate(img, angle);
         }
         

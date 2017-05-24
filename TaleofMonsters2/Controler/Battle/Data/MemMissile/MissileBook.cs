@@ -7,21 +7,26 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
 {
     internal class MissileBook
     {
-        static Dictionary<int, Image> effectType = new Dictionary<int, Image>();
+        static Dictionary<string, Image> effectType = new Dictionary<string, Image>();
         static Dictionary<string, MissileConfig> cachedConfigDict;
 
-        public static Image GetImage(int id)
+        public static Image GetImage(int id, bool isYFlip)
         {
-            if (!effectType.ContainsKey(id))
+            var key = isYFlip ? id.ToString() + "f" : id.ToString();
+            if (!effectType.ContainsKey(key))
             {
                 var img = PicLoader.Read("Missile", string.Format("{0}.PNG", id));
                 if (img == null)
                 {
                     img = PicLoader.Read("Missile", "0.PNG");
                 }
-                effectType.Add(id, img);
+                if (isYFlip)
+                {
+                    img.RotateFlip(RotateFlipType.RotateNoneFlipY);
+                }
+                effectType.Add(key, img);
             }
-            return effectType[id];
+            return effectType[key];
         }
 
         public static MissileConfig GetConfig(string name)
