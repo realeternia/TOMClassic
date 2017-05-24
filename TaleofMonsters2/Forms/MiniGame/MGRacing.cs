@@ -214,6 +214,9 @@ namespace TaleofMonsters.Forms.MiniGame
             Image img = PicLoader.Read("MiniGame.Racing", string.Format("race{0}.PNG", (int)info.Hardness+1));
             e.Graphics.DrawImage(img, 50 + xoff, 50 + yoff, 100, 100);
             img.Dispose();
+            img = PicLoader.Read("Border", "questb1.PNG");
+            e.Graphics.DrawImage(img, 50 + xoff, 50 + yoff, 100, 100);
+            img.Dispose();
             var font = new Font("宋体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             DrawShadeText(e.Graphics, string.Format("第{0}赛段", raceId + 1), font, Brushes.Lime, xoff + 165, 35 + yoff);
             DrawShadeText(e.Graphics, string.Format("长度 {0}", distanceDes), font, Brushes.White, xoff+165, 65+yoff);

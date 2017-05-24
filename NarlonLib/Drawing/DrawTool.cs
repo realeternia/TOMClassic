@@ -114,7 +114,6 @@ namespace NarlonLib.Drawing
 
         public static Bitmap Rotate(Image b, int angle)
         {
-            angle = (angle + 360) % 360;
             //»¡¶È×ª»»
             double radian = angle * System.Math.PI / 180.0;
             double cos = System.Math.Cos(radian);

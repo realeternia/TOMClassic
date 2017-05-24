@@ -44,8 +44,9 @@ namespace TaleofMonsters.Forms.MiniGame
             this.colorLabel1.Name = "colorLabel1";
             this.colorLabel1.Size = new System.Drawing.Size(326, 86);
             this.colorLabel1.TabIndex = 37;
-            this.colorLabel1.Text = "|本游戏是|#ff6600|老虎机||的变种，玩法也非常简单。\r\n|转盘一共转动3次，得分由三次相加。\r\n|3个|#ff0000|7||积|#008800|30|" +
-    "|分。\r\n|其他3个|#ff0000|相同符号||积|#008800|20||分。\r\n|否则，按照标识积分。";
+            this.colorLabel1.Text = "|这个一个当时|#ff6600|赌场||中非常流行的一个游戏。\r\n|每次游戏包含三小局，得分由三局相加。\r\n|每局中，如果出现3个|#ff0000|7||则可以获" +
+    "得|#008800|30||分。\r\n|其他的3个|#ff0000|相同符号情况，||可以获得|#008800|20||分。\r\n|否则，则按照显示的数字计算单局得" +
+    "分。";
             // 
             // bitmapButtonC1
             // 
