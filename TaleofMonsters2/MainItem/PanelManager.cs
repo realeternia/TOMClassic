@@ -137,6 +137,8 @@ namespace TaleofMonsters.MainItem
                     basePanel = new MGOvercome(); break;
                 case SystemMenuIds.GameRacing:
                     basePanel = new MGRacing(); break;
+                case SystemMenuIds.GameVoting:
+                    basePanel = new MGVoting(); break;
             }
             if (basePanel != null)
             {
