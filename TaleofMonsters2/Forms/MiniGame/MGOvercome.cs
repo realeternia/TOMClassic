@@ -30,7 +30,7 @@ namespace TaleofMonsters.Forms.MiniGame
             this.bitmapButtonC1.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
             bitmapButtonC1.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             bitmapButtonC1.ForeColor = Color.White;
-            bitmapButtonC1.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("res2");
+            bitmapButtonC1.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("hatt1");
             bitmapButtonC1.IconSize = new Size(16, 16);
             bitmapButtonC1.IconXY = new Point(4, 5);
             bitmapButtonC1.TextOffX = 8;

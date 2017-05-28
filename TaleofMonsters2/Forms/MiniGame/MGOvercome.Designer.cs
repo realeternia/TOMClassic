@@ -58,7 +58,7 @@ namespace TaleofMonsters.Forms.MiniGame
             this.bitmapButtonC1.Size = new System.Drawing.Size(50, 30);
             this.bitmapButtonC1.TabIndex = 27;
             this.bitmapButtonC1.Tag = "1";
-            this.bitmapButtonC1.Text = "添加";
+            this.bitmapButtonC1.Text = "出招";
             this.bitmapButtonC1.TextOffX = 0;
             this.bitmapButtonC1.UseVisualStyleBackColor = true;
             this.bitmapButtonC1.Click += new System.EventHandler(this.bitmapButtonC1_Click);
