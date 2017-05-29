@@ -17,6 +17,7 @@ namespace TaleofMonsters.Forms.MiniGame
 
         private List<int> myCards;
         private List<int> hisCards;
+        private RandomSequence rs;
 
         private int myMark;
         private int hisMark;
@@ -166,10 +167,12 @@ namespace TaleofMonsters.Forms.MiniGame
         {
             myCards = new List<int>();
             hisCards = new List<int>();
+            rs = new RandomSequence(52);
+           
             for (int i = 0; i < 2; i++)
             {
-                myCards.Add(MathTool.GetRandom(52));
-                hisCards.Add(MathTool.GetRandom(52));
+                myCards.Add(rs.NextNumber());
+                hisCards.Add(rs.NextNumber());
             }
             myFull = false;
             hisFull = false;
@@ -191,14 +194,14 @@ namespace TaleofMonsters.Forms.MiniGame
 
             if (hisScore < viewScore && hisScore < 21)
             {
-                hisCards.Add(MathTool.GetRandom(52));
+                hisCards.Add(rs.NextNumber());
                 Invalidate(new Rectangle(xoff, yoff, 324, 244));
                 hisFull = false;
                 myFull = false;
             }
             else if (hisScore < viewScore+6 && hisScore < 16)
             {
-                hisCards.Add(MathTool.GetRandom(52));
+                hisCards.Add(rs.NextNumber());
                 Invalidate(new Rectangle(xoff, yoff, 324, 244));
                 hisFull = false;
                 myFull = false;
@@ -216,7 +219,7 @@ namespace TaleofMonsters.Forms.MiniGame
             {
                 return;
             }
-            myCards.Add(MathTool.GetRandom(52));
+            myCards.Add(rs.NextNumber());
             Invalidate(new Rectangle(xoff, yoff, 324, 244));
             hisFull = false;
             myFull = false;
