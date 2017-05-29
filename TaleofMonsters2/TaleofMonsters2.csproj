@@ -209,6 +209,12 @@
     <Compile Include="Forms\MiniGame\MGBase.Designer.cs">
       <DependentUpon>MGBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MiniGame\MGTwentyOne.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MiniGame\MGTwentyOne.Designer.cs">
+      <DependentUpon>MGTwentyOne.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MiniGame\MGVoting.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -810,6 +816,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MiniGame\MGBase.resx">
       <DependentUpon>MGBase.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MiniGame\MGTwentyOne.resx">
+      <DependentUpon>MGTwentyOne.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MiniGame\MGVoting.resx">

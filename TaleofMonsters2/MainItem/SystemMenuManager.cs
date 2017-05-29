@@ -307,5 +307,6 @@ namespace TaleofMonsters.MainItem
         GameOvercome = 1107,
         GameRacing = 1108,
         GameVoting = 1109,
+        GameTwentyOne = 1110,
     }
 }
