@@ -24,6 +24,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
           //  PlayerAttr attr = new PlayerAttr();
           //  attr.ModifyMonsterData(HeroData);
             InitBase();
+
+            BattleManager.Instance.RuleData.CheckPlayerData(this);
         }
         
         public override void InitialCards()

@@ -1,0 +1,5 @@
+﻿s这片地里种满了玉米。成熟的玉米在此刻看起来是多么的诱人。
+	a拿走一些
+		ereward|food
+	a直接离开
+		ereward|mental
