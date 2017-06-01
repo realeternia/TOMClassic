@@ -85,7 +85,8 @@ namespace TaleofMonsters.DataType.Equips
 
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine(equipConfig.Name, HSTypes.I2QualityColor(equipConfig.Quality), 20);
-            tipData.AddTextNewLine(string.Format("       装备部位:{0}", HSTypes.I2EPosition(equipConfig.Position)), "White");
+            EquipSlotConfig slotConfig = ConfigData.GetEquipSlotConfig(equipConfig.Position);
+            tipData.AddTextNewLine(string.Format("       装备部位:{0}", slotConfig.Name), "White");
             tipData.AddTextNewLine("", "White");
             if (Atk > 0)
             {

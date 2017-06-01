@@ -16,6 +16,8 @@ namespace TaleofMonsters.DataType.User
 
         [FieldIndex(Index = 3)] public List<int> EquipComposeAvail;
 
+        private const int MainHouseIndex = 5;
+
         public InfoEquip()
         {
             Equipon = new DbEquip[GameConstants.EquipOnCount];
@@ -30,7 +32,7 @@ namespace TaleofMonsters.DataType.User
         public void AddEquip(int id, int minuteLast)
         {
             EquipConfig equipConfig = ConfigData.GetEquipConfig(id);
-            MainTipManager.AddTip(string.Format("|获得装备-|{0}|{1}", HSTypes.I2QualityColor(equipConfig.Quality), equipConfig.Name), "White");
+            MainTipManager.AddTip(String.Format("|获得装备-|{0}|{1}", HSTypes.I2QualityColor(equipConfig.Quality), equipConfig.Name), "White");
 
             for (int i = 0; i < GameConstants.EquipOffCount; i++)
             {
@@ -115,5 +117,47 @@ namespace TaleofMonsters.DataType.User
             }
         }
 
+        public bool CanEquip(int equipId, int slotId)
+        {
+            //先判定slot可用性
+            EquipSlotConfig slotConfig = ConfigData.GetEquipSlotConfig(slotId);
+            if (slotId != MainHouseIndex)//主楼格永远可以装备
+            {
+                if (Equipon[MainHouseIndex - 1].BaseId == 0)
+                    return false;
+                EquipConfig equipConfig = ConfigData.GetEquipConfig(Equipon[MainHouseIndex-1].BaseId);
+                if (equipConfig.SlotId != null)
+                {
+                    return Array.IndexOf(equipConfig.SlotId, slotId) >= 0;
+                }
+            }
+
+            if (equipId > 0)
+            {
+                EquipConfig equipConfig = ConfigData.GetEquipConfig(equipId);
+                return equipConfig.Position == slotConfig.Type;
+            }
+            return true;
+        }
+
+        public List<int> GetValidEquipsList()
+        {
+            List<int> equips = new List<int>();
+
+            for(int i=0;i< GameConstants.EquipOnCount;i++)
+            {
+                var equip = Equipon[i];
+                if (equip.BaseId == 0)
+                {
+                    continue;
+                }
+
+                if (CanEquip(equip.BaseId, i+1))
+                {
+                    equips.Add(equip.BaseId);
+                }
+            }
+            return equips;
+        }
     }
 }

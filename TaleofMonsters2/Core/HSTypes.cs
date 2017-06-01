@@ -98,12 +98,6 @@
             return rt[id];
         }
 
-        public static string I2EPosition(int id)
-        {
-            string[] rt = { "???", "头盔", "武器", "护具", "饰品" };
-            return rt[id];
-        }
-
         public static string I2Quality(int id)
         {
             string[] rt = {"普通", "良好", "优质", "史诗", "传说", "神", "烂"};

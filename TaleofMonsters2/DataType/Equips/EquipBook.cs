@@ -34,11 +34,6 @@ namespace TaleofMonsters.DataType.Equips
             return datas.ToArray();
         }
 
-        public static bool CanEquip(int id)
-        {
-            return true;
-        }
-
         public static int GetRandEquipByLevelQuality(int qual)
         {
             if (equipQualDict == null)
@@ -68,22 +63,6 @@ namespace TaleofMonsters.DataType.Equips
                 return 0;
             }
             return datas[MathTool.GetRandom(datas.Count)];
-        }
-
-        public static List<Equip> GetEquipsList(int[] equipIds)
-        {
-            List<Equip> equips = new List<Equip>();
-
-            foreach (int eid in equipIds)
-            {
-                if (eid == 0)
-                {
-                    continue;
-                }
-
-                equips.Add(new Equip(eid));
-            }
-            return equips;
         }
 
 

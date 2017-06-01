@@ -48,20 +48,13 @@ namespace TaleofMonsters.Forms
             InitializeComponent();
             bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
             bitmapButtonJob.ImageNormal = PicLoader.Read("ButtonBitmap", "LearnButton.JPG");
-
             vRegion = new VirtualRegion(this);
-            var r1 = new PictureRegion(1, 413, 69, 64, 64, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipon[0].BaseId);
-            r1.AddDecorator(new RegionBorderDecorator(Color.Yellow));//头盔
-            vRegion.AddRegion(r1);
-            r1 = new PictureRegion(2, 374, 151, 40, 40, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipon[1].BaseId);
-            r1.AddDecorator(new RegionBorderDecorator(Color.Yellow));//武器
-            vRegion.AddRegion(r1);
-            r1 = new PictureRegion(3, 425, 151, 40, 40, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipon[2].BaseId);
-            r1.AddDecorator(new RegionBorderDecorator(Color.Yellow));//防具
-            vRegion.AddRegion(r1);
-            r1 = new PictureRegion(4, 476, 151, 40, 40, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipon[3].BaseId);
-            r1.AddDecorator(new RegionBorderDecorator(Color.Yellow));//饰品
-            vRegion.AddRegion(r1);
+            for (int i = 0; i < 9; i++)
+            {
+                var r1 = new PictureRegion(i+1, 373 + 51 * (i%3), 60 + 51*(i/3), 40, 40, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipon[i].BaseId);
+                r1.AddDecorator(new RegionBorderDecorator(Color.Yellow));//饰品
+                vRegion.AddRegion(r1);
+            }
 
             vRegion.AddRegion(new SubVirtualRegion(10, 147, 107, 46, 44));
             vRegion.AddRegion(new SubVirtualRegion(11, 200, 107, 46, 44));
@@ -126,6 +119,14 @@ namespace TaleofMonsters.Forms
                     equip.ExpireTime = UserProfile.InfoEquip.Equipon[id - 1].ExpireTime;
                     image = equip.GetPreview();
                 }
+                else
+                {
+                    EquipSlotConfig slotConfig = ConfigData.GetEquipSlotConfig(id);
+                    ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+                    tipData.AddTextNewLine(slotConfig.Name, "Lime");
+                    tipData.AddTextNewLine(slotConfig.Des, "White");
+                    image = tipData.Image;
+                }
             }
             else if (id < 20)
             {
@@ -169,23 +170,16 @@ namespace TaleofMonsters.Forms
                     if (selectTar != -1)//穿上装备
                     {
                         EquipConfig equipConfig = ConfigData.GetEquipConfig(UserProfile.InfoEquip.Equipoff[selectTar].BaseId);
-                        if (!EquipBook.CanEquip(equipConfig.Id))
+                        if (UserProfile.InfoEquip.CanEquip(equipConfig.Id, id))
                         {
-                            AddFlowCenter("等级不足", "Red");
-                        }
-                        else
-                        {
-                            if (equipConfig.Position == id)
-                            {
-                                var oldItem = UserProfile.InfoEquip.Equipon[id - 1];
-                                UserProfile.InfoEquip.Equipon[id - 1] = UserProfile.InfoEquip.Equipoff[selectTar];
-                                vRegion.SetRegionKey(id, UserProfile.InfoEquip.Equipon[id - 1].BaseId);
-                                UserProfile.InfoEquip.Equipoff[selectTar] = oldItem;
-                                vRegion.SetRegionKey(selectTar + 20, oldItem.BaseId);
-                                RefreshEquip();
-                                selectTar = -1;
-                                myCursor.ChangeCursor("default");
-                            }
+                            var oldItem = UserProfile.InfoEquip.Equipon[id - 1];
+                            UserProfile.InfoEquip.Equipon[id - 1] = UserProfile.InfoEquip.Equipoff[selectTar];
+                            vRegion.SetRegionKey(id, UserProfile.InfoEquip.Equipon[id - 1].BaseId);
+                            UserProfile.InfoEquip.Equipoff[selectTar] = oldItem;
+                            vRegion.SetRegionKey(selectTar + 20, oldItem.BaseId);
+                            RefreshEquip();
+                            selectTar = -1;
+                            myCursor.ChangeCursor("default");
                         }
                     }
                     else//脱下装备
@@ -274,7 +268,7 @@ namespace TaleofMonsters.Forms
 
         private void RefreshEquip()
         {
-            equipDataList = EquipBook.GetEquipsList(Array.ConvertAll(UserProfile.InfoEquip.Equipon,equip=>equip.BaseId));
+            equipDataList = UserProfile.InfoEquip.GetValidEquipsList().ConvertAll(equipId =>new Equip(equipId));
             vEquip = EquipBook.GetVirtualEquips(equipDataList);
             var jobConfig = ConfigData.GetJobConfig(UserProfile.InfoBasic.Job);
             jobInfo = new JobAddon();
@@ -288,7 +282,7 @@ namespace TaleofMonsters.Forms
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
             Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString("角色", font, Brushes.White, Width / 2 - 40, 8);
+            e.Graphics.DrawString("城堡", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
 
             Image back = PicLoader.Read("System", "HeroBackNew1.JPG");
@@ -301,6 +295,26 @@ namespace TaleofMonsters.Forms
             if (vRegion != null)
             {
                 vRegion.Draw(e.Graphics);
+            }
+
+            for (int i = 0; i < 9; i++)
+            {
+                EquipSlotConfig slotConfig = ConfigData.GetEquipSlotConfig(i + 1);
+                var img = PicLoader.Read("System", string.Format("EquipBack{0}.JPG", slotConfig.Type));
+                e.Graphics.DrawImage(img, 373 + 51 * (i % 3), 60 + 51 * (i / 3), 40, 40);
+                img.Dispose();
+            }
+            if (vRegion != null)
+            {
+                vRegion.Draw(e.Graphics);
+            }
+            for (int i = 0; i < 9; i++)
+            {
+                if (!UserProfile.InfoEquip.CanEquip(0, i + 1))
+                {
+                    var img = HSIcons.GetIconsByEName("wrong");
+                    e.Graphics.DrawImage(img, 373 + 51 * (i % 3) + 5, 60 + 51 * (i / 3) + 5, 30, 30);
+                }
             }
 
             JobConfig jobConfig = ConfigDatas.ConfigData.GetJobConfig(UserProfile.InfoBasic.Job);

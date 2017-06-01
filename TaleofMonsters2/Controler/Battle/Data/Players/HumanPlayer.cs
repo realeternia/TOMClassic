@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Core;
@@ -30,8 +31,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             Cards = new ActiveCards(cd);
 
             int[] energyRate = {0, 0, 0};
-            int[] equipOn = Array.ConvertAll(UserProfile.InfoEquip.Equipon, a => a.BaseId);
-            CalculateEquipAndSkill(equipOn, energyRate);
+            CalculateEquipAndSkill(UserProfile.InfoEquip.GetValidEquipsList(), energyRate);
             EnergyGenerator.SetRate(energyRate, UserProfile.InfoBasic.Job);
 
             InitBase();
@@ -74,9 +74,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 #endif
         }
 
-        private void CalculateEquipAndSkill(int[] equipids, int[] energyData)
+        private void CalculateEquipAndSkill(List<int> equipids, int[] energyData)
         {
-            var equipList = EquipBook.GetEquipsList(equipids);
+            var equipList = equipids.ConvertAll(equipId => new Equip(equipId));
             foreach (var equip in equipList)
             {
                 EquipConfig equipConfig = ConfigData.GetEquipConfig(equip.TemplateId);

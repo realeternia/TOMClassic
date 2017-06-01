@@ -14,7 +14,7 @@ namespace TaleofMonsters.Core
         public const int BlessShopDura = 3600; //blessshop÷ÿ÷√ ±º‰
         public const int QuestionCooldownDura = 15;
         public const int EquipOffCount = 60;
-        public const int EquipOnCount = 4;
+        public const int EquipOnCount = 9;
 
         public const float DrawManaTime = 1f;
         public const float DrawManaTimeFast = 0.5f;
