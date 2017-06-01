@@ -109,12 +109,7 @@
         public const int Summon = 4;
         public const int Battle = 5;
     }
-    internal enum MazeObjectTypes
-    {
-        Monster,
-        Resource,
-        Item,
-    }
+
     internal enum CardProductMarkTypes
     {
         Null,

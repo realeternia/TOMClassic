@@ -93,7 +93,6 @@ namespace TaleofMonsters.Core
             register.Register(typeof(InfoFarm), 14);
             register.Register(typeof(DbSceneSpecialPosData), 16);
             register.Register(typeof(DbDeckData), 18);
-            register.Register(typeof(InfoMaze), 20);
             register.Register(typeof(DbMergeData), 21);
             register.Register(typeof(DbRivalState), 23);
             register.Register(typeof(InfoRival), 24);

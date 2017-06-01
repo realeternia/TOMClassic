@@ -36,8 +36,6 @@ namespace TaleofMonsters.DataType.User
         public InfoAchieve InfoAchieve;
         [FieldIndex(Index = 14)]
         public InfoWorld InfoWorld;
-        [FieldIndex(Index = 15)]
-        public InfoMaze InfoMaze;
 
         public Profile()
         {
@@ -48,7 +46,6 @@ namespace TaleofMonsters.DataType.User
             InfoSkill = new InfoSkill();
             InfoRival=new InfoRival();
             InfoFarm=new InfoFarm();
-            InfoMaze=new InfoMaze();
             InfoQuest=new InfoQuest();
             InfoRecord=new InfoRecord();
             InfoAchieve=new InfoAchieve();

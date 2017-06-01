@@ -298,7 +298,6 @@
     <Compile Include="DataType\User\InfoCard.cs" />
     <Compile Include="DataType\User\InfoEquip.cs" />
     <Compile Include="DataType\User\InfoFarm.cs" />
-    <Compile Include="DataType\User\InfoMaze.cs" />
     <Compile Include="DataType\User\InfoQuest.cs" />
     <Compile Include="DataType\User\InfoRecord.cs" />
     <Compile Include="DataType\User\InfoRival.cs" />
@@ -420,7 +419,6 @@
     <Compile Include="DataType\Others\JobBook.cs" />
     <Compile Include="DataType\Maps\BattleMap.cs" />
     <Compile Include="DataType\Maps\BattleMapBook.cs" />
-    <Compile Include="DataType\Mazes\MazeItem.cs" />
     <Compile Include="DataType\User\Db\DbTournamentData.cs" />
     <Compile Include="DataType\Others\RankData.cs" />
     <Compile Include="DataType\User\InfoWorld.cs" />
@@ -456,12 +454,6 @@
     </Compile>
     <Compile Include="Forms\MagicBook\DropItemViewerForm.Designer.cs">
       <DependentUpon>DropItemViewerForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\MazeWindow.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Forms\MazeWindow.Designer.cs">
-      <DependentUpon>MazeWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\MiniGame\MGIconsCatch.cs">
       <SubType>UserControl</SubType>
@@ -502,8 +494,6 @@
     <Compile Include="Forms\NpcShopForm.Designer.cs">
       <DependentUpon>NpcShopForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataType\Mazes\Maze.cs" />
-    <Compile Include="DataType\Mazes\MazeBook.cs" />
     <Compile Include="DataType\User\Db\DbRivalState.cs" />
     <Compile Include="Forms\EquipmentForm.cs">
       <SubType>UserControl</SubType>
@@ -800,10 +790,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MagicBook\DropItemViewerForm.resx">
       <DependentUpon>DropItemViewerForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MazeWindow.resx">
-      <DependentUpon>MazeWindow.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ExpBottleForm.resx">
