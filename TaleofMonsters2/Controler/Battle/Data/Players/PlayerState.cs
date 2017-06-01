@@ -39,8 +39,20 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                         mon.MaxHp.Source += equipAddon.Hp;
                         mon.AddHp(equipAddon.Hp);//顺便把hp也加上
                     }
+                    if (equipAddon.Def > 0)
+                        mon.Def.Source += equipAddon.Def;
+                    if (equipAddon.Mag > 0)
+                        mon.Mag.Source += equipAddon.Mag;
                     if (equipAddon.Spd > 0)
                         mon.Spd.Source += equipAddon.Spd;
+                    if (equipAddon.Hit > 0)
+                        mon.Hit.Source += equipAddon.Hit;
+                    if (equipAddon.Dhit > 0)
+                        mon.Dhit.Source += equipAddon.Dhit;
+                    if (equipAddon.Crt > 0)
+                        mon.Crt.Source += equipAddon.Crt;
+                    if (equipAddon.Luk > 0)
+                        mon.Luk.Source += equipAddon.Luk;
                     if (equipAddon.Range > 0)
                         mon.Avatar.Range += equipAddon.Range;
                     if (equipAddon.CommonSkillList.Count > 0)

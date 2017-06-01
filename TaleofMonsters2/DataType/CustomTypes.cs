@@ -227,7 +227,13 @@
         AtkRate,
         HpRate,
         Spd,
-        Range
+        Range,
+        Def,
+        Mag,
+        Hit,
+        Dhit,
+        Crt,
+        Luk
     }
 
     internal enum MemPlayerRecordTypes

@@ -42,7 +42,7 @@ namespace TaleofMonsters.Forms
             // 
             this.bitmapButton1.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButton1.Font = new System.Drawing.Font("宋体", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
+            this.bitmapButton1.Font = new System.Drawing.Font("SimSun", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
             this.bitmapButton1.IconImage = null;
             this.bitmapButton1.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButton1.IconXY = new System.Drawing.Point(0, 0);
@@ -52,8 +52,8 @@ namespace TaleofMonsters.Forms
             this.bitmapButton1.NoUseDrawNine = false;
             this.bitmapButton1.Size = new System.Drawing.Size(48, 24);
             this.bitmapButton1.TabIndex = 28;
-            this.bitmapButton1.Tag = "1";
-            this.bitmapButton1.Text = "Lv1";
+            this.bitmapButton1.Tag = "0";
+            this.bitmapButton1.Text = "普通";
             this.bitmapButton1.TextOffX = 0;
             this.bitmapButton1.UseVisualStyleBackColor = true;
             this.bitmapButton1.Click += new System.EventHandler(this.bitmapButton1_Click);
@@ -79,7 +79,7 @@ namespace TaleofMonsters.Forms
             // 
             this.bitmapButton2.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButton2.Font = new System.Drawing.Font("宋体", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
+            this.bitmapButton2.Font = new System.Drawing.Font("SimSun", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
             this.bitmapButton2.IconImage = null;
             this.bitmapButton2.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButton2.IconXY = new System.Drawing.Point(0, 0);
@@ -89,8 +89,8 @@ namespace TaleofMonsters.Forms
             this.bitmapButton2.NoUseDrawNine = false;
             this.bitmapButton2.Size = new System.Drawing.Size(48, 24);
             this.bitmapButton2.TabIndex = 29;
-            this.bitmapButton2.Tag = "2";
-            this.bitmapButton2.Text = "Lv2";
+            this.bitmapButton2.Tag = "1";
+            this.bitmapButton2.Text = "良好";
             this.bitmapButton2.TextOffX = 0;
             this.bitmapButton2.UseVisualStyleBackColor = true;
             this.bitmapButton2.Click += new System.EventHandler(this.bitmapButton1_Click);
@@ -99,7 +99,7 @@ namespace TaleofMonsters.Forms
             // 
             this.bitmapButton3.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButton3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButton3.Font = new System.Drawing.Font("宋体", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
+            this.bitmapButton3.Font = new System.Drawing.Font("SimSun", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
             this.bitmapButton3.IconImage = null;
             this.bitmapButton3.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButton3.IconXY = new System.Drawing.Point(0, 0);
@@ -109,8 +109,8 @@ namespace TaleofMonsters.Forms
             this.bitmapButton3.NoUseDrawNine = false;
             this.bitmapButton3.Size = new System.Drawing.Size(48, 24);
             this.bitmapButton3.TabIndex = 30;
-            this.bitmapButton3.Tag = "3";
-            this.bitmapButton3.Text = "Lv3";
+            this.bitmapButton3.Tag = "2";
+            this.bitmapButton3.Text = "优质";
             this.bitmapButton3.TextOffX = 0;
             this.bitmapButton3.UseVisualStyleBackColor = true;
             this.bitmapButton3.Click += new System.EventHandler(this.bitmapButton1_Click);
@@ -119,7 +119,7 @@ namespace TaleofMonsters.Forms
             // 
             this.bitmapButton4.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButton4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButton4.Font = new System.Drawing.Font("宋体", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
+            this.bitmapButton4.Font = new System.Drawing.Font("SimSun", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
             this.bitmapButton4.IconImage = null;
             this.bitmapButton4.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButton4.IconXY = new System.Drawing.Point(0, 0);
@@ -129,8 +129,8 @@ namespace TaleofMonsters.Forms
             this.bitmapButton4.NoUseDrawNine = false;
             this.bitmapButton4.Size = new System.Drawing.Size(48, 24);
             this.bitmapButton4.TabIndex = 31;
-            this.bitmapButton4.Tag = "4";
-            this.bitmapButton4.Text = "Lv4";
+            this.bitmapButton4.Tag = "3";
+            this.bitmapButton4.Text = "史诗";
             this.bitmapButton4.TextOffX = 0;
             this.bitmapButton4.UseVisualStyleBackColor = true;
             this.bitmapButton4.Click += new System.EventHandler(this.bitmapButton1_Click);
@@ -139,7 +139,7 @@ namespace TaleofMonsters.Forms
             // 
             this.bitmapButton5.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButton5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButton5.Font = new System.Drawing.Font("宋体", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
+            this.bitmapButton5.Font = new System.Drawing.Font("SimSun", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
             this.bitmapButton5.IconImage = null;
             this.bitmapButton5.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButton5.IconXY = new System.Drawing.Point(0, 0);
@@ -149,8 +149,8 @@ namespace TaleofMonsters.Forms
             this.bitmapButton5.NoUseDrawNine = false;
             this.bitmapButton5.Size = new System.Drawing.Size(48, 24);
             this.bitmapButton5.TabIndex = 32;
-            this.bitmapButton5.Tag = "5";
-            this.bitmapButton5.Text = "Lv5";
+            this.bitmapButton5.Tag = "4";
+            this.bitmapButton5.Text = "传说";
             this.bitmapButton5.TextOffX = 0;
             this.bitmapButton5.UseVisualStyleBackColor = true;
             this.bitmapButton5.Click += new System.EventHandler(this.bitmapButton1_Click);

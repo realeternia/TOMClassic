@@ -93,7 +93,7 @@ namespace TaleofMonsters.Forms.Items
         private void pictureBoxBuy_Click(object sender, EventArgs e)
         {
             var equipConfig = ConfigData.GetEquipConfig(equipId);
-            var cost = GameResourceBook.OutStoneMerge(equipConfig.Quality + 1, equipConfig.Level);
+            var cost = GameResourceBook.OutStoneMerge(equipConfig.Quality + 1);
             if (UserProfile.InfoBag.HasResource(GameResourceType.Stone, cost))
             {
                 UserProfile.InfoBag.SubResource(GameResourceType.Stone, cost);
@@ -121,7 +121,7 @@ namespace TaleofMonsters.Forms.Items
 
                 virtualRegion.Draw(g);
 
-                var cost = GameResourceBook.OutStoneMerge(equipConfig.Quality + 1, equipConfig.Level);
+                var cost = GameResourceBook.OutStoneMerge(equipConfig.Quality + 1);
                 Font ft = new Font("宋体", 9*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
                 Brush b = new SolidBrush(Color.FromName(HSTypes.I2QualityColor(equipConfig.Quality)));
                 g.DrawString(equipConfig.Name, ft, b, x + 90, y + 10);

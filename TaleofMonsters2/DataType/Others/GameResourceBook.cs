@@ -136,16 +136,16 @@ namespace TaleofMonsters.DataType.Others
         /// <summary>
         /// 消耗石材制作装备,level 1-5
         /// </summary>
-        public static uint OutStoneMerge(int qual, int level)
+        public static uint OutStoneMerge(int qual)
         {
-            return (uint)((float)level * 2 * Math.Sqrt(qual));//2-5-10-16
+            return (uint)((float)2 * 2 * Math.Sqrt(qual));//2-5-10-16
         }
         /// <summary>
         /// 分解装备获得石材
         /// </summary>
-        public static uint InStoneEquipDecompose(int qual, int level)
+        public static uint InStoneEquipDecompose(int qual)
         {
-            return Math.Max(1, (uint)((float)level * Math.Sqrt(qual) * 0.7));//2-5-10-16 0.7
+            return Math.Max(1, (uint)(2 * Math.Sqrt(qual) * 0.7));//2-5-10-16 0.7
         }
         /// <summary>
         /// 消耗木材建设农场

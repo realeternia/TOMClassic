@@ -40,17 +40,17 @@ namespace TaleofMonsters.Forms
                 equipControls[i] = new EquipComposeItem(this, 10 + (i % 3) * 180, 63 + (i / 3) * 82, 180, 82);
                 equipControls[i].Init(i);
             }
-            InitEquips(1);
+            InitEquips(0);
             nlPageSelector1.TotalPage = (equipIdList.Count-1)/9 + 1;
         }
 
-        private void InitEquips(int level)
+        private void InitEquips(int qual)
         {
             equipIdList = new List<int>();
             foreach (var eid in UserProfile.Profile.InfoEquip.EquipComposeAvail)
             {
                 var equipConfig = ConfigData.GetEquipConfig(eid);
-                if (equipConfig.Level == level)
+                if (equipConfig.Quality == qual)
                     equipIdList.Add(equipConfig.Id);
             }
             page = 0;

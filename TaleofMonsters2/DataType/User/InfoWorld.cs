@@ -267,7 +267,7 @@ namespace TaleofMonsters.DataType.User
             mthds.Target = mid;
             {
                 List<IntPair> mthd = new List<IntPair>();
-                int icount = GetItemCount(equipConfig.Level);
+                int icount = 3;
                 int itrare = MathTool.GetRandom(Math.Max(1, equipConfig.Quality * 2 - 1), equipConfig.Quality * 2 + 1);//第一个素材品质和装备品质挂钩
                 Dictionary<int, bool> existFormula = new Dictionary<int, bool>();
                 for (int j = 0; j < icount; j++)
@@ -276,13 +276,13 @@ namespace TaleofMonsters.DataType.User
                     if (j == 0)
                     {
                         pv.Type = HItemBook.GetRandRareItemId(HItemRandomGroups.Gather, itrare);
-                        pv.Value = GetItemCountByEquipLevel(equipConfig.Level, itrare) + 1;
+                        pv.Value = GetItemCountByEquipLevel( itrare) + 1;
                     }
                     else
                     {
                         int nrare = MathTool.GetRandom(Math.Max(1, itrare - 3), itrare);
                         pv.Type = HItemBook.GetRandRareItemId(HItemRandomGroups.Fight, nrare);
-                        pv.Value = Math.Max(1, GetItemCountByEquipLevel(equipConfig.Level, nrare));
+                        pv.Value = Math.Max(1, GetItemCountByEquipLevel(nrare));
                     }
                     if (existFormula.ContainsKey(pv.Type))
                     {
@@ -300,24 +300,10 @@ namespace TaleofMonsters.DataType.User
             return mthds;
         }
 
-        private int GetItemCount(int elevel)
-        {
-            if (elevel < 3)
-            {
-                return 2;
-            }
-            if (elevel < 5)
-            {
-                return 3;
-            }
-            return 4;
-        }
-
-
-        private int GetItemCountByEquipLevel(int elevel, int rare)
+        private int GetItemCountByEquipLevel(int rare)
         {
             int[] levelp = { 1, 2, 3, 4, 6, 10, 14, 20 };
-            return elevel*2*MathTool.GetRandom(8, 12)/10/levelp[rare];
+            return 3*2*MathTool.GetRandom(8, 12)/10/levelp[rare];
         }
 
         public void UpdatePosEnable(int id, bool isEnable)

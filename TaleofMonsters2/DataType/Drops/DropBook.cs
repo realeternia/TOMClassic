@@ -19,9 +19,9 @@ namespace TaleofMonsters.DataType.Drops
                 {
                     DropItems(dropConfig.Items, items);
                 }
-                else if (dropConfig.EquipLevel > 0)
+                else if (dropConfig.EquipQualityMin > 0 || dropConfig.EquipQualityMax > 0)
                 {
-                    DropEquips(dropConfig.EquipLevel, items);
+                    DropEquips(dropConfig.EquipQualityMin, dropConfig.EquipQualityMax, items);
                 }
                 else if(dropConfig.RandomItemRate.Length > 0)
                 {
@@ -46,26 +46,26 @@ namespace TaleofMonsters.DataType.Drops
             }
         }
 
-        private static void DropEquips(int equipLevel, List<int> items)
+        private static void DropEquips(int qualMin, int qualMax, List<int> items)
         {
-            int[] qualRate = {70, 20, 5, 4, 1};
             int resultQual = 0;
-            int sum = 0;
-            int roll = MathTool.GetRandom(100);
-            for (int i = 0; i < 5; i++)
+            if (qualMax == qualMin)
             {
-                sum += qualRate[i];
-                if (roll < sum)
+                resultQual = qualMin;
+            }
+            else
+            {
+                resultQual = qualMin;
+                while (MathTool.GetRandom(3) == 0 && resultQual < qualMax)
                 {
-                    resultQual = i;
-                    break;
+                    resultQual ++;
                 }
             }
 
             int resultItemId = 0;
             while (resultItemId == 0)
             {
-                resultItemId = EquipBook.GetRandEquipByLevelQuality(equipLevel, resultQual);
+                resultItemId = EquipBook.GetRandEquipByLevelQuality(resultQual);
                 resultQual--;//如果该品质没有道具，就降低一档品质继续查找
             }
             

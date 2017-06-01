@@ -9,7 +9,7 @@ namespace TaleofMonsters.DataType.Equips
 {
     internal static class EquipBook
     {
-        private static Dictionary<int, List<int>> equipLevelDict;
+        private static Dictionary<int, List<int>> equipQualDict;
 
         public static Image GetEquipImage(int id)
         {
@@ -27,7 +27,7 @@ namespace TaleofMonsters.DataType.Equips
             List<int> datas = new List<int>();
             foreach (var equipConfig in ConfigData.EquipDict.Values)
             {
-                if (equipConfig.Disable)
+                if (equipConfig.Disable || !equipConfig.CanMerge)
                     continue;
                 datas.Add(equipConfig.Id);//返回所有
             }
@@ -39,27 +39,27 @@ namespace TaleofMonsters.DataType.Equips
             return true;
         }
 
-        public static int GetRandEquipByLevelQuality(int lv, int qual)
+        public static int GetRandEquipByLevelQuality(int qual)
         {
-            if (equipLevelDict == null)
+            if (equipQualDict == null)
             {
-                equipLevelDict = new Dictionary<int, List<int>>();
+                equipQualDict = new Dictionary<int, List<int>>();
                 foreach (var equipConfig in ConfigData.EquipDict.Values)
                 {
                     if (equipConfig.Disable)
                         continue;
-                    int catalog = equipConfig.Level*10 + equipConfig.Quality;
-                    if (!equipLevelDict.ContainsKey(catalog))
+                    if (!equipConfig.RandomDrop)
+                        continue;
+                    if (!equipQualDict.ContainsKey(equipConfig.Quality))
                     {
-                        equipLevelDict.Add(catalog, new List<int>());
+                        equipQualDict.Add(equipConfig.Quality, new List<int>());
                     }
-                    equipLevelDict[catalog].Add(equipConfig.Id);
+                    equipQualDict[equipConfig.Quality].Add(equipConfig.Id);
                 }
             }
 
-            int keyType = lv * 10 + qual;
             List<int> datas;
-            if (!equipLevelDict.TryGetValue(keyType, out datas))
+            if (!equipQualDict.TryGetValue(qual, out datas))
             {
                 return 0;
             }
@@ -94,7 +94,13 @@ namespace TaleofMonsters.DataType.Equips
             {
                 vEquip.Atk += equip.Atk;
                 vEquip.Hp += equip.Hp;
+                vEquip.Def += equip.Def;
+                vEquip.Mag += equip.Mag;
                 vEquip.Spd += equip.Spd;
+                vEquip.Hit += equip.Hit;
+                vEquip.Dhit += equip.Dhit;
+                vEquip.Crt += equip.Crt;
+                vEquip.Luk += equip.Luk;
                 vEquip.Range += equip.Range;
                 vEquip.MpRate += equip.MpRate;
                 vEquip.PpRate += equip.PpRate;

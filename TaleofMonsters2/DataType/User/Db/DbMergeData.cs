@@ -39,10 +39,6 @@ namespace TaleofMonsters.DataType.User.Db
             {
                 return ea.Quality.CompareTo(eb.Quality);
             }
-            if (ea.Level != eb.Level)
-            {
-                return ea.Level.CompareTo(eb.Level);
-            }
             return ea.Id.CompareTo(eb.Id);
         }
 

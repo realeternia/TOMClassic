@@ -19,7 +19,15 @@ namespace TaleofMonsters.DataType.Equips
 
         public int Atk { get; set; }//实际的攻击力
         public int Hp { get; set; }
+
+        public int Def { get; set; }
+        public int Mag { get; set; }
         public int Spd { get; set; }
+        public int Hit { get; set; }
+        public int Dhit { get; set; }
+        public int Crt { get; set; }
+        public int Luk { get; set; }
+
         public int Range { get; set; }
 
         public int LpRate { get; set; }
@@ -55,7 +63,14 @@ namespace TaleofMonsters.DataType.Equips
             Atk = heroData.Atk * equipConfig.AtkR / 100;
             Hp = heroData.Hp * equipConfig.VitR / 100;
 
+            Def = equipConfig.Def;
+            Mag = equipConfig.Mag;
             Spd = equipConfig.Spd;
+            Hit = equipConfig.Hit;
+            Dhit = equipConfig.Dhit;
+            Crt = equipConfig.Crt;
+            Luk = equipConfig.Luk;
+
             Range = equipConfig.Range;
 
             if (equipConfig.CommonSkillId > 0)
@@ -71,7 +86,6 @@ namespace TaleofMonsters.DataType.Equips
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine(equipConfig.Name, HSTypes.I2QualityColor(equipConfig.Quality), 20);
             tipData.AddTextNewLine(string.Format("       装备部位:{0}", HSTypes.I2EPosition(equipConfig.Position)), "White");
-            tipData.AddTextNewLine(string.Format("       装备等级:{0}", equipConfig.Level), "White");
             tipData.AddTextNewLine("", "White");
             if (Atk > 0)
             {
@@ -83,10 +97,40 @@ namespace TaleofMonsters.DataType.Equips
                 EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(EquipAttrs.HpRate + 1));
                 tipData.AddTextNewLine(string.Format(eAddon.Format, equipConfig.VitR), HSTypes.I2EaddonColor(eAddon.Rare));
             }
+            if (Def > 0)
+            {
+                EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(EquipAttrs.Def + 1));
+                tipData.AddTextNewLine(string.Format(eAddon.Format, equipConfig.Def), HSTypes.I2EaddonColor(eAddon.Rare));
+            }
+            if (Mag > 0)
+            {
+                EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(EquipAttrs.Mag + 1));
+                tipData.AddTextNewLine(string.Format(eAddon.Format, equipConfig.Mag), HSTypes.I2EaddonColor(eAddon.Rare));
+            }
             if (Spd > 0)
             {
                 EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(EquipAttrs.Spd + 1));
                 tipData.AddTextNewLine(string.Format(eAddon.Format, equipConfig.Spd), HSTypes.I2EaddonColor(eAddon.Rare));
+            }
+            if (Hit > 0)
+            {
+                EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(EquipAttrs.Hit + 1));
+                tipData.AddTextNewLine(string.Format(eAddon.Format, equipConfig.Hit), HSTypes.I2EaddonColor(eAddon.Rare));
+            }
+            if (Dhit > 0)
+            {
+                EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(EquipAttrs.Dhit + 1));
+                tipData.AddTextNewLine(string.Format(eAddon.Format, equipConfig.Dhit), HSTypes.I2EaddonColor(eAddon.Rare));
+            }
+            if (Crt > 0)
+            {
+                EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(EquipAttrs.Crt + 1));
+                tipData.AddTextNewLine(string.Format(eAddon.Format, equipConfig.Crt), HSTypes.I2EaddonColor(eAddon.Rare));
+            }
+            if (Luk > 0)
+            {
+                EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(EquipAttrs.Luk + 1));
+                tipData.AddTextNewLine(string.Format(eAddon.Format, equipConfig.Luk), HSTypes.I2EaddonColor(eAddon.Rare));
             }
             if (Range > 0)
             {
