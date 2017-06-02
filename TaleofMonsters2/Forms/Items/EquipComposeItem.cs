@@ -42,7 +42,7 @@ namespace TaleofMonsters.Forms.Items
             bitmapButtonBuy.IconSize = new Size(16,16);
             bitmapButtonBuy.IconXY = new Point(4,4);
             bitmapButtonBuy.TextOffX = 8;
-            this.bitmapButtonBuy.Text = @"锻造";
+            this.bitmapButtonBuy.Text = @"建造";
             parent.Controls.Add(bitmapButtonBuy);
         }
 
@@ -100,7 +100,7 @@ namespace TaleofMonsters.Forms.Items
                 UserProfile.InfoEquip.AddEquip(equipId, 24*60 * 3);
                 parent.Invalidate();
 
-                parent.AddFlowCenter("锻造成功", "Lime");
+                parent.AddFlowCenter("建造成功", "Lime");
             }
             else
             {

@@ -67,7 +67,7 @@ namespace TaleofMonsters.Forms
             this.buttonBuy.Name = "buttonBuy";
             this.buttonBuy.Size = new System.Drawing.Size(62, 26);
             this.buttonBuy.TabIndex = 30;
-            this.buttonBuy.Text = "试炼";
+            this.buttonBuy.Text = "学习";
             this.buttonBuy.UseVisualStyleBackColor = false;
             this.buttonBuy.Click += new System.EventHandler(this.buttonBuy_Click);
             // 

@@ -65,25 +65,26 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 }
                 else
                 {
-                    foreach (var monId in monsterBoostItemList)
+                    if (monsterBoostItemList != null)
                     {
-                        var equipConfig = ConfigData.GetEquipConfig(monId);
-                        if (equipConfig.PickMethod(mon))
+                        foreach (var monId in monsterBoostItemList)
                         {
-                            if (equipConfig.MonsterAtk > 0)
-                                mon.Atk.Source += mon.Atk.Source * equipConfig.MonsterAtk / 100;
-                            if (equipConfig.MonsterHp > 0)
+                            var equipConfig = ConfigData.GetEquipConfig(monId);
+                            if (equipConfig.PickMethod(mon))
                             {
-                                var addon = mon.MaxHp.Source*equipConfig.MonsterHp/100;
-                                mon.MaxHp.Source += addon;
-                                mon.AddHp(addon);//顺便把hp也加上
+                                if (equipConfig.MonsterAtk > 0)
+                                    mon.Atk.Source += mon.Atk.Source * equipConfig.MonsterAtk / 100;
+                                if (equipConfig.MonsterHp > 0)
+                                {
+                                    var addon = mon.MaxHp.Source * equipConfig.MonsterHp / 100;
+                                    mon.MaxHp.Source += addon;
+                                    mon.AddHp(addon);//顺便把hp也加上
+                                }
                             }
                         }
                     }
                 }
 
-                //if (Avatar.MonsterConfig.Type != (int)CardTypeSub.Hero)
-                //    EAddonBook.UpdateMonsterData(this, OwnerPlayer.State.Monsterskills.Keys(), OwnerPlayer.State.Monsterskills.Values());
                 monsterTypeCounts[(int) MonsterCountTypes.Total]++;
                 monsterTypeCounts[mon.Attr + 10]++;
                 monsterTypeCounts[mon.Type + 20]++;

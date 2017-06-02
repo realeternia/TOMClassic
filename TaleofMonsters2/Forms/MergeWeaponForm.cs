@@ -123,7 +123,7 @@ namespace TaleofMonsters.Forms
             {
                 if (UserProfile.InfoBag.GetItemCount(pairValue.Type) < pairValue.Value)
                 {
-                    AddFlowCenter("合成材料不足", "Red");
+                    AddFlowCenter("材料不足", "Red");
                     return;
                 }
             }
@@ -232,7 +232,7 @@ namespace TaleofMonsters.Forms
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
             Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString(" 试炼 ", font, Brushes.White, Width / 2 - 40, 8);
+            e.Graphics.DrawString(" 学习 ", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
 
             if (currentInfo == null)

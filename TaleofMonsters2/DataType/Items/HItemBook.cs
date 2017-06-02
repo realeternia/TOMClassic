@@ -25,11 +25,11 @@ namespace TaleofMonsters.DataType.Items
                 {
                     if (hItemConfig.RandomGroup > 0)
                     {
-                        if (!rareMidDict[group].ContainsKey(hItemConfig.Rare))
+                        if (!rareMidDict[hItemConfig.RandomGroup].ContainsKey(hItemConfig.Rare))
                         {
-                            rareMidDict[group].Add(hItemConfig.Rare, new List<int>());
+                            rareMidDict[hItemConfig.RandomGroup].Add(hItemConfig.Rare, new List<int>());
                         }
-                        rareMidDict[group][hItemConfig.Rare].Add(hItemConfig.Id);
+                        rareMidDict[hItemConfig.RandomGroup][hItemConfig.Rare].Add(hItemConfig.Id);
                     }
                 }
             }

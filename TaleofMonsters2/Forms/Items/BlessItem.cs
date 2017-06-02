@@ -43,7 +43,7 @@ namespace TaleofMonsters.Forms.Items
             bitmapButtonBuy.IconSize = new Size(16, 16);
             bitmapButtonBuy.IconXY = new Point(4, 4);
             bitmapButtonBuy.TextOffX = 8;
-            this.bitmapButtonBuy.Text = @"锻造";
+            this.bitmapButtonBuy.Text = @"交易";
             parent.Controls.Add(bitmapButtonBuy);
         }
 

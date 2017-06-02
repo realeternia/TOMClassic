@@ -75,7 +75,7 @@ namespace TaleofMonsters.Forms
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
             Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString(" 合成 ", font, Brushes.White, Width / 2 - 40, 8);
+            e.Graphics.DrawString(" 建造 ", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
 
             foreach (var ctl in equipControls)
