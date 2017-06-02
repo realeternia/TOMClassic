@@ -482,14 +482,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             SkillManager.CheckInitialEffect();
         }
 
-		public void AddStrengthLevel(int value)
-		{
-			int basedata = value * MathTool.GetSqrtMulti10(Avatar.MonsterConfig.Star);
-		    Atk += (double) basedata/10;
-//		    Def += (double) basedata/10;
-//			MaxHp=Avatar.Hp + 3 * basedata / 10;
-		}
-
         private void MakeSound(bool onSummon)
         {
             if (Avatar.MonsterConfig.Sound == "")

@@ -32,7 +32,7 @@ namespace TaleofMonsters.DataType.User
         public void AddEquip(int id, int minuteLast)
         {
             EquipConfig equipConfig = ConfigData.GetEquipConfig(id);
-            MainTipManager.AddTip(String.Format("|获得装备-|{0}|{1}", HSTypes.I2QualityColor(equipConfig.Quality), equipConfig.Name), "White");
+            MainTipManager.AddTip(string.Format("|获得装备-|{0}|{1}", HSTypes.I2QualityColor(equipConfig.Quality), equipConfig.Name), "White");
 
             for (int i = 0; i < GameConstants.EquipOffCount; i++)
             {
@@ -126,9 +126,9 @@ namespace TaleofMonsters.DataType.User
                 if (Equipon[MainHouseIndex - 1].BaseId == 0)
                     return false;
                 EquipConfig equipConfig = ConfigData.GetEquipConfig(Equipon[MainHouseIndex-1].BaseId);
-                if (equipConfig.SlotId != null)
+                if (equipConfig.SlotId != null && Array.IndexOf(equipConfig.SlotId, slotId) < 0)
                 {
-                    return Array.IndexOf(equipConfig.SlotId, slotId) >= 0;
+                    return false;
                 }
             }
 

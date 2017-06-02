@@ -97,7 +97,7 @@ namespace TaleofMonsters.Forms.Items
             if (UserProfile.InfoBag.HasResource(GameResourceType.Stone, cost))
             {
                 UserProfile.InfoBag.SubResource(GameResourceType.Stone, cost);
-                UserProfile.InfoEquip.AddEquip(equipId, 60 * 3);
+                UserProfile.InfoEquip.AddEquip(equipId, 24*60 * 3);
                 parent.Invalidate();
 
                 parent.AddFlowCenter("锻造成功", "Lime");

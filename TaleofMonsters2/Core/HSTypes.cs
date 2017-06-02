@@ -97,6 +97,11 @@
             string[] rt = { "", "普通", "材料", "任务" };
             return rt[id];
         }
+        public static string I2EquipSlotType(int id)
+        {
+            string[] rt = { "", "主楼", "旗帜", "武器", "城墙" , "建筑" };
+            return rt[id];
+        }
 
         public static string I2Quality(int id)
         {

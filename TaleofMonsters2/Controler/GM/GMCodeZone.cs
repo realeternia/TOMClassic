@@ -22,7 +22,7 @@ namespace TaleofMonsters.Controler.GM
             if (blinkCounter.OnTick())
             {
                 showLine = !showLine;
-                MainForm.Instance.RefreshView();
+                MainForm.Instance.RefreshView(); 
             }
         }
 
@@ -131,7 +131,7 @@ namespace TaleofMonsters.Controler.GM
 
         private static float GetWidth(Graphics g, Font ft, string s)
         {
-            return g.MeasureString(s.Replace(' ', 'l'), ft).Width;
+            return g.MeasureString(s.Replace(' ', '2'), ft).Width;
         }
     }
 }

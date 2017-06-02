@@ -52,7 +52,6 @@ namespace TaleofMonsters.Forms
             for (int i = 0; i < 9; i++)
             {
                 var r1 = new PictureRegion(i+1, 373 + 51 * (i%3), 60 + 51*(i/3), 40, 40, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipon[i].BaseId);
-                r1.AddDecorator(new RegionBorderDecorator(Color.Yellow));//饰品
                 vRegion.AddRegion(r1);
             }
 

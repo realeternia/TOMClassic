@@ -109,7 +109,7 @@ namespace TaleofMonsters.Forms
                 UserProfile.InfoBag.DeleteItem(pairValue.Type, pairValue.Value);
             }
 
-            UserProfile.InfoEquip.AddEquip(equipConfig.Id, 60*3);
+            UserProfile.InfoEquip.AddEquip(equipConfig.Id, 24*60*3);
             UserProfile.InfoEquip.AddEquipCompose(equipConfig.Id);
         }
 

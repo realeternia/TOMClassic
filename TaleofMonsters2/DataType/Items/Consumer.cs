@@ -155,7 +155,7 @@ namespace TaleofMonsters.DataType.Items
                     var isEquip = ConfigIdManager.IsEquip(itemId);
                     if (isEquip)
                     {
-                        UserProfile.InfoEquip.AddEquip(itemId, 60);
+                        UserProfile.InfoEquip.AddEquip(itemId, 60*24);
                     }
                     else
                     {

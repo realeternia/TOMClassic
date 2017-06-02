@@ -1,4 +1,6 @@
-﻿using NarlonLib.Core;
+﻿using System.Collections.Generic;
+using ConfigDatas;
+using NarlonLib.Core;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Equips;
@@ -14,6 +16,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         private Equip equipAddon;//来自装备的属性加成
 
+        private List<int> monsterBoostItemList;
+
         private AutoDictionary<int, int> monsterTypeCounts = new AutoDictionary<int, int>();//属性类型为key
 
         public PlayerState()
@@ -21,9 +25,10 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             equipAddon = new Equip();
         }
 
-        public void UpdateAttr(Equip equip)
+        public void UpdateAttr(Equip equip, List<int> itemList)
         {
             equipAddon = equip;
+            monsterBoostItemList = itemList;
         }
 
         public void CheckMonsterEvent(bool isAdd, LiveMonster mon)
@@ -57,6 +62,24 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                         mon.Avatar.Range += equipAddon.Range;
                     if (equipAddon.CommonSkillList.Count > 0)
                         mon.SkillManager.AddSkillBeforeInit(equipAddon.CommonSkillList, SkillSourceTypes.Equip);
+                }
+                else
+                {
+                    foreach (var monId in monsterBoostItemList)
+                    {
+                        var equipConfig = ConfigData.GetEquipConfig(monId);
+                        if (equipConfig.PickMethod(mon))
+                        {
+                            if (equipConfig.MonsterAtk > 0)
+                                mon.Atk.Source += mon.Atk.Source * equipConfig.MonsterAtk / 100;
+                            if (equipConfig.MonsterHp > 0)
+                            {
+                                var addon = mon.MaxHp.Source*equipConfig.MonsterHp/100;
+                                mon.MaxHp.Source += addon;
+                                mon.AddHp(addon);//顺便把hp也加上
+                            }
+                        }
+                    }
                 }
 
                 //if (Avatar.MonsterConfig.Type != (int)CardTypeSub.Hero)

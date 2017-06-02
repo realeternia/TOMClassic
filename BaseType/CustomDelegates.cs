@@ -16,5 +16,7 @@ namespace ConfigDatas
     public delegate bool SpellTrapAddCardDelegate(IPlayer player, IPlayer rival, ITrap trap, int cardId, int cardType);
     public delegate bool SpellTrapSummonDelegate(IPlayer player, IPlayer rival, ITrap trap, IMonster mon, int level);
 
+    public delegate bool EquipMonsterPickDelegate(IMonster src);
+
     public delegate string FormatStringDelegate(int level);
 }

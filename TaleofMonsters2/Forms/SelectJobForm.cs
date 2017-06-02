@@ -296,7 +296,7 @@ namespace TaleofMonsters.Forms
                 {
                     if (eid > 0)
                     {
-                        user.InfoEquip.AddEquip(eid, 60);
+                        user.InfoEquip.AddEquip(eid, 24*60*7);
                     }
                 }
             }

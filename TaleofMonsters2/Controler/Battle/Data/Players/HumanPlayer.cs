@@ -77,6 +77,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         private void CalculateEquipAndSkill(List<int> equipids, int[] energyData)
         {
             var equipList = equipids.ConvertAll(equipId => new Equip(equipId));
+            List<int> monsterBoostItemList = new List<int>();
             foreach (var equip in equipList)
             {
                 EquipConfig equipConfig = ConfigData.GetEquipConfig(equip.TemplateId);
@@ -89,10 +90,15 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 {
                     HeroSkillList.Add(equipConfig.HeroSkillId); //添加装备附带的技能
                 }
+
+                if (equipConfig.PickMethod != null)
+                {
+                    monsterBoostItemList.Add(equip.TemplateId);
+                }
             }
 
             var addon = EquipBook.GetVirtualEquips(equipList);
-            State.UpdateAttr(addon);
+            State.UpdateAttr(addon, monsterBoostItemList);
         }
     }
 }

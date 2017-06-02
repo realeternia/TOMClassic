@@ -56,7 +56,7 @@ namespace TaleofMonsters.Controler.GM
                     case "atp": if (data.Length == 2) UserProfile.InfoBasic.AttrPoint += int.Parse(data[1]); break;
                     case "mov": if (data.Length == 2) UserProfile.InfoBasic.Position = 0;//如果是0，后面流程会随机一个位置
                         Scene.Instance.ChangeMap(int.Parse(data[1]), true); break;
-                    case "eqp": if (data.Length == 2) UserProfile.InfoEquip.AddEquip(int.Parse(data[1]), 60); break;
+                    case "eqp": if (data.Length == 2) UserProfile.InfoEquip.AddEquip(int.Parse(data[1]), 60*24); break;
                     case "itm": if (data.Length == 3) UserProfile.InfoBag.AddItem(int.Parse(data[1]), int.Parse(data[2])); break;
                     case "emys": foreach (int peopleId in ConfigData.PeopleDict.Keys)
                         {

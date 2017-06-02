@@ -85,8 +85,7 @@ namespace TaleofMonsters.DataType.Equips
 
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine(equipConfig.Name, HSTypes.I2QualityColor(equipConfig.Quality), 20);
-            EquipSlotConfig slotConfig = ConfigData.GetEquipSlotConfig(equipConfig.Position);
-            tipData.AddTextNewLine(string.Format("       位置:{0}", slotConfig.Name), "White");
+            tipData.AddTextNewLine(string.Format("       位置:{0}", HSTypes.I2EquipSlotType(equipConfig.Position)), "White");
             tipData.AddTextNewLine("", "White");
             if (Atk > 0)
             {
@@ -138,7 +137,10 @@ namespace TaleofMonsters.DataType.Equips
                 EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(EquipAttrs.Range + 1));
                 tipData.AddTextNewLine(string.Format(eAddon.Format, equipConfig.Range), HSTypes.I2EaddonColor(eAddon.Rare));
             }
-
+            if (!string.IsNullOrEmpty(equipConfig.Des))
+            {
+                tipData.AddTextNewLine(equipConfig.Des, "Lime");
+            }
             if (equipConfig.EnergyRate[0] !=0|| equipConfig.EnergyRate[1] !=0|| equipConfig.EnergyRate[2] != 0)
             {
                 tipData.AddLine();
@@ -206,7 +208,7 @@ namespace TaleofMonsters.DataType.Equips
             tipData.AddLine();
             tipData.AddTextNewLine(string.Format("出售价格:{0}", equipConfig.Value), "Yellow");
             tipData.AddImage(HSIcons.GetIconsByEName("res1"));
-            tipData.AddImageXY(EquipBook.GetEquipImage(TemplateId), 8, 8, 48, 48, 7, 24, 32, 32);
+            tipData.AddImageXY(EquipBook.GetEquipImage(TemplateId), 8, 8, 48, 48, 7, 24, 30, 30);
             return tipData.Image;
         }
     }

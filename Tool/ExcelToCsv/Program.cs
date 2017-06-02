@@ -355,6 +355,14 @@ namespace ExcelToCsv
                                       "delegate(IPlayer p, IPlayer r, ITrap t, IMonster m,int lv){{{0}}}",
                                       datas[i]);
                 }
+                else if (typeStr == "EquipMonsterPickDelegate")
+                {
+                    result = datas[i].ToString() == ""
+                                  ? "null"
+                                  : string.Format(
+                                      "delegate(IMonster m){{if({0})return true;return false;}}",
+                                      datas[i]);
+                }
                 else if (typeStr == "FormatStringDelegate")
                 {
                     if (datas[i].ToString() == "")
