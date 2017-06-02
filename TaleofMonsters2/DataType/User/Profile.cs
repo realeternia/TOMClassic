@@ -140,8 +140,8 @@ namespace TaleofMonsters.DataType.User
             InfoBasic.MentalPoint = 100;
             InfoBasic.FoodPoint = 100;
             InfoBag.BagCount = 50;
-            InfoEquip.AddEquipCompose(21200101);
-            InfoEquip.AddEquipCompose(21300101);
+            InfoEquip.AddEquipCompose(21100001);
+            InfoEquip.AddEquipCompose(21300001);
         }
 
         public void OnKillMonster(int tlevel, int trace, int ttype)

@@ -243,6 +243,11 @@ namespace TaleofMonsters
                             }
                         }
 
+                        if (SystemMenuManager.GMMode)
+                        {
+                            GMCodeZone.OnFrame();
+                        }
+
                         Scene.Instance.TimeGo(0.05f);
                     }
                     catch (Exception e)

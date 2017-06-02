@@ -15,6 +15,34 @@ namespace TaleofMonsters.Controler.GM
 {
     internal class GMCommand
     {
+        public static bool IsCommand(string c)
+        {
+            switch (c)
+            {
+                case "exp": break;
+                case "cad": break;
+                case "atp": break;
+                case "mov": break;
+                case "eqp": break;
+                case "itm": break;
+                case "emys": break;
+                case "gold": break;
+                case "res": break;
+                case "dmd": break;
+                case "acv": break;
+                case "view": break;
+                case "fbat": break;
+                case "cbat": break;
+                case "scr": break;
+                case "sceq": break;
+                case "cure":  break;
+                case "bls":  break;
+                case "qst": break;
+                default: return false;
+            }
+            return true;
+        }
+
         public static void ParseCommand(string cmd)
         {
             string[] data = cmd.Split(' ');
