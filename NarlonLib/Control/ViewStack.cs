@@ -14,7 +14,7 @@ namespace NarlonLib.Control
 
         protected override void OnKeyDown(KeyEventArgs ke)
         {
-            if (ke.KeyCode == Keys.Left || ke.KeyCode == Keys.Right)
+            if (ke.KeyCode == Keys.Left || ke.KeyCode == Keys.Right || ke.KeyCode == Keys.Home || ke.KeyCode == Keys.End)
             {
                 ke.Handled = true;
             }

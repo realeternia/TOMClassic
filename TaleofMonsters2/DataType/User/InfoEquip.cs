@@ -32,6 +32,8 @@ namespace TaleofMonsters.DataType.User
         public void AddEquip(int id, int minuteLast)
         {
             EquipConfig equipConfig = ConfigData.GetEquipConfig(id);
+            if (equipConfig.Id == 0)
+                return;
             MainTipManager.AddTip(string.Format("|获得装备-|{0}|{1}", HSTypes.I2QualityColor(equipConfig.Quality), equipConfig.Name), "White");
 
             for (int i = 0; i < GameConstants.EquipOffCount; i++)

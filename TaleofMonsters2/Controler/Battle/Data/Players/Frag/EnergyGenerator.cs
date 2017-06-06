@@ -25,12 +25,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         /// <summary>
         /// 仅仅npc使用，玩家不用
         /// </summary>
-        public void SetRateNpc(PeopleConfig peopleConfig)
+        public void SetRateNpc(int[] rateChange, PeopleConfig peopleConfig)
         {
             JobConfig jobConfig = ConfigData.GetJobConfig(peopleConfig.Job);
-            RateLp = jobConfig.EnergyRate[0];
-            RatePp = jobConfig.EnergyRate[1];
-            RateMp = jobConfig.EnergyRate[2];
+            RateLp = jobConfig.EnergyRate[0] + rateChange[0];
+            RatePp = jobConfig.EnergyRate[1] + rateChange[1];
+            RateMp = jobConfig.EnergyRate[2] + rateChange[2];
             LimitLp = jobConfig.EnergyLimit[0];
             LimitPp = jobConfig.EnergyLimit[1];
             LimitMp = jobConfig.EnergyLimit[2];

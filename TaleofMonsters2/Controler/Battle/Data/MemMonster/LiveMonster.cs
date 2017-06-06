@@ -171,7 +171,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
         }
 
-        public string Arrow
+        public virtual string Arrow
         {
             get
             {
@@ -426,7 +426,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         
         public void AddWeapon(IBattleWeapon tw)
         {
-            if (Avatar.MonsterConfig.IsBuilding)
+            if (!CanAddWeapon())
             {
                 NLog.Warn(string.Format("AddWeapon to building {0}", Avatar.Id));
                 return;
@@ -435,7 +435,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             if (Weapon != null)
                 Weapon.CheckWeaponEffect(this, -1);
             Weapon = tw;
-            //  EAddonBook.UpdateWeaponData(Weapon, OwnerPlayer.State.Weaponskills.Keys(), OwnerPlayer.State.Weaponskills.Values());
+            //  EAddonBook.UpdateWeaponData(Weapon, OwnerPlayer.Modifier.Weaponskills.Keys(), OwnerPlayer.Modifier.Weaponskills.Values());
             Weapon.CheckWeaponEffect(this, 1);
         }
 
@@ -493,6 +493,15 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             SoundManager.Play("Unit", soundPath);
         }
 
+        protected virtual void DrawImg(Graphics g)
+        {
+            var img = MonsterBook.GetMonsterImage(Avatar.Id, 100, 100);
+            if (img != null)
+            {
+                g.DrawImage(img, 0, 0, 100, 100);
+            }
+        }
+
         public void DrawOnBattle(Graphics g2, Color uponColor)
         {
             Bitmap image = new Bitmap(100, 100);
@@ -500,11 +509,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
             if (!IsGhost)
             {
-                var monImg = MonsterBook.GetMonsterImage(Avatar.Id, 100, 100);
-                if (monImg != null)
-                {
-                    g.DrawImage(monImg, 0, 0, 100, 100);
-                }
+                DrawImg(g);
               
                 if (uponColor != Color.White)
                 {
@@ -644,10 +649,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             int lifp = Life * 100 / Avatar.Hp;
             MonsterCoverBox.RemoveAllCover();
             SkillManager.CheckRemoveEffect();
-            OwnerPlayer.State.CheckMonsterEvent(false, this);
+            OwnerPlayer.Modifier.CheckMonsterEvent(false, this);
             Avatar = new Monster(monId);
             Avatar.UpgradeToLevel(Level);
-            OwnerPlayer.State.CheckMonsterEvent(true, this);
+            OwnerPlayer.Modifier.CheckMonsterEvent(true, this);
             SetBasicData();
             MonsterCoverBox.CheckCover();
             SkillManager.CheckInitialEffect();
@@ -741,12 +746,28 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public int GetMonsterCountByRace(int rid)
         {
-            return OwnerPlayer.State.GetMonsterCountByType((MonsterCountTypes)(rid + 20));
+            int count = 0;
+            foreach (var monster in BattleManager.Instance.MonsterQueue.Enumerator)
+            {
+                if (monster.Type == rid)
+                {
+                    count++;
+                }
+            }
+            return count;
         }
 
         public int GetMonsterCountByType(int type)
         {
-            return OwnerPlayer.State.GetMonsterCountByType((MonsterCountTypes)(type+10));
+            int count = 0;
+            foreach (var monster in BattleManager.Instance.MonsterQueue.Enumerator)
+            {
+                if (monster.Attr == type)
+                {
+                    count++;
+                }
+            }
+            return count;
         }
 
         public void AddMissile(IMonster target, string arrow)

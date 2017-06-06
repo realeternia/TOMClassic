@@ -80,7 +80,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                 var level = ConfigData.GetLevelExpConfig(player.Level).TowerLevel;
                 int realX = player.IsLeft ? x + unitInfo.X : x - unitInfo.X;
                 int realY = y + unitInfo.Y;
-                LiveMonster lm = new LiveMonster(level, heroData, new Point(realX * CardSize, realY * CardSize), player.IsLeft);
+                var lm = new TowerMonster(level, heroData, new Point(realX * CardSize, realY * CardSize), player.IsLeft);
 
                 BattleManager.Instance.RuleData.CheckTowerData(lm);
 

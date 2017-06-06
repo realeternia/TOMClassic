@@ -112,6 +112,8 @@ namespace TaleofMonsters.DataType.User
         public void AddItem(int id, int num)
         {
             HItemConfig itemConfig = ConfigData.GetHItemConfig(id);
+            if (itemConfig.Id == 0)
+                return;
             MainTipManager.AddTip(string.Format("|获得物品-|{0}|{1}||x{2}", HSTypes.I2RareColor(itemConfig.Rare), itemConfig.Name, num), "White");
 
             int max = itemConfig.MaxPile;

@@ -18,12 +18,12 @@ using NarlonLib.Log;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Components.CardSelect;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
-using TaleofMonsters.Controler.Battle.DataTent;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Cards.Spells;
 using TaleofMonsters.DataType.Cards.Weapons;
 using TaleofMonsters.DataType.Effects;
+using TaleofMonsters.DataType.Equips;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
 {
@@ -96,7 +96,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             get { return CardsDesk.GetSelectId(); }
         }
 
-        public PlayerState State { get; protected set; }
+        public EquipModifier Modifier { get; protected set; }
 
         public int PeopleId { get; set; }
 
@@ -118,7 +118,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             EnergyGenerator = new EnergyGenerator();
             SpikeManager = new SpikeManager(this);
             TrapHolder = new TrapHolder(this);
-            State = new PlayerState();
+            Modifier = new EquipModifier();
         }
 
         protected void InitBase()
@@ -133,6 +133,52 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             {
                 HeroSkillList.Add(jobConfig.SkillId);//添加职业技能
             }
+        }
+
+        protected void CalculateEquipAndSkill(List<int> equipids, int[] energyData)
+        {
+            var equipList = equipids.ConvertAll(equipId => new Equip(equipId));
+            List<int> monsterBoostItemList = new List<int>();
+            foreach (var equip in equipList)
+            {
+                EquipConfig equipConfig = ConfigData.GetEquipConfig(equip.TemplateId);
+                for (int i = 0; i < 3; i++)
+                {
+                    energyData[i] += equipConfig.EnergyRate[i];
+                }
+
+                if (equipConfig.HeroSkillId > 0)
+                {
+                    HeroSkillList.Add(equipConfig.HeroSkillId); //添加装备附带的技能
+                }
+
+                if (equipConfig.PickMethod != null)
+                {
+                    monsterBoostItemList.Add(equip.TemplateId);
+                }
+
+                if (equipConfig.Position == (int)EquipTypes.Core)
+                {
+                    Modifier.CoreId = equipConfig.Id;
+                }
+                else if (equipConfig.Position == (int)EquipTypes.Wall)
+                {
+                    if (Modifier.Wall1Id == 0)
+                        Modifier.Wall1Id = equipConfig.Id;
+                    else
+                        Modifier.Wall2Id = equipConfig.Id;
+                }
+                else if (equipConfig.Position == (int)EquipTypes.Weapon)
+                {
+                    if (Modifier.Weapon1Id == 0)
+                        Modifier.Weapon1Id = equipConfig.Id;
+                    else
+                        Modifier.Weapon2Id = equipConfig.Id;
+                }
+            }
+
+            var addon = EquipBook.GetVirtualEquips(equipList);
+            Modifier.UpdateInfo(addon, monsterBoostItemList);
         }
 
         public void Update(bool isFast, float pastRound, int round)

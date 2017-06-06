@@ -15,7 +15,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             Level = peopleConfig.Level;
             Job = UserProfile.InfoBasic.Job;
 
-            EnergyGenerator.SetRateNpc(peopleConfig);
+            EnergyGenerator.SetRateNpc(new [] { 0, 0, 0 },peopleConfig);
 
             Cards = cpcards.GetCopy();
             InitBase();

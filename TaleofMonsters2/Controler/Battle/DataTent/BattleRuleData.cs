@@ -40,7 +40,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             }
         }
 
-        public void CheckTowerData(LiveMonster lm)
+        public void CheckTowerData(TowerMonster lm)
         {
             if (Parm.Reason == PeopleFightReason.SceneQuest)
             {

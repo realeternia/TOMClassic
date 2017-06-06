@@ -169,36 +169,7 @@
         Normal,
         Shop
     }
-    internal enum MonsterCountTypes
-    {
-        Total = 1,
 
-        TypeNull = 10,
-        TypeWater = 11,
-        TypeWind = 12,
-        TypeFire = 13,
-        TypeEarth = 14,
-        TypeLight = 15,
-        TypeDark = 16,
-
-        RaceDevil = 21,
-        RaceMachine = 22,
-        RaceSpirit = 23,
-        RaceInsect = 24,
-        RaceDragon = 25,
-        RaceBird = 26,
-        RaceCrawling = 27,
-        RaceHuman = 28,
-        RaceOrc = 29,
-        RaceUndead = 30,
-        RaceBeast = 31,
-        RaceFish = 32,
-        RaceElement = 33,
-        RacePlant = 34,
-        RaceGoblin = 35,
-        RaceTotem = 36,
-        RaceHero = 55,
-    }
     internal enum QuestionTypes
     {
         MonsterInfo = 1,
@@ -216,6 +187,14 @@
         Weapon,
         Equip,
         Skill,//技能给技能
+    }
+    internal enum EquipTypes
+    {
+        Core = 1,
+        Flag,
+        Weapon,
+        Wall,
+        Other,
     }
     internal enum EquipAttrs
     {

@@ -17,12 +17,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(id);
             Job = peopleConfig.Job;
 
-            EnergyGenerator.SetRateNpc(peopleConfig);
+            int[] energyRate = { 0, 0, 0 };
+            CalculateEquipAndSkill(new List<int>(), energyRate); //todo
+            EnergyGenerator.SetRateNpc(energyRate, peopleConfig);
 
             DeckCard[] cds = DeckBook.GetDeckByName(deck, Level);
             Cards = new ActiveCards(cds);
-          //  PlayerAttr attr = new PlayerAttr();
-          //  attr.ModifyMonsterData(HeroData);
             InitBase();
 
             BattleManager.Instance.RuleData.CheckPlayerData(this);
