@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Math;
+using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms.MiniGame
@@ -22,6 +23,10 @@ namespace TaleofMonsters.Forms.MiniGame
         {
             type = (int)SystemMenuIds.GameBattleRobot;
             InitializeComponent();
+
+            bitmapButtonC1.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            bitmapButtonC2.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            bitmapButtonC3.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
         }
 
         public override void Init(int width, int height)
