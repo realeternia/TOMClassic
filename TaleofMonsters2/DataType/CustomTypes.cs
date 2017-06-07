@@ -36,8 +36,9 @@
         Element = 13,
         Plant = 14,
         Goblin = 15,
-        Totem=16,
-        Hero = 35,
+        Totem = 16,
+        NormalTower = 34,
+        KingTower = 35,
 
         Weapon = 100,
         Scroll = 101,

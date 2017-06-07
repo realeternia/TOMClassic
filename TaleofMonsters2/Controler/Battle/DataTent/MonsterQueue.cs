@@ -95,7 +95,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             for (int i = 0; i < monsters.Count; i++)
             {
                 var lm = monsters[i];
-                if (lm.IsLeft == isLeft && lm.Type == (int)CardTypeSub.Hero)
+                if (lm.IsLeft == isLeft && lm.Type == (int)CardTypeSub.KingTower)
                 {
                     return lm;
                 }

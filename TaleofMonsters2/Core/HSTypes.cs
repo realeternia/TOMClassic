@@ -41,7 +41,8 @@
                 case 14: return "植物";
                 case 15: return "地精";
                 case 16: return "石像";
-                case 35: return "英雄";
+                case 34: return "建筑";
+                case 35: return "城堡";
 
                 case 100: return "武器";
                 case 101: return "卷轴";
@@ -76,7 +77,8 @@
                 case 14: return "植物";
                 case 15: return "地精";
                 case 16: return "石像";
-                case 35: return "英雄";
+                case 34: return "建筑";
+                case 35: return "城堡";
 
                 case 100: return "$--每次命中敌人消耗耐久";
                 case 101: return "$--每次命中敌人消耗耐久";

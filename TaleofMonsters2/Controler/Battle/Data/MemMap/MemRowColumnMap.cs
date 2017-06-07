@@ -174,9 +174,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                 if (lm.IsGhost || isLeft && lm.IsLeft)
                     continue;
 
-                if (lm.IsHero)
-                    continue;
-
                 lm.SetToPosition(type, 1);
             }
         }

@@ -14,7 +14,6 @@ namespace ConfigDatas
         int WeaponType { get; }	//1,2,3,4
         IPlayer Owner{get;}
         IPlayer Rival { get; }
-        bool IsHero{get;}
         bool IsDefence { get; }
         System.Drawing.Point Position{get;set;}
         IMap Map { get; }

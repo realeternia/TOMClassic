@@ -8,6 +8,8 @@ namespace ConfigDatas
 
         public double Multiter { get; set; }
 
+        public bool Locked { get; set; } //锁定后就无法修改了
+
         public AttrModifyData(float sourceValue)
         {
             Source = sourceValue;
@@ -22,6 +24,10 @@ namespace ConfigDatas
 
         public static AttrModifyData operator +(AttrModifyData data, double value)
         {
+            if (data.Locked)
+            {
+                return data;
+            }
             var rt = new AttrModifyData(data);
             rt.Adder += (float)value;
             return rt;
@@ -29,6 +35,10 @@ namespace ConfigDatas
 
         public static AttrModifyData operator -(AttrModifyData data, double value)
         {
+            if (data.Locked)
+            {
+                return data;
+            }
             var rt = new AttrModifyData(data);
             rt.Adder -= (float)value;
             return rt;
@@ -36,6 +46,10 @@ namespace ConfigDatas
 
         public static AttrModifyData operator *(AttrModifyData data, double value)
         {
+            if (data.Locked)
+            {
+                return data;
+            }
             var rt = new AttrModifyData(data);
             rt.Multiter += (float)value;
             return rt;
@@ -43,6 +57,10 @@ namespace ConfigDatas
 
         public static AttrModifyData operator /(AttrModifyData data, double value)
         {
+            if (data.Locked)
+            {
+                return data;
+            }
             var rt = new AttrModifyData(data);
             rt.Multiter -= (float)value;
             return rt;

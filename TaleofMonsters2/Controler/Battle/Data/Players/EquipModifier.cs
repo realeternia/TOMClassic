@@ -37,7 +37,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             if (!isAdd)
                 return;
 
-            if (mon.IsHero)
+            if (mon.Type == (int)CardTypeSub.KingTower)
             {
                 if (equipAddon.Atk > 0)
                     mon.Atk.Source += equipAddon.Atk;    
@@ -64,6 +64,19 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                     mon.Avatar.Range += equipAddon.Range;
                 if (equipAddon.CommonSkillList.Count > 0)
                     mon.SkillManager.AddSkillBeforeInit(equipAddon.CommonSkillList, SkillSourceTypes.Equip);
+
+                mon.Atk.Locked = true;
+                mon.MaxHp.Locked = true;
+                mon.Def.Locked = true;
+                mon.Mag.Locked = true;
+                mon.Spd.Locked = true;
+                mon.Hit.Locked = true;
+                mon.Dhit.Locked = true;
+                mon.Crt.Locked = true;
+                mon.Luk.Locked = true;
+            }
+            else if (mon.Type == (int) CardTypeSub.NormalTower)
+            {
             }
             else
             {
@@ -75,12 +88,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                         if (equipConfig.PickMethod(mon))
                         {
                             if (equipConfig.MonsterAtk > 0)
-                                mon.Atk.Source += mon.Atk.Source * equipConfig.MonsterAtk / 100;
+                                mon.Atk.Source += mon.Atk.Source*equipConfig.MonsterAtk/100;
                             if (equipConfig.MonsterHp > 0)
                             {
-                                var addon = mon.MaxHp.Source * equipConfig.MonsterHp / 100;
+                                var addon = mon.MaxHp.Source*equipConfig.MonsterHp/100;
                                 mon.MaxHp.Source += addon;
-                                mon.AddHp(addon);//顺便把hp也加上
+                                mon.AddHp(addon); //顺便把hp也加上
                             }
                         }
                     }

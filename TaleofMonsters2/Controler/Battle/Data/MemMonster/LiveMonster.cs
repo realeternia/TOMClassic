@@ -51,7 +51,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public float GhostTime { get; set; } //0-1表示在墓地状态
         public bool IsDefence { get { return ReadMov == 0 && !Avatar.MonsterConfig.IsBuilding; } }
         public Point Position { get; set; }
-        public bool IsHero { get { return Avatar.MonsterConfig.Type == (int) CardTypeSub.Hero; } }
         public IMap Map { get { return BattleManager.Instance.MemMap; } }
         public bool IsLeft { get; set; }
         public int Action { get; set; }
@@ -320,7 +319,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             GhostTime = 0.01f;//开始死亡
             BattleManager.Instance.MemMap.GetMouseCell(Position.X,Position.Y).UpdateOwner(-Id);
-            if (Avatar.MonsterConfig.Type == (int)CardTypeSub.Hero)
+            if (Avatar.MonsterConfig.Type == (int)CardTypeSub.KingTower)
             {
                 if (!IsLeft)
                 {
@@ -637,9 +636,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void Transform(int monId)
         {
-            if (IsHero)
+            if (Avatar.MonsterConfig.IsBuilding)
             {
-                NLog.Warn("hero cannot be Transform");
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", Position, 0, "Gold", 26, 0, 0, 1, 15), false);
                 return;
             }
 
