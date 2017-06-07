@@ -16,7 +16,6 @@ namespace TaleofMonsters.DataType.User
         [FieldIndex(Index = 7)] public byte Level;
         [FieldIndex(Index = 16)] public int Exp;
         [FieldIndex(Index = 17)] public int MapId;
-        [FieldIndex(Index = 18)] public int AttrPoint;
         [FieldIndex(Index = 19)] public int LastLoginTime;
         [FieldIndex(Index = 20)] public uint FoodPoint; //饱腹值
         [FieldIndex(Index = 21)] public int DungeonRandomSeed;

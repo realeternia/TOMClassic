@@ -64,10 +64,6 @@ namespace TaleofMonsters.Forms.Items.Regions
                         g.DrawImage(PicLoader.Read("Border", cardBorder), X, Y, Width, Height);
                     };
                 }
-                else if (type == PictureRegionCellType.SkillAttr)
-                {
-                    img = DataType.HeroSkills.HeroSkillAttrBook.GetHeroSkillAttrImage(nid);
-                }
                 else if (type == PictureRegionCellType.Achieve)
                 {
                     img = DataType.Achieves.AchieveBook.GetAchieveImage(nid);
@@ -158,7 +154,6 @@ namespace TaleofMonsters.Forms.Items.Regions
         Item,
         Equip,
         Card,
-        SkillAttr,
         Achieve,
         HeroSkill,
         People,

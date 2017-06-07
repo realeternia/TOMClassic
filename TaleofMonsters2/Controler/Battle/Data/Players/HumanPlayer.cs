@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User;
@@ -8,7 +6,6 @@ using TaleofMonsters.DataType.Decks;
 using System.Drawing;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Equips;
 using TaleofMonsters.DataType.Others;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
@@ -28,13 +25,14 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 int id = UserProfile.InfoCard.SelectedDeck.GetCardAt(i);
                 cd[i] = new DeckCard(UserProfile.InfoCard.GetDeckCardById(id));
             }
+
             Cards = new ActiveCards(cd);
 
             int[] energyRate = {0, 0, 0};
             CalculateEquipAndSkill(UserProfile.InfoEquip.GetValidEquipsList(), energyRate);
             EnergyGenerator.SetRate(energyRate, UserProfile.InfoBasic.Job);
+            EnergyGenerator.Next(0);
 
-            InitBase();
 
             BattleManager.Instance.RuleData.CheckPlayerData(this);
         }

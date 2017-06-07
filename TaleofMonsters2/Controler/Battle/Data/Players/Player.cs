@@ -119,24 +119,19 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             SpikeManager = new SpikeManager(this);
             TrapHolder = new TrapHolder(this);
             Modifier = new EquipModifier();
-        }
-
-        protected void InitBase()
-        {
             Lp = 3;
             Mp = 3;
             Pp = 3;
-            EnergyGenerator.Next(0);
+        }
 
+        protected void CalculateEquipAndSkill(List<int> equipids, int[] energyData)
+        {
             var jobConfig = ConfigData.GetJobConfig(Job);
             if (jobConfig.SkillId > 0)
             {
                 HeroSkillList.Add(jobConfig.SkillId);//添加职业技能
             }
-        }
 
-        protected void CalculateEquipAndSkill(List<int> equipids, int[] energyData)
-        {
             var equipList = equipids.ConvertAll(equipId => new Equip(equipId));
             List<int> monsterBoostItemList = new List<int>();
             foreach (var equip in equipList)
@@ -179,6 +174,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
             var addon = EquipBook.GetVirtualEquips(equipList);
             Modifier.UpdateInfo(addon, monsterBoostItemList);
+
+            if (HeroSkillList.Count > 3)
+            {
+                HeroSkillList = HeroSkillList.GetRange(HeroSkillList.Count - 3, 3); //最多保留3个技能
+            }
         }
 
         public void Update(bool isFast, float pastRound, int round)

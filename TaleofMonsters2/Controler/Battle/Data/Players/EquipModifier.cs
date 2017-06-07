@@ -40,26 +40,26 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             if (mon.Type == (int)CardTypeSub.KingTower)
             {
                 if (equipAddon.Atk > 0)
-                    mon.Atk.Source += equipAddon.Atk;    
+                    mon.Atk += equipAddon.Atk;    
                 if (equipAddon.Hp > 0)
                 {
                     mon.MaxHp.Source += equipAddon.Hp;
                     mon.AddHp(equipAddon.Hp);//顺便把hp也加上
                 }
                 if (equipAddon.Def > 0)
-                    mon.Def.Source += equipAddon.Def;
+                    mon.Def += equipAddon.Def;
                 if (equipAddon.Mag > 0)
-                    mon.Mag.Source += equipAddon.Mag;
+                    mon.Mag += equipAddon.Mag;
                 if (equipAddon.Spd > 0)
-                    mon.Spd.Source += equipAddon.Spd;
+                    mon.Spd += equipAddon.Spd;
                 if (equipAddon.Hit > 0)
-                    mon.Hit.Source += equipAddon.Hit;
+                    mon.Hit += equipAddon.Hit;
                 if (equipAddon.Dhit > 0)
-                    mon.Dhit.Source += equipAddon.Dhit;
+                    mon.Dhit += equipAddon.Dhit;
                 if (equipAddon.Crt > 0)
-                    mon.Crt.Source += equipAddon.Crt;
+                    mon.Crt += equipAddon.Crt;
                 if (equipAddon.Luk > 0)
-                    mon.Luk.Source += equipAddon.Luk;
+                    mon.Luk += equipAddon.Luk;
                 if (equipAddon.Range > 0)
                     mon.Avatar.Range += equipAddon.Range;
                 if (equipAddon.CommonSkillList.Count > 0)
@@ -77,6 +77,13 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
             else if (mon.Type == (int) CardTypeSub.NormalTower)
             {
+                if (equipAddon.Atk > 0)
+                    mon.Atk += equipAddon.Atk * 0.5;
+                if (equipAddon.Hp > 0)
+                {
+                    mon.MaxHp += equipAddon.Hp * 0.5;
+                    mon.AddHp(equipAddon.Hp * 0.5);//顺便把hp也加上
+                }
             }
             else
             {
@@ -88,7 +95,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                         if (equipConfig.PickMethod(mon))
                         {
                             if (equipConfig.MonsterAtk > 0)
-                                mon.Atk.Source += mon.Atk.Source*equipConfig.MonsterAtk/100;
+                                mon.Atk += mon.Atk.Source*equipConfig.MonsterAtk/100;
                             if (equipConfig.MonsterHp > 0)
                             {
                                 var addon = mon.MaxHp.Source*equipConfig.MonsterHp/100;

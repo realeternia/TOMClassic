@@ -18,7 +18,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             EnergyGenerator.SetRateNpc(new [] { 0, 0, 0 },peopleConfig);
 
             Cards = cpcards.GetCopy();
-            InitBase();
+            EnergyGenerator.Next(0);
         }
     }
 }

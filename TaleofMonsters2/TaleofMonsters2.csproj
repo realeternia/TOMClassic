@@ -290,7 +290,6 @@
     <Compile Include="DataType\Maps\BattleMapUnitInfo.cs" />
     <Compile Include="DataType\User\Db\DbFarmState.cs" />
     <Compile Include="DataType\Formulas\FormulaBook.cs" />
-    <Compile Include="DataType\HeroSkills\HeroSkillAttrBook.cs" />
     <Compile Include="DataType\Others\GameResourceBook.cs" />
     <Compile Include="DataType\Others\LevelInfoBook.cs" />
     <Compile Include="DataType\User\InfoAchieve.cs" />
@@ -302,7 +301,6 @@
     <Compile Include="DataType\User\InfoQuest.cs" />
     <Compile Include="DataType\User\InfoRecord.cs" />
     <Compile Include="DataType\User\InfoRival.cs" />
-    <Compile Include="DataType\User\InfoSkill.cs" />
     <Compile Include="DataType\User\Db\DbMergeData.cs" />
     <Compile Include="DataType\Others\Question.cs" />
     <Compile Include="DataType\Others\QuestionBook.cs" />
@@ -336,7 +334,6 @@
     <Compile Include="Forms\ExpBottleForm.Designer.cs">
       <DependentUpon>ExpBottleForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Items\HeroSkillAttrItem.cs" />
     <Compile Include="Forms\Items\GameShopItem.cs" />
     <Compile Include="Forms\Items\CardShopItem.cs" />
     <Compile Include="Forms\Items\Regions\ButtonRegion.cs" />
@@ -383,12 +380,6 @@
     </Compile>
     <Compile Include="Forms\TreasureWheelForm.Designer.cs">
       <DependentUpon>TreasureWheelForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\HeroSkillAttrForm.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Forms\HeroSkillAttrForm.Designer.cs">
-      <DependentUpon>HeroSkillAttrForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\LevelInfoForm.cs">
       <SubType>UserControl</SubType>
@@ -942,10 +933,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TreasureWheelForm.resx">
       <DependentUpon>TreasureWheelForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\HeroSkillAttrForm.resx">
-      <DependentUpon>HeroSkillAttrForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LevelInfoForm.resx">

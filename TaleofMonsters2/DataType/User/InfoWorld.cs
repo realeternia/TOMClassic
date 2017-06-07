@@ -267,8 +267,8 @@ namespace TaleofMonsters.DataType.User
             mthds.Target = mid;
             {
                 List<IntPair> mthd = new List<IntPair>();
-                int icount = 3;
-                int itrare = MathTool.GetRandom(Math.Max(1, equipConfig.Quality * 2 - 1), equipConfig.Quality * 2 + 1);//第一个素材品质和装备品质挂钩
+                int icount = equipConfig.Quality == EquipQualityTypes.Legend ? 4 : 3;
+                int itrare = Math.Max(1, Math.Min(6, equipConfig.Quality * 2 - 1));//第一个素材品质和装备品质挂钩
                 Dictionary<int, bool> existFormula = new Dictionary<int, bool>();
                 for (int j = 0; j < icount; j++)
                 {
@@ -276,13 +276,13 @@ namespace TaleofMonsters.DataType.User
                     if (j == 0)
                     {
                         pv.Type = HItemBook.GetRandRareItemId(HItemRandomGroups.Gather, itrare);
-                        pv.Value = GetItemCountByEquipLevel( itrare) + 1;
+                        pv.Value = MathTool.GetRandom(3, 6);
                     }
                     else
                     {
-                        int nrare = MathTool.GetRandom(Math.Max(1, itrare - 3), itrare);
+                        int nrare = MathTool.GetRandom(Math.Max(0, itrare - 3), itrare) + 1;
                         pv.Type = HItemBook.GetRandRareItemId(HItemRandomGroups.Fight, nrare);
-                        pv.Value = Math.Max(1, GetItemCountByEquipLevel(nrare));
+                        pv.Value = MathTool.GetRandom(2, 5);
                     }
                     if (existFormula.ContainsKey(pv.Type))
                     {
@@ -298,12 +298,6 @@ namespace TaleofMonsters.DataType.User
                 mthds.Set(mthd);
             }
             return mthds;
-        }
-
-        private int GetItemCountByEquipLevel(int rare)
-        {
-            int[] levelp = { 1, 2, 3, 4, 6, 10, 14, 20 };
-            return 3*2*MathTool.GetRandom(8, 12)/10/levelp[rare];
         }
 
         public void UpdatePosEnable(int id, bool isEnable)

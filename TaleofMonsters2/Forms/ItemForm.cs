@@ -56,6 +56,7 @@ namespace TaleofMonsters.Forms
             base.Init(width, height);
             show = true;
             nlPageSelector1.TotalPage = Math.Min((UserProfile.InfoBag.BagCount - 1) / 100 + 2, 9);
+            nlPageSelector1.NoFresh = true;
             RefreshFrame();
         }
 
@@ -140,19 +141,19 @@ namespace TaleofMonsters.Forms
                     else
                     {
                         int diff = baseid + tar - UserProfile.InfoBag.BagCount + 1;
-                        int pricecount = 0;
+                        uint pricecount = 0;
                         for (int i = 0; i < diff; i++)
                         {
-                            pricecount += (UserProfile.InfoBag.BagCount + i) / 50 + 1;
+                            pricecount += (uint)((UserProfile.InfoBag.BagCount + i) / 5 + 10);
                         }
-                        if (MessageBoxEx2.Show(string.Format("是否花{0}钻石开启额外的{1}格物品格?", pricecount, diff)) == DialogResult.OK)
+                        if (MessageBoxEx2.Show(string.Format("是否花{0}金币开启额外的{1}格物品格?", pricecount, diff)) == DialogResult.OK)
                         {
-                            if (UserProfile.InfoBag.PayDiamond(pricecount))
+                            if (UserProfile.InfoBag.HasResource(GameResourceType.Gold, pricecount))
                             {
+                                UserProfile.InfoBag.SubResource(GameResourceType.Gold, pricecount);
                                 UserProfile.InfoBag.ResizeBag(UserProfile.InfoBag.BagCount+diff);
 
                                 nlPageSelector1.TotalPage = Math.Min((UserProfile.InfoBag.BagCount - 1) / 100 + 2, 9);
-
                                 AddFlowCenter("背包扩容完成", "LimeGreen");
                             }
                         }

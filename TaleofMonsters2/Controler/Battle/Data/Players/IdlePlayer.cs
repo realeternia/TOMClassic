@@ -13,7 +13,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
             DeckCard[] cds = DeckBook.GetDeckByName("test", Level);
             Cards = new ActiveCards(cds);
-            InitBase();
+            EnergyGenerator.Next(0);
         }
     }
 }

@@ -178,9 +178,6 @@ namespace TaleofMonsters.MainItem
                 case SystemMenuIds.EquipmentForm:
                     PanelManager.DealPanel(new EquipmentForm());
                     break;
-                case SystemMenuIds.HeroSkillAttrForm:
-                    PanelManager.DealPanel(new HeroSkillAttrForm());
-                    break;
                 case SystemMenuIds.EquipComposeForm:
                     PanelManager.DealPanel(new EquipComposeForm());
                     break;
@@ -282,7 +279,6 @@ namespace TaleofMonsters.MainItem
         TaskForm = 6,
         PeopleViewForm = 7,
         DeckViewForm = 8,
-        HeroSkillAttrForm = 9,
         EquipComposeForm = 10,
         ItemForm = 11,
         EquipmentForm = 12,

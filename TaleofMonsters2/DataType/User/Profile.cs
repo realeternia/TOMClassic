@@ -20,8 +20,6 @@ namespace TaleofMonsters.DataType.User
         public InfoBag InfoBag;
         [FieldIndex(Index = 5)]
         public InfoCard InfoCard;
-        [FieldIndex(Index = 6)]
-        public InfoSkill InfoSkill;
         [FieldIndex(Index = 8)]
         public InfoRival InfoRival;
         [FieldIndex(Index = 9)]
@@ -43,7 +41,6 @@ namespace TaleofMonsters.DataType.User
             InfoBag = new InfoBag();
             InfoEquip = new InfoEquip();
             InfoCard = new InfoCard();
-            InfoSkill = new InfoSkill();
             InfoRival=new InfoRival();
             InfoFarm=new InfoFarm();
             InfoQuest=new InfoQuest();

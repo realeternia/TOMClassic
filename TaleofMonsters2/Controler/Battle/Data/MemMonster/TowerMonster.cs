@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards.Monsters;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster
@@ -15,7 +16,17 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         protected override void DrawImg(Graphics g)
         {
             Image img = null;
-            if (OwnerPlayer.Modifier.CoreId != 0)
+            if (Type == (int) CardTypeSub.NormalTower)
+            {
+                img = MonsterBook.GetMonsterImage(Avatar.Id, 100, 100);
+                if (img != null)
+                {
+                    g.DrawImage(img, 0, 0, 100, 100);
+                }
+                return;
+            }
+            
+            if ( OwnerPlayer.Modifier.CoreId != 0)
             {
                 EquipConfig equipConfig = ConfigData.GetEquipConfig(OwnerPlayer.Modifier.CoreId);
                 img = PicLoader.Read("Equip.Big", string.Format("{0}.JPG", equipConfig.Url));

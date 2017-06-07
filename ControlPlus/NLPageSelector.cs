@@ -17,6 +17,8 @@ namespace ControlPlus
 
         private int selectIndex;
 
+        public bool NoFresh { get; set; }
+
         public NLPageSelector(Control uc,int x,int y,int width)
         {
             this.x = x;
@@ -61,7 +63,8 @@ namespace ControlPlus
                     }
                 }
 
-                ChangeTarget(0);
+                if(!NoFresh)
+                    ChangeTarget(0);
             }
         }
 

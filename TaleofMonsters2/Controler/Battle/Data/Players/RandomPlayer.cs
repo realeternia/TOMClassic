@@ -26,7 +26,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 cd[i] = new DeckCard(CardConfigManager.GetRandomCard(0, -1), 1, 0);
             }
             Cards = new ActiveCards(cd);
-            InitBase();
+            EnergyGenerator.Next(0);
         }
     }
 }
