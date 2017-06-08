@@ -40,7 +40,7 @@ namespace TaleofMonsters.Forms
 
             virtualRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
 
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
+            this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
             this.nlPageSelector1 = new ControlPlus.NLPageSelector(this, 463, 422, 150);
             nlPageSelector1.PageChange += nlPageSelector1_PageChange;
         }

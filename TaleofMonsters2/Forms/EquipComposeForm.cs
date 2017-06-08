@@ -20,12 +20,12 @@ namespace TaleofMonsters.Forms
         public EquipComposeForm()
         {
             InitializeComponent();            
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
-            this.bitmapButton1.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack1.PNG");
-            this.bitmapButton2.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack1.PNG");
-            this.bitmapButton3.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack4.PNG");
-            this.bitmapButton4.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack4.PNG");
-            this.bitmapButton5.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack3.PNG");
+            this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
+            this.bitmapButton1.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack1.PNG");
+            this.bitmapButton2.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack1.PNG");
+            this.bitmapButton3.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack4.PNG");
+            this.bitmapButton4.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack4.PNG");
+            this.bitmapButton5.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack3.PNG");
 
             this.nlPageSelector1 = new ControlPlus.NLPageSelector(this, 398, 310, 150);
             nlPageSelector1.PageChange += nlPageSelector1_PageChange;
@@ -50,7 +50,7 @@ namespace TaleofMonsters.Forms
             foreach (var eid in UserProfile.Profile.InfoEquip.EquipComposeAvail)
             {
                 var equipConfig = ConfigData.GetEquipConfig(eid);
-                if (equipConfig.Quality == qual)
+                if (equipConfig.Id > 0 && equipConfig.Quality == qual)
                     equipIdList.Add(equipConfig.Id);
             }
             page = 0;

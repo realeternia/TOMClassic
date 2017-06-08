@@ -52,8 +52,8 @@ namespace TaleofMonsters.Forms.MiniGame
         public override void Init(int width, int height)
         {
             base.Init(width, height);
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
-            this.bitmapButtonHelp.ImageNormal = PicLoader.Read("ButtonBitmap", "LearnButton.JPG");
+            this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
+            this.bitmapButtonHelp.ImageNormal = PicLoader.Read("Button.Panel", "LearnButton.JPG");
             show = true;
         }
         public void SetMinigameId(int id)

@@ -328,12 +328,6 @@
     <Compile Include="Forms\BuyPieceForm.Designer.cs">
       <DependentUpon>BuyPieceForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ExpBottleForm.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Forms\ExpBottleForm.Designer.cs">
-      <DependentUpon>ExpBottleForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Items\GameShopItem.cs" />
     <Compile Include="Forms\Items\CardShopItem.cs" />
     <Compile Include="Forms\Items\Regions\ButtonRegion.cs" />
@@ -781,10 +775,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MagicBook\DropItemViewerForm.resx">
       <DependentUpon>DropItemViewerForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ExpBottleForm.resx">
-      <DependentUpon>ExpBottleForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MiniGame\MGIconsCatch.resx">

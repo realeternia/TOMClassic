@@ -11,7 +11,7 @@ namespace TaleofMonsters.Forms
         public IEForm()
         {
             InitializeComponent();
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
+            this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
         }
 
         public void SetUrl(string url)

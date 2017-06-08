@@ -16,7 +16,7 @@ namespace TaleofMonsters.Forms
 
         private void ConnectForm_Load(object sender, EventArgs e)
         {
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
+            this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
         }
 
         private void buttonSend_Click(object sender, EventArgs e)

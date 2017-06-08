@@ -88,11 +88,11 @@ namespace TaleofMonsters.Forms
             virtualRegion.RegionEntered += OnVRegionEntered;
             virtualRegion.RegionLeft += OnVRegionLeft;
 
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
+            this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
             bitmapButtonClose.NoUseDrawNine = true;
-            this.bitmapButtonNext.ImageNormal = PicLoader.Read("ButtonBitmap", "NextButton.JPG");
+            this.bitmapButtonNext.ImageNormal = PicLoader.Read("Button.Panel", "NextButton.JPG");
             bitmapButtonNext.NoUseDrawNine = true;
-            this.bitmapButtonSwitch.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            this.bitmapButtonSwitch.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
             bitmapButtonSwitch.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             bitmapButtonSwitch.ForeColor = Color.White;
             bitmapButtonSwitch.IconImage = PicLoader.Read("Icon", "rot4.PNG");
@@ -101,13 +101,13 @@ namespace TaleofMonsters.Forms
             bitmapButtonSwitch.TextOffX = 8;
             bitmapButtonSwitch.Text = "切换";
            // bitmapButtonNext.NoUseDrawNine = true;
-            this.bitmapButtonPre.ImageNormal = PicLoader.Read("ButtonBitmap", "PreButton.JPG");
+            this.bitmapButtonPre.ImageNormal = PicLoader.Read("Button.Panel", "PreButton.JPG");
             bitmapButtonPre.NoUseDrawNine = true;
-            this.bitmapButtonNextD.ImageNormal = PicLoader.Read("ButtonBitmap", "NextButton.JPG");
+            this.bitmapButtonNextD.ImageNormal = PicLoader.Read("Button.Panel", "NextButton.JPG");
             bitmapButtonNextD.NoUseDrawNine = true;
-            this.bitmapButtonPreD.ImageNormal = PicLoader.Read("ButtonBitmap", "PreButton.JPG");
+            this.bitmapButtonPreD.ImageNormal = PicLoader.Read("Button.Panel", "PreButton.JPG");
             bitmapButtonPreD.NoUseDrawNine = true;
-            this.bitmapButtonDel.ImageNormal = PicLoader.Read("ButtonBitmap", "DelButton.JPG");
+            this.bitmapButtonDel.ImageNormal = PicLoader.Read("Button.Panel", "DelButton.JPG");
             bitmapButtonDel.NoUseDrawNine = true;
           
             cardDetail = new CardDetail(this, 605, 35, 565);

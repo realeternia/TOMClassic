@@ -29,8 +29,8 @@ namespace TaleofMonsters.Forms
         public CardShopViewForm()
         {
             InitializeComponent();
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
-            this.bitmapButtonRefresh.ImageNormal = PicLoader.Read("ButtonBitmap", "LearnButton.JPG");
+            this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
+            this.bitmapButtonRefresh.ImageNormal = PicLoader.Read("Button.Panel", "LearnButton.JPG");
             this.nlPageSelector1 = new NLPageSelector(this, 371, 438, 150);
             nlPageSelector1.PageChange += nlPageSelector1_PageChange;
 

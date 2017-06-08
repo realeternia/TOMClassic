@@ -29,7 +29,7 @@ namespace TaleofMonsters.Forms
         public WorldMapViewForm()
         {
             InitializeComponent();
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
+            this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
             bitmapButtonClose.NoUseDrawNine = true;
             myCursor = new HSCursor(this);
         }

@@ -33,7 +33,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             region.RegionEntered += Region_RegionEntered;
             region.RegionLeft += Region_RegionLeft;
 
-            bitmapButton1.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            bitmapButton1.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
         }
 
 

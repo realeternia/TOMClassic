@@ -24,9 +24,9 @@ namespace TaleofMonsters.Forms.MiniGame
             type = (int)SystemMenuIds.GameBattleRobot;
             InitializeComponent();
 
-            bitmapButtonC1.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
-            bitmapButtonC2.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
-            bitmapButtonC3.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            bitmapButtonC1.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
+            bitmapButtonC2.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
+            bitmapButtonC3.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
         }
 
         public override void Init(int width, int height)

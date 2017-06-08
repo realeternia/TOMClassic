@@ -48,16 +48,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 UserProfile.InfoBag.SubResource(type, (uint)(-number));
             }
         }
-        
-        public override void OnKillMonster(int id, int dieLevel, int dieStar, Point position)
-        {
-            base.OnKillMonster(id, dieLevel, dieStar, position);
-
-            int expGet = (int)Math.Sqrt(dieLevel * dieStar) / 2 + 1; //杀死怪物经验
-            int rexp = UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.HeroExpPoint) + expGet;
-            UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.HeroExpPoint, Math.Min(ExpTree.GetNextRequiredCard(Level), rexp));
-         //   BattleManager.Instance.FlowWordQueue.Add(new FlowExpInfo(expGet, position, 20, 50), true);
-        }
 
         public override void InitialCards()
         {

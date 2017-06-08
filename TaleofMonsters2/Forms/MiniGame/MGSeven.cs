@@ -61,7 +61,7 @@ namespace TaleofMonsters.Forms.MiniGame
         {
             InitializeComponent();
             #region 按钮初始化
-            this.bitmapButtonC1.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            this.bitmapButtonC1.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
             bitmapButtonC1.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             bitmapButtonC1.ForeColor = Color.White;
             bitmapButtonC1.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("rot1");
@@ -69,7 +69,7 @@ namespace TaleofMonsters.Forms.MiniGame
             bitmapButtonC1.IconXY = new Point(4, 5);
             bitmapButtonC1.TextOffX = 8;
             bitmapButtonC1.Text = @"开始";
-            this.bitmapButtonC2.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            this.bitmapButtonC2.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
             bitmapButtonC2.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             bitmapButtonC2.ForeColor = Color.White;
             bitmapButtonC2.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("rot2");
@@ -77,7 +77,7 @@ namespace TaleofMonsters.Forms.MiniGame
             bitmapButtonC2.IconXY = new Point(4, 5);
             bitmapButtonC2.TextOffX = 8;
             bitmapButtonC2.Text = @"停止";
-            this.bitmapButtonC3.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            this.bitmapButtonC3.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
             bitmapButtonC3.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             bitmapButtonC3.ForeColor = Color.White;
             bitmapButtonC3.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("rot2");
@@ -85,7 +85,7 @@ namespace TaleofMonsters.Forms.MiniGame
             bitmapButtonC3.IconXY = new Point(4, 5);
             bitmapButtonC3.TextOffX = 8;
             bitmapButtonC3.Text = @"停止";
-            this.bitmapButtonC4.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            this.bitmapButtonC4.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
             bitmapButtonC4.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             bitmapButtonC4.ForeColor = Color.White;
             bitmapButtonC4.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("rot2");

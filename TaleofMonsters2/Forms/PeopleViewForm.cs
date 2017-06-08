@@ -30,7 +30,7 @@ namespace TaleofMonsters.Forms
         public PeopleViewForm()
         {
             InitializeComponent();
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
+            this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
             people = new List<DbRivalState>();
             virtualRegion = new VirtualRegion(this);
             virtualRegion.AddRegion(new PictureRegion(1, 41, 40, 70, 70, PictureRegionCellType.People, 0));
@@ -58,7 +58,7 @@ namespace TaleofMonsters.Forms
         {
             base.Init(width, height);
             showImage = true;
-            this.bitmapButtonFight.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            this.bitmapButtonFight.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
             bitmapButtonFight.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             bitmapButtonFight.ForeColor = Color.White;
             bitmapButtonFight.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("abl1");

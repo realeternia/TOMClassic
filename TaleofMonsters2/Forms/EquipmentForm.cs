@@ -46,8 +46,8 @@ namespace TaleofMonsters.Forms
         public EquipmentForm()
         {
             InitializeComponent();
-            bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
-            bitmapButtonJob.ImageNormal = PicLoader.Read("ButtonBitmap", "LearnButton.JPG");
+            bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
+            bitmapButtonJob.ImageNormal = PicLoader.Read("Button.Panel", "LearnButton.JPG");
             vRegion = new VirtualRegion(this);
             for (int i = 0; i < 9; i++)
             {

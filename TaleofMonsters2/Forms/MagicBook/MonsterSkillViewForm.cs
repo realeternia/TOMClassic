@@ -39,11 +39,11 @@ namespace TaleofMonsters.Forms.MagicBook
         public MonsterSkillViewForm()
         {
             InitializeComponent();
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
+            this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
             bitmapButtonClose.NoUseDrawNine = true;
-            this.bitmapButtonNext.ImageNormal = PicLoader.Read("ButtonBitmap", "NextButton.JPG");
+            this.bitmapButtonNext.ImageNormal = PicLoader.Read("Button.Panel", "NextButton.JPG");
             bitmapButtonNext.NoUseDrawNine = true;
-            this.bitmapButtonPre.ImageNormal = PicLoader.Read("ButtonBitmap", "PreButton.JPG");
+            this.bitmapButtonPre.ImageNormal = PicLoader.Read("Button.Panel", "PreButton.JPG");
             bitmapButtonPre.NoUseDrawNine = true;
             tempImage = new Bitmap(cardWidth*xCount, cardHeight*yCount);
             comboBoxType.SelectedIndex = 0;

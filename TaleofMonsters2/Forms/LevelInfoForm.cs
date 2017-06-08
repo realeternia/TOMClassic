@@ -43,7 +43,7 @@ namespace TaleofMonsters.Forms
         public LevelInfoForm()
         {
             InitializeComponent();
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
+            this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
         }
 
         private void pictureBoxCancel_Click(object sender, EventArgs e)

@@ -40,7 +40,7 @@ namespace TaleofMonsters.MainItem
             {
                 if (UserProfile.InfoCard.GetCardExp(TargetCard.BaseId) <= 0)
                 {
-                    Form.AddFlowCenter(HSErrorTypes.GetDescript(HSErrorTypes.CardExpNotEnough), "Red");
+                    Form.AddFlowCenter(HSErrorTypes.GetDescript(HSErrorTypes.CardExpNotEnough2), "Red");
                 }
                 else if (MessageBoxEx2.Show("确定要分解多余的碎片？") == DialogResult.OK)
                 {

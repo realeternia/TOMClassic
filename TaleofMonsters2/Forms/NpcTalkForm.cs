@@ -101,7 +101,12 @@ namespace TaleofMonsters.Forms
                 }
                 else if (interactBlock.Children.Count == 1 && interactBlock.Children[0] is SceneQuestEvent)
                 {
-                    evtItem = TalkEventItem.CreateEventItem(EventId, eventLevel, this, new Rectangle(10, Height - 10 - 5 * 20 - 160, Width - 20, 160), interactBlock.Children[0] as SceneQuestEvent);
+                    var evt = interactBlock.Children[0] as SceneQuestEvent;
+                    if (evt.Type == "npc")
+                    {
+                        tar = -1; //为了修一个显示bug
+                    }
+                    evtItem = TalkEventItem.CreateEventItem(EventId, eventLevel, this, new Rectangle(10, Height - 10 - 5 * 20 - 160, Width - 20, 160), evt);
                 }
 
                 if (evtItem != null && evtItem.AutoClose())

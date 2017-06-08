@@ -24,9 +24,9 @@ namespace TaleofMonsters.Forms
         {
             InitializeComponent();
 
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
-            this.bitmapButton1.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack1.PNG");
-            this.bitmapButton2.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack3.PNG");
+            this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
+            this.bitmapButton1.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack1.PNG");
+            this.bitmapButton2.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack3.PNG");
         }
 
         public override void Init(int width, int height)

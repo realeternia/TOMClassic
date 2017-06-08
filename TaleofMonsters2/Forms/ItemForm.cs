@@ -34,8 +34,8 @@ namespace TaleofMonsters.Forms
         public ItemForm()
         {
             InitializeComponent();
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
-            this.bitmapButtonSort.ImageNormal = PicLoader.Read("ButtonBitmap", "SortButton.JPG");
+            this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
+            this.bitmapButtonSort.ImageNormal = PicLoader.Read("Button.Panel", "SortButton.JPG");
             bitmapButtonSort.NoUseDrawNine = true;
             this.nlPageSelector1 = new ControlPlus.NLPageSelector(this, 123, 362, 204);
             nlPageSelector1.PageChange += nlPageSelector1_PageChange;

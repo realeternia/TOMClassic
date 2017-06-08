@@ -30,7 +30,7 @@ namespace TaleofMonsters.Forms
         public CardBagForm()
         {
             InitializeComponent();
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
+            this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
 
             vRegion = new VirtualRegion(this);
             

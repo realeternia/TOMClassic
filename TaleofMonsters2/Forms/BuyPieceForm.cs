@@ -33,13 +33,13 @@ namespace TaleofMonsters.Forms
         public BuyPieceForm()
         {
             InitializeComponent();
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
+            this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
             bitmapButtonClose.NoUseDrawNine = true;
-            this.bitmapButtonRefresh.ImageNormal = PicLoader.Read("ButtonBitmap", "PlusButton.JPG");
+            this.bitmapButtonRefresh.ImageNormal = PicLoader.Read("Button.Panel", "PlusButton.JPG");
             bitmapButtonRefresh.NoUseDrawNine = true;
-            this.bitmapButtonFresh.ImageNormal = PicLoader.Read("ButtonBitmap", "FreshButton.JPG");
+            this.bitmapButtonFresh.ImageNormal = PicLoader.Read("Button.Panel", "FreshButton.JPG");
             bitmapButtonFresh.NoUseDrawNine = true;
-            this.bitmapButtonDouble.ImageNormal = PicLoader.Read("ButtonBitmap", "MoneyButton.JPG");
+            this.bitmapButtonDouble.ImageNormal = PicLoader.Read("Button.Panel", "MoneyButton.JPG");
             bitmapButtonDouble.NoUseDrawNine = true;
             colorWord = new ColorWordRegion(12, 38, 384, "微软雅黑", 11, Color.White);
             colorWord.Bold = true;

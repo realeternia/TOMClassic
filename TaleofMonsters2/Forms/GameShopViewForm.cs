@@ -24,7 +24,7 @@ namespace TaleofMonsters.Forms
         public GameShopViewForm()
         {
             InitializeComponent();
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
+            this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
             this.nlPageSelector1 = new ControlPlus.NLPageSelector(this, 365, 365, 150);
             nlPageSelector1.PageChange += nlPageSelector1_PageChange;
             productIds = new List<int>();

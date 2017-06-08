@@ -16,7 +16,7 @@ namespace TaleofMonsters.Forms
         public CalendarForm()
         {
             InitializeComponent();
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
+            this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
             radioButton1.Image = HSIcons.GetIconsByEName("mth1");
             radioButton2.Image = HSIcons.GetIconsByEName("mth2");
             radioButton3.Image = HSIcons.GetIconsByEName("mth3");

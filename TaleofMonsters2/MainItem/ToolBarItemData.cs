@@ -5,8 +5,6 @@ using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User;
 using ConfigDatas;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Others;
 
 namespace TaleofMonsters.MainItem
 { 
@@ -85,15 +83,6 @@ namespace TaleofMonsters.MainItem
             }            
         }
 
-        public int GetRecordLimit(MemPlayerRecordTypes rd)
-        {
-            switch (rd)
-            {
-                case MemPlayerRecordTypes.HeroExpPoint: return ExpTree.GetNextRequiredCard(UserProfile.InfoBasic.Level);
-            }
-            return 0;
-        }
-
         public void Draw(Graphics g, int menuTar)
         {
             bool isTarget = menuTar == Id;
@@ -114,10 +103,6 @@ namespace TaleofMonsters.MainItem
                 if (isTarget && Id < 20)
                 {
                     buttony = Y - 7;
-                }
-                if (MainIconConfig.Type == (int)ToolBarItemTypes.Limit)
-                {
-                    info = string.Format("{0:00.0}%", (double)UserProfile.InfoRecord.GetRecordById(MainIconConfig.Record) * 100 / GetRecordLimit((MemPlayerRecordTypes)MainIconConfig.Record));
                 }
                 g.DrawImage(button, X, buttony, Width, Height);
             }

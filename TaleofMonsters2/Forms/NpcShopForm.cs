@@ -21,7 +21,7 @@ namespace TaleofMonsters.Forms
         public NpcShopForm()
         {
             InitializeComponent();
-            this.bitmapButtonClose2.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
+            this.bitmapButtonClose2.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
             this.nlPageSelector1 = new ControlPlus.NLPageSelector(this, 143, 244, 150);
             nlPageSelector1.PageChange += nlPageSelector1_PageChange;
         }

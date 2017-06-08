@@ -35,7 +35,7 @@ namespace TaleofMonsters.Forms.Items
             bitmapButtonBuy.Location = new Point(x + 125, y + 53);
             bitmapButtonBuy.Size = new Size(50, 24);
             this.bitmapButtonBuy.Click += new System.EventHandler(this.pictureBoxBuy_Click);
-            this.bitmapButtonBuy.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack2.PNG");
+            this.bitmapButtonBuy.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
             bitmapButtonBuy.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             bitmapButtonBuy.ForeColor = Color.White;
             bitmapButtonBuy.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("hatt2");
@@ -51,7 +51,7 @@ namespace TaleofMonsters.Forms.Items
             index = idx;
 
             virtualRegion = new VirtualRegion(parent);
-            virtualRegion.AddRegion(new PictureRegion(1, x + 3, y + 3, 76, 75, PictureRegionCellType.Equip, 0));
+            virtualRegion.AddRegion(new PictureRegion(1, x + 3 + 6, y + 3 + 6,  76 - 12, 75 - 12, PictureRegionCellType.Equip, 0));
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
@@ -117,10 +117,13 @@ namespace TaleofMonsters.Forms.Items
 
             if (show)
             {
-                var equipConfig = ConfigData.GetEquipConfig(equipId);
+                var back = PicLoader.Read("System", "MapBack.JPG");
+                g.DrawImage(back, x + 2, y + 2, width - 4, height - 4);
+                back.Dispose();
 
                 virtualRegion.Draw(g);
 
+                var equipConfig = ConfigData.GetEquipConfig(equipId);
                 var cost = GameResourceBook.OutStoneMerge(equipConfig.Quality + 1);
                 Font ft = new Font("宋体", 9*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
                 Brush b = new SolidBrush(Color.FromName(HSTypes.I2QualityColor(equipConfig.Quality)));

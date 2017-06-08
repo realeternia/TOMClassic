@@ -31,7 +31,7 @@ namespace TaleofMonsters.Forms
         public MergeWeaponForm()
         {
             InitializeComponent();
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
+            this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
             virtualRegion = new VirtualRegion(this);
             virtualRegion.AddRegion(new PictureAnimRegion(1, 295, 100, 60, 60, PictureRegionCellType.Equip, 0));
             virtualRegion.AddRegion(new PictureAnimRegion(2, 200, 259, 40, 40, PictureRegionCellType.Item, 0));
@@ -232,7 +232,7 @@ namespace TaleofMonsters.Forms
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
             Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString(" 学习 ", font, Brushes.White, Width / 2 - 40, 8);
+            e.Graphics.DrawString(" 图纸 ", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
 
             if (currentInfo == null)

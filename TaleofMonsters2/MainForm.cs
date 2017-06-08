@@ -35,8 +35,8 @@ namespace TaleofMonsters
         public MainForm()
         {
             InitializeComponent();
-            bitmapButtonLogin.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack1.PNG");
-            bitmapButtonExit.ImageNormal = PicLoader.Read("ButtonBitmap", "ButtonBack1.PNG");
+            bitmapButtonLogin.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack1.PNG");
+            bitmapButtonExit.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack1.PNG");
 
             if (Config.Config.ResolutionBigger)
             {

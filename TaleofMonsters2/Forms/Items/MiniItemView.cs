@@ -37,9 +37,9 @@ namespace TaleofMonsters.Forms.Items
         {
             show = true;
             myCursor.ChangeCursor("default");
-            this.bitmapButtonLeft.ImageNormal = PicLoader.Read("ButtonBitmap", "PreButton.JPG");
+            this.bitmapButtonLeft.ImageNormal = PicLoader.Read("Button.Panel", "PreButton.JPG");
             bitmapButtonLeft.NoUseDrawNine = true;
-            this.bitmapButtonRight.ImageNormal = PicLoader.Read("ButtonBitmap", "NextButton.JPG");
+            this.bitmapButtonRight.ImageNormal = PicLoader.Read("Button.Panel", "NextButton.JPG");
             bitmapButtonRight.NoUseDrawNine = true;
             items = new MiniItemViewItem[cellCount];
             for (int i = 0; i < cellCount; i++)

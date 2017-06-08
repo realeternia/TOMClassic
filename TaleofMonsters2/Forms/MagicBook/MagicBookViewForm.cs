@@ -18,7 +18,7 @@ namespace TaleofMonsters.Forms.MagicBook
         public MagicBookViewForm()
         {
             InitializeComponent();
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
+            this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
             virtualRegion = new VirtualRegion(this);
             int xOff = 15;
             int yOff = 40;

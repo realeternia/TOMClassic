@@ -20,7 +20,7 @@ namespace TaleofMonsters.Forms
         public TournamentViewForm()
         {
             InitializeComponent();
-            this.bitmapButtonClose.ImageNormal = PicLoader.Read("ButtonBitmap", "CloseButton1.JPG");
+            this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
         }
 
         private void TournamentViewForm_Load(object sender, EventArgs e)

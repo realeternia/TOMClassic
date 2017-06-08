@@ -7,7 +7,6 @@ using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.MagicBook;
-using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.MainItem 
 {
@@ -199,16 +198,6 @@ namespace TaleofMonsters.MainItem
                 case SystemMenuIds.TreasureWheelForm:
                     PanelManager.DealPanel(new TreasureWheelForm());
                     break;
-                case SystemMenuIds.ExpBottle:
-                    PanelManager.DealPanel(new ExpBottleForm());
-                    //if (MessageBoxEx2.Show("是否花5钻石将时间回到3小时前?") == DialogResult.OK)
-                    //{
-                    //    if (UserProfile.Profile.PayDiamond(5))
-                    //    {
-                    //        UserProfile.Profile.time.AddSeconds(-3 * 3600);
-                    //    }
-                    //}
-                    break;
                 case SystemMenuIds.QuestionForm:
                     PanelManager.DealPanel(new QuestionForm());
                     break;
@@ -285,12 +274,9 @@ namespace TaleofMonsters.MainItem
         MagicBookViewForm = 32,
         WorldMapViewForm = 33,
         ConnectForm = 34,
-      //  MergeWeaponForm = 35,
         CardShopViewForm = 36,
         TournamentViewForm = 37,
-       // AddDayForm = 38,
         TreasureWheelForm = 39,
-        ExpBottle = 40,
         QuestionForm = 41,
         MinigameForm = 42,
         GameUpToNumber = 1100,
