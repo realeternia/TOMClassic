@@ -41,7 +41,6 @@ namespace TaleofMonsters.Forms
                 equipControls[i].Init(i);
             }
             InitEquips(0);
-            nlPageSelector1.TotalPage = (equipIdList.Count-1)/9 + 1;
         }
 
         private void InitEquips(int qual)
@@ -54,6 +53,7 @@ namespace TaleofMonsters.Forms
                     equipIdList.Add(equipConfig.Id);
             }
             page = 0;
+            nlPageSelector1.TotalPage = (equipIdList.Count - 1) / 9 + 1;
             RefreshInfo();
         }
 

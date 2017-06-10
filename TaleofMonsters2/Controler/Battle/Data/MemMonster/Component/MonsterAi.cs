@@ -117,7 +117,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
             if (monster.RealSpd != 0) //会返回一些ats
             {
-                monster.AddActionRate((float) (monster.RealSpd)*GameConstants.SpdToRate/100);
+                monster.AddActionRate((monster.RealSpd)*GameConstants.SpdToRate/100);
             }
             monster.MovRound = 0;
         }
@@ -172,7 +172,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             score += mon.RealRange*10;//优先打远程单位
             if (MonsterBook.HasTag(mon.CardId, "taunt"))
             {
-                score += 10000;
+                score += 100000;
             }
             return score;
         }

@@ -40,7 +40,7 @@ namespace TaleofMonsters.Core
         public const int CrtToRate = 6;//每点crt实际的暴击率
         public const float DefaultCrtDamage = 1.5f;//默认暴击时的伤害倍率
         public const double MagToRate = 0.1;//每点mag实际的伤害率
-        public const int SpdToRate = 5;//每点攻速实际的提升率
+        public const double SpdToRate = 3;//每点攻速实际的提升率
         public const int HitToRate = 5;//每点命中实际的提升率
         public const int LukToRoll = 100; //每点幸运造成的额外roll点，万分之
         public const int MaxDropItemGetOnBattle = 10; //每次可以获得战利品数量上限

@@ -24,6 +24,8 @@ namespace TaleofMonsters.Controler.GM
                 case "atp": break;
                 case "mov": break;
                 case "eqp": break;
+                case "eqpm": break;
+                case "eqpms": break;
                 case "itm": break;
                 case "emys": break;
                 case "gold": break;
@@ -57,12 +59,16 @@ namespace TaleofMonsters.Controler.GM
                         Scene.Instance.ChangeMap(int.Parse(data[1]), true); break;
                     case "eqp": if (data.Length == 2) UserProfile.InfoEquip.AddEquip(int.Parse(data[1]), 60*24); break;
                     case "eqpm": if (data.Length == 2) UserProfile.InfoEquip.AddEquipCompose(int.Parse(data[1])); break;
+                    case "eqpms":
+                        foreach (int eid in ConfigData.EquipDict.Keys)
+                        {
+                            UserProfile.InfoEquip.AddEquipCompose(eid);
+                        }
+                        break;
                     case "itm": if (data.Length == 3) UserProfile.InfoBag.AddItem(int.Parse(data[1]), int.Parse(data[2])); break;
                     case "emys": foreach (int peopleId in ConfigData.PeopleDict.Keys)
                         {
-                            DbRivalState memRival = new DbRivalState(peopleId);
-                            memRival.Avail = true;
-                            UserProfile.InfoRival.Rivals[peopleId] = memRival;
+                            UserProfile.InfoRival.SetRivalAvail(peopleId);
                         }
                         break;
                     case "gold": if (data.Length == 2)
