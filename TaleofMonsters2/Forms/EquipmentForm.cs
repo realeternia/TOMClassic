@@ -14,7 +14,6 @@ using ConfigDatas;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User.Db;
-using TaleofMonsters.Forms.Items.Regions.Decorators;
 using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms
@@ -49,7 +48,7 @@ namespace TaleofMonsters.Forms
             bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
             bitmapButtonJob.ImageNormal = PicLoader.Read("Button.Panel", "LearnButton.JPG");
             vRegion = new VirtualRegion(this);
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < GameConstants.EquipOnCount; i++)
             {
                 var r1 = new PictureRegion(i+1, 373 + 51 * (i%3), 60 + 51*(i/3), 40, 40, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipon[i].BaseId);
                 vRegion.AddRegion(r1);
@@ -296,7 +295,7 @@ namespace TaleofMonsters.Forms
                 vRegion.Draw(e.Graphics);
             }
 
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < GameConstants.EquipOnCount; i++)
             {
                 EquipSlotConfig slotConfig = ConfigData.GetEquipSlotConfig(i + 1);
                 var img = PicLoader.Read("System", string.Format("EquipBack{0}.JPG", slotConfig.Type));
@@ -307,7 +306,7 @@ namespace TaleofMonsters.Forms
             {
                 vRegion.Draw(e.Graphics);
             }
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < GameConstants.EquipOnCount; i++)
             {
                 if (!UserProfile.InfoEquip.CanEquip(0, i + 1))
                 {
