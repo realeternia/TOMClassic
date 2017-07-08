@@ -4,9 +4,6 @@ using ConfigDatas;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Tool;
-using TaleofMonsters.DataType.Cards.Monsters;
-using TaleofMonsters.DataType.Cards.Spells;
-using TaleofMonsters.DataType.Cards.Weapons;
 using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.Drops;
 using TaleofMonsters.DataType.User;
@@ -101,7 +98,7 @@ namespace TaleofMonsters.DataType.Items
 
             if (itemConfig.DirectDamage > 0)
             {
-                player.DirectDamage += itemConfig.DirectDamage;
+                player.SpecialAttr.DirectDamage += itemConfig.DirectDamage;
             }
 
             if (itemConfig.FightRandomCardType > 0)

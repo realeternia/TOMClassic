@@ -42,15 +42,15 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public delegate void ShowCardSelectorEventHandler(Player p, ICardSelectMethod m);
         public event ShowCardSelectorEventHandler OnShowCardSelector;
 
-        private float recoverTime;
+        private float recoverTime; //魔法的恢复累计值
 
         public EnergyGenerator EnergyGenerator { get; set; }
         public SpikeManager SpikeManager { get; set; }
         public CardManager CardManager { get; private set; }
         public TrapHolder TrapHolder { get; private set; }
+        public EquipModifier Modifier { get; protected set; }
         public IPlayerAction Action { get; private set; }
-
-        public double SpellEffectAddon { get; set; }//法术牌效果加成
+        public PlayerSpecialAttr SpecialAttr { get; private set; }
 
         private bool isPlayerControl; //是否玩家控制
 
@@ -95,13 +95,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             get { return CardsDesk.GetSelectId(); }
         }
 
-        public EquipModifier Modifier { get; protected set; }
-
         public int PeopleId { get; set; }
 
         public ActiveCards Cards { get; protected set; }//自己搭配的卡组
 
-        public int DirectDamage { get; set; }
+        public int CardNumber { get { return CardManager.GetCardNumber(); } }
 
         private List<string> holyWordList = new List<string>(); //圣言，一些特殊效果的指令
         private List<int[]> monsterAddonOnce = new List<int[]>(); //一次性的强化
@@ -119,6 +117,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             TrapHolder = new TrapHolder(this);
             Modifier = new EquipModifier();
             Action = new PlayerAction(this);
+            SpecialAttr = new PlayerSpecialAttr();
             Lp = 3;
             Mp = 3;
             Pp = 3;
@@ -183,7 +182,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void Update(bool isFast, float pastRound, int round)
         {
-            recoverTime += pastRound * GameConstants.RoundRecoverAddon * ((round >= GameConstants.RoundRecoverDoubleRound) ? 2 : 1);
+            recoverTime += pastRound * GameConstants.RoundRecoverAddon * (round >= GameConstants.RoundRecoverDoubleRound ? 2 : 1);
             var need = isFast ? GameConstants.DrawManaTimeFast : GameConstants.DrawManaTime;
             if (recoverTime >= need)
             {
@@ -354,8 +353,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 OnKillEnemy(id, dieLevel, IsLeft);
             }
         }
-
-
+        
         public void UseMonster(ActiveCard card, Point location)
         {
             if (!BeforeUseCard(card, location))
@@ -458,7 +456,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             try
             {
                 Spell spell = new Spell(card.CardId);
-                spell.Addon = SpellEffectAddon;
+                spell.Addon = SpecialAttr.SpellEffectAddon;
                 spell.UpgradeToLevel(card.Level);
                 if (!card.IsHeroSkill)
                     BattleManager.Instance.StatisticData.GetPlayer(IsLeft).SpellAdd++;
@@ -479,13 +477,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             AfterUseCard(card);
             CardManager.DeleteCardAt(SelectId);
         }
-
-
-        public int CardNumber
-        {
-            get { return CardManager.GetCardNumber(); }
-        }
-
 
         public void AddCardReason(IMonster mon, AddCardReason reason)
         {

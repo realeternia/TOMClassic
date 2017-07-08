@@ -191,7 +191,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 
         public void AddSpellEffect(double rate)
         {
-            self.SpellEffectAddon += rate;
+            self.SpecialAttr.SpellEffectAddon += rate;
         }
 
         public void AddSpike(int id)

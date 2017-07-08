@@ -111,9 +111,10 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             foreach (var mon in monsters)
             {
                 var rival = mon.Rival as Player;
-                if (rival.DirectDamage > 0)
+                var directDam = rival.SpecialAttr.DirectDamage;
+                if (directDam > 0)
                 {
-                    HitDamage damage = new HitDamage(rival.DirectDamage, rival.DirectDamage, 0, DamageTypes.Magic);
+                    HitDamage damage = new HitDamage(directDam, directDam, 0, DamageTypes.Magic);
                     mon.HpBar.OnDamage(damage);
                 }
                 if (!mon.IsAlive)
@@ -140,15 +141,14 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                     else LeftCount = LeftCount + 1;
                 }
             }
-            BattleManager.Instance.PlayerManager.LeftPlayer.DirectDamage = 0;//伤害清除
-            BattleManager.Instance.PlayerManager.RightPlayer.DirectDamage = 0;
+            BattleManager.Instance.PlayerManager.LeftPlayer.SpecialAttr.DirectDamage = 0;//伤害清除
+            BattleManager.Instance.PlayerManager.RightPlayer.SpecialAttr.DirectDamage = 0;
 
             foreach (int mid in removeMids)
             {
                 Remove(mid);
             }
-
-
+            
             foreach (var roundMonster in monsters)
             {
                 if (roundMonster.IsGhost) 

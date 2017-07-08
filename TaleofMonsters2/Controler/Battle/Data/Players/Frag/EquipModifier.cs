@@ -4,7 +4,7 @@ using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Equips;
 
-namespace TaleofMonsters.Controler.Battle.Data.Players
+namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 {
     /// <summary>
     /// 负责装备属性对单位的影响
