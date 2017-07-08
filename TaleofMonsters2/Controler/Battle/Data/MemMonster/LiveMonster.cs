@@ -4,25 +4,18 @@ using System.Drawing;
 using ConfigDatas;
 using NarlonLib.Log;
 using NarlonLib.Math;
-using TaleofMonsters.Config;
-using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
-using TaleofMonsters.Controler.Battle.Data.MemMissile;
 using TaleofMonsters.Controler.Battle.Data.MemMonster.Component;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType.CardPieces;
 using TaleofMonsters.DataType.Cards.Monsters;
-using TaleofMonsters.DataType.Effects;
 using TaleofMonsters.DataType.Skills;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Core;
-using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards.Weapons;
-using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.Formulas;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster
@@ -46,14 +39,15 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public int Id { get; private set; }
         public int Level { get; private set; }
-        public Monster Avatar { get; private set; }
+        public Monster Avatar { get; set; }
 
         public float GhostTime { get; set; } //0-1表示在墓地状态
         public bool IsDefence { get { return ReadMov == 0 && !Avatar.MonsterConfig.IsBuilding; } }
         public Point Position { get; set; }
         public IMap Map { get { return BattleManager.Instance.MemMap; } }
+        public IMonsterAction Action { get; private set; }
         public bool IsLeft { get; set; }
-        public int Action { get; set; }
+        public int ActPoint { get; set; }
         public IBattleWeapon Weapon { get; set; }
         
         public int AttackType { get; set; }//只有武器可以改变，技能不行
@@ -70,7 +64,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public double CrtDamAddRate { get; set; }
         public int MovRound { get; set; }
-        
+        public void AddActionRate(double value)
+        {
+            ActPoint += (int)(GameConstants.LimitAts * value);
+        }
+
         public bool IsSummoned { get; set; } //是否召唤单位
 
         public int Life
@@ -231,7 +229,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
             Position = point;
             IsLeft = isLeft;
-            Action = 0;
+            ActPoint = 0;
             roundPast = 0;
             HpBar = new HpBar(this);
             SkillManager = new SkillManager(this);
@@ -247,7 +245,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             MonsterCoverBox = new MonsterCoverBox(this);
         }
 
-        private void SetBasicData()
+        public void SetBasicData()
         {
             BuffManager.Reload();
             auroList = new List<MonsterAuro>();
@@ -390,10 +388,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             if (BuffManager.HasBuff(BuffEffectTypes.NoAction))
                 return false;
-            Action += GameConstants.RoundAts;//200ms + 30
-            if (Action >= GameConstants.LimitAts)
+            ActPoint += GameConstants.RoundAts;//200ms + 30
+            if (ActPoint >= GameConstants.LimitAts)
             {
-                Action = Action - GameConstants.LimitAts;
+                ActPoint = ActPoint - GameConstants.LimitAts;
                 return true;
             }
             return false;
@@ -531,12 +529,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                     //画集气槽
                     g.FillPie(Brushes.Purple, 65, 65, 30, 30, 0, skillPercent * 360 / 100);
                     //画行动槽
-                    g.FillPie(CanAttack ? Brushes.Yellow : Brushes.LightGray, 70, 70, 20, 20, 0, Action * 360 / GameConstants.LimitAts);
+                    g.FillPie(CanAttack ? Brushes.Yellow : Brushes.LightGray, 70, 70, 20, 20, 0, ActPoint * 360 / GameConstants.LimitAts);
                 }
                 else
                 {
                     //画行动槽
-                    g.FillPie(CanAttack ? Brushes.Yellow : Brushes.LightGray, 65, 65, 30, 30, 0, Action * 360 / GameConstants.LimitAts);
+                    g.FillPie(CanAttack ? Brushes.Yellow : Brushes.LightGray, 65, 65, 30, 30, 0, ActPoint * 360 / GameConstants.LimitAts);
                 }
 
                 var starIcon = HSIcons.GetIconsByEName("sysstar");
@@ -602,179 +600,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             HpBar.AddHp((int)(RealMaxHp * value));
         }
 
-        public IMonsterAuro AddAuro(int buff, int lv, string tar)
-        {
-            var auro = new MonsterAuro(this, buff, lv, tar);
-            auroList.Add(auro);
-            return auro;
-        }
-
-        public void AddAntiMagic(string type, int value)
-        {
-            if (type=="All")
-            {
-                for (int i = 0; i < antiMagic.Length; i++)
-                {
-                    antiMagic[i] += value;
-                }
-            }
-            else
-            {
-                antiMagic[(int)Enum.Parse(typeof(CardElements), type) - 1] += value;    
-            }            
-        }
-
-        public void AddItem(int itemId)
-        {
-            if (OwnerPlayer is HumanPlayer)
-            {
-                BattleManager.Instance.StatisticData.AddItemGet(itemId);
-                UserProfile.InfoBag.AddItem(itemId, 1);
-                BattleManager.Instance.FlowWordQueue.Add(new FlowItemInfo(itemId, Position, 20, 50), true);
-            }
-        }
-
-        public void Transform(int monId)
-        {
-            if (Avatar.MonsterConfig.IsBuilding)
-            {
-                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", Position, 0, "Gold", 26, 0, 0, 1, 15), false);
-                return;
-            }
-
-            int cardId = Weapon == null ? 0 : Weapon.CardId;
-            var savedWeapon = Weapon == null ? null : Weapon.GetCopy();
-            DeleteWeapon();
-            int lifp = Life * 100 / Avatar.Hp;
-            MonsterCoverBox.RemoveAllCover();
-            SkillManager.CheckRemoveEffect();
-            OwnerPlayer.Modifier.CheckMonsterEvent(false, this);
-            Avatar = new Monster(monId);
-            Avatar.UpgradeToLevel(Level);
-            OwnerPlayer.Modifier.CheckMonsterEvent(true, this);
-            SetBasicData();
-            MonsterCoverBox.CheckCover();
-            SkillManager.CheckInitialEffect();
-            if (cardId > 0)
-            {
-                AddWeapon(savedWeapon);
-            }
-            HpBar.SetHp(Avatar.Hp * lifp / 100);
-        }
-
-        public void AddActionRate(double value)
-        {
-            Action += (int)(GameConstants.LimitAts*value);
-        }
-
-        public void Return(int costChange)
-        {
-            if (Avatar.MonsterConfig.IsBuilding)
-            {
-                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", Position, 0, "Gold", 26, 0, 0, 1, 15), false);
-                return;
-            }
-
-            BattleManager.Instance.MemMap.GetMouseCell(Position.X, Position.Y).UpdateOwner(0);
-            SkillManager.CheckRemoveEffect();
-            Owner.AddCard(this, CardId, Level, costChange);
-
-            BattleManager.Instance.MonsterQueue.RemoveDirect(Id);
-        }
-
-        public void AddWeapon(int weaponId, int lv)
-        {
-            if (!CanAddWeapon())
-            {
-                return;
-            }
-
-            Weapon wpn = new Weapon(weaponId);
-            wpn.UpgradeToLevel(lv);
-            var tWeapon = new TrueWeapon(this, lv, wpn);
-            AddWeapon(tWeapon);
-        }
-
-        public void StealWeapon(IMonster target)
-        {
-            var monster = target as LiveMonster;
-            if (monster != null)
-            {
-                var weapon = monster.Weapon;
-                AddWeapon(weapon);
-                target.BreakWeapon();
-            }
-        }
-
-        public void BreakWeapon()
-        {
-            if (Weapon != null)
-                DeleteWeapon();
-        }
-
-        public void WeaponReturn()
-        {
-            if (Weapon is TrueWeapon)
-            {
-                ActiveCard card = new ActiveCard(new DeckCard(Weapon.CardId, (byte)Weapon.Level, 0));
-                OwnerPlayer.CardManager.AddCard(card);
-                DeleteWeapon();
-            }
-        }
-
-        public void LevelUpWeapon(int lv)
-        {
-            if (Weapon != null)
-            {
-                var weaponId = Weapon.CardId;
-                var weaponLevel = Weapon.Level;
-                BreakWeapon();
-                AddWeapon(weaponId, weaponLevel+lv);
-            }
-        }
-
-        public void AddRandSkill()
-        {
-            SkillManager.AddSkill(SkillBook.GetRandSkillId(), Level, 100, SkillSourceTypes.Skill);
-        }
-
-        public void AddSkill(int skillId, int rate)
-        {
-            SkillManager.AddSkill(skillId, Level, rate, SkillSourceTypes.Skill);
-        }
-
-        public int GetMonsterCountByRace(int rid)
-        {
-            int count = 0;
-            foreach (var monster in BattleManager.Instance.MonsterQueue.Enumerator)
-            {
-                if (monster.Type == rid)
-                {
-                    count++;
-                }
-            }
-            return count;
-        }
-
-        public int GetMonsterCountByType(int type)
-        {
-            int count = 0;
-            foreach (var monster in BattleManager.Instance.MonsterQueue.Enumerator)
-            {
-                if (monster.Attr == type)
-                {
-                    count++;
-                }
-            }
-            return count;
-        }
-
-        public void AddMissile(IMonster target, string arrow)
-        {
-            BasicMissileControler controler = new TraceMissileControler(this, target as LiveMonster);
-            Missile mi = new Missile(arrow, Position.X, Position.Y, controler);
-            BattleManager.Instance.MissileQueue.Add(mi);
-        }
 
         public int Star
         {
@@ -791,10 +616,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             get { return Life; }
         }
 
-        public bool IsTileMatching
-        {
-            get { return BuffManager.IsTileMatching; }
-        }
 
         public bool CanAttack { get; set; }
 
@@ -802,33 +623,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             get { return !BuffManager.HasBuff(BuffEffectTypes.NoMove); }
         }
-
-        public bool IsElement(string ele)
-        {
-            return (int) Enum.Parse(typeof (CardElements), ele) == Avatar.MonsterConfig.Type;
-        }
-
-        public bool IsRace(string rac)
-        {
-            return (int)Enum.Parse(typeof(CardTypeSub), rac) == Avatar.MonsterConfig.Type;
-        }
-
-        public bool IsNight
-        {
-            get { return BattleManager.Instance.IsNight; }
-        }
+        
 
         public bool HasSkill(int sid)
         {
             return SkillManager.HasSkill(sid);
-        }
-
-        //遗忘所有武器技能除外
-        public void Silent()
-        {
-            SkillManager.Forget();
-
-            BuffManager.ClearBuff(false);//清除所有buff
         }
 
         public int Attr { get { return Avatar.MonsterConfig.Attr; } }
@@ -839,47 +638,45 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public MonsterCoverBox MonsterCoverBox { get; private set; }
 
-        public void Disappear()
+        public void AddMaxHp(double value)
         {
-            if (IsGhost)
-            {
-                GhostTime = 1;//让坟场消失
-            }
-        }
-
-        public void AddBuff(int buffId, int blevel, double dura)
-        {
-            BuffManager.AddBuff(buffId, blevel, dura);
-        }
-
-        public void ClearDebuff()
-        {
-            BuffManager.ClearBuff(true);
-        }
-
-        public void ExtendDebuff(double count)
-        {
-            BuffManager.ExtendDebuff(count);
-        }
-
-        public bool HasBuff(int buffid)
-        {
-            return BuffManager.HasBuff(buffid);
-        }
-
-        public void SetToPosition(string type, int step)
-        {
-            if (Avatar.MonsterConfig.IsBuilding)
+            if (Avatar.MonsterConfig.IsBuilding && value < 0)
             {
                 BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", Position, 0, "Gold", 26, 0, 0, 1, 15), false);
                 return;
             }
 
-            Point dest = MonsterPositionHelper.GetAvailPoint(Position, type, IsLeft, step);
-            if (dest.X != Position.X || dest.Y != Position.Y)
+            var lifeRate = Life / MaxHp;
+            MaxHp.Source += value;
+            if (value > 0)
             {
-                BattleLocationManager.SetToPosition(this, dest);
+                AddHp(value);//顺便把hp也加上
             }
+            else
+            {
+                AddHp(lifeRate * value);
+            }
+        }
+        public void AddAntiMagic(string type, int value)
+        {
+            if (type == "All")
+            {
+                for (int i = 0; i < antiMagic.Length; i++)
+                {
+                    antiMagic[i] += value;
+                }
+            }
+            else
+            {
+                antiMagic[(int)Enum.Parse(typeof(CardElements), type) - 1] += value;
+            }
+        }
+
+        public IMonsterAuro AddAuro(int buff, int lv, string tar)
+        {
+            var auro = new MonsterAuro(this, buff, lv, tar);
+            auroList.Add(auro);
+            return auro;
         }
 
         public void OnMagicDamage(IMonster source, double damage, int element)
@@ -899,143 +696,16 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public void OnSpellDamage(double damage, int element, double vibrate)
         {
             if (vibrate > 0)
-                damage = damage*MathTool.GetRandom(1 - vibrate, 1 + vibrate);
+                damage = damage * MathTool.GetRandom(1 - vibrate, 1 + vibrate);
             var damValue = damage * (1 - FormulaBook.GetMagDefRate(RealMag));
             var dam = new HitDamage((int)damValue, (int)damValue, element, DamageTypes.Magic);
             CheckMagicDamage(dam);
             HpBar.OnDamage(dam);
         }
 
-        public void SuddenDeath()
-        {
-            if (Avatar.MonsterConfig.IsBuilding)
-            {
-                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", Position, 0, "Gold", 26, 0, 0, 1, 15), false);
-                return;
-            }
-            HpBar.SetHp(0);
-        }
-
-        public void Rebel()
-        {
-            if (Avatar.MonsterConfig.IsBuilding)
-            {
-                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", Position, 0, "Gold", 26, 0, 0, 1, 15), false);
-                return;
-            }
-            IsLeft = !IsLeft;
-        }
-
-        public void AddMaxHp(double value)
-        {
-            if (Avatar.MonsterConfig.IsBuilding && value < 0)
-            {
-                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", Position, 0, "Gold", 26, 0, 0, 1, 15), false);
-                return;
-            }
-
-            var lifeRate = Life/MaxHp;
-            MaxHp.Source += value;
-            if (value > 0)
-            {
-                AddHp(value);//顺便把hp也加上
-            }
-            else
-            {
-                AddHp(lifeRate * value);
-            }
-        }
-
-        public void Summon(string type, int id, int count)
-        {
-            if (IsSummoned)
-            {//召唤生物不能继续召唤，防止无限循环
-                return;
-            }
-
-            List<Point> posLis = MonsterPositionHelper.GetAvailPointList(Position, type, IsLeft, count);
-
-            foreach (var pos in posLis)
-            {
-                var mon = new Monster(id);
-                mon.UpgradeToLevel(Level);
-                LiveMonster newMon = new LiveMonster(Level, mon, pos, IsLeft);
-                newMon.IsSummoned = true;
-                BattleManager.Instance.MonsterQueue.AddDelay(newMon);
-            }
-        }
-
-        public void SummonRandomAttr(string type, int attr)
-        {
-            int cardId;
-            while (true)
-            {
-                cardId = CardConfigManager.GetRandomAttrCard(attr);
-                if(CardConfigManager.GetCardConfig(cardId).Type == CardTypes.Monster)
-                    break;
-            }
-            Summon(type, cardId, 1);
-        }
-
-        public void MadDrug()
-        {
-            if (!Avatar.MonsterConfig.IsBuilding && RealRange > 0)
-            {
-                Atk.Source = MaxHp.Source/5;
-            }
-        }
-
-        public void CureRandomAlien(double rate)
-        {
-            IMonster target = null;
-            foreach (IMonster o in Map.GetAllMonster(Position))
-            {
-                if (o.IsLeft == IsLeft && o.HpRate < 100 && o.Id != Id)
-                {
-                    if (target == null || target.HpRate>o.HpRate)
-                    {
-                        target = o;
-                    }
-                }
-            }
-            if (target!=null)
-            {
-                target.AddHpRate(rate);
-                BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect("yellowstar"), (LiveMonster)target, false));
-            }
-        }
-
-        public bool ResistBuffType(int type)
-        {
-            var rate = BuffManager.GetBuffImmuneRate(type);
-            return MathTool.GetRandom(0.0, 1.0) < rate;
-        }
-
-        public void EatTomb(IMonster tomb)
-        {
-            Atk.Source *= 1.1;
-            AddMaxHp(MaxHp.Source*0.1);
-            (tomb as LiveMonster).Disappear();
-        }
-
         public void ClearTarget()
         {
             aiController.ClearTarget();
-        }
-
-        public void AddPArmor(double val)
-        {
-            HpBar.AddPArmor((int)val);
-        }
-
-        public void AddMArmor(double val)
-        {
-            HpBar.AddMArmor((int)val);
-        }
-
-        public int GetPArmor()
-        {
-            return HpBar.PArmor;
         }
         #endregion
     }

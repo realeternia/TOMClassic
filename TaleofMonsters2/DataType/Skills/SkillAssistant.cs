@@ -103,7 +103,7 @@ namespace TaleofMonsters.DataType.Skills
 
             if (tileMatching || src.HasSkill(GameConstants.SkillTileId))//µØÐÎ
             {
-                src.AddBuff(BuffConfig.Indexer.Tile, 1, 0.05);
+                src.BuffManager.AddBuff(BuffConfig.Indexer.Tile, 1, 0.05);
             }
         }
 

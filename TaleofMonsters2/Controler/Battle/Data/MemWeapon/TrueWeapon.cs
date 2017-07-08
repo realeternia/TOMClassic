@@ -60,7 +60,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
             Life--;
             if (Life == 0)
             {
-                self.BreakWeapon();
+                self.Action.BreakWeapon();
                 BattleManager.Instance.FlowWordQueue.Add(new FlowWord("装备破损", self.Position, -2, "Cyan", 26, 0, 0, -2, 15), false);
             }
             else

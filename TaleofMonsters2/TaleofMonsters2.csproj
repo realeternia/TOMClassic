@@ -116,6 +116,7 @@
     <Compile Include="Controler\Battle\Data\MemMissile\MissileControler.cs" />
     <Compile Include="Controler\Battle\Data\MemMissile\Missile.cs" />
     <Compile Include="Controler\Battle\Data\MemMissile\MissileBook.cs" />
+    <Compile Include="Controler\Battle\Data\MemMonster\Component\MonsterAction.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\Component\MonsterPositionHelper.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\LiveMonsterToolTip.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\Component\MonsterAi.cs" />

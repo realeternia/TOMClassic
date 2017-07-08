@@ -372,7 +372,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void ExchangeMonster(IMonster target, int lv)
         {
-            target.Transform(MonsterBook.GetRandMonsterId());
+            target.Action.Transform(MonsterBook.GetRandMonsterId());
         }
 
         public void UseMonster(ActiveCard card, Point location)

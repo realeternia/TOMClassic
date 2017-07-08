@@ -17,25 +17,8 @@ namespace ConfigDatas
         bool IsDefence { get; }
         System.Drawing.Point Position{get;set;}
         IMap Map { get; }
+        IMonsterAction Action { get; }
         bool IsLeft { get; }
-
-        IMonsterAuro AddAuro(int buff, int lv, string tar);
-        void AddAntiMagic(string type, int value);
-        void AddBuff(int buffId, int blevel, double dura);
-        void AddItem(int itemId);//战斗中
-        void Transform(int monId);
-        void AddActionRate(double value);
-        void Return(int costChange);
-        void AddWeapon(int weaponId, int lv);
-        void StealWeapon(IMonster target);
-        void BreakWeapon();
-        void WeaponReturn();
-        void LevelUpWeapon(int lv);
-        void AddRandSkill();
-        void AddSkill(int id, int rate);
-        int GetMonsterCountByRace(int rid);
-        int GetMonsterCountByType(int type);
-        void AddMissile(IMonster target, string arrow);
 		
         AttrModifyData Atk{get;set;}
         AttrModifyData MaxHp { get; set; }
@@ -50,38 +33,23 @@ namespace ConfigDatas
 
         double CrtDamAddRate { get; set; } //暴击时伤害倍数增加
 
-        bool IsTileMatching { get; }
+
         bool CanAttack { get; set; }
-        bool IsElement(string ele);
-        bool IsRace(string rac);
+
         int AttackType { get; }
         bool HasSkill(int sid);
-        void Silent();
+
         int Attr { get; } //属性
         int Type { get; } //种族
 
-        bool IsNight{get;}
-        void ClearDebuff();
-        void ExtendDebuff(double count);
-        bool HasBuff(int id);
-        void SetToPosition(string type, int step);
+        int MovRound { get; } //连续移动回合数，攻击后清除
+        void AddActionRate(double value);
+        void AddMaxHp(double val);
+        void AddAntiMagic(string type, int value);
+        IMonsterAuro AddAuro(int buff, int lv, string tar);
         void OnMagicDamage(IMonster source, double damage, int element);
         void OnSpellDamage(double damage, int element);
         void OnSpellDamage(double damage, int element, double vibrate);
-        void SuddenDeath();
-        void Rebel();//造反
-        void AddMaxHp(double val);
-        int MovRound { get; } //连续移动回合数，攻击后清除
-
-        void Summon(string type, int id, int count);
-        void SummonRandomAttr(string type, int attr);
-        void MadDrug(); //交换攻击和血量
-        void CureRandomAlien(double rate);
-        bool ResistBuffType(int type);
-        void EatTomb(IMonster tomb);
         void ClearTarget();
-        void AddPArmor(double val);
-        void AddMArmor(double val);
-        int GetPArmor();
     }
 }

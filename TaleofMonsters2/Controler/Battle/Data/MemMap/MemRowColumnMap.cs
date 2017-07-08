@@ -174,7 +174,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                 if (lm.IsGhost || isLeft && lm.IsLeft)
                     continue;
 
-                lm.SetToPosition(type, 1);
+                lm.Action.SetToPosition(type, 1);
             }
         }
 
@@ -241,7 +241,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             lm.AddHp(addHp);
             if (lm.Owner != player)//复活了对方的怪，就招过来了
             {
-                lm.Rebel();
+                lm.Action.Rebel();
             }
         }
 
@@ -268,7 +268,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             if (oid < 0)
             {
                 var mon = BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(-oid);
-                mon.Disappear();
+                mon.Action.Disappear();
             }
         }
 

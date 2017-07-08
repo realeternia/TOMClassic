@@ -75,7 +75,7 @@ namespace TaleofMonsters.Controler.Battle.Data
                 if (attrList.Count > 0 && !attrList.Contains((CardElements)mon.Avatar.MonsterConfig.Attr))
                     continue;
 
-                mon.AddBuff(buffId, level, 0.05);
+                mon.BuffManager.AddBuff(buffId, level, 0.05);
             }
         }
 
