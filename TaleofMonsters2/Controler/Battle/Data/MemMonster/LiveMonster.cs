@@ -26,11 +26,13 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public HpBar HpBar { get; private set; }
         public SkillManager SkillManager { get; private set; }
         public BuffManager BuffManager { get; private set; }
-        
+        public LiveMonsterToolTip LiveMonsterToolTip { get; private set; }
+        public MonsterCoverBox MonsterCoverBox { get; private set; }
+        public AuroManager AuroManager { get; private set; }
         private int lastDamagerId; //最后一击的怪物id
         private int peakDamagerLuk; //最高攻击者的幸运值
 
-        private List<MonsterAuro> auroList;//光环
+    
         private int[] antiMagic;//魔法抗性
         private int roundPast; //经过的调用数，每次调用大约200ms
         private float pastRoundTotal; //消耗的时间片，累计到1清理一次
@@ -49,7 +51,30 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public bool IsLeft { get; set; }
         public int ActPoint { get; set; }
         public IBattleWeapon Weapon { get; set; }
-        
+
+        public int CardId
+        {
+            get { return Avatar.Id; }
+        }
+
+        public int WeaponId
+        {
+            get { return Weapon == null ? 0 : Weapon.CardId; }
+        }
+        public int WeaponType
+        {
+            get { return Weapon != null ? Weapon.Type - CardTypeSub.Weapon + 1 : 0; }
+        }
+
+        public int Star { get { return Avatar.MonsterConfig.Star; } }
+        public int Attr { get { return Avatar.MonsterConfig.Attr; } }
+        public int Type { get { return Avatar.MonsterConfig.Type; } }
+
+        public bool CanMove
+        {
+            get { return !BuffManager.HasBuff(BuffEffectTypes.NoMove); }
+        }
+        public bool CanAttack { get; set; }
         public int AttackType { get; set; }//只有武器可以改变，技能不行
         public AttrModifyData Atk { get; set; }
         public AttrModifyData MaxHp { get; set; }
@@ -71,11 +96,15 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public bool IsSummoned { get; set; } //是否召唤单位
 
-        public int Life
+        public int Hp
         {
             get { return HpBar.Life; }
         }
-        
+        public double HpRate
+        {
+            get { return (double)Hp * 100 / Avatar.Hp; }
+        }
+
         public Point CenterPosition
         {
             get { return new Point(Position.X + BattleManager.Instance.MemMap.CardSize / 2, 
@@ -84,7 +113,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public bool IsAlive
         {
-            get { return Life > 0; }
+            get { return Hp > 0; }
         }
 
         public int RealAtk
@@ -218,6 +247,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             get { return GhostTime > 0; }
         }
 
+
         #endregion
 
         public LiveMonster(int level, Monster mon, Point point, bool isLeft)
@@ -239,7 +269,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             BuffManager = new BuffManager(this);
             aiController = new MonsterAi(this);
             LiveMonsterToolTip = new LiveMonsterToolTip(this);
-
+            AuroManager = new AuroManager(this);
             SetBasicData();
             HpBar.SetHp(Avatar.Hp);
             MonsterCoverBox = new MonsterCoverBox(this);
@@ -248,7 +278,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public void SetBasicData()
         {
             BuffManager.Reload();
-            auroList = new List<MonsterAuro>();
+            AuroManager.Reload();
             SkillManager.Reload();
             
             antiMagic = new int[6];//6个属性
@@ -432,7 +462,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             if (Weapon != null)
                 Weapon.CheckWeaponEffect(this, -1);
             Weapon = tw;
-            //  EAddonBook.UpdateWeaponData(Weapon, OwnerPlayer.Modifier.Weaponskills.Keys(), OwnerPlayer.Modifier.Weaponskills.Values());
             Weapon.CheckWeaponEffect(this, 1);
         }
 
@@ -462,13 +491,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
         }
 
-        public void CheckAuroEffect()
-        {
-            foreach (var auro in auroList)
-            {
-                auro.CheckAuroState();
-            }
-        }
 
         public void Revive()
         {
@@ -575,21 +597,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             image.Dispose();
         }
 
-        #region IMonster 成员
-
-        public int CardId
-        {
-            get { return Avatar.Id; }
-        }
-
-        public int WeaponId
-        {
-            get { return Weapon == null ? 0 : Weapon.CardId; }
-        }
-        public int WeaponType
-        {
-            get { return Weapon != null ? Weapon.Type - CardTypeSub.Weapon + 1 : 0; }
-        }
         public void AddHp(double addon)
         {
             HpBar.AddHp((int)addon);
@@ -599,45 +606,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             HpBar.AddHp((int)(RealMaxHp * value));
         }
-
-
-        public int Star
-        {
-            get { return Avatar.MonsterConfig.Star; }
-        }
-
-        public double HpRate
-        {
-            get { return (double)Life * 100/Avatar.Hp; }
-        }
-
-        public int Hp
-        {
-            get { return Life; }
-        }
-
-
-        public bool CanAttack { get; set; }
-
-        public bool CanMove
-        {
-            get { return !BuffManager.HasBuff(BuffEffectTypes.NoMove); }
-        }
         
-
         public bool HasSkill(int sid)
         {
             return SkillManager.HasSkill(sid);
         }
-
-        public int Attr { get { return Avatar.MonsterConfig.Attr; } }
-
-        public int Type { get { return Avatar.MonsterConfig.Type; } }
-
-        public LiveMonsterToolTip LiveMonsterToolTip { get; private set; }
-
-        public MonsterCoverBox MonsterCoverBox { get; private set; }
-
+        
         public void AddMaxHp(double value)
         {
             if (Avatar.MonsterConfig.IsBuilding && value < 0)
@@ -646,7 +620,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 return;
             }
 
-            var lifeRate = Life / MaxHp;
+            var lifeRate = Hp / MaxHp;
             MaxHp.Source += value;
             if (value > 0)
             {
@@ -670,13 +644,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             {
                 antiMagic[(int)Enum.Parse(typeof(CardElements), type) - 1] += value;
             }
-        }
-
-        public IMonsterAuro AddAuro(int buff, int lv, string tar)
-        {
-            var auro = new MonsterAuro(this, buff, lv, tar);
-            auroList.Add(auro);
-            return auro;
         }
 
         public void OnMagicDamage(IMonster source, double damage, int element)
@@ -707,6 +674,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             aiController.ClearTarget();
         }
-        #endregion
+
     }
 }

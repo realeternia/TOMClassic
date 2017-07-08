@@ -44,7 +44,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             tipData.AddImage(HSIcons.GetIconsByEName("rac" + liveMonster.Avatar.MonsterConfig.Type), 16, 16);
             tipData.AddLine();
 
-            tipData.AddTextNewLine(string.Format("生命 {0}/{1}", liveMonster.Life, liveMonster.RealMaxHp), "Lime");
+            tipData.AddTextNewLine(string.Format("生命 {0}/{1}", liveMonster.Hp, liveMonster.RealMaxHp), "Lime");
             if (liveMonster.HpBar.PArmor > 0)
                 AddText(tipData, "物甲", liveMonster.HpBar.PArmor, liveMonster.HpBar.PArmor, "LightGray", true);
             if (liveMonster.HpBar.MArmor > 0)

@@ -46,7 +46,6 @@ namespace ConfigDatas
         void AddActionRate(double value);
         void AddMaxHp(double val);
         void AddAntiMagic(string type, int value);
-        IMonsterAuro AddAuro(int buff, int lv, string tar);
         void OnMagicDamage(IMonster source, double damage, int element);
         void OnSpellDamage(double damage, int element);
         void OnSpellDamage(double damage, int element, double vibrate);

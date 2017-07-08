@@ -63,7 +63,7 @@ namespace TaleofMonsters.Controler.Battle
                     for (int i = 0; i <BattleManager.Instance.MonsterQueue.Count; i++)
                     {
                         LiveMonster monster =BattleManager.Instance.MonsterQueue[i];
-                        if (!monster.IsGhost && monster.IsLeft == isLeft && monster.Weapon == null && monster.Life > monster.RealMaxHp / 2)
+                        if (!monster.IsGhost && monster.IsLeft == isLeft && monster.Weapon == null && monster.Hp > monster.RealMaxHp / 2)
                         {
                             if (!monster.CanAddWeapon())//建筑无法使用武器
                                 continue;

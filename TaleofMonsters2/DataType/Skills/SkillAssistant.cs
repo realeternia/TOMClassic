@@ -98,7 +98,7 @@ namespace TaleofMonsters.DataType.Skills
         {
             if (!src.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
             {
-                src.CheckAuroEffect();
+                src.AuroManager.CheckAuroEffect();
             }
 
             if (tileMatching || src.HasSkill(GameConstants.SkillTileId))//µØÐÎ

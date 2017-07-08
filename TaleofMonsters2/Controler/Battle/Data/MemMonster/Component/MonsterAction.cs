@@ -11,7 +11,6 @@ using TaleofMonsters.Controler.Battle.Data.MemMissile;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
-using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Cards.Weapons;
@@ -68,7 +67,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             int cardId = self.Weapon == null ? 0 : self.Weapon.CardId;
             var savedWeapon = self.Weapon == null ? null : self.Weapon.GetCopy();
             self.DeleteWeapon();
-            int lifp = self.Life * 100 / self.Avatar.Hp;
+            int lifp = self.Hp * 100 / self.Avatar.Hp;
             self.MonsterCoverBox.RemoveAllCover();
             self.SkillManager.CheckRemoveEffect();
             self.OwnerPlayer.Modifier.CheckMonsterEvent(false, self);
@@ -338,6 +337,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             self.BuffManager.ClearBuff(false);//清除所有buff
         }
 
+        public IMonsterAuro AddAuro(int buff, int lv, string tar)
+        {
+            return self.AuroManager.AddAuro(buff, lv, tar);
+        }
 
         public void AddPArmor(double val)
         {

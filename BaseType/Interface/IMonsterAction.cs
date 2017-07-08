@@ -39,7 +39,7 @@
         bool ResistBuffType(int type);
         void EatTomb(IMonster tomb);
         void Silent();
-
+        IMonsterAuro AddAuro(int buff, int lv, string tar);
         void AddPArmor(double val);
         void AddMArmor(double val);
         int GetPArmor();
