@@ -95,7 +95,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
             BattleManager.Instance.MemMap.GetMouseCell(self.Position.X, self.Position.Y).UpdateOwner(0);
             self.SkillManager.CheckRemoveEffect();
-            self.Owner.AddCard(self, self.CardId, self.Level, costChange);
+            self.Owner.Action.AddCard(self, self.CardId, self.Level, costChange);
 
             BattleManager.Instance.MonsterQueue.RemoveDirect(self.Id);
         }

@@ -5,7 +5,6 @@ using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
-using TaleofMonsters.Controler.Battle.Data.MemMissile;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players.Frag;
 using TaleofMonsters.Core.Interface;
@@ -15,7 +14,6 @@ using System.Drawing;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Controler.Battle.Data.MemSpell;
 using NarlonLib.Log;
-using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Components.CardSelect;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
 using TaleofMonsters.DataType;
@@ -50,6 +48,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public SpikeManager SpikeManager { get; set; }
         public CardManager CardManager { get; private set; }
         public TrapHolder TrapHolder { get; private set; }
+        public IPlayerAction Action { get; private set; }
 
         public double SpellEffectAddon { get; set; }//法术牌效果加成
 
@@ -119,6 +118,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             SpikeManager = new SpikeManager(this);
             TrapHolder = new TrapHolder(this);
             Modifier = new EquipModifier();
+            Action = new PlayerAction(this);
             Lp = 3;
             Mp = 3;
             Pp = 3;
@@ -347,11 +347,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         {
         }
 
-        public void AddResource(int type, int number)
-        {
-            AddResource((GameResourceType)type, number);
-        }
-
         public void OnKillMonster(int id, int dieLevel, int dieStar, Point position)
         {
             if (OnKillEnemy != null)
@@ -360,20 +355,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
         }
 
-        public void AddMonster(int cardId, int level,Point location)
-        {
-            int size = BattleManager.Instance.MemMap.CardSize;
-            var truePos = new Point(location.X/size*size, location.Y/size*size);
-            var mon = new Monster(cardId);
-            mon.UpgradeToLevel(level);
-            LiveMonster newMon = new LiveMonster(level, mon, truePos, IsLeft);
-            BattleManager.Instance.MonsterQueue.Add(newMon);
-        }
-
-        public void ExchangeMonster(IMonster target, int lv)
-        {
-            target.Action.Transform(MonsterBook.GetRandMonsterId());
-        }
 
         public void UseMonster(ActiveCard card, Point location)
         {
@@ -486,7 +467,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
                 if (SpikeManager.HasSpike("mirrorspell"))
                 {
-                    Rival.AddCard(null, card.CardId, card.Level);
+                    Rival.Action.AddCard(null, card.CardId, card.Level);
                 }
             }
             catch (Exception e)
@@ -499,198 +480,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             CardManager.DeleteCardAt(SelectId);
         }
 
-        public void AddTrap(int id, int spellId, int lv, double rate, int damage, double help)
-        {
-            TrapHolder.AddTrap(id, spellId, lv, rate, damage, help);
-        }
-
-        public void RemoveRandomTrap()
-        {
-            TrapHolder.RemoveRandomTrap();
-        }
-
-        public void AddSpellMissile(IMonster target, ISpell spell, Point mouse, string effect)
-        {
-            BasicMissileControler controler = new SpellTraceMissileControler((LiveMonster)target, spell);
-            Missile mi = new Missile(effect, mouse.X, mouse.Y, controler);
-            BattleManager.Instance.MissileQueue.Add(mi);
-        }
-
-        public void AddSpellRowMissile(ISpell spell, int count, Point mouse, string effect)
-        {
-            int size = BattleManager.Instance.MemMap.CardSize;
-            int ybase = mouse.Y/size*size;
-            int xstart = IsLeft ? 0 : BattleManager.Instance.MemMap.StageWidth - size;
-            for (int i = -count/2; i <= count/2; i++)
-            {
-                int yoff = ybase + i*size;
-                int xend = IsLeft ? xstart + spell.Range / 10 * size : xstart - spell.Range / 10 * size;
-                BasicMissileControler controler = new SpellLandMissileControler(this, new Point(xend, yoff), spell);
-                Missile mi = new Missile(effect, xstart, yoff, controler);
-                BattleManager.Instance.MissileQueue.Add(mi);
-            }
-        }
-
-        public void DeleteRandomCardFor(IPlayer p, int levelChange)
-        {
-            CardManager.DeleteRandomCardFor(p, levelChange);
-        }
-
-        public void CopyRandomCardFor(IPlayer p, int levelChange)
-        {
-            CardManager.CopyRandomCardFor(p, levelChange);
-        }
-
-        public void AddCard(IMonster mon, int cardId, int level)
-        {
-            CardManager.AddCard(cardId, level, 0);
-            AddCardReason(mon, Frag.AddCardReason.GetCertainCard);
-        }
-        public void AddCard(IMonster mon, int cardId, int level, int modify)
-        {
-            CardManager.AddCard(cardId, level, modify);
-            AddCardReason(mon, Frag.AddCardReason.GetCertainCard);
-        }
-
-        public void GetNextNCard(IMonster mon, int n)
-        {
-            DrawNextNCard(mon, n, Frag.AddCardReason.DrawCardBySkillOrSpell);
-        }
-
-        public void DrawNextNCard(IMonster mon, int n, AddCardReason reason)
-        {
-            var cardCount = Cards.LeftCount;
-            for (int i = 0; i < n; i++)
-                CardManager.GetNextCard();
-
-            AddCardReason(mon, reason);
-
-            if (CardLeftChanged != null && cardCount != Cards.LeftCount)
-            {
-                CardLeftChanged();
-            }
-        }
-
-        public void CopyRandomNCard(int n, int spellid)
-        {
-            CardManager.CopyRandomNCard(n ,spellid);
-        }
-
-        public void DeleteAllCard()
-        {
-           CardManager.DeleteAllCard();
-        }
-
-        public void DeleteSelectCard()
-        {
-            CardManager.DeleteCardAt(SelectId);
-            CardsDesk.DisSelectCard();
-        }
-
-        public void RecostSelectCard()
-        {
-            var selectCard = CardManager.GetDeckCardAt(SelectId);
-            if (selectCard == null)
-            {
-                NLog.Error(string.Format("RecostSelectCard id={0} not Found", SelectId));
-                return;
-            }
-            AddMp(-selectCard.Mp);
-            AddLp(-selectCard.Lp);
-            AddPp(-selectCard.Pp);
-        }
 
         public int CardNumber
         {
             get { return CardManager.GetCardNumber(); }
         }
 
-        public void ConvertCard(int count, int cardId, int levelChange)
-        {
-            CardManager.ConvertCard(count, cardId, levelChange);
-        }
-
-        public void CardLevelUp(int n, int type)
-        {
-            CardManager.CardLevelUp(n, type);
-        }
-
-        public void AddRandomCard(IMonster mon, int type, int lv)
-        {
-            int cardId = CardConfigManager.GetRandomTypeCard(type);
-            if (cardId != 0)
-            {
-                CardManager.AddCard(cardId, lv, 0);
-                AddCardReason(mon, Frag.AddCardReason.RandomCard);
-            }
-        }
-
-        public void AddRandomCardJob(IMonster mon, int job, int lv)
-        {
-            var cardId = CardConfigManager.GetRandomJobCard(job);
-            if (cardId != 0)
-            {
-                CardManager.AddCard(cardId, lv, 0);
-                AddCardReason(mon, Frag.AddCardReason.RandomCard);
-            }
-        }
-
-        public void AddRandomCardRace(IMonster mon, int race, int lv)
-        {
-            var cardId = CardConfigManager.GetRandomRaceCard(race);
-            if (cardId != 0)
-            {
-                CardManager.AddCard(cardId, lv, 0);
-                AddCardReason(mon, Frag.AddCardReason.RandomCard);
-            }
-        }
-
-        public void DiscoverCardType(IMonster mon, int type, int lv, string dtype)
-        {
-            List<int> cardIds = new List<int>();
-            for (int i = 0; i < GameConstants.DiscoverCardCount; i++)
-            {
-                int cardId = CardConfigManager.GetRandomTypeCard(type);
-                cardIds.Add(cardId);
-            }
-            DiscoverCard(mon, cardIds.ToArray(), lv, (DiscoverCardActionType)Enum.Parse(typeof(DiscoverCardActionType), dtype));
-        }
-        public void DiscoverCardRace(IMonster mon, int race, int lv, string dtype)
-        {
-            List<int> cardIds = new List<int>();
-            for (int i = 0; i < GameConstants.DiscoverCardCount; i++)
-            {
-                int cardId = CardConfigManager.GetRandomRaceCard(race);
-                cardIds.Add(cardId);
-            }
-            DiscoverCard(mon, cardIds.ToArray(), lv, (DiscoverCardActionType)Enum.Parse(typeof(DiscoverCardActionType), dtype));
-        }
-
-        private void DiscoverCard(IMonster mon, int[] cardId, int lv, DiscoverCardActionType type)
-        {
-            if (isPlayerControl)
-            {
-                CardSelectMethodDiscover discover = new CardSelectMethodDiscover(cardId, lv, type);
-                if (OnShowCardSelector != null)
-                {
-                    OnShowCardSelector(this, discover);
-                }
-            }
-            else
-            {
-                AIStrategy.Discover(this, mon, cardId, lv, type);
-            }
-        }
-
-        public void AddDiscoverCard(IMonster mon, int cardId, int level, DiscoverCardActionType type)
-        {
-            switch (type)
-            {
-                case DiscoverCardActionType.AddCard: CardManager.AddCard(cardId, level, 0); break;
-                case DiscoverCardActionType.Add2Cards: CardManager.AddCard(cardId, level, 0); CardManager.AddCard(cardId, level, 0); break;
-            }
-            AddCardReason(mon, Frag.AddCardReason.Discover);
-        }
 
         public void AddCardReason(IMonster mon, AddCardReason reason)
         {
@@ -720,19 +515,43 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
         }
 
-        public void AddSpellEffect(double rate)
+        public void DrawNextNCard(IMonster mon, int n, AddCardReason reason)
         {
-            SpellEffectAddon += rate;
+            var cardCount = Cards.LeftCount;
+            for (int i = 0; i < n; i++)
+                CardManager.GetNextCard();
+
+            AddCardReason(mon, reason);
+
+            if (CardLeftChanged != null && cardCount != Cards.LeftCount)
+            {
+                CardLeftChanged();
+            }
+        }
+        public void DiscoverCard(IMonster mon, int[] cardId, int lv, DiscoverCardActionType type)
+        {
+            if (isPlayerControl)
+            {
+                CardSelectMethodDiscover discover = new CardSelectMethodDiscover(cardId, lv, type);
+                if (OnShowCardSelector != null)
+                {
+                    OnShowCardSelector(this, discover);
+                }
+            }
+            else
+            {
+                AIStrategy.Discover(this, mon, cardId, lv, type);
+            }
         }
 
-        public void AddSpike(int id)
+        public void AddDiscoverCard(IMonster mon, int cardId, int level, DiscoverCardActionType type)
         {
-            SpikeManager.AddSpike(id);
-        }
-
-        public void RemoveSpike(int id)
-        {
-            SpikeManager.RemoveSpike(id);
+            switch (type)
+            {
+                case DiscoverCardActionType.AddCard: CardManager.AddCard(cardId, level, 0); break;
+                case DiscoverCardActionType.Add2Cards: CardManager.AddCard(cardId, level, 0); CardManager.AddCard(cardId, level, 0); break;
+            }
+            AddCardReason(mon, Frag.AddCardReason.Discover);
         }
 
         public void AddHolyWord(string word)
