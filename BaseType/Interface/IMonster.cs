@@ -66,6 +66,8 @@ namespace ConfigDatas
         bool HasBuff(int id);
         void SetToPosition(string type, int step);
         void OnMagicDamage(IMonster source, double damage, int element);
+        void OnSpellDamage(double damage, int element);
+        void OnSpellDamage(double damage, int element, double vibrate);
         void SuddenDeath();
         void Rebel();//‘Ï∑¥
         void AddMaxHp(double val);

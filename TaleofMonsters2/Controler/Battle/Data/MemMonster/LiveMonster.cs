@@ -884,9 +884,24 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void OnMagicDamage(IMonster source, double damage, int element)
         {
-            var damValue = damage *(1 - FormulaBook.GetMagDefRate(RealMag));
-            var dam = new HitDamage((int)damValue, (int)damValue, element, DamageTypes.Magic);
             lastDamagerId = source == null ? 0 : source.Id;
+            var damValue = damage * (1 - FormulaBook.GetMagDefRate(RealMag));
+            var dam = new HitDamage((int)damValue, (int)damValue, element, DamageTypes.Magic);
+            CheckMagicDamage(dam);
+            HpBar.OnDamage(dam);
+        }
+
+        public void OnSpellDamage(double damage, int element)
+        {
+            OnSpellDamage(damage, element, 0);
+        }
+
+        public void OnSpellDamage(double damage, int element, double vibrate)
+        {
+            if (vibrate > 0)
+                damage = damage*MathTool.GetRandom(1 - vibrate, 1 + vibrate);
+            var damValue = damage * (1 - FormulaBook.GetMagDefRate(RealMag));
+            var dam = new HitDamage((int)damValue, (int)damValue, element, DamageTypes.Magic);
             CheckMagicDamage(dam);
             HpBar.OnDamage(dam);
         }
