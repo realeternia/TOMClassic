@@ -229,7 +229,7 @@ namespace TaleofMonsters.Controler.Battle.Data
 
             if (Self != null)
             {
-                BattleManager.Instance.FlowWordQueue.Add(new FlowSkillInfo(SkillId, Self.Position, 0, "lime", 20, 50, ""), true);
+                BattleManager.Instance.FlowWordQueue.Add(new FlowSkillInfo(SkillId, Self.Position, 0, "lime", 20, 50, ""));
             }
         }
 

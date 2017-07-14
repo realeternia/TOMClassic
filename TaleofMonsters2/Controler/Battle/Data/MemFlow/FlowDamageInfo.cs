@@ -22,20 +22,20 @@ namespace TaleofMonsters.Controler.Battle.Data.MemFlow
             }
         }
 
-        internal override void Draw(Graphics g)
+        public override void Draw(Graphics g)
         {
-            int xOff = position.X-10;
+            int xOff = Position.X-10;
 
             if (damage.Dtype == DamageTypes.Magic)
             {
                 xOff -= 16;
-                g.DrawImage(HSIcons.GetIconsByEName("atr"+damage.Element), xOff, position.Y + 8, 18, 18);
+                g.DrawImage(HSIcons.GetIconsByEName("atr"+damage.Element), xOff, Position.Y + 8, 18, 18);
                 xOff += 16;
                 color = PaintTool.GetColorByAttribute(damage.Element);
             }
 
             Brush brush = new SolidBrush(color);
-            g.DrawString(word, font, brush, xOff, position.Y);
+            g.DrawString(word, font, brush, xOff, Position.Y);
             brush.Dispose();
         } 
     }

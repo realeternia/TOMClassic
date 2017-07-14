@@ -4,6 +4,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemFlow
 {
     internal class FlowWord
     {
+        public Point Position { get; set; }
+
         protected string word;
         protected Font font;
         protected int speedY;
@@ -11,7 +13,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemFlow
         protected int size;
         protected Color color;
         protected Point startPoint;
-        public Point position;
         protected int duration;
 
         public bool IsFinished
@@ -19,10 +20,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemFlow
             get
             {
                 duration--;
-                position = new Point(position.X + speedX, position.Y - speedY);
+                Position = new Point(Position.X + speedX, Position.Y - speedY);
                 return duration <= 0;
             }
         }
+
+        public virtual bool NoOverlap { get { return false; } }
 
         public FlowWord(string word, Point point, string color)
             : this(word, point, 0, color, 0, 0, 0, 3, 15)
@@ -43,7 +46,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemFlow
             this.speedX = speedX;
             this.speedY = speedY;
             startPoint = new Point(point.X + offX, point.Y + offY);
-            position = startPoint;
+            Position = startPoint;
             this.duration = duration;
             if (startPoint.X> 800)
             {
@@ -51,11 +54,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemFlow
             }
         }
 
-        internal virtual void Draw(Graphics g)
+        public virtual void Draw(Graphics g)
         {
             using(Brush brush = new SolidBrush(color))
             {
-                g.DrawString(word, font, brush, position.X, position.Y);
+                g.DrawString(word, font, brush, Position.X, Position.Y);
             }
         }
     }

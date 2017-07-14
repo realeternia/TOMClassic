@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace TaleofMonsters.Forms.Items.Regions
 {
-    internal class VirtualRegion
+    internal class VirtualRegion : IDisposable
     {
         public delegate void VRegionLeftEventHandler();
         public delegate void VRegionClickEventHandler(int id, int x, int y, MouseButtons button);
@@ -27,15 +28,15 @@ namespace TaleofMonsters.Forms.Items.Regions
         {
             subRegions = new Dictionary<int, SubVirtualRegion>();
             this.parent = parent;
-            parent.MouseMove+=new MouseEventHandler(parent_MouseMove);
-            parent.MouseClick+=new MouseEventHandler(parent_MouseClick);
-            parent.MouseLeave+=new System.EventHandler(parent_MouseLeave);
+            parent.MouseMove+=parent_MouseMove;
+            parent.MouseClick+=parent_MouseClick;
+            parent.MouseLeave+=parent_MouseLeave;
             Visible = true;
         }
 
         public void AddRegion(SubVirtualRegion region)
         {
-            region.Parent = parent;
+            region.SetParent(this);
             subRegions.Add(region.Id, region);
         }
 
@@ -164,6 +165,14 @@ namespace TaleofMonsters.Forms.Items.Regions
             }
         }
 
+        public void Invalidate(Rectangle region)
+        {
+            if (parent != null)
+            {
+                parent.Invalidate(region);
+            }
+        }
+
         private void parent_MouseMove(object sender, MouseEventArgs e)
         {
             CheckMouseMove(e.X, e.Y);
@@ -177,6 +186,14 @@ namespace TaleofMonsters.Forms.Items.Regions
         private void parent_MouseClick(object sender, MouseEventArgs e)
         {
             CheckMouseClick(e.Button);
+        }
+
+        public void Dispose()
+        {
+            parent.MouseMove -= parent_MouseMove;
+            parent.MouseClick -= parent_MouseClick;
+            parent.MouseLeave -= parent_MouseLeave;
+            parent = null;
         }
     }
 }

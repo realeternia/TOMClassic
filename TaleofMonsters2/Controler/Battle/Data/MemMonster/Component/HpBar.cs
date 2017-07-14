@@ -111,7 +111,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 return;
             }
             Life -= damage.Value;
-            BattleManager.Instance.FlowWordQueue.Add(new FlowDamageInfo(damage, self.CenterPosition), false);//µÙ—™œ‘ æ
+            BattleManager.Instance.FlowWordQueue.Add(new FlowDamageInfo(damage, self.CenterPosition));//µÙ—™œ‘ æ
         }
 
         public void AddHp(int val)

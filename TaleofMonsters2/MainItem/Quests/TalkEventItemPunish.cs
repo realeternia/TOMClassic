@@ -218,6 +218,11 @@ namespace TaleofMonsters.MainItem.Quests
 
             vRegion.Draw(g);
         }
+
+        public override void Dispose()
+        {
+            vRegion.Dispose();
+        }
     }
 }
 

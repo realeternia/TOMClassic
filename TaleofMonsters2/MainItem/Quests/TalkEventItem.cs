@@ -1,11 +1,12 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
 
 namespace TaleofMonsters.MainItem.Quests
 {
-    internal class TalkEventItem
+    internal class TalkEventItem : IDisposable
     {
         internal enum TalkEventState
         {
@@ -65,6 +66,11 @@ namespace TaleofMonsters.MainItem.Quests
         public virtual bool AutoClose()
         {
             return false;
+        }
+
+        public virtual void Dispose()
+        {
+
         }
     }
 }

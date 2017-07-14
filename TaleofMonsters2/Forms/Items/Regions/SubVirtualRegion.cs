@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
 using TaleofMonsters.Core.Interface;
 
 namespace TaleofMonsters.Forms.Items.Regions
@@ -18,7 +17,7 @@ namespace TaleofMonsters.Forms.Items.Regions
         protected List<IRegionDecorator> decorators;
         protected RegionState state;
 
-        public Control Parent { get; set; }
+        protected VirtualRegion parent;
 
         public SubVirtualRegion(int id, int x, int y, int width, int height)
         {
@@ -28,6 +27,11 @@ namespace TaleofMonsters.Forms.Items.Regions
             Width = width;
             Height = height;
             decorators = new List<IRegionDecorator>();
+        }
+
+        public void SetParent(VirtualRegion r)
+        {
+            parent = r;
         }
 
         public void AddDecorator(IRegionDecorator decorator)

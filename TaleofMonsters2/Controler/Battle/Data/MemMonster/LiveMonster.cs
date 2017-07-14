@@ -370,7 +370,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                             if (itemId > 0)
                             {
                                 BattleManager.Instance.StatisticData.AddItemGet(itemId);
-                                BattleManager.Instance.FlowWordQueue.Add(new FlowItemInfo(itemId, Position, 20, 50), true);
+                                BattleManager.Instance.FlowWordQueue.Add(new FlowItemInfo(itemId, Position, 20, 50));
                             }
                             UserProfile.Profile.OnKillMonster(Avatar.MonsterConfig.Star, Avatar.MonsterConfig.Type, Avatar.MonsterConfig.Type);
                         }
@@ -434,7 +434,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 SkillAssistant.CheckBurst(this, target, isMelee);
                 bool isMiss = !target.BeHited(this);
                 if (isMiss)
-                    BattleManager.Instance.FlowWordQueue.Add(new FlowWord("Miss!", new Point(Position.X + 40, Position.Y + 40), 0, "red", -10, 0), false);
+                    BattleManager.Instance.FlowWordQueue.Add(new FlowWord("Miss!", new Point(Position.X + 40, Position.Y + 40), 0, "red", -10, 0));
             }
         }
 
@@ -616,7 +616,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             if (Avatar.MonsterConfig.IsBuilding && value < 0)
             {
-                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", Position, 0, "Gold", 26, 0, 0, 1, 15), false);
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", Position, 0, "Gold", 26, 0, 0, 1, 15));
                 return;
             }
 

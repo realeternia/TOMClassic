@@ -61,11 +61,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
             if (Life == 0)
             {
                 self.Action.BreakWeapon();
-                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("装备破损", self.Position, -2, "Cyan", 26, 0, 0, -2, 15), false);
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("装备破损", self.Position, -2, "Cyan", 26, 0, 0, -2, 15));
             }
             else
             {
-                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("耐久-1", self.Position, -2, "Cyan", 26, 0, 0, -2, 15), false);
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("耐久-1", self.Position, -2, "Cyan", 26, 0, 0, -2, 15));
             }
         }
 

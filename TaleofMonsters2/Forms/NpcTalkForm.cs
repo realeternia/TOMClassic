@@ -84,8 +84,7 @@ namespace TaleofMonsters.Forms
                     Scene.Instance.OnEventFinish();
                     return;
                 }
-
-
+                
                 if (evtItem != null && evtItem.RunningState == TalkEventItem.TalkEventState.Running)
                 {
                     //事件过程中无视点击
@@ -93,7 +92,13 @@ namespace TaleofMonsters.Forms
                 }
 
                 interactBlock = answerList[tar]; //对话换页
-                evtItem = null;
+
+                if (evtItem != null)
+                {
+                    evtItem.Dispose();
+                    evtItem = null;
+                }
+           
                 if (interactBlock.Children.Count == 1 && interactBlock.Children[0] is SceneQuestSay)
                 {
                     interactBlock = interactBlock.Children[0];

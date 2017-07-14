@@ -51,18 +51,18 @@ namespace TaleofMonsters.Forms.Items.Regions
         public override void Enter()
         {
             base.Enter();
-            if (Parent != null)
+            if (parent != null)
             {
-                Parent.Invalidate(new Rectangle(X, Y, Width, Height));
+                parent.Invalidate(new Rectangle(X, Y, Width, Height));
             }
         }
 
         public override void Left()
         {
             base.Left();
-            if (Parent != null)
+            if (parent != null)
             {
-                Parent.Invalidate(new Rectangle(X, Y, Width, Height));
+                parent.Invalidate(new Rectangle(X, Y, Width, Height));
             }
         }
     }

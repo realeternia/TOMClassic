@@ -11,13 +11,13 @@ namespace TaleofMonsters.Controler.Battle.Data.MemFlow
             word = string.Format("+{0}", add);
         }
 
-        internal override void Draw(Graphics g)
+        public override void Draw(Graphics g)
         {
-            g.DrawImage(HSIcons.GetIconsByEName("oth5"), position.X, position.Y, 20, 20);
+            g.DrawImage(HSIcons.GetIconsByEName("oth5"), Position.X, Position.Y, 20, 20);
 
-            g.DrawString(word, font, Brushes.Black, position.X + 23, position.Y + 1);
+            g.DrawString(word, font, Brushes.Black, Position.X + 23, Position.Y + 1);
             Brush brush = new SolidBrush(color);
-            g.DrawString(word, font, brush, position.X + 21, position.Y);
+            g.DrawString(word, font, brush, Position.X + 21, Position.Y);
             brush.Dispose();
         } 
     }

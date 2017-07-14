@@ -223,7 +223,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             var lm =BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(killerId);
             if (lm != null)
             {
-                BattleManager.Instance.FlowWordQueue.Add(new FlowManaInfo(manas, lm.Position, 0, 40), true);
+                BattleManager.Instance.FlowWordQueue.Add(new FlowManaInfo(manas, lm.Position, 0, 40));
             }
         }
 
@@ -250,7 +250,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 {
                     addonList.Add((PlayerManaTypes)type);
                 }
-                BattleManager.Instance.FlowWordQueue.Add(new FlowManaInfo(addonList, mon.Position, 0, 40), true);
+                BattleManager.Instance.FlowWordQueue.Add(new FlowManaInfo(addonList, mon.Position, 0, 40));
             }
         }
 
@@ -385,7 +385,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             catch (Exception e)
             {
                 NLog.Warn(e);
-                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("未知错误", location, 0, "Red", 26, 0, 0, 2, 15), false);
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("未知错误", location, 0, "Red", 26, 0, 0, 2, 15));
                 return;
             }
             AfterUseCard(card);
@@ -412,7 +412,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             catch (Exception e)
             {
                 NLog.Warn(e);
-                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("未知错误", lm.Position, 0, "Red", 26, 0, 0, 2, 15), false);
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("未知错误", lm.Position, 0, "Red", 26, 0, 0, 2, 15));
                 return;
             }
             AfterUseCard(card);
@@ -439,7 +439,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             catch (Exception e)
             {
                 NLog.Warn(e);
-                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("未知错误", lm.Position, 0, "Red", 26, 0, 0, 2, 15), false);
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("未知错误", lm.Position, 0, "Red", 26, 0, 0, 2, 15));
                 return;
             }
             AfterUseCard(card);
@@ -471,7 +471,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             catch (Exception e)
             {
                 NLog.Warn(e);
-                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("未知错误", location, 0, "Red", 26, 0, 0, 2, 15),false);
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("未知错误", location, 0, "Red", 26, 0, 0, 2, 15));
                 return;
             }
             AfterUseCard(card);
@@ -581,7 +581,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect("longly"), Tower as LiveMonster, true));
             Tower.OnMagicDamage(null, Tower.MaxHp.Source / 10, (int)CardElements.None);
             BattleManager.Instance.FlowWordQueue.Add(new FlowErrInfo(noCard ? HSErrorTypes.CardOutPunish :
-                HSErrorTypes.CardFullPunish, Tower.Position, 0, 3), false);
+                HSErrorTypes.CardFullPunish, Tower.Position, 0, 3));
         }
 
         public virtual List<int> GetInitialMonster()

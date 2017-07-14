@@ -52,7 +52,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             {
                 BattleManager.Instance.StatisticData.AddItemGet(itemId);
                 UserProfile.InfoBag.AddItem(itemId, 1);
-                BattleManager.Instance.FlowWordQueue.Add(new FlowItemInfo(itemId, self.Position, 20, 50), true);
+                BattleManager.Instance.FlowWordQueue.Add(new FlowItemInfo(itemId, self.Position, 20, 50));
             }
         }
 
@@ -60,7 +60,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         {
             if (self.Avatar.MonsterConfig.IsBuilding)
             {
-                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15), false);
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15));
                 return;
             }
 
@@ -89,7 +89,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         {
             if (self.Avatar.MonsterConfig.IsBuilding)
             {
-                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15), false);
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15));
                 return;
             }
 
@@ -226,7 +226,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         {
             if (self.Avatar.MonsterConfig.IsBuilding)
             {
-                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15), false);
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15));
                 return;
             }
 
@@ -242,7 +242,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         {
             if (self.Avatar.MonsterConfig.IsBuilding)
             {
-                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15), false);
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15));
                 return;
             }
             self.HpBar.SetHp(0);
@@ -252,7 +252,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         {
             if (self.Avatar.MonsterConfig.IsBuilding)
             {
-                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15), false);
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15));
                 return;
             }
             self.IsLeft = !self.IsLeft;

@@ -7,7 +7,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
 {
     internal class FlowWordQueue
     {
-        List<FlowWord> queue = new List<FlowWord>();
+        private List<FlowWord> queue = new List<FlowWord>();
         private bool isFast;
 
         #region 模仿数组迭代
@@ -22,22 +22,22 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             get { return queue.Count; }
         }
 
-        public void Add(FlowWord flowWord, bool needCheck)
+        public void Add(FlowWord flowWord)
         {
             if (isFast)
             {
                 return;
             }
 
-            if (needCheck)
+            if (flowWord.NoOverlap)
             {
                 foreach (FlowWord word in queue)
                 {
-                    if (word is FlowSkillInfo)
+                    if (word.NoOverlap)
                     {
-                        if (Math.Abs(word.position.X - flowWord.position.X) < 50 && Math.Abs(word.position.Y - flowWord.position.Y) < 20)
+                        if (Math.Abs(word.Position.X - flowWord.Position.X) < 50 && Math.Abs(word.Position.Y - flowWord.Position.Y) < 20)
                         {
-                            flowWord.position = new Point(flowWord.position.X, word.position.Y + 20);
+                            flowWord.Position = new Point(flowWord.Position.X, word.Position.Y + 20);
                         }
                     }
                 }

@@ -75,16 +75,25 @@ namespace NarlonLib.Core
         private DateTime lastTime;
         private readonly float interval;
 
+        public double PastSeconds { get; set; }
+
         public TimeCounter(float interval)
         {
             this.interval = interval;
             lastTime = TimeTool.GetNowDateTime();
         }
 
+        public void SetNow()
+        {
+            lastTime = DateTime.Now;
+        }
+
+
         public bool OnTick()
         {
             if (TimeTool.GetNowDateTime().Subtract(lastTime).TotalSeconds > interval)
             {
+                PastSeconds = (DateTime.Now - lastTime).TotalSeconds;
                 lastTime = TimeTool.GetNowDateTime();
                 return true;
             }
