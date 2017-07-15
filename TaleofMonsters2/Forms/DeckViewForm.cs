@@ -62,7 +62,7 @@ namespace TaleofMonsters.Forms
         private bool show;
         private int floor;
 
-        private bool isShowStatistic = true; //默认显示carddetail
+        private bool isShowStatistic = false; //默认显示carddetail
 
         private CardDetail cardDetail;
         private CardDeckStatistic deckStatistic; 

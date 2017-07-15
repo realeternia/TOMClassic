@@ -273,6 +273,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             SetBasicData();
             HpBar.SetHp(Avatar.Hp);
             MonsterCoverBox = new MonsterCoverBox(this);
+            Action = new MonsterAction(this);
         }
 
         public void SetBasicData()
