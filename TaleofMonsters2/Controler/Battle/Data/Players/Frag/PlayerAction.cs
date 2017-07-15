@@ -194,6 +194,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             self.SpecialAttr.SpellEffectAddon += rate;
         }
 
+        public void AddSpellVibrate(double rate)
+        {
+            self.SpecialAttr.SpellVibrate += rate;
+        }
+
         public void AddSpike(int id)
         {
             self.SpikeManager.AddSpike(id);

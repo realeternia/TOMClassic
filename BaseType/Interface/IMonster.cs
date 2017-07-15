@@ -5,7 +5,7 @@ namespace ConfigDatas
         int Id{get;}
         int Star { get; }
         int Level { get; }
-        int CardId{get;}
+        int CardId { get; }
         void AddHp(double addon);
         void AddHpRate(double value);
         double HpRate{get;}
@@ -15,12 +15,12 @@ namespace ConfigDatas
         IPlayer Owner{get;}
         IPlayer Rival { get; }
         bool IsDefence { get; }
-        System.Drawing.Point Position{get;set;}
+        System.Drawing.Point Position{get;}
         IMap Map { get; }
         IMonsterAction Action { get; }
         bool IsLeft { get; }
-		
-        AttrModifyData Atk{get;set;}
+
+        AttrModifyData Atk { get; set; }
         AttrModifyData MaxHp { get; set; }
 
         AttrModifyData Def { get; set; }

@@ -32,5 +32,6 @@
         void AddSpellRowMissile(ISpell spell, int count, System.Drawing.Point mouse, string effect);
 
         void AddSpellEffect(double rate);
+        void AddSpellVibrate(double rate);
     }
 }

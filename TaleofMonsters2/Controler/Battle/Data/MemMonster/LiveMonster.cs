@@ -664,7 +664,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public void OnSpellDamage(double damage, int element, double vibrate)
         {
             if (vibrate > 0)
-                damage = damage * MathTool.GetRandom(1 - vibrate, 1 + vibrate);
+            {
+                var vAddon = OwnerPlayer.SpecialAttr.SpellVibrate;
+                damage = damage*(1 + MathTool.GetRandom(-vibrate + vAddon*vibrate*2, vibrate));
+            }
             var damValue = damage * (1 - FormulaBook.GetMagDefRate(RealMag));
             var dam = new HitDamage((int)damValue, (int)damValue, element, DamageTypes.Magic);
             CheckMagicDamage(dam);
