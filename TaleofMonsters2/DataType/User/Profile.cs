@@ -26,6 +26,8 @@ namespace TaleofMonsters.DataType.User
         public InfoFarm InfoFarm;
         [FieldIndex(Index = 10)]
         public InfoEquip InfoEquip;
+        [FieldIndex(Index = 11)]
+        public InfoQuest InfoQuest;
         [FieldIndex(Index = 12)]
         public InfoRecord InfoRecord;
         [FieldIndex(Index = 13)]
@@ -41,6 +43,7 @@ namespace TaleofMonsters.DataType.User
             InfoCard = new InfoCard();
             InfoRival=new InfoRival();
             InfoFarm=new InfoFarm();
+            InfoQuest=new InfoQuest();
             InfoRecord=new InfoRecord();
             InfoAchieve=new InfoAchieve();
             InfoWorld = new InfoWorld();
