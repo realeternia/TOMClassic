@@ -302,7 +302,6 @@
     <Compile Include="DataType\User\InfoCard.cs" />
     <Compile Include="DataType\User\InfoEquip.cs" />
     <Compile Include="DataType\User\InfoFarm.cs" />
-    <Compile Include="DataType\User\InfoQuest.cs" />
     <Compile Include="DataType\User\InfoRecord.cs" />
     <Compile Include="DataType\User\InfoRival.cs" />
     <Compile Include="DataType\User\Db\DbMergeData.cs" />
@@ -982,10 +981,6 @@
       <SubType>Designer</SubType>
       <DependentUpon>NpcTalkForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\QuestForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>QuestForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controler\Battle\Components\TimeViewer.resx">
       <SubType>Designer</SubType>
       <DependentUpon>TimeViewer.cs</DependentUpon>
@@ -1034,12 +1029,6 @@
     </Compile>
     <Compile Include="Forms\NpcTalkForm.Designer.cs">
       <DependentUpon>NpcTalkForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\QuestForm.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Forms\QuestForm.Designer.cs">
-      <DependentUpon>QuestForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DataType\Others\TileBook.cs" />
     <Compile Include="Controler\Battle\Components\TimeViewer.cs">

@@ -39,11 +39,6 @@ namespace TaleofMonsters.DataType.User
             get { return Profile.InfoRecord; }
         }
 
-        public static InfoQuest InfoQuest
-        {
-            get { return Profile.InfoQuest; }
-        }
-
         public static InfoWorld InfoWorld
         {
             get { return Profile.InfoWorld; }

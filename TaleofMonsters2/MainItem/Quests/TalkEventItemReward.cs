@@ -149,10 +149,6 @@ namespace TaleofMonsters.MainItem.Quests
                     UserProfile.InfoRecord.SetFlag(flagKey);
                 }
             }
-            if (config.QuestId > 0)
-            {
-                UserProfile.InfoQuest.SetQuest(config.QuestId);
-            }
         }
 
         private void RewardBless(ref int index)

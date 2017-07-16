@@ -52,18 +52,6 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
                 Disabled = !UserProfile.InfoRecord.CheckFlag(
                         (uint) (MemPlayerFlagTypes) Enum.Parse(typeof (MemPlayerFlagTypes), parms[1]));
             }
-            else if (parms[0] == "questno")
-            {
-                Disabled = UserProfile.InfoQuest.IsQuestFinish(config.QuestNeed);
-            }
-            else if (parms[0] == "quest")
-            {
-                Disabled = !UserProfile.InfoQuest.IsQuestFinish(config.QuestNeed);
-            }
-            else if (parms[0] == "questeq")
-            {
-                Disabled = UserProfile.InfoQuest.QuestId != config.QuestNeed;
-            }
             else if (parms[0] == "rivalavail")
             {
                 Disabled = !UserProfile.InfoRival.GetRivalState(config.EnemyId).Avail;
