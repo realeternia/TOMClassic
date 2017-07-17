@@ -53,7 +53,6 @@ namespace TaleofMonsters.DataType.User
         {
             if (File.Exists(string.Format("./Save/{0}.db", passport)))
             {
-                Profile = new Profile();
                 FileStream fs = new FileStream(string.Format("./Save/{0}.db", passport), FileMode.Open);
                 byte[] dts = new byte[fs.Length];
                 fs.Read(dts, 0, dts.Length);

@@ -140,7 +140,6 @@
         public const int MapSetting = 2;
         public const int Hidden = 3;
     }
-
     internal enum RegionTypes
     {
         None = 0,
@@ -152,6 +151,12 @@
         MultiColumn = 6,
         Grid = 7,
         All = 9,
+    };
+
+    internal enum QuestTypes
+    {
+        None = 0,
+        Kill = 1,
     };
 
     internal enum GameResourceType

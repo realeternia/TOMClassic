@@ -97,12 +97,12 @@ namespace TaleofMonsters.Forms
             virtualRegion.SetRegionKey(2, 0);
             virtualRegion.SetRegionKey(3, 0);
 
-            if (!string.IsNullOrEmpty(questConfig.Quest1))
-                virtualRegion.SetRegionKey(1, SceneBook.GetSceneQuestByName(questConfig.Quest1));
-            if (!string.IsNullOrEmpty(questConfig.Quest2))
-                virtualRegion.SetRegionKey(2, SceneBook.GetSceneQuestByName(questConfig.Quest2));
-            if (!string.IsNullOrEmpty(questConfig.Quest3))
-                virtualRegion.SetRegionKey(3, SceneBook.GetSceneQuestByName(questConfig.Quest3));
+//            if (!string.IsNullOrEmpty(questConfig.Quest1))
+//                virtualRegion.SetRegionKey(1, SceneBook.GetSceneQuestByName(questConfig.Quest1));
+//            if (!string.IsNullOrEmpty(questConfig.Quest2))
+//                virtualRegion.SetRegionKey(2, SceneBook.GetSceneQuestByName(questConfig.Quest2));
+//            if (!string.IsNullOrEmpty(questConfig.Quest3))
+//                virtualRegion.SetRegionKey(3, SceneBook.GetSceneQuestByName(questConfig.Quest3));
             
             Invalidate();
         }
@@ -142,21 +142,21 @@ namespace TaleofMonsters.Forms
 
             string sceneQuestId = "";
             string subContext = "";
-            if (id ==1)
-            {
-                sceneQuestId = questConfig.Quest1;
-                subContext = questConfig.SubDescript1;
-            }
-            if (id == 2)
-            {
-                sceneQuestId = questConfig.Quest2;
-                subContext = questConfig.SubDescript2;
-            }
-            if (id == 3)
-            {
-                sceneQuestId = questConfig.Quest3;
-                subContext = questConfig.SubDescript3;
-            }
+//            if (id ==1)
+//            {
+//                sceneQuestId = questConfig.Quest1;
+//                subContext = questConfig.SubDescript1;
+//            }
+//            if (id == 2)
+//            {
+//                sceneQuestId = questConfig.Quest2;
+//                subContext = questConfig.SubDescript2;
+//            }
+//            if (id == 3)
+//            {
+//                sceneQuestId = questConfig.Quest3;
+//                subContext = questConfig.SubDescript3;
+//            }
             if (!string.IsNullOrEmpty(sceneQuestId))
             {
                 var name = ConfigData.GetSceneQuestConfig(SceneBook.GetSceneQuestByName(sceneQuestId)).Name;
