@@ -271,7 +271,7 @@ namespace TaleofMonsters.Controler.Battle
             }
             catch (Exception err)
             {
-                NarlonLib.Log.NLog.Error("panelBattle_Paint" + err);
+                NarlonLib.Log.NLog.Error("panelBattle_Paint " + err);
             }
 
             e.Graphics.DrawImageUnscaled(bmp, 0, 0);

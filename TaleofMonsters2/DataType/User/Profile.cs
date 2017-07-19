@@ -182,11 +182,13 @@ namespace TaleofMonsters.DataType.User
             int inter = TimeTool.DateTimeToUnixTime(DateTime.Now) - InfoBasic.LastLoginTime;
             InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalOnline, inter / 60);
             InfoBasic.LastLoginTime = TimeTool.DateTimeToUnixTime(DateTime.Now);
+            InfoQuest.OnLogout();
         }
 
         public void OnSwitchScene()
         {
             InfoEquip.CheckExpireAndDura(true);
+            InfoQuest.OnSwitchScene();
             UserProfile.SaveToDB();//每次切场景存个档
         }
 

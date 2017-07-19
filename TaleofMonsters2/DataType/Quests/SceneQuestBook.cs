@@ -5,6 +5,7 @@ using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.User.Db;
@@ -123,15 +124,13 @@ namespace TaleofMonsters.DataType.Quests
 
         private static bool IsQuestFlagAvail(SceneQuestConfig questConfig)
         {
-            if (!String.IsNullOrEmpty(questConfig.TriggerFlagExist))
+            if (!string.IsNullOrEmpty(questConfig.TriggerFlagExist))
             {
-                return UserProfile.InfoRecord.CheckFlag(
-                    (uint)(MemPlayerFlagTypes)Enum.Parse(typeof(MemPlayerFlagTypes), questConfig.TriggerFlagExist));
+                return QuestBook.HasFlag(questConfig.TriggerFlagExist);
             }
-            if (!String.IsNullOrEmpty(questConfig.TriggerFlagNoExist))
+            if (!string.IsNullOrEmpty(questConfig.TriggerFlagNoExist))
             {
-                return !UserProfile.InfoRecord.CheckFlag(
-                    (uint)(MemPlayerFlagTypes)Enum.Parse(typeof(MemPlayerFlagTypes), questConfig.TriggerFlagNoExist));
+                return !QuestBook.HasFlag(questConfig.TriggerFlagNoExist);
             }
             return true;
         }

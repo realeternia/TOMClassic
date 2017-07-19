@@ -11,7 +11,6 @@ using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using ConfigDatas;
-using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.MainItem;
@@ -91,7 +90,7 @@ namespace TaleofMonsters.Forms
             RefreshEquip();
             show = true;
 
-            bitmapButtonJob.Visible = UserProfile.InfoRecord.CheckFlag((uint) MemPlayerFlagTypes.SelectJob);
+            bitmapButtonJob.Visible = QuestBook.HasFlag("selectjob");
         }
 
         private void pictureBoxClose_Click(object sender, EventArgs e)

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User.Db;
 
@@ -29,6 +30,32 @@ namespace TaleofMonsters.DataType.User
             //    return;
             //}
             //QuestId = qid;
+        }
+
+        public void OnSwitchScene()
+        {
+            ResetQuest();
+        }
+        public void OnLogout()
+        {
+            ResetQuest();
+        }
+
+        private void ResetQuest()
+        {
+            var resetList = new List<int>();
+            foreach (var dbQuestData in QuestRunning)
+            {
+                var questConfig = ConfigData.GetQuestConfig(dbQuestData.QuestId);
+                if (questConfig.ResetOnLeave)
+                {
+                    resetList.Add(questConfig.Id);
+                }
+            }
+            foreach (var questId in resetList)
+            {
+                QuestRunning.RemoveAll(quest => questId == quest.QuestId);
+            }
         }
     }
 }

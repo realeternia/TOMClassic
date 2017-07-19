@@ -245,14 +245,4 @@
         SceneQuestRandPeopleId = 1101,
         DungeonQuestOffside = 1102,
     }
-
-    internal enum MemPlayerFlagTypes
-    {
-        SelectJob=1,
-        Qiaqia,
-        Aolai,
-        Qiongqi,
-        AolaiFight,
-        Kedi
-    }
 }

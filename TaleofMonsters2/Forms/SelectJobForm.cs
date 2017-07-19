@@ -13,6 +13,7 @@ using TaleofMonsters.DataType.Items;
 using TaleofMonsters.Forms.Items.Core;
 using ConfigDatas;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType.Others;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
 using TaleofMonsters.DataType.User;
@@ -105,7 +106,7 @@ namespace TaleofMonsters.Forms
             }
             cellTypeList.Clear();
 
-            if (!UserProfile.Profile.InfoRecord.CheckFlag((uint)MemPlayerFlagTypes.SelectJob))
+            if (!QuestBook.HasFlag("selectjob"))
             {
 #region 显示第一次选职业的奖励
                 int imgIndex = 2;
@@ -262,14 +263,13 @@ namespace TaleofMonsters.Forms
             if (jobConfig.IsSpecial || jobConfig.InitialLocked && !UserProfile.Profile.InfoBasic.AvailJobList.Contains(selectJobId))
                 return;
 
-            if (UserProfile.InfoRecord.CheckFlag((uint)MemPlayerFlagTypes.SelectJob))
+            if (QuestBook.HasFlag("selectjob"))
             {//转职
                 UserProfile.InfoBasic.Job = selectJobId;
             }
             else
             {//第一次选职业
                 UserProfile.InfoBasic.Job = selectJobId;
-                UserProfile.InfoRecord.SetFlag((uint)MemPlayerFlagTypes.SelectJob);
                 SendJobReward();
             }
 

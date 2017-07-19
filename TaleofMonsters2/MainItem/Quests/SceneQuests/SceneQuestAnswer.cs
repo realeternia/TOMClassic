@@ -44,13 +44,11 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
 
             if (parms[0] == "flagno")
             {
-                Disabled = UserProfile.InfoRecord.CheckFlag(
-                        (uint) (MemPlayerFlagTypes) Enum.Parse(typeof (MemPlayerFlagTypes), parms[1]));
+                Disabled = QuestBook.HasFlag(parms[1]);
             }
             else if (parms[0] == "flag")
             {
-                Disabled = !UserProfile.InfoRecord.CheckFlag(
-                        (uint) (MemPlayerFlagTypes) Enum.Parse(typeof (MemPlayerFlagTypes), parms[1]));
+                Disabled = !QuestBook.HasFlag(parms[1]);
             }
             else if (parms[0] == "rivalavail")
             {
