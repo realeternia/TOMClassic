@@ -19,6 +19,29 @@ namespace TaleofMonsters.DataType.User
             QuestFinish = new List<int>();
         }
 
+        public bool IsQuestCanReceive(int qid)
+        {
+            if (QuestFinish.Contains(qid))
+            {
+                return false;
+            }
+            if (QuestRunning.Find(q => q.QuestId == qid) != null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool IsQuestCanReward(int qid)
+        {
+            var questData = QuestRunning.Find(q => q.QuestId == qid);
+            if (questData != null)
+            {
+                return questData.State == (int)QuestStates.Accomplish;
+            }
+            return false;
+        }
+
         public bool IsQuestFinish(int qid)
         {
             return QuestFinish.Contains(qid);

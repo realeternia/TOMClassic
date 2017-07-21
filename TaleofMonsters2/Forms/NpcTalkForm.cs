@@ -134,12 +134,29 @@ namespace TaleofMonsters.Forms
                 answerList.Add(sceneQuestBlock);
             }
 
-            foreach (var questConfig in ConfigData.QuestDict.Values)
+            if (interactBlock!=null && interactBlock.Depth==0)
             {
-                if (!UserProfile.InfoQuest.IsQuestFinish(questConfig.Id) && questConfig.NpcId == EventId)
+                foreach (var questConfig in ConfigData.QuestDict.Values)
                 {
-                    SceneQuestBlock block = new SceneQuestBlock(EventId, eventLevel, questConfig.Name, 1, 888);
-                    answerList.Add(block);
+                    if (questConfig.NpcId != EventId)
+                        continue;
+
+                    if (!UserProfile.InfoQuest.IsQuestCanReceive(questConfig.Id))
+                    {
+                        var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockquest");
+                        questBlock.Script = questConfig.Name;
+                        questBlock.Prefix = "quest";
+                        questBlock.Children[0].Script = questConfig.Descript;
+                        (questBlock.Children[0].Children[0].Children[0] as SceneQuestEvent).ParamList[0] = questConfig.Id.ToString();
+                        answerList.Add(questBlock);
+                    }
+                    if (!UserProfile.InfoQuest.IsQuestCanReward(questConfig.Id))
+                    {
+                        var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockquestfin");
+                        questBlock.Script = questConfig.Name;
+                        questBlock.Prefix = "questfin";
+                        answerList.Add(questBlock);
+                    }
                 }
             }
         }
@@ -181,10 +198,9 @@ namespace TaleofMonsters.Forms
                         if (!string.IsNullOrEmpty(word.Prefix))
                         {
                             string icon = "";
-                            if (word.Prefix.StartsWith("quest"))
-                                icon = "npc5";
-                            if (word.Prefix.StartsWith("rival"))
-                                icon = "tsk1";
+                            if (word.Prefix.StartsWith("quest")) icon = "npc1";
+                            else if (word.Prefix.StartsWith("questfin")) icon = "npc3";
+                            else if (word.Prefix.StartsWith("rival")) icon = "tsk1";
                             if (icon != "")
                             {
                                 e.Graphics.DrawImage(HSIcons.GetIconsByEName(icon), textOff, id * 20 + Height - 10 - answerList.Count * 20 + 2, 18, 18);
