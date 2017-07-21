@@ -2,6 +2,7 @@
 using ConfigDatas;
 using TaleofMonsters.Controler.Battle;
 using TaleofMonsters.Controler.Battle.Tool;
+using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.User;
@@ -113,7 +114,7 @@ namespace TaleofMonsters.Controler.GM
                     case "bls": if (data.Length == 2)
                         BlessManager.AddBless(int.Parse(data[1]), 10); break;
                     case "qst":if (data.Length == 2)
-                        UserProfile.InfoQuest.SetQuest(int.Parse(data[1])); break;
+                        UserProfile.InfoQuest.SetQuestState(int.Parse(data[1]), QuestStates.Receive); break;
                 }
             }
             catch (FormatException) { }

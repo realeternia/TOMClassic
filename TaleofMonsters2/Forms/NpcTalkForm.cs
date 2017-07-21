@@ -133,6 +133,15 @@ namespace TaleofMonsters.Forms
                     continue;
                 answerList.Add(sceneQuestBlock);
             }
+
+            foreach (var questConfig in ConfigData.QuestDict.Values)
+            {
+                if (!UserProfile.InfoQuest.IsQuestFinish(questConfig.Id) && questConfig.NpcId == EventId)
+                {
+                    SceneQuestBlock block = new SceneQuestBlock(EventId, eventLevel, questConfig.Name, 1, 888);
+                    answerList.Add(block);
+                }
+            }
         }
 
         private void NpcTalkForm_Paint(object sender, PaintEventArgs e)

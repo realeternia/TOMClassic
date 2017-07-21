@@ -42,15 +42,7 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
             string[] parms = info.Split('-');
             var config = ConfigData.GetSceneQuestConfig(eventId);
 
-            if (parms[0] == "flagno")
-            {
-                Disabled = QuestBook.HasFlag(parms[1]);
-            }
-            else if (parms[0] == "flag")
-            {
-                Disabled = !QuestBook.HasFlag(parms[1]);
-            }
-            else if (parms[0] == "rivalavail")
+            if (parms[0] == "rivalavail")
             {
                 Disabled = !UserProfile.InfoRival.GetRivalState(config.EnemyId).Avail;
             }

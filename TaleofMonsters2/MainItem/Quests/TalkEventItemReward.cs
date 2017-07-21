@@ -143,10 +143,9 @@ namespace TaleofMonsters.MainItem.Quests
         {
             if (!string.IsNullOrEmpty(config.Flag))
             {
-                var flagKey = (uint) (MemPlayerFlagTypes) Enum.Parse(typeof (MemPlayerFlagTypes), config.Flag);
-                if (!UserProfile.InfoRecord.CheckFlag(flagKey))
+                if (!QuestBook.HasFlag(config.Flag))
                 {
-                    UserProfile.InfoRecord.SetFlag(flagKey);
+                    QuestBook.SetFlag(config.Flag);
                 }
             }
         }
