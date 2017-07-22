@@ -121,7 +121,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             var selectCard = self.CardManager.GetDeckCardAt(self.SelectId);
             if (selectCard == null)
             {
-                NLog.Error(string.Format("RecostSelectCard id={0} not Found", self.SelectId));
+                NLog.Error("RecostSelectCard id={0} not Found", self.SelectId);
                 return;
             }
             self.AddMp(-selectCard.Mp);

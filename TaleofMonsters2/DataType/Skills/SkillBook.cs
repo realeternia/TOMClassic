@@ -56,7 +56,7 @@ namespace TaleofMonsters.DataType.Skills
                 Image image = PicLoader.Read("Skill", string.Format("{0}.JPG", skillConfig.Icon));
                 if (image == null)
                 {
-                    NLog.Error(string.Format("GetSkillImage {0} {1} not found", id, fname));
+                    NLog.Error("GetSkillImage {0} {1} not found", id, fname);
                     return null;
                 }
 

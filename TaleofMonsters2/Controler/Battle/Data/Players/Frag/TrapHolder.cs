@@ -73,7 +73,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                     if (self.Mp >= trapConfig.ManaCost && trapConfig.EffectUse(self, rival, trap, selectCard.CardId, (int)selectCard.CardType))
                     {
                         RemoveTrap(trap, trapConfig);
-                        NLog.Debug(string.Format("RemoveTrap UseCard id={0} cardId={1}", trap.Id, selectCard.CardId));
+                        NLog.Debug("RemoveTrap UseCard id={0} cardId={1}", trap.Id, selectCard.CardId);
                         BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(trapConfig.UnitEffect), location, false));
 
                         return true;
@@ -94,7 +94,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                     if (self.Mp >= trapConfig.ManaCost && trapConfig.EffectSummon(self, rival, trap, mon, trap.Level))
                     {
                         RemoveTrap(trap, trapConfig);
-                        NLog.Debug(string.Format("RemoveTrap Summon id={0} cardId={1}", trap.Id, mon.Id));
+                        NLog.Debug("RemoveTrap Summon id={0} cardId={1}", trap.Id, mon.Id);
                         BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(trapConfig.UnitEffect), mon as LiveMonster, false));
                         return;
                     }

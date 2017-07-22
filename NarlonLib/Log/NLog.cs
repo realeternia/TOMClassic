@@ -16,6 +16,8 @@ namespace NarlonLib.Log
         private static string remoteIP = "";
         private static int remotePort;
 
+        private static string name = "HS";
+
         private static string format = "[%d{yyyy-MM-dd HH:mm:ss,fff}][%-5level][%c]%message%newline";
 
         public static void Start(LogTargets target) //server remote mode will be set auto when use SetRemote
@@ -74,20 +76,19 @@ namespace NarlonLib.Log
             BasicConfigurator.Configure(appenders.ToArray());
         }
 
-        public delegate void NLog4NetLogEventHandler(string name, object message);
-
         public static NLog4NetLogEventHandler CustomDebug;
         public static NLog4NetLogEventHandler CustomError;
         public static NLog4NetLogEventHandler CustomFatal;
         public static NLog4NetLogEventHandler CustomInfo;
         public static NLog4NetLogEventHandler CustomWarn;
 
-        public static void Debug(object message)
+        public static void Debug(object message, params object[] args)
         {
-            Debug("HS", message);
+            var outputText = args == null ? message.ToString() : string.Format(message.ToString(), args);
+            Debug(outputText);
         }
 
-        private static void Debug(string name, object message)
+        private static void Debug(object message)
         {
             LogManager.GetLogger(name).Debug(message);
             if (((type & LogTargets.Custom) != 0) && CustomDebug != null)
@@ -96,12 +97,13 @@ namespace NarlonLib.Log
             }
         }
 
-        public static void Error(object message)
+        public static void Error(object message, params object[] args)
         {
-            Error("HS", message);
+            var outputText = args == null ? message.ToString() : string.Format(message.ToString(), args);
+            Error(outputText);
         }
 
-        private static void Error(string name, object message)
+        private static void Error(object message)
         {
             LogManager.GetLogger(name).Error(message);
             if (((type & LogTargets.Custom) != 0) && CustomError != null)
@@ -110,40 +112,13 @@ namespace NarlonLib.Log
             }
         }
 
-        public static void Fatal(object message)
+        public static void Warn(object message, params object[] args)
         {
-            Fatal("HS", message);
+            var outputText = args == null ? message.ToString() : string.Format(message.ToString(), args);
+            Warn(outputText);
         }
 
-        private static void Fatal(string name, object message)
-        {
-            LogManager.GetLogger(name).Fatal(message);
-            if (((type & LogTargets.Custom) != 0) && CustomFatal != null)
-            {
-                CustomFatal(name, message);
-            }
-        }
-
-        public static void Info(object message)
-        {
-            Info("HS", message);
-        }
-
-        private static void Info(string name, object message)
-        {
-            LogManager.GetLogger(name).Info(message);
-            if (((type & LogTargets.Custom) != 0) && CustomInfo != null)
-            {
-                CustomInfo(name, message);
-            }
-        }
-
-        public static void Warn(object message)
-        {
-            Warn("HS", message);
-        }
-
-        private static void Warn(string name, object message)
+        private static void Warn(object message)
         {
             LogManager.GetLogger(name).Warn(message);
             if (((type & LogTargets.Custom) != 0) && CustomWarn != null)
@@ -162,4 +137,6 @@ namespace NarlonLib.Log
         Custom = 8,
         All = ServerConsole | ServerRemote | File
     }
+
+    public delegate void NLog4NetLogEventHandler(string name, object message);
 }

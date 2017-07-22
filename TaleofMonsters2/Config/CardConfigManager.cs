@@ -56,7 +56,7 @@ namespace TaleofMonsters.Config
                 {
                     if (dataList[i].Value >= qualityIndex.Length)
                     {
-                        NLog.Debug(string.Format("EndInit invalide quality id={0}", dataList[i].Type));
+                        NLog.Debug("EndInit invalide quality id={0}", dataList[i].Type);
                         continue;
                     }
 

@@ -20,7 +20,7 @@ namespace TaleofMonsters.Controler.Loader
                 }
                 catch
                 {
-                    NarlonLib.Log.NLog.Error(string.Format("DataLoader.Read error {0}.{1}", dir, path));
+                    NarlonLib.Log.NLog.Error("DataLoader.Read error {0}.{1}", dir, path);
                 }
             }
             catch

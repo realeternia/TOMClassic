@@ -56,7 +56,7 @@ namespace TaleofMonsters.DataType.Cards.Spells
                 Image image = PicLoader.Read("Spell", string.Format("{0}.JPG", spellConfig.Icon));
                 if (image == null)
                 {
-                    NLog.Error(string.Format("GetWeaponImage {0} {1} not found", id, fname));
+                    NLog.Error("GetWeaponImage {0} {1} not found", id, fname);
                     return null;
                 }
 #if DEBUG

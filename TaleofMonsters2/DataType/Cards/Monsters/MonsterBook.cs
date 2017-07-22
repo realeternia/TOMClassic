@@ -94,7 +94,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
                 Image image = PicLoader.Read("Monsters", string.Format("{0}.JPG", monsterConfig.Icon));
                 if (image == null)
                 {
-                    NLog.Error(string.Format("GetMonsterImage {0} {1} not found",id, fname));
+                    NLog.Error("GetMonsterImage {0} {1} not found",id, fname);
                     return null;
                 }
 #if DEBUG

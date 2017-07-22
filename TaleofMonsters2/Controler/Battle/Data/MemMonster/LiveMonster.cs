@@ -456,7 +456,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             if (!CanAddWeapon())
             {
-                NLog.Warn(string.Format("AddWeapon to building {0}", Avatar.Id));
+                NLog.Warn("AddWeapon to building {0}", Avatar.Id);
                 return;
             }
 

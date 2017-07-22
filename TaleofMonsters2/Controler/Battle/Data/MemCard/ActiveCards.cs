@@ -69,7 +69,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
 
             if (CardConfigManager.GetCardConfig(cards[rt].CardId).Id == 0)
             {//卡牌配置可能已经过期，用下一个卡
-                NarlonLib.Log.NLog.Warn(string.Format("card is outofdate id={0}", cards[rt].CardId));
+                NarlonLib.Log.NLog.Warn("card is outofdate id={0}", cards[rt].CardId);
                 return GetNextCard();
             }
 
