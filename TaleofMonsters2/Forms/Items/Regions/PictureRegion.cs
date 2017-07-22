@@ -160,6 +160,6 @@ namespace TaleofMonsters.Forms.Items.Regions
         CardQual,
         Job,
         Bless,
-        SceneQuest
+        SceneQuest,
     }
 }

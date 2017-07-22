@@ -1,6 +1,6 @@
 ﻿a任务名
 	s任务描述
 		a接受
-			equest
+			equest|123
 		a取消
 			end

@@ -19,6 +19,13 @@ namespace TaleofMonsters.DataType.User
             QuestFinish = new List<int>();
         }
 
+        public bool IsQuestNotReceive(int qid)
+        {
+            var questRun = QuestRunning.Find(q => q.QuestId == qid);
+            var questFin = QuestFinish.Find(q => q == qid);
+            return questFin <= 0 && questRun == null;
+        }
+
         public bool IsQuestCanReceive(int qid)
         {
             if (QuestFinish.Contains(qid))
@@ -59,11 +66,13 @@ namespace TaleofMonsters.DataType.User
             var questFin = QuestFinish.Find(q => q == qid);
             if (state == QuestStates.Receive)
             {
-                if (questRun != null && questFin > 0)
+                if (questRun == null && questFin <= 0)
                 {
-                    var questData = new DbQuestData();
-                    questData.QuestId = qid;
-                    questData.State = (byte)QuestStates.Receive;
+                    var questData = new DbQuestData
+                    {
+                        QuestId = qid,
+                        State = (byte) QuestStates.Receive
+                    };
                     QuestRunning.Add(questData);
                 }
             }

@@ -19,6 +19,8 @@ namespace TaleofMonsters.Forms.Items.Regions
 
         protected VirtualRegion parent;
 
+        private int keyId;
+
         public SubVirtualRegion(int id, int x, int y, int width, int height)
         {
             Id = id;
@@ -49,11 +51,12 @@ namespace TaleofMonsters.Forms.Items.Regions
 
         public virtual void SetKeyValue(int value)
         {
+            keyId = value;
         }
 
         public virtual int GetKeyValue()
         {
-            return 0;
+            return keyId;
         }
 
         public void SetDecorator(int idx, object value)//ÉèÖÃ×Ó×°ÊÎÆ÷×´Ì¬

@@ -43,7 +43,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonClose.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonClose.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonClose.ImageNormal = null;
-            this.bitmapButtonClose.Location = new System.Drawing.Point(701, 19);
+            this.bitmapButtonClose.Location = new System.Drawing.Point(434, 25);
             this.bitmapButtonClose.Name = "bitmapButtonClose";
             this.bitmapButtonClose.NoUseDrawNine = false;
             this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
@@ -57,15 +57,15 @@ namespace TaleofMonsters.Forms
             this.comboBoxType.BackColor = System.Drawing.Color.Black;
             this.comboBoxType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.comboBoxType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxType.Font = new System.Drawing.Font("宋体", 9F);
+            this.comboBoxType.Font = new System.Drawing.Font("SimSun", 9F);
             this.comboBoxType.ForeColor = System.Drawing.SystemColors.Window;
             this.comboBoxType.FormattingEnabled = true;
             this.comboBoxType.Items.AddRange(new object[] {
             "第一章",
             "第二章"});
-            this.comboBoxType.Location = new System.Drawing.Point(22, 48);
+            this.comboBoxType.Location = new System.Drawing.Point(23, 40);
             this.comboBoxType.Name = "comboBoxType";
-            this.comboBoxType.Size = new System.Drawing.Size(133, 22);
+            this.comboBoxType.Size = new System.Drawing.Size(91, 22);
             this.comboBoxType.TabIndex = 48;
             this.comboBoxType.SelectedIndexChanged += new System.EventHandler(this.comboBoxType_SelectedIndexChanged);
             // 
@@ -77,7 +77,7 @@ namespace TaleofMonsters.Forms
             this.Controls.Add(this.bitmapButtonClose);
             this.DoubleBuffered = true;
             this.Name = "QuestForm";
-            this.Size = new System.Drawing.Size(741, 499);
+            this.Size = new System.Drawing.Size(476, 398);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.TaskForm_Paint);
             this.ResumeLayout(false);
 

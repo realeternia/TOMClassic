@@ -47,6 +47,7 @@ namespace TaleofMonsters.Forms.Items.Regions
 
     internal enum ImageRegionCellType
     {
+        None,
         Gold,
         Exp,
         Food,

@@ -141,7 +141,7 @@ namespace TaleofMonsters.Forms
                     if (questConfig.NpcId != EventId)
                         continue;
 
-                    if (!UserProfile.InfoQuest.IsQuestCanReceive(questConfig.Id))
+                    if (UserProfile.InfoQuest.IsQuestCanReceive(questConfig.Id))
                     {
                         var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockquest");
                         questBlock.Script = questConfig.Name;
@@ -150,10 +150,10 @@ namespace TaleofMonsters.Forms
                         (questBlock.Children[0].Children[0].Children[0] as SceneQuestEvent).ParamList[0] = questConfig.Id.ToString();
                         answerList.Add(questBlock);
                     }
-                    if (!UserProfile.InfoQuest.IsQuestCanReward(questConfig.Id))
+                    if (UserProfile.InfoQuest.IsQuestCanReward(questConfig.Id))
                     {
                         var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockquestfin");
-                        questBlock.Script = questConfig.Name;
+                        questBlock.Script = questConfig.Name+"(提交)";
                         questBlock.Prefix = "questfin";
                         answerList.Add(questBlock);
                     }
@@ -198,8 +198,8 @@ namespace TaleofMonsters.Forms
                         if (!string.IsNullOrEmpty(word.Prefix))
                         {
                             string icon = "";
-                            if (word.Prefix.StartsWith("quest")) icon = "npc1";
-                            else if (word.Prefix.StartsWith("questfin")) icon = "npc3";
+                            if (word.Prefix.StartsWith("questfin")) icon = "npc3";
+                            else if (word.Prefix.StartsWith("quest")) icon = "npc1";
                             else if (word.Prefix.StartsWith("rival")) icon = "tsk1";
                             if (icon != "")
                             {
