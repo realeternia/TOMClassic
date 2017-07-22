@@ -252,7 +252,7 @@ namespace TaleofMonsters
                     }
                     catch (Exception e)
                     {
-                        NLog.Fatal(e);
+                        NLog.Error(e);
                         throw;
                     }
                 }

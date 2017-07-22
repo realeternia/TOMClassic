@@ -30,7 +30,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneRules
             if (randQuestList.Count > questCellCount)
             {
                 randQuestList.RemoveRange(questCellCount, randQuestList.Count - questCellCount);
-                NLog.Warn(string.Format("Generate id={0} size too big {1}", mapId, randQuestList.Count));
+                NLog.Warn("Generate id={0} size too big {1}", mapId, randQuestList.Count);
             }
             else
             {
