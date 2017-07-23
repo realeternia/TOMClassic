@@ -11,7 +11,9 @@ namespace TaleofMonsters.Core
         private static Stack<string> bgmHistory;
 
         private static FMOD.System _fmod = null;
-        
+        private const float BGMVolume = 0.02f; //背景音乐音量
+        private const float EffectVolume = 0.3f; //特效音乐音量
+
         private static Thread soundThread;
         private static Channel _channelBGM = null;//在子线程使用
         private static List<SoundItem> taskList = new List<SoundItem>();//在子线程使用
@@ -120,6 +122,7 @@ namespace TaleofMonsters.Core
                 {
                     bool isPlaying;
                     _channelBGM.isPlaying(out isPlaying);
+                  
                     if (isPlaying)
                     {
                         _channelBGM.stop();
@@ -148,7 +151,12 @@ namespace TaleofMonsters.Core
 
             if (isBGM)
             {
+                channel.setVolume(BGMVolume);
                 _channelBGM = channel;
+            }
+            else
+            {
+                channel.setVolume(EffectVolume);
             }
         }
     }

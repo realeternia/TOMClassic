@@ -185,11 +185,12 @@ namespace TaleofMonsters.DataType.User
             InfoQuest.OnLogout();
         }
 
-        public void OnSwitchScene()
+        public void OnSwitchScene(bool isWarp)
         {
             InfoEquip.CheckExpireAndDura(true);
-            InfoQuest.OnSwitchScene();
-            UserProfile.SaveToDB();//每次切场景存个档
+            InfoQuest.OnSwitchScene(isWarp);
+            if(isWarp)
+                UserProfile.SaveToDB();//每次切场景存个档
         }
 
         public void OnNewDay()

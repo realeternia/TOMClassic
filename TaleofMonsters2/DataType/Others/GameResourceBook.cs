@@ -30,7 +30,7 @@ namespace TaleofMonsters.DataType.Others
         /// </summary>
         public static uint InGoldFight(int level, bool isPeople)
         {
-            uint get = (uint) (ExpTree.GetResourceFactor(level)*GoldFactor/2);
+            uint get = Math.Max(1, (uint) (ExpTree.GetResourceFactor(level)*GoldFactor/2));
             return isPeople ? get : get/2;
         }
         /// <summary>
@@ -38,18 +38,22 @@ namespace TaleofMonsters.DataType.Others
         /// </summary>
         public static uint InGoldSceneQuest(int level, int rate, bool noRandom = false)
         {
+            if (rate <= 0)
+                return 0;
             double[] factor = new[] {0.2, 0.5, 0.5, 1, 1, 1.5, 2.2};
             rate = (int) (rate*(noRandom ? 1 : factor[MathTool.GetRandom(factor.Length)]));
-            return (uint)(ExpTree.GetResourceFactor(level)*GoldFactor*rate/100);
+            return Math.Max(1, (uint)(ExpTree.GetResourceFactor(level)*GoldFactor*rate/100));
         }
         /// <summary>
         /// 场景剧情消耗金币
         /// </summary>
         public static uint OutGoldSceneQuest(int level, int rate, bool noRandom = false)
         {
+            if (rate <= 0)
+                return 0;
             double[] factor = new[] { 0.5, 1, 1, 1.5};
             rate = (int) (rate*(noRandom ? 1 : factor[MathTool.GetRandom(factor.Length)]))*3/4;
-            return (uint)(ExpTree.GetResourceFactor(level) * GoldFactor * rate / 100);
+            return Math.Max(1, (uint)(ExpTree.GetResourceFactor(level) * GoldFactor * rate / 100));
         }
         /// <summary>
         /// 场景剧情获得食物
@@ -110,14 +114,18 @@ namespace TaleofMonsters.DataType.Others
         /// </summary>
         public static uint InExpSceneQuest(int level, int rate)
         {
-            return (uint)(ExpTree.GetNextRequired(level)/12 * rate / 100);
+            if (rate > 0)
+            {
+                return Math.Max(1, (uint)(ExpTree.GetNextRequired(level) / 12 * rate / 100));
+            }
+            return 0;
         }
         /// <summary>
         /// 战斗获得经验值
         /// </summary>
         public static uint InExpFight(int level, int rLevel)
         {
-            return (uint)(ExpTree.GetNextRequired(rLevel) / 2 / (15 + Math.Abs(level - rLevel) * 3) + 1);
+            return Math.Max(1, (uint)(ExpTree.GetNextRequired(rLevel) / 2 / (15 + Math.Abs(level - rLevel) * 3) + 1));
         }
         /// <summary>
         /// 购买卡牌消耗Gem

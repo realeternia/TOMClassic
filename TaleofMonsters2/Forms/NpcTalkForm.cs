@@ -155,6 +155,7 @@ namespace TaleofMonsters.Forms
                         var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockquestfin");
                         questBlock.Script = questConfig.Name+"(提交)";
                         questBlock.Prefix = "questfin";
+                        (questBlock.Children[0] as SceneQuestEvent).ParamList[0] = questConfig.Id.ToString();
                         answerList.Add(questBlock);
                     }
                 }

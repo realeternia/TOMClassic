@@ -2,7 +2,10 @@ using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Log;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.User.Db;
+using TaleofMonsters.MainItem;
+using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.DataType.User
 {
@@ -74,6 +77,8 @@ namespace TaleofMonsters.DataType.User
                         State = (byte) QuestStates.Receive
                     };
                     QuestRunning.Add(questData);
+
+                    OnReceiveQuest(qid);
                 }
             }
             else if (state == QuestStates.Finish)
@@ -82,6 +87,8 @@ namespace TaleofMonsters.DataType.User
                 {
                     QuestRunning.Remove(questRun);
                     QuestFinish.Add(qid);
+
+                    OnFinishQuest(qid);
                 }
             }
             else
@@ -93,14 +100,35 @@ namespace TaleofMonsters.DataType.User
             }
         }
 
-        public void OnSwitchScene()
+        private void OnReceiveQuest(int qid)
         {
-            ResetQuest();
+            var questConfig = ConfigData.GetQuestConfig(qid);
+            if (questConfig.SceneQuestId > 0)
+            {
+                SceneQuestConfig config = ConfigData.GetSceneQuestConfig(questConfig.SceneQuestId);
+                Scene.Instance.QuestNext(config.Ename);
+            }
+
+            MainTipManager.AddTip(string.Format("接受任务-{0}", questConfig.Name), "White");
+            SoundManager.Play("System", "QuestActivateWhat1.wav");
+        }
+
+        private void OnFinishQuest(int qid)
+        {
+            var questConfig = ConfigData.GetQuestConfig(qid);
+            MainTipManager.AddTip(string.Format("完成任务-{0}", questConfig.Name), "White");
+            SoundManager.Play("System", "QuestCompleted.wav");
+        }
+
+        public void OnSwitchScene(bool isWarp)
+        {
+            if (isWarp)
+                ResetQuest();
         }
 
         public void OnLogout()
         {
-            ResetQuest();
+          //  ResetQuest();
         }
 
         private void ResetQuest()

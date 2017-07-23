@@ -106,7 +106,7 @@ namespace TaleofMonsters.Forms
             }
             cellTypeList.Clear();
 
-            if (!QuestBook.HasFlag("selectjob"))
+            if (UserProfile.InfoBasic.Job == JobConfig.Indexer.NewBie)
             {
 #region 显示第一次选职业的奖励
                 int imgIndex = 2;
@@ -263,7 +263,7 @@ namespace TaleofMonsters.Forms
             if (jobConfig.IsSpecial || jobConfig.InitialLocked && !UserProfile.Profile.InfoBasic.AvailJobList.Contains(selectJobId))
                 return;
 
-            if (QuestBook.HasFlag("selectjob"))
+            if (UserProfile.InfoBasic.Job != JobConfig.Indexer.NewBie)
             {//转职
                 UserProfile.InfoBasic.Job = selectJobId;
             }

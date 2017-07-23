@@ -123,7 +123,7 @@ namespace TaleofMonsters.MainItem.Scenes
             GenerateMiniMap(mapid, MathTool.Clamp(sceneConfig.IconX - 110,0, 1688-300), MathTool.Clamp(sceneConfig.IconY - 110, 0, 1121 - 300));
 
             UserProfile.InfoBasic.MapId = mapid;
-            UserProfile.Profile.OnSwitchScene();
+            UserProfile.Profile.OnSwitchScene(isWarp);
 
             BlessManager.OnChangeMap();
             OnBlessChange();

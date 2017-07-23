@@ -4,7 +4,7 @@
     {
         public static bool ShowImage = true;
 #if DEBUG
-        public static bool PlayerSound = false;
+        public static bool PlayerSound = true;
 #else
         public static bool PlayerSound = true;
 #endif

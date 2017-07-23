@@ -1,7 +1,5 @@
 ﻿using System.Drawing;
 using ConfigDatas;
-using NarlonLib.Drawing;
-using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.DataType.Others
