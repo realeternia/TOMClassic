@@ -33,7 +33,7 @@ namespace NarlonLib.Control
                         Brush brush = new SolidBrush(color);
                         e.Graphics.DrawString(text[i + 1], Font, brush, xoff, Font.Height * line, StringFormat.GenericTypographic);
                         brush.Dispose();
-                        xoff += (int)e.Graphics.MeasureString(text[i + 1], Font).Width - 5;
+                        xoff += (int)TextRenderer.MeasureText(e.Graphics, text[i + 1], Font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
                     }
                 }
                 else

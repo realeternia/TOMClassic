@@ -398,7 +398,7 @@ namespace TaleofMonsters.MainItem.Scenes
                 blue.Dispose();
             }
 
-            int len = (int)g.MeasureString(sceneName, font).Width;
+            var len = TextRenderer.MeasureText(g, sceneName, font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
             g.DrawString(sceneName, font, Brushes.White, new PointF(width - 85 - len / 2, 8));
 
             int xOff = (width - 688)/2 + 103;

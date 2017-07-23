@@ -48,13 +48,23 @@ namespace TaleofMonsters.DataType.Others
             bool isFinish = UserProfile.InfoQuest.IsQuestFinish(id);
             bool isRecv = UserProfile.InfoQuest.IsQuestCanReceive(id);
             bool isReward = UserProfile.InfoQuest.IsQuestCanReward(id);
+            string headColor = "Gray";
             if (isFinish)
+            {
                 nameStr += "(已完成)";
+                headColor = "Gold";
+            }
             if (isRecv)
+            {
                 nameStr += "(可接受)";
+                headColor = "Cyan";
+            }
             if (isReward)
+            {
                 nameStr += "(可提交)";
-            tipData.AddTextNewLine(nameStr, "Lime", 20);
+                headColor = "Lime";
+            }
+            tipData.AddTextNewLine(nameStr, headColor, 20);
             if (UserProfile.InfoQuest.IsQuestCanProgress(id))
                 tipData.AddTextNewLine(string.Format(" 进度{0}/10", UserProfile.InfoQuest.GetQuestProgress(id)), "White", 20);
             tipData.AddLine();
@@ -65,7 +75,7 @@ namespace TaleofMonsters.DataType.Others
                 tipData.AddTextNewLine("委托人:" + npcConfig.Name, "White");
             }
             tipData.AddLine();
-            tipData.AddTextLines(questConfig.Descript, "White", 20, true);
+            tipData.AddRichTextLines(questConfig.Descript, "White", 20);
             return tipData.Image;
         }
 

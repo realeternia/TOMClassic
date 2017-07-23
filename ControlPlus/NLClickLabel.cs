@@ -38,8 +38,9 @@ namespace ControlPlus
         {
             LabelInfo li = new LabelInfo();
             li.index = labels.Count;
-            li.wid = (int)g.MeasureString(text, Font).Width;
-            li.het = (int)g.MeasureString(text, Font).Height;
+            var regionSize = TextRenderer.MeasureText(g, text, Font, new Size(0, 0), TextFormatFlags.NoPadding);
+            li.wid = regionSize.Width;
+            li.het = regionSize.Height;
             if (li.wid+nx>Width)
             {
                 nx = 0;

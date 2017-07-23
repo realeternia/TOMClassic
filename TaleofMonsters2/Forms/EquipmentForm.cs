@@ -260,7 +260,8 @@ namespace TaleofMonsters.Forms
 
         private int GetX(Graphics g, string s, Font font, int x, int width)
         {
-            return x + (width - (int)g.MeasureString(s, font).Width) / 2;
+            var wid = TextRenderer.MeasureText(g, s, font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
+            return x + (width - wid) / 2;
         }
 
         private void RefreshEquip()

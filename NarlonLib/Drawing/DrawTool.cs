@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace NarlonLib.Drawing
 {
@@ -21,7 +22,7 @@ namespace NarlonLib.Drawing
             for (int i = 0; i < text.Length; i++)
             {
                 string schr = text.Substring(i, 1);
-                float textwid = g.MeasureString(schr, fontsong).Width * 7 / 10;
+                var textwid = TextRenderer.MeasureText(g, schr, fontsong, new Size(0, 0), TextFormatFlags.NoPadding).Width;
                 if (schr == "$")
                 {
                     realwid = 0;
@@ -41,7 +42,7 @@ namespace NarlonLib.Drawing
             int heg = row * 14 + 9;
             if (head != "")
             {
-                wid = System.Math.Max(wid, (int) g.MeasureString(head, fontsong).Width);
+                wid = System.Math.Max(wid, TextRenderer.MeasureText(g, head, fontsong, new Size(0, 0), TextFormatFlags.NoPadding).Width);
                 heg += 20;
             }
             wid += 10;
@@ -66,7 +67,7 @@ namespace NarlonLib.Drawing
             for (int i = 0; i < text.Length; i++)
             {
                 string schr = text.Substring(i, 1);
-                float textwid = g.MeasureString(schr, fontsong).Width*7/10;
+                float textwid = TextRenderer.MeasureText(g, schr, fontsong, new Size(0, 0), TextFormatFlags.NoPadding).Width;
                 bool ismark = false;
                 if ((text[i] >= '0' && text[i] <= '9') || text[i] == '.')
                 {

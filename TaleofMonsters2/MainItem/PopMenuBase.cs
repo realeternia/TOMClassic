@@ -55,9 +55,9 @@ namespace TaleofMonsters.MainItem
             Font fontsong = new Font("ËÎÌו", 9*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             Bitmap tempImg = new Bitmap(3, 3);
             Graphics g = Graphics.FromImage(tempImg);
-            foreach (MenuItemData menuItemData in datas)
+            foreach (var menuItemData in datas)
             {
-                SizeF size= g.MeasureString(menuItemData.Text, fontsong);
+                var size = TextRenderer.MeasureText(g, menuItemData.Text, fontsong, new Size(0, 0), TextFormatFlags.NoPadding);
                 width = Math.Max(width, size.Width);
                 height += yOff;
             }

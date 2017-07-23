@@ -62,7 +62,7 @@ namespace TaleofMonsters.Core
             }
             return Brushes.White;
         }
-
+        
         public static void DrawValueLine(Graphics g, int value, int x, int y, int width, int height)
         {
             Color colorStart;

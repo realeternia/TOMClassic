@@ -1,4 +1,7 @@
 using System.Drawing;
+using System.Windows.Forms;
+using ControlPlus;
+using TaleofMonsters.Core;
 
 namespace TaleofMonsters.Forms.Items.Core
 {
@@ -52,24 +55,16 @@ namespace TaleofMonsters.Forms.Items.Core
                         if ((i % 2) == 0)
                         {
                             if (infos[i] == "")
-                            {
                                 color = fcolor;
-                            }
                             else
-                            {
-                                color = FromColorName(infos[i]);
-                            }
+                                color = TipImage.GetTalkColor(infos[i]);
                         }
                         else
-                        {
                             DrawSub(g, infos[i], color, ref line, ref linewid);
-                        }
                     }
                 }
                 else
-                {
                     DrawSub(g, lineData, color, ref line, ref linewid);
-                }
                 line++;
             }
           
@@ -81,7 +76,7 @@ namespace TaleofMonsters.Forms.Items.Core
             for (int i = 0; i < s.Length; i++)
             {
                 string schr = s.Substring(i, 1);
-                float textwid = g.MeasureString(schr, font).Width - 5;
+                float textwid = TextRenderer.MeasureText(g, schr, font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
                 if (linewid+textwid>width-4)
                 {
                     line++;
@@ -95,21 +90,5 @@ namespace TaleofMonsters.Forms.Items.Core
             font.Dispose();
         }
 
-        private static Color FromColorName(string cname)
-        {
-            if (cname.Length == 1) //简写
-            {
-                switch (cname)
-                {
-                    case "R": return Color.Red;  //怪物
-                    case "G": return Color.Green; //人物，npc
-                    case "B": return Color.RoyalBlue; //场景
-                    case "P": return Color.MediumPurple; //幻兽
-                    case "Y": return Color.Yellow; //道具
-                    case "O": return Color.DarkGoldenrod; //事件
-                }
-            }
-            return Color.FromName(cname);
-        }
     }
 }

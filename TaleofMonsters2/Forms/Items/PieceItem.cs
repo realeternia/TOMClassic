@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
 using TaleofMonsters.Controler.Loader;
@@ -140,7 +141,8 @@ namespace TaleofMonsters.Forms.Items
                 brush.Dispose();
 
                 g.DrawString(price.ToString(), font, Brushes.Gold, x+57, y+30);
-                g.DrawImage(HSIcons.GetIconsByEName("res1"), g.MeasureString(price.ToString(), font).Width + 57+x, y+32, 16, 16);
+                var wid = TextRenderer.MeasureText(g, price.ToString(), font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
+                g.DrawImage(HSIcons.GetIconsByEName("res1"), wid + 57+x, y+32, 16, 16);
 
                 virtualRegion.Draw(g);
                 g.DrawString(itemCount.ToString(), font, Brushes.Black, x+30, y+29);

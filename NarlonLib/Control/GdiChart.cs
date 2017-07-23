@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace NarlonLib.Control
 {
@@ -88,7 +89,7 @@ namespace NarlonLib.Control
                     }
                     for (int i = 0; i < count; i++)
                     {
-                        var wid = g.MeasureString(chartLabels[i], font).Width;
+                        var wid = TextRenderer.MeasureText(g, chartLabels[i], font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
                         g.DrawString(chartLabels[i], font, stringBrush, X + Margin + i * 2 * barWidth - wid / 2 + barWidth / 2, Y + Height - 30 + 2);
                     }
                     g.DrawLine(Pens.White, X + Margin, Y + Height - 30, X + Width - Margin, Y + Height - 30);
@@ -128,7 +129,7 @@ namespace NarlonLib.Control
                     g.FillPolygon(chartBrush, values);
                     for (int i = 0; i < count; i++)
                     {
-                        var wid = g.MeasureString(chartLabels[i], font).Width;
+                        var wid = TextRenderer.MeasureText(g, chartLabels[i], font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
                         g.DrawString(chartLabels[i], font, stringBrush, border[i].X - wid / 2, border[i].Y - 6);
                     }
                 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 using NarlonLib.Core;
 using NarlonLib.Drawing;
 
@@ -63,7 +64,8 @@ namespace TaleofMonsters.MainItem
                         Brush brush = new SolidBrush(color);
                         g.DrawString(text[j + 1], font, brush, 11 + xoff, offY+5 + i * 18, StringFormat.GenericTypographic);
                         brush.Dispose();
-                        xoff += (int)g.MeasureString(text[j + 1], font).Width - 5;
+                        var len = TextRenderer.MeasureText(g, text[j + 1], font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
+                        xoff += len - 5;
                     }
                 }
                 else

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 
 namespace ControlPlus
 {
@@ -47,6 +48,77 @@ namespace ControlPlus
                 data = data.Substring(wordPerLine);
                 AddTextNewLine(data.Substring(0, Math.Min(data.Length, wordPerLine)), color);
             }
+        }
+
+        public void AddRichTextLines(string data, string cr, int wordPerLine)
+        {
+            Color color = Color.FromName(cr);
+            var lines = data.Split('$');
+            int wordLeft = 0;
+            foreach (var lineData in lines)
+            {
+                wordLeft = wordPerLine;
+                if (lineData.IndexOf('|') >= 0)
+                {
+                    string[] infos = lineData.Split('|');
+                    for (int i = 0; i < infos.Length; i++)
+                    {
+                        if ((i % 2) == 0)
+                        {
+                            if (infos[i] == "")
+                                color = Color.FromName(cr);
+                            else
+                                color = GetTalkColor(infos[i]);
+                        }
+                        else
+                            AddLineText(infos[i], ref wordLeft, wordPerLine, color.Name);
+                    }
+                }
+                else
+                    AddLineText(lineData, ref wordLeft, wordPerLine, color.Name);
+            }
+        }
+
+        private void AddLineText(string lineData, ref int wordLeft, int perLine, string color)
+        {
+            int index;
+            if (perLine == wordLeft) //整行
+            {
+                index = Math.Min(lineData.Length, perLine);
+                AddTextNewLine(lineData.Substring(0, index), color);
+            }
+            else
+            {
+                index = Math.Min(lineData.Length, wordLeft);
+                AddText(lineData.Substring(0, index), color);
+            }
+            wordLeft -= index;
+            if (wordLeft == 0)
+                wordLeft = perLine;
+            while (index < lineData.Length)
+            {
+                var len = Math.Min(lineData.Length-index, perLine);
+                AddTextNewLine(lineData.Substring(index, len), color);
+                index += len;
+                if (len != perLine)
+                    wordLeft -= len;
+            }
+        }
+        public static Color GetTalkColor(string cname)
+        {
+            if (cname.Length == 1) //简写
+            {
+                switch (cname)
+                {
+                    case "R": return Color.Red;  //怪物
+                    case "G": return Color.Green; //人物，npc
+                    case "B": return Color.RoyalBlue; //场景
+                    case "P": return Color.MediumPurple; //幻兽
+                    case "Y": return Color.Yellow; //道具
+                    case "O": return Color.DarkGoldenrod; //事件
+                }
+            }
+            return Color.FromName(cname);
         }
 
         public void AddTextOff(string data, string color, int off)
@@ -134,10 +206,10 @@ namespace ControlPlus
                         if (obj is LineText)
                         {
                             LineText text = (obj as LineText);
-                            text.UpdateWid((int) g.MeasureString(text.text, fontInfo).Width+5);
+                            text.UpdateWid((int)TextRenderer.MeasureText(g, text.text, fontInfo, new Size(0, 0), TextFormatFlags.NoPadding).Width);
                         }
                     }
-                    wid = Math.Max(wid, datas[i].Width);
+                    wid = Math.Max(wid, datas[i].Width+5);
                     heg += datas[i].Height;
                 }
                 wid += 5;

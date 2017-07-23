@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
@@ -91,7 +92,8 @@ namespace TaleofMonsters.DataType.Achieves
             Graphics g = Graphics.FromImage(bmp);
             foreach (string s in datas)
             {
-                wid = Math.Max(wid, (int)g.MeasureString(s, fontsong).Width);
+                float lenth = TextRenderer.MeasureText(g, s, fontsong, new Size(0, 0), TextFormatFlags.NoPadding).Width;
+                wid = Math.Max(wid, (int)lenth);
             }
             heg = datas.Count * 16;
             wid += 5; heg += 5;
