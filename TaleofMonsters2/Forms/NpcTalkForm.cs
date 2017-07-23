@@ -138,23 +138,29 @@ namespace TaleofMonsters.Forms
             {
                 foreach (var questConfig in ConfigData.QuestDict.Values)
                 {
-                    if (questConfig.NpcId != EventId)
-                        continue;
-
-                    if (UserProfile.InfoQuest.IsQuestCanReceive(questConfig.Id))
+                    if (questConfig.NpcId == EventId)
                     {
-                        var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockquest");
-                        questBlock.Script = questConfig.Name;
-                        questBlock.Prefix = "quest";
-                        questBlock.Children[0].Script = questConfig.Descript;
-                        (questBlock.Children[0].Children[0].Children[0] as SceneQuestEvent).ParamList[0] = questConfig.Id.ToString();
-                        answerList.Add(questBlock);
+                        if (UserProfile.InfoQuest.IsQuestCanReceive(questConfig.Id))
+                        {
+                            var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockquest");
+                            questBlock.Script = questConfig.Name;
+                            questBlock.Prefix = "quest";
+                            questBlock.Children[0].Script = questConfig.Descript;
+                            (questBlock.Children[0].Children[0].Children[0] as SceneQuestEvent).ParamList[0] = questConfig.Id.ToString();
+                            answerList.Add(questBlock);
+                        }
+                        if (UserProfile.InfoQuest.IsQuestCanReward(questConfig.Id))
+                        {
+                            var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockquestfin");
+                            questBlock.Script = questConfig.Name + "(提交)";
+                            questBlock.Prefix = "questfin";
+                            (questBlock.Children[0] as SceneQuestEvent).ParamList[0] = questConfig.Id.ToString();
+                            answerList.Add(questBlock);
+                        }
                     }
-                    if (UserProfile.InfoQuest.IsQuestCanReward(questConfig.Id))
+                    if (questConfig.SceneQuest == config.Ename && UserProfile.InfoQuest.IsQuestCanProgress(questConfig.Id))
                     {
-                        var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockquestfin");
-                        questBlock.Script = questConfig.Name+"(提交)";
-                        questBlock.Prefix = "questfin";
+                        var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, questConfig.QuestScript);
                         (questBlock.Children[0] as SceneQuestEvent).ParamList[0] = questConfig.Id.ToString();
                         answerList.Add(questBlock);
                     }

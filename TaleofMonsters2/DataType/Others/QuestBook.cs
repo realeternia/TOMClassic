@@ -27,14 +27,14 @@ namespace TaleofMonsters.DataType.Others
             return false;
         }
 
-        public static void SetFlag(string f)
+        public static void SetFlag(string f, byte progress)
         {
             foreach (var questData in UserProfile.InfoQuest.QuestRunning)
             {
                 var config = ConfigData.GetQuestConfig(questData.QuestId);
                 if (config.Ename == f)
                 {
-                    UserProfile.InfoQuest.SetQuestState(config.Id, QuestStates.Accomplish);
+                    UserProfile.InfoQuest.AddQuestProgress(config.Id, progress);
                     return;
                 }
             }
@@ -44,7 +44,19 @@ namespace TaleofMonsters.DataType.Others
         {
             QuestConfig questConfig = ConfigData.GetQuestConfig(id);
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
-            tipData.AddTextNewLine(questConfig.Name, "Lime", 20);
+            string nameStr = questConfig.Name;
+            bool isFinish = UserProfile.InfoQuest.IsQuestFinish(id);
+            bool isRecv = UserProfile.InfoQuest.IsQuestCanReceive(id);
+            bool isReward = UserProfile.InfoQuest.IsQuestCanReward(id);
+            if (isFinish)
+                nameStr += "(已完成)";
+            if (isRecv)
+                nameStr += "(可接受)";
+            if (isReward)
+                nameStr += "(可提交)";
+            tipData.AddTextNewLine(nameStr, "Lime", 20);
+            if (UserProfile.InfoQuest.IsQuestCanProgress(id))
+                tipData.AddTextNewLine(string.Format(" 进度{0}/10", UserProfile.InfoQuest.GetQuestProgress(id)), "White", 20);
             tipData.AddLine();
             tipData.AddTextNewLine("难度:" + GetTaskHardness(questConfig.Y), "White");
             if (questConfig.NpcId > 0)
@@ -52,6 +64,7 @@ namespace TaleofMonsters.DataType.Others
                 SceneQuestConfig npcConfig = ConfigData.GetSceneQuestConfig(questConfig.NpcId);
                 tipData.AddTextNewLine("委托人:" + npcConfig.Name, "White");
             }
+            tipData.AddLine();
             tipData.AddTextLines(questConfig.Descript, "White", 20, true);
             return tipData.Image;
         }

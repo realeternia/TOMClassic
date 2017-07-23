@@ -6,6 +6,7 @@ namespace TaleofMonsters.DataType.User.Db
     {
         [FieldIndex(Index = 1)] public int QuestId;
         [FieldIndex(Index = 2)] public byte State;
+        [FieldIndex(Index = 3)] public byte Progress;
 
         public DbQuestData()
         {

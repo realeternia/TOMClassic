@@ -39,7 +39,30 @@ namespace TaleofMonsters.DataType.User
             {
                 return false;
             }
+            var questConfig = ConfigData.GetQuestConfig(qid);
+            if (questConfig.Former > 0 && !IsQuestFinish(questConfig.Former))
+                return false;
             return true;
+        }
+
+        public bool IsQuestCanProgress(int qid)
+        {
+            var questData = QuestRunning.Find(q => q.QuestId == qid);
+            if (questData != null)
+            {
+                return questData.State == (int)QuestStates.Receive && questData.Progress < 10;
+            }
+            return false;
+        }
+
+        public int GetQuestProgress(int qid)
+        {
+            var questData = QuestRunning.Find(q => q.QuestId == qid);
+            if (questData != null && questData.State == (int)QuestStates.Receive)
+            {
+                return questData.Progress;
+            }
+            return 0;
         }
 
         public bool IsQuestCanReward(int qid)
@@ -96,6 +119,26 @@ namespace TaleofMonsters.DataType.User
                 if (questRun != null && questRun.State < (byte)state)
                 {
                     questRun.State = (byte) state;
+                }
+            }
+        }
+
+        public void AddQuestProgress(int qid, byte progress)
+        {
+            var questRun = QuestRunning.Find(q => q.QuestId == qid);
+            if (questRun.State == (int)QuestStates.Receive)
+            {
+                questRun.Progress += progress;
+                var questConfig = ConfigData.GetQuestConfig(qid);
+                if (questRun.Progress >= 10)
+                {
+                    questRun.Progress = 10;
+                    questRun.State = (int) QuestStates.Accomplish;
+                    MainTipManager.AddTip(string.Format("任务达成-{0}", questConfig.Name), "White");
+                }
+                else
+                {
+                    MainTipManager.AddTip(string.Format("任务进度-{0} {1}/10", questConfig.Name, questRun.Progress), "White");
                 }
             }
         }

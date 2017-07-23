@@ -145,7 +145,7 @@ namespace TaleofMonsters.MainItem.Quests
             {
                 if (!QuestBook.HasFlag(config.Flag))
                 {
-                    QuestBook.SetFlag(config.Flag);
+                    QuestBook.SetFlag(config.Flag, (byte)config.FlagProgress);
                 }
             }
         }

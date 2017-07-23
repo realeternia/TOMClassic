@@ -7,7 +7,6 @@ using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Scenes;
-using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
 using TaleofMonsters.MainItem.Scenes;
@@ -19,7 +18,7 @@ namespace TaleofMonsters.DataType.Quests
         public static void LoadSceneFile(int mapWidth, int mapHeight, string filePath, Random r,
             List<SceneManager.ScenePosData> cachedMapData, List<DbSceneSpecialPosData> cachedSpecialData)
         {
-            StreamReader sr = new StreamReader(DataLoader.Read("Scene", String.Format("{0}.txt", filePath)));
+            StreamReader sr = new StreamReader(DataLoader.Read("Scene", string.Format("{0}.txt", filePath)));
             int xoff = 0, yoff = 0, wid = 0, height = 0;
 
             string line;
@@ -30,12 +29,12 @@ namespace TaleofMonsters.DataType.Quests
                 string parm = datas[1].Trim();
                 switch (tp)
                 {
-                    case "startx": xoff = Int32.Parse(parm) * mapWidth / 1422; break;
-                    case "starty": yoff = Int32.Parse(parm) * mapHeight / 855 + 50; break; //50为固定偏移
-                    case "width": wid = Int32.Parse(parm); break;
-                    case "height": height = Int32.Parse(parm); break;
-                    case "startpoint": Scene.Instance.StartPos = Int32.Parse(parm); break;
-                    case "revivepoint": Scene.Instance.RevivePos = Int32.Parse(parm); break;
+                    case "startx": xoff = int.Parse(parm) * mapWidth / 1422; break;
+                    case "starty": yoff = int.Parse(parm) * mapHeight / 855 + 50; break; //50为固定偏移
+                    case "width": wid = int.Parse(parm); break;
+                    case "height": height = int.Parse(parm); break;
+                    case "startpoint": Scene.Instance.StartPos = int.Parse(parm); break;
+                    case "revivepoint": Scene.Instance.RevivePos = int.Parse(parm); break;
                     case "data": ReadBody(sr, mapWidth, mapHeight, r, cachedMapData, cachedSpecialData, wid, height, xoff, yoff); break;
                 }
             }
@@ -55,7 +54,7 @@ namespace TaleofMonsters.DataType.Quests
                 string[] data = sr.ReadLine().Split('\t');
                 for (int j = 0; j < wid; j++)
                 {
-                    int val = Int32.Parse(data[j]);
+                    int val = int.Parse(data[j]);
                     if (val == 0)
                     {
                         continue;
@@ -97,11 +96,11 @@ namespace TaleofMonsters.DataType.Quests
                     continue;
 
                 var posData = new DbSceneSpecialPosData();
-                posData.Id = Int32.Parse(data[0]);
+                posData.Id = int.Parse(data[0]);
                 posData.Type = data[1];
                 posData.MapSetting = true;
                 if (data.Length > 2)
-                    posData.Info = Int32.Parse(data[2]);
+                    posData.Info = int.Parse(data[2]);
                 cachedSpecialData.Add(posData);
             }
         }
@@ -170,16 +169,16 @@ namespace TaleofMonsters.DataType.Quests
                     string[] questData = info.Split(';');
                     int qid = SceneBook.GetSceneQuestByName(questData[0]);
                     if(IsQuestAvail(qid))
-                        datas.Add(new RLIdValue { Id = qid, Value = Int32.Parse(questData[1]) });
+                        datas.Add(new RLIdValue { Id = qid, Value = int.Parse(questData[1]) });
                 }
             }
-            if (!String.IsNullOrEmpty(config.QuestRandom))
+            if (!string.IsNullOrEmpty(config.QuestRandom))
             {
                 string[] infos = config.QuestRandom.Split('|');
                 foreach (var info in infos)
                 {
                     string[] questData = info.Split(';');
-                    int rate = Int32.Parse(questData[1]);
+                    int rate = int.Parse(questData[1]);
                     if (MathTool.GetRandom(100)<rate)//概率事件
                     {
                         int qid = SceneBook.GetSceneQuestByName(questData[0]);
@@ -196,7 +195,7 @@ namespace TaleofMonsters.DataType.Quests
         {
             var config = ConfigData.GetSceneConfig(mapId);
             List<RLIdValue> datas = new List<RLIdValue>();
-            if (!String.IsNullOrEmpty(config.QuestDungeon))
+            if (!string.IsNullOrEmpty(config.QuestDungeon))
             {
                 string[] infos = config.QuestDungeon.Split('|');
                 foreach (var info in infos)
@@ -204,7 +203,7 @@ namespace TaleofMonsters.DataType.Quests
                     string[] questData = info.Split(';');
                     int qid = SceneBook.GetSceneQuestByName(questData[0]);
                     if (IsQuestAvail(qid))
-                        datas.Add(new RLIdValue {Id = qid, Value = Int32.Parse(questData[1])});
+                        datas.Add(new RLIdValue {Id = qid, Value = int.Parse(questData[1])});
                 }
             }
             return datas;
@@ -230,7 +229,7 @@ namespace TaleofMonsters.DataType.Quests
                     case 'a': data = new SceneQuestAnswer(eventId, level, script, lineDepth, lineCount); break;
                     case 'e': data = new SceneQuestEvent(eventId, level, script, lineDepth, lineCount); break;
                     case 'r': data = new SceneQuestRollItem(eventId, level, script, lineDepth, lineCount); break;
-                    default: throw new Exception(String.Format("GetQuestData unknown type {0} {1}", name, lineCount));
+                    default: throw new Exception(string.Format("GetQuestData unknown type {0} {1}", name, lineCount));
                 }
 
                 levelCachDict[data.Depth] = data;

@@ -162,11 +162,8 @@
     public enum QuestStates
     {
         Receive = 1,
-        Progress1 = 2,
-        Progress2 = 3,
-        Progress3 = 4,
-        Accomplish = 5,
-        Finish = 6
+        Accomplish = 2,
+        Finish = 3
     };
 
     internal enum GameResourceType

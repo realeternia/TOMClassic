@@ -1,5 +1,7 @@
 ﻿using System.Drawing;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Quests;
+using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
 using TaleofMonsters.MainItem.Scenes;
@@ -26,6 +28,7 @@ namespace TaleofMonsters.MainItem.Quests
                 case "detect": Scene.Instance.DetectNear(int.Parse(evt.ParamList[0])); break;
                 case "detectrd": Scene.Instance.DetectRandom(int.Parse(evt.ParamList[0])); break;
                 case "quest": UserProfile.InfoQuest.SetQuestState(int.Parse(evt.ParamList[0]), QuestStates.Receive); break;
+                case "questp": UserProfile.InfoQuest.AddQuestProgress(int.Parse(evt.ParamList[0]), byte.Parse(evt.ParamList[1])); break;
             }
         }
 
