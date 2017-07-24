@@ -9,6 +9,7 @@ using ConfigDatas;
 using ControlPlus; 
 using NarlonLib.Core;
 using NarlonLib.Log;
+using NarlonLib.Tools;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.GM;
 using TaleofMonsters.Controler.Loader;

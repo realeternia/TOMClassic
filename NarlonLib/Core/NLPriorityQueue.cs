@@ -4,22 +4,18 @@ using System.Collections.Generic;
 
 namespace NarlonLib.Core
 {
-    class NLUXPriorityQueue<T> : IEnumerable<T>
+    public class NLPriorityQueue<T> : IEnumerable<T>
     {
-        IComparer<T> comparer;
-        T[] heap;
+        private IComparer<T> comparer;
+        private T[] heap;
 
-        private int count;
-        public int Count
-        {
-            get { return count; }            
-        }
+        public int Count { get; private set; }
 
-        public NLUXPriorityQueue() : this(null) { }
-        public NLUXPriorityQueue(int capacity) : this(capacity, null) { }
-        public NLUXPriorityQueue(IComparer<T> comparer) : this(16, comparer) { }
+        public NLPriorityQueue() : this(null) { }
+        public NLPriorityQueue(int capacity) : this(capacity, null) { }
+        public NLPriorityQueue(IComparer<T> comparer) : this(16, comparer) { }
 
-        public NLUXPriorityQueue(int capacity, IComparer<T> comparer)
+        public NLPriorityQueue(int capacity, IComparer<T> comparer)
         {
             this.comparer = (comparer == null) ? Comparer<T>.Default : comparer;
             this.heap = new T[capacity];
@@ -29,13 +25,13 @@ namespace NarlonLib.Core
         {
             if (Count >= heap.Length) Array.Resize(ref heap, Count * 2);
             heap[Count] = v;
-            SiftUp(count++);
+            SiftUp(Count++);
         }
 
         public T Pop()
         {
-            T v = Top();
-            heap[0] = heap[--count];
+            var v = Top();
+            heap[0] = heap[--Count];
             if (Count > 0) SiftDown(0);
             return v;
         }
@@ -48,15 +44,15 @@ namespace NarlonLib.Core
 
         void SiftUp(int n)
         {
-            T v = heap[n];
-            for (int n2 = n / 2; n > 0 && comparer.Compare(v, heap[n2]) > 0; n = n2, n2 /= 2) heap[n] = heap[n2];
+            var v = heap[n];
+            for (var n2 = n / 2; n > 0 && comparer.Compare(v, heap[n2]) > 0; n = n2, n2 /= 2) heap[n] = heap[n2];
             heap[n] = v;
         }
 
         void SiftDown(int n)
         {
-            T v = heap[n];
-            for (int n2 = n * 2; n2 < Count; n = n2, n2 *= 2)
+            var v = heap[n];
+            for (var n2 = n * 2; n2 < Count; n = n2, n2 *= 2)
             {
                 if (n2 + 1 < Count && comparer.Compare(heap[n2 + 1], heap[n2]) > 0) n2++;
                 if (comparer.Compare(v, heap[n2]) >= 0) break;
@@ -67,7 +63,7 @@ namespace NarlonLib.Core
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
-            foreach (T element in heap)
+            foreach (var element in heap)
             {
                 if (null == element)
                 {
@@ -79,7 +75,7 @@ namespace NarlonLib.Core
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            foreach (T element in heap)
+            foreach (var element in heap)
             {
                 if (null == element)
                 {

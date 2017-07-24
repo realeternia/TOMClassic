@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using ControlPlus;
 using NarlonLib.Core;
 using NarlonLib.Math;
+using NarlonLib.Tools;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;

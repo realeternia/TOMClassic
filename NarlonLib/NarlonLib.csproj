@@ -119,13 +119,14 @@
     <Compile Include="Control\DoubleBufferedListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Core\NLCoroutineManager.cs" />
     <Compile Include="Core\NLPair.cs" />
-    <Compile Include="Core\NLCoroutine.cs" />
+    <Compile Include="Core\NLTimeCoroutine.cs" />
     <Compile Include="Core\NLPointF.cs" />
-    <Compile Include="Core\StringTool.cs" />
+    <Compile Include="Tools\StringTool.cs" />
     <Compile Include="Core\SimpleSet.cs" />
     <Compile Include="Core\NLPriorityQueue.cs" />
-    <Compile Include="Core\NLTimer.cs" />
+    <Compile Include="Core\NLTimerManager.cs" />
     <Compile Include="Drawing\DrawTool.cs" />
     <Compile Include="Drawing\ImagePixelTool.cs" />
     <Compile Include="File\CsvDataReader.cs" />
@@ -133,15 +134,14 @@
     <Compile Include="Math\Adder.cs" />
     <Compile Include="Math\Calculator.cs" />
     <Compile Include="Math\NLRandom.cs" />
-    <Compile Include="Math\ListTool.cs" />
+    <Compile Include="Tools\ArraysUtils.cs" />
     <Compile Include="Math\RandomPicker.cs" />
-    <Compile Include="File\IniFile.cs" />
+    <Compile Include="File\NLIniFile.cs" />
     <Compile Include="Math\MathTool.cs" />
     <Compile Include="Math\RandomSequence.cs" />
     <Compile Include="Math\RandomMaker.cs" />
-    <Compile Include="Net\NLRC4.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Core\TimeTool.cs" />
+    <Compile Include="Tools\TimeTool.cs" />
     <Compile Include="Core\AutoDictionary.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Core;
+using NarlonLib.Tools;
 
 namespace TaleofMonsters.Controler.GM
 {

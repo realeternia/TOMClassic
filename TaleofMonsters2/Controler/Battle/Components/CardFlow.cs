@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using NarlonLib.Control;
 using NarlonLib.Core;
 using NarlonLib.Drawing;
+using NarlonLib.Tools;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards;

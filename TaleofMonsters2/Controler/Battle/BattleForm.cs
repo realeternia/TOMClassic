@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
 using NarlonLib.Core;
+using NarlonLib.Tools;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Components.CardSelect;
 using TaleofMonsters.Controler.Battle.Data;
@@ -195,7 +196,7 @@ namespace TaleofMonsters.Controler.Battle
             if (onTurn)
                 return;
             onTurn = true;
-            NLCoroutine.DoTimer();
+
             try
             {
                 panelBattle.Invalidate();

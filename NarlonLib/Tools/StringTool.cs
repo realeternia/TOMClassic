@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NarlonLib.Core
+namespace NarlonLib.Tools
 {
     public class StringTool
     {

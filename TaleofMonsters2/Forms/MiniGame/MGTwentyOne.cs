@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Core;
 using NarlonLib.Math;
+using NarlonLib.Tools;
 using TaleofMonsters.Controler.Loader;
 
 namespace TaleofMonsters.Forms.MiniGame

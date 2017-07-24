@@ -2,6 +2,7 @@
 using System.Drawing;
 using ConfigDatas;
 using NarlonLib.Math;
+using NarlonLib.Tools;
 using TaleofMonsters.Controler.Battle;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
@@ -83,7 +84,7 @@ namespace TaleofMonsters.DataType.Peoples
                 }
             }
 
-            ListTool.RandomShuffle(pids);
+            ArraysUtils.RandomShuffle(pids);
             return pids.GetRange(0, count).ToArray();
         }
 

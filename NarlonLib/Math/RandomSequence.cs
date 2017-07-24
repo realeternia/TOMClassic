@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using NarlonLib.Tools;
 
 namespace NarlonLib.Math
 {
@@ -31,11 +32,11 @@ namespace NarlonLib.Math
                 numberList= new List<int>(datas);
                 if (rd == null)
                 {
-                    ListTool.RandomShuffle(numberList);
+                    ArraysUtils.RandomShuffle(numberList);
                 }
                 else
                 {
-                    ListTool.RandomShuffle(numberList, rd);
+                    ArraysUtils.RandomShuffle(numberList, rd);
                 }
                 
                 lastNumber = 0;

@@ -2,6 +2,7 @@
 using ConfigDatas;
 using NarlonLib.Log;
 using NarlonLib.Math;
+using NarlonLib.Tools;
 using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.User;
 
@@ -34,9 +35,9 @@ namespace TaleofMonsters.MainItem.Scenes.SceneRules
             }
             else
             {
-                ListTool.Fill(randQuestList, 0, questCellCount);
+                ArraysUtils.Fill(randQuestList, 0, questCellCount);
             }
-            ListTool.RandomShuffle(randQuestList);
+            ArraysUtils.RandomShuffle(randQuestList);
         }
     }
 }

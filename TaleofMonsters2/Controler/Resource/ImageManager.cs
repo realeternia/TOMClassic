@@ -2,6 +2,7 @@
 using System.Drawing;
 using NarlonLib.Core;
 using System;
+using NarlonLib.Tools;
 using TaleofMonsters.Controler.Loader;
 
 namespace TaleofMonsters.Controler.Resource

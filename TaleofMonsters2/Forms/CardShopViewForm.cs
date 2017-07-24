@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using ControlPlus;
 using NarlonLib.Core;
+using NarlonLib.Tools;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;

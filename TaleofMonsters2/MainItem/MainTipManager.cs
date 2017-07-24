@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Core;
 using NarlonLib.Drawing;
+using NarlonLib.Tools;
 
 namespace TaleofMonsters.MainItem
 {

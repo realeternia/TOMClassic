@@ -5,6 +5,7 @@ using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User;
 using ConfigDatas;
+using NarlonLib.Tools;
 
 namespace TaleofMonsters.MainItem
 { 
@@ -57,7 +58,7 @@ namespace TaleofMonsters.MainItem
                 {
                     return false;
                 }
-                return UserProfile.InfoRecord.GetRecordById(MainIconConfig.Record) > NarlonLib.Core.TimeTool.DateTimeToUnixTime(DateTime.Now);
+                return UserProfile.InfoRecord.GetRecordById(MainIconConfig.Record) > TimeTool.DateTimeToUnixTime(DateTime.Now);
             }
         }
 
@@ -92,7 +93,7 @@ namespace TaleofMonsters.MainItem
             string info = "";
             if (InCD)
             {
-                int timediff = UserProfile.InfoRecord.GetRecordById(MainIconConfig.Record) - NarlonLib.Core.TimeTool.DateTimeToUnixTime(DateTime.Now);
+                int timediff = UserProfile.InfoRecord.GetRecordById(MainIconConfig.Record) - TimeTool.DateTimeToUnixTime(DateTime.Now);
                 info = string.Format("{0:00}:{1:00}", timediff / 60, timediff % 60);
 
                 Rectangle destBack = new Rectangle(X, buttony, Width, Height);

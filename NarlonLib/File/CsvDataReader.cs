@@ -6,10 +6,10 @@ namespace NarlonLib.File
 {
     public class CsvDataReader
     {
-        StreamReader sr;
-        Dictionary<string, int> heads;
-        string lastReadLine;
-        string[] lastReadValues;
+        private StreamReader sr;
+        private Dictionary<string, int> heads;
+        private string lastReadLine;
+        private string[] lastReadValues;
 
         public CsvDataReader(string name)
             : this(new FileStream(name, FileMode.Open))

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Math;
+using NarlonLib.Tools;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.User;
@@ -24,7 +25,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneRules
                         UserProfile.InfoWorld.SavedDungeonQuests.Add(questData.Id);
                     }
                 }
-                ListTool.RandomShuffle(UserProfile.InfoWorld.SavedDungeonQuests);
+                ArraysUtils.RandomShuffle(UserProfile.InfoWorld.SavedDungeonQuests);
             }
         }
 
@@ -48,13 +49,13 @@ namespace TaleofMonsters.MainItem.Scenes.SceneRules
                 }
                 else
                 {
-                    ListTool.RandomShuffle(UserProfile.InfoWorld.SavedDungeonQuests);
+                    ArraysUtils.RandomShuffle(UserProfile.InfoWorld.SavedDungeonQuests);
                     offset = 0;
                     randQuestList.Add(UserProfile.InfoWorld.SavedDungeonQuests[offset]);
                 }
             }
             UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.DungeonQuestOffside, offset);
-            ListTool.RandomShuffle(randQuestList);
+            ArraysUtils.RandomShuffle(randQuestList);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Core;
 using NarlonLib.Math;
+using NarlonLib.Tools;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.World;
 using TaleofMonsters.Core;
@@ -248,7 +249,7 @@ namespace TaleofMonsters.DataType.User
             {
                 int[] ids = EquipBook.GetCanMergeId(UserProfile.InfoBasic.Level);
                 List<int> newids = new List<int>(ids);
-                ListTool.RandomShuffle(newids);
+                ArraysUtils.RandomShuffle(newids);
                 MergeMethods = new List<DbMergeData>();
                 for (int i = 0; i < 8; i++)
                 {
@@ -360,7 +361,7 @@ namespace TaleofMonsters.DataType.User
                         BlessShopItems.Add(blessData.Id);
                     }
                 }
-                ListTool.RandomShuffle(BlessShopItems);
+                ArraysUtils.RandomShuffle(BlessShopItems);
                 BlessShopItems = BlessShopItems.GetRange(0, 5);
                 UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastBlessShopTime, TimeManager.GetTimeOnNextInterval(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastBlessShopTime), time, GameConstants.BlessShopDura));
             }

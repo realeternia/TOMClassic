@@ -4,6 +4,7 @@ using TaleofMonsters.Controler.World;
 using TaleofMonsters.Core;
 using NarlonLib.Math;
 using ConfigDatas;
+using NarlonLib.Tools;
 using TaleofMonsters.Controler.Battle.Tool;
 
 namespace TaleofMonsters.DataType.User
