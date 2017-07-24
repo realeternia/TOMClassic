@@ -158,10 +158,12 @@ namespace TaleofMonsters.Forms
                             answerList.Add(questBlock);
                         }
                     }
-                    if (questConfig.SceneQuest == config.Ename && UserProfile.InfoQuest.IsQuestCanProgress(questConfig.Id))
-                    {
+                    if (questConfig.CheckSceneQuest == config.Ename && UserProfile.InfoQuest.IsQuestCanProgress(questConfig.Id))
+                    {//增加一个选项的任务
                         var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, questConfig.QuestScript);
-                        (questBlock.Children[0] as SceneQuestEvent).ParamList[0] = questConfig.Id.ToString();
+                        var replyItem = questBlock.Children[0] as SceneQuestEvent;
+                        replyItem.ParamList[0] = questConfig.Id.ToString();
+                        replyItem.ParamList[1] = questConfig.ProgressAdd.ToString();
                         answerList.Add(questBlock);
                     }
                 }

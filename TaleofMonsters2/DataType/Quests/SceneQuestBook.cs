@@ -5,7 +5,6 @@ using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.MainItem.Quests.SceneQuests;

@@ -6,6 +6,7 @@ using NarlonLib.Control;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Others;
+using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;

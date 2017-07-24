@@ -65,7 +65,7 @@ namespace TaleofMonsters.MainItem
                         g.DrawString(text[j + 1], font, brush, 11 + xoff, offY+5 + i * 18, StringFormat.GenericTypographic);
                         brush.Dispose();
                         var len = TextRenderer.MeasureText(g, text[j + 1], font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
-                        xoff += len - 5;
+                        xoff += len;
                     }
                 }
                 else

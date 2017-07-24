@@ -12,6 +12,7 @@ using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using ConfigDatas;
 using TaleofMonsters.DataType.Others;
+using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.MainItem;
 

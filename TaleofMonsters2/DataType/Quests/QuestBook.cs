@@ -2,7 +2,7 @@
 using ConfigDatas;
 using TaleofMonsters.DataType.User;
 
-namespace TaleofMonsters.DataType.Others
+namespace TaleofMonsters.DataType.Quests
 {
     internal static class QuestBook
     {

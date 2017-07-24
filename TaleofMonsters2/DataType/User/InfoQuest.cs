@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Log;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.MainItem;
 using TaleofMonsters.MainItem.Scenes;
@@ -146,10 +145,9 @@ namespace TaleofMonsters.DataType.User
         private void OnReceiveQuest(int qid)
         {
             var questConfig = ConfigData.GetQuestConfig(qid);
-            if (questConfig.SceneQuestId > 0)
+            if (!string.IsNullOrEmpty(questConfig.TriggerSceneQuest))
             {
-                SceneQuestConfig config = ConfigData.GetSceneQuestConfig(questConfig.SceneQuestId);
-                Scene.Instance.QuestNext(config.Ename);
+                Scene.Instance.QuestNext(questConfig.TriggerSceneQuest);
             }
 
             MainTipManager.AddTip(string.Format("接受任务-{0}", questConfig.Name), "White");
@@ -161,6 +159,23 @@ namespace TaleofMonsters.DataType.User
             var questConfig = ConfigData.GetQuestConfig(qid);
             MainTipManager.AddTip(string.Format("完成任务-{0}", questConfig.Name), "White");
             SoundManager.Play("System", "QuestCompleted.wav");
+        }
+
+        public void OnSceneQuestSuccess(string questName, bool partial)
+        {
+            if (partial)
+            {
+                return;
+            }
+
+            foreach (var runQuest in QuestRunning)
+            {
+                var config = ConfigData.GetQuestConfig(runQuest.QuestId);
+                if (IsQuestCanProgress(runQuest.QuestId) && config.SuccessSceneQuest == questName)
+                {
+                    AddQuestProgress(runQuest.QuestId, (byte) config.ProgressAdd);
+                }
+            }
         }
 
         public void OnSwitchScene(bool isWarp)

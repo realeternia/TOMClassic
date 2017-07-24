@@ -1,2 +1,2 @@
 ﻿a采集罂粟
-	equestp|123|10
+	equestp|123|1

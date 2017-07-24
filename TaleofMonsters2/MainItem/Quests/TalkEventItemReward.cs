@@ -12,6 +12,7 @@ using TaleofMonsters.DataType.Equips;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Peoples;
+using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.MainItem.Blesses;
@@ -49,6 +50,8 @@ namespace TaleofMonsters.MainItem.Quests
             {
                 result = evt.Children[0];//应该是一个say
             }
+
+            UserProfile.InfoQuest.OnSceneQuestSuccess(config.Ename, IsPartialSuccess());
         }
 
         private void DoReward(ref int index, string type, int times, RewardAction action)
@@ -60,6 +63,18 @@ namespace TaleofMonsters.MainItem.Quests
                     action(ref index);
                 }
             }
+        }
+
+        public bool IsPartialSuccess()
+        {
+            foreach (var item in evt.ParamList)
+            {
+                if (item != "x2" || item != "x3")
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private bool IsBonusAvail(string tp)

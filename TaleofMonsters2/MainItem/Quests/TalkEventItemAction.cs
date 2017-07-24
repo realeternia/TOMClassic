@@ -1,7 +1,5 @@
 ﻿using System.Drawing;
 using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Quests;
-using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
 using TaleofMonsters.MainItem.Scenes;
