@@ -78,7 +78,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Lib\ConfigData.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="NLVFS">
       <HintPath>Lib\NLVFS.dll</HintPath>
     </Reference>
