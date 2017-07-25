@@ -198,6 +198,8 @@ namespace TaleofMonsters.Forms
                 return CardConfigManager.GetRateCard(itemConfig.RandomCardRate, CardConfigManager.GetRandomAttrCard, info);
             if (type == 2)
                 return CardConfigManager.GetRateCard(itemConfig.RandomCardRate, CardConfigManager.GetRandomTypeCard, info);
+            if (type == 3)
+                return CardConfigManager.GetRateCard(itemConfig.RandomCardRate, CardConfigManager.GetRandomRaceCard, info);
             return CardConfigManager.GetRateCard(itemConfig.RandomCardRate, CardConfigManager.GetRandomCard, 0);
         }
     }
