@@ -58,7 +58,8 @@ namespace TaleofMonsters.Forms
             virtualRegion = new VirtualRegion(panelBack);
             for (int i = 0; i < points.Length; i++)
             {
-                virtualRegion.AddRegion(new PictureAnimRegion(i, points[i].X, points[i].Y, 40, 40, PictureRegionCellType.Item, ConfigDatas.ConfigData.GetTreasureWheelConfig(i + 1).Item)); 
+                var itemId = HItemBook.GetItemId(ConfigDatas.ConfigData.GetTreasureWheelConfig(i + 1).Item);
+                virtualRegion.AddRegion(new PictureAnimRegion(i, points[i].X, points[i].Y, 40, 40, PictureRegionCellType.Item, itemId)); 
             }
            
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
@@ -74,7 +75,8 @@ namespace TaleofMonsters.Forms
 
                 if (fuel == fuelAim)
                 {
-                    UserProfile.InfoBag.AddItem(ConfigDatas.ConfigData.GetTreasureWheelConfig((fuel % points.Length) + 1).Item, 1);
+                    var itemId = HItemBook.GetItemId(ConfigDatas.ConfigData.GetTreasureWheelConfig((fuel % points.Length) + 1).Item);
+                    UserProfile.InfoBag.AddItem(itemId, 1);
                     fuelAim = 0;
                 }
             }
@@ -136,7 +138,5 @@ namespace TaleofMonsters.Forms
         {
             Close();
         }
-
-
     }
 }

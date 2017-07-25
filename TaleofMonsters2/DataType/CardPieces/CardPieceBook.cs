@@ -2,6 +2,7 @@
 using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType.Items;
 
 namespace TaleofMonsters.DataType.CardPieces
 {
@@ -47,12 +48,12 @@ namespace TaleofMonsters.DataType.CardPieces
             {
                 MonsterConfig monsterConfig = ConfigData.GetMonsterConfig(id);
                 pieces[id] = new List<CardPieceRate>();
-                if (monsterConfig.DropId1 > 0)
-                    pieces[id].Add(CardPieceRate.FromCardPiece(monsterConfig.DropId1, monsterConfig.Star));
-                if (monsterConfig.DropId2 > 0)
-                    pieces[id].Add(CardPieceRate.FromCardPiece(monsterConfig.DropId2, monsterConfig.Star));
+                if (!string.IsNullOrEmpty(monsterConfig.DropId1))
+                    pieces[id].Add(CardPieceRate.FromCardPiece(HItemBook.GetItemId(monsterConfig.DropId1), monsterConfig.Star));
+                if (!string.IsNullOrEmpty(monsterConfig.DropId2))
+                    pieces[id].Add(CardPieceRate.FromCardPiece(HItemBook.GetItemId(monsterConfig.DropId2), monsterConfig.Star));
 
-                foreach (CardPieceRaceConfig cardPieceConfig in ConfigData.CardPieceRaceDict.Values)
+                foreach (var cardPieceConfig in ConfigData.CardPieceRaceDict.Values)
                 {
                     if (cardPieceConfig.Race != -1 && cardPieceConfig.Race != monsterConfig.Type)
                         continue;
@@ -89,9 +90,10 @@ namespace TaleofMonsters.DataType.CardPieces
         public static int[] GetCardIdsByItemId(int id)
         {
             List<int> data = new List<int>();
+            var config = ConfigData.GetHItemConfig(id);
             foreach (var monsterConfig in ConfigData.MonsterDict.Values)
             {
-                if (monsterConfig.DropId1==id || monsterConfig.DropId2 == id)
+                if (monsterConfig.DropId1== config.Ename || monsterConfig.DropId2 == config.Ename)
                 {
                     data.Add(monsterConfig.Id);
                 }

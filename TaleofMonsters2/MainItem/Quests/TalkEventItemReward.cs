@@ -113,20 +113,21 @@ namespace TaleofMonsters.MainItem.Quests
         
         private void RewardItem(ref int index)
         {
-            if (config.RewardItem > 0)
+            if (!string.IsNullOrEmpty(config.RewardItem))
             {
-                var isEquip = ConfigIdManager.IsEquip(config.RewardItem);
+                var itemId = HItemBook.GetItemId(config.RewardItem);
+                var isEquip = ConfigIdManager.IsEquip(itemId);
                 if (isEquip)
                 {
-                    UserProfile.InfoEquip.AddEquip(config.RewardItem, 24*60);
+                    UserProfile.InfoEquip.AddEquip(itemId, 24*60);
                     vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25, 60, 60,
-                                                        PictureRegionCellType.Equip, config.RewardItem));
+                                                        PictureRegionCellType.Equip, itemId));
                 }
                 else
                 {
-                    UserProfile.InfoBag.AddItem(config.RewardItem, 1);
+                    UserProfile.InfoBag.AddItem(itemId, 1);
                     vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25, 60, 60,
-                                                        PictureRegionCellType.Item, config.RewardItem));
+                                                        PictureRegionCellType.Item, itemId));
                 }
 
                 index++;

@@ -161,7 +161,7 @@ namespace TaleofMonsters.DataType.Items
                     countList.Add(1);
                 }
                 var form = new ItemPackageForm();
-                ((ItemPackageForm)form).SetItem(itemList.ToArray(), countList.ToArray());
+                form.SetItem(itemList.ToArray(), countList.ToArray());
                 PanelManager.DealPanel(form);
             }
 
@@ -170,18 +170,18 @@ namespace TaleofMonsters.DataType.Items
 
         private static bool UseGift(int id)
         {
-            var items = ConfigData.GetItemGiftConfig(id).Items;
+            var config = ConfigData.GetItemGiftConfig(id);
             List<int> itemList = new List<int>();
             List<int> countList = new List<int>();
-            for (int i = 0; i < items.Count; i++)
+            for (int i = 0; i < config.Items.Length; i++)
             {
-                var item = items[i];
-                UserProfile.InfoBag.AddItem(item.Id, item.Value);
-                itemList.Add(item.Id);
-                countList.Add(item.Value);
+                var itemId = HItemBook.GetItemId(config.Items[i]);
+                UserProfile.InfoBag.AddItem(itemId, config.ItemCount[i]);
+                itemList.Add(itemId);
+                countList.Add(config.ItemCount[i]);
             }
             var form = new ItemPackageForm();
-            ((ItemPackageForm)form).SetItem(itemList.ToArray(), countList.ToArray());
+            form.SetItem(itemList.ToArray(), countList.ToArray());
             PanelManager.DealPanel(form);
             return true;
         }

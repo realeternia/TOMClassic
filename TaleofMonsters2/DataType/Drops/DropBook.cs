@@ -15,9 +15,9 @@ namespace TaleofMonsters.DataType.Drops
             
             for (int j = 0; j < dropConfig.Count; j++)
             {
-                if (dropConfig.Items.Count > 0)
+                if (dropConfig.Items.Length > 0)
                 {
-                    DropItems(dropConfig.Items, items);
+                    DropItems(dropConfig.Items, dropConfig.ItemRate, items);
                 }
                 else if (dropConfig.EquipQualityMin > 0 || dropConfig.EquipQualityMax > 0)
                 {
@@ -31,16 +31,17 @@ namespace TaleofMonsters.DataType.Drops
             return items;
         }
 
-        private static void DropItems(RLIdValueList itemConfig, List<int> items)
+        private static void DropItems(string[] dropItems, int[] rates, List<int> items)
         {
             int roll = MathTool.GetRandom(100);
             int sum = 0;
-            for (int i = 0; i < itemConfig.Count; i++)
+            for (int i = 0; i < dropItems.Length; i++)
             {
-                sum += itemConfig[i].Value;
+                sum += rates[i];
                 if (sum > roll)
                 {
-                    items.Add(itemConfig[i].Id);
+                    var itemId = HItemBook.GetItemId(dropItems[i]);
+                    items.Add(itemId);
                     break;
                 }
             }

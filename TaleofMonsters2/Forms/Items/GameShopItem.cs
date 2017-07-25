@@ -62,8 +62,9 @@ namespace TaleofMonsters.Forms.Items
 
             if (id != 0)
             {
-                virtualRegion.SetRegionKey(1, gameShopConfig.ItemId);
-                var isEquip = ConfigIdManager.IsEquip(gameShopConfig.ItemId);
+                var eid = HItemBook.GetItemId(gameShopConfig.Item);
+                virtualRegion.SetRegionKey(1, eid);
+                var isEquip = ConfigIdManager.IsEquip(eid);
                 virtualRegion.SetRegionType(1, !isEquip ? PictureRegionCellType.Item : PictureRegionCellType.Equip);
             }
 
@@ -77,32 +78,35 @@ namespace TaleofMonsters.Forms.Items
             {
                 GameShopConfig gameShopConfig = ConfigData.GetGameShopConfig(productId);
                 Image image =null;
-                var isEquip = ConfigIdManager.IsEquip(gameShopConfig.ItemId);
+                var eid = HItemBook.GetItemId(gameShopConfig.Item);
+                var isEquip = ConfigIdManager.IsEquip(eid);
                 if (!isEquip)
                 {
-                    image = HItemBook.GetPreview(gameShopConfig.ItemId);
+                    image = HItemBook.GetPreview(eid);
                 }
                 else
                 {
-                    Equip equip = new Equip(gameShopConfig.ItemId);
+                    Equip equip = new Equip(eid);
                     image = equip.GetPreview();
                 }
-                tooltip.Show(image, parent, mx, my, gameShopConfig.ItemId);
+                tooltip.Show(image, parent, mx, my, eid);
             }
         }
 
         private void virtualRegion_RegionLeft()
         {
             GameShopConfig gameShopConfig = ConfigData.GetGameShopConfig(productId);
-            tooltip.Hide(parent, gameShopConfig.ItemId);
+            var eid = HItemBook.GetItemId(gameShopConfig.Item);
+            tooltip.Hide(parent, eid);
         }
 
         private void pictureBoxBuy_Click(object sender, EventArgs e)
         {
             GameShopConfig gameShopConfig = ConfigData.GetGameShopConfig(productId);
-            var itmConfig = ConfigData.GetHItemConfig(gameShopConfig.ItemId);
+            var eid = HItemBook.GetItemId(gameShopConfig.Item);
+            var itmConfig = ConfigData.GetHItemConfig(eid);
             var itemPrice = GameResourceBook.OutGoldSellItem(itmConfig.Rare, itmConfig.ValueFactor);
-            PopBuyProduct.Show(gameShopConfig.ItemId, (int)Math.Max(1, itemPrice / GameConstants.DiamondToGold));
+            PopBuyProduct.Show(eid, (int)Math.Max(1, itemPrice / GameConstants.DiamondToGold));
         }
 
         public void Draw(Graphics g)
@@ -116,25 +120,27 @@ namespace TaleofMonsters.Forms.Items
                 GameShopConfig gameShopConfig = ConfigData.GetGameShopConfig(productId);
                 string name;
                 string fontcolor;
-                var isEquip = ConfigIdManager.IsEquip(gameShopConfig.ItemId);
-                if (!isEquip)
+                uint price = 0;
+                var eid = HItemBook.GetItemId(gameShopConfig.Item);
+                var isEquip = ConfigIdManager.IsEquip(eid);
+                if (isEquip)
                 {
-                    HItemConfig itemConfig = ConfigData.GetHItemConfig(gameShopConfig.ItemId);
-                    name = itemConfig.Name;
-                    fontcolor = HSTypes.I2RareColor(itemConfig.Rare);
+                    EquipConfig equipConfig = ConfigData.GetEquipConfig(eid);
+                    name = equipConfig.Name;
+                    fontcolor = HSTypes.I2QualityColor(equipConfig.Quality);
+                    price = GameResourceBook.OutGoldSellItem(equipConfig.Quality, 100);
                 }
                 else
                 {
-                    EquipConfig equipConfig = ConfigData.GetEquipConfig(gameShopConfig.ItemId);
-                    name = equipConfig.Name;
-                    fontcolor = HSTypes.I2QualityColor(equipConfig.Quality);
+                    HItemConfig itemConfig = ConfigData.GetHItemConfig(eid);
+                    name = itemConfig.Name;
+                    fontcolor = HSTypes.I2RareColor(itemConfig.Rare);
+                    price = GameResourceBook.OutGoldSellItem(itemConfig.Rare, itemConfig.ValueFactor);
                 }
                 Font fontsong = new Font("宋体", 9*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
                 Brush brush = new SolidBrush(Color.FromName(fontcolor));
                 g.DrawString(name, fontsong, brush, x + 76, y + 9);
                 brush.Dispose();
-                var itmConfig = ConfigData.GetHItemConfig(gameShopConfig.ItemId);
-                var price = GameResourceBook.OutGoldSellItem(itmConfig.Rare, itmConfig.ValueFactor);
                 g.DrawString(string.Format("{0,3:D}", Math.Max(1, price / GameConstants.DiamondToGold)), fontsong, Brushes.PaleTurquoise, x + 80, y + 37);
                 fontsong.Dispose();
                 g.DrawImage(HSIcons.GetIconsByEName("res8"), x + 110, y + 35, 16, 16);

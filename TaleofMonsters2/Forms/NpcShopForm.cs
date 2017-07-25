@@ -3,12 +3,15 @@ using System.Drawing;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Forms.Items;
 using ConfigDatas;
+using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Scenes;
 
 namespace TaleofMonsters.Forms
 {
     internal sealed partial class NpcShopForm : BasePanel
     {
+        private const int MaxCellCount = 6;
+
         private int[] items;
         private int page;
         private ShopItem[] itemControls;
@@ -34,25 +37,25 @@ namespace TaleofMonsters.Forms
             items = new int[shopInfo.SellTable.Length];
             for (int i = 0; i < items.Length; i++)
             {
-                items[i] = shopInfo.SellTable[i];
+                items[i] = HItemBook.GetItemId(shopInfo.SellTable[i]);
             }
-            itemControls = new ShopItem[6];
-            for (int i = 0; i < 6; i++)
+            itemControls = new ShopItem[MaxCellCount];
+            for (int i = 0; i < MaxCellCount; i++)
             {
                 itemControls[i] = new ShopItem(this, 8 + (i % 2) * 142, 75 + (i / 2) * 55, 143, 56);
                 itemControls[i].Init(shopInfo.MoneyType);
             }
-            nlPageSelector1.TotalPage = (items.Length - 1) / 6 + 1;
+            nlPageSelector1.TotalPage = (items.Length - 1) / MaxCellCount + 1;
             RefreshInfo();
         }
 
         private void RefreshInfo()
         {
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < MaxCellCount; i++)
             {
-                if (page*6 + i < items.Length)
+                if (page* MaxCellCount + i < items.Length)
                 {
-                    itemControls[i].RefreshData(items[page*6 + i]);
+                    itemControls[i].RefreshData(items[page* MaxCellCount + i]);
                 }
                 else
                 {

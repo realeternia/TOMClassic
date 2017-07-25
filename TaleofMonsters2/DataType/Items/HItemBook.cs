@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
 using NarlonLib.Drawing;
+using NarlonLib.Log;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
@@ -36,6 +38,34 @@ namespace TaleofMonsters.DataType.Items
 
             var rareList = rareMidDict[group][rare];
             return rareList[MathTool.GetRandom(rareList.Count)];
+        }
+
+        private static Dictionary<string, int> itemNameIdDict;
+        public static int GetItemId(string ename)
+        {
+            if (itemNameIdDict == null)
+            {
+                itemNameIdDict = new Dictionary<string, int>();
+                foreach (var hItemConfig in ConfigData.HItemDict.Values)
+                {
+                    if (itemNameIdDict.ContainsKey(hItemConfig.Ename))
+                    {
+                        NLog.Warn("GetItemId key={0} exsited", hItemConfig.Ename);
+                        continue;
+                    }
+                    itemNameIdDict[hItemConfig.Ename] = hItemConfig.Id;
+                }
+                foreach (var hItemConfig in ConfigData.EquipDict.Values)
+                {
+                    if (itemNameIdDict.ContainsKey(hItemConfig.Ename))
+                    {
+                        NLog.Warn("GetItemId key={0} exsited", hItemConfig.Ename);
+                        continue;
+                    }
+                    itemNameIdDict[hItemConfig.Ename] = hItemConfig.Id;
+                }
+            }
+            return itemNameIdDict[ename];
         }
 
         public static Image GetHItemImage(int id)
