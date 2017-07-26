@@ -2,7 +2,7 @@ using ConfigDatas;
 
 namespace TaleofMonsters.DataType.CardPieces
 {
-    public struct CardPieceRate
+    internal struct CardPieceRate
     {
         public int ItemId { get; private set; }
         public int Rate { get; private set; }//万分之概率

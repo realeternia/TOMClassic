@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
-using ConfigDatas;
 using NarlonLib.Log;
-using NarlonLib.Math;
 using NarlonLib.Tools;
 using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.MainItem.Scenes.SceneRules
 {
-    public class SceneRuleCommon : ISceneRule
+    internal class SceneRuleCommon : ISceneRule
     {
         private int mapId;
 

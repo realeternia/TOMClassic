@@ -1,5 +1,4 @@
 ﻿using TaleofMonsters.Config;
-using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.User.Db;
 
 namespace TaleofMonsters.DataType.Decks

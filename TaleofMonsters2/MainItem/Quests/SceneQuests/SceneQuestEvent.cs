@@ -2,7 +2,7 @@
 
 namespace TaleofMonsters.MainItem.Quests.SceneQuests
 {
-    public class SceneQuestEvent : SceneQuestBlock
+    internal class SceneQuestEvent : SceneQuestBlock
     {
         public string Type { get; set; }
         public List<string> ParamList { get; set; }

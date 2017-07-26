@@ -8,7 +8,7 @@ using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.MainItem.Quests.SceneQuests
 {
-    public class SceneQuestAnswer : SceneQuestBlock
+    internal class SceneQuestAnswer : SceneQuestBlock
     {
         public SceneQuestAnswer(int eid, int lv, string s, int depth, int line)
             : base(eid, lv, s, depth, line)

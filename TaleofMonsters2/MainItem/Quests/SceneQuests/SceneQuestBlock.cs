@@ -2,7 +2,7 @@
 
 namespace TaleofMonsters.MainItem.Quests.SceneQuests
 {
-    public class SceneQuestBlock
+    internal class SceneQuestBlock
     {
         protected int eventId;
 

@@ -101,7 +101,7 @@
         }
         public static string I2EquipSlotType(int id)
         {
-            string[] rt = { "", "主楼", "旗帜", "武器", "城墙" , "建筑" };
+            string[] rt = { "", "主楼", "旗帜", "武器", "城墙" , "附楼" };
             return rt[id];
         }
 

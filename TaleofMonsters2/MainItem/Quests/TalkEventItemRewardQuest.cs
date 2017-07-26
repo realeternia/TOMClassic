@@ -87,7 +87,7 @@ namespace TaleofMonsters.MainItem.Quests
 
                 index++;
             }
-            if (questConfig.RewardDrop > 0)
+            if (!string.IsNullOrEmpty(questConfig.RewardDrop))
             {
                 var itemList = DropBook.GetDropItemList(questConfig.RewardDrop);
                 foreach (var itemId in itemList)

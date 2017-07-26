@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Math;
+using TaleofMonsters.DataType.Drops;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
 
@@ -41,8 +42,9 @@ namespace TaleofMonsters.DataType.Peoples
 
             int roll = MathTool.GetRandom(1000);
             int sum = 0;
-            foreach (var itemId in peopleConfig.DropItem)
+            foreach (var item in peopleConfig.DropItem)
             {
+                var itemId = DropBook.GetDropId(item);
                 sum += GetItemDropRate(itemId);
                 if (roll <= sum)
                     return itemId;

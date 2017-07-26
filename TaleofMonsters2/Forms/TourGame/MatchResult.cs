@@ -4,9 +4,9 @@ namespace TaleofMonsters.Forms.TourGame
 {
     public class MatchResult
     {
-         [FieldIndex(Index = 1)]
+        [FieldIndex(Index = 1)]
         public int Winner;
-         [FieldIndex(Index = 2)]
+        [FieldIndex(Index = 2)]
         public int Loser;
 
         public MatchResult()

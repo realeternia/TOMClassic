@@ -136,16 +136,16 @@ namespace TaleofMonsters.DataType.Items
                 return false;
             }
             form = new CardBagForm();
-            ((CardBagForm)form).SetEffect(itemConfig.Id);
+            ((CardBagForm)form).SetData(itemConfig.Id);
             PanelManager.DealPanel(form);
 
             return true;
         }
         public static bool UseDropItem(ItemConsumerConfig itemConfig)
         {
-            if (itemConfig.DropId > 0)
+            if (!string.IsNullOrEmpty(itemConfig.DropItem))
             {
-                var itemList = DropBook.GetDropItemList(itemConfig.DropId);
+                var itemList = DropBook.GetDropItemList(itemConfig.DropItem);
                 var countList = new List<int>();
                 foreach (var itemId in itemList)
                 {

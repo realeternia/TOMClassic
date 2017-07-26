@@ -10,7 +10,7 @@ namespace TaleofMonsters.Forms.MiniGame
 {
     internal partial class MGBase : BasePanel
     {
-        public class MinigameRank
+        internal class MinigameRank
         {
             public static int S = 3;
             public static int A = 2;

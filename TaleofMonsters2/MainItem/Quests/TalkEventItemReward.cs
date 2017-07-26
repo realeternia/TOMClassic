@@ -132,7 +132,7 @@ namespace TaleofMonsters.MainItem.Quests
 
                 index++;
             }
-            if (config.RewardDrop > 0)
+            if (!string.IsNullOrEmpty(config.RewardDrop))
             {
                 var itemList = DropBook.GetDropItemList(config.RewardDrop);
                 foreach (var itemId in itemList)

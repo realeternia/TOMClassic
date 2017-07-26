@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ConfigDatas;
+using NarlonLib.Log;
 using NarlonLib.Math;
 using TaleofMonsters.DataType.Equips;
 using TaleofMonsters.DataType.Items;
@@ -8,6 +9,30 @@ namespace TaleofMonsters.DataType.Drops
 {
     public static class DropBook
     {
+        private static Dictionary<string, int> itemNameIdDict;
+        public static int GetDropId(string ename)
+        {
+            if (itemNameIdDict == null)
+            {
+                itemNameIdDict = new Dictionary<string, int>();
+                foreach (var hItemConfig in ConfigData.DropDict.Values)
+                {
+                    if (itemNameIdDict.ContainsKey(hItemConfig.Ename))
+                    {
+                        NLog.Warn("GetDropId key={0} exsited", hItemConfig.Ename);
+                        continue;
+                    }
+                    itemNameIdDict[hItemConfig.Ename] = hItemConfig.Id;
+                }
+            }
+            return itemNameIdDict[ename];
+        }
+
+        public static List<int> GetDropItemList(string groupName)
+        {
+            return GetDropItemList(GetDropId(groupName));
+        }
+
         public static List<int> GetDropItemList(int groupId)
         {
             List<int> items = new List<int>();
