@@ -3,8 +3,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
-using NarlonLib.Math;
-using NarlonLib.Tools;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
@@ -200,22 +198,15 @@ namespace TaleofMonsters.Forms
         private int UseScard()
         {
             var consumerConfig = ConfigData.GetItemConsumerConfig(itemId);
-            if (consumerConfig.RandomCardCatalog != null && consumerConfig.RandomCardCatalog.Length > 0)
-            {
-                var type = consumerConfig.RandomCardCatalog[1];
-                var info = consumerConfig.RandomCardCatalog[2];
-                if (type == 1)
-                    return CardConfigManager.GetRateCard(consumerConfig.RandomCardRate, CardConfigManager.GetRandomAttrCard, info);
-                if (type == 2)
-                    return CardConfigManager.GetRateCard(consumerConfig.RandomCardRate, CardConfigManager.GetRandomTypeCard, info);
-                if (type == 3)
-                    return CardConfigManager.GetRateCard(consumerConfig.RandomCardRate, CardConfigManager.GetRandomRaceCard, info);
-                return CardConfigManager.GetRateCard(consumerConfig.RandomCardRate, CardConfigManager.GetRandomCard, 0);
-            }
-            else
-            {
-                return NLRandomPicker<int>.RandomPickN(consumerConfig.RandomCardIds, Array.ConvertAll(consumerConfig.RandomCardRate, input => (float)input/1000), 1)[0];
-            }
+            var type = consumerConfig.RandomCardCatalog[1];
+            var info = consumerConfig.RandomCardCatalog[2];
+            if (type == 1)
+                return CardConfigManager.GetRateCard(consumerConfig.RandomCardRate, CardConfigManager.GetRandomAttrCard, info);
+            if (type == 2)
+                return CardConfigManager.GetRateCard(consumerConfig.RandomCardRate, CardConfigManager.GetRandomTypeCard, info);
+            if (type == 3)
+                return CardConfigManager.GetRateCard(consumerConfig.RandomCardRate, CardConfigManager.GetRandomRaceCard, info);
+            return CardConfigManager.GetRateCard(consumerConfig.RandomCardRate, CardConfigManager.GetRandomCard, 0);
         }
     }
 }
