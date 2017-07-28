@@ -10,6 +10,7 @@ using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.Decks;
 using NarlonLib.Math;
+using TaleofMonsters.DataType.Items;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 
@@ -153,8 +154,8 @@ namespace TaleofMonsters.Forms
         {
             UserProfile.Profile = CreateProfile();            
             CreateCards();
-            UserProfile.InfoBag.AddItem(GameConstants.NewbieGift, 1);//新手礼包
-            UserProfile.InfoBag.AddItem(GameConstants.NewbieGiftElement + type*10, 10);//属性石
+            UserProfile.InfoBag.AddItem(HItemBook.GetItemId("xinshoulibao"), 1);//新手礼包
+            UserProfile.InfoBag.AddItem(HItemBook.GetItemId("scwu1") + type*10, 10);//属性石
             result = DialogResult.OK;
             Close();
         }

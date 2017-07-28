@@ -169,8 +169,11 @@ namespace TaleofMonsters.DataType.User
             if (Consumer.UseItemsById(pickItem.Type, type))
             {
                 var consumerConfig = ConfigData.GetItemConsumerConfig(pickItem.Type);
-                CdGroupStartTime[consumerConfig.CdGroup-1] = TimeTool.GetNowUnixTime();
-                CdGroupTime[consumerConfig.CdGroup-1] = TimeTool.GetNowUnixTime() + consumerConfig.CdTime;
+                if (consumerConfig.CdGroup > 0)
+                {
+                    CdGroupStartTime[consumerConfig.CdGroup - 1] = TimeTool.GetNowUnixTime();
+                    CdGroupTime[consumerConfig.CdGroup - 1] = TimeTool.GetNowUnixTime() + consumerConfig.CdTime;
+                }
                 pickItem.Value--;
                 if (pickItem.Value <= 0)
                     pickItem.Type = 0;

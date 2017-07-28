@@ -47,8 +47,6 @@ namespace TaleofMonsters.Core
         public const int MaxDropItemGetOnBattle = 10; //每次可以获得战利品数量上限
 
         public const int SkillTileId = 55610001;
-        public const int NewbieGift = 22031001;
-        public const int NewbieGiftElement = 22018001;
 
         public const float SceneTileGradient = 0.33f;
         public const int SceneTileStandardWidth = 100;

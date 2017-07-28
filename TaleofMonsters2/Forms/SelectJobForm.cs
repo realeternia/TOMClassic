@@ -13,7 +13,6 @@ using TaleofMonsters.DataType.Items;
 using TaleofMonsters.Forms.Items.Core;
 using ConfigDatas;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Others;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
 using TaleofMonsters.DataType.User;
@@ -122,28 +121,22 @@ namespace TaleofMonsters.Forms
                         }
                     }
                 }
-                if (jobConfig.InitialEquip != null)//初始道具
+                if (jobConfig.InitialEquip != null && jobConfig.InitialEquip.Length>0)//初始道具
                 {
-                    foreach (var eid in jobConfig.InitialEquip)
+                    foreach (var ename in jobConfig.InitialEquip)
                     {
-                        if (eid > 0)
-                        {
-                            virtualRegion.SetRegionType(imgIndex, PictureRegionCellType.Equip);
-                            virtualRegion.SetRegionKey(imgIndex++, eid);
-                            cellTypeList.Add(PictureRegionCellType.Equip);
-                        }
+                        virtualRegion.SetRegionType(imgIndex, PictureRegionCellType.Equip);
+                        virtualRegion.SetRegionKey(imgIndex++, HItemBook.GetItemId(ename));
+                        cellTypeList.Add(PictureRegionCellType.Equip);
                     }
                 }
-                if (jobConfig.InitialEquip != null)//初始道具
+                if (jobConfig.InitialItem != null && jobConfig.InitialItem.Length > 0)//初始道具
                 {
-                    foreach (var eid in jobConfig.InitialItem)
+                    foreach (var ename in jobConfig.InitialItem)
                     {
-                        if (eid > 0)
-                        {
-                            virtualRegion.SetRegionType(imgIndex, PictureRegionCellType.Item);
-                            virtualRegion.SetRegionKey(imgIndex++, eid);
-                            cellTypeList.Add(PictureRegionCellType.Item);
-                        }
+                        virtualRegion.SetRegionType(imgIndex, PictureRegionCellType.Item);
+                        virtualRegion.SetRegionKey(imgIndex++, HItemBook.GetItemId(ename));
+                        cellTypeList.Add(PictureRegionCellType.Item);
                     }
                 }
 #endregion
@@ -290,24 +283,18 @@ namespace TaleofMonsters.Forms
                     }
                 }
             }
-            if (jobConfig.InitialEquip != null) //初始道具
+            if (jobConfig.InitialEquip != null && jobConfig.InitialEquip.Length > 0) //初始道具
             {
-                foreach (var eid in jobConfig.InitialEquip)
+                foreach (var ename in jobConfig.InitialEquip)
                 {
-                    if (eid > 0)
-                    {
-                        user.InfoEquip.AddEquip(eid, 24*60*7);
-                    }
+                    user.InfoEquip.AddEquip(HItemBook.GetItemId(ename), 24 * 60 * 7);
                 }
             }
-            if (jobConfig.InitialEquip != null) //初始道具
+            if (jobConfig.InitialItem != null && jobConfig.InitialItem.Length > 0) //初始道具
             {
-                foreach (var eid in jobConfig.InitialItem)
+                foreach (var ename in jobConfig.InitialItem)
                 {
-                    if (eid > 0)
-                    {
-                        user.InfoBag.AddItem(eid, 1);
-                    }
+                    user.InfoBag.AddItem(HItemBook.GetItemId(ename), 1);
                 }
             }
         }
