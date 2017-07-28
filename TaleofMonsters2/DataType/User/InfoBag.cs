@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Core;
+using NarlonLib.Tools;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Achieves;
 using TaleofMonsters.DataType.Items;
@@ -16,6 +17,8 @@ namespace TaleofMonsters.DataType.User
         [FieldIndex(Index = 2)] public int Diamond;
         [FieldIndex(Index = 3)] public IntPair[] Items;
         [FieldIndex(Index = 4)] public int BagCount;
+        [FieldIndex(Index = 5)] public int[] CdGroupStartTime; //开始时间
+        [FieldIndex(Index = 6)] public int[] CdGroupTime; //到期时间
 
         public InfoBag()
         {
@@ -25,6 +28,8 @@ namespace TaleofMonsters.DataType.User
             {
                 Items[i] = new IntPair();
             }
+            CdGroupStartTime = new int[GameConstants.ItemCdGroupCount];
+            CdGroupTime = new int[GameConstants.ItemCdGroupCount];
         }
 
         public bool CheckResource(int[] resourceInfo)
@@ -163,6 +168,9 @@ namespace TaleofMonsters.DataType.User
 
             if (Consumer.UseItemsById(pickItem.Type, type))
             {
+                var consumerConfig = ConfigData.GetItemConsumerConfig(pickItem.Type);
+                CdGroupStartTime[consumerConfig.CdGroup] = TimeTool.GetNowUnixTime();
+                CdGroupTime[consumerConfig.CdGroup] = TimeTool.GetNowUnixTime() + consumerConfig.CdTime;
                 pickItem.Value--;
                 if (pickItem.Value <= 0)
                     pickItem.Type = 0;
@@ -282,6 +290,30 @@ namespace TaleofMonsters.DataType.User
             for (int i = BagCount; i < newSize; i++)
                 Items[i] = new IntPair();
             BagCount = newSize;
+        }
+
+        public float GetCdTimeRate(int itemId)
+        {
+            var canUse = ConfigData.GetHItemConfig(itemId).IsUsable;
+            if (canUse)
+            {
+                var consumerConfig = ConfigData.GetItemConsumerConfig(itemId);
+                var group = consumerConfig.CdGroup;
+                if (CdGroupStartTime[group-1] > 0)
+                {
+                    var nowTime = TimeTool.GetNowUnixTime();
+                    if (nowTime >= CdGroupTime[group - 1])
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        return (nowTime - CdGroupStartTime[group - 1]) /
+                          (CdGroupTime[group - 1] - CdGroupStartTime[group - 1]);
+                    }
+                }
+            }
+            return 0;
         }
     }
 }

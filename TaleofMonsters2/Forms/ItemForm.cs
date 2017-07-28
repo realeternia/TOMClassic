@@ -16,6 +16,8 @@ namespace TaleofMonsters.Forms
 {
     internal sealed partial class ItemForm : BasePanel
     {
+        private const int CellCountPerPage = 100;
+
         private int pageid;
         private bool isDirty;
         private bool show;
@@ -30,6 +32,8 @@ namespace TaleofMonsters.Forms
 
         private PopMenuItem popMenuItem;
         private PoperContainer popContainer;
+
+        private int[] itemCdRate = new int[CellCountPerPage]; //cd显示
 
         public ItemForm()
         {
@@ -55,9 +59,31 @@ namespace TaleofMonsters.Forms
         {
             base.Init(width, height);
             show = true;
-            nlPageSelector1.TotalPage = Math.Min((UserProfile.InfoBag.BagCount - 1) / 100 + 2, 9);
+            nlPageSelector1.TotalPage = Math.Min((UserProfile.InfoBag.BagCount - 1) / CellCountPerPage + 2, 9);
             nlPageSelector1.NoFresh = true;
             RefreshFrame();
+        }
+
+        public override void OnFrame(int tick, float timePass)
+        {
+            base.OnFrame(tick, timePass);
+
+            for(int i=0;i< CellCountPerPage; i++)
+            {
+                if (baseid + i >= UserProfile.InfoBag.BagCount)
+                    continue;
+
+                IntPair thing = UserProfile.InfoBag.Items[baseid + i];
+                if (thing.Type != 0)
+                {
+                    var rate = (int)(UserProfile.InfoBag.GetCdTimeRate(thing.Type)*100);
+                    if (rate != itemCdRate[i])
+                    {
+                        itemCdRate[i] = rate;
+                        Invalidate(new Rectangle((int) ((i%10)*31.2f + 5 + 6), (int) ((i/10)*31.8f + 3 + 36), 30, 30));
+                    }
+                }
+            }
         }
 
         private void RefreshFrame()
@@ -133,7 +159,7 @@ namespace TaleofMonsters.Forms
                         if (UserProfile.InfoBag.Items[baseid + tar].Type != 0)
                         {
                             HItemConfig itemConfig = ConfigData.GetHItemConfig(UserProfile.InfoBag.Items[baseid + tar].Type);
-                            myCursor.ChangeCursor("Item", String.Format("{0}.JPG", itemConfig.Url), 40, 40);
+                            myCursor.ChangeCursor("Item", string.Format("{0}.JPG", itemConfig.Url), 40, 40);
                             leftSelectTar = tar;
                             tooltip.Hide(this);
                         }
@@ -153,7 +179,7 @@ namespace TaleofMonsters.Forms
                                 UserProfile.InfoBag.SubResource(GameResourceType.Gold, pricecount);
                                 UserProfile.InfoBag.ResizeBag(UserProfile.InfoBag.BagCount+diff);
 
-                                nlPageSelector1.TotalPage = Math.Min((UserProfile.InfoBag.BagCount - 1) / 100 + 2, 9);
+                                nlPageSelector1.TotalPage = Math.Min((UserProfile.InfoBag.BagCount - 1) / CellCountPerPage + 2, 9);
                                 AddFlowCenter("背包扩容完成", "LimeGreen");
                             }
                         }
@@ -252,27 +278,26 @@ namespace TaleofMonsters.Forms
                 g.DrawImage(img, 0, 0, 324, 324);
                 img.Dispose();
                 font = new Font("Aril", 11*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-                for (int i = 0; i < 100; i++)
+                for (int i = 0; i < CellCountPerPage; i++)
                 {
-                    int imul = i/10;
                     if (baseid + i < UserProfile.InfoBag.BagCount)
                     {
                         IntPair thing = UserProfile.InfoBag.Items[baseid + i];
                         if (thing.Type != 0)
                         {
                             var itemConfig = ConfigData.GetHItemConfig(thing.Type);
-                            g.DrawImage(HItemBook.GetHItemImage(thing.Type), (i % 10) * 31.2F + 5, imul * 31.8F + 3, 30.0F, 30.0F);
-                            g.DrawString(thing.Value.ToString(), font, Brushes.Black, (i % 10) * 31.2F + 8, imul * 31.8F + 14);
-                            g.DrawString(thing.Value.ToString(), font, thing.Value == itemConfig.MaxPile ? Brushes.Tomato : Brushes.White, (i % 10) * 31.2F + 7, imul * 31.8F + 13);
+                            g.DrawImage(HItemBook.GetHItemImage(thing.Type), (i % 10) * 31.2f + 5, (i / 10) * 31.8f + 3, 30.0f, 30.0f);
+                            g.DrawString(thing.Value.ToString(), font, Brushes.Black, (i % 10) * 31.2f + 8, (i / 10) * 31.8f + 14);
+                            g.DrawString(thing.Value.ToString(), font, thing.Value == itemConfig.MaxPile ? Brushes.Tomato : Brushes.White, (i % 10) * 31.2f + 7, (i / 10) * 31.8f + 13);
 
                             var pen = new Pen(Color.FromName(HSTypes.I2RareColor(itemConfig.Rare)), 2);
-                            g.DrawRectangle(pen, (i % 10) * 31.2F + 5, imul * 31.8F + 3, 30.0F, 30.0F);
+                            g.DrawRectangle(pen, (i % 10) * 31.2f + 5, (i / 10) * 31.8f + 3, 30.0f, 30.0f);
                             pen.Dispose();
                         }
                     }
                     else
                     {
-                        g.DrawImage(HSIcons.GetIconsByEName("oth3"), (i % 10) * 31.2F + 8, imul * 31.8F + 4, 24.0F, 24.0F);
+                        g.DrawImage(HSIcons.GetIconsByEName("oth3"), (i % 10) * 31.2f + 8, (i / 10) * 31.8f + 4, 24.0f, 24.0f);
                     }
                 }
                 font.Dispose();
@@ -280,17 +305,28 @@ namespace TaleofMonsters.Forms
                 isDirty = false;
             }
             e.Graphics.DrawImage(tempImage, 6, 36);
+
+            Brush brush = new SolidBrush(Color.FromArgb(200, Color.Black));
+            for (int i = 0; i < itemCdRate.Length; i++)
+            {
+                if (itemCdRate[i] > 0)
+                {
+                    e.Graphics.FillRectangle(brush, (i % 10) * 31.2f + 5 + 6, (i/10) * 31.8f + 3 + 36, 30, 30 * itemCdRate[i] / 100);
+                }
+            }
+            brush.Dispose();
+
             int rect = tar;
             if (rect >= 0)
             {
                 if (baseid + rect < UserProfile.InfoBag.BagCount)
                 {
                     SolidBrush yellowbrush = new SolidBrush(Color.FromArgb(80, Color.Yellow));
-                    e.Graphics.FillRectangle(yellowbrush, (rect%10)*31.2F + 11, (rect/10)*31.8F + 39, 30.0F, 30.0F);
+                    e.Graphics.FillRectangle(yellowbrush, (rect%10)*31.2f + 11, (rect/10)*31.8f + 39, 30.0f, 30.0f);
                     yellowbrush.Dispose();
 
                     Pen yellowpen = new Pen(Brushes.Yellow, 2);
-                    e.Graphics.DrawRectangle(yellowpen, (rect%10)*31.2F + 11, (rect/10)*31.8F + 39, 30.0F, 30.0F);
+                    e.Graphics.DrawRectangle(yellowpen, (rect%10)*31.2f + 11, (rect/10)*31.8f + 39, 30.0f, 30.0f);
                     yellowpen.Dispose();
                 }
                 else
@@ -298,7 +334,7 @@ namespace TaleofMonsters.Forms
                     int tpoff = rect;
                     while (tpoff >= 0 && baseid + tpoff >= UserProfile.InfoBag.BagCount)
                     {
-                        e.Graphics.DrawImage(HSIcons.GetIconsByEName("oth4"), (tpoff % 10) * 31.2F + 14, (tpoff / 10) * 31.8F + 40, 24F, 24F);
+                        e.Graphics.DrawImage(HSIcons.GetIconsByEName("oth4"), (tpoff % 10) * 31.2f + 14, (tpoff / 10) * 31.8f + 40, 24f, 24f);
                         tpoff--;
                     }
                 }
@@ -308,7 +344,7 @@ namespace TaleofMonsters.Forms
         private void nlPageSelector1_PageChange(int pg)
         {
             pageid = pg;
-            baseid = pageid * 100;
+            baseid = pageid * CellCountPerPage;
             RefreshFrame();
         }
 

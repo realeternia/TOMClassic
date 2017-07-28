@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Items;
@@ -9,34 +8,22 @@ namespace TaleofMonsters.Forms.Items
 {
     internal class MiniItemViewItem
     {
-        public int itemPos;
         private int x;
         private int y;
-        private int id;
-        private Rectangle rect;
-        private int percent;
 
-        public int Id
-        {
-            get { return id; }
-        }
+        public int Id { get; private set; }
+        public int ItemPos { get; set; }
 
-        public Rectangle Rectangle
-        {
-            get {return rect;}
-        }
+        public Rectangle Rectangle { get; private set; }
 
-        public int Percent
-        {
-            set { percent = value; }
-        }
+        public int Percent { get; set; }
 
         public MiniItemViewItem(int id, int x, int y)
         {
-            this.id = id;
+            Id = id;
             this.x = x;
             this.y = y;
-            rect = new Rectangle(x, y, 35, 35);
+            Rectangle = new Rectangle(x, y, 35, 35);
         }
 
         public bool IsInArea(int mx, int my)
@@ -50,10 +37,10 @@ namespace TaleofMonsters.Forms.Items
             g.DrawImage(back, x+3, y+3, 32, 32);
             back.Dispose();
 
-            if (itemPos >= 0)
+            if (ItemPos >= 0)
             {
                 Font font = new Font("Aril", 11*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-                int itemId = UserProfile.InfoBag.Items[itemPos].Type;
+                int itemId = UserProfile.InfoBag.Items[ItemPos].Type;
                 if (enable)
                 {
                     g.DrawImage(HItemBook.GetHItemImage(itemId), x + 3, y + 3, 32, 32);
@@ -64,14 +51,14 @@ namespace TaleofMonsters.Forms.Items
                     g.DrawImage(HItemBook.GetHItemImage(itemId), ret, 0, 0, 64, 64, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
                 }
 
-                int count = UserProfile.InfoBag.Items[itemPos].Value;
+                int count = UserProfile.InfoBag.Items[ItemPos].Value;
                 g.DrawString(count.ToString(), font, Brushes.Black, x + 4, y + 4);
                 g.DrawString(count.ToString(), font, Brushes.White, x + 3, y + 3);
 
-                if (percent>1)
+                if (Percent>1)
                 {
                     Brush brush = new SolidBrush(Color.FromArgb(200, Color.Black));
-                    g.FillRectangle(brush, x, y, 35, 35*percent/100);
+                    g.FillRectangle(brush, x, y, 35, 35*Percent/100);
                     brush.Dispose();
                 }
 

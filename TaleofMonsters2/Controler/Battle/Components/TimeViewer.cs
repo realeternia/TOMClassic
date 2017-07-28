@@ -28,7 +28,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             isShow = true;
         }
 
-        internal void TimeGo(float roundT)
+        internal void OnFrame(float roundT)
         {
             float oldTime = time;
             //time += pastTime*10;//todo

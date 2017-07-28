@@ -13,6 +13,8 @@ namespace TaleofMonsters.Forms.Items
 {
     internal partial class MiniItemView : UserControl
     {
+        private const int CellCount = 6;
+
         private bool show;
         private int tar; //背包里的格子偏移
         private int page;
@@ -20,9 +22,8 @@ namespace TaleofMonsters.Forms.Items
         private HSCursor myCursor;
         private List<int> ids;
         private MiniItemViewItem[] items;
-        private const int cellCount = 6;
-        private const int cdCount = 11;
-        private int[] cds;
+
+        public int ItemSubType { get; set; } //只有某一子类别的道具可以进入这个背包
 
         public MiniItemView()
         {
@@ -30,9 +31,7 @@ namespace TaleofMonsters.Forms.Items
             tar = -1;
             myCursor = new HSCursor(this);
         }
-
-        public int ItemSubType { get; set; } //只有某一子类别的道具可以进入这个背包
-
+        
         public void Init()
         {
             show = true;
@@ -41,16 +40,12 @@ namespace TaleofMonsters.Forms.Items
             bitmapButtonLeft.NoUseDrawNine = true;
             this.bitmapButtonRight.ImageNormal = PicLoader.Read("Button.Panel", "NextButton.JPG");
             bitmapButtonRight.NoUseDrawNine = true;
-            items = new MiniItemViewItem[cellCount];
-            for (int i = 0; i < cellCount; i++)
+            items = new MiniItemViewItem[CellCount];
+            for (int i = 0; i < CellCount; i++)
             {
                 items[i] = new MiniItemViewItem(i+1, 30 * (i % 2), i / 2 * 35);
             }
-            cds = new int[cdCount];
-            for (int i = 0; i < cellCount; i++)
-            {
-                cds[i] = 0;
-            }
+
             RefreshList();
         }
 
@@ -75,40 +70,32 @@ namespace TaleofMonsters.Forms.Items
 
         private void RefreshItems()
         {
-            for (int i = page * cellCount; i < page * cellCount + cellCount; i++)
+            for (int i = page * CellCount; i < page * CellCount + CellCount; i++)
             {
                 if (i < ids.Count)
                 {
-                    items[i % cellCount].itemPos = ids[i];
+                    items[i % CellCount].ItemPos = ids[i];
                 }
                 else
                 {
-                    items[i % cellCount].itemPos = -1;
+                    items[i % CellCount].ItemPos = -1;
                 }
             }
         }
 
-        public void NewTick()
+        public void OnFrame()
         {
             foreach (var item in items)
             {
-                if (item.itemPos < 0)
+                if (item.ItemPos < 0)
                     continue;
 
-                int itid = UserProfile.InfoBag.Items[item.itemPos].Type;
-                HItemConfig itemConfig = ConfigData.GetHItemConfig(itid);
-                if (itemConfig.CdGroup > 0 && cds[itemConfig.CdGroup] > 0)
+                int itemId = UserProfile.InfoBag.Items[item.ItemPos].Type;
+                var rate = (int)(UserProfile.InfoBag.GetCdTimeRate(itemId)*100);
+                if (rate != item.Percent)
                 {
-                    item.Percent = cds[itemConfig.CdGroup] * 100 / CdGroup.GetCDTime(itemConfig.CdGroup);
+                    item.Percent = rate;
                     Invalidate(item.Rectangle);
-                }
-            }
-
-            for (int i = 0; i < cdCount; i++)
-            {
-                if (cds[i] > 0)
-                {
-                    cds[i]--;
                 }
             }
         }
@@ -139,7 +126,7 @@ namespace TaleofMonsters.Forms.Items
             {
                 if (item.IsInArea(e.X, e.Y))
                 {
-                    temp = item.itemPos;
+                    temp = item.ItemPos;
                     index = item.Id-1;
                     break;
                 }
@@ -166,16 +153,14 @@ namespace TaleofMonsters.Forms.Items
             if (!Enabled || tar == -1)
                 return;
 
-            HItemConfig itemConfig = ConfigData.GetHItemConfig(UserProfile.InfoBag.Items[tar].Type);
+            var itemId = UserProfile.InfoBag.Items[tar].Type;
+            HItemConfig itemConfig = ConfigData.GetHItemConfig(itemId);
             if (itemConfig.IsUsable)
             {
-                if (itemConfig.CdGroup > 0)
-                {
-                    if (cds[itemConfig.CdGroup] > 0)
-                    {
-                        return;
-                    }
-                    cds[itemConfig.CdGroup] = CdGroup.GetCDTime(itemConfig.CdGroup);
+                var rate = UserProfile.InfoBag.GetCdTimeRate(itemId);
+                if (rate > 0)
+                {//cd中
+                    return;
                 }
                 int count = UserProfile.InfoBag.Items[tar].Value;
                 UserProfile.InfoBag.UseItemByPos(tar, ItemSubType);

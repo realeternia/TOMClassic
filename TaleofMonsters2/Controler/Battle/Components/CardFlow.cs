@@ -136,7 +136,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             DoubleBuffered = true;
         }
         
-        public void NewTick()
+        public void OnFrame()
         {
             if (counter.OnTick())
             {

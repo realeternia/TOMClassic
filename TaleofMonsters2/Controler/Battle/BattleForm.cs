@@ -214,9 +214,9 @@ namespace TaleofMonsters.Controler.Battle
                 }
 
                 CheckCursor();
-                miniItemView1.NewTick();
-                timeViewer1.TimeGo(BattleManager.Instance.Round);
-                cardFlow1.NewTick();
+                miniItemView1.OnFrame();
+                timeViewer1.OnFrame(BattleManager.Instance.Round);
+                cardFlow1.OnFrame();
 
                 BattleManager.Instance.Next();
             }

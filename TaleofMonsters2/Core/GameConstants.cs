@@ -15,6 +15,7 @@ namespace TaleofMonsters.Core
         public const int QuestionCooldownDura = 15;
         public const int EquipOffCount = 60;
         public const int EquipOnCount = 9;
+        public const int ItemCdGroupCount = 10;
 
         public const float DrawManaTime = 1f;
         public const float DrawManaTimeFast = 0.5f;

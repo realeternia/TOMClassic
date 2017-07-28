@@ -280,7 +280,6 @@
     <Compile Include="DataType\CustomTypes.cs" />
     <Compile Include="DataType\Equips\Equip.cs" />
     <Compile Include="DataType\HeroSkills\HeroPowerBook.cs" />
-    <Compile Include="DataType\Items\CdGroup.cs" />
     <Compile Include="Config\CardConfigManager.cs" />
     <Compile Include="Core\DbSerializer.cs" />
     <Compile Include="Core\HSImageAttributes.cs" />
