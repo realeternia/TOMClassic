@@ -58,7 +58,7 @@ namespace TaleofMonsters.Forms.Items
                 if (Percent>1)
                 {
                     Brush brush = new SolidBrush(Color.FromArgb(200, Color.Black));
-                    g.FillRectangle(brush, x, y, 35, 35*Percent/100);
+                    g.FillRectangle(brush, x, y, 35, 35*(100-Percent)/100);
                     brush.Dispose();
                 }
 

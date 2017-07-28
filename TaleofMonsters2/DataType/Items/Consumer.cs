@@ -73,7 +73,7 @@ namespace TaleofMonsters.DataType.Items
             {
                 UserProfile.InfoBasic.SetSceneMove(itemConfig.MoveAdd, itemConfig.MoveRound);
             }
-            if (!String.IsNullOrEmpty(itemConfig.Instruction))
+            if (!string.IsNullOrEmpty(itemConfig.Instruction))
             {
                 CheckInstruction(itemConfig.Instruction);
             }

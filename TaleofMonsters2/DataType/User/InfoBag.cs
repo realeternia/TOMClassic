@@ -169,8 +169,8 @@ namespace TaleofMonsters.DataType.User
             if (Consumer.UseItemsById(pickItem.Type, type))
             {
                 var consumerConfig = ConfigData.GetItemConsumerConfig(pickItem.Type);
-                CdGroupStartTime[consumerConfig.CdGroup] = TimeTool.GetNowUnixTime();
-                CdGroupTime[consumerConfig.CdGroup] = TimeTool.GetNowUnixTime() + consumerConfig.CdTime;
+                CdGroupStartTime[consumerConfig.CdGroup-1] = TimeTool.GetNowUnixTime();
+                CdGroupTime[consumerConfig.CdGroup-1] = TimeTool.GetNowUnixTime() + consumerConfig.CdTime;
                 pickItem.Value--;
                 if (pickItem.Value <= 0)
                     pickItem.Type = 0;
@@ -294,12 +294,14 @@ namespace TaleofMonsters.DataType.User
 
         public float GetCdTimeRate(int itemId)
         {
+            if (itemId == 0)
+                return 0;
             var canUse = ConfigData.GetHItemConfig(itemId).IsUsable;
             if (canUse)
             {
                 var consumerConfig = ConfigData.GetItemConsumerConfig(itemId);
                 var group = consumerConfig.CdGroup;
-                if (CdGroupStartTime[group-1] > 0)
+                if (group > 0 && CdGroupStartTime[group-1] > 0)
                 {
                     var nowTime = TimeTool.GetNowUnixTime();
                     if (nowTime >= CdGroupTime[group - 1])
@@ -308,8 +310,7 @@ namespace TaleofMonsters.DataType.User
                     }
                     else
                     {
-                        return (nowTime - CdGroupStartTime[group - 1]) /
-                          (CdGroupTime[group - 1] - CdGroupStartTime[group - 1]);
+                        return (float)(nowTime - CdGroupStartTime[group - 1]) / (CdGroupTime[group - 1] - CdGroupStartTime[group - 1]);
                     }
                 }
             }
