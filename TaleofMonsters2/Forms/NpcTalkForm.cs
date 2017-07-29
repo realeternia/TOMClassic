@@ -210,6 +210,7 @@ namespace TaleofMonsters.Forms
                             if (word.Prefix.StartsWith("questfin")) icon = "npc3";
                             else if (word.Prefix.StartsWith("quest")) icon = "npc1";
                             else if (word.Prefix.StartsWith("rival")) icon = "tsk1";
+                            else if (word.Prefix.StartsWith("shop")) icon = "oth7";
                             if (icon != "")
                             {
                                 e.Graphics.DrawImage(HSIcons.GetIconsByEName(icon), textOff, id * 20 + Height - 10 - answerList.Count * 20 + 2, 18, 18);

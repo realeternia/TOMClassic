@@ -30,33 +30,34 @@ namespace TaleofMonsters.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.bitmapButtonClose2 = new NarlonLib.Control.BitmapButton();
-
+            this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
             this.SuspendLayout();
             // 
-            // bitmapButtonClose2
+            // bitmapButtonClose
             // 
-            this.bitmapButtonClose2.BorderColor = System.Drawing.Color.DarkBlue;
-            this.bitmapButtonClose2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButtonClose2.Image = null;
-            this.bitmapButtonClose2.ImageNormal = null;
-            this.bitmapButtonClose2.Location = new System.Drawing.Point(265, 45);
-            this.bitmapButtonClose2.Name = "bitmapButtonClose2";
-            this.bitmapButtonClose2.Size = new System.Drawing.Size(24, 24);
-            this.bitmapButtonClose2.TabIndex = 23;
-            this.bitmapButtonClose2.Text = "";
-            this.bitmapButtonClose2.UseVisualStyleBackColor = true;
-            this.bitmapButtonClose2.Click += new System.EventHandler(this.pictureBoxCancel_Click);
+            this.bitmapButtonClose.BorderColor = System.Drawing.Color.DarkBlue;
+            this.bitmapButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bitmapButtonClose.IconImage = null;
+            this.bitmapButtonClose.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonClose.IconXY = new System.Drawing.Point(0, 0);
+            this.bitmapButtonClose.ImageNormal = null;
+            this.bitmapButtonClose.Location = new System.Drawing.Point(386, 38);
+            this.bitmapButtonClose.Name = "bitmapButtonClose";
+            this.bitmapButtonClose.NoUseDrawNine = false;
+            this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
+            this.bitmapButtonClose.TabIndex = 23;
+            this.bitmapButtonClose.TextOffX = 0;
+            this.bitmapButtonClose.UseVisualStyleBackColor = true;
+            this.bitmapButtonClose.Click += new System.EventHandler(this.pictureBoxCancel_Click);
             // 
             // NpcShopForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Transparent;
-            this.Controls.Add(this.bitmapButtonClose2);
+            this.Controls.Add(this.bitmapButtonClose);
             this.DoubleBuffered = true;
             this.Name = "NpcShopForm";
-            this.Size = new System.Drawing.Size(301, 278);
+            this.Size = new System.Drawing.Size(445, 263);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.ShopWindow_Paint);
             this.ResumeLayout(false);
 
@@ -64,6 +65,6 @@ namespace TaleofMonsters.Forms
 
         #endregion
 
-        private BitmapButton bitmapButtonClose2;
+        private BitmapButton bitmapButtonClose;
     }
 }
