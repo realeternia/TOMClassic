@@ -109,7 +109,9 @@ namespace TaleofMonsters.Forms
 
             font = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             string str = string.Format("我的钻石:  {0} ", UserProfile.InfoBag.Diamond);
+            e.Graphics.DrawString(str, font, Brushes.White, 20, 372);
             var strWid = TextRenderer.MeasureText(e.Graphics, str, font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
+            font.Dispose();
             e.Graphics.DrawImage(HSIcons.GetIconsByEName("res8"), 20 + strWid, 371, 14, 14);
         }
 

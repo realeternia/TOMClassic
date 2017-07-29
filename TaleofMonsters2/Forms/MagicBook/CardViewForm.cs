@@ -329,7 +329,7 @@ namespace TaleofMonsters.Forms.MagicBook
             font.Dispose();
 
             var quality = cardConfigData.Quality + 1;
-            g.DrawImage(HSIcons.GetIconsByEName("gem" + quality), x + cardWidth / 2 - 8, y + cardHeight - 20, 16, 16);
+            g.DrawImage(HSIcons.GetIconsByEName("gem" + (int)quality), x + cardWidth / 2 - 8, y + cardHeight - 20, 16, 16);
 
             var jobId = cardConfigData.JobId;
             if (jobId > 0)

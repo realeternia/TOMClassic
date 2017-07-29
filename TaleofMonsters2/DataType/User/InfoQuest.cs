@@ -137,7 +137,7 @@ namespace TaleofMonsters.DataType.User
                 }
                 else
                 {
-                    MainTipManager.AddTip(string.Format("任务进度-{0} {1}/10", questConfig.Name, questRun.Progress), "White");
+                    MainTipManager.AddTip(string.Format("任务进度-{0} {1}%", questConfig.Name, questRun.Progress*10), "White");
                 }
             }
         }

@@ -148,7 +148,7 @@ namespace TaleofMonsters.Forms
                     e.Graphics.DrawString(("★★★★★★★★★★").Substring(10 - cardConfigData.Star), fontStar, Brushes.Yellow, tx + 5, ty + 10);
                     fontStar.Dispose();
                     var quality = cardConfigData.Quality + 1;
-                    e.Graphics.DrawImage(HSIcons.GetIconsByEName("gem" + quality), tx + 50, ty + 125, 20, 20);
+                    e.Graphics.DrawImage(HSIcons.GetIconsByEName("gem" + (int)quality), tx + 50, ty + 125, 20, 20);
                 }
                 else
                 {

@@ -167,7 +167,7 @@ namespace TaleofMonsters.Forms.Items
 
                 var cardConfigData = CardConfigManager.GetCardConfig(product.Cid);
                 var quality = cardConfigData.Quality + 1;
-                g.DrawImage(HSIcons.GetIconsByEName("gem" + quality), x + width/2-8, y + height-44, 16, 16);
+                g.DrawImage(HSIcons.GetIconsByEName("gem" + (int)quality), x + width/2-8, y + height-44, 16, 16);
 
             }
         }

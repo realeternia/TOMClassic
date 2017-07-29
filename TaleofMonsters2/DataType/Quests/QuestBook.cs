@@ -66,7 +66,7 @@ namespace TaleofMonsters.DataType.Quests
             }
             tipData.AddTextNewLine(nameStr, headColor, 20);
             if (UserProfile.InfoQuest.IsQuestCanProgress(id))
-                tipData.AddTextNewLine(string.Format(" 进度{0}/10", UserProfile.InfoQuest.GetQuestProgress(id)), "White", 20);
+                tipData.AddTextNewLine(string.Format(" 进度{0}%", UserProfile.InfoQuest.GetQuestProgress(id)*10), "White", 20);
             tipData.AddLine();
             tipData.AddTextNewLine("难度:" + GetTaskHardness(questConfig.Y), "White");
             if (questConfig.NpcId > 0)
