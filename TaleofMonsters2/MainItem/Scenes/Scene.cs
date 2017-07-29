@@ -74,6 +74,8 @@ namespace TaleofMonsters.MainItem.Scenes
 
         private const float ChessMoveAnimTime =0.5f;//旗子跳跃的动画时间
 
+        private bool allEventFinished; //所有的事件都完成了
+
         public Scene(Control p, int w, int h)
         {
             parent = p;
@@ -122,6 +124,7 @@ namespace TaleofMonsters.MainItem.Scenes
 
             GenerateMiniMap(mapid, MathTool.Clamp(sceneConfig.IconX - 110,0, 1688-300), MathTool.Clamp(sceneConfig.IconY - 110, 0, 1121 - 300));
 
+            allEventFinished = false;
             UserProfile.InfoBasic.MapId = mapid;
             UserProfile.Profile.OnSwitchScene(isWarp);
 
@@ -263,6 +266,8 @@ namespace TaleofMonsters.MainItem.Scenes
                 ChangeMap(config.ReviveScene, true);
                 UserProfile.InfoBasic.Position = GetRevivePos();
             }
+
+            CheckAllQuestOpened();
         }
         
         public void CheckMouseMove(int x, int y)
@@ -557,17 +562,21 @@ namespace TaleofMonsters.MainItem.Scenes
             return false;
         }
 
-        public bool IsSceneAllQuestOpened()
+        public void CheckAllQuestOpened()
         {
+            if (allEventFinished)
+                return;
+
             foreach (var sceneObject in sceneItems)
             {
                 var quest = sceneObject as SceneQuest;
                 if (quest != null && !quest.MapSetting && !quest.Disabled)
                 {
-                    return false;
+                    return;
                 }
             }
-            return true;
+            QuestBook.CheckAllQuestWith("allopen");
+            allEventFinished = true;
         }
 
         private Image GetSceneImage()

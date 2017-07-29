@@ -53,6 +53,18 @@ namespace TaleofMonsters.DataType.Quests
             }
         }
 
+        public static void CheckAllQuestWith(string mark)
+        {
+            foreach (var questData in UserProfile.InfoQuest.QuestRunning)
+            {
+                var config = ConfigData.GetQuestConfig(questData.QuestId);
+                if (config.NeedAction == mark && UserProfile.InfoQuest.IsQuestCanProgress(config.Id))
+                {
+                    UserProfile.InfoQuest.AddQuestProgress(config.Id, 10);
+                }
+            }
+        }
+
         public static Image GetPreview(int id)
         {
             QuestConfig questConfig = ConfigData.GetQuestConfig(id);
