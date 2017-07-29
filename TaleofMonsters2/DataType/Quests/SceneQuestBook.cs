@@ -6,6 +6,7 @@ using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Scenes;
+using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
 using TaleofMonsters.MainItem.Scenes;
@@ -122,13 +123,18 @@ namespace TaleofMonsters.DataType.Quests
 
         private static bool IsQuestFlagAvail(SceneQuestConfig questConfig)
         {
-            if (!string.IsNullOrEmpty(questConfig.TriggerFlagExist))
+            if (!string.IsNullOrEmpty(questConfig.TriggerQuestNotReceive))
             {
-                return QuestBook.HasFlag(questConfig.TriggerFlagExist);
+                return UserProfile.InfoQuest.IsQuestNotReceive(QuestBook.GetQuestIdByName(questConfig.TriggerQuestNotReceive));
             }
-            if (!string.IsNullOrEmpty(questConfig.TriggerFlagNoExist))
+            if (!string.IsNullOrEmpty(questConfig.TriggerQuestReceived))
             {
-                return !QuestBook.HasFlag(questConfig.TriggerFlagNoExist);
+                return UserProfile.InfoQuest.IsQuestCanProgress(QuestBook.GetQuestIdByName(questConfig.TriggerQuestReceived));
+            }
+            if (!string.IsNullOrEmpty(questConfig.TriggerQuestFinished))
+            {
+                var qid = QuestBook.GetQuestIdByName(questConfig.TriggerQuestFinished);
+                return UserProfile.InfoQuest.IsQuestFinish(qid) || UserProfile.InfoQuest.IsQuestCanReward(qid);
             }
             return true;
         }

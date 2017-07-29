@@ -1,5 +1,9 @@
 ﻿s只需要花一点点金币，就可以好好睡上一觉。
 	a没钱的孩子伤不起
 		end
-	a|cantrade-1|交易。
-		etrade|1
+	a|cantrade-2|交易。
+		etrade|2
+	a|cantrade-5|交易。
+		etrade|5
+	a|cantrade-10|交易。
+		etrade|10

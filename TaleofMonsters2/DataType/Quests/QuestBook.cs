@@ -6,7 +6,20 @@ namespace TaleofMonsters.DataType.Quests
 {
     internal static class QuestBook
     {
-        public static bool HasFlag(string f)
+        public static int GetQuestIdByName(string f)
+        {
+            foreach (var questData in ConfigData.QuestDict.Values)
+            {
+                if (questData.Ename == f)
+                {
+                    return questData.Id;
+                }
+            }
+
+            return 0;
+        }
+
+        public static bool HasQuest(string f)
         {
             foreach (var questId in UserProfile.InfoQuest.QuestFinish)
             {
@@ -27,7 +40,7 @@ namespace TaleofMonsters.DataType.Quests
             return false;
         }
 
-        public static void SetFlag(string f, byte progress)
+        public static void SetQuestProgress(string f, byte progress)
         {
             foreach (var questData in UserProfile.InfoQuest.QuestRunning)
             {
