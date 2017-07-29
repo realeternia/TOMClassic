@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Log;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.MainItem;
 using TaleofMonsters.MainItem.Scenes;
@@ -69,6 +70,12 @@ namespace TaleofMonsters.DataType.User
             var questData = QuestRunning.Find(q => q.QuestId == qid);
             if (questData != null)
             {
+                if (questData.State == (int)QuestStates.Accomplish)
+                    return true;
+                var questConfig = ConfigData.GetQuestConfig(qid);
+                if (!string.IsNullOrEmpty(questConfig.RequireItem))
+                    if (UserProfile.InfoBag.GetItemCount(HItemBook.GetItemId(questConfig.RequireItem)) <= 0)
+                        return false;
                 return questData.State == (int)QuestStates.Accomplish;
             }
             return false;
@@ -146,9 +153,7 @@ namespace TaleofMonsters.DataType.User
         {
             var questConfig = ConfigData.GetQuestConfig(qid);
             if (!string.IsNullOrEmpty(questConfig.TriggerSceneQuest))
-            {
                 Scene.Instance.QuestNext(questConfig.TriggerSceneQuest);
-            }
 
             MainTipManager.AddTip(string.Format("接受任务-{0}", questConfig.Name), "White");
             SoundManager.Play("System", "QuestActivateWhat1.wav");
@@ -157,6 +162,9 @@ namespace TaleofMonsters.DataType.User
         private void OnFinishQuest(int qid)
         {
             var questConfig = ConfigData.GetQuestConfig(qid);
+            if (!string.IsNullOrEmpty(questConfig.RequireItem))
+                UserProfile.InfoBag.DeleteItem(HItemBook.GetItemId(questConfig.RequireItem), 1);
+
             MainTipManager.AddTip(string.Format("完成任务-{0}", questConfig.Name), "White");
             SoundManager.Play("System", "QuestCompleted.wav");
         }
