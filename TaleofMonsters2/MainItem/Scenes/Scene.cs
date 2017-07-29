@@ -125,8 +125,9 @@ namespace TaleofMonsters.MainItem.Scenes
             GenerateMiniMap(mapid, MathTool.Clamp(sceneConfig.IconX - 110,0, 1688-300), MathTool.Clamp(sceneConfig.IconY - 110, 0, 1121 - 300));
 
             allEventFinished = false;
-            UserProfile.InfoBasic.MapId = mapid;
+
             UserProfile.Profile.OnSwitchScene(isWarp);
+            UserProfile.InfoBasic.MapId = mapid;//这句必须在存档后
 
             BlessManager.OnChangeMap();
             OnBlessChange();

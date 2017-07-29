@@ -65,6 +65,33 @@ namespace TaleofMonsters.DataType.Quests
             }
         }
 
+        public static string GetRewardStr(int qid)
+        {
+            string rt = "";
+            var questConfig = ConfigData.GetQuestConfig(qid);
+            if (questConfig.RewardGold > 0)
+            {
+                rt += "金钱 ";
+            }
+            if (questConfig.RewardExp > 0)
+            {
+                rt += "经验 ";
+            }
+            if (string.IsNullOrEmpty(questConfig.RewardItem) || string.IsNullOrEmpty(questConfig.RewardDrop))
+            {
+                rt += "道具 ";
+            }
+            if (questConfig.RewardFood > 0|| questConfig.RewardHealth > 0|| questConfig.RewardMental > 0)
+            {
+                rt += "生存 ";
+            }
+            if (questConfig.RewardBlessLevel > 0)
+            {
+                rt += "祝福 ";
+            }
+            return rt;
+        }
+
         public static Image GetPreview(int id)
         {
             QuestConfig questConfig = ConfigData.GetQuestConfig(id);
