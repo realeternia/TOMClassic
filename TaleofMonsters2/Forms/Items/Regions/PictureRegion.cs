@@ -28,11 +28,7 @@ namespace TaleofMonsters.Forms.Items.Regions
             {
                 Image img = null;
                 HsActionCallback action = null;
-                if (type == PictureRegionCellType.Npc)
-                {
-                    img = SceneBook.GetSceneNpcImage(nid);
-                }
-                else if (type == PictureRegionCellType.Item)
+                if (type == PictureRegionCellType.Item)
                 {
                     img = DataType.Items.HItemBook.GetHItemImage(nid);
                     action = () =>
@@ -150,7 +146,6 @@ namespace TaleofMonsters.Forms.Items.Regions
 
     internal enum PictureRegionCellType
     {
-        Npc,
         Item,
         Equip,
         Card,

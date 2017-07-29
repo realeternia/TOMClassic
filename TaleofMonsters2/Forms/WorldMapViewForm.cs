@@ -229,15 +229,15 @@ namespace TaleofMonsters.Forms
             tipData.AddTextNewLine(sceneConfig.Name, "Lime", 20);
             tipData.AddTextNewLine(string.Format("地图等级: {0}", sceneConfig.Level), sceneConfig.Level>UserProfile.InfoBasic.Level?"Red": "White");
 
-            string[] icons = SceneBook.GetNPCIconsOnMap(id);
-            if (icons.Length > 0)
-            {
-                tipData.AddTextNewLine("设施", "Green");
-                foreach (string icon in icons)
-                {
-                    tipData.AddImage(HSIcons.GetIconsByEName(icon));
-                }
-            }
+            //string[] icons = SceneBook.GetNPCIconsOnMap(id);
+            //if (icons.Length > 0)
+            //{
+            //    tipData.AddTextNewLine("设施", "Green");
+            //    foreach (string icon in icons)
+            //    {
+            //        tipData.AddImage(HSIcons.GetIconsByEName(icon));
+            //    }
+            //}
 
             if (sceneConfig.Func != "")
             {

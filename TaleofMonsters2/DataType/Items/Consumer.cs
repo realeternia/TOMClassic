@@ -25,7 +25,7 @@ namespace TaleofMonsters.DataType.Items
             if (useMethod == HItemUseTypes.Common)
             {
                 if (itemConfig.SubType == HItemTypes.Gift)
-                    return UseGift(id);
+                    return UseGift(consumerConfig);
                 if (itemConfig.SubType == HItemTypes.Item)
                     return UseItem(consumerConfig);
                 if (itemConfig.SubType == HItemTypes.RandomCard)
@@ -168,17 +168,16 @@ namespace TaleofMonsters.DataType.Items
             return true;
         }
 
-        private static bool UseGift(int id)
+        private static bool UseGift(ItemConsumerConfig itemConfig)
         {
-            var config = ConfigData.GetItemGiftConfig(id);
             List<int> itemList = new List<int>();
             List<int> countList = new List<int>();
-            for (int i = 0; i < config.Items.Length; i++)
+            for (int i = 0; i < itemConfig.Items.Length; i++)
             {
-                var itemId = HItemBook.GetItemId(config.Items[i]);
-                UserProfile.InfoBag.AddItem(itemId, config.ItemCount[i]);
+                var itemId = HItemBook.GetItemId(itemConfig.Items[i]);
+                UserProfile.InfoBag.AddItem(itemId, itemConfig.ItemCount[i]);
                 itemList.Add(itemId);
-                countList.Add(config.ItemCount[i]);
+                countList.Add(itemConfig.ItemCount[i]);
             }
             var form = new ItemPackageForm();
             form.SetItem(itemList.ToArray(), countList.ToArray());
