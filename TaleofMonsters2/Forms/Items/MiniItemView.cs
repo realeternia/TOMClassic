@@ -7,6 +7,7 @@ using NarlonLib.Control;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.Forms.Items
@@ -24,6 +25,7 @@ namespace TaleofMonsters.Forms.Items
         private MiniItemViewItem[] items;
 
         public int ItemSubType { get; set; } //只有某一子类别的道具可以进入这个背包
+        public HItemUseTypes UseType { get; set; }
 
         public MiniItemView()
         {
@@ -163,7 +165,7 @@ namespace TaleofMonsters.Forms.Items
                     return;
                 }
                 int count = UserProfile.InfoBag.Items[tar].Value;
-                UserProfile.InfoBag.UseItemByPos(tar, ItemSubType);
+                UserProfile.InfoBag.UseItemByPos(tar, UseType);
                 if (count == 1)
                 {
                     RefreshList();

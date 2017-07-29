@@ -38,16 +38,16 @@ namespace TaleofMonsters.Forms
             // 
             this.bitmapButtonClose.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bitmapButtonClose.Image = null;
-            
-            
+            this.bitmapButtonClose.IconImage = null;
+            this.bitmapButtonClose.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonClose.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonClose.ImageNormal = null;
-            
-           this.bitmapButtonClose.Location = new System.Drawing.Point(581, 3);
+            this.bitmapButtonClose.Location = new System.Drawing.Point(581, 3);
             this.bitmapButtonClose.Name = "bitmapButtonClose";
+            this.bitmapButtonClose.NoUseDrawNine = false;
             this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
             this.bitmapButtonClose.TabIndex = 27;
-            this.bitmapButtonClose.Text = "";
+            this.bitmapButtonClose.TextOffX = 0;
             this.bitmapButtonClose.UseVisualStyleBackColor = true;
             this.bitmapButtonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
@@ -59,10 +59,10 @@ namespace TaleofMonsters.Forms
             this.miniItemView1.Name = "miniItemView1";
             this.miniItemView1.Size = new System.Drawing.Size(72, 142);
             this.miniItemView1.TabIndex = 28;
+            this.miniItemView1.UseType = TaleofMonsters.DataType.HItemUseTypes.Seed;
             // 
             // FarmForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.miniItemView1);
@@ -71,8 +71,8 @@ namespace TaleofMonsters.Forms
             this.Name = "FarmForm";
             this.Size = new System.Drawing.Size(631, 450);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FarmForm_Paint);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FarmForm_MouseMove);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FarmForm_MouseClick);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FarmForm_MouseMove);
             this.ResumeLayout(false);
 
         }

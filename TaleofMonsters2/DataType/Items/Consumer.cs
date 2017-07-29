@@ -15,14 +15,14 @@ namespace TaleofMonsters.DataType.Items
 {
     internal static class Consumer
     {
-        public static bool UseItemsById(int id, int useMethod)
+        public static bool UseItemsById(int id, HItemUseTypes useMethod)
         {
             HItemConfig itemConfig = ConfigData.GetHItemConfig(id);
             if (itemConfig.Id == ConfigData.NoneHItem.Id)
                 return false;
 
             ItemConsumerConfig consumerConfig = ConfigData.GetItemConsumerConfig(id);
-            if (useMethod == HItemTypes.Common)
+            if (useMethod == HItemUseTypes.Common)
             {
                 if (itemConfig.SubType == HItemTypes.Gift)
                     return UseGift(id);
@@ -33,12 +33,12 @@ namespace TaleofMonsters.DataType.Items
                 if (itemConfig.SubType == HItemTypes.DropItem)
                     return UseDropItem(consumerConfig);
             }
-            else if (useMethod == HItemTypes.Fight)
+            else if (useMethod == HItemUseTypes.Fight)
             {
                 if (itemConfig.SubType == HItemTypes.Fight)
                     return UseFightItem(consumerConfig);
             }
-            else if (useMethod == HItemTypes.Seed)
+            else if (useMethod == HItemUseTypes.Seed)
             {
                 if (itemConfig.SubType == HItemTypes.Seed)
                     return UseSeedItem(consumerConfig);

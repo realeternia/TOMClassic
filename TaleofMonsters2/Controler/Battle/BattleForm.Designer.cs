@@ -40,7 +40,6 @@ namespace TaleofMonsters.Controler.Battle
             this.lifeClock2 = new TaleofMonsters.Controler.Battle.Components.LifeClock();
             this.lifeClock1 = new TaleofMonsters.Controler.Battle.Components.LifeClock();
             this.cardFlow1 = new TaleofMonsters.Controler.Battle.Components.CardFlow();
-  			this.timeViewer1 = new TimeViewer();
             this.panelBattle.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -92,6 +91,7 @@ namespace TaleofMonsters.Controler.Battle
             this.miniItemView1.Name = "miniItemView1";
             this.miniItemView1.Size = new System.Drawing.Size(72, 135);
             this.miniItemView1.TabIndex = 38;
+            this.miniItemView1.UseType = TaleofMonsters.DataType.HItemUseTypes.Fight;
             // 
             // cardList2
             // 

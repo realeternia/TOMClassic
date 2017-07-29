@@ -18,7 +18,7 @@ namespace TaleofMonsters.MainItem
         {
             if (target.Type == "use")
             {
-                UserProfile.InfoBag.UseItemByPos(ItemIndex, HItemTypes.Common);
+                UserProfile.InfoBag.UseItemByPos(ItemIndex, HItemUseTypes.Common);
             }
             else if (target.Type == "throw")
             {

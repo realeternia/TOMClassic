@@ -160,7 +160,7 @@ namespace TaleofMonsters.DataType.User
             }
         }
 
-        public void UseItemByPos(int pos, int type)
+        public void UseItemByPos(int pos, HItemUseTypes type)
         {
             var pickItem = Items[pos];
             if (pickItem.Value <= 0)

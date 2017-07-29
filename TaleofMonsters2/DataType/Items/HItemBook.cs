@@ -106,18 +106,15 @@ namespace TaleofMonsters.DataType.Items
                     tipData.AddTextNewLine("       双击使用", "Green");
                 }
             }
-            else if (hItemConfig.SubType == HItemTypes.Task)
+            if (hItemConfig.Type == HItemTypes.Task)
             {
                 tipData.AddTextNewLine("       任务物品", "DarkBlue");
             }
-            else if (hItemConfig.SubType == HItemTypes.Material)
+            else if (hItemConfig.Type == HItemTypes.Material)
             {
                 tipData.AddTextNewLine(string.Format("       材料(稀有度:{0})", hItemConfig.Rare), "White");
             }
-            else
-            {
-                tipData.AddTextNewLine("", "White");
-            }
+
             tipData.AddTextNewLine(string.Format("       等级:{0}", hItemConfig.Level), "White");
             tipData.AddTextNewLine("", "White");
             tipData.AddTextLines(hItemConfig.Descript, "White",20,true);

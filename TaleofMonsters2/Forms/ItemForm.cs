@@ -247,7 +247,7 @@ namespace TaleofMonsters.Forms
             HItemConfig itemConfig = ConfigData.GetHItemConfig(UserProfile.InfoBag.Items[baseid + tar].Type);
             if (itemConfig.IsUsable && itemConfig.SubType != HItemTypes.Fight)
             {
-                UserProfile.InfoBag.UseItemByPos(baseid + tar, HItemTypes.Common);
+                UserProfile.InfoBag.UseItemByPos(baseid + tar, HItemUseTypes.Common);
                 leftSelectTar = -1;
                 myCursor.ChangeCursor("default");
                 isDirty = true;
