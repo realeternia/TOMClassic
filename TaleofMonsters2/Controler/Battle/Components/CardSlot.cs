@@ -103,7 +103,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             font = new Font("宋体", 9*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             var cardName = string.Format("{0}Lv{1}", Card.Name, ACard.Level);
             var cardQual = Config.CardConfigManager.GetCardConfig(Card.CardId).Quality;
-            var cardColor = Color.FromName(HSTypes.I2QualityColor(cardQual));
+            var cardColor = Color.FromName(HSTypes.I2QualityColor((int)cardQual));
             var brush = new SolidBrush(cardColor);
             g.DrawString(cardName, font, Brushes.Black, x + 1, mouse != CardMouseState.MouseOn ? y + 107 : y+ 112);
             g.DrawString(cardName, font,brush, x, mouse != CardMouseState.MouseOn ? y+ 106 :y+ 111);

@@ -55,7 +55,7 @@ namespace TaleofMonsters.Forms.MagicBook
             items = new List<int>();
             foreach (HItemConfig itemConfig in ConfigData.HItemDict.Values)
             {
-                if (itemConfig.Type == HItemTypes.Material)
+                if (itemConfig.Type == (int)HItemTypes.Material)
                     items.Add(itemConfig.Id);
             }
             totalCount = items.Count;

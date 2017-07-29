@@ -131,11 +131,11 @@ namespace TaleofMonsters.MainItem.Scenes
             
             SystemMenuManager.ResetIconState(); //reset main icon state todo remove check
 
-            if (sceneConfig.Type == SceneTypes.Dungeon)
+            if (sceneConfig.Type == (int)SceneTypes.Dungeon)
             {
                 Rule = new SceneRuleDungeon();
             }
-            else if (sceneConfig.Type == SceneTypes.Town)
+            else if (sceneConfig.Type == (int)SceneTypes.Town)
             {
                 Rule = new SceneRuleTown();
             }
@@ -580,7 +580,7 @@ namespace TaleofMonsters.MainItem.Scenes
             foreach (var questData in SceneQuestBook.GetQuestConfigData(UserProfile.InfoBasic.MapId))
             {
                 var questConfig = ConfigData.GetSceneQuestConfig(questData.Id);
-                if (questConfig.Type == SceneQuestTypes.Hidden)
+                if (questConfig.Type == (int)SceneQuestTypes.Hidden)
                     continue;
                 var happend = GetDisableEventCount(questData.Id);
                 var evtLevel = questConfig.Level == 0 ? config.Level : questConfig.Level;

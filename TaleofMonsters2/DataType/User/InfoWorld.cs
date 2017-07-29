@@ -154,7 +154,7 @@ namespace TaleofMonsters.DataType.User
 
         private int GetSellRate(int cid)
         {
-            int qual = CardConfigManager.GetCardConfig(cid).Quality;
+            int qual = (int)CardConfigManager.GetCardConfig(cid).Quality;
             return 11 - qual * 2;
         }
 
@@ -268,7 +268,7 @@ namespace TaleofMonsters.DataType.User
             mthds.Target = mid;
             {
                 List<IntPair> mthd = new List<IntPair>();
-                int icount = equipConfig.Quality == EquipQualityTypes.Legend ? 4 : 3;
+                int icount = equipConfig.Quality == (int)EquipQualityTypes.Legend ? 4 : 3;
                 int itrare = Math.Max(1, Math.Min(6, equipConfig.Quality * 2 - 1));//第一个素材品质和装备品质挂钩
                 Dictionary<int, bool> existFormula = new Dictionary<int, bool>();
                 for (int j = 0; j < icount; j++)

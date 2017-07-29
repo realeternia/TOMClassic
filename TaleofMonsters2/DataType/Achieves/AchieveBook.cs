@@ -69,7 +69,7 @@ namespace TaleofMonsters.DataType.Achieves
             }
             else
             {
-                if (achieveConfig.Type == AchieveTypes.Battle)
+                if (achieveConfig.Type == (int)AchieveTypes.Battle)
                 {
                     datas.Add("0/1");
                     colors.Add("LemonChiffon");

@@ -87,7 +87,7 @@ namespace TaleofMonsters.DataType.Cards.Spells
 
         public void UpgradeToLevel(int level)
         {
-            var modify = CardAssistant.GetCardModify(SpellConfig.Quality, SpellConfig.Modify);
+            var modify = CardAssistant.GetCardModify((CardQualityTypes)SpellConfig.Quality, SpellConfig.Modify);
             
             Level = level;
 

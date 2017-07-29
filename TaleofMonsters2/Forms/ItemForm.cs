@@ -245,7 +245,7 @@ namespace TaleofMonsters.Forms
                 return;
 
             HItemConfig itemConfig = ConfigData.GetHItemConfig(UserProfile.InfoBag.Items[baseid + tar].Type);
-            if (itemConfig.IsUsable && itemConfig.SubType != HItemTypes.Fight)
+            if (itemConfig.IsUsable && itemConfig.SubType != (int)HItemTypes.Fight)
             {
                 UserProfile.InfoBag.UseItemByPos(baseid + tar, HItemUseTypes.Common);
                 leftSelectTar = -1;

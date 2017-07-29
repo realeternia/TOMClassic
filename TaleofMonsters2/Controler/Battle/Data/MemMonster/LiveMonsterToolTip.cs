@@ -39,7 +39,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             var cardQual = Config.CardConfigManager.GetCardConfig(liveMonster.CardId).Quality;
             var name = string.Format("{0}(Lv{1})", liveMonster.Avatar.Name, liveMonster.Level);
-            tipData.AddTextNewLine(name, HSTypes.I2QualityColor(cardQual), 20);
+            tipData.AddTextNewLine(name, HSTypes.I2QualityColor((int)cardQual), 20);
             tipData.AddImage(HSIcons.GetIconsByEName("atr" + liveMonster.Avatar.MonsterConfig.Attr), 16, 16);
             tipData.AddImage(HSIcons.GetIconsByEName("rac" + liveMonster.Avatar.MonsterConfig.Type), 16, 16);
             tipData.AddLine();

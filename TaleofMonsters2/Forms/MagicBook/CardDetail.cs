@@ -27,7 +27,6 @@ namespace TaleofMonsters.Forms.MagicBook
 
         private int cid;
         private int level;
-        private int lastCell = -1;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
         private Card card;
         private List<MonsterSkill> skills;
@@ -58,13 +57,12 @@ namespace TaleofMonsters.Forms.MagicBook
         {
             cid = dcard.BaseId;
             level = dcard.Level;
-            lastCell = -1;
             skills = new List<MonsterSkill>();
             string effectName = "";
             if (cid > 0)
             {
                 card = CardAssistant.GetCard(cid);
-                virtualRegion.SetRegionKey(3, CardConfigManager.GetCardConfig(cid).Quality+1);
+                virtualRegion.SetRegionKey(3, (int)CardConfigManager.GetCardConfig(cid).Quality+1);
                 var jobId = CardConfigManager.GetCardConfig(cid).JobId;
                 if (jobId > 0)
                 {

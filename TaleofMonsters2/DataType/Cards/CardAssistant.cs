@@ -83,7 +83,7 @@ namespace TaleofMonsters.DataType.Cards
             return movPunish[mov / 5];
         }
 
-        public static int GetCardModify(int quality, int modify)
+        public static int GetCardModify(CardQualityTypes quality, int modify)
         {
             int result = modify;
             if (quality == CardQualityTypes.Legend)

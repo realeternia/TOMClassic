@@ -168,7 +168,7 @@ namespace TaleofMonsters.Forms.Items
                     brush.Dispose();
                 }
                 eg.DrawString(cardConfigData.Star.ToString(), fontBold, Brushes.Gold, X-1, Y + yoff);
-                Color color = Color.FromName(HSTypes.I2QualityColor(cardConfigData.Quality));
+                Color color = Color.FromName(HSTypes.I2QualityColor((int)cardConfigData.Quality));
                 Brush colorBrush = new SolidBrush(color);
                 var cardName = cardConfigData.Name;
                 if (cardName.Length>4)

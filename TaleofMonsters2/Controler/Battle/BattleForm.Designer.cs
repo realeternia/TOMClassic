@@ -40,6 +40,7 @@ namespace TaleofMonsters.Controler.Battle
             this.lifeClock2 = new TaleofMonsters.Controler.Battle.Components.LifeClock();
             this.lifeClock1 = new TaleofMonsters.Controler.Battle.Components.LifeClock();
             this.cardFlow1 = new TaleofMonsters.Controler.Battle.Components.CardFlow();
+            this.timeViewer1 = new TimeViewer();
             this.panelBattle.SuspendLayout();
             this.SuspendLayout();
             // 

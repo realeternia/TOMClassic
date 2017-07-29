@@ -281,7 +281,7 @@ namespace TaleofMonsters.Controler.Battle.Components
 
         public void ShowTip()
         {
-            int x = 0, y = 0;
+            int x = 0;
             var img = GetPlayerImage();
             if (!IsLeft) //右边那人
                 x = Width - img.Width;
@@ -316,7 +316,7 @@ namespace TaleofMonsters.Controler.Battle.Components
                         var cardConfig = CardConfigManager.GetCardConfig(card.CardId);
                         tipData.AddTextNewLine("-", "White");
                         tipData.AddImage(CardAssistant.GetCardImage(card.CardId, 20, 20));
-                        tipData.AddText(string.Format("{0}({1}★)Lv{2}", cardConfig.Name, cardConfig.Star, card.Level), HSTypes.I2QualityColor(cardConfig.Quality));
+                        tipData.AddText(string.Format("{0}({1}★)Lv{2}", cardConfig.Name, cardConfig.Star, card.Level), HSTypes.I2QualityColor((int)cardConfig.Quality));
                     }
                 }
             }

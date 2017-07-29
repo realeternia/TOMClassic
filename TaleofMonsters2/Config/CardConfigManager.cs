@@ -16,7 +16,7 @@ namespace TaleofMonsters.Config
         public int Cost { get; set; }
         public int Star { get; set; }
         public string Name { get; set; }
-        public int Quality { get; set; }
+        public CardQualityTypes Quality { get; set; }
         public int JobId { get; set; }
         public bool IsSpecial { get; set; }
         public string Remark { get; set; }
@@ -40,11 +40,11 @@ namespace TaleofMonsters.Config
                 dataList = new List<IntPair>();
             }
 
-            public void Add(int cardId, int quality)
+            public void Add(int cardId, CardQualityTypes quality)
             {
                 IntPair data = new IntPair();
                 data.Type = cardId;
-                data.Value = quality;
+                data.Value = (int)quality;
                 dataList.Add(data);
             }
 
@@ -129,7 +129,7 @@ namespace TaleofMonsters.Config
                     Cost = monsterConfig.Cost,
                     Star = monsterConfig.Star,
                     Name = monsterConfig.Name,
-                    Quality = monsterConfig.Quality,
+                    Quality = (CardQualityTypes)monsterConfig.Quality,
                     JobId = monsterConfig.JobId,
                     IsSpecial = monsterConfig.IsSpecial == 1,
                     Remark = monsterConfig.Remark
@@ -155,7 +155,7 @@ namespace TaleofMonsters.Config
                     Cost = weaponConfig.Cost,
                     Star = weaponConfig.Star,
                     Name = weaponConfig.Name,
-                    Quality = weaponConfig.Quality,
+                    Quality = (CardQualityTypes)weaponConfig.Quality,
                     JobId = weaponConfig.JobId,
                     IsSpecial = weaponConfig.IsSpecial == 1,
                     Remark = weaponConfig.Remark
@@ -181,7 +181,7 @@ namespace TaleofMonsters.Config
                     Cost = spellConfig.Cost,
                     Star = spellConfig.Star,
                     Name = spellConfig.Name,
-                    Quality = spellConfig.Quality,
+                    Quality = (CardQualityTypes)spellConfig.Quality,
                     JobId = spellConfig.JobId,
                     IsSpecial = spellConfig.IsSpecial == 1,
                     Remark = spellConfig.Remark
@@ -273,7 +273,7 @@ namespace TaleofMonsters.Config
             {
                 if (monsterConfig.IsSpecial == 0)
                 {
-                    raceCardDict[monsterConfig.Type].Add(monsterConfig.Id, monsterConfig.Quality);
+                    raceCardDict[monsterConfig.Type].Add(monsterConfig.Id, (CardQualityTypes)monsterConfig.Quality);
                 }
             }
 

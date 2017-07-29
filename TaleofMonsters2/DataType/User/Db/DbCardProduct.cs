@@ -49,8 +49,7 @@ namespace TaleofMonsters.DataType.User.Db
                 {
                     res.Gold = 300;
                 }
-                int qual = cardData.Quality + 1;
-                res.Add(GameResourceType.Gem, (int) GameResourceBook.OutGemCardBuy(qual));
+                res.Add(GameResourceType.Gem, (int) GameResourceBook.OutGemCardBuy((int)cardData.Quality + 1));
                 return res;
             }
         }

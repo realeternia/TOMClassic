@@ -71,7 +71,7 @@ namespace TaleofMonsters.MainItem.Scenes
                         case "Warp":
                             so = new SceneWarp(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height, cachedData.Info);
                             so.Disabled = cachedData.Disabled;
-                            if (ConfigData.GetSceneConfig(id).Type == SceneTypes.Common && reason == SceneFreshReason.Warp)
+                            if (ConfigData.GetSceneConfig(id).Type == (int)SceneTypes.Common && reason == SceneFreshReason.Warp)
                             {
                                 cachedData.Disabled = true;
                                 so.Disabled = true;//如果是切场景，切到战斗场景，所有传送门自动关闭

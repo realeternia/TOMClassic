@@ -48,7 +48,7 @@ namespace TaleofMonsters.DataType.User
         {
             uint index = id / 32;
             uint offset = id % 32;
-            Flags[(int)index] = (uint)(Flags[(int)index] | (1 << (int)offset));
+            Flags[index] = Flags[index] | (uint)(1 << (int)offset);
         }
 
         public void ClearFlag(uint id)

@@ -51,39 +51,39 @@
         Terrain = 203,
     }
 
-    internal static class CardQualityTypes
+    internal enum CardQualityTypes
     {
-        public const byte Common = 0;
-        public const byte Good = 1;
-        public const byte Excel = 2;
-        public const byte Epic = 3;
-        public const byte Legend = 4;
-        public const byte God = 5; //不可能出现，只是做一个bound
-        public const byte Trash = 6; //不可能出现，只是做一个bound
+        Common = 0,
+        Good = 1,
+        Excel = 2,
+        Epic = 3,
+        Legend = 4,
+        God = 5, //不可能出现，只是做一个bound
+        Trash = 6, //不可能出现，只是做一个bound
     }
 
-    internal static class EquipQualityTypes
+    internal enum EquipQualityTypes
     {
-        public const int Common = 0;
-        public const int Good = 1;
-        public const int Excel = 2;
-        public const int Epic = 3;
-        public const int Legend = 4;
+        Common = 0,
+        Good = 1,
+        Excel = 2,
+        Epic = 3,
+        Legend = 4,
     }
-    internal static class HItemTypes
+    internal enum HItemTypes
     {
-        public const int Common = 1; //用于type
-        public const int Material = 2;
-        public const int Task = 3;
+        Common = 1, //用于type
+        Material = 2,
+        Task = 3,
 
-        public const int Dull = 10;
-        public const int Fight = 11; //用于subtype
-        public const int Gift = 12;
-        public const int Item = 13;
-      //  public const int Ore = 14;
-        public const int DropItem = 15;
-        public const int RandomCard = 16;
-        public const int Seed = 17;
+        Dull = 10,
+        Fight = 11, //用于subtype
+        Gift = 12,
+        Item = 13,
+      //  Ore = 14,
+        DropItem = 15,
+        RandomCard = 16,
+        Seed = 17,
     }
 
     public enum HItemUseTypes
@@ -93,11 +93,11 @@
         Seed
     }
 
-    internal static class HItemRandomGroups
+    internal enum HItemRandomGroups
     {
-        public const int None = 0;
-        public const int Gather = 1;
-        public const int Fight = 2;
+        None = 0,
+        Gather = 1,
+        Fight = 2,
     }
 
     internal enum BuffEffectTypes
@@ -110,13 +110,13 @@
         Shield = 102,
         Chaos = 103,
     }
-    internal class AchieveTypes
+    internal enum AchieveTypes
     {
-        public const int Common = 1;
-        public const int Resource = 2;
-        public const int Fight = 3;
-        public const int Summon = 4;
-        public const int Battle = 5;
+        Common = 1,
+        Resource = 2,
+        Fight = 3,
+        Summon = 4,
+        Battle = 5,
     }
 
     internal enum CardProductMarkTypes
@@ -129,24 +129,24 @@
         Sale
     }
 
-    internal static class TournamentTypes
+    internal enum TournamentTypes
     {
-        public const int League4 = 1;
-        public const int Cup8 = 2;
-        public const int Cup16 = 3;
+        League4 = 1,
+        Cup8 = 2,
+        Cup16 = 3,
     }
-    internal static class SceneTypes
+    internal enum SceneTypes
     {
-        public const int Town = 1;
-        public const int Common = 2;
-        public const int Dungeon = 3;
+        Town = 1,
+        Common = 2,
+        Dungeon = 3,
     }
 
-    internal static class SceneQuestTypes
+    internal enum SceneQuestTypes
     {
-        public const int Common = 1;
-        public const int MapSetting = 2;
-        public const int Hidden = 3;
+        Common = 1,
+        MapSetting = 2,
+        Hidden = 3,
     }
     internal enum RegionTypes
     {
@@ -159,20 +159,20 @@
         MultiColumn = 6,
         Grid = 7,
         All = 9,
-    };
+    }
 
     internal enum QuestTypes
     {
         None = 0,
         Kill = 1,
-    };
+    }
 
     public enum QuestStates
     {
         Receive = 1,
         Accomplish = 2,
         Finish = 3
-    };
+    }
 
     internal enum GameResourceType
     {

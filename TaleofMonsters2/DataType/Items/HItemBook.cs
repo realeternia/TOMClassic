@@ -14,24 +14,25 @@ namespace TaleofMonsters.DataType.Items
 {
     internal static class HItemBook
     {
-        private static Dictionary<int, Dictionary<int, List<int>>> rareMidDict;//随机组，稀有度
+        private static Dictionary<HItemRandomGroups, Dictionary<int, List<int>>> rareMidDict;//随机组，稀有度
 
-        public static int GetRandRareItemId(int group, int rare)
+        public static int GetRandRareItemId(HItemRandomGroups group, int rare)
         {
             if (rareMidDict == null)
             {
-                rareMidDict = new Dictionary<int, Dictionary<int, List<int>>>();
-                rareMidDict[1] = new Dictionary<int, List<int>>();
-                rareMidDict[2] = new Dictionary<int, List<int>>();//目前只有2个随机组
+                rareMidDict = new Dictionary<HItemRandomGroups, Dictionary<int, List<int>>>();
+                rareMidDict[HItemRandomGroups.Gather] = new Dictionary<int, List<int>>();
+                rareMidDict[HItemRandomGroups.Fight] = new Dictionary<int, List<int>>();//目前只有2个随机组
                 foreach (var hItemConfig in ConfigData.HItemDict.Values)
                 {
                     if (hItemConfig.RandomGroup > 0)
                     {
-                        if (!rareMidDict[hItemConfig.RandomGroup].ContainsKey(hItemConfig.Rare))
+                        var group1 = (HItemRandomGroups) hItemConfig.RandomGroup;
+                        if (!rareMidDict[group1].ContainsKey(hItemConfig.Rare))
                         {
-                            rareMidDict[hItemConfig.RandomGroup].Add(hItemConfig.Rare, new List<int>());
+                            rareMidDict[group1].Add(hItemConfig.Rare, new List<int>());
                         }
-                        rareMidDict[hItemConfig.RandomGroup][hItemConfig.Rare].Add(hItemConfig.Id);
+                        rareMidDict[group1][hItemConfig.Rare].Add(hItemConfig.Id);
                     }
                 }
             }
@@ -93,11 +94,11 @@ namespace TaleofMonsters.DataType.Items
             tipData.AddTextNewLine(hItemConfig.Name, HSTypes.I2RareColor(hItemConfig.Rare), 20);
             if (hItemConfig.IsUsable)
             {
-                if (hItemConfig.SubType == HItemTypes.Fight)
+                if (hItemConfig.SubType == (int)HItemTypes.Fight)
                 {
                     tipData.AddTextNewLine("       战斗中双击使用", "Red");
                 }
-                else if (hItemConfig.SubType == HItemTypes.Seed)
+                else if (hItemConfig.SubType == (int)HItemTypes.Seed)
                 {
                     tipData.AddTextNewLine("       农场中双击使用", "Red");
                 }
@@ -106,11 +107,11 @@ namespace TaleofMonsters.DataType.Items
                     tipData.AddTextNewLine("       双击使用", "Green");
                 }
             }
-            if (hItemConfig.Type == HItemTypes.Task)
+            if (hItemConfig.Type == (int)HItemTypes.Task)
             {
                 tipData.AddTextNewLine("       任务物品", "DarkBlue");
             }
-            else if (hItemConfig.Type == HItemTypes.Material)
+            else if (hItemConfig.Type == (int)HItemTypes.Material)
             {
                 tipData.AddTextNewLine(string.Format("       材料(稀有度:{0})", hItemConfig.Rare), "White");
             }
@@ -118,7 +119,7 @@ namespace TaleofMonsters.DataType.Items
             tipData.AddTextNewLine(string.Format("       等级:{0}", hItemConfig.Level), "White");
             tipData.AddTextNewLine("", "White");
             tipData.AddTextLines(hItemConfig.Descript, "White",20,true);
-            if (hItemConfig.SubType == HItemTypes.RandomCard)
+            if (hItemConfig.SubType == (int)HItemTypes.RandomCard)
             {
                 var consumerConfig = ConfigData.GetItemConsumerConfig(hItemConfig.Id);
                 int totalRate = 0;

@@ -103,7 +103,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
 
         public void UpgradeToLevel(int level)
         {
-            var modify = CardAssistant.GetCardModify(WeaponConfig.Quality, WeaponConfig.Modify);
+            var modify = CardAssistant.GetCardModify((CardQualityTypes)WeaponConfig.Quality, WeaponConfig.Modify);
 
             int standardValue = (20 + WeaponConfig.Star * 12) * (level*8 + 92) / 100 * (200 + modify) / 200;
             standardValue = (int)((float)standardValue * 4 / WeaponConfig.Dura * (1 + (WeaponConfig.Dura - 4) * 0.1));//耐久低的武器总值削减

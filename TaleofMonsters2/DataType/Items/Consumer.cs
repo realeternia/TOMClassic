@@ -24,23 +24,23 @@ namespace TaleofMonsters.DataType.Items
             ItemConsumerConfig consumerConfig = ConfigData.GetItemConsumerConfig(id);
             if (useMethod == HItemUseTypes.Common)
             {
-                if (itemConfig.SubType == HItemTypes.Gift)
+                if (itemConfig.SubType == (int)HItemTypes.Gift)
                     return UseGift(consumerConfig);
-                if (itemConfig.SubType == HItemTypes.Item)
+                if (itemConfig.SubType == (int)HItemTypes.Item)
                     return UseItem(consumerConfig);
-                if (itemConfig.SubType == HItemTypes.RandomCard)
+                if (itemConfig.SubType == (int)HItemTypes.RandomCard)
                     return UseRandomCard(consumerConfig);
-                if (itemConfig.SubType == HItemTypes.DropItem)
+                if (itemConfig.SubType == (int)HItemTypes.DropItem)
                     return UseDropItem(consumerConfig);
             }
             else if (useMethod == HItemUseTypes.Fight)
             {
-                if (itemConfig.SubType == HItemTypes.Fight)
+                if (itemConfig.SubType == (int)HItemTypes.Fight)
                     return UseFightItem(consumerConfig);
             }
             else if (useMethod == HItemUseTypes.Seed)
             {
-                if (itemConfig.SubType == HItemTypes.Seed)
+                if (itemConfig.SubType == (int)HItemTypes.Seed)
                     return UseSeedItem(consumerConfig);
             }
 

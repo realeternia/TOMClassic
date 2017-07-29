@@ -80,17 +80,17 @@ namespace TaleofMonsters.Forms
                 else
                 {
                     TournamentConfig tournamentConfig = ConfigData.GetTournamentConfig(tid);
-                    if (tournamentConfig.Type == TournamentTypes.Cup8)
+                    if (tournamentConfig.Type == (int)TournamentTypes.Cup8)
                     {
                         viewStack1.SelectedIndex = 0;
                         tourCup81.Init(tid);
                     }
-                    else if (tournamentConfig.Type == TournamentTypes.League4)
+                    else if (tournamentConfig.Type == (int)TournamentTypes.League4)
                     {
                         viewStack1.SelectedIndex = 1;
                         tourLeague41.Init(tid);
                     }
-                    else if (tournamentConfig.Type == TournamentTypes.Cup16)
+                    else if (tournamentConfig.Type == (int)TournamentTypes.Cup16)
                     {
                         viewStack1.SelectedIndex = 2;
                         tourCup161.Init(tid);

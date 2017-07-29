@@ -13,7 +13,6 @@ namespace TaleofMonsters.Forms.MiniGame
         private int[,] attrs;
         private int ehp;
         private int[,] eattrs;
-        private int type;
         private string resultStr;
         private int stag;
         private int lastact;
@@ -21,7 +20,6 @@ namespace TaleofMonsters.Forms.MiniGame
 
         public MGBattleRobot()
         {
-            type = (int)SystemMenuIds.GameBattleRobot;
             InitializeComponent();
 
             bitmapButtonC1.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");

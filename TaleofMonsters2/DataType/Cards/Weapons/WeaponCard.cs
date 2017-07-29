@@ -210,7 +210,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             const string stars = "★★★★★★★★★★";
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             var cardQual = Config.CardConfigManager.GetCardConfig(CardId).Quality;
-            tipData.AddTextNewLine(weapon.WeaponConfig.Name, HSTypes.I2QualityColor(cardQual), 20);
+            tipData.AddTextNewLine(weapon.WeaponConfig.Name, HSTypes.I2QualityColor((int)cardQual), 20);
             tipData.AddText(string.Format("Lv{0}({1})", card.Level, weapon.WeaponConfig.Ename), "MediumAquamarine");
             tipData.AddTextNewLine(stars.Substring(10 - weapon.WeaponConfig.Star), "Yellow", 20);
             tipData.AddLine();

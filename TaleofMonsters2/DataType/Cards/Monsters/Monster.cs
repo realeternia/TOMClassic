@@ -77,7 +77,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
 
         public void UpgradeToLevel(int level)
         {
-            var modify = CardAssistant.GetCardModify(MonsterConfig.Quality, MonsterConfig.Modify);
+            var modify = CardAssistant.GetCardModify((CardQualityTypes)MonsterConfig.Quality, MonsterConfig.Modify);
 
             Level = level;
 
