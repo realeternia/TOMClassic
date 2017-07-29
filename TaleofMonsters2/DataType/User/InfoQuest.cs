@@ -70,12 +70,9 @@ namespace TaleofMonsters.DataType.User
             var questData = QuestRunning.Find(q => q.QuestId == qid);
             if (questData != null)
             {
-                if (questData.State == (int)QuestStates.Accomplish)
-                    return true;
                 var questConfig = ConfigData.GetQuestConfig(qid);
                 if (!string.IsNullOrEmpty(questConfig.RequireItem))
-                    if (UserProfile.InfoBag.GetItemCount(HItemBook.GetItemId(questConfig.RequireItem)) <= 0)
-                        return false;
+                    return UserProfile.InfoBag.GetItemCount(HItemBook.GetItemId(questConfig.RequireItem)) > 0;
                 return questData.State == (int)QuestStates.Accomplish;
             }
             return false;
@@ -98,7 +95,7 @@ namespace TaleofMonsters.DataType.User
             var questFin = QuestFinish.Find(q => q == qid);
             if (state == QuestStates.Receive)
             {
-                if (questRun == null && questFin <= 0)
+                if (IsQuestCanReceive(qid))
                 {
                     var questData = new DbQuestData
                     {
@@ -112,7 +109,7 @@ namespace TaleofMonsters.DataType.User
             }
             else if (state == QuestStates.Finish)
             {
-                if (questRun != null && questRun.State == (byte)QuestStates.Accomplish && questFin == 0)
+                if (IsQuestCanReward(qid) && questFin == 0)
                 {
                     QuestRunning.Remove(questRun);
                     QuestFinish.Add(qid);

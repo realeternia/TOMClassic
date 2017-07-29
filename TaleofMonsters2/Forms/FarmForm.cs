@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using ConfigDatas;
 using ControlPlus;
 using NarlonLib.Core;
 using NarlonLib.Math;
@@ -124,6 +125,7 @@ namespace TaleofMonsters.Forms
 
         public override void OnFrame(int tick, float timePass)
         {
+            base.OnFrame(tick, timePass);
             if (tick % 6 == 0)
             {
                 Invalidate();
@@ -165,29 +167,27 @@ namespace TaleofMonsters.Forms
                 e.Graphics.DrawImage(tile, baseX, baseY + 86 - tile.Height, tile.Width, tile.Height);
                 tile.Dispose();
 
-                if (timeState.Type > 0)
+                if (timeState.Type <= 0)
+                    continue;
+
+                TimeSpan span = TimeTool.UnixTimeToDateTime(timeState.Time) - DateTime.Now;
+                var itemConfig = ConfigData.GetHItemConfig(timeState.Type);
+                Image veg = PicLoader.Read("Farm", string.Format("{0}.PNG", itemConfig.Url));
+                if (veg != null)
                 {
-                    TimeSpan span = TimeTool.UnixTimeToDateTime(timeState.Time) - DateTime.Now;
-
-                    Image veg = PicLoader.Read("Farm", string.Format("veg{0}.PNG", timeState.Type%100));
                     if (span.TotalSeconds > 0)
-                    {
                         e.Graphics.DrawImage(veg, new Rectangle(baseX + 59, baseY + 6, veg.Width, veg.Height), 0, 0, veg.Width, veg.Height, GraphicsUnit.Pixel, Core.HSImageAttributes.ToGray);
-                    }
                     else
-                    {
                         e.Graphics.DrawImage(veg, baseX + 59, baseY + 6, veg.Width, veg.Height);
-                    }
                     veg.Dispose();
+                }
 
-                    
-                    if (span.TotalSeconds > 0)
-                    {
-                        string timeText = string.Format("{0}:{1:00}:{2:00}", span.Hours, span.Minutes, span.Seconds);
-                        font = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-                        e.Graphics.DrawString(timeText, font, Brushes.White, baseX+55, baseY + 30);
-                        font.Dispose();
-                    }
+                if (span.TotalSeconds > 0)
+                {
+                    string timeText = string.Format("{0}:{1:00}:{2:00}", span.Hours, span.Minutes, span.Seconds);
+                    font = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+                    e.Graphics.DrawString(timeText, font, Brushes.White, baseX + 55, baseY + 30);
+                    font.Dispose();
                 }
             }
         }
