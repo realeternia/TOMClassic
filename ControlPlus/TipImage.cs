@@ -198,20 +198,24 @@ namespace ControlPlus
                 int wid = 120, heg = 0;
                 Bitmap bmp = new Bitmap(300, 300);
                 Graphics g = Graphics.FromImage(bmp);
-                Font fontInfo = new Font("宋体", 9*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+                Font fontTitle = new Font("宋体", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+                Font fontOther = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
                 for (int i = 0; i < datas.Count;i++ )
                 {
                     foreach (ILineObject obj in datas[i].Objects)
                     {
                         if (obj is LineText)
                         {
-                            LineText text = (obj as LineText);
-                            text.UpdateWid((int)TextRenderer.MeasureText(g, text.text, fontInfo, new Size(0, 0), TextFormatFlags.NoPadding).Width);
+                            LineText text = obj as LineText;
+                            var textWid = TextRenderer.MeasureText(g, text.text, datas[i].Id == 0? fontTitle: fontOther, new Size(0, 0), TextFormatFlags.NoPadding).Width;
+                            text.UpdateWid(textWid);
                         }
                     }
                     wid = Math.Max(wid, datas[i].Width+5);
                     heg += datas[i].Height;
                 }
+                fontTitle.Dispose();
+                fontOther.Dispose();
                 wid += 5;
                 heg += 5;
                 g.Dispose();
@@ -227,7 +231,7 @@ namespace ControlPlus
                     y += datas[i-1].Height;
                     datas[i].Draw(g, 5, y, wid);
                 }
-                fontInfo.Dispose();
+
                 foreach (ImageInfo imageInfo in imgs)
                 {
                     Rectangle dest = new Rectangle(imageInfo.X, imageInfo.Y, imageInfo.Width, imageInfo.Height);
@@ -244,14 +248,14 @@ namespace ControlPlus
 
     struct LineInfo
     {
-        private int id;
+        public int Id;
         public List<ILineObject> Objects;
         public int Height;
 
         public LineInfo(int id, int height)
         {
-            this.id = id;
-            this.Height = height;
+            Id = id;
+            Height = height;
             Objects = new List<ILineObject>();
         }
         public int Width
@@ -273,7 +277,7 @@ namespace ControlPlus
             int xoff = x;
             foreach (ILineObject obj in Objects)
             {
-                obj.Draw(g, id, ref xoff, y, twid, Height);
+                obj.Draw(g, Id, ref xoff, y, twid, Height);
                 if (obj.Off > 0)
                     xoff = obj.Width;
                 else
@@ -322,12 +326,9 @@ namespace ControlPlus
 
         #region ILineObject 成员
 
-        public int Width 
+        public int Width
         {
-            get
-            {
-                return wid;
-            }
+            get { return wid; }
         }
 
         public void Draw(Graphics g, int id, ref int x, int y, int twid, int height)
