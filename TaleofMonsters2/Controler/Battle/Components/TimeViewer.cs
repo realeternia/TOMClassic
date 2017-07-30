@@ -11,9 +11,9 @@ namespace TaleofMonsters.Controler.Battle.Components
     {
         private float time;//当前的虚拟时间
         private float round;//当前的回合数，超过固定值就可以抽牌
-        private int weather;
+  //      private int weather;
         private int daytime;
-        private int special;
+   //     private int special;
         private bool isShow;
 
         internal TimeViewer()
@@ -71,14 +71,14 @@ namespace TaleofMonsters.Controler.Battle.Components
                 Image img = PicLoader.Read("Weather", url);
                 e.Graphics.DrawImage(img, 6, 35, 30, 30);
                 img.Dispose();
-                url = string.Format("w{0}.JPG", weather);
-                img = PicLoader.Read("Weather", url);
-                e.Graphics.DrawImage(img, 41, 35, 30, 30);
-                img.Dispose();
-                url = string.Format("s{0}.JPG", special);
-                img = PicLoader.Read("Weather", url);
-                e.Graphics.DrawImage(img, 76, 35, 30, 30);
-                img.Dispose();
+        //        url = string.Format("w{0}.JPG", weather);
+        //        img = PicLoader.Read("Weather", url);
+        //        e.Graphics.DrawImage(img, 41, 35, 30, 30);
+        //        img.Dispose();
+          //      url = string.Format("s{0}.JPG", special);
+        //        img = PicLoader.Read("Weather", url);
+       //         e.Graphics.DrawImage(img, 76, 35, 30, 30);
+       //         img.Dispose();
             }
         }
     }

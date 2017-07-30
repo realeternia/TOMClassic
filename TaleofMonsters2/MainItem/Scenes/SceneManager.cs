@@ -85,7 +85,7 @@ namespace TaleofMonsters.MainItem.Scenes
                 }
                 else
                 {
-                    so = new SceneTile(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height); break;
+                    so = new SceneTile(scenePosData.Id, scenePosData.X, scenePosData.Y, scenePosData.Width, scenePosData.Height); 
                     so.Disabled = true;
                     //throw new Exception("RefreshSceneObjects error");
                 }

@@ -42,7 +42,6 @@ namespace TaleofMonsters.MainItem.Quests
             DoReward(ref index, "mental", GetMulti() + BlessManager.RewardMentalMulti, RewardMental);
             DoReward(ref index, "exp", GetMulti() + BlessManager.RewardExpMulti, RewardExp);
             DoReward(ref index, "rival", 1, RewardRival);
-            DoReward(ref index, "flag", 1, RewardFlag);
             DoReward(ref index, "bless", 1, RewardBless);
             DoReward(ref index, "item", 1, RewardItem);
 
@@ -151,17 +150,6 @@ namespace TaleofMonsters.MainItem.Quests
                                                             60, 60, PictureRegionCellType.Item, itemId));
                     }
                     index++;
-                }
-            }
-        }
-
-        private void RewardFlag(ref int index)
-        {
-            if (!string.IsNullOrEmpty(config.Flag))
-            {
-                if (!QuestBook.HasQuest(config.Flag))
-                {
-                    QuestBook.SetQuestProgress(config.Flag, (byte)config.FlagProgress);
                 }
             }
         }

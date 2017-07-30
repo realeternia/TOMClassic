@@ -395,6 +395,7 @@ namespace TaleofMonsters.Config
                 else
                 {
                     NLog.Debug("GetRateCard cardId = 0 funcInfo " + funcInfo);
+                    break;
                 }
             }
 

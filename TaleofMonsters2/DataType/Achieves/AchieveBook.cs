@@ -28,19 +28,19 @@ namespace TaleofMonsters.DataType.Achieves
 
         public static void CheckByCheckType(string ctype)
         {
-            return; //todo 暂时关闭成就系统
-            foreach (AchieveConfig ach in ConfigData.AchieveDict.Values)
-            {
-                if (ach.CheckType == ctype && !UserProfile.Profile.InfoAchieve.GetAchieve(ach.Id))
-                {
-                    if (UserProfile.Profile.GetAchieveState(ach.Id) >= ach.Condition.Value)
-                    {
-                        UserProfile.Profile.InfoAchieve.SetAchieve(ach.Id);
-                        MainTipManager.AddTip(string.Format("|获得成就-|Gold|{0}", ach.Name), "White");
-                        UserProfile.InfoBag.AddDiamond(ach.Money);
-                    }
-                }
-            }
+            //todo 暂时关闭成就系统
+        //    foreach (AchieveConfig ach in ConfigData.AchieveDict.Values)
+        //    {
+        //        if (ach.CheckType == ctype && !UserProfile.Profile.InfoAchieve.GetAchieve(ach.Id))
+        //        {
+        //            if (UserProfile.Profile.GetAchieveState(ach.Id) >= ach.Condition.Value)
+        //            {
+        //                UserProfile.Profile.InfoAchieve.SetAchieve(ach.Id);
+        //                MainTipManager.AddTip(string.Format("|获得成就-|Gold|{0}", ach.Name), "White");
+        //                UserProfile.InfoBag.AddDiamond(ach.Money);
+        //            }
+        //        }
+        //    }
         }
 
         public static Image GetPreview(int id)
