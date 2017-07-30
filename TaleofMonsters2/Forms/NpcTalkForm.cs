@@ -161,6 +161,7 @@ namespace TaleofMonsters.Forms
                     if (questConfig.CheckSceneQuest == config.Ename && UserProfile.InfoQuest.IsQuestCanProgress(questConfig.Id))
                     {//增加一个选项的任务
                         var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, questConfig.QuestScript);
+                        questBlock.Prefix = "addon";
                         ModifyQuestState(questBlock, questConfig);
                         answerList.Add(questBlock);
                     }
@@ -171,7 +172,7 @@ namespace TaleofMonsters.Forms
         private void ModifyQuestState(SceneQuestBlock sb, QuestConfig questConfig)
         {
             var event1 = sb as SceneQuestEvent; 
-            if (event1 != null && event1.Type == "equestp")
+            if (event1 != null && event1.Type == "questp")
             {
                 event1.ParamList[0] = questConfig.Id.ToString();
                 event1.ParamList[1] = questConfig.ProgressAdd.ToString();
@@ -223,6 +224,7 @@ namespace TaleofMonsters.Forms
                             else if (word.Prefix.StartsWith("quest")) icon = "npc1";
                             else if (word.Prefix.StartsWith("rival")) icon = "tsk1";
                             else if (word.Prefix.StartsWith("shop")) icon = "oth7";
+                            else if (word.Prefix.StartsWith("addon")) icon = "tsk5";
                             if (icon != "")
                             {
                                 e.Graphics.DrawImage(HSIcons.GetIconsByEName(icon), textOff, id * 20 + Height - 10 - answerList.Count * 20 + 2, 18, 18);
