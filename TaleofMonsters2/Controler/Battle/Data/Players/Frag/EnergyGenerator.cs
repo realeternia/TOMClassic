@@ -22,6 +22,13 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         public int LimitPp { get; set; }
         public int LimitMp { get; set; }
 
+        public double GainEpRate { get; private set; } //收集能量的速度倍率
+
+        public EnergyGenerator()
+        {
+            GainEpRate = 1;
+        }
+
         /// <summary>
         /// 仅仅npc使用，玩家不用
         /// </summary>
@@ -34,6 +41,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             LimitLp = jobConfig.EnergyLimit[0];
             LimitPp = jobConfig.EnergyLimit[1];
             LimitMp = jobConfig.EnergyLimit[2];
+            GainEpRate += peopleConfig.EpSlow;
         }
         
         public void SetRate(int[] rateChange, int jobId)

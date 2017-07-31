@@ -7,23 +7,23 @@ namespace NarlonLib.Tools
 {
     public class ArraysUtils
     {
-        public static void RandomShuffle(List<int> list)
+        public static void RandomShuffle<T>(IList<T> list)
         {
             for (int i = 0; i < list.Count; ++i)
             {
                 int var = MathTool.GetRandom(list.Count);
-                int temp = list[i];
+                var temp = list[i];
                 list[i] = list[var];
                 list[var] = temp;
             }
         }
 
-        public static void RandomShuffle(List<int> list, Random r)
+        public static void RandomShuffle<T>(IList<T> list, Random r)
         {
             for (int i = 0; i < list.Count; ++i)
             {
                 int var = r.Next(list.Count);
-                int temp = list[i];
+                var temp = list[i];
                 list[i] = list[var];
                 list[var] = temp;
             }

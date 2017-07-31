@@ -184,6 +184,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         {
             recoverTime += pastRound * GameConstants.RoundRecoverAddon * (round >= GameConstants.RoundRecoverDoubleRound ? 2 : 1);
             var need = isFast ? GameConstants.DrawManaTimeFast : GameConstants.DrawManaTime;
+            need = (float)(need * EnergyGenerator.GainEpRate);
             if (recoverTime >= need)
             {
                 recoverTime -= need;
@@ -229,7 +230,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public float GetRoundRate()
         {
-            return recoverTime / GameConstants.DrawManaTime;
+            return (float)(recoverTime / (GameConstants.DrawManaTime * EnergyGenerator.GainEpRate));
         }
 
         public virtual void InitialCards()

@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ConfigDatas;
+using NarlonLib.Tools;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Tool;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Decks;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
@@ -18,6 +21,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             Job = peopleConfig.Job;
             
             DeckCard[] cds = DeckBook.GetDeckByName(deck, Level);
+            ArraysUtils.RandomShuffle(cds);
+            if (peopleConfig.CardReduce > 0) //有的野怪卡会比较少
+                cds = ArraysUtils.GetSubArray(cds, 0, GameConstants.DeckCardCount - peopleConfig.CardReduce);
             Cards = new ActiveCards(cds);
 
             int[] energyRate = { 0, 0, 0 };
@@ -32,6 +38,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         {
             base.InitialCards();
         }
+
         public override List<int> GetInitialMonster()
         {
             var list = new List<int>();

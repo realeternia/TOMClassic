@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using NarlonLib.Math;
+using NarlonLib.Tools;
 using TaleofMonsters.Config;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Decks;
@@ -25,19 +26,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
 
         public ActiveCards(DeckCard[] itsCards)
         {
-            ActiveCard[] tcards = new ActiveCard[GameConstants.DeckCardCount];
-            for (int i = 0; i < GameConstants.DeckCardCount; i++)
+            ActiveCard[] tcards = new ActiveCard[itsCards.Length];
+            for (int i = 0; i < itsCards.Length; i++)
             {
                 tcards[i] = new ActiveCard(itsCards[i]);
             }
-            for (int i = 0; i < 100; i++)
-            {
-                int x = MathTool.GetRandom(GameConstants.DeckCardCount);
-                int y = MathTool.GetRandom(GameConstants.DeckCardCount);
-                ActiveCard temp = tcards[x];
-                tcards[x] = tcards[y];
-                tcards[y] = temp;
-            }
+            ArraysUtils.RandomShuffle(tcards);
             cards = new List<ActiveCard>(tcards);
             index = 0;
         }
