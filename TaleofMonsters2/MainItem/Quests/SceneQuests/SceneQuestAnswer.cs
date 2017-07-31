@@ -44,11 +44,11 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
 
             if (parms[0] == "rivalavail")
             {
-                Disabled = !UserProfile.InfoRival.GetRivalState(config.EnemyId).Avail;
+                Disabled = !UserProfile.InfoRival.GetRivalState(PeopleBook.GetPeopleId(config.EnemyName)).Avail;
             }
             else if (parms[0] == "rivalavailno")
             {
-                Disabled = UserProfile.InfoRival.GetRivalState(config.EnemyId).Avail;
+                Disabled = UserProfile.InfoRival.GetRivalState(PeopleBook.GetPeopleId(config.EnemyName)).Avail;
             }
             else if (parms[0] == "sceneno")
             {

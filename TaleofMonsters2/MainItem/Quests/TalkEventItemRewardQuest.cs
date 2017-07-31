@@ -124,13 +124,13 @@ namespace TaleofMonsters.MainItem.Quests
 
         private void RewardRival(ref int index)
         {
-            if (questConfig.RivalId > 0)
+            if (!string.IsNullOrEmpty(questConfig.UnlockRival))
             {
-                int rivalId = questConfig.RivalId;
-                if (rivalId == 1) //特殊处理标记
-                {
-                    rivalId = UserProfile.InfoRecord.GetRecordById((int) MemPlayerRecordTypes.SceneQuestRandPeopleId);
-                }
+                var rivalId = 0;
+                if (questConfig.UnlockRival == "check")
+                    rivalId = UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.SceneQuestRandPeopleId);
+                else
+                    rivalId = PeopleBook.GetPeopleId(questConfig.UnlockRival);
 
                 UserProfile.InfoRival.SetRivalAvail(rivalId);
                 vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25,

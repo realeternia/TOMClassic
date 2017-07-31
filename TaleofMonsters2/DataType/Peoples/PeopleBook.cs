@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
+using NarlonLib.Log;
 using NarlonLib.Math;
 using NarlonLib.Tools;
 using TaleofMonsters.Controler.Battle;
@@ -8,13 +9,31 @@ using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Pops;
-using TaleofMonsters.Core;
 using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.DataType.Peoples
 {
     internal static class PeopleBook
     {
+        private static Dictionary<string, int> itemNameIdDict;
+        public static int GetPeopleId(string ename)
+        {
+            if (itemNameIdDict == null)
+            {
+                itemNameIdDict = new Dictionary<string, int>();
+                foreach (var peopleConfig in ConfigData.PeopleDict.Values)
+                {
+                    if (itemNameIdDict.ContainsKey(peopleConfig.Ename))
+                    {
+                        NLog.Warn("GetPeopleId key={0} exsited", peopleConfig.Ename);
+                        continue;
+                    }
+                    itemNameIdDict[peopleConfig.Ename] = peopleConfig.Id;
+                }
+            }
+            return itemNameIdDict[ename];
+        }
+
         public static int GetRandomPeopleId(int levelMin, int levelMax)
         {
             List<int> ids = new List<int>();

@@ -17,7 +17,7 @@ namespace TaleofMonsters.MainItem.Quests
         public TalkEventItemFight(int evtId, int level, Rectangle r, SceneQuestEvent e)
             : base(evtId, level, r, e)
         {
-            int enemyId = config.EnemyId;
+            int enemyId = PeopleBook.GetPeopleId(config.EnemyName);
             HsActionCallback winCallback = OnWin;
             HsActionCallback failCallback = OnFail;
             var parm = new PeopleFightParm();

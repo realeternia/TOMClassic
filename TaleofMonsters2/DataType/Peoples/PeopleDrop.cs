@@ -25,14 +25,14 @@ namespace TaleofMonsters.DataType.Peoples
                 Max = goldExpect*13/10
             };
             resources.Add(gold);
-            foreach (int rid in peopleConfig.Reward)
-            {
-                DropResource drop = new DropResource {Id = rid};
-                drop.Percent = (uint)(drop.Id <= 3 ? peopleConfig.Level * 5 / 4 + 5 : peopleConfig.Level / 2 + 2);
-                drop.Min = 1;
-                drop.Max = 1;
-                resources.Add(drop);
-            }
+            //foreach (int rid in peopleConfig.Reward)
+            //{
+            //    DropResource drop = new DropResource {Id = rid};
+            //    drop.Percent = (uint)(drop.Id <= 3 ? peopleConfig.Level * 5 / 4 + 5 : peopleConfig.Level / 2 + 2);
+            //    drop.Min = 1;
+            //    drop.Max = 1;
+            //    resources.Add(drop);
+            //}
         }
 
         public int GetDropItem()
