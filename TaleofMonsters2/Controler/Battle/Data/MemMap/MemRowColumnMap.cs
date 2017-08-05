@@ -71,16 +71,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
 
         public void InitUnit(Player player)
         {
-            int x = player.IsLeft ? 0 : ColumnCount - 1;
-            int y = RowCount / 2;
-
-            foreach (var unitInfo in bMap.Info)
+            var unitsPos = player.IsLeft ? bMap.LeftUnits : bMap.RightUnits;
+            foreach (var unitInfo in unitsPos)
             {
                 var heroData = new Monster(unitInfo.UnitId);
                 var level = ConfigData.GetLevelExpConfig(player.Level).TowerLevel;
-                int realX = player.IsLeft ? x + unitInfo.X : x - unitInfo.X;
-                int realY = y + unitInfo.Y;
-                var lm = new TowerMonster(level, heroData, new Point(realX * CardSize, realY * CardSize), player.IsLeft);
+                var lm = new TowerMonster(level, heroData, new Point(unitInfo.X * CardSize, unitInfo.Y * CardSize), player.IsLeft);
 
                 BattleManager.Instance.RuleData.CheckTowerData(lm);
 
@@ -99,9 +95,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                     var level = ConfigData.GetLevelExpConfig(player.Level).TowerLevel;
                     var mon = new Monster(mid);
                     mon.UpgradeToLevel(level);
-                    int realX = player.IsLeft ? x + xoff : x - xoff;
-                    int realY = y+ yoff;
-                    var pos = new Point(realX * CardSize, realY * CardSize);
+                    var pos = new Point(xoff * CardSize, yoff * CardSize);
                     LiveMonster lm = new LiveMonster(level, mon, pos, player.IsLeft);
                     BattleManager.Instance.MonsterQueue.Add(lm);
                 }

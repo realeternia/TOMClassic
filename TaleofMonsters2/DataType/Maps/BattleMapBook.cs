@@ -39,19 +39,32 @@ namespace TaleofMonsters.DataType.Maps
                     }
                 }
             }
-            var unitCount = int.Parse(sr.ReadLine());//单位布置
-            map.Info = new BattleMapUnitInfo[unitCount];
+            var unitCount = int.Parse(sr.ReadLine());//左边单位布置
+            map.LeftUnits = new BattleMapUnitInfo[unitCount];
             for (int i = 0; i < unitCount; i++)
             {
                 string[] unitinfos = sr.ReadLine().Split('\t');
-                map.Info[i] = new BattleMapUnitInfo
+                map.LeftUnits[i] = new BattleMapUnitInfo
                     {
                         X = int.Parse(unitinfos[0]),
                         Y = int.Parse(unitinfos[1]),
                         UnitId = int.Parse(unitinfos[2])
                     };
             }
-			sr.Close();
+
+            unitCount = int.Parse(sr.ReadLine());//右边单位布置
+            map.RightUnits = new BattleMapUnitInfo[unitCount];
+            for (int i = 0; i < unitCount; i++)
+            {
+                string[] unitinfos = sr.ReadLine().Split('\t');
+                map.RightUnits[i] = new BattleMapUnitInfo
+                {
+                    X = int.Parse(unitinfos[0]),
+                    Y = int.Parse(unitinfos[1]),
+                    UnitId = int.Parse(unitinfos[2])
+                };
+            }
+            sr.Close();
             return map;
         }
 

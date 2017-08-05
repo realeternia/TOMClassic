@@ -5,6 +5,7 @@ namespace TaleofMonsters.DataType.Maps
         public int XCount;
         public int YCount;
         public int[,] Cells;
-        public BattleMapUnitInfo[] Info;
+        public BattleMapUnitInfo[] LeftUnits;
+        public BattleMapUnitInfo[] RightUnits;
     }
 }
