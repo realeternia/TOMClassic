@@ -104,6 +104,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         private List<string> holyWordList = new List<string>(); //圣言，一些特殊效果的指令
         private List<int[]> monsterAddonOnce = new List<int[]>(); //一次性的强化
 
+        protected bool noCardOutPunish; //没有卡牌消耗完的惩罚
+
         #endregion
 
         public Player(bool playerControl, bool isLeft)
@@ -579,6 +581,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void OnGetCardFail(bool noCard)
         {
+            if (noCardOutPunish)
+                return;
+
             BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect("longly"), Tower as LiveMonster, true));
             Tower.OnMagicDamage(null, Tower.MaxHp.Source / 10, (int)CardElements.None);
             BattleManager.Instance.FlowWordQueue.Add(new FlowErrInfo(noCard ? HSErrorTypes.CardOutPunish :

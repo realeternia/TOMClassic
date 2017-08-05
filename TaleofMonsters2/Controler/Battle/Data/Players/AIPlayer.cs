@@ -23,7 +23,10 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             DeckCard[] cds = DeckBook.GetDeckByName(deck, Level);
             ArraysUtils.RandomShuffle(cds);
             if (peopleConfig.CardReduce > 0) //有的野怪卡会比较少
+            {
+                noCardOutPunish = true;
                 cds = ArraysUtils.GetSubArray(cds, 0, GameConstants.DeckCardCount - peopleConfig.CardReduce);
+            }
             Cards = new ActiveCards(cds);
 
             int[] energyRate = { 0, 0, 0 };
