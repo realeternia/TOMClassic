@@ -12,7 +12,6 @@ using TaleofMonsters.DataType.Equips;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Peoples;
-using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.MainItem.Blesses;

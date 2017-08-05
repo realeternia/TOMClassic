@@ -1,6 +1,7 @@
 ﻿using System;
 using ConfigDatas;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Drops;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.User;
@@ -74,21 +75,32 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
                            UserProfile.Profile.InfoBasic.HealthPoint < healthNeed ||
                            UserProfile.Profile.InfoBasic.MentalPoint < mentalNeed;
 
-                uint goldAdd = 0;
-                if (config.TradeGold > 0)
-                    goldAdd = GameResourceBook.InGoldSceneQuest(level, config.TradeGold*multi, true);
-                uint foodAdd = 0;
-                if (config.TradeFood > 0)
-                    foodAdd = Math.Min(100, GameResourceBook.InFoodSceneQuest(config.TradeFood*multi, true));
-                uint healthAdd = 0;
-                if (config.TradeHealth > 0)
-                    healthAdd = Math.Min(100, GameResourceBook.InHealthSceneQuest(config.TradeHealth*multi, true));
-                uint mentalAdd = 0;
-                if (config.TradeMental > 0)
-                    mentalAdd = Math.Min(100, GameResourceBook.InMentalSceneQuest(config.TradeMental*multi, true));
-                Script = string.Format("增加{0}(消耗{1})",
-                                       GetTradeStr(goldAdd, foodAdd, healthAdd, mentalAdd),
-                                       GetTradeStr(goldNeed, foodNeed, healthNeed, mentalNeed));
+                if (string.IsNullOrEmpty(config.TradeDropItem))
+                {
+                    uint goldAdd = 0;
+                    if (config.TradeGold > 0)
+                        goldAdd = GameResourceBook.InGoldSceneQuest(level, config.TradeGold*multi, true);
+                    uint foodAdd = 0;
+                    if (config.TradeFood > 0)
+                        foodAdd = Math.Min(100, GameResourceBook.InFoodSceneQuest(config.TradeFood*multi, true));
+                    uint healthAdd = 0;
+                    if (config.TradeHealth > 0)
+                        healthAdd = Math.Min(100, GameResourceBook.InHealthSceneQuest(config.TradeHealth*multi, true));
+                    uint mentalAdd = 0;
+                    if (config.TradeMental > 0)
+                        mentalAdd = Math.Min(100, GameResourceBook.InMentalSceneQuest(config.TradeMental*multi, true));
+                    Script = string.Format("获得{0}(消耗{1})",
+                        GetTradeStr(goldAdd, foodAdd, healthAdd, mentalAdd),
+                        GetTradeStr(goldNeed, foodNeed, healthNeed, mentalNeed));
+                }
+                else
+                {
+                    var dropId = DropBook.GetDropId(config.TradeDropItem);
+                    Script = string.Format("获得{0}(消耗{1})",
+                        ConfigData.GetDropConfig(dropId).Name,
+                        GetTradeStr(goldNeed, foodNeed, healthNeed, mentalNeed));
+
+                }
             }
             else if (parms[0] == "hasrival")
             {

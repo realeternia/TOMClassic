@@ -3,7 +3,11 @@ using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Control;
 using NarlonLib.Drawing;
+using TaleofMonsters.Config;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Drops;
+using TaleofMonsters.DataType.Equips;
+using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Regions;
@@ -128,10 +132,49 @@ namespace TaleofMonsters.MainItem.Quests
                     index++;
                 }
             }
+            if (!string.IsNullOrEmpty(config.TradeDropItem))
+            {
+                var itemList = DropBook.GetDropItemList(config.TradeDropItem);
+                foreach (var itemId in itemList)
+                {
+                    var isEquip = ConfigIdManager.IsEquip(itemId);
+                    if (isEquip)
+                    {
+                        UserProfile.InfoEquip.AddEquip(itemId, 24 * 60);
+                        vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25,
+                                                            60, 60, PictureRegionCellType.Equip, itemId));
+                    }
+                    else
+                    {
+                        UserProfile.InfoBag.AddItem(itemId, 1);
+                        vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25,
+                                                            60, 60, PictureRegionCellType.Item, itemId));
+                    }
+                    index++;
+                }
+            }
         }
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
+            {
+                var region = vRegion.GetRegion(id) as PictureRegion;
+                if (region != null)
+                {
+                    var regionType = region.GetVType();
+                    if (regionType == PictureRegionCellType.Item)
+                    {
+                        Image image = HItemBook.GetPreview(key);
+                        tooltip.Show(image, parent, x, y);
+                    }
+                    else if (regionType == PictureRegionCellType.Equip)
+                    {
+                        Equip equip = new Equip(key);
+                        Image image = equip.GetPreview();
+                        tooltip.Show(image, parent, x, y);
+                    }
+                }
+            }
             {
                 var region = vRegion.GetRegion(id) as ImageRegion;
                 if (region != null)
