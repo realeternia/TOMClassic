@@ -6,6 +6,7 @@ using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.User.Db;
+using TaleofMonsters.MainItem.Blesses;
 using TaleofMonsters.MainItem.Scenes.SceneObjects;
 
 namespace TaleofMonsters.MainItem.Scenes
@@ -146,7 +147,7 @@ namespace TaleofMonsters.MainItem.Scenes
         public static bool CanPlayerMove(int id1, int id2)
         {
             var dis = GetDistance(id1, id2);
-            return dis > 0 && dis <= UserProfile.InfoBasic.GetSceneMove();
+            return dis > 0 && dis <= 1 + BlessManager.MoveDistance;
         }
 
         public static int GetDistance(int id1, int id2)

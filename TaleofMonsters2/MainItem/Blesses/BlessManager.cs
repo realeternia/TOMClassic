@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Collections.Generic;
 using ConfigDatas;
-using NarlonLib.Math;
-using TaleofMonsters.DataType.Blesses;
 using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.MainItem.Blesses
@@ -22,11 +18,15 @@ namespace TaleofMonsters.MainItem.Blesses
             RebuildCache();
         }
 
-        public static void AddBless(int id, int time)
+        public static void AddBless(int id)
         {
+            var time = ConfigData.GetBlessConfig(id).Round;
             if (UserProfile.InfoWorld.Blesses.Count >= 10) //最大10个bless
                 return;
-            UserProfile.InfoWorld.Blesses[id] = time;
+            if (UserProfile.InfoWorld.Blesses.ContainsKey(id))
+                UserProfile.InfoWorld.Blesses[id] += time;
+            else
+                UserProfile.InfoWorld.Blesses[id] = time;
             if (Update != null)
             {
                 Update();
@@ -65,6 +65,7 @@ namespace TaleofMonsters.MainItem.Blesses
             {
                 var config = ConfigData.GetBlessConfig(key);
                 cache.MoveFoodChange += config.MoveFoodChange;
+                cache.MoveDistance += config.MoveDistance;
                 cache.PunishFoodMulti += config.PunishFoodMulti;
                 cache.PunishGoldMulti += config.PunishGoldMulti;
                 cache.PunishHealthMulti += config.PunishHealthMulti;
@@ -103,11 +104,14 @@ namespace TaleofMonsters.MainItem.Blesses
             }
         }
 
-        public static int SceneMove
+        public static int MoveFoodChange
         {
             get { return cache.MoveFoodChange; }
         }
-
+        public static int MoveDistance
+        {
+            get { return cache.MoveDistance; }
+        }
         public static int PunishFoodMulti
         {
             get { return cache.PunishFoodMulti; }

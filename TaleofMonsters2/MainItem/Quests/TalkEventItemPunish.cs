@@ -142,7 +142,7 @@ namespace TaleofMonsters.MainItem.Quests
             if (config.PunishBlessLevel > 0)
             {
                 var blessId = BlessBook.GetRandomBlessLevel(false, config.PunishBlessLevel);
-                BlessManager.AddBless(blessId, GameConstants.QuestBlessTime);
+                BlessManager.AddBless(blessId);
                 vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25,
                                                        60, 60, PictureRegionCellType.Bless, blessId));
                 index++;

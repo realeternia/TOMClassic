@@ -112,7 +112,7 @@ namespace TaleofMonsters.Controler.GM
                     case "cure": UserProfile.InfoBasic.MentalPoint=100; UserProfile.InfoBasic.HealthPoint=100;
                         UserProfile.InfoBasic.FoodPoint = 100;break;
                     case "bls": if (data.Length == 2)
-                        BlessManager.AddBless(int.Parse(data[1]), 10); break;
+                        BlessManager.AddBless(int.Parse(data[1])); break;
                     case "qst":if (data.Length == 2)
                         UserProfile.InfoQuest.SetQuestState(int.Parse(data[1]), QuestStates.Receive); break;
                 }

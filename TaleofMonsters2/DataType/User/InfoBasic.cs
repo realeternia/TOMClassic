@@ -24,8 +24,6 @@ namespace TaleofMonsters.DataType.User
         [FieldIndex(Index = 24)] public uint HealthPoint; //健康度
         [FieldIndex(Index = 25)] public uint MentalPoint; //精神
         [FieldIndex(Index = 26)] public List<int> AvailJobList = new List<int>(); //解锁职业列表
-        [FieldIndex(Index = 27)] public uint MoveBoost; //快速移动
-        [FieldIndex(Index = 28)] public uint MoveBoostRound; //快速移动时长
 
         public void AddExp(int ex)
         {
@@ -109,32 +107,6 @@ namespace TaleofMonsters.DataType.User
             else
             {
                 MentalPoint -= val;
-            }
-        }
-        public void SetSceneMove(int move, int time)
-        {
-            if (MoveBoostRound == 0 || ( MoveBoostRound > 0 && move >= MoveBoost))
-            {
-                MoveBoost = (uint)move;
-                MoveBoostRound = (uint)time;
-                MainTipManager.AddTip(string.Format("|场景移动范围|Cyan|{0}||，剩余|Cyan|{1}||回合", move, time), "White");
-            }
-        }
-
-        public uint GetSceneMove()
-        {
-            if (MoveBoostRound > 0)
-            {
-                return MoveBoost;
-            }
-            return 1;
-        }
-        public void CheckSceneMove()
-        {
-            if (MoveBoostRound > 0)
-            {
-                MoveBoostRound--;
-                MainTipManager.AddTip(string.Format("|场景移动范围|Cyan|{0}||，剩余|Cyan|{1}||回合", MoveBoost, MoveBoostRound), "White");
             }
         }
 

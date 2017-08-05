@@ -120,7 +120,7 @@ namespace TaleofMonsters.Forms.Items
             UserProfile.InfoBag.SubResource(GameResourceType.Mercury, cost);
             if (config.Type == 1) //买入
             {
-                BlessManager.AddBless(blessId, GameConstants.QuestBlessTime);
+                BlessManager.AddBless(blessId);
                 UserProfile.InfoWorld.BlessShopItems.Remove(blessId);
                 parent.AddFlowCenter("祝福成功", "Lime");
             }

@@ -9,6 +9,7 @@ using TaleofMonsters.DataType.Drops;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms;
 using TaleofMonsters.MainItem;
+using TaleofMonsters.MainItem.Blesses;
 using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.DataType.Items
@@ -69,9 +70,9 @@ namespace TaleofMonsters.DataType.Items
             {
                 UserProfile.InfoBasic.AddMental((uint)itemConfig.GainMental);
             }
-            if (itemConfig.MoveAdd > 0)
+            if (itemConfig.BlessId > 0)
             {
-                UserProfile.InfoBasic.SetSceneMove(itemConfig.MoveAdd, itemConfig.MoveRound);
+                BlessManager.AddBless(itemConfig.BlessId);
             }
             if (!string.IsNullOrEmpty(itemConfig.Instruction))
             {
