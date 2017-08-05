@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ConfigDatas;
+using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.MainItem.Blesses
@@ -11,8 +12,7 @@ namespace TaleofMonsters.MainItem.Blesses
         private static BlessConfig cache;
 
         public static BlessUpdateMethod Update = null;
-
-
+        
         public static void OnChangeMap()
         {
             RebuildCache();
@@ -50,7 +50,7 @@ namespace TaleofMonsters.MainItem.Blesses
             foreach (var bless in UserProfile.InfoWorld.Blesses)
             {
                 var blessConfig = ConfigData.GetBlessConfig(bless.Key);
-                if (blessConfig.Type == 2)
+                if (blessConfig.Type == (int)BlessTypes.Negative)
                 {
                     datas.Add(blessConfig.Id);
                 }
@@ -101,6 +101,7 @@ namespace TaleofMonsters.MainItem.Blesses
                 {
                     Update();
                 }
+                RebuildCache();
             }
         }
 

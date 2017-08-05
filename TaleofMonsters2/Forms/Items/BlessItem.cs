@@ -74,12 +74,12 @@ namespace TaleofMonsters.Forms.Items
             }
 
             var config = ConfigData.GetBlessConfig(eid);
-            if (config.Type == 1)
+            if (config.Type == (int)BlessTypes.Active)
             {
                 bitmapButtonBuy.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("oth9");
                 this.bitmapButtonBuy.Text = @"购买";
             }
-            else
+            else if (config.Type == (int)BlessTypes.Negative)
             {
                 bitmapButtonBuy.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("hatt8");
                 this.bitmapButtonBuy.Text = @"移除";
@@ -106,10 +106,7 @@ namespace TaleofMonsters.Forms.Items
         {
             var config = ConfigData.GetBlessConfig(blessId);
             uint cost = 0;
-            if (config.Type == 1) //买入
-                cost = GameResourceBook.OutMercuryBlessBuy(config.Level);
-            else
-                cost = GameResourceBook.OutMercuryBlessBuy(config.Level);
+            cost = GameResourceBook.OutMercuryBlessBuy(config.Level);
 
             if (!UserProfile.InfoBag.HasResource(GameResourceType.Mercury, cost))
             {
@@ -118,13 +115,13 @@ namespace TaleofMonsters.Forms.Items
             }
 
             UserProfile.InfoBag.SubResource(GameResourceType.Mercury, cost);
-            if (config.Type == 1) //买入
+            if (config.Type == (int)BlessTypes.Active) //买入
             {
                 BlessManager.AddBless(blessId);
                 UserProfile.InfoWorld.BlessShopItems.Remove(blessId);
                 parent.AddFlowCenter("祝福成功", "Lime");
             }
-            else
+            else if (config.Type == (int)BlessTypes.Negative)
             {
                 BlessManager.RemoveBless(blessId);
                 parent.AddFlowCenter("移除成功", "Lime");

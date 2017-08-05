@@ -356,10 +356,8 @@ namespace TaleofMonsters.DataType.User
                 BlessShopItems.Clear();
                 foreach (var blessData in ConfigData.BlessDict.Values)
                 {
-                    if (blessData.Type == 1)
-                    {
+                    if (blessData.Type == (int)BlessTypes.Active)
                         BlessShopItems.Add(blessData.Id);
-                    }
                 }
                 ArraysUtils.RandomShuffle(BlessShopItems);
                 BlessShopItems = BlessShopItems.GetRange(0, 5);

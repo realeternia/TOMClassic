@@ -74,13 +74,9 @@ namespace TaleofMonsters.Forms
         {
             showType = type;
             if (type == 1)
-            {
                 blesses = UserProfile.InfoWorld.GetBlessShopData();
-            }
             else
-            {
                 blesses = BlessManager.GetNegtiveBless();
-            }
 
             RefreshInfo();
             Invalidate(new Rectangle(9, 35, 66, 30*5));

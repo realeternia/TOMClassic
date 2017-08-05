@@ -18,24 +18,24 @@ namespace TaleofMonsters.DataType.Blesses
         {
             for (int i = 0; i < 4; i++)
             {
-                BlessBook.activeBlessDict[i] = new List<int>();
-                BlessBook.negativeBlessDict[i] = new List<int>();
+                activeBlessDict[i] = new List<int>();
+                negativeBlessDict[i] = new List<int>();
             }
             foreach (var blessConfig in ConfigData.BlessDict.Values)
             {
-                if (blessConfig.Type == 1)
-                    BlessBook.activeBlessDict[blessConfig.Level].Add(blessConfig.Id);
-                else
-                    BlessBook.negativeBlessDict[blessConfig.Level].Add(blessConfig.Id);
+                if (blessConfig.Type == (int)BlessTypes.Active)
+                    activeBlessDict[blessConfig.Level].Add(blessConfig.Id);
+                else if (blessConfig.Type == (int)BlessTypes.Negative)
+                    negativeBlessDict[blessConfig.Level].Add(blessConfig.Id);
             }
         }
 
         public static Image GetBlessImage(int id)
         {
-            string fname = String.Format("Bless/{0}.PNG", ConfigData.BlessDict[id].Icon);
+            string fname = string.Format("Bless/{0}.PNG", ConfigData.BlessDict[id].Icon);
             if (!ImageManager.HasImage(fname))
             {
-                Image image = PicLoader.Read("Bless", String.Format("{0}.PNG", ConfigData.BlessDict[id].Icon));
+                Image image = PicLoader.Read("Bless", string.Format("{0}.PNG", ConfigData.BlessDict[id].Icon));
                 ImageManager.AddImage(fname, image);
             }
             return ImageManager.GetImage(fname);
@@ -48,10 +48,15 @@ namespace TaleofMonsters.DataType.Blesses
             if (UserProfile.InfoWorld.Blesses.ContainsKey(key))
                 lastTime = UserProfile.InfoWorld.Blesses[key];
             TipImage tipData = new TipImage();
-            tipData.AddTextNewLine(config.Name, config.Type == 1 ? "Green" : "Red", 20);
+            var color = "White";
+            if (config.Type == (int) BlessTypes.Active)
+                color = "Green";
+            else if (config.Type == (int)BlessTypes.Negative)
+                color = "Red";
+            tipData.AddTextNewLine(config.Name, color, 20);
             tipData.AddLine(2);
             tipData.AddTextLines(config.Descript, "White", 15, true);
-            tipData.AddTextNewLine(String.Format("剩余步数{0}", lastTime), "Wheat");
+            tipData.AddTextNewLine(string.Format("剩余步数{0}", lastTime), "Wheat");
             return tipData.Image;
         }
         

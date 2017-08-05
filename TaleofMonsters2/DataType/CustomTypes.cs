@@ -230,6 +230,13 @@
         Crt,
         Luk
     }
+    internal enum BlessTypes
+    {
+        None = 0,
+        Active = 1,
+        Negative = 2,
+        Quest = 3,
+    }
 
     internal enum MemPlayerRecordTypes
     {
