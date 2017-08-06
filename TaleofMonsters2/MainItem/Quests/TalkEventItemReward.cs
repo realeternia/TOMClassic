@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using NarlonLib.Control;
 using NarlonLib.Drawing;
 using TaleofMonsters.Config;
-using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Blesses;
 using TaleofMonsters.DataType.Drops;

@@ -22,13 +22,6 @@ namespace TaleofMonsters.MainItem.Scenes
             public int Height;
         }
 
-        internal enum SceneFreshReason 
-        {
-            Load,
-            Warp,
-            Reset
-        }
-
         public static List<SceneObject> RefreshSceneObjects(int id, int mapWidth ,int mapHeight, SceneFreshReason reason)
         {
             List<ScenePosData> cachedMapData = new List<ScenePosData>();

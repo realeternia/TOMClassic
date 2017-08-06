@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players;
-using TaleofMonsters.Controler.Battle.Data.Players.Frag;
+using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.User;
 
@@ -84,7 +84,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 {
                     if (Parm.RuleAddon == PeopleFightRuleAddon.Card)
                     {
-                        p.DrawNextNCard(null, Parm.RuleLevel, AddCardReason.InitCard);
+                        p.DrawNextNCard(null, Parm.RuleLevel, AddCardReasons.InitCard);
                     }
                 }
             }

@@ -19,6 +19,12 @@
         Dark = 6,
     }
 
+    internal enum DiscoverCardActionType
+    {
+        AddCard,
+        Add2Cards
+    }
+
     internal enum CardTypeSub
     {
         Devil = 1,
@@ -236,6 +242,50 @@
         Active = 1,
         Negative = 2,
         Quest = 3,
+    }
+
+    internal enum BurstStage
+    {
+        Fail,
+        Pass,
+        Fin
+    }
+
+    internal enum AddCardReasons
+    {
+        InitCard,
+        RoundCard,
+        DrawCardBySkillOrSpell,
+        GetCertainCard,
+        RandomCard,
+        Discover
+    }
+
+    internal enum BuffImmuneGroup
+    {
+        Life, // 1.生命
+        Mental, //2.意志
+        Physical, //3.肉体
+        Element, // 4.元素
+        Help // 5.联动
+    }
+
+    internal enum CardMouseState
+    {
+        Normal,
+        MouseOn,
+        Disable
+    }
+
+    internal enum SceneFreshReason
+    {
+        Load,
+        Warp,
+        Reset
+    }
+    internal enum ToolBarItemTypes
+    {
+        Normal, Time, Limit
     }
 
     internal enum MemPlayerRecordTypes

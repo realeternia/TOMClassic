@@ -62,7 +62,7 @@ namespace TaleofMonsters.Forms.Items.Core
         }
     }
 
-    public enum IconDirections
+    internal enum IconDirections
     {
         LeftToRight,
         RightToLeft,

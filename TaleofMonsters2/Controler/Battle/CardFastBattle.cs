@@ -88,7 +88,7 @@ namespace TaleofMonsters.Controler.Battle
         }
     }
 
-    enum CardFastBattleResult
+    internal enum CardFastBattleResult
     {
         LeftWin,
         RightWin,

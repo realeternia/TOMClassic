@@ -9,7 +9,6 @@ using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Cards.Monsters;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
@@ -86,17 +85,17 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         public void AddCard(IMonster mon, int cardId, int level)
         {
             self.CardManager.AddCard(cardId, level, 0);
-            self.AddCardReason(mon, Frag.AddCardReason.GetCertainCard);
+            self.AddCardReason(mon, AddCardReasons.GetCertainCard);
         }
         public void AddCard(IMonster mon, int cardId, int level, int modify)
         {
             self.CardManager.AddCard(cardId, level, modify);
-            self.AddCardReason(mon, Frag.AddCardReason.GetCertainCard);
+            self.AddCardReason(mon, AddCardReasons.GetCertainCard);
         }
 
         public void GetNextNCard(IMonster mon, int n)
         {
-            self.DrawNextNCard(mon, n, Frag.AddCardReason.DrawCardBySkillOrSpell);
+            self.DrawNextNCard(mon, n, AddCardReasons.DrawCardBySkillOrSpell);
         }
 
 
@@ -144,7 +143,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             if (cardId != 0)
             {
                 self.CardManager.AddCard(cardId, lv, 0);
-                self.AddCardReason(mon, Frag.AddCardReason.RandomCard);
+                self.AddCardReason(mon, AddCardReasons.RandomCard);
             }
         }
 
@@ -154,7 +153,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             if (cardId != 0)
             {
                 self.CardManager.AddCard(cardId, lv, 0);
-                self.AddCardReason(mon, Frag.AddCardReason.RandomCard);
+                self.AddCardReason(mon, AddCardReasons.RandomCard);
             }
         }
 
@@ -164,7 +163,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             if (cardId != 0)
             {
                 self.CardManager.AddCard(cardId, lv, 0);
-                self.AddCardReason(mon, Frag.AddCardReason.RandomCard);
+                self.AddCardReason(mon, AddCardReasons.RandomCard);
             }
         }
 

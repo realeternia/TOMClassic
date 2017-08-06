@@ -17,7 +17,6 @@ using NarlonLib.Log;
 using TaleofMonsters.Controler.Battle.Components.CardSelect;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
 using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Cards.Spells;
 using TaleofMonsters.DataType.Cards.Weapons;
 using TaleofMonsters.DataType.Effects;
@@ -237,7 +236,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public virtual void InitialCards()
         {
-            DrawNextNCard(null, GameConstants.BattleInitialCardCount, Frag.AddCardReason.InitCard);
+            DrawNextNCard(null, GameConstants.BattleInitialCardCount, DataType.AddCardReasons.InitCard);
 
             BattleManager.Instance.RuleData.CheckInitialCards(this);
         }
@@ -481,20 +480,20 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             CardManager.DeleteCardAt(SelectId);
         }
 
-        public void AddCardReason(IMonster mon, AddCardReason reason)
+        public void AddCardReason(IMonster mon, AddCardReasons reason)
         {
             string effName = "";
             switch (reason)
             {
-                case Frag.AddCardReason.DrawCardBySkillOrSpell:
+                case AddCardReasons.DrawCardBySkillOrSpell:
                     effName = "flycard";
                     break;
-                case Frag.AddCardReason.GetCertainCard:
-                    goto case Frag.AddCardReason.DrawCardBySkillOrSpell;
-                case Frag.AddCardReason.Discover:
+                case AddCardReasons.GetCertainCard:
+                    goto case AddCardReasons.DrawCardBySkillOrSpell;
+                case AddCardReasons.Discover:
                     effName = "flycard2";
                     break;
-                case Frag.AddCardReason.RandomCard:
+                case AddCardReasons.RandomCard:
                     effName = "flycard3";
                     break;
             }
@@ -509,7 +508,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
         }
 
-        public void DrawNextNCard(IMonster mon, int n, AddCardReason reason)
+        public void DrawNextNCard(IMonster mon, int n, AddCardReasons reason)
         {
             var cardCount = Cards.LeftCount;
             for (int i = 0; i < n; i++)
@@ -545,7 +544,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 case DiscoverCardActionType.AddCard: CardManager.AddCard(cardId, level, 0); break;
                 case DiscoverCardActionType.Add2Cards: CardManager.AddCard(cardId, level, 0); CardManager.AddCard(cardId, level, 0); break;
             }
-            AddCardReason(mon, Frag.AddCardReason.Discover);
+            AddCardReason(mon, DataType.AddCardReasons.Discover);
         }
 
         public void AddHolyWord(string word)

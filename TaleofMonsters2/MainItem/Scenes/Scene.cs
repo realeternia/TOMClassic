@@ -149,7 +149,7 @@ namespace TaleofMonsters.MainItem.Scenes
             }
             TimeMinutes = (int)DateTime.Now.TimeOfDay.TotalMinutes;
             Rule.Init(mapid, TimeMinutes);
-            sceneItems = SceneManager.RefreshSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, isWarp ? SceneManager.SceneFreshReason.Warp : SceneManager.SceneFreshReason.Load );
+            sceneItems = SceneManager.RefreshSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, isWarp ? SceneFreshReason.Warp : SceneFreshReason.Load );
             if (UserProfile.InfoBasic.Position == 0 && sceneItems.Count > 0)//兜底处理
                 UserProfile.InfoBasic.Position = sceneItems[0].Id;
             parent.Invalidate();
@@ -613,7 +613,7 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public void ResetScene()
         {
-            sceneItems = SceneManager.RefreshSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, SceneManager.SceneFreshReason.Reset);
+            sceneItems = SceneManager.RefreshSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, SceneFreshReason.Reset);
             parent.Invalidate();
         }
 

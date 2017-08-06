@@ -1,6 +1,6 @@
 ﻿using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Data.Players;
-using TaleofMonsters.DataType.Cards;
+using TaleofMonsters.DataType;
 
 namespace TaleofMonsters.Controler.Battle.Components.CardSelect
 {

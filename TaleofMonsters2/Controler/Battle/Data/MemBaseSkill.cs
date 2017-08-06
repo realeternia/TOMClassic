@@ -252,10 +252,4 @@ namespace TaleofMonsters.Controler.Battle.Data
 
     }
 
-    internal enum BurstStage
-    {
-        Fail,
-        Pass,
-        Fin
-    }
 }
