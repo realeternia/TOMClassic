@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using NarlonLib.Math;
@@ -83,6 +84,14 @@ namespace NarlonLib.Tools
             T[] newArray = new T[count];
             Array.Copy(a, begin, newArray, 0, count);
             return newArray;
+        }
+        public static List<T> GetSubArray<T>(List<T> a, int begin, int count)
+        {
+            if (a.Count <= begin)
+                return new List<T>();
+            if (a.Count < begin + count)
+                return a.GetRange(begin, a.Count-begin);
+            return a.GetRange(begin, count);
         }
 
         public static string GetArrayString<T>(T[] a, int begin, int count)

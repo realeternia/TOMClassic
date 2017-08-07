@@ -174,17 +174,16 @@ namespace TaleofMonsters.DataType.User
                     CdGroupStartTime[consumerConfig.CdGroup - 1] = TimeTool.GetNowUnixTime();
                     CdGroupTime[consumerConfig.CdGroup - 1] = TimeTool.GetNowUnixTime() + consumerConfig.CdTime;
                 }
-                pickItem.Value--;
-                if (pickItem.Value <= 0)
-                    pickItem.Type = 0;
+
+                DeleteItemByPos(pos, 1);
+
                 MainForm.Instance.RefreshView();
             }
         }
 
         public void ClearItemAllByPos(int pos)
         {
-            Items[pos].Value = 0;
-            Items[pos].Type = 0;
+            DeleteItemByPos(pos, 0);
         }
 
         public void SellItemAllByPos(int pos)
@@ -197,10 +196,9 @@ namespace TaleofMonsters.DataType.User
                 uint money = (uint)(sellPrice * pickItem.Value);
                 AddResource(GameResourceType.Gold, money);
             }
-            ClearItemAllByPos(pos);
+            DeleteItemByPos(pos, 0);
         }
-
-
+        
         public int GetItemCount(int id)
         {
             int count = 0;
@@ -215,6 +213,23 @@ namespace TaleofMonsters.DataType.User
             return count;
         }
 
+        private void DeleteItemByPos(int pos, int num)
+        {//num=0,移除所有
+            IntPair cell = Items[pos];
+            var itemConfig = ConfigData.GetHItemConfig(cell.Type);
+            if (num != 0 && cell.Value > num)
+            {
+                cell.Value -= num;
+                MainTipManager.AddTip(string.Format("|扣除物品-|{0}|{1}||x{2}", HSTypes.I2RareColor(itemConfig.Rare), itemConfig.Name, num), "White");
+            }
+            else
+            {
+                MainTipManager.AddTip(string.Format("|扣除物品-|{0}|{1}||x{2}", HSTypes.I2RareColor(itemConfig.Rare), itemConfig.Name, cell.Value), "White");
+                cell.Value = 0;
+                cell.Type = 0;
+            }
+        }
+
 
         public void DeleteItem(int id, int num)
         {
@@ -227,13 +242,16 @@ namespace TaleofMonsters.DataType.User
                     if (pickItem.Value > count)
                     {
                         pickItem.Value -= count;
-                        return;
+                        break;
                     }
                     count -= pickItem.Value;
                     pickItem.Type = 0;
                     pickItem.Value = 0;
                 }
             }
+
+            var itemConfig = ConfigData.GetHItemConfig(id);
+            MainTipManager.AddTip(string.Format("|扣除物品-|{0}|{1}||x{2}", HSTypes.I2RareColor(itemConfig.Rare), itemConfig.Name, num), "White");
         }
 
         public void SortItem()
@@ -262,13 +280,13 @@ namespace TaleofMonsters.DataType.User
             }
         }
 
-        public List<IntPair> GetItemCountBySubtype(int type)
+        public List<IntPair> GetItemCountByType(int type)
         {
             AutoDictionary<int, int> counter = new AutoDictionary<int, int>();
             for (int i = 0; i < BagCount; i++)
             {
                 HItemConfig itemConfig = ConfigData.GetHItemConfig(Items[i].Type);
-                if (itemConfig != null && itemConfig.SubType == type)
+                if (itemConfig != null && itemConfig.Type == type)
                 {
                     counter[itemConfig.Id] += Items[i].Value;
                 }
