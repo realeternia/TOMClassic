@@ -2,4 +2,4 @@
 	a确实
 		end
 	a|shop|我想看下你的货物
-		enpc|shop|sdaolai
+		enpc|shop

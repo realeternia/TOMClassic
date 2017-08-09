@@ -39,7 +39,7 @@ namespace TaleofMonsters.MainItem.Quests
             else if (e.ParamList[0] == "shop")
             {
                 var shop = new NpcShopForm();
-                shop.ShopName = e.ParamList[1];
+                shop.ShopName = config.ShopName;
                 PanelManager.DealPanel(shop);
             }
         }

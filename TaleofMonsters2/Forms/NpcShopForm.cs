@@ -3,6 +3,7 @@ using System.Drawing;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Forms.Items;
 using ConfigDatas;
+using NarlonLib.Math;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.Forms.Items.Core;
 
@@ -37,6 +38,12 @@ namespace TaleofMonsters.Forms
             {
                 items[i] = HItemBook.GetItemId(shopInfo.SellTable[i]);
             }
+
+            if (shopInfo.RandomChooseX > 0)
+            {
+                items = NLRandomPicker<int>.RandomPickN(items, (uint)shopInfo.RandomChooseX);
+            }
+
             itemControls = new ShopItem[MaxCellCount];
             for (int i = 0; i < MaxCellCount; i++)
             {

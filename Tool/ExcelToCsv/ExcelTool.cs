@@ -32,7 +32,7 @@ namespace ExcelToCsv
             foreach (DataRow row in dt.Rows)
             {
                 var sheetName = row["TABLE_NAME"].ToString();
-                if (sheetName=="null" || sheetName.Replace("\'","").StartsWith("~"))
+                if (sheetName == "null" || sheetName.Replace("\'", "").StartsWith("~") || sheetName.StartsWith("_xlnm"))
                 {
                     continue;
                 }
