@@ -14,9 +14,7 @@ namespace TaleofMonsters.Forms
         private const int MaxCellCount = 12;
 
         private int[] items;
-        private int page;
         private ShopItem[] itemControls;
-        private ControlPlus.NLPageSelector nlPageSelector1;
 
         public string ShopName { get; set; }
 
@@ -24,8 +22,6 @@ namespace TaleofMonsters.Forms
         {
             InitializeComponent();
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
-            this.nlPageSelector1 = new ControlPlus.NLPageSelector(this, 143, 244, 150);
-            nlPageSelector1.PageChange += nlPageSelector1_PageChange;
         }
 
         public override void Init(int width, int height)
@@ -50,7 +46,6 @@ namespace TaleofMonsters.Forms
                 itemControls[i] = new ShopItem(this, 8 + (i % 3) * 142, 35 + (i / 3) * 55, 143, 56);
                 itemControls[i].Init(shopInfo.MoneyType);
             }
-            nlPageSelector1.TotalPage = (items.Length - 1) / MaxCellCount + 1;
             RefreshInfo();
         }
 
@@ -70,9 +65,9 @@ namespace TaleofMonsters.Forms
         {
             for (int i = 0; i < MaxCellCount; i++)
             {
-                if (page* MaxCellCount + i < items.Length)
+                if (i < items.Length)
                 {
-                    itemControls[i].RefreshData(items[page* MaxCellCount + i]);
+                    itemControls[i].RefreshData(items[i]);
                 }
                 else
                 {
@@ -101,12 +96,6 @@ namespace TaleofMonsters.Forms
                     ctl.Draw(e.Graphics);
                 }
             }
-        }
-
-        private void nlPageSelector1_PageChange(int pg)
-        {
-            page = pg;
-            RefreshInfo();
         }
     }
 }
