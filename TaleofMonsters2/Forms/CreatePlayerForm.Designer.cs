@@ -36,9 +36,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBoxHead = new System.Windows.Forms.PictureBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.buttonOk = new System.Windows.Forms.Button();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.buttonLeft = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHead)).BeginInit();
             this.SuspendLayout();
@@ -48,7 +46,7 @@
             this.buttonCancel.BackColor = System.Drawing.Color.DarkBlue;
             this.buttonCancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonCancel.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonCancel.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold);
             this.buttonCancel.ForeColor = System.Drawing.Color.White;
             this.buttonCancel.Location = new System.Drawing.Point(50, 302);
             this.buttonCancel.Name = "buttonCancel";
@@ -63,7 +61,7 @@
             this.buttonJob.BackColor = System.Drawing.Color.DarkBlue;
             this.buttonJob.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonJob.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonJob.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonJob.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold);
             this.buttonJob.ForeColor = System.Drawing.Color.White;
             this.buttonJob.Location = new System.Drawing.Point(198, 159);
             this.buttonJob.Name = "buttonJob";
@@ -78,7 +76,7 @@
             this.buttonRes.BackColor = System.Drawing.Color.DarkBlue;
             this.buttonRes.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonRes.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonRes.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonRes.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold);
             this.buttonRes.ForeColor = System.Drawing.Color.White;
             this.buttonRes.Location = new System.Drawing.Point(198, 225);
             this.buttonRes.Name = "buttonRes";
@@ -93,7 +91,7 @@
             this.buttonType.BackColor = System.Drawing.Color.DarkBlue;
             this.buttonType.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonType.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonType.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonType.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold);
             this.buttonType.ForeColor = System.Drawing.Color.White;
             this.buttonType.Location = new System.Drawing.Point(198, 192);
             this.buttonType.Name = "buttonType";
@@ -106,7 +104,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("宋体", 9F);
+            this.label3.Font = new System.Drawing.Font("SimSun", 9F);
             this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label3.Location = new System.Drawing.Point(42, 232);
             this.label3.Name = "label3";
@@ -117,7 +115,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("宋体", 9F);
+            this.label2.Font = new System.Drawing.Font("SimSun", 9F);
             this.label2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label2.Location = new System.Drawing.Point(42, 196);
             this.label2.Name = "label2";
@@ -128,7 +126,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 9F);
+            this.label1.Font = new System.Drawing.Font("SimSun", 9F);
             this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label1.Location = new System.Drawing.Point(42, 160);
             this.label1.Name = "label1";
@@ -145,28 +143,12 @@
             this.pictureBoxHead.TabIndex = 18;
             this.pictureBoxHead.TabStop = false;
             // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.BackColor = System.Drawing.Color.Transparent;
-            this.radioButton1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.radioButton1.Font = new System.Drawing.Font("宋体", 9F);
-            this.radioButton1.ForeColor = System.Drawing.Color.Chartreuse;
-            this.radioButton1.Location = new System.Drawing.Point(131, 70);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(35, 16);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "男";
-            this.radioButton1.UseVisualStyleBackColor = false;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
-            // 
             // buttonOk
             // 
             this.buttonOk.BackColor = System.Drawing.Color.DarkBlue;
             this.buttonOk.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonOk.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonOk.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonOk.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold);
             this.buttonOk.ForeColor = System.Drawing.Color.White;
             this.buttonOk.Location = new System.Drawing.Point(152, 302);
             this.buttonOk.Name = "buttonOk";
@@ -176,28 +158,12 @@
             this.buttonOk.UseVisualStyleBackColor = false;
             this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
             // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.BackColor = System.Drawing.Color.Transparent;
-            this.radioButton2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.radioButton2.Font = new System.Drawing.Font("宋体", 9F);
-            this.radioButton2.ForeColor = System.Drawing.Color.LightCoral;
-            this.radioButton2.Location = new System.Drawing.Point(187, 70);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(35, 16);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "女";
-            this.radioButton2.UseVisualStyleBackColor = false;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
-            // 
             // buttonLeft
             // 
             this.buttonLeft.BackColor = System.Drawing.Color.DarkBlue;
             this.buttonLeft.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonLeft.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonLeft.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonLeft.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold);
             this.buttonLeft.ForeColor = System.Drawing.Color.White;
             this.buttonLeft.Location = new System.Drawing.Point(141, 111);
             this.buttonLeft.Name = "buttonLeft";
@@ -209,25 +175,22 @@
             // 
             // CreatePlayerForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(272, 353);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonJob);
-            this.Controls.Add(this.radioButton2);
             this.Controls.Add(this.buttonRes);
             this.Controls.Add(this.buttonLeft);
             this.Controls.Add(this.buttonType);
             this.Controls.Add(this.buttonOk);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.radioButton1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.pictureBoxHead);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "CreatePlayerForm";
-            this.Opacity = 0.9;
+            this.Opacity = 0.9D;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "创建角色";
@@ -243,9 +206,7 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBoxHead;
-        private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.Button buttonOk;
-        private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.Button buttonLeft;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;

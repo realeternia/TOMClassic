@@ -57,31 +57,11 @@ namespace TaleofMonsters.Forms
 
         private void buttonLeft_Click(object sender, EventArgs e)
         {
-            headId += 2;
-            if (headId > 32)
-                headId -= 32;
+            headId ++;
+            if (headId > 10)
+                headId -= 10;
             pictureBoxHead.Image = PicLoader.Read("Player", string.Format("{0}.PNG", headId));
             Invalidate();
-        }
-
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioButton2.Checked)
-            {
-                headId++;
-                pictureBoxHead.Image = PicLoader.Read("Player", string.Format("{0}.PNG", headId));
-                Invalidate();
-            }
-        }
-
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioButton1.Checked)
-            {
-                headId--;
-                pictureBoxHead.Image = PicLoader.Read("Player", string.Format("{0}.PNG", headId));
-                Invalidate();
-            }
         }
 
         private Profile CreateProfile()
