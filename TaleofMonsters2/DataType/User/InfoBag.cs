@@ -119,13 +119,10 @@ namespace TaleofMonsters.DataType.User
             HItemConfig itemConfig = ConfigData.GetHItemConfig(id);
             if (itemConfig.Id == 0)
                 return;
-            MainTipManager.AddTip(string.Format("|获得物品-|{0}|{1}||x{2}", HSTypes.I2RareColor(itemConfig.Rare), itemConfig.Name, num), "White");
-
+        
             int max = itemConfig.MaxPile;
             if (max <= 0)
-            {
                 return;
-            }
 
             int count = num;
             for (int i = 0; i < BagCount; i++)
@@ -136,10 +133,14 @@ namespace TaleofMonsters.DataType.User
                     if (pickItem.Value + count <= max)
                     {
                         pickItem.Value += count;
-                        return;
+                        count = 0;
+                        break;
                     }
-                    count -= max - pickItem.Value;
-                    pickItem.Value = max;
+                    else
+                    {
+                        count -= max - pickItem.Value;
+                        pickItem.Value = max;
+                    }
                 }
             }
             for (int i = 0; i < BagCount; i++)
@@ -147,17 +148,22 @@ namespace TaleofMonsters.DataType.User
                 var pickItem = Items[i];
                 if (pickItem.Type == 0)
                 {
+                    pickItem.Type = id;
                     if (count <= max)
                     {
-                        pickItem.Type = id;
                         pickItem.Value = count;
-                        return;
+                        count = 0;
+                        break;
                     }
-                    pickItem.Type = id;
-                    count -= max;
-                    pickItem.Value = max;
+                    else
+                    {
+                        pickItem.Value = max;
+                        count -= max;
+                    }
                 }
             }
+            if (num > count)
+                MainTipManager.AddTip(string.Format("|获得物品-|{0}|{1}||x{2}", HSTypes.I2RareColor(itemConfig.Rare), itemConfig.Name, num - count), "White");
         }
 
         public void UseItemByPos(int pos, HItemUseTypes type)
@@ -165,6 +171,9 @@ namespace TaleofMonsters.DataType.User
             var pickItem = Items[pos];
             if (pickItem.Value <= 0)
                 return;
+            var rate = UserProfile.InfoBag.GetCdTimeRate(pickItem.Type);
+            if (rate > 0)
+                return; //cd中
 
             if (Consumer.UseItemsById(pickItem.Type, type))
             {
@@ -179,6 +188,7 @@ namespace TaleofMonsters.DataType.User
 
                 MainForm.Instance.RefreshView();
             }
+            //todo 需要提示下错误类型
         }
 
         public void ClearItemAllByPos(int pos)
@@ -208,6 +218,19 @@ namespace TaleofMonsters.DataType.User
                 if (pickItem.Type == id)
                 {
                     count += pickItem.Value;
+                }
+            }
+            return count;
+        }
+        public int GetBlankCount()
+        {
+            int count = 0;
+            for (int i = 0; i < BagCount; i++)
+            {
+                var pickItem = Items[i];
+                if (pickItem.Type == 0)
+                {
+                    count ++;
                 }
             }
             return count;
@@ -294,9 +317,35 @@ namespace TaleofMonsters.DataType.User
             List<IntPair> datas = new List<IntPair>();
             foreach (int itemId in counter.Keys())
             {
-                IntPair pairData = new IntPair();
-                pairData.Type = itemId;
-                pairData.Value = counter[itemId];
+                IntPair pairData = new IntPair
+                {
+                    Type = itemId,
+                    Value = counter[itemId]
+                };
+                datas.Add(pairData);
+            }
+            return datas;
+        }
+
+        public List<IntPair> GetItemCountByAttribute(string attrName)
+        {
+            AutoDictionary<int, int> counter = new AutoDictionary<int, int>();
+            for (int i = 0; i < BagCount; i++)
+            {
+                HItemConfig itemConfig = ConfigData.GetHItemConfig(Items[i].Type);
+                if (itemConfig != null && itemConfig.Attributes != null && Array.IndexOf(itemConfig.Attributes, attrName) >= 0)
+                {
+                    counter[itemConfig.Id] += Items[i].Value;
+                }
+            }
+            List<IntPair> datas = new List<IntPair>();
+            foreach (int itemId in counter.Keys())
+            {
+                IntPair pairData = new IntPair
+                {
+                    Type = itemId,
+                    Value = counter[itemId]
+                };
                 datas.Add(pairData);
             }
             return datas;

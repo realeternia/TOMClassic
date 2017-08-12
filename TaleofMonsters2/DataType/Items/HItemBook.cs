@@ -115,7 +115,10 @@ namespace TaleofMonsters.DataType.Items
             {
                 tipData.AddTextNewLine(string.Format("       材料(稀有度:{0})", hItemConfig.Rare), "White");
             }
-
+            if (hItemConfig.Attributes != null && hItemConfig.Attributes.Length > 0)
+            {
+                tipData.AddTextNewLine(string.Format("       特性:{0}", string.Join(",", hItemConfig.Attributes)), "Lime");
+            }
             tipData.AddTextNewLine(string.Format("       等级:{0}", hItemConfig.Level), "White");
             tipData.AddTextNewLine("", "White");
             tipData.AddTextLines(hItemConfig.Descript, "White",20,true);

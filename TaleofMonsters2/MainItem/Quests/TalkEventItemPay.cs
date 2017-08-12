@@ -1,7 +1,9 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Control;
 using NarlonLib.Log;
+using NarlonLib.Math;
 using NarlonLib.Tools;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
@@ -38,10 +40,17 @@ namespace TaleofMonsters.MainItem.Quests
         private void CalculateRequire()
         {
             int index = 1;
-            var items = ArraysUtils.GetSubArray(UserProfile.InfoBag.GetItemCountByType((int) HItemTypes.Material), 0, 5);
+            List<IntPair> items;
+            if (config.PayKey == null || config.PayKey.Length == 0)
+                items = ArraysUtils.GetSubArray(UserProfile.InfoBag.GetItemCountByType((int) HItemTypes.Material), 0, 13);
+            else
+            {
+                string pickKey = config.PayKey[MathTool.GetRandom(config.PayKey.Length)];
+                items = ArraysUtils.GetSubArray(UserProfile.InfoBag.GetItemCountByAttribute(pickKey), 0, 13);
+            }
             for (int i = 0; i < items.Count; i++)
             {
-                var region = new PictureAnimRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25, 60, 60,
+                var region = new PictureAnimRegion(index, pos.X + 3 + 20 + (index - 1) % 7 * 70, pos.Y + 3 + 25 + (index - 1) / 7 * 70, 60, 60,
                                     PictureRegionCellType.Item, items[i].Type);
                 region.AddDecorator(new RegionTextDecorator(37, 42, 12, Color.White, true));
                 vRegion.AddRegion(region);
@@ -50,7 +59,7 @@ namespace TaleofMonsters.MainItem.Quests
             }
 
             var icon = HSIcons.GetIconsByEName("rot7");
-            vRegion.AddRegion(new ImageRegion(10, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25, 60, 60, ImageRegionCellType.None, icon));
+            vRegion.AddRegion(new ImageRegion(20, pos.X + 3 + 20 + (index - 1) % 7 * 70, pos.Y + 3 + 25 + (index - 1) / 7 * 70, 60, 60, ImageRegionCellType.None, icon));
         }
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
@@ -67,7 +76,7 @@ namespace TaleofMonsters.MainItem.Quests
                 }
             }
 
-            if (id ==10)
+            if (id ==20)
             {
                 tooltip.Show("不提交", parent, x, y);
             }
@@ -116,7 +125,7 @@ namespace TaleofMonsters.MainItem.Quests
            // g.DrawRectangle(Pens.White, pos);
 
             Font font = new Font("宋体", 11 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            g.DrawString("支付", font, Brushes.White, pos.X + 3, pos.Y + 3);
+            g.DrawString("选择支付", font, Brushes.White, pos.X + 3, pos.Y + 3);
             font.Dispose();
 
             g.DrawLine(Pens.Wheat, pos.X + 3, pos.Y + 3 + 20, pos.X + 3+400, pos.Y + 3 + 20);

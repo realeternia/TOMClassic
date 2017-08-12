@@ -159,11 +159,6 @@ namespace TaleofMonsters.Forms.Items
             HItemConfig itemConfig = ConfigData.GetHItemConfig(itemId);
             if (itemConfig.IsUsable)
             {
-                var rate = UserProfile.InfoBag.GetCdTimeRate(itemId);
-                if (rate > 0)
-                {//cd中
-                    return;
-                }
                 int count = UserProfile.InfoBag.Items[tar].Value;
                 UserProfile.InfoBag.UseItemByPos(tar, UseType);
                 if (count == 1)

@@ -5,8 +5,8 @@ using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Peoples;
+using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
-using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.Forms;
 using TaleofMonsters.MainItem;
 using TaleofMonsters.MainItem.Blesses;
@@ -106,7 +106,7 @@ namespace TaleofMonsters.Controler.GM
                         } break;
                     case "sceq":
                         NpcTalkForm sw = new NpcTalkForm();
-                        sw.EventId = int.Parse(data[1]);
+                        sw.EventId = SceneBook.GetSceneQuestByName(data[1]);
                         sw.NeedBlackForm = true;
                         PanelManager.DealPanel(sw); break;
                     case "cure": UserProfile.InfoBasic.MentalPoint=100; UserProfile.InfoBasic.HealthPoint=100;

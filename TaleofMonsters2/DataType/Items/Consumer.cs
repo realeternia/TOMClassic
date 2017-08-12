@@ -19,9 +19,6 @@ namespace TaleofMonsters.DataType.Items
         public static bool UseItemsById(int id, HItemUseTypes useMethod)
         {
             HItemConfig itemConfig = ConfigData.GetHItemConfig(id);
-            if (itemConfig.Id == ConfigData.NoneHItem.Id)
-                return false;
-
             ItemConsumerConfig consumerConfig = ConfigData.GetItemConsumerConfig(id);
             if (useMethod == HItemUseTypes.Common)
             {
@@ -147,6 +144,8 @@ namespace TaleofMonsters.DataType.Items
             if (!string.IsNullOrEmpty(itemConfig.DropItem))
             {
                 var itemList = DropBook.GetDropItemList(itemConfig.DropItem);
+                if (UserProfile.InfoBag.GetBlankCount() < itemList.Count)
+                    return false;
                 var countList = new List<int>();
                 foreach (var itemId in itemList)
                 {
@@ -171,6 +170,9 @@ namespace TaleofMonsters.DataType.Items
 
         private static bool UseGift(ItemConsumerConfig itemConfig)
         {
+            if (UserProfile.InfoBag.GetBlankCount() < itemConfig.Items.Length)
+                return false;
+
             List<int> itemList = new List<int>();
             List<int> countList = new List<int>();
             for (int i = 0; i < itemConfig.Items.Length; i++)
