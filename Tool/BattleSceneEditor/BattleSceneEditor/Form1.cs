@@ -68,7 +68,7 @@ namespace BattleSceneEditor
             string pathParent = "../../PicResource/";
             foreach (var unit in map.LeftUnits)
             {
-                var img = Image.FromFile(string.Format("{0}Monsters/{1}.JPG", pathParent, unit.UnitId % 10000000002));
+                var img = Image.FromFile(string.Format("{0}Monsters/{1}.JPG", pathParent, unit.UnitId % 1000000));
                 e.Graphics.DrawImage(img, unit.X * cellWidth, unit.Y * cellHeight, cellWidth, cellHeight);
                 img.Dispose();
             }
