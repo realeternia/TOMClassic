@@ -115,11 +115,10 @@ namespace TaleofMonsters.Forms.MagicBook
             int pages = totalCount / cardCount + 1;
             int cardLimit = (page < pages - 1) ? cardCount : (totalCount % cardCount);
             int former = cardCount * page + 1;
-            selectPanel.ClearContent();
+            var datas = new List<int>();
             for (int i = former - 1; i < former + cardLimit - 1; i++)
-            {
-                selectPanel.AddContent(items[i]);
-            }
+                datas.Add(items[i]);
+            selectPanel.AddContent(datas);
         }
 
         private void DropItemViewerForm_Click(object sender, EventArgs e)
@@ -159,13 +158,16 @@ namespace TaleofMonsters.Forms.MagicBook
             }
         }
 
-        private void SelectPanel_DrawCell(Graphics g, int info, int xOff, int yOff, bool inMouseOn, bool isTarget)
+        private void SelectPanel_DrawCell(Graphics g, int info, int xOff, int yOff, bool inMouseOn, bool isTarget, bool onlyBorder)
         {
-            g.DrawImage(HItemBook.GetHItemImage(info), xOff, yOff, cardWidth, cardHeight);
-            var itemConfig = ConfigData.GetHItemConfig(info);
-            var pen = new Pen(Color.FromName(HSTypes.I2RareColor(itemConfig.Rare)), 2);
-            g.DrawRectangle(pen, xOff, yOff, cardWidth - 2, cardHeight - 2);
-            pen.Dispose();
+            if (!onlyBorder)
+            {
+                g.DrawImage(HItemBook.GetHItemImage(info), xOff, yOff, cardWidth, cardHeight);
+                var itemConfig = ConfigData.GetHItemConfig(info);
+                var pen = new Pen(Color.FromName(HSTypes.I2RareColor(itemConfig.Rare)), 2);
+                g.DrawRectangle(pen, xOff, yOff, cardWidth - 2, cardHeight - 2);
+                pen.Dispose();
+            }
 
             if (inMouseOn || isTarget)
             {

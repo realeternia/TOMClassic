@@ -84,12 +84,10 @@ namespace TaleofMonsters.Forms
 
         private void RefreshInfo()
         {
-            selectPanel.ClearContent();
+            var datas = new List<int>();
             for (int i = baseid; i < Math.Min(baseid + 8, jobIdList.Count); i++)
-            {
-                selectPanel.AddContent(jobIdList[i]);
-            }
-           
+                datas.Add(jobIdList[i]);
+            selectPanel.AddContent(datas);
             selectPanel.SelectIndex = 0;
         }
 
@@ -147,7 +145,7 @@ namespace TaleofMonsters.Forms
             Invalidate();
         }
 
-        private void selectPanel_DrawCell(Graphics g, int info, int xOff, int yOff, bool inMouseOn, bool isTarget)
+        private void selectPanel_DrawCell(Graphics g, int info, int xOff, int yOff, bool inMouseOn, bool isTarget, bool onlyBorder)
         {
             if (isTarget)
             {
@@ -159,21 +157,25 @@ namespace TaleofMonsters.Forms
             }
             g.DrawRectangle(Pens.Thistle, 1 + xOff, yOff, 154 - 2, 35 - 4);
 
-            var jobConfig = ConfigData.GetJobConfig(info);
-            var img = HSIcons.GetIconsByEName("job" + jobConfig.JobIndex);
-            g.DrawImage(img, 14 + xOff, 2 + yOff, 28, 28);
-            Font font = new Font("微软雅黑", 11.25F*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            g.DrawString(jobConfig.Name, font, Brushes.White, 58 + xOff, 6 + yOff);
-            font.Dispose();
-
-            if (jobConfig.InitialLocked && !UserProfile.Profile.InfoBasic.AvailJobList.Contains(info))
+            if (!onlyBorder)
             {
-                Brush b = new SolidBrush(Color.FromArgb(150, Color.Black));
-                g.FillRectangle(b, xOff, yOff, 154, selectPanel.ItemHeight);
+                var jobConfig = ConfigData.GetJobConfig(info);
+                var img = HSIcons.GetIconsByEName("job" + jobConfig.JobIndex);
+                g.DrawImage(img, 14 + xOff, 2 + yOff, 28, 28);
+                Font font = new Font("微软雅黑", 11.25F * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+                g.DrawString(jobConfig.Name, font, Brushes.White, 58 + xOff, 6 + yOff);
+                font.Dispose();
 
-                var lockIcon = HSIcons.GetIconsByEName("oth4");
-                g.DrawImage(lockIcon, 65 + xOff, 6 + yOff, 24, 24);
+                if (jobConfig.InitialLocked && !UserProfile.Profile.InfoBasic.AvailJobList.Contains(info))
+                {
+                    Brush b = new SolidBrush(Color.FromArgb(150, Color.Black));
+                    g.FillRectangle(b, xOff, yOff, 154, selectPanel.ItemHeight);
+
+                    var lockIcon = HSIcons.GetIconsByEName("oth4");
+                    g.DrawImage(lockIcon, 65 + xOff, 6 + yOff, 24, 24);
+                }
             }
+       
         }
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)

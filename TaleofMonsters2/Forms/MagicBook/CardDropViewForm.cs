@@ -75,6 +75,8 @@ namespace TaleofMonsters.Forms.MagicBook
             selectPanel.ItemHeight = cardHeight;
             selectPanel.DrawCell += SelectPanel_DrawCell;
             selectPanel.SelectIndexChanged += SelectPanel_SelectIndexChanged;
+
+            selectPanel.UseCache = true;
             #endregion
 
             base.Init(width, height);
@@ -165,11 +167,10 @@ namespace TaleofMonsters.Forms.MagicBook
             int pages = cards.Count / cardCount + 1;
             int cardLimit = (page < pages - 1) ? cardCount : (cards.Count % cardCount);
             int former = cardCount * page + 1;
-            selectPanel.ClearContent();
+            var datas = new List<int>();
             for (int i = former - 1; i < former + cardLimit - 1; i++)
-            {
-                selectPanel.AddContent(cards[i]);
-            }
+                datas.Add(cards[i]);
+            selectPanel.AddContent(datas);
         }
 
         private void buttonClose_Click(object sender, EventArgs e)
@@ -222,9 +223,11 @@ namespace TaleofMonsters.Forms.MagicBook
             SelectCard(cards[tar]);
         }
 
-        private void SelectPanel_DrawCell(Graphics g, int info, int xOff, int yOff, bool inMouseOn, bool isTarget)
+        private void SelectPanel_DrawCell(Graphics g, int info, int xOff, int yOff, bool inMouseOn, bool isTarget, bool onlyBorder)
         {
-            CardAssistant.DrawBase(g, info, xOff, yOff, cardWidth, cardHeight);
+            if (!onlyBorder)
+                CardAssistant.DrawBase(g, info, xOff, yOff, cardWidth, cardHeight);
+
             if (inMouseOn)
             {
                 var brushes = new SolidBrush(Color.FromArgb(130, Color.Yellow));
@@ -232,23 +235,27 @@ namespace TaleofMonsters.Forms.MagicBook
                 brushes.Dispose();
             }
 
-            var cardConfigData = CardConfigManager.GetCardConfig(info);
-            Font font = new Font("宋体", 5 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            g.DrawString(("★★★★★★★★★★").Substring(10 - cardConfigData.Star), font, Brushes.Yellow, xOff + 3, yOff + 3);
-            font.Dispose();
-
-            var quality = cardConfigData.Quality + 1;
-            g.DrawImage(HSIcons.GetIconsByEName("gem" + (int)quality), xOff + cardWidth / 2 - 8, yOff + cardHeight - 20, 16, 16);
-
-            var jobId = cardConfigData.JobId;
-            if (jobId > 0)
+            if (!onlyBorder)
             {
-                var jobConfig = ConfigData.GetJobConfig(jobId);
-                Brush brush = new SolidBrush(Color.FromName(jobConfig.Color));
-                g.FillRectangle(brush, xOff + cardWidth - 24, yOff + 4, 20, 20);
-                g.DrawImage(HSIcons.GetIconsByEName("job" + jobConfig.JobIndex), xOff + cardWidth - 24, yOff + 4, 20, 20);
-                brush.Dispose();
+                var cardConfigData = CardConfigManager.GetCardConfig(info);
+                Font font = new Font("宋体", 5 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+                g.DrawString(("★★★★★★★★★★").Substring(10 - cardConfigData.Star), font, Brushes.Yellow, xOff + 3, yOff + 3);
+                font.Dispose();
+
+                var quality = cardConfigData.Quality + 1;
+                g.DrawImage(HSIcons.GetIconsByEName("gem" + (int)quality), xOff + cardWidth / 2 - 8, yOff + cardHeight - 20, 16, 16);
+
+                var jobId = cardConfigData.JobId;
+                if (jobId > 0)
+                {
+                    var jobConfig = ConfigData.GetJobConfig(jobId);
+                    Brush brush = new SolidBrush(Color.FromName(jobConfig.Color));
+                    g.FillRectangle(brush, xOff + cardWidth - 24, yOff + 4, 20, 20);
+                    g.DrawImage(HSIcons.GetIconsByEName("job" + jobConfig.JobIndex), xOff + cardWidth - 24, yOff + 4, 20, 20);
+                    brush.Dispose();
+                }
             }
+         
         }
 
         private void CardViewForm_Paint(object sender, PaintEventArgs e)

@@ -216,11 +216,10 @@ namespace TaleofMonsters.Forms.MagicBook
             int pages = totalCount / cardCount + 1;
             int cardLimit = (page < pages - 1) ? cardCount : (totalCount % cardCount);
             int former = cardCount * page + 1;
-            selectPanel.ClearContent();
+            var datas = new List<int>();
             for (int i = former - 1; i < former + cardLimit - 1; i++)
-            {
-                selectPanel.AddContent(skills[i]);
-            }
+                datas.Add(skills[i]);
+            selectPanel.AddContent(datas);
         }
 
         private void MonsterSkillViewForm_Click(object sender, EventArgs e)
@@ -260,14 +259,17 @@ namespace TaleofMonsters.Forms.MagicBook
             }
         }
 
-        private void SelectPanel_DrawCell(Graphics g, int info, int xOff, int yOff, bool inMouseOn, bool isTarget)
+        private void SelectPanel_DrawCell(Graphics g, int info, int xOff, int yOff, bool inMouseOn, bool isTarget, bool onlyBorder)
         {
-            var cardImg = SkillBook.GetSkillImage(info);
-            if (cardImg != null)
+            if (!onlyBorder)
             {
-                g.DrawImage(cardImg, xOff, yOff, cardWidth, cardHeight);
+                var cardImg = SkillBook.GetSkillImage(info);
+                if (cardImg != null)
+                {
+                    g.DrawImage(cardImg, xOff, yOff, cardWidth, cardHeight);
+                }
             }
-
+        
             if (inMouseOn || isTarget)
             {
                 Color borderColor = isTarget ? Color.Lime : Color.Yellow;

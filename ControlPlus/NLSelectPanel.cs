@@ -9,7 +9,7 @@ namespace ControlPlus
         public delegate void SelectEventHandler();
         public event SelectEventHandler SelectIndexChanged;
 
-        public delegate void SelectPanelCellDrawHandler(Graphics g, int info, int xOff, int yOff, bool inMouseOn, bool isTarget);
+        public delegate void SelectPanelCellDrawHandler(Graphics g, int info, int xOff, int yOff, bool inMouseOn, bool isTarget, bool onlyBorder);
         public event SelectPanelCellDrawHandler DrawCell;
 
         public int ItemHeight { get; set; }
@@ -24,6 +24,10 @@ namespace ControlPlus
         private int width;
         private int height;
         private Control parent;
+
+        private Bitmap tempImage;
+
+        public bool UseCache { get; set; }
 
         public NLSelectPanel(int x, int y, int width, int height, Control parent)
         {
@@ -55,19 +59,31 @@ namespace ControlPlus
             get { return new Rectangle(x, y, width, height); }
         }
 
-        public void ClearContent()
+        public void AddContent(List<int> infoData)
         {
             infos.Clear();
-        }
+            infos.AddRange(infoData);
 
-        public void AddContent(int info)
-        {
-            infos.Add(info);
-        }
+            if (UseCache)
+            {
+                if (tempImage != null)
+                    tempImage.Dispose();
 
-        public void UpdateContent(int info)
-        {
-            infos[selectIndex] = info;
+                tempImage = new Bitmap(width, height);
+                var itemWidth = width / ItemsPerRow;
+                Graphics g = Graphics.FromImage(tempImage);
+                for (int i = 0; i < infoData.Count; i++)
+                {
+                    int drawX = (i % ItemsPerRow) * itemWidth;
+                    int drawY = (i / ItemsPerRow) * ItemHeight;
+                    if (DrawCell != null)
+                    {
+                        DrawCell(g, infos[i], drawX, drawY, false, false, false);
+                    }
+                }
+                g.Dispose();
+            }
+
         }
 
         private void OnMouseMove(object o, MouseEventArgs e)
@@ -102,28 +118,18 @@ namespace ControlPlus
 
         private void OnPaint(object o, PaintEventArgs e)
         {
+            if (UseCache && tempImage != null)
+                e.Graphics.DrawImage(tempImage, x, y);
             var itemWidth = width / ItemsPerRow;
             for (int i = 0; i < infos.Count; i++)
             {
                 int drawX = x + (i%ItemsPerRow)*itemWidth;
                 int drawY = y + (i / ItemsPerRow) * ItemHeight;
 
-                if (i == selectIndex)
-                {
-                    e.Graphics.FillRectangle(Brushes.DarkGreen, drawX, drawY, itemWidth, ItemHeight);
-                }
-                else if (i == moveIndex)
-                {
-                    e.Graphics.FillRectangle(Brushes.DarkCyan, drawX, drawY, itemWidth, ItemHeight);
-                }
-                e.Graphics.DrawRectangle(Pens.Thistle, 1 + drawX, drawY, itemWidth - 2, ItemHeight - 4);
-
                 if (DrawCell != null)
                 {
-                    DrawCell(e.Graphics, infos[i], drawX, drawY, i == moveIndex, i == selectIndex);
+                    DrawCell(e.Graphics, infos[i], drawX, drawY, i == moveIndex, i == selectIndex, UseCache);
                 }
-
-
             }
         }
     }

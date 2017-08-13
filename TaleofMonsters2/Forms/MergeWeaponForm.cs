@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
@@ -62,12 +63,13 @@ namespace TaleofMonsters.Forms
             itemCounts = new int[8];
             mergeInfos = UserProfile.InfoWorld.GetAllMergeData();
             Array.Sort(mergeInfos, new CompareByMethod());
-            selectPanel.ClearContent();
+            var datas = new List<int>();
             foreach (DbMergeData merge in mergeInfos)
             {
                 EquipConfig equipConfig = ConfigData.GetEquipConfig(merge.Target);
-                selectPanel.AddContent(equipConfig.Id);
+                datas.Add(equipConfig.Id);
             }
+            selectPanel.AddContent(datas);
             selectPanel.SelectIndex = 0;
             Invalidate(selectPanel.Rectangle);
             UpdateMethod();
@@ -78,7 +80,7 @@ namespace TaleofMonsters.Forms
             UpdateMethod();
         }
 
-        private void selectPanel_DrawCell(Graphics g, int info, int xOff, int yOff, bool inMouseOn, bool isTarget)
+        private void selectPanel_DrawCell(Graphics g, int info, int xOff, int yOff, bool inMouseOn, bool isTarget, bool onlyBorder)
         {
             if (isTarget)
             {
@@ -90,23 +92,26 @@ namespace TaleofMonsters.Forms
             }
             g.DrawRectangle(Pens.Thistle, 1 + xOff, yOff, 154 - 2, 50 - 4);
 
-            EquipConfig equipConfig = ConfigData.GetEquipConfig(info);
-            g.DrawImage(EquipBook.GetEquipImage(info), 5 + xOff, 5 + yOff, 40, 40);
-            Font font = new Font("微软雅黑", 11.25F*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            SolidBrush sb = new SolidBrush(Color.FromName(HSTypes.I2QualityColor(equipConfig.Quality)));
-            g.DrawString(equipConfig.Name, font, sb, 50 + xOff, 5 + yOff);
-            sb.Dispose();
-            font.Dispose();
-
-            //font = new Font("宋体", 10F * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            //g.DrawString("Lv" + equipConfig.Level, font, Brushes.DimGray, 50 + xOff + 10, 5 + yOff + 24);
-            //font.Dispose();
-
-            if (UserProfile.InfoEquip.EquipComposeAvail.Contains(info))
+            if (!onlyBorder)
             {
-                var img = PicLoader.Read("System", "Learn.PNG");
-                g.DrawImage(img, xOff + 10, 3 + yOff, img.Width, img.Height);
-                img.Dispose();
+                EquipConfig equipConfig = ConfigData.GetEquipConfig(info);
+                g.DrawImage(EquipBook.GetEquipImage(info), 5 + xOff, 5 + yOff, 40, 40);
+                Font font = new Font("微软雅黑", 11.25F * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+                SolidBrush sb = new SolidBrush(Color.FromName(HSTypes.I2QualityColor(equipConfig.Quality)));
+                g.DrawString(equipConfig.Name, font, sb, 50 + xOff, 5 + yOff);
+                sb.Dispose();
+                font.Dispose();
+
+                //font = new Font("宋体", 10F * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+                //g.DrawString("Lv" + equipConfig.Level, font, Brushes.DimGray, 50 + xOff + 10, 5 + yOff + 24);
+                //font.Dispose();
+
+                if (UserProfile.InfoEquip.EquipComposeAvail.Contains(info))
+                {
+                    var img = PicLoader.Read("System", "Learn.PNG");
+                    g.DrawImage(img, xOff + 10, 3 + yOff, img.Width, img.Height);
+                    img.Dispose();
+                }
             }
         }
 
