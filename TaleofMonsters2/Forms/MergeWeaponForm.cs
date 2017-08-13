@@ -78,8 +78,18 @@ namespace TaleofMonsters.Forms
             UpdateMethod();
         }
 
-        private void selectPanel_DrawCell(Graphics g, int info, int xOff, int yOff)
+        private void selectPanel_DrawCell(Graphics g, int info, int xOff, int yOff, bool inMouseOn, bool isTarget)
         {
+            if (isTarget)
+            {
+                g.FillRectangle(Brushes.DarkGreen, xOff, yOff, 154, 50);
+            }
+            else if (inMouseOn)
+            {
+               g.FillRectangle(Brushes.DarkCyan, xOff, yOff, 154, 50);
+            }
+            g.DrawRectangle(Pens.Thistle, 1 + xOff, yOff, 154 - 2, 50 - 4);
+
             EquipConfig equipConfig = ConfigData.GetEquipConfig(info);
             g.DrawImage(EquipBook.GetEquipImage(info), 5 + xOff, 5 + yOff, 40, 40);
             Font font = new Font("微软雅黑", 11.25F*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);

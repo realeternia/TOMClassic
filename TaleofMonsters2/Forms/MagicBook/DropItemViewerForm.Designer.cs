@@ -105,7 +105,6 @@ namespace TaleofMonsters.Forms.MagicBook
             this.Size = new System.Drawing.Size(783, 585);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.DropItemViewerForm_Paint);
             this.Click += new System.EventHandler(this.DropItemViewerForm_Click);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DropItemViewerForm_MouseMove);
             this.ResumeLayout(false);
 
         }

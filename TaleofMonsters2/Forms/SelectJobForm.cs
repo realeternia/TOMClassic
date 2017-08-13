@@ -147,11 +147,21 @@ namespace TaleofMonsters.Forms
             Invalidate();
         }
 
-        private void selectPanel_DrawCell(Graphics g, int info, int xOff, int yOff)
+        private void selectPanel_DrawCell(Graphics g, int info, int xOff, int yOff, bool inMouseOn, bool isTarget)
         {
+            if (isTarget)
+            {
+                g.FillRectangle(Brushes.DarkGreen, xOff, yOff, 154, 35);
+            }
+            else if (inMouseOn)
+            {
+                g.FillRectangle(Brushes.DarkCyan, xOff, yOff, 154, 35);
+            }
+            g.DrawRectangle(Pens.Thistle, 1 + xOff, yOff, 154 - 2, 35 - 4);
+
             var jobConfig = ConfigData.GetJobConfig(info);
             var img = HSIcons.GetIconsByEName("job" + jobConfig.JobIndex);
-            g.DrawImage(img, 14 + xOff, 4 + yOff, 28, 28);
+            g.DrawImage(img, 14 + xOff, 2 + yOff, 28, 28);
             Font font = new Font("微软雅黑", 11.25F*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             g.DrawString(jobConfig.Name, font, Brushes.White, 58 + xOff, 6 + yOff);
             font.Dispose();

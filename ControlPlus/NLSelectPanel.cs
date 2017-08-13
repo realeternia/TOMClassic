@@ -9,10 +9,12 @@ namespace ControlPlus
         public delegate void SelectEventHandler();
         public event SelectEventHandler SelectIndexChanged;
 
-        public delegate void SelectPanelCellDrawHandler(Graphics g, int info, int xOff, int yOff);
+        public delegate void SelectPanelCellDrawHandler(Graphics g, int info, int xOff, int yOff, bool inMouseOn, bool isTarget);
         public event SelectPanelCellDrawHandler DrawCell;
 
-        private int itemHeight;
+        public int ItemHeight { get; set; }
+        public int ItemsPerRow { get; set; }
+
         private int selectIndex;
         private int moveIndex;
         private List<int> infos;
@@ -30,16 +32,11 @@ namespace ControlPlus
             this.width = width;
             this.height = height;
             this.parent = parent;
+            ItemsPerRow = 1;
             parent.MouseMove += OnMouseMove;
             parent.MouseClick += OnMouseClick;
             parent.Paint += OnPaint;
             infos = new List<int>();
-        }
-
-        public int ItemHeight
-        {
-            get { return itemHeight; }
-            set { itemHeight = value; }
         }
 
         public int SelectIndex
@@ -75,10 +72,11 @@ namespace ControlPlus
 
         private void OnMouseMove(object o, MouseEventArgs e)
         {
+            var itemWidth = width/ItemsPerRow;
             int index = -1;
             if (e.X > x && e.X < x + width && e.Y > y && e.Y < y + height)
             {
-                index = (e.Y - y) / itemHeight;
+                index = (e.Y - y) / ItemHeight * ItemsPerRow + (e.X - x) / itemWidth;
                 if (index < 0 || index >= infos.Count)
                 {
                     index = -1;
@@ -104,22 +102,28 @@ namespace ControlPlus
 
         private void OnPaint(object o, PaintEventArgs e)
         {
+            var itemWidth = width / ItemsPerRow;
             for (int i = 0; i < infos.Count; i++)
             {
+                int drawX = x + (i%ItemsPerRow)*itemWidth;
+                int drawY = y + (i / ItemsPerRow) * ItemHeight;
+
                 if (i == selectIndex)
                 {
-                    e.Graphics.FillRectangle(Brushes.DarkGreen, x, itemHeight * i + y, width, itemHeight);
+                    e.Graphics.FillRectangle(Brushes.DarkGreen, drawX, drawY, itemWidth, ItemHeight);
                 }
                 else if (i == moveIndex)
                 {
-                    e.Graphics.FillRectangle(Brushes.DarkCyan, x, itemHeight * i + y, width, itemHeight);
+                    e.Graphics.FillRectangle(Brushes.DarkCyan, drawX, drawY, itemWidth, ItemHeight);
                 }
-                e.Graphics.DrawRectangle(Pens.Thistle, 1 + x, itemHeight * i + 2 + y, width - 2, itemHeight - 4);
+                e.Graphics.DrawRectangle(Pens.Thistle, 1 + drawX, drawY, itemWidth - 2, ItemHeight - 4);
 
                 if (DrawCell != null)
                 {
-                    DrawCell(e.Graphics, infos[i], x, itemHeight*i + y);
+                    DrawCell(e.Graphics, infos[i], drawX, drawY, i == moveIndex, i == selectIndex);
                 }
+
+
             }
         }
     }
