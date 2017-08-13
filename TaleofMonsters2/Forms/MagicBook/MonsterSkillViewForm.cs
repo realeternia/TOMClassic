@@ -247,7 +247,6 @@ namespace TaleofMonsters.Forms.MagicBook
             {
                 Skill skill = new Skill(skills[tar]);
                 skillDesStr = string.Format("{0}:{1}", skill.SkillConfig.Name, skill.Descript);
-                Invalidate(new Rectangle(65, cardHeight * yCount + 37 + cardHeight + 21, 500, 20));
                 nlClickLabel1.ClearLabel();
                 foreach (int mid in MonsterBook.GetSkillMids(skill.Id))
                 {

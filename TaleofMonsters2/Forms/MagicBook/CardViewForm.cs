@@ -8,6 +8,7 @@ using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.Core;
 using TaleofMonsters.Forms.Items.Core;
 using ConfigDatas;
+using ControlPlus;
 
 namespace TaleofMonsters.Forms.MagicBook
 {
@@ -19,11 +20,8 @@ namespace TaleofMonsters.Forms.MagicBook
         private int yCount = 5;
         private int cardCount;
         private int page;
-        private bool show;
         private int tar = -1;
         private List<int> cards;
-        private Bitmap tempImage;
-        private bool isDirty = true;
         private CardDetail cardDetail;
 
         private int filterLevel=0;
@@ -34,6 +32,8 @@ namespace TaleofMonsters.Forms.MagicBook
         private int filterEle = -1;
         private string filterRemark = "全部";
 
+        private NLSelectPanel selectPanel;
+
         public CardViewForm()
         {
             InitializeComponent();
@@ -43,7 +43,6 @@ namespace TaleofMonsters.Forms.MagicBook
             bitmapButtonNext.NoUseDrawNine = true;
             this.bitmapButtonPre.ImageNormal = PicLoader.Read("Button.Panel", "PreButton.JPG");
             bitmapButtonPre.NoUseDrawNine = true;
-            tempImage = new Bitmap(cardWidth * xCount, cardHeight*yCount);
         }
 
         public override void Init(int width, int height)
@@ -59,10 +58,15 @@ namespace TaleofMonsters.Forms.MagicBook
 
             Width = xCount * cardWidth + borderX;
             Height = yCount * cardHeight + borderY;
+
+            selectPanel = new NLSelectPanel(65, 110, xCount * cardWidth, yCount * cardHeight, this);
+            selectPanel.ItemsPerRow = xCount;
+            selectPanel.ItemHeight = cardHeight;
+            selectPanel.DrawCell += SelectPanel_DrawCell;
+            selectPanel.SelectIndexChanged += SelectPanel_SelectIndexChanged;
             #endregion
 
             base.Init(width, height);
-            show = true;
             cards = new List<int>();
             comboBoxCatalog.SelectedIndex = 0;
             cardDetail = new CardDetail(this, cardWidth * xCount + 65, 35, cardHeight * yCount + 70);
@@ -226,10 +230,10 @@ namespace TaleofMonsters.Forms.MagicBook
             cards = configData.ConvertAll(card => card.Id);
 
             UpdateButtonState();
+            InitItems();
 
             if (cards.Count > 0)
                 cardDetail.SetInfo(cards[0]);
-            isDirty = true;
             Invalidate(new Rectangle(65, 110, cardWidth * xCount, cardHeight * yCount));
         }
 
@@ -250,7 +254,7 @@ namespace TaleofMonsters.Forms.MagicBook
             tar = -1;
             cardDetail.SetInfo(-1);
             UpdateButtonState();
-            isDirty = true;
+            InitItems();
             Invalidate(new Rectangle(65, 110, cardWidth*xCount, cardHeight*yCount));
         }
 
@@ -265,8 +269,20 @@ namespace TaleofMonsters.Forms.MagicBook
             tar = -1;
             cardDetail.SetInfo(-1);
             UpdateButtonState();
-            isDirty = true;
+            InitItems();
             Invalidate(new Rectangle(65, 110, cardWidth * xCount, cardHeight * yCount));
+        }
+
+        private void InitItems()
+        {
+            int pages = cards.Count / cardCount + 1;
+            int cardLimit = (page < pages - 1) ? cardCount : (cards.Count % cardCount);
+            int former = cardCount * page + 1;
+            selectPanel.ClearContent();
+            for (int i = former - 1; i < former + cardLimit - 1; i++)
+            {
+                selectPanel.AddContent(cards[i]);
+            }
         }
 
         private void buttonClose_Click(object sender, EventArgs e)
@@ -274,38 +290,10 @@ namespace TaleofMonsters.Forms.MagicBook
             Close();
         }
 
-        private void CardViewForm_MouseMove(object sender, MouseEventArgs e)
+        private void SelectPanel_SelectIndexChanged()
         {
-            int truex = e.X - 65;
-            int truey = e.Y - 110;
-            if (truex > 0 && truex < xCount * cardWidth && truey > 0 && truey < yCount * cardHeight)
-            {
-                int temp = truex / cardWidth + truey / cardHeight * xCount + cardCount * page;
-                if (temp != tar)
-                {
-                    if (temp < cards.Count)
-                    {
-                        tar = temp;
-                    }
-                    else
-                    {
-                        tar = -1;
-                    }
-                    Invalidate(new Rectangle(65, 110, cardWidth * xCount, cardHeight * yCount));
-                }
-            }
-            else
-            {
-                if (tar != -1)
-                {
-                    tar = -1;
-                    Invalidate(new Rectangle(65, 110, cardWidth * xCount, cardHeight * yCount));
-                }
-            }
-        }
+            tar = selectPanel.SelectIndex + page * cardCount;
 
-        private void CardViewForm_Click(object sender, EventArgs e)
-        {
             if (tar != -1)
             {
                 cardDetail.SetInfo(cards[tar]);
@@ -313,33 +301,38 @@ namespace TaleofMonsters.Forms.MagicBook
             }
         }
 
-        private void DrawOnCardView(Graphics g, int cid, int x, int y, bool isSelected)
+        private void SelectPanel_DrawCell(Graphics g, int info, int xOff, int yOff, bool inMouseOn, bool isTarget)
         {
-            CardAssistant.DrawBase(g, cid, x, y, cardWidth, cardHeight);
-            if (isSelected)
+            CardAssistant.DrawBase(g, info, xOff, yOff, cardWidth, cardHeight);
+            if (inMouseOn)
             {
                 var brushes = new SolidBrush(Color.FromArgb(130, Color.Yellow));
-                g.FillRectangle(brushes, x, y, cardWidth, cardHeight);
+                g.FillRectangle(brushes, xOff, yOff, cardWidth, cardHeight);
                 brushes.Dispose();
             }
 
-            var cardConfigData = CardConfigManager.GetCardConfig(cid);
-            Font font = new Font("宋体", 5*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            g.DrawString(("★★★★★★★★★★").Substring(10 - cardConfigData.Star), font, Brushes.Yellow, x+3, y+3);
+            var cardConfigData = CardConfigManager.GetCardConfig(info);
+            Font font = new Font("宋体", 5 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            g.DrawString(("★★★★★★★★★★").Substring(10 - cardConfigData.Star), font, Brushes.Yellow, xOff + 3, yOff + 3);
             font.Dispose();
 
             var quality = cardConfigData.Quality + 1;
-            g.DrawImage(HSIcons.GetIconsByEName("gem" + (int)quality), x + cardWidth / 2 - 8, y + cardHeight - 20, 16, 16);
+            g.DrawImage(HSIcons.GetIconsByEName("gem" + (int)quality), xOff + cardWidth / 2 - 8, yOff + cardHeight - 20, 16, 16);
 
             var jobId = cardConfigData.JobId;
             if (jobId > 0)
             {
                 var jobConfig = ConfigData.GetJobConfig(jobId);
                 Brush brush = new SolidBrush(Color.FromName(jobConfig.Color));
-                g.FillRectangle(brush, x + cardWidth - 24, y + 4, 20, 20);
-                g.DrawImage(HSIcons.GetIconsByEName("job" + jobConfig.JobIndex), x + cardWidth - 24, y + 4, 20, 20);
+                g.FillRectangle(brush, xOff + cardWidth - 24, yOff + 4, 20, 20);
+                g.DrawImage(HSIcons.GetIconsByEName("job" + jobConfig.JobIndex), xOff + cardWidth - 24, yOff + 4, 20, 20);
                 brush.Dispose();
             }
+        }
+        
+        private void CardViewForm_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void CardViewForm_Paint(object sender, PaintEventArgs e)
@@ -359,36 +352,6 @@ namespace TaleofMonsters.Forms.MagicBook
             font = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             e.Graphics.DrawString("分类", font, Brushes.White, 86, 61);
             font.Dispose();
-
-            if (show)
-            {
-                int pages = cards.Count / cardCount + 1;
-                int cardLimit = (page < pages - 1) ? cardCount : (cards.Count % cardCount);
-                int former = cardCount * page + 1;
-                if (isDirty)
-                {
-                    tempImage.Dispose();
-                    tempImage = new Bitmap(cardWidth * xCount, cardHeight * yCount);
-                    Graphics g = Graphics.FromImage(tempImage);
-                    for (int i = former - 1; i < former + cardLimit - 1; i++)
-                    {
-                        int ri = i % (xCount * yCount);
-                        int x = (ri % xCount) * cardWidth;
-                        int y = (ri / xCount) * cardHeight;
-                        DrawOnCardView(g, cards[i], x, y, false);
-                    }
-                    g.Dispose();
-                    isDirty = false;
-                }
-                e.Graphics.DrawImage(tempImage, 65, 110);
-                if (tar != -1 && tar < cards.Count)
-                {
-                    int ri = tar % (xCount * yCount);
-                    int x = (ri % xCount) * cardWidth + 65;
-                    int y = (ri/xCount)*cardHeight + 110;
-                    DrawOnCardView(e.Graphics, cards[tar], x, y, true);
-                }
-            }
         }
 
         private class CompareByCard : IComparer<CardConfigData>
@@ -416,8 +379,6 @@ namespace TaleofMonsters.Forms.MagicBook
 
             #endregion
         }
-
-
     }
 
 }

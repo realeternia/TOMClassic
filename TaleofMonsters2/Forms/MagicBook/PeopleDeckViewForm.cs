@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
+using ControlPlus;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType.Decks;
@@ -20,13 +21,11 @@ namespace TaleofMonsters.Forms.MagicBook
         private const int cardCount = xCount * yCount;
         private int totalCount;
         private int page;
-        private bool show;
         private int tar = -1;
-        private int sel = -1;
         private List<int> people;
-        private Bitmap tempImage;
-        private bool isDirty = true;
         private CardDetail cardDetail;
+
+        private NLSelectPanel selectPanel;
 
         public PeopleDeckViewForm()
         {
@@ -37,16 +36,20 @@ namespace TaleofMonsters.Forms.MagicBook
             bitmapButtonNext.NoUseDrawNine = true;
             this.bitmapButtonPre.ImageNormal = PicLoader.Read("Button.Panel", "PreButton.JPG");
             bitmapButtonPre.NoUseDrawNine = true;
-            tempImage = new Bitmap(cardWidth * xCount, cardHeight*yCount);
             cardDetail = new CardDetail(this, cardWidth * xCount + 65, 35, cardHeight * 7 + 105);
             nlClickLabel1.Location = new Point(70, cardHeight * yCount + 65);
             nlClickLabel1.Size = new Size(cardWidth * xCount - 10, 70+(7-yCount)*cardHeight);
+
+            selectPanel = new NLSelectPanel(65, 35, xCount * cardWidth, yCount * cardHeight, this);
+            selectPanel.ItemsPerRow = xCount;
+            selectPanel.ItemHeight = cardHeight;
+            selectPanel.DrawCell += SelectPanel_DrawCell;
+            selectPanel.SelectIndexChanged += SelectPanel_SelectIndexChanged;
         }
 
         public override void Init(int width, int height)
         {
             base.Init(width, height);
-            show = true;
             page = 0;
             people = new List<int>();
             foreach (PeopleConfig peopleConfig in ConfigData.PeopleDict.Values)
@@ -58,6 +61,7 @@ namespace TaleofMonsters.Forms.MagicBook
             }
             totalCount = people.Count;
             UpdateButtonState();
+            InitItems();
         }
 
         public override void OnFrame(int tick, float timePass)
@@ -80,10 +84,9 @@ namespace TaleofMonsters.Forms.MagicBook
                 return;
             }
             tar = -1;
-            sel = -1;
             cardDetail.SetInfo(-1);
             UpdateButtonState();
-            isDirty = true;
+            InitItems();
             Invalidate(new Rectangle(65, 35, cardWidth * xCount+200, 630));
         }
 
@@ -96,18 +99,46 @@ namespace TaleofMonsters.Forms.MagicBook
                 return;
             }
             tar = -1;
-            sel = -1;
             cardDetail.SetInfo(-1);
             UpdateButtonState();
-            isDirty = true;
+            InitItems();
             Invalidate(new Rectangle(65, 35, cardWidth * xCount+200, 630));
+        }
+
+        private void InitItems()
+        {
+            int pages = totalCount / cardCount + 1;
+            int cardLimit = (page < pages - 1) ? cardCount : (totalCount % cardCount);
+            int former = cardCount * page + 1;
+            selectPanel.ClearContent();
+            for (int i = former - 1; i < former + cardLimit - 1; i++)
+            {
+                selectPanel.AddContent(people[i]);
+            }
         }
 
         private void PeopleDeckViewForm_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void nlClickLabel1_SelectionChange(Object value)
+        {
+            cardDetail.SetInfo(value as DeckCard);
+            Invalidate(new Rectangle(65, 35, cardWidth * xCount + 200, 630));
+        }
+
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void SelectPanel_SelectIndexChanged()
+        {
+            tar = selectPanel.SelectIndex + page * cardCount;
+
             if (tar != -1)
             {
-                sel = tar;
                 PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(people[tar]);
                 cardDetail.SetInfo(-1);
 
@@ -125,43 +156,25 @@ namespace TaleofMonsters.Forms.MagicBook
                     nlClickLabel1.AddLabel(cardstr, card);
                 }
 
-                Invalidate(new Rectangle(65, 35, cardWidth * xCount + 200, 630));
                 nlClickLabel1.Invalidate();
             }
         }
 
-        private void PeopleDeckViewForm_MouseMove(object sender, MouseEventArgs e)
+        private void SelectPanel_DrawCell(Graphics g, int info, int xOff, int yOff, bool inMouseOn, bool isTarget)
         {
-            int truex = e.X - 65;
-            int truey = e.Y - 35;
-            if (truex > 0 && truex < xCount * cardWidth && truey > 0 && truey < yCount * cardHeight)
-            {
-                int temp = truex / cardWidth + truey / cardHeight * xCount + cardCount * page;
-                if (temp != tar)
-                {
-                    tar = temp < totalCount ? temp : -1;
-                    Invalidate(new Rectangle(65, 35, cardWidth * xCount, cardHeight * yCount));
-                }
-            }
-            else
-            {
-                if (tar != -1)
-                {
-                    tar = -1;
-                    Invalidate(new Rectangle(65, 35, cardWidth * xCount, cardHeight * yCount));
-                }
-            }
-        }
+            g.DrawImage(PeopleBook.GetPersonImage(info), xOff, yOff, cardWidth, cardHeight);
 
-        private void nlClickLabel1_SelectionChange(Object value)
-        {
-            cardDetail.SetInfo(value as DeckCard);
-            Invalidate(new Rectangle(65, 35, cardWidth * xCount + 200, 630));
-        }
+            if (inMouseOn || isTarget)
+            {
+                Color borderColor = isTarget ? Color.Lime : Color.Yellow;
+                SolidBrush yellowbrush = new SolidBrush(Color.FromArgb(80, borderColor));
+                g.FillRectangle(yellowbrush, xOff, yOff, cardWidth, cardHeight);
+                yellowbrush.Dispose();
 
-        private void buttonClose_Click(object sender, EventArgs e)
-        {
-            Close();
+                Pen yellowpen = new Pen(borderColor, 3);
+                g.DrawRectangle(yellowpen, xOff, yOff, cardWidth - 3, cardHeight - 3);
+                yellowpen.Dispose();
+            }
         }
 
         private void MonsterSkillViewForm_Paint(object sender, PaintEventArgs e)
@@ -179,53 +192,6 @@ namespace TaleofMonsters.Forms.MagicBook
             fontblack.Dispose();
 
             cardDetail.Draw(e.Graphics);
-
-            if (show)
-            {
-                int pages = totalCount / cardCount + 1;
-                int cardLimit = (page < pages - 1) ? cardCount : (totalCount % cardCount);
-                int former = cardCount * page + 1;
-                if (isDirty)
-                {
-                    tempImage.Dispose();
-                    tempImage = new Bitmap(cardWidth * xCount, cardHeight * yCount);
-                    Graphics g = Graphics.FromImage(tempImage);
-                    for (int i = former - 1; i < former + cardLimit - 1; i++)
-                    {
-                        g.DrawImage(PeopleBook.GetPersonImage(people[i]), (i % xCount) * cardWidth, ((i / xCount) % yCount) * cardHeight, cardWidth, cardHeight);
-                    }
-                    g.Dispose();
-                    isDirty = false;
-                }
-                e.Graphics.DrawImage(tempImage, 65, 35);
-
-                if (sel != -1 && sel < totalCount)
-                {
-                    SolidBrush yellowbrush = new SolidBrush(Color.FromArgb(80, Color.Lime));
-                    int x = (sel%xCount)*cardWidth + 65;
-                    int y = ((sel/xCount)%yCount)*cardHeight + 35;
-                    e.Graphics.FillRectangle(yellowbrush, x, y, cardWidth, cardHeight);
-                    yellowbrush.Dispose();
-
-                    Pen yellowpen = new Pen(Brushes.Lime, 3);
-                    e.Graphics.DrawRectangle(yellowpen, x, y, cardWidth, cardHeight);
-                    yellowpen.Dispose();
-                }
-                if (tar != -1 && tar < totalCount)
-                {
-                    int x = (tar % xCount) * cardWidth + 65;
-                    int y = ((tar / xCount) % yCount) * cardHeight + 35;
-                    SolidBrush yellowbrush = new SolidBrush(Color.FromArgb(80, Color.Yellow));
-                    e.Graphics.FillRectangle(yellowbrush, x, y, cardWidth, cardHeight);
-                    yellowbrush.Dispose();
-
-                    Pen yellowpen = new Pen(Brushes.Yellow, 3);
-                    e.Graphics.DrawRectangle(yellowpen, x, y, cardWidth, cardHeight);
-                    yellowpen.Dispose();
-                }
-            }
         }
-
-
     }
 }

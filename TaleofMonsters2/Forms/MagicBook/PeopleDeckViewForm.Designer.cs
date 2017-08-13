@@ -104,7 +104,6 @@ namespace TaleofMonsters.Forms.MagicBook
             this.Size = new System.Drawing.Size(763, 570);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MonsterSkillViewForm_Paint);
             this.Click += new System.EventHandler(this.PeopleDeckViewForm_Click);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PeopleDeckViewForm_MouseMove);
             this.ResumeLayout(false);
 
         }

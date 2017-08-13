@@ -147,7 +147,6 @@ namespace TaleofMonsters.Forms.MagicBook
                 HItemConfig itemConfig = ConfigData.GetHItemConfig(items[tar]);
                 const string stars = "★★★★★★★★★★";
                 itemDesStr = string.Format("{0}({2}){1}", itemConfig.Name, itemConfig.Descript, stars.Substring(10 - itemConfig.Rare));
-                Invalidate(new Rectangle(65, cardHeight * yCount + 37 + 21, 500, 20));
 
                 nlClickLabel1.ClearLabel();
                 int[] cardIds = CardPieceBook.GetCardIdsByItemId(items[tar]);

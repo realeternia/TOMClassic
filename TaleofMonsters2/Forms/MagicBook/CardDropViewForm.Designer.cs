@@ -99,7 +99,6 @@ namespace TaleofMonsters.Forms.MagicBook
             this.Size = new System.Drawing.Size(823, 575);
             this.Click += new System.EventHandler(this.CardViewForm_Click);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.CardViewForm_Paint);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CardViewForm_MouseMove);
             this.ResumeLayout(false);
 
         }
