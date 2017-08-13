@@ -8,6 +8,7 @@ using TaleofMonsters.DataType.Items;
 using TaleofMonsters.Forms.Items.Core;
 using ConfigDatas;
 using TaleofMonsters.Config;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 
 namespace TaleofMonsters.Forms.MagicBook
@@ -161,7 +162,7 @@ namespace TaleofMonsters.Forms.MagicBook
             Close();
         }
 
-        private void MonsterSkillViewForm_Paint(object sender, PaintEventArgs e)
+        private void DropItemViewerForm_Paint(object sender, PaintEventArgs e)
         {
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
@@ -184,8 +185,6 @@ namespace TaleofMonsters.Forms.MagicBook
 
             cardDetail.Draw(e.Graphics);
 
-
-
             if (show)
             {
                 int pages = totalCount / cardCount + 1;
@@ -199,6 +198,10 @@ namespace TaleofMonsters.Forms.MagicBook
                     for (int i = former - 1; i < former + cardLimit - 1; i++)
                     {
                         g.DrawImage(HItemBook.GetHItemImage(items[i]), (i % xCount) * cardWidth, ((i / xCount) % yCount) * cardHeight, cardWidth, cardHeight);
+                        var itemConfig = ConfigData.GetHItemConfig(items[i]);
+                        var pen = new Pen(Color.FromName(HSTypes.I2RareColor(itemConfig.Rare)), 2);
+                        g.DrawRectangle(pen, (i % xCount) * cardWidth, ((i / xCount) % yCount) * cardHeight, cardWidth-2, cardHeight-2);
+                        pen.Dispose();
                     }
                     g.Dispose();
                     isDirty = false;

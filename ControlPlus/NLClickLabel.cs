@@ -7,11 +7,22 @@ namespace ControlPlus
 {
     public partial class NLClickLabel : UserControl
     {
+        internal struct LabelInfo
+        {
+            public int index;
+            public int x;
+            public int y;
+            public int wid;
+            public int het;
+            public Object value;
+            public string text;
+        }
         private int nx, ny;
         private List<LabelInfo> labels;
         private Graphics g;
         private int lastOnId;
         private int lastClickId;
+        private int interval = 5; //两个物件间的空隙
 
         public delegate void ClickEventHandler(Object value);
         public event ClickEventHandler SelectionChange;
@@ -51,7 +62,7 @@ namespace ControlPlus
             li.text = text;
             li.value = value;
             labels.Add(li);
-            nx += Margin.Left + li.wid;
+            nx += Margin.Left + li.wid+ interval;
         }
 
         private void NLClickLabel_Paint(object sender, PaintEventArgs e)
@@ -101,14 +112,4 @@ namespace ControlPlus
         }
     }
 
-    internal struct LabelInfo
-    {
-        public int index;
-        public int x;
-        public int y;
-        public int wid;
-        public int het;
-        public Object value;
-        public string text;
-    }
 }
