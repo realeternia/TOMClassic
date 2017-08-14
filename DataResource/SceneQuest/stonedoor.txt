@@ -12,3 +12,4 @@
 							a太棒了
 								ereward
 	a转身离开
+		end

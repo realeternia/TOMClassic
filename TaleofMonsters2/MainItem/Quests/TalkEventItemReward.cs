@@ -82,7 +82,7 @@ namespace TaleofMonsters.MainItem.Quests
                 {
                     return true;
                 }
-                if (item != "x2" || item != "x3")
+                if (item != "x2" && item != "x3")
                 {
                     return false;
                 }
