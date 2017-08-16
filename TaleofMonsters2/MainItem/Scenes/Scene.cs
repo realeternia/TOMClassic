@@ -57,13 +57,11 @@ namespace TaleofMonsters.MainItem.Scenes
         private Image miniBack;
         private Image backPicture;
         private int cellTar = -1;
-        private List<SceneObject> sceneItems; //场景中的物件，各种npc等
+        private SceneInfo sceneInfo; //场景中的物件，各种npc等
         private string sceneName;
         private Control parent;
 
         public ISceneRule Rule { get; set; }
-        public int StartPos { get; set; } //传送后指定地点
-        public int RevivePos { get; set; }
 
         public int TimeMinutes { get; private set; }
         private int width, height;// 场景的宽度和高度
@@ -149,9 +147,9 @@ namespace TaleofMonsters.MainItem.Scenes
             }
             TimeMinutes = (int)DateTime.Now.TimeOfDay.TotalMinutes;
             Rule.Init(mapid, TimeMinutes);
-            sceneItems = SceneManager.RefreshSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, isWarp ? SceneFreshReason.Warp : SceneFreshReason.Load );
-            if (UserProfile.InfoBasic.Position == 0 && sceneItems.Count > 0)//兜底处理
-                UserProfile.InfoBasic.Position = sceneItems[0].Id;
+            sceneInfo = SceneManager.RefreshSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, isWarp ? SceneFreshReason.Warp : SceneFreshReason.Load );
+            if (UserProfile.InfoBasic.Position == 0 && sceneInfo.Items.Count > 0)//兜底处理
+                UserProfile.InfoBasic.Position = sceneInfo.Items[0].Id;
             parent.Invalidate();
         }
 
@@ -212,7 +210,7 @@ namespace TaleofMonsters.MainItem.Scenes
                 {
                     movingData.Time = 0;
 
-                    foreach (var sceneObject in sceneItems)
+                    foreach (var sceneObject in sceneInfo.Items)
                     {
                         if (sceneObject.Id == movingData.DestId)
                         {
@@ -275,7 +273,7 @@ namespace TaleofMonsters.MainItem.Scenes
         {
             if (movingData.Time > 0) return;
             int nTemp = -1;
-            foreach (var sceneObject in sceneItems)
+            foreach (var sceneObject in sceneInfo.Items)
             {
                 if (sceneObject.IsMouseIn(x, y))
                     nTemp = sceneObject.Id;
@@ -293,7 +291,7 @@ namespace TaleofMonsters.MainItem.Scenes
             if (movingData.Time > 0) return;
             SceneObject src = null;
             SceneObject dest = null;
-            foreach (var sceneObject in sceneItems)
+            foreach (var sceneObject in sceneInfo.Items)
             {
                 if (sceneObject.Id == cellTar)
                 {
@@ -438,7 +436,7 @@ namespace TaleofMonsters.MainItem.Scenes
         {
             SceneObject possessCell = null;
             SceneObject selectTarget = null;
-            foreach (SceneObject obj in sceneItems)
+            foreach (SceneObject obj in sceneInfo.Items)
             {
                 if (obj.Id == cellTar)
                 {
@@ -488,7 +486,7 @@ namespace TaleofMonsters.MainItem.Scenes
         private int GetDisableEventCount(int eid)
         {
             int count = 0;
-            foreach (var sceneObject in sceneItems)
+            foreach (var sceneObject in sceneInfo.Items)
             {
                 var sceQuest = sceneObject as SceneQuest;
                 if (sceQuest != null && sceQuest.EventId == eid && sceneObject.Disabled)
@@ -501,7 +499,7 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public int GetWarpPosByMapId(int mapId)
         {
-            foreach (var sceneObject in sceneItems)
+            foreach (var sceneObject in sceneInfo.Items)
             {
                 var warp = sceneObject as SceneWarp;
                 if (warp != null && warp.TargetMap == mapId)
@@ -513,30 +511,30 @@ namespace TaleofMonsters.MainItem.Scenes
         }
         public int GetStartPos()
         {
-            foreach (var sceneObject in sceneItems)
+            foreach (var sceneObject in sceneInfo.Items)
             {
-                if (sceneObject.Id == StartPos)
+                if (sceneObject.Id == sceneInfo.StartPos)
                 {
                     return sceneObject.Id;
                 }
             }
-            return sceneItems[MathTool.GetRandom(sceneItems.Count)].Id; //随机给一个
+            return sceneInfo.Items[MathTool.GetRandom(sceneInfo.Items.Count)].Id; //随机给一个
         }
         public int GetRevivePos()
         {
-            foreach (var sceneObject in sceneItems)
+            foreach (var sceneObject in sceneInfo.Items)
             {
-                if (sceneObject.Id == RevivePos)
+                if (sceneObject.Id == sceneInfo.RevivePos)
                 {
                     return sceneObject.Id;
                 }
             }
-            return sceneItems[MathTool.GetRandom(sceneItems.Count)].Id; //随机给一个
+            return sceneInfo.Items[MathTool.GetRandom(sceneInfo.Items.Count)].Id; //随机给一个
         }
 
         public SceneObject GetObjectByPos(int pos)
         {
-            foreach (var sceneObject in sceneItems)
+            foreach (var sceneObject in sceneInfo.Items)
             {
                 if (sceneObject != null && sceneObject.Id == pos)
                 {
@@ -548,7 +546,7 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public bool HasSceneItemWithName(string name)
         {
-            foreach (var sceneObject in sceneItems)
+            foreach (var sceneObject in sceneInfo.Items)
             {
                 var quest = sceneObject as SceneQuest;
                 if (quest != null && quest.EventId > 0)
@@ -568,7 +566,7 @@ namespace TaleofMonsters.MainItem.Scenes
             if (allEventFinished)
                 return;
 
-            foreach (var sceneObject in sceneItems)
+            foreach (var sceneObject in sceneInfo.Items)
             {
                 var quest = sceneObject as SceneQuest;
                 if (quest != null && !quest.MapSetting && !quest.Disabled)
@@ -586,7 +584,7 @@ namespace TaleofMonsters.MainItem.Scenes
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine(string.Format("{0}(Lv{1})", sceneName, config.Level), "LightBlue", 20);
             tipData.AddLine(2);
-            tipData.AddTextNewLine(string.Format("格子:{0}", sceneItems.Count), "White");
+            tipData.AddTextNewLine(string.Format("格子:{0}", sceneInfo.Items.Count), "White");
             foreach (var questData in SceneQuestBook.GetQuestConfigData(UserProfile.InfoBasic.MapId))
             {
                 var questConfig = ConfigData.GetSceneQuestConfig(questData.Id);
@@ -613,13 +611,13 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public void ResetScene()
         {
-            sceneItems = SceneManager.RefreshSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, SceneFreshReason.Reset);
+            sceneInfo = SceneManager.RefreshSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, SceneFreshReason.Reset);
             parent.Invalidate();
         }
 
         public void EnableTeleport()
         {
-            foreach (var sceneObject in sceneItems)
+            foreach (var sceneObject in sceneInfo.Items)
             {
                 if (sceneObject is SceneWarp)
                 {
@@ -631,7 +629,7 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public void RandomPortal()
         {
-            UserProfile.InfoBasic.Position = sceneItems[MathTool.GetRandom(sceneItems.Count)].Id;
+            UserProfile.InfoBasic.Position = sceneInfo.Items[MathTool.GetRandom(sceneInfo.Items.Count)].Id;
             parent.Invalidate();
         }
 
@@ -644,7 +642,7 @@ namespace TaleofMonsters.MainItem.Scenes
         public void HiddenWay()
         {    
             int fromId = UserProfile.InfoBasic.Position;
-            foreach (var sceneObject in sceneItems)
+            foreach (var sceneObject in sceneInfo.Items)
             {
                 if (sceneObject is SceneQuest)
                 {
@@ -660,16 +658,15 @@ namespace TaleofMonsters.MainItem.Scenes
 
             while (true)
             {
-                int index = MathTool.GetRandom(sceneItems.Count);
-                var targetCell = sceneItems[index];
+                int index = MathTool.GetRandom(sceneInfo.Items.Count);
+                var targetCell = sceneInfo.Items[index];
                 if (targetCell.Id == fromId)
                     continue;
                 if (!targetCell.CanBeReplaced())
                     continue;
                 int qId = SceneQuestBook.GetSceneQuestByName("hiddeway");
-                sceneItems[index] =
-                    new SceneQuest(targetCell.Id, targetCell.X, targetCell.Y, targetCell.Width, targetCell.Height, qId);
-                sceneItems[index].MapSetting = true;
+                sceneInfo.Items[index] = new SceneQuest(targetCell.Id, targetCell.X, targetCell.Y, targetCell.Width, targetCell.Height, qId);
+                sceneInfo.Items[index].MapSetting = true;
                 UserProfile.InfoBasic.Position = targetCell.Id;
                 UserProfile.InfoWorld.UpdatePosInfo(targetCell.Id, qId);
                 UserProfile.InfoWorld.UpdatePosMapSetting(targetCell.Id, true);
@@ -683,16 +680,15 @@ namespace TaleofMonsters.MainItem.Scenes
             int fromId = UserProfile.InfoBasic.Position;
             while (true)
             {
-                int index = MathTool.GetRandom(sceneItems.Count);
-                var targetCell = sceneItems[index];
+                int index = MathTool.GetRandom(sceneInfo.Items.Count);
+                var targetCell = sceneInfo.Items[index];
                 if (targetCell.Id == fromId)
                     continue;
                 if (!targetCell.CanBeReplaced())
                     continue;
                 int qId = SceneQuestBook.GetSceneQuestByName(qname);
-                sceneItems[index] =
-                    new SceneQuest(targetCell.Id, targetCell.X, targetCell.Y, targetCell.Width, targetCell.Height, qId);
-                sceneItems[index].MapSetting = true;
+                sceneInfo.Items[index] = new SceneQuest(targetCell.Id, targetCell.X, targetCell.Y, targetCell.Width, targetCell.Height, qId);
+                sceneInfo.Items[index].MapSetting = true;
                 UserProfile.InfoWorld.UpdatePosInfo(targetCell.Id, qId);
                 UserProfile.InfoWorld.UpdatePosMapSetting(targetCell.Id, true);
                 break;
@@ -703,7 +699,7 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public void DetectAll()
         {
-            foreach (var sceneObject in sceneItems)
+            foreach (var sceneObject in sceneInfo.Items)
             {
                 if (sceneObject is SceneQuest)
                 {
@@ -714,7 +710,7 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public void DetectNear(int range)
         {
-            foreach (var sceneObject in sceneItems)
+            foreach (var sceneObject in sceneInfo.Items)
             {
                 if (sceneObject is SceneQuest && SceneManager.GetDistance(sceneObject.Id, UserProfile.InfoBasic.Position) <= range)
                 {
@@ -725,7 +721,7 @@ namespace TaleofMonsters.MainItem.Scenes
         public void DetectRandom(int count)
         {
             List<SceneObject> toChoose = new List<SceneObject>();
-            foreach (var sceneObject in sceneItems)
+            foreach (var sceneObject in sceneInfo.Items)
             {
                 if (sceneObject is SceneQuest && !sceneObject.Disabled && 
                     !sceneObject.MapSetting && !sceneObject.HasFlag(SceneObject.ScenePosFlagType.Detected))

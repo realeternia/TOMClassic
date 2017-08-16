@@ -22,18 +22,20 @@ namespace TaleofMonsters.MainItem.Scenes
             public int Height;
         }
 
-        public static List<SceneObject> RefreshSceneObjects(int id, int mapWidth ,int mapHeight, SceneFreshReason reason)
+        public static SceneInfo RefreshSceneObjects(int id, int mapWidth ,int mapHeight, SceneFreshReason reason)
         {
-            List<ScenePosData> cachedMapData = new List<ScenePosData>();
-            var cachedSpecialData = new Dictionary<int, DbSceneSpecialPosData>();
+            SceneInfo info = new SceneInfo(id);
+
             var filePath = ConfigData.GetSceneConfig(id).TilePath;
 
+            var cachedSpecialData = new Dictionary<int, DbSceneSpecialPosData>();
+            List<ScenePosData> cachedMapData = new List<ScenePosData>();
             List<DbSceneSpecialPosData> specialDataList = new List<DbSceneSpecialPosData>();
             if (reason != SceneFreshReason.Load || UserProfile.Profile.InfoWorld.PosInfos == null || UserProfile.Profile.InfoWorld.PosInfos.Count <= 0)
             {//重新生成
                 UserProfile.InfoBasic.DungeonRandomSeed = MathTool.GetRandom(int.MaxValue);
                 Random r = new Random(UserProfile.InfoBasic.DungeonRandomSeed);
-                SceneBook.LoadSceneFile(mapWidth, mapHeight, filePath, r, cachedMapData, specialDataList);
+                SceneBook.LoadSceneFile(mapWidth, mapHeight, filePath, r, info);
                 FilterSpecialData(specialDataList, cachedSpecialData);
                 var questCellCount = cachedMapData.Count - cachedSpecialData.Count;
                 GenerateSceneRandomInfo(id, questCellCount, cachedMapData, cachedSpecialData);
@@ -41,14 +43,13 @@ namespace TaleofMonsters.MainItem.Scenes
             else
             {//从存档加载
                 Random r = new Random(UserProfile.InfoBasic.DungeonRandomSeed);
-                SceneBook.LoadSceneFile(mapWidth, mapHeight, filePath, r, cachedMapData, specialDataList);
+                SceneBook.LoadSceneFile(mapWidth, mapHeight, filePath, r, info);
                 foreach (var posData in UserProfile.Profile.InfoWorld.PosInfos)
                 {
                     cachedSpecialData[posData.Id] = posData;
                 }
             }
 
-            List<SceneObject> sceneObjects = new List<SceneObject>();
             foreach (var scenePosData in cachedMapData)
             {
                 DbSceneSpecialPosData cachedData;
@@ -83,14 +84,13 @@ namespace TaleofMonsters.MainItem.Scenes
                     so.Disabled = true;
                     //throw new Exception("RefreshSceneObjects error");
                 }
-                sceneObjects.Add(so);
+                info.Items.Add(so);
             }
 
-            return sceneObjects;
+            return info;
         }
 
-        private static void FilterSpecialData(List<DbSceneSpecialPosData> specialDataList, 
-            Dictionary<int, DbSceneSpecialPosData> cachedSpecialData)
+        private static void FilterSpecialData(List<DbSceneSpecialPosData> specialDataList, Dictionary<int, DbSceneSpecialPosData> cachedSpecialData)
         {
             foreach (var specialPosData in specialDataList)
             {

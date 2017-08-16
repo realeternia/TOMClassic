@@ -56,7 +56,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             if (Card is SpecialCard)
             {
              //   Image img2 = Card.GetCardImage(120, 120);
-             //   g.DrawImage(img2, new Rectangle(Location.X, 10, 120, 120), 0, 0, img2.Width, img2.Height, GraphicsUnit.Pixel);
+             //   g.DrawImage(img2, new Rectangle(Location.X, 10, 120, 120), 0, 0, img2.Width, img2.YCount, GraphicsUnit.Pixel);
                 return;
             }
 
