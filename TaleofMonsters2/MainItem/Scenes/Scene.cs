@@ -666,7 +666,7 @@ namespace TaleofMonsters.MainItem.Scenes
                     continue;
                 if (!targetCell.CanBeReplaced())
                     continue;
-                int qId = SceneBook.GetSceneQuestByName("hiddeway");
+                int qId = SceneQuestBook.GetSceneQuestByName("hiddeway");
                 sceneItems[index] =
                     new SceneQuest(targetCell.Id, targetCell.X, targetCell.Y, targetCell.Width, targetCell.Height, qId);
                 sceneItems[index].MapSetting = true;
@@ -689,7 +689,7 @@ namespace TaleofMonsters.MainItem.Scenes
                     continue;
                 if (!targetCell.CanBeReplaced())
                     continue;
-                int qId = SceneBook.GetSceneQuestByName(qname);
+                int qId = SceneQuestBook.GetSceneQuestByName(qname);
                 sceneItems[index] =
                     new SceneQuest(targetCell.Id, targetCell.X, targetCell.Y, targetCell.Width, targetCell.Height, qId);
                 sceneItems[index].MapSetting = true;

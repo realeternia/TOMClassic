@@ -93,7 +93,7 @@ namespace TaleofMonsters.Forms.Items.Regions
                 }
                 else if (type == PictureRegionCellType.SceneQuest)
                 {
-                    img = SceneBook.GetSceneQuestImage(nid);
+                    img = SceneQuestBook.GetSceneQuestImage(nid);
                 }
                 if (img != null)
                 {

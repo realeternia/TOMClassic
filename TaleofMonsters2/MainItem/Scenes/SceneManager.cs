@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Quests;
+using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.MainItem.Blesses;
@@ -33,7 +33,7 @@ namespace TaleofMonsters.MainItem.Scenes
             {//重新生成
                 UserProfile.InfoBasic.DungeonRandomSeed = MathTool.GetRandom(int.MaxValue);
                 Random r = new Random(UserProfile.InfoBasic.DungeonRandomSeed);
-                SceneQuestBook.LoadSceneFile(mapWidth, mapHeight, filePath, r, cachedMapData, specialDataList);
+                SceneBook.LoadSceneFile(mapWidth, mapHeight, filePath, r, cachedMapData, specialDataList);
                 FilterSpecialData(specialDataList, cachedSpecialData);
                 var questCellCount = cachedMapData.Count - cachedSpecialData.Count;
                 GenerateSceneRandomInfo(id, questCellCount, cachedMapData, cachedSpecialData);
@@ -41,7 +41,7 @@ namespace TaleofMonsters.MainItem.Scenes
             else
             {//从存档加载
                 Random r = new Random(UserProfile.InfoBasic.DungeonRandomSeed);
-                SceneQuestBook.LoadSceneFile(mapWidth, mapHeight, filePath, r, cachedMapData, specialDataList);
+                SceneBook.LoadSceneFile(mapWidth, mapHeight, filePath, r, cachedMapData, specialDataList);
                 foreach (var posData in UserProfile.Profile.InfoWorld.PosInfos)
                 {
                     cachedSpecialData[posData.Id] = posData;

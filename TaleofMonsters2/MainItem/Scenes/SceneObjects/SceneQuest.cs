@@ -83,14 +83,14 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             {
                 g.DrawImage(markQuest, destRect, 0, 0, markQuest.Width, markQuest.Height, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
                 var config = ConfigData.GetSceneQuestConfig(EventId);
-                g.DrawImage(SceneBook.GetSceneQuestImage(config.Id), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
+                g.DrawImage(SceneQuestBook.GetSceneQuestImage(config.Id), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
             }
             else
             {
                 g.DrawImage(markQuest, destRect, 0, 0, markQuest.Width, markQuest.Height, GraphicsUnit.Pixel);
                 if (MapSetting)
                 {
-                    g.DrawImage(SceneBook.GetSceneQuestImage(EventId), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel);
+                    g.DrawImage(SceneQuestBook.GetSceneQuestImage(EventId), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel);
                     var config = ConfigData.GetSceneQuestConfig(EventId);
                     var targetName = config.Name;
                     Font fontName = new Font("宋体", 11 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
@@ -103,7 +103,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                     if (HasFlag(ScenePosFlagType.Detected))
                     {
                         if(EventId > 0)
-                            g.DrawImage(SceneBook.GetSceneQuestImage(EventId), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel);
+                            g.DrawImage(SceneQuestBook.GetSceneQuestImage(EventId), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel);
                         else
                             g.DrawImage(markQuest, destRect, 0, 0, markQuest.Width, markQuest.Height, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
                     }

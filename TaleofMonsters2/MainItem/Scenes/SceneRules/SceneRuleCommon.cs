@@ -2,6 +2,7 @@
 using NarlonLib.Log;
 using NarlonLib.Tools;
 using TaleofMonsters.DataType.Quests;
+using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.MainItem.Scenes.SceneRules
