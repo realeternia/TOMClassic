@@ -17,14 +17,17 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public List<SceneObject> Items { get; private set; } //场景中的物件，各种npc等
 
-        public List<SceneManager.ScenePosData> MapData { get; private set; }
+        public int HiddenCellCount { get; set; } //隐藏的格子数
 
+        public List<SceneManager.ScenePosData> MapData { get; private set; }
         public List<DbSceneSpecialPosData> SpecialData { get; private set; }
 
         public SceneInfo(int id)
         {
             Id = id;
-            Items = new List<SceneObject>();    
+            Items = new List<SceneObject>();
+            MapData = new List<SceneManager.ScenePosData>();
+            SpecialData = new List<DbSceneSpecialPosData>();
         }
 
         

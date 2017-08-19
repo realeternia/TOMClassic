@@ -20,6 +20,8 @@ namespace TaleofMonsters.MainItem.Scenes
             public int Y;
             public int Width;
             public int Height;
+
+            public int HiddenIndex; //1开始都是隐藏的
         }
 
         public static SceneInfo RefreshSceneObjects(int id, int mapWidth ,int mapHeight, SceneFreshReason reason)
@@ -29,16 +31,14 @@ namespace TaleofMonsters.MainItem.Scenes
             var filePath = ConfigData.GetSceneConfig(id).TilePath;
 
             var cachedSpecialData = new Dictionary<int, DbSceneSpecialPosData>();
-            List<ScenePosData> cachedMapData = new List<ScenePosData>();
-            List<DbSceneSpecialPosData> specialDataList = new List<DbSceneSpecialPosData>();
             if (reason != SceneFreshReason.Load || UserProfile.Profile.InfoWorld.PosInfos == null || UserProfile.Profile.InfoWorld.PosInfos.Count <= 0)
             {//重新生成
                 UserProfile.InfoBasic.DungeonRandomSeed = MathTool.GetRandom(int.MaxValue);
                 Random r = new Random(UserProfile.InfoBasic.DungeonRandomSeed);
                 info = SceneBook.LoadSceneFile(id, mapWidth, mapHeight, filePath, r);
-                FilterSpecialData(specialDataList, cachedSpecialData);
-                var questCellCount = cachedMapData.Count - cachedSpecialData.Count;
-                GenerateSceneRandomInfo(id, questCellCount, cachedMapData, cachedSpecialData);
+                FilterSpecialData(info.SpecialData, cachedSpecialData);
+                var questCellCount = info.MapData.Count - info.HiddenCellCount - cachedSpecialData.Count;
+                GenerateSceneRandomInfo(id, questCellCount, info.MapData, cachedSpecialData);
             }
             else
             {//从存档加载
@@ -50,7 +50,7 @@ namespace TaleofMonsters.MainItem.Scenes
                 }
             }
 
-            foreach (var scenePosData in cachedMapData)
+            foreach (var scenePosData in info.MapData)
             {
                 DbSceneSpecialPosData cachedData;
                 cachedSpecialData.TryGetValue(scenePosData.Id, out cachedData);
@@ -119,7 +119,7 @@ namespace TaleofMonsters.MainItem.Scenes
                 {
                     specialData = new DbSceneSpecialPosData();
                     specialData.Id = scenePosData.Id;
-                    if (randQuestList.Count > index)
+                    if (scenePosData.HiddenIndex == 0 && randQuestList.Count > index) //隐藏房间不随机任务
                     {
                         specialData.Type = "Quest";
                         specialData.Info = randQuestList[index++];    //随机一个出来

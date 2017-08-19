@@ -78,6 +78,12 @@ namespace TaleofMonsters.DataType.Scenes
                             randomGroup[cellIndex] = new List<SceneManager.ScenePosData>();
                         randomGroup[cellIndex].Add(so);
                     }
+                    else if (cellTag == 'h') //隐藏组
+                    {
+                        so.HiddenIndex = cellIndex;
+                        info.MapData.Add(so);
+                        info.HiddenCellCount++;
+                    }
                     else
                     {
                         info.MapData.Add(so);

@@ -436,20 +436,20 @@ namespace TaleofMonsters.MainItem.Scenes
         {
             SceneObject possessCell = null;
             SceneObject selectTarget = null;
-            foreach (SceneObject obj in sceneInfo.Items)
+            foreach (var sceneObject in sceneInfo.Items)
             {
-                if (obj.Id == cellTar)
+                if (sceneObject.Id == cellTar)
                 {
-                    selectTarget = obj;
+                    selectTarget = sceneObject;
                 }
                 else
                 {//先绘制非目标
-                    obj.Draw(g, false);
+                    sceneObject.Draw(g, false);
                 }
                 
-                if (obj.Id == UserProfile.Profile.InfoBasic.Position)
+                if (sceneObject.Id == UserProfile.Profile.InfoBasic.Position)
                 {
-                    possessCell = obj;
+                    possessCell = sceneObject;
                 }
             }
 
@@ -629,7 +629,7 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public void RandomPortal()
         {
-            UserProfile.InfoBasic.Position = sceneInfo.Items[MathTool.GetRandom(sceneInfo.Items.Count)].Id;
+            UserProfile.InfoBasic.Position = sceneInfo.Items[MathTool.GetRandom(sceneInfo.Items.Count)].Id; //todo 这样会随机到隐藏格子，不大对
             parent.Invalidate();
         }
 

@@ -95,9 +95,16 @@ namespace TaleofMonsters.Forms.Items
 
         private void virtualRegion_RegionLeft()
         {
-            GameShopConfig gameShopConfig = ConfigData.GetGameShopConfig(productId);
-            var eid = HItemBook.GetItemId(gameShopConfig.Item);
-            tooltip.Hide(parent, eid);
+            if (productId == 0)
+            {
+                tooltip.Hide(parent, 0);
+            }
+            else
+            {
+                GameShopConfig gameShopConfig = ConfigData.GetGameShopConfig(productId);
+                var eid = HItemBook.GetItemId(gameShopConfig.Item);
+                tooltip.Hide(parent, eid);
+            }
         }
 
         private void pictureBoxBuy_Click(object sender, EventArgs e)
