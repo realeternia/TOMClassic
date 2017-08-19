@@ -11,10 +11,10 @@ namespace TaleofMonsters.DataType.Scenes
 {
     internal static class SceneBook
     {
-        public static void LoadSceneFile(int mapWidth, int mapHeight, string filePath, Random r, SceneInfo info)
+        public static SceneInfo LoadSceneFile(int id, int mapWidth, int mapHeight, string filePath, Random r)
         {
             StreamReader sr = new StreamReader(DataLoader.Read("Scene", string.Format("{0}.txt", filePath)));
-            int xoff = 0, yoff = 0, wid = 0, height = 0;
+            SceneInfo info = new SceneInfo(id);
 
             string line;
             while ((line = sr.ReadLine()) != null)
@@ -35,6 +35,8 @@ namespace TaleofMonsters.DataType.Scenes
             }
 
             sr.Close();
+
+            return info;
         }
 
         private static void ReadBody(StreamReader sr, int mapWidth, int mapHeight, Random r, SceneInfo info)
@@ -44,11 +46,18 @@ namespace TaleofMonsters.DataType.Scenes
             Dictionary<int, List<SceneManager.ScenePosData>> randomGroup = new Dictionary<int, List<SceneManager.ScenePosData>>();
             for (int i = 0; i < info.YCount; i++)
             {
-                string[] data = sr.ReadLine().Split('\t');
+                string[] datas = sr.ReadLine().Split('\t');
                 for (int j = 0; j < info.XCount; j++)
                 {
-                    int val = int.Parse(data[j]);
-                    if (val == 0)
+                    string numberStr = datas[j];
+                    char cellTag = (char)0;
+                    if (numberStr[0] >= 'a' && numberStr[0] <= 'z') //是个字母
+                    {
+                        cellTag = numberStr[0];
+                        numberStr = numberStr.Substring(1);
+                    }
+                    int cellIndex = int.Parse(numberStr);
+                    if (cellIndex == 0)
                     {
                         continue;
                     }
@@ -56,18 +65,18 @@ namespace TaleofMonsters.DataType.Scenes
                     int lineOff = (int)(cellWidth * (info.YCount - i - 1) * GameConstants.SceneTileGradient);
                     SceneManager.ScenePosData so = new SceneManager.ScenePosData
                     {
-                        Id = val,
+                        Id = cellIndex,
                         X = info.Xoff + j * cellWidth + lineOff,
                         Y = info.Yoff + i * cellHeight,
                         Width = cellWidth,
                         Height = cellHeight
                     };
-                    if (val < 1000) //随机组
+                    if (cellTag == 'r') //随机组
                     {
                         so.Id = (info.YCount - i) * 1000 + j + 1;
-                        if (!randomGroup.ContainsKey(val))
-                            randomGroup[val] = new List<SceneManager.ScenePosData>();
-                        randomGroup[val].Add(so);
+                        if (!randomGroup.ContainsKey(cellIndex))
+                            randomGroup[cellIndex] = new List<SceneManager.ScenePosData>();
+                        randomGroup[cellIndex].Add(so);
                     }
                     else
                     {

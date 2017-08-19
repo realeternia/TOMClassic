@@ -1,0 +1,10 @@
+startx=150
+starty=600
+width=12
+height=3
+startpoint=1007
+data=1
+3001	r1	r1	0	0	0	0	0	0	0	0	0
+r2	0	r1	0	0	0	0	0	0	0	0	0
+r2	r2	1003	1004	1005	1006	1007	0	0	0	0	0
+3001	Quest	42130003

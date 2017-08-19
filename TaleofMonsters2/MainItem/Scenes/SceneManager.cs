@@ -24,7 +24,7 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public static SceneInfo RefreshSceneObjects(int id, int mapWidth ,int mapHeight, SceneFreshReason reason)
         {
-            SceneInfo info = new SceneInfo(id);
+            SceneInfo info;
 
             var filePath = ConfigData.GetSceneConfig(id).TilePath;
 
@@ -35,7 +35,7 @@ namespace TaleofMonsters.MainItem.Scenes
             {//重新生成
                 UserProfile.InfoBasic.DungeonRandomSeed = MathTool.GetRandom(int.MaxValue);
                 Random r = new Random(UserProfile.InfoBasic.DungeonRandomSeed);
-                SceneBook.LoadSceneFile(mapWidth, mapHeight, filePath, r, info);
+                info = SceneBook.LoadSceneFile(id, mapWidth, mapHeight, filePath, r);
                 FilterSpecialData(specialDataList, cachedSpecialData);
                 var questCellCount = cachedMapData.Count - cachedSpecialData.Count;
                 GenerateSceneRandomInfo(id, questCellCount, cachedMapData, cachedSpecialData);
@@ -43,7 +43,7 @@ namespace TaleofMonsters.MainItem.Scenes
             else
             {//从存档加载
                 Random r = new Random(UserProfile.InfoBasic.DungeonRandomSeed);
-                SceneBook.LoadSceneFile(mapWidth, mapHeight, filePath, r, info);
+                info = SceneBook.LoadSceneFile(id, mapWidth, mapHeight, filePath, r);
                 foreach (var posData in UserProfile.Profile.InfoWorld.PosInfos)
                 {
                     cachedSpecialData[posData.Id] = posData;

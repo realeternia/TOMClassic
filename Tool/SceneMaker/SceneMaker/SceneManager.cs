@@ -33,10 +33,8 @@ namespace SceneMaker
             }
             catch (Exception e)
             {
-                
                 throw;
             }
-         
 
             List<SceneObject> sceneObjects = new List<SceneObject>();
             foreach (var scenePosData in cachedMapData)
@@ -84,11 +82,18 @@ namespace SceneMaker
             int cellHeight = GameConstants.SceneTileStandardHeight * mapHeight / 855;
             for (int i = 0; i < height; i++)
             {
-                string[] data = sr.ReadLine().Split('\t');
+                string[] datas = sr.ReadLine().Split('\t');
                 for (int j = 0; j < wid; j++)
                 {
-                    int val = int.Parse(data[j]);
-                    if (val == 0)
+                    string numberStr = datas[j];
+                    char cellTag = (char)0;
+                    if (numberStr[0] >= 'a' && numberStr[0] <= 'z') //是个字母
+                    {
+                        cellTag = numberStr[0];
+                        numberStr = numberStr.Substring(1);
+                    }
+                    int cellIndex = int.Parse(numberStr);
+                    if (cellIndex == 0)
                     {
                         continue;
                     }
@@ -96,7 +101,7 @@ namespace SceneMaker
                     int lineOff = (int)(cellWidth * (height - i - 1) * GameConstants.SceneTileGradient);
                     ScenePosData so = new ScenePosData
                     {
-                        Id = val,
+                        Id = cellIndex,
                         X = xoff + j * cellWidth + lineOff,
                         Y = yoff + i * cellHeight,
                         Width = cellWidth,
