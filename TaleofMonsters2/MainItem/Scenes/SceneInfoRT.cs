@@ -27,7 +27,7 @@ namespace TaleofMonsters.MainItem.Scenes
                     return sceneObject.Id;
                 }
             }
-            return Items[MathTool.GetRandom(Items.Count)].Id; //随机给一个
+            return GetRandom(0, false); //随机给一个
         }
 
         public int GetRevivePos()
@@ -39,7 +39,22 @@ namespace TaleofMonsters.MainItem.Scenes
                     return sceneObject.Id;
                 }
             }
-            return Items[MathTool.GetRandom(Items.Count)].Id; //随机给一个
+            return GetRandom(0, false); //随机给一个
+        }
+
+        public int GetRandom(int fromId, bool checkEvent)
+        {
+            while (true)
+            {
+                int index = MathTool.GetRandom(Items.Count);
+                var targetCell = Items[index];
+                if (targetCell.Id == fromId)
+                    continue;
+                if (checkEvent && !targetCell.CanBeReplaced())
+                    continue;
+
+                return index;
+            }
         }
     }
 }

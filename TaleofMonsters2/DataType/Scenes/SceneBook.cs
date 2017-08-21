@@ -43,7 +43,7 @@ namespace TaleofMonsters.DataType.Scenes
         {
             int cellWidth = GameConstants.SceneTileStandardWidth * mapWidth / 1422;
             int cellHeight = GameConstants.SceneTileStandardHeight * mapHeight / 855;
-            Dictionary<int, List<SceneManager.ScenePosData>> randomGroup = new Dictionary<int, List<SceneManager.ScenePosData>>();
+            Dictionary<int, List<SceneInfo.SceneScriptPosData>> randomGroup = new Dictionary<int, List<SceneInfo.SceneScriptPosData>>();
             for (int i = 0; i < info.YCount; i++)
             {
                 string[] datas = sr.ReadLine().Split('\t');
@@ -63,7 +63,7 @@ namespace TaleofMonsters.DataType.Scenes
                     }
 
                     int lineOff = (int)(cellWidth * (info.YCount - i - 1) * GameConstants.SceneTileGradient);
-                    SceneManager.ScenePosData so = new SceneManager.ScenePosData
+                    SceneInfo.SceneScriptPosData so = new SceneInfo.SceneScriptPosData
                     {
                         Id = cellIndex,
                         X = info.Xoff + j * cellWidth + lineOff,
@@ -75,7 +75,7 @@ namespace TaleofMonsters.DataType.Scenes
                     {
                         so.Id = (info.YCount - i) * 1000 + j + 1;
                         if (!randomGroup.ContainsKey(cellIndex))
-                            randomGroup[cellIndex] = new List<SceneManager.ScenePosData>();
+                            randomGroup[cellIndex] = new List<SceneInfo.SceneScriptPosData>();
                         randomGroup[cellIndex].Add(so);
                     }
                     else if (cellTag == 'h') //隐藏组
@@ -103,10 +103,9 @@ namespace TaleofMonsters.DataType.Scenes
                 if (data.Length < 2)
                     continue;
 
-                var posData = new DbSceneSpecialPosData();
+                var posData = new SceneInfo.SceneScriptSpecialData();
                 posData.Id = int.Parse(data[0]);
                 posData.Type = data[1];
-                posData.MapSetting = true;
                 if (data.Length > 2)
                     posData.Info = int.Parse(data[2]);
                 info.SpecialData.Add(posData);

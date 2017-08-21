@@ -608,7 +608,7 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public void RandomPortal()
         {
-            UserProfile.InfoBasic.Position = SceneInfo.Items[MathTool.GetRandom(SceneInfo.Items.Count)].Id; //todo 这样会随机到隐藏格子，不大对
+            UserProfile.InfoBasic.Position = SceneInfo.GetRandom(UserProfile.InfoBasic.Position, false);
             parent.Invalidate();
         }
 
@@ -635,44 +635,26 @@ namespace TaleofMonsters.MainItem.Scenes
                 }
             }
 
-            while (true)
-            {
-                int index = MathTool.GetRandom(SceneInfo.Items.Count);
-                var targetCell = SceneInfo.Items[index];
-                if (targetCell.Id == fromId)
-                    continue;
-                if (!targetCell.CanBeReplaced())
-                    continue;
-                int qId = SceneQuestBook.GetSceneQuestByName("hiddeway");
-                SceneInfo.Items[index] = new SceneQuest(targetCell.Id, targetCell.X, targetCell.Y, targetCell.Width, targetCell.Height, qId);
-                SceneInfo.Items[index].MapSetting = true;
-                UserProfile.InfoBasic.Position = targetCell.Id;
-                UserProfile.InfoWorld.UpdatePosInfo(targetCell.Id, qId);
-                UserProfile.InfoWorld.UpdatePosMapSetting(targetCell.Id, true);
-                parent.Invalidate();
-                break;
-            }
+            int index = SceneInfo.GetRandom(UserProfile.InfoBasic.Position, true);
+            var targetCell = SceneInfo.Items[index];
+            int qId = SceneQuestBook.GetSceneQuestByName("hiddeway");
+            SceneInfo.Items[index] = new SceneQuest(targetCell.Id, targetCell.X, targetCell.Y, targetCell.Width, targetCell.Height, qId);
+            SceneInfo.Items[index].MapSetting = true;
+            UserProfile.InfoBasic.Position = targetCell.Id;
+            UserProfile.InfoWorld.UpdatePosInfo(targetCell.Id, qId);
+            UserProfile.InfoWorld.UpdatePosMapSetting(targetCell.Id, true);
+            parent.Invalidate();
         }
 
         public void QuestNext(string qname)
         {
-            int fromId = UserProfile.InfoBasic.Position;
-            while (true)
-            {
-                int index = MathTool.GetRandom(SceneInfo.Items.Count);
-                var targetCell = SceneInfo.Items[index];
-                if (targetCell.Id == fromId)
-                    continue;
-                if (!targetCell.CanBeReplaced())
-                    continue;
-                int qId = SceneQuestBook.GetSceneQuestByName(qname);
-                SceneInfo.Items[index] = new SceneQuest(targetCell.Id, targetCell.X, targetCell.Y, targetCell.Width, targetCell.Height, qId);
-                SceneInfo.Items[index].MapSetting = true;
-                UserProfile.InfoWorld.UpdatePosInfo(targetCell.Id, qId);
-                UserProfile.InfoWorld.UpdatePosMapSetting(targetCell.Id, true);
-                break;
-            }
-           
+            int index = SceneInfo.GetRandom(UserProfile.InfoBasic.Position, true);
+            var targetCell = SceneInfo.Items[index];
+            int qId = SceneQuestBook.GetSceneQuestByName(qname);
+            SceneInfo.Items[index] = new SceneQuest(targetCell.Id, targetCell.X, targetCell.Y, targetCell.Width, targetCell.Height, qId);
+            SceneInfo.Items[index].MapSetting = true;
+            UserProfile.InfoWorld.UpdatePosInfo(targetCell.Id, qId);
+            UserProfile.InfoWorld.UpdatePosMapSetting(targetCell.Id, true);
             parent.Invalidate();
         }
 

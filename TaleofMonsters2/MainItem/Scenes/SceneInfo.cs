@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using TaleofMonsters.DataType.User.Db;
-using TaleofMonsters.MainItem.Scenes.SceneObjects;
 
 namespace TaleofMonsters.MainItem.Scenes
 {
@@ -9,6 +7,23 @@ namespace TaleofMonsters.MainItem.Scenes
     /// </summary>
     internal class SceneInfo
     {
+        internal struct SceneScriptPosData
+        {
+            public int Id;
+            public int X;
+            public int Y;
+            public int Width;
+            public int Height;
+
+            public int HiddenIndex; //1开始都是隐藏的
+        }
+        internal struct SceneScriptSpecialData
+        {
+            public int Id;
+            public string Type;
+            public int Info;
+        }
+
         public int Id { get; private set; }
         public int XCount { get; set; }
         public int YCount { get; set; }
@@ -20,14 +35,14 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public int HiddenCellCount { get; set; } //隐藏的格子数
 
-        public List<SceneManager.ScenePosData> MapData { get; private set; }
-        public List<DbSceneSpecialPosData> SpecialData { get; private set; }
+        public List<SceneScriptPosData> MapData { get; private set; }
+        public List<SceneScriptSpecialData> SpecialData { get; private set; }
 
         public SceneInfo(int id)
         {
             Id = id;
-            MapData = new List<SceneManager.ScenePosData>();
-            SpecialData = new List<DbSceneSpecialPosData>();
+            MapData = new List<SceneScriptPosData>();
+            SpecialData = new List<SceneScriptSpecialData>();
         }
 
         

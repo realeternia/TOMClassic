@@ -13,17 +13,6 @@ namespace TaleofMonsters.MainItem.Scenes
 {
     internal static class SceneManager
     {
-        internal struct ScenePosData
-        {
-            public int Id;
-            public int X;
-            public int Y;
-            public int Width;
-            public int Height;
-
-            public int HiddenIndex; //1开始都是隐藏的
-        }
-
         public static SceneInfoRT RefreshSceneObjects(int id, int mapWidth ,int mapHeight, SceneFreshReason reason)
         {
             SceneInfoRT info = new SceneInfoRT();
@@ -90,7 +79,7 @@ namespace TaleofMonsters.MainItem.Scenes
             return info;
         }
 
-        private static void FilterSpecialData(List<DbSceneSpecialPosData> specialDataList, Dictionary<int, DbSceneSpecialPosData> cachedSpecialData)
+        private static void FilterSpecialData(List<SceneInfo.SceneScriptSpecialData> specialDataList, Dictionary<int, DbSceneSpecialPosData> cachedSpecialData)
         {
             foreach (var specialPosData in specialDataList)
             {
@@ -99,11 +88,17 @@ namespace TaleofMonsters.MainItem.Scenes
                     if (!SceneQuestBook.IsQuestAvail(specialPosData.Info))
                         continue;
                 }
-                cachedSpecialData[specialPosData.Id] = specialPosData;
+                cachedSpecialData[specialPosData.Id] = new DbSceneSpecialPosData
+                {
+                    Id = specialPosData.Id,
+                    Info = specialPosData.Info,
+                    Type = specialPosData.Type,
+                    MapSetting = true
+                };
             }
         }
 
-        private static void GenerateSceneRandomInfo(int id, int questCellCount, List<ScenePosData> cachedMapData, Dictionary<int, DbSceneSpecialPosData> cachedSpecialData)
+        private static void GenerateSceneRandomInfo(int id, int questCellCount, List<SceneInfo.SceneScriptPosData> cachedMapData, Dictionary<int, DbSceneSpecialPosData> cachedSpecialData)
         {
             List<int> randQuestList = new List<int>();
             Scene.Instance.Rule.Generate(randQuestList, questCellCount);
