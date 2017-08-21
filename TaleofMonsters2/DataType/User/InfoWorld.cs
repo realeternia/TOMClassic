@@ -301,6 +301,10 @@ namespace TaleofMonsters.DataType.User
             return mthds;
         }
 
+        public void AddPos(DbSceneSpecialPosData pos)
+        {
+            PosInfos.Add(pos);
+        }
         public void UpdatePosEnable(int id, bool isEnable)
         {
             foreach (var posData in PosInfos)

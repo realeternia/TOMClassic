@@ -621,40 +621,25 @@ namespace TaleofMonsters.MainItem.Scenes
         public void HiddenWay()
         {    
             int fromId = UserProfile.InfoBasic.Position;
-            foreach (var sceneObject in SceneInfo.Items)
+            var findCellId = SceneInfo.FindCell(fromId, "hiddeway");
+            if (findCellId > 0)
             {
-                if (sceneObject is SceneQuest)
-                {
-                    var config = ConfigData.GetSceneQuestConfig((sceneObject as SceneQuest).EventId);
-                    if (config.Ename == "hiddeway" && sceneObject.Id != fromId)
-                    {
-                        UserProfile.InfoBasic.Position = sceneObject.Id;
-                        parent.Invalidate();
-                        return;
-                    }
-                }
+                UserProfile.InfoBasic.Position = findCellId;
+            }
+            else
+            {
+                int cellId = SceneInfo.GetRandom(UserProfile.InfoBasic.Position, true);
+                SceneInfo.ReplaceCellQuest(cellId, "hiddeway");
+                UserProfile.InfoBasic.Position = cellId; //移动过去
             }
 
-            int index = SceneInfo.GetRandom(UserProfile.InfoBasic.Position, true);
-            var targetCell = SceneInfo.Items[index];
-            int qId = SceneQuestBook.GetSceneQuestByName("hiddeway");
-            SceneInfo.Items[index] = new SceneQuest(targetCell.Id, targetCell.X, targetCell.Y, targetCell.Width, targetCell.Height, qId);
-            SceneInfo.Items[index].MapSetting = true;
-            UserProfile.InfoBasic.Position = targetCell.Id;
-            UserProfile.InfoWorld.UpdatePosInfo(targetCell.Id, qId);
-            UserProfile.InfoWorld.UpdatePosMapSetting(targetCell.Id, true);
             parent.Invalidate();
         }
 
         public void QuestNext(string qname)
         {
             int index = SceneInfo.GetRandom(UserProfile.InfoBasic.Position, true);
-            var targetCell = SceneInfo.Items[index];
-            int qId = SceneQuestBook.GetSceneQuestByName(qname);
-            SceneInfo.Items[index] = new SceneQuest(targetCell.Id, targetCell.X, targetCell.Y, targetCell.Width, targetCell.Height, qId);
-            SceneInfo.Items[index].MapSetting = true;
-            UserProfile.InfoWorld.UpdatePosInfo(targetCell.Id, qId);
-            UserProfile.InfoWorld.UpdatePosMapSetting(targetCell.Id, true);
+            SceneInfo.ReplaceCellQuest(index, qname);
             parent.Invalidate();
         }
 

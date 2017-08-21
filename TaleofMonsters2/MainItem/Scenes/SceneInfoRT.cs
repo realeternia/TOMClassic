@@ -1,5 +1,10 @@
 ﻿using System.Collections.Generic;
+using ConfigDatas;
 using NarlonLib.Math;
+using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Scenes;
+using TaleofMonsters.DataType.User;
+using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.MainItem.Scenes.SceneObjects;
 
 namespace TaleofMonsters.MainItem.Scenes
@@ -11,11 +16,63 @@ namespace TaleofMonsters.MainItem.Scenes
     {
         public SceneInfo Script { get; set; }
 
+        private int hiddenIndex = 1; //已经触发的隐藏级别
         public List<SceneObject> Items { get; private set; } //场景中的物件，各种npc等
 
         public SceneInfoRT()
         {
             Items = new List<SceneObject>();
+        }
+
+        public void AddCellIntial(SceneInfo.SceneScriptPosData cellConfigData, DbSceneSpecialPosData specialPosData, int id, SceneFreshReason reason)
+        {
+            SceneObject so;
+            if (cellConfigData.Id > 0)
+            {
+                switch (specialPosData.Type)
+                {
+                    case "Quest":
+                        so = new SceneQuest(specialPosData.Id, cellConfigData.X, cellConfigData.Y, cellConfigData.Width, cellConfigData.Height, specialPosData.Info);
+                        so.Disabled = specialPosData.Disabled; break;
+                    case "Warp":
+                        so = new SceneWarp(specialPosData.Id, cellConfigData.X, cellConfigData.Y, cellConfigData.Width, cellConfigData.Height, specialPosData.Info);
+                        so.Disabled = specialPosData.Disabled;
+                        if (ConfigData.GetSceneConfig(id).Type == (int)SceneTypes.Common && reason == SceneFreshReason.Warp)
+                        {
+                            specialPosData.Disabled = true;
+                            so.Disabled = true;//如果是切场景，切到战斗场景，所有传送门自动关闭
+                        }
+                        break;
+                    default:
+                        so = new SceneTile(specialPosData.Id, cellConfigData.X, cellConfigData.Y, cellConfigData.Width, cellConfigData.Height); break;
+                }
+                so.Flag = specialPosData.Flag;
+                so.MapSetting = specialPosData.MapSetting;
+            }
+            else
+            {
+                so = new SceneTile(specialPosData.Id, cellConfigData.X, cellConfigData.Y, cellConfigData.Width, cellConfigData.Height);
+                so.Disabled = true;
+                //throw new Exception("RefreshSceneObjects error");
+            }
+            Items.Add(so);
+        }
+
+        public void ReplaceCellQuest(int cellId, string eventName)
+        {
+            for (int i = 0; i < Items.Count; i++)
+            {
+                if (Items[i].Id != cellId)
+                    continue;
+
+                var oldCell = Items[i];
+                int qId = SceneQuestBook.GetSceneQuestByName(eventName);
+                Items[i] = new SceneQuest(oldCell.Id, oldCell.X, oldCell.Y, oldCell.Width, oldCell.Height, qId);
+                Items[i].MapSetting = true;
+
+                UserProfile.InfoWorld.UpdatePosInfo(cellId, qId);
+                UserProfile.InfoWorld.UpdatePosMapSetting(cellId, true);
+            }
         }
 
         public int GetStartPos()
@@ -53,7 +110,52 @@ namespace TaleofMonsters.MainItem.Scenes
                 if (checkEvent && !targetCell.CanBeReplaced())
                     continue;
 
-                return index;
+                return targetCell.Id;
+            }
+        }
+
+        public int FindCell(int fromId, string qname)
+        {
+            foreach (var sceneObject in Items)
+            {
+                if (sceneObject is SceneQuest)
+                {
+                    var config = ConfigData.GetSceneQuestConfig((sceneObject as SceneQuest).EventId);
+                    if (config.Ename == qname && sceneObject.Id != fromId)
+                    {
+                        return sceneObject.Id;
+                    }
+                }
+            }
+            return 0;
+        }
+
+        public void OpenHidden(string eventName)
+        {//按序触发隐藏
+            while (true)
+            {
+                var cellList = Script.MapData.FindAll(cell => cell.HiddenIndex == hiddenIndex);
+                if (cellList.Count <= 0)
+                    break;
+
+                foreach (var sceneScriptData in cellList)
+                {
+                    int qId = SceneQuestBook.GetSceneQuestByName(eventName);
+                    var questData = new SceneQuest(sceneScriptData.Id, sceneScriptData.X, sceneScriptData.Y, sceneScriptData.Width, sceneScriptData.Height, qId);
+                    questData.MapSetting = true;
+                    Items.Add(questData);
+
+                    DbSceneSpecialPosData specialPos = new DbSceneSpecialPosData
+                    {
+                        Id = sceneScriptData.Id,
+                        Info = qId,
+                        Type = "Quest",
+                        MapSetting = true
+                    };
+                    UserProfile.InfoWorld.AddPos(specialPos);
+                }
+
+                hiddenIndex++;
             }
         }
     }

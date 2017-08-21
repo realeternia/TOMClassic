@@ -35,8 +35,8 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public int HiddenCellCount { get; set; } //隐藏的格子数
 
-        public List<SceneScriptPosData> MapData { get; private set; }
-        public List<SceneScriptSpecialData> SpecialData { get; private set; }
+        public List<SceneScriptPosData> MapData { get; private set; } //随机后的结果也会到这里
+        public List<SceneScriptSpecialData> SpecialData { get; private set; } //写死的npc等等
 
         public SceneInfo(int id)
         {
@@ -45,6 +45,14 @@ namespace TaleofMonsters.MainItem.Scenes
             SpecialData = new List<SceneScriptSpecialData>();
         }
 
-        
+        public Dictionary<int, SceneScriptPosData> GetCellDict()
+        {
+            var dict = new Dictionary<int, SceneScriptPosData>();
+            foreach (var sceneScriptPosData in MapData)
+            {
+                dict[sceneScriptPosData.Id] = sceneScriptPosData;
+            }
+            return dict;
+        }
     }
 }
