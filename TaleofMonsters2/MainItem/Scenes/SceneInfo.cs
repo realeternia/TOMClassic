@@ -4,6 +4,9 @@ using TaleofMonsters.MainItem.Scenes.SceneObjects;
 
 namespace TaleofMonsters.MainItem.Scenes
 {
+    /// <summary>
+    /// 直接从配置文件读取的地图信息，禁止修改
+    /// </summary>
     internal class SceneInfo
     {
         public int Id { get; private set; }
@@ -15,8 +18,6 @@ namespace TaleofMonsters.MainItem.Scenes
         public int StartPos { get; set; } //传送后指定地点
         public int RevivePos { get; set; } //复活后重生点
 
-        public List<SceneObject> Items { get; private set; } //场景中的物件，各种npc等
-
         public int HiddenCellCount { get; set; } //隐藏的格子数
 
         public List<SceneManager.ScenePosData> MapData { get; private set; }
@@ -25,7 +26,6 @@ namespace TaleofMonsters.MainItem.Scenes
         public SceneInfo(int id)
         {
             Id = id;
-            Items = new List<SceneObject>();
             MapData = new List<SceneManager.ScenePosData>();
             SpecialData = new List<DbSceneSpecialPosData>();
         }

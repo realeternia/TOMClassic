@@ -24,9 +24,9 @@ namespace TaleofMonsters.MainItem.Scenes
             public int HiddenIndex; //1开始都是隐藏的
         }
 
-        public static SceneInfo RefreshSceneObjects(int id, int mapWidth ,int mapHeight, SceneFreshReason reason)
+        public static SceneInfoRT RefreshSceneObjects(int id, int mapWidth ,int mapHeight, SceneFreshReason reason)
         {
-            SceneInfo info;
+            SceneInfoRT info = new SceneInfoRT();
 
             var filePath = ConfigData.GetSceneConfig(id).TilePath;
 
@@ -35,22 +35,22 @@ namespace TaleofMonsters.MainItem.Scenes
             {//重新生成
                 UserProfile.InfoBasic.DungeonRandomSeed = MathTool.GetRandom(int.MaxValue);
                 Random r = new Random(UserProfile.InfoBasic.DungeonRandomSeed);
-                info = SceneBook.LoadSceneFile(id, mapWidth, mapHeight, filePath, r);
-                FilterSpecialData(info.SpecialData, cachedSpecialData);
-                var questCellCount = info.MapData.Count - info.HiddenCellCount - cachedSpecialData.Count;
-                GenerateSceneRandomInfo(id, questCellCount, info.MapData, cachedSpecialData);
+                info.Script = SceneBook.LoadSceneFile(id, mapWidth, mapHeight, filePath, r);
+                FilterSpecialData(info.Script.SpecialData, cachedSpecialData);
+                var questCellCount = info.Script.MapData.Count - info.Script.HiddenCellCount - cachedSpecialData.Count;
+                GenerateSceneRandomInfo(id, questCellCount, info.Script.MapData, cachedSpecialData);
             }
             else
             {//从存档加载
                 Random r = new Random(UserProfile.InfoBasic.DungeonRandomSeed);
-                info = SceneBook.LoadSceneFile(id, mapWidth, mapHeight, filePath, r);
+                info.Script = SceneBook.LoadSceneFile(id, mapWidth, mapHeight, filePath, r);
                 foreach (var posData in UserProfile.Profile.InfoWorld.PosInfos)
                 {
                     cachedSpecialData[posData.Id] = posData;
                 }
             }
 
-            foreach (var scenePosData in info.MapData)
+            foreach (var scenePosData in info.Script.MapData)
             {
                 DbSceneSpecialPosData cachedData;
                 cachedSpecialData.TryGetValue(scenePosData.Id, out cachedData);

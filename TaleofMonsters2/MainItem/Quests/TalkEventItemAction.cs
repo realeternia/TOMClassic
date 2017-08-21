@@ -22,7 +22,7 @@ namespace TaleofMonsters.MainItem.Quests
                         Scene.Instance.QuestNext(parm); break;
                 case "changemap":
                     Scene.Instance.ChangeMap(config.SceneId, true);
-                    UserProfile.InfoBasic.Position = Scene.Instance.GetStartPos(); //如果没配置了出生点，就随机一个点
+                    UserProfile.InfoBasic.Position = Scene.Instance.SceneInfo.GetStartPos(); //如果没配置了出生点，就随机一个点
                     break;
                 case "detect": Scene.Instance.DetectNear(int.Parse(evt.ParamList[0])); break;
                 case "detectrd": Scene.Instance.DetectRandom(int.Parse(evt.ParamList[0])); break;
