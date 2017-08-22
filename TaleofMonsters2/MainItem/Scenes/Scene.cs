@@ -643,6 +643,12 @@ namespace TaleofMonsters.MainItem.Scenes
             parent.Invalidate();
         }
 
+        public void OpenHidden(string qname)
+        {
+            SceneInfo.OpenHidden(qname);
+            parent.Invalidate();
+        }
+
         public void DetectAll()
         {
             foreach (var sceneObject in SceneInfo.Items)

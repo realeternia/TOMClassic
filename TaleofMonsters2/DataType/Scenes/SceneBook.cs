@@ -80,6 +80,7 @@ namespace TaleofMonsters.DataType.Scenes
                     }
                     else if (cellTag == 'h') //隐藏组
                     {
+                        so.HiddenIndex = cellIndex;
                         so.Id = (info.YCount - i) * 1000 + j + 1;
                         info.MapData.Add(so);
                         info.HiddenCellCount++;

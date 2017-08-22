@@ -140,18 +140,35 @@ namespace TaleofMonsters.MainItem.Scenes
 
                 foreach (var sceneScriptData in cellList)
                 {
-                    int qId = SceneQuestBook.GetSceneQuestByName(eventName);
-                    var questData = new SceneQuest(sceneScriptData.Id, sceneScriptData.X, sceneScriptData.Y, sceneScriptData.Width, sceneScriptData.Height, qId);
-                    questData.MapSetting = true;
-                    Items.Add(questData);
-
-                    DbSceneSpecialPosData specialPos = new DbSceneSpecialPosData
+                    SceneObject questData;
+                    DbSceneSpecialPosData specialPos;
+                    if (string.IsNullOrEmpty(eventName))
                     {
-                        Id = sceneScriptData.Id,
-                        Info = qId,
-                        Type = "Quest",
-                        MapSetting = true
-                    };
+                        questData = new SceneTile(sceneScriptData.Id, sceneScriptData.X, sceneScriptData.Y, sceneScriptData.Width, sceneScriptData.Height);
+                        specialPos = new DbSceneSpecialPosData
+                        {
+                            Id = sceneScriptData.Id,
+                            Type = "Tile",
+                            MapSetting = true,
+                            Flag = (uint)SceneObject.ScenePosFlagType.Hidden
+                        };
+                    }
+                    else
+                    {
+                        int qId = SceneQuestBook.GetSceneQuestByName(eventName);
+                        questData = new SceneQuest(sceneScriptData.Id, sceneScriptData.X, sceneScriptData.Y, sceneScriptData.Width, sceneScriptData.Height, qId);
+                        specialPos = new DbSceneSpecialPosData
+                        {
+                            Id = sceneScriptData.Id,
+                            Info = qId,
+                            Type = "Quest",
+                            MapSetting = true,
+                            Flag = (uint)SceneObject.ScenePosFlagType.Hidden
+                        };
+                    }
+                    questData.MapSetting = true;
+                    questData.AddFlag(SceneObject.ScenePosFlagType.Hidden);
+                    Items.Add(questData);
                     UserProfile.InfoWorld.AddPos(specialPos);
                 }
 

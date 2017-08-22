@@ -20,6 +20,7 @@ namespace TaleofMonsters.MainItem.Quests
                 case "hiddenway": Scene.Instance.HiddenWay(); break;
                 case "next": foreach (var parm in config.NextQuest) //支持多个next同时触发
                         Scene.Instance.QuestNext(parm); break;
+                case "hide": Scene.Instance.OpenHidden(config.HiddenRoomQuest); break;
                 case "changemap":
                     Scene.Instance.ChangeMap(config.SceneId, true);
                     UserProfile.InfoBasic.Position = Scene.Instance.SceneInfo.GetStartPos(); //如果没配置了出生点，就随机一个点

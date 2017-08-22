@@ -11,7 +11,8 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
         [Flags]
         internal enum ScenePosFlagType
         {
-            Detected = 1 //可以看到所有格子
+            Detected = 1, //可以看到所有格子
+            Hidden = 1 << 1,  //显示的隐藏房间
         }
 
         public readonly int Id;
@@ -102,6 +103,12 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
         {
             Color tileColor = Color.White;
             Color lineColor = Color.DimGray;
+
+            if (HasFlag(ScenePosFlagType.Hidden))
+            {
+                tileColor = Color.DarkBlue;
+                lineColor = Color.Blue;
+            }
 
             if (isTarget)
             {
