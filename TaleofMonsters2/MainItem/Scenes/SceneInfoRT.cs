@@ -132,48 +132,45 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public void OpenHidden(string eventName)
         {//按序触发隐藏
-            while (true)
+            var cellList = Script.MapData.FindAll(cell => cell.HiddenIndex == hiddenIndex);
+            if (cellList.Count <= 0)
+                return;
+
+            foreach (var sceneScriptData in cellList)
             {
-                var cellList = Script.MapData.FindAll(cell => cell.HiddenIndex == hiddenIndex);
-                if (cellList.Count <= 0)
-                    break;
-
-                foreach (var sceneScriptData in cellList)
+                SceneObject questData;
+                DbSceneSpecialPosData specialPos;
+                if (string.IsNullOrEmpty(eventName))
                 {
-                    SceneObject questData;
-                    DbSceneSpecialPosData specialPos;
-                    if (string.IsNullOrEmpty(eventName))
+                    questData = new SceneTile(sceneScriptData.Id, sceneScriptData.X, sceneScriptData.Y, sceneScriptData.Width, sceneScriptData.Height);
+                    specialPos = new DbSceneSpecialPosData
                     {
-                        questData = new SceneTile(sceneScriptData.Id, sceneScriptData.X, sceneScriptData.Y, sceneScriptData.Width, sceneScriptData.Height);
-                        specialPos = new DbSceneSpecialPosData
-                        {
-                            Id = sceneScriptData.Id,
-                            Type = "Tile",
-                            MapSetting = true,
-                            Flag = (uint)SceneObject.ScenePosFlagType.Hidden
-                        };
-                    }
-                    else
-                    {
-                        int qId = SceneQuestBook.GetSceneQuestByName(eventName);
-                        questData = new SceneQuest(sceneScriptData.Id, sceneScriptData.X, sceneScriptData.Y, sceneScriptData.Width, sceneScriptData.Height, qId);
-                        specialPos = new DbSceneSpecialPosData
-                        {
-                            Id = sceneScriptData.Id,
-                            Info = qId,
-                            Type = "Quest",
-                            MapSetting = true,
-                            Flag = (uint)SceneObject.ScenePosFlagType.Hidden
-                        };
-                    }
-                    questData.MapSetting = true;
-                    questData.AddFlag(SceneObject.ScenePosFlagType.Hidden);
-                    Items.Add(questData);
-                    UserProfile.InfoWorld.AddPos(specialPos);
+                        Id = sceneScriptData.Id,
+                        Type = "Tile",
+                        MapSetting = true,
+                        Flag = (uint)SceneObject.ScenePosFlagType.Hidden
+                    };
                 }
-
-                hiddenIndex++;
+                else
+                {
+                    int qId = SceneQuestBook.GetSceneQuestByName(eventName);
+                    questData = new SceneQuest(sceneScriptData.Id, sceneScriptData.X, sceneScriptData.Y, sceneScriptData.Width, sceneScriptData.Height, qId);
+                    specialPos = new DbSceneSpecialPosData
+                    {
+                        Id = sceneScriptData.Id,
+                        Info = qId,
+                        Type = "Quest",
+                        MapSetting = true,
+                        Flag = (uint)SceneObject.ScenePosFlagType.Hidden
+                    };
+                }
+                questData.MapSetting = true;
+                questData.AddFlag(SceneObject.ScenePosFlagType.Hidden);
+                Items.Add(questData);
+                UserProfile.InfoWorld.AddPos(specialPos);
             }
+
+            hiddenIndex++;
         }
     }
 }

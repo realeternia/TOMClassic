@@ -107,7 +107,7 @@ namespace TaleofMonsters.DataType.Scenes
             if (config.QAngel > 0)//天使
                 datas.Add(new RLIdValue { Id = 42000006, Value = config.QAngel });
 
-            if (!String.IsNullOrEmpty(config.Quest))
+            if (!string.IsNullOrEmpty(config.Quest))
             {
                 string[] infos = config.Quest.Split('|');
                 foreach (var info in infos)
