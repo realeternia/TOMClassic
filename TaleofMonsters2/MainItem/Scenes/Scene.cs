@@ -594,6 +594,23 @@ namespace TaleofMonsters.MainItem.Scenes
             parent.Invalidate();
         }
 
+        public void Ruin()
+        {
+            foreach (var sceneObject in SceneInfo.Items)
+            {
+                var quest = sceneObject as SceneQuest;
+                if (quest == null)
+                    continue;
+                var questConfig = ConfigData.GetSceneQuestConfig(quest.EventId);
+                if (questConfig.Type != (int)SceneQuestTypes.MapSetting && questConfig.Danger == 0 && !sceneObject.Disabled)
+                {
+                    sceneObject.MapSetting = true;
+                    sceneObject.SetEnable(false);
+                }
+            }
+            parent.Invalidate();
+        }
+
         public void EnableTeleport()
         {
             foreach (var sceneObject in SceneInfo.Items)

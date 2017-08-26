@@ -14,6 +14,7 @@ namespace TaleofMonsters.MainItem.Quests
             switch (e.Type)
             {
                 case "reset": Scene.Instance.ResetScene(); break;
+                case "ruin": Scene.Instance.Ruin(); break;
                 case "teleport": Scene.Instance.EnableTeleport(); break;
                 case "portal": Scene.Instance.RandomPortal(); break;
                 case "move": Scene.Instance.MoveTo(config.Position); break;
