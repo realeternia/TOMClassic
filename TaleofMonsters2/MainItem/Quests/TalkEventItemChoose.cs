@@ -43,11 +43,12 @@ namespace TaleofMonsters.MainItem.Quests
         {
             int index = 1;
             winRate = config.ChooseWinRate;
+            rollItemSpeedX = MathTool.GetRandom(20, 40);
 
             if (config.ChooseFood > 0)
             {
                 int foodCost = (int)GameResourceBook.OutFoodSceneQuest(config.ChooseFood);
-                var region = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25 + 100), 60, ImageRegionCellType.Food, -foodCost);
+                var region = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25 + 70), 60, ImageRegionCellType.Food, -foodCost);
                 vRegion.AddRegion(region);
                 index++;
             }
@@ -55,13 +56,13 @@ namespace TaleofMonsters.MainItem.Quests
             if (config.ChooseGold > 0)
             {
                 int goldCost = (int)GameResourceBook.OutGoldSceneQuest(config.Level, config.ChooseGold);
-                var region = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25 + 100), 60, ImageRegionCellType.Gold, -goldCost);
+                var region = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25 + 70), 60, ImageRegionCellType.Gold, -goldCost);
                 vRegion.AddRegion(region);
                 index++;
             }
 
             var icon = HSIcons.GetIconsByEName("rot7");
-            vRegion.AddRegion(new ImageRegion(20, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25 + 100, 60, 60, ImageRegionCellType.None, icon));
+            vRegion.AddRegion(new ImageRegion(20, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25 + 70, 60, 60, ImageRegionCellType.None, icon));
         }
 
         public override void OnFrame(int tick)
@@ -102,19 +103,24 @@ namespace TaleofMonsters.MainItem.Quests
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
+            if (!vRegion.Visible)
+            {
+                return;
+            }
+
             var region = vRegion.GetRegion(id) as ImageRegion;
             if (region != null)
             {
                 var regionType = region.GetVType();
                 if (regionType == ImageRegionCellType.Gold)
                 {
-                    string resStr = string.Format("黄金:{0}", region.Parm);
+                    string resStr = string.Format("消耗{0}黄金提高{1}%成功率", -int.Parse(region.Parm.ToString()), config.ChooseGoldAddon);
                     Image image = DrawTool.GetImageByString(resStr, 100);
                     tooltip.Show(image, parent, x, y);
                 }
                 else if (regionType == ImageRegionCellType.Food)
                 {
-                    string resStr = string.Format("食物:{0}", region.Parm);
+                    string resStr = string.Format("消耗{0}食物提高{1}%成功率", -int.Parse(region.Parm.ToString()), config.ChooseFoodAddon);
                     Image image = DrawTool.GetImageByString(resStr, 100);
                     tooltip.Show(image, parent, x, y);
                 }
@@ -133,21 +139,39 @@ namespace TaleofMonsters.MainItem.Quests
 
         private void virtualRegion_RegionClicked(int id, int x, int y, MouseButtons button)
         {
+            if (!vRegion.Visible)
+            {
+                return;
+            }
+
             var region = vRegion.GetRegion(id) as ImageRegion;
             if (region != null)
             {
                 var regionType = region.GetVType();
                 if (regionType == ImageRegionCellType.Gold)
                 {
-                    UserProfile.Profile.InfoBag.SubResource(GameResourceType.Gold, (uint)region.Parm);
+                    uint goldCost = GameResourceBook.OutGoldSceneQuest(config.Level, config.ChooseGold);
+                    if (!UserProfile.InfoBag.HasResource(GameResourceType.Gold, goldCost))
+                    {
+                        return;
+                    }
+                    UserProfile.InfoBag.SubResource(GameResourceType.Gold, goldCost);
                     winRate += config.ChooseGoldAddon;
                 }
                 else if (regionType == ImageRegionCellType.Food)
                 {
-                    UserProfile.Profile.InfoBasic.SubFood((uint)region.Parm);
+                    uint foodCost = GameResourceBook.OutFoodSceneQuest(config.ChooseFood);
+                    if (UserProfile.InfoBasic.FoodPoint < foodCost)
+                    {
+                        return;
+                    }
+                    UserProfile.InfoBasic.SubFood(foodCost);
                     winRate += config.ChooseFoodAddon;
                 }
             }
+
+            afterChoose = true;
+            vRegion.Visible = false;
         }
 
         public override void Draw(Graphics g)
@@ -165,11 +189,11 @@ namespace TaleofMonsters.MainItem.Quests
             for (int i = 0; i < BarCount; i++)
             {
                 Brush b = i * (100 / BarCount) < winRate ? Brushes.Lime : Brushes.Red;
-                g.FillRectangle(b, pos.X + i * frameSize + frameOff, pos.Y + 25 + 30, frameSize - 2, 40);
+                g.FillRectangle(b, pos.X + i * frameSize + frameOff, pos.Y + 15 + 30, frameSize - 6, 30);
             }
 
             var nowIndex = (rollItemX - frameOff)/(frameSize*2);
-            g.DrawRectangle(Pens.White, pos.X + nowIndex * frameSize + frameOff, pos.Y + 25 + 30, frameSize - 2, 40);
+            g.DrawRectangle(Pens.White, pos.X + nowIndex * frameSize + frameOff, pos.Y + 15 + 30, frameSize - 6, 30);
 
             vRegion.Draw(g);
         }
