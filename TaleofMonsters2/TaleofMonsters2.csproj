@@ -253,6 +253,7 @@
     <Compile Include="MainItem\Quests\TalkEventItemEnd.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemGame.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemNpc.cs" />
+    <Compile Include="MainItem\Quests\TalkEventItemChoose.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemPunish.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemPay.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemRewardQuest.cs" />
