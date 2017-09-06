@@ -20,7 +20,7 @@ namespace TaleofMonsters.Forms.Items.Regions.Decorators
 
         public void Draw(Graphics g, int x, int y, int width, int height)
         {
-            g.DrawImage(img, x + (width - size)/2, y + (height - size)/2, width + size, height + size);
+            g.DrawImage(img, x + (width - size)/2, y + (height - size)/2, size, size);
         }
     }
 }

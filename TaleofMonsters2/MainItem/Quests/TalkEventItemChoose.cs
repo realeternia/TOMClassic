@@ -9,6 +9,7 @@ using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Regions;
+using TaleofMonsters.Forms.Items.Regions.Decorators;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
 
 namespace TaleofMonsters.MainItem.Quests
@@ -64,8 +65,9 @@ namespace TaleofMonsters.MainItem.Quests
                 index++;
             }
 
-            var icon = HSIcons.GetIconsByEName("rot7");
-            vRegion.AddRegion(new ImageRegion(20, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25 + 70, 60, 60, ImageRegionCellType.None, icon));
+            var button = new ButtonRegion(20, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25 + 70, 60, 60, "iconbg.JPG", "");
+            button.AddDecorator(new RegionImageDecorator(HSIcons.GetIconsByEName("rot7"), 60 / 2));
+            vRegion.AddRegion(button);
         }
 
         public override void OnFrame(int tick)
@@ -113,18 +115,20 @@ namespace TaleofMonsters.MainItem.Quests
             }
 
             var region = vRegion.GetRegion(id);
-            if (region != null)
+            if (region != null && region.Parm != null)
             {
                 var regionType = (ImageRegionCellType)region.Parm;
                 if (regionType == ImageRegionCellType.Gold)
                 {
-                    string resStr = string.Format("消耗{0}黄金提高{1}%成功率", -int.Parse(region.Parm.ToString()), config.ChooseGoldAddon);
+                    int foodCost = (int)GameResourceBook.OutFoodSceneQuest(config.ChooseFood);
+                    string resStr = string.Format("消耗{0}黄金提高{1}%成功率", -foodCost, config.ChooseGoldAddon);
                     Image image = DrawTool.GetImageByString(resStr, 100);
                     tooltip.Show(image, parent, x, y);
                 }
                 else if (regionType == ImageRegionCellType.Food)
                 {
-                    string resStr = string.Format("消耗{0}食物提高{1}%成功率", -int.Parse(region.Parm.ToString()), config.ChooseFoodAddon);
+                    int goldCost = (int)GameResourceBook.OutGoldSceneQuest(config.Level, config.ChooseGold);
+                    string resStr = string.Format("消耗{0}食物提高{1}%成功率", -goldCost, config.ChooseFoodAddon);
                     Image image = DrawTool.GetImageByString(resStr, 100);
                     tooltip.Show(image, parent, x, y);
                 }
@@ -149,7 +153,7 @@ namespace TaleofMonsters.MainItem.Quests
             }
 
             var region = vRegion.GetRegion(id);
-            if (region != null)
+            if (region != null && region.Parm != null)
             {
                 var regionType = (ImageRegionCellType)region.Parm;
                 if (regionType == ImageRegionCellType.Gold)

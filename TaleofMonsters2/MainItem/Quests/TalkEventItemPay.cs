@@ -35,7 +35,6 @@ namespace TaleofMonsters.MainItem.Quests
             CalculateRequire();
         }
 
-
         private void CalculateRequire()
         {
             int index = 1;
@@ -49,26 +48,27 @@ namespace TaleofMonsters.MainItem.Quests
             }
             for (int i = 0; i < items.Count; i++)
             {
-                var region = new PictureAnimRegion(index, pos.X + 3 + 20 + (index - 1) % 7 * 70, pos.Y + 3 + 25 + (index - 1) / 7 * 70, 60, 60,
-                                    PictureRegionCellType.Item, items[i].Type);
+                var region = new ButtonRegion(index, pos.X + 3 + 20 + (index - 1) % 7 * 70, pos.Y + 3 + 25 + (index - 1) / 7 * 70, 60, 60, HItemBook.GetHItemImage(items[i].Type));
+                region.SetKeyValue(items[i].Type);
                 region.AddDecorator(new RegionTextDecorator(37, 42, 12, Color.White, true));
                 vRegion.AddRegion(region);
                 vRegion.SetRegionDecorator(index, 0, items[i].Value.ToString());
                 index++;
             }
 
-            var icon = HSIcons.GetIconsByEName("rot7");
-            vRegion.AddRegion(new ImageRegion(20, pos.X + 3 + 20 + (index - 1) % 7 * 70, pos.Y + 3 + 25 + (index - 1) / 7 * 70, 60, 60, ImageRegionCellType.None, icon));
+            var button = new ButtonRegion(20, pos.X + 3 + 20 + (index - 1) % 7 * 70, pos.Y + 3 + 25 + (index - 1) / 7 * 70, 60, 60, "iconbg.JPG", "");
+            button.AddDecorator(new RegionImageDecorator(HSIcons.GetIconsByEName("rot7"), 60 / 2));
+            vRegion.AddRegion(button);
         }
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
             lastKey = key;
-            var region = vRegion.GetRegion(id) as PictureRegion;
-            if (region != null)
+
+            if (key > 0)
             {
-                var regionType = region.GetVType();
-                if (regionType == PictureRegionCellType.Item)
+                var region = vRegion.GetRegion(id);
+                if (region != null)
                 {
                     Image image = HItemBook.GetPreview(key);
                     tooltip.Show(image, parent, x, y);
