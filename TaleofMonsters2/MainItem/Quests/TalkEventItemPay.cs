@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Control;
-using NarlonLib.Log;
 using NarlonLib.Math;
 using NarlonLib.Tools;
 using TaleofMonsters.Core;

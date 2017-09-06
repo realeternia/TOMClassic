@@ -25,7 +25,8 @@ namespace TaleofMonsters.MainItem.Quests
         private int rollItemSpeedX;
 
         private int winRate; //%数值
-        private const int BarCount = 20;
+        private const int BarCount = 20; //有多少个柱子
+        private const int FrameOff = 10; //第一个柱子相叫最左边的偏移
 
         public TalkEventItemChoose(int evtId, int level, Control c, Rectangle r, SceneQuestEvent e)
             : base(evtId, level, r, e)
@@ -48,7 +49,7 @@ namespace TaleofMonsters.MainItem.Quests
             if (config.ChooseFood > 0)
             {
                 int foodCost = (int)GameResourceBook.OutFoodSceneQuest(config.ChooseFood);
-                var region = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25 + 70), 60, ImageRegionCellType.Food, -foodCost);
+                var region = ComplexRegion.GetResButtonRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25 + 70), 60, ImageRegionCellType.Food, -foodCost);
                 vRegion.AddRegion(region);
                 index++;
             }
@@ -56,7 +57,7 @@ namespace TaleofMonsters.MainItem.Quests
             if (config.ChooseGold > 0)
             {
                 int goldCost = (int)GameResourceBook.OutGoldSceneQuest(config.Level, config.ChooseGold);
-                var region = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25 + 70), 60, ImageRegionCellType.Gold, -goldCost);
+                var region = ComplexRegion.GetResButtonRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25 + 70), 60, ImageRegionCellType.Gold, -goldCost);
                 vRegion.AddRegion(region);
                 index++;
             }
@@ -70,7 +71,9 @@ namespace TaleofMonsters.MainItem.Quests
             if (afterChoose)
             {
                 rollItemX += rollItemSpeedX;
-                if (rollItemX > pos.Width - 20)
+
+                int frameSize = (pos.Width - FrameOff * 2) / (BarCount * 2);
+                if (rollItemX >= frameSize * BarCount*2)
                 {
                     rollItemX = 0;
                 }
@@ -93,9 +96,8 @@ namespace TaleofMonsters.MainItem.Quests
                 RunningState = TalkEventState.Finish;
                 afterChoose = false;
 
-                int frameOff = 10;
-                int frameSize = (pos.Width - frameOff * 2) / (BarCount * 2);//一个颜色一个黑相间
-                var nowIndex = (rollItemX - frameOff) / (frameSize * 2);
+                int frameSize = (pos.Width - FrameOff * 2) / (BarCount * 2);//一个颜色一个黑相间
+                var nowIndex = rollItemX / (frameSize * 2);
 
                 result = evt.ChooseTarget(nowIndex*(100/BarCount) < winRate ? 1 : 0);
             }
@@ -128,7 +130,7 @@ namespace TaleofMonsters.MainItem.Quests
 
             if (id ==20)
             {
-                tooltip.Show("不追加", parent, x, y);
+                tooltip.Show(string.Format("不追加({0}%成功率)", winRate), parent, x, y);
             }
         }
 
@@ -184,16 +186,15 @@ namespace TaleofMonsters.MainItem.Quests
 
             g.DrawLine(Pens.Wheat, pos.X + 3, pos.Y + 3 + 20, pos.X + 3+400, pos.Y + 3 + 20);
 
-            int frameOff = 10;
-            int frameSize = (pos.Width - frameOff * 2) / (BarCount * 2);//一个颜色一个黑相间
+            int frameSize = (pos.Width - FrameOff * 2) / (BarCount * 2);//一个颜色一个黑相间
             for (int i = 0; i < BarCount; i++)
             {
                 Brush b = i * (100 / BarCount) < winRate ? Brushes.Lime : Brushes.Red;
-                g.FillRectangle(b, pos.X + i * frameSize + frameOff, pos.Y + 15 + 30, frameSize - 6, 30);
+                g.FillRectangle(b, pos.X + i * frameSize + FrameOff, pos.Y + 15 + 30, frameSize - 6, 30);
             }
 
-            var nowIndex = (rollItemX - frameOff)/(frameSize*2);
-            g.DrawRectangle(Pens.White, pos.X + nowIndex * frameSize + frameOff, pos.Y + 15 + 30, frameSize - 6, 30);
+            var nowIndex = rollItemX/(frameSize*2);
+            g.DrawRectangle(Pens.White, pos.X + nowIndex * frameSize + FrameOff, pos.Y + 15 + 30, frameSize - 6, 30);
 
             vRegion.Draw(g);
         }

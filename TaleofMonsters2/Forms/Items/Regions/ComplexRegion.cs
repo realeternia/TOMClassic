@@ -6,10 +6,38 @@ namespace TaleofMonsters.Forms.Items.Regions
 {
     internal static class ComplexRegion
     {
-        public static SubVirtualRegion GetSceneDataRegion(int index, Point pos, int size, ImageRegionCellType type, int change)
+        public static SubVirtualRegion GetResShowRegion(int index, Point pos, int size, ImageRegionCellType type, int change)
         {
             string iconName = "";
             Color borderColor = Color.White;
+            iconName = CheckResourceType(type, iconName, ref borderColor);
+            var pictureRegion = new ImageRegion(index, pos.X, pos.Y, size, size, type, HSIcons.GetIconsByEName(iconName));
+            pictureRegion.Scale = 0.5f;
+            pictureRegion.Parm = change.ToString();
+            var textControl = new RegionTextDecorator(3, size-20, 11, change > 0 ? Color.White : Color.Red, true);
+            textControl.SetState(change.ToString());
+            pictureRegion.AddDecorator(textControl);
+            pictureRegion.AddDecorator(new RegionBorderDecorator(borderColor));
+            return pictureRegion;
+        }
+
+        public static SubVirtualRegion GetResButtonRegion(int index, Point pos, int size, ImageRegionCellType type, int change)
+        {
+            string iconName = "";
+            Color borderColor = Color.White;
+            iconName = CheckResourceType(type, iconName, ref borderColor);
+            var pictureRegion = new ImageRegion(index, pos.X, pos.Y, size, size, type, HSIcons.GetIconsByEName(iconName));
+            pictureRegion.Scale = 0.5f;
+            pictureRegion.Parm = change.ToString();
+            var textControl = new RegionTextDecorator(3, size - 20, 11, change > 0 ? Color.White : Color.Red, true);
+            textControl.SetState(change.ToString());
+            pictureRegion.AddDecorator(new RegionImageDecorator("Border", "iconbg.PNG"));
+            pictureRegion.AddDecorator(textControl);
+            return pictureRegion;
+        }
+
+        private static string CheckResourceType(ImageRegionCellType type, string iconName, ref Color borderColor)
+        {
             if (type == ImageRegionCellType.Gold)
             {
                 iconName = "res1";
@@ -35,14 +63,7 @@ namespace TaleofMonsters.Forms.Items.Regions
                 iconName = "oth5";
                 borderColor = Color.Purple;
             }
-            var pictureRegion = new ImageRegion(index, pos.X, pos.Y, size, size, type, HSIcons.GetIconsByEName(iconName));
-            pictureRegion.Scale = 0.5f;
-            pictureRegion.Parm = change.ToString();
-            var textControl = new RegionTextDecorator(3, size-20, 11, change > 0 ? Color.White : Color.Red, true);
-            textControl.SetState(change.ToString());
-            pictureRegion.AddDecorator(textControl);
-            pictureRegion.AddDecorator(new RegionBorderDecorator(borderColor));
-            return pictureRegion;
+            return iconName;
         }
     }
 }

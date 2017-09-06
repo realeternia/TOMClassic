@@ -95,14 +95,14 @@ namespace TaleofMonsters.Controler.Battle
                 if (resource[0] > 0)
                 {
                     var pos = GetCellPosition();
-                    var pictureRegion = ComplexRegion.GetSceneDataRegion(cellIndex, pos, 45, ImageRegionCellType.Gold, resource[0]);
+                    var pictureRegion = ComplexRegion.GetResShowRegion(cellIndex, pos, 45, ImageRegionCellType.Gold, resource[0]);
                     virtualRegion.AddRegion(pictureRegion);
                 }
 
                 if (exp > 0)
                 {
                     var pos = GetCellPosition();
-                    var pictureRegion = ComplexRegion.GetSceneDataRegion(cellIndex, pos, 45, ImageRegionCellType.Exp,(int)exp);
+                    var pictureRegion = ComplexRegion.GetResShowRegion(cellIndex, pos, 45, ImageRegionCellType.Exp,(int)exp);
                     virtualRegion.AddRegion(pictureRegion);
                 }
 

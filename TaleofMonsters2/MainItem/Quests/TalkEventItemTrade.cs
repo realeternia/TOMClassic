@@ -42,7 +42,7 @@ namespace TaleofMonsters.MainItem.Quests
                 if (goldGet > 0)
                 {
                     UserProfile.Profile.InfoBag.AddResource(GameResourceType.Gold, goldGet);
-                    var pictureRegion = ComplexRegion.GetSceneDataRegion(index,
+                    var pictureRegion = ComplexRegion.GetResShowRegion(index,
                         new Point(pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25), 60, ImageRegionCellType.Gold,
                         (int) goldGet);
                     vRegion.AddRegion(pictureRegion);
@@ -55,7 +55,7 @@ namespace TaleofMonsters.MainItem.Quests
                 if (goldLoss > 0)
                 {
                     UserProfile.Profile.InfoBag.SubResource(GameResourceType.Gold, goldLoss);
-                    var pictureRegion = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Gold, (int)-goldLoss);
+                    var pictureRegion = ComplexRegion.GetResShowRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Gold, (int)-goldLoss);
                     vRegion.AddRegion(pictureRegion);
                     index++;
                 }
@@ -66,7 +66,7 @@ namespace TaleofMonsters.MainItem.Quests
                 if (foodGet > 0)
                 {
                     UserProfile.Profile.InfoBasic.AddFood(foodGet);
-                    var pictureRegion = ComplexRegion.GetSceneDataRegion(index,
+                    var pictureRegion = ComplexRegion.GetResShowRegion(index,
                         new Point(pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25), 60, ImageRegionCellType.Food,
                         (int) foodGet);
                     vRegion.AddRegion(pictureRegion);
@@ -79,7 +79,7 @@ namespace TaleofMonsters.MainItem.Quests
                 if (foodLoss > 0)
                 {
                     UserProfile.Profile.InfoBasic.SubFood(foodLoss);
-                    var pictureRegion = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Food, (int)-foodLoss);
+                    var pictureRegion = ComplexRegion.GetResShowRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Food, (int)-foodLoss);
                     vRegion.AddRegion(pictureRegion);
                     index++;
                 }
@@ -90,7 +90,7 @@ namespace TaleofMonsters.MainItem.Quests
                 if (healthGet > 0)
                 {
                     UserProfile.Profile.InfoBasic.AddHealth(healthGet);
-                    var pictureRegion = ComplexRegion.GetSceneDataRegion(index,
+                    var pictureRegion = ComplexRegion.GetResShowRegion(index,
                         new Point(pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25), 60, ImageRegionCellType.Health,
                         (int) healthGet);
                     vRegion.AddRegion(pictureRegion);
@@ -103,7 +103,7 @@ namespace TaleofMonsters.MainItem.Quests
                 if (healthLoss > 0)
                 {
                     UserProfile.Profile.InfoBasic.SubHealth(healthLoss);
-                    var pictureRegion = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Health, (int)-healthLoss);
+                    var pictureRegion = ComplexRegion.GetResShowRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Health, (int)-healthLoss);
                     vRegion.AddRegion(pictureRegion);
                     index++;
                 }
@@ -114,7 +114,7 @@ namespace TaleofMonsters.MainItem.Quests
                 if (mentalGet > 0)
                 {
                     UserProfile.Profile.InfoBasic.AddMental(mentalGet);
-                    var pictureRegion = ComplexRegion.GetSceneDataRegion(index,
+                    var pictureRegion = ComplexRegion.GetResShowRegion(index,
                         new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Mental,
                         (int)mentalGet);
                     vRegion.AddRegion(pictureRegion);
@@ -127,7 +127,7 @@ namespace TaleofMonsters.MainItem.Quests
                 if (mentalLoss > 0)
                 {
                     UserProfile.Profile.InfoBasic.SubMental(mentalLoss);
-                    var pictureRegion = ComplexRegion.GetSceneDataRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Mental, (int)-mentalLoss);
+                    var pictureRegion = ComplexRegion.GetResShowRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25), 60, ImageRegionCellType.Mental, (int)-mentalLoss);
                     vRegion.AddRegion(pictureRegion);
                     index++;
                 }

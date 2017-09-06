@@ -14,6 +14,8 @@ namespace TaleofMonsters.MainItem.Quests
         private int rollItemX;
         private int rollItemSpeedX;
 
+        private const int FrameOff = 10; //第一个柱子相叫最左边的偏移
+
         public TalkEventItemRoll(int evtId, int level, Rectangle r, SceneQuestEvent e)
             : base(evtId, level, r, e)
         {
@@ -29,9 +31,9 @@ namespace TaleofMonsters.MainItem.Quests
                 rollItemX = 0;
                 rollItemSpeedX *= -1;
             }
-            if (rollItemX > pos.Width-20)
+            if (rollItemX > pos.Width- FrameOff*2)
             {
-                rollItemX = pos.Width-20;
+                rollItemX = pos.Width- FrameOff * 2;
                 rollItemSpeedX *= -1;
             }
 
@@ -57,7 +59,7 @@ namespace TaleofMonsters.MainItem.Quests
             if (result == null)
             {
                 RunningState = TalkEventState.Finish;
-                int frameSize = (pos.Width - 20)/evt.ParamList.Count;
+                int frameSize = (pos.Width - FrameOff*2) /evt.ParamList.Count;
                 result = evt.ChooseTarget(rollItemX/frameSize);
 
                 if (BlessManager.RollFailSubHealth > 0 && evt.ParamList[rollItemX/frameSize].Contains("失败"))
@@ -89,8 +91,7 @@ namespace TaleofMonsters.MainItem.Quests
 
             g.DrawLine(Pens.Wheat, pos.X + 3, pos.Y + 3 + 20, pos.X + 3 + 400, pos.Y + 3 + 20);
 
-            int frameOff = 10;
-            int frameSize = (pos.Width - frameOff*2) / evt.ParamList.Count;
+            int frameSize = (pos.Width - FrameOff * 2) / evt.ParamList.Count;
             font = new Font("宋体", 11 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             for (int i = 0; i < evt.ParamList.Count; i++)
             {
@@ -103,11 +104,11 @@ namespace TaleofMonsters.MainItem.Quests
                     case "大失败": b = Brushes.Red; break;
                     default: b = Brushes.Wheat; break;
                 }
-                g.FillRectangle(b, pos.X + i * frameSize + frameOff, pos.Y + 25 + 30, frameSize - 2, 5);
-                g.DrawString(evt.ParamList[i], font, b, pos.X + i * frameSize + frameOff + frameSize / 2 - 20, pos.Y + 25 + 10);
+                g.FillRectangle(b, pos.X + i * frameSize + FrameOff, pos.Y + 25 + 30, frameSize - 2, 5);
+                g.DrawString(evt.ParamList[i], font, b, pos.X + i * frameSize + FrameOff + frameSize / 2 - 20, pos.Y + 25 + 10);
             }
-            g.FillEllipse(Brushes.Yellow, new Rectangle(pos.X + rollItemX + frameOff-6, pos.Y + 25 + 40, 12, 12));
-            g.FillEllipse(Brushes.OrangeRed, new Rectangle(pos.X + rollItemX + frameOff-1, pos.Y + 25 + 40 + 5, 3, 3));
+            g.FillEllipse(Brushes.Yellow, new Rectangle(pos.X + rollItemX + FrameOff - 6, pos.Y + 25 + 40, 12, 12));
+            g.FillEllipse(Brushes.OrangeRed, new Rectangle(pos.X + rollItemX + FrameOff - 1, pos.Y + 25 + 40 + 5, 3, 3));
             font.Dispose();
         }
     }

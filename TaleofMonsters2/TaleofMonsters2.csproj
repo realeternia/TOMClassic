@@ -177,6 +177,7 @@
     <Compile Include="DataType\User\Db\DbEquip.cs" />
     <Compile Include="DataType\User\Db\DbDeckCard.cs" />
     <Compile Include="DataType\User\Db\DbSceneSpecialPosData.cs" />
+    <Compile Include="Forms\Items\Regions\Decorators\RegionImageDecorator.cs" />
     <Compile Include="Forms\MinigameForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
