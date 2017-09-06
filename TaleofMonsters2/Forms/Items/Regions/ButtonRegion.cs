@@ -16,20 +16,43 @@ namespace TaleofMonsters.Forms.Items.Regions
 
         public override void Draw(Graphics g)
         {
-            Image img = Controler.Loader.PicLoader.Read("Button", isIn | state != RegionState.Free ? path2 : path1);
-            if (img != null)
+            if (string.IsNullOrEmpty(path2))
             {
-                if (isMouseDown)
-                    g.DrawImage(img, new Rectangle(X, Y + 10, Width, Height - 10), 0, 0, Width, Height - 10, GraphicsUnit.Pixel);
-                else
-                    g.DrawImage(img, X, Y, Width, Height);
-                
-                img.Dispose();
+                Image img = Controler.Loader.PicLoader.Read("Button", path1);
+                if (img != null)
+                {
+                    if (isMouseDown)
+                        g.DrawImage(img, new Rectangle(X + 3, Y + 3, Width - 3, Height - 3), 0, 0, Width - 3, Height - 3, GraphicsUnit.Pixel);
+                    else
+                        g.DrawImage(img, X, Y, Width, Height);
+
+                    img.Dispose();
+
+                    if (isIn | state != RegionState.Free)
+                    {
+                        Brush b = new SolidBrush(Color.FromArgb(100, Color.AliceBlue));
+                        g.FillRectangle(b, X, Y, Width, Height);
+                        b.Dispose();
+                    }
+                }
             }
+            else
+            {
+                Image img = Controler.Loader.PicLoader.Read("Button", isIn | state != RegionState.Free ? path2 : path1);
+                if (img != null)
+                {
+                    g.DrawImage(img, X, Y, Width, Height);
+                    img.Dispose();
+                }
+            }
+
 
             foreach (var decorator in decorators)
             {
-                decorator.Draw(g, X, Y, Width, Height);
+                if (isMouseDown)
+                    decorator.Draw(g, X + 3, Y + 3, Width-3, Height-3);
+                else
+                    decorator.Draw(g, X, Y, Width, Height);
             }
 
             if (state== RegionState.Rectangled)

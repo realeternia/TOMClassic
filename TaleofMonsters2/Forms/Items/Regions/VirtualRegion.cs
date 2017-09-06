@@ -83,12 +83,12 @@ namespace TaleofMonsters.Forms.Items.Regions
             }
         }
 
-        public void SetRegionParm(int id, object value)
+        public void SetRegionVisible(int id, bool visible)
         {
             SubVirtualRegion region;
             if (subRegions.TryGetValue(id, out region))
             {
-                region.Parm = value;
+                region.Visible = visible;
             }
         }
 
@@ -165,7 +165,8 @@ namespace TaleofMonsters.Forms.Items.Regions
             }
             foreach (SubVirtualRegion subVirtualRegion in subRegions.Values)
             {
-                subVirtualRegion.Draw(g); 
+                if (subVirtualRegion.Visible)
+                    subVirtualRegion.Draw(g);
             }
         }
 

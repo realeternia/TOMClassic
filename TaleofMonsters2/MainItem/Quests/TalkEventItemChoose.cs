@@ -50,6 +50,7 @@ namespace TaleofMonsters.MainItem.Quests
             {
                 int foodCost = (int)GameResourceBook.OutFoodSceneQuest(config.ChooseFood);
                 var region = ComplexRegion.GetResButtonRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25 + 70), 60, ImageRegionCellType.Food, -foodCost);
+                region.Parm = ImageRegionCellType.Food;
                 vRegion.AddRegion(region);
                 index++;
             }
@@ -58,6 +59,7 @@ namespace TaleofMonsters.MainItem.Quests
             {
                 int goldCost = (int)GameResourceBook.OutGoldSceneQuest(config.Level, config.ChooseGold);
                 var region = ComplexRegion.GetResButtonRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25 + 70), 60, ImageRegionCellType.Gold, -goldCost);
+                region.Parm = ImageRegionCellType.Gold;
                 vRegion.AddRegion(region);
                 index++;
             }
@@ -110,10 +112,10 @@ namespace TaleofMonsters.MainItem.Quests
                 return;
             }
 
-            var region = vRegion.GetRegion(id) as ImageRegion;
+            var region = vRegion.GetRegion(id);
             if (region != null)
             {
-                var regionType = region.GetVType();
+                var regionType = (ImageRegionCellType)region.Parm;
                 if (regionType == ImageRegionCellType.Gold)
                 {
                     string resStr = string.Format("消耗{0}黄金提高{1}%成功率", -int.Parse(region.Parm.ToString()), config.ChooseGoldAddon);
@@ -146,10 +148,10 @@ namespace TaleofMonsters.MainItem.Quests
                 return;
             }
 
-            var region = vRegion.GetRegion(id) as ImageRegion;
+            var region = vRegion.GetRegion(id);
             if (region != null)
             {
-                var regionType = region.GetVType();
+                var regionType = (ImageRegionCellType)region.Parm;
                 if (regionType == ImageRegionCellType.Gold)
                 {
                     uint goldCost = GameResourceBook.OutGoldSceneQuest(config.Level, config.ChooseGold);

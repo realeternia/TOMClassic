@@ -1,18 +1,17 @@
 using System.Drawing;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core.Interface;
 
 namespace TaleofMonsters.Forms.Items.Regions.Decorators
 {
     internal class RegionImageDecorator : IRegionDecorator
     {
-        private string type;
-        private string file;
+        private Image img;
+        private int size;
 
-        public RegionImageDecorator(string type, string file)
+        public RegionImageDecorator(Image icon, int size)
         {
-            this.type = type;
-            this.file = file;
+            img = icon;
+            this.size = size;
         }
 
         public void SetState(object info)
@@ -21,9 +20,7 @@ namespace TaleofMonsters.Forms.Items.Regions.Decorators
 
         public void Draw(Graphics g, int x, int y, int width, int height)
         {
-            var img = PicLoader.Read(type, file);
-            g.DrawImage(img, x, y, width, height);
-            img.Dispose();
+            g.DrawImage(img, x + (width - size)/2, y + (height - size)/2, width + size, height + size);
         }
     }
 }

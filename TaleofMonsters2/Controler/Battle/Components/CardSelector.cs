@@ -50,17 +50,17 @@ namespace TaleofMonsters.Controler.Battle.Components
             var margin = (Width - 2 * 150 - 120) / (cardCount - 1);
             for (int i = 0; i < cardCount; i++)
             {
-                region.AddRegion(new SwitchButtonRegion(i +1, margin * i + 150, 100, 120, 120, "ErrorButton.PNG", ""));
+                region.AddRegion(new ButtonRegion(i +1, margin * i + 150, 100, 120, 120, "ErrorButton.PNG", "ErrorButton.PNG"));
             }
 
             UpdateCards();
         }
 
-        public void SetRegionParm(int id, bool parm)
+        public void SetRegionVisible(int id, bool visible)
         {
             if (region != null)
             {
-                region.SetRegionParm(id, parm);
+                region.SetRegionVisible(id, visible);
             }
         }
 
@@ -118,9 +118,9 @@ namespace TaleofMonsters.Controler.Battle.Components
             canClick = false;
             bitmapButton1.ForeColor = Color.Red;
             bitmapButton1.Text = @"进入游戏";
-            region.SetRegionParm(1, true);
-            region.SetRegionParm(2, true);
-            region.SetRegionParm(3, true);
+            SetRegionVisible(1, true);
+            SetRegionVisible(2, true);
+            SetRegionVisible(3, true);
             Invalidate();
         }
 

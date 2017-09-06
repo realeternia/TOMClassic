@@ -77,7 +77,7 @@ namespace TaleofMonsters.Forms
             SubVirtualRegion region;
             for (int i = 0; i < 2; i++)
             {
-                region = new ButtonRegion(i + 1, 12+120+85*i, 40, 74, 24, "CommonButton1.JPG", "CommonButton1On.JPG");
+                region = new ButtonRegion(i + 1, 12+120+85*i, 40, 74, 24, "CommonButton1.JPG", "");
                 region.AddDecorator(new RegionTextDecorator(8, 7, 10, Color.Black));
                 virtualRegion.AddRegion(region);
             }

@@ -10,7 +10,7 @@ namespace TaleofMonsters.Forms.Items.Regions
         {
             string iconName = "";
             Color borderColor = Color.White;
-            iconName = CheckResourceType(type, iconName, ref borderColor);
+            CheckResourceType(type, ref iconName, ref borderColor);
             var pictureRegion = new ImageRegion(index, pos.X, pos.Y, size, size, type, HSIcons.GetIconsByEName(iconName));
             pictureRegion.Scale = 0.5f;
             pictureRegion.Parm = change.ToString();
@@ -25,18 +25,16 @@ namespace TaleofMonsters.Forms.Items.Regions
         {
             string iconName = "";
             Color borderColor = Color.White;
-            iconName = CheckResourceType(type, iconName, ref borderColor);
-            var pictureRegion = new ImageRegion(index, pos.X, pos.Y, size, size, type, HSIcons.GetIconsByEName(iconName));
-            pictureRegion.Scale = 0.5f;
-            pictureRegion.Parm = change.ToString();
+            CheckResourceType(type, ref iconName, ref borderColor);
+            var pictureRegion = new ButtonRegion(index, pos.X, pos.Y, size, size, "iconbg.JPG", "");
             var textControl = new RegionTextDecorator(3, size - 20, 11, change > 0 ? Color.White : Color.Red, true);
             textControl.SetState(change.ToString());
-            pictureRegion.AddDecorator(new RegionImageDecorator("Border", "iconbg.PNG"));
+            pictureRegion.AddDecorator(new RegionImageDecorator(HSIcons.GetIconsByEName(iconName), size/2));
             pictureRegion.AddDecorator(textControl);
             return pictureRegion;
         }
 
-        private static string CheckResourceType(ImageRegionCellType type, string iconName, ref Color borderColor)
+        private static void CheckResourceType(ImageRegionCellType type, ref string iconName, ref Color borderColor)
         {
             if (type == ImageRegionCellType.Gold)
             {
@@ -63,7 +61,6 @@ namespace TaleofMonsters.Forms.Items.Regions
                 iconName = "oth5";
                 borderColor = Color.Purple;
             }
-            return iconName;
         }
     }
 }
