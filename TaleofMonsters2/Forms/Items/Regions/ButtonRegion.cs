@@ -19,7 +19,11 @@ namespace TaleofMonsters.Forms.Items.Regions
             Image img = Controler.Loader.PicLoader.Read("Button", isIn | state != RegionState.Free ? path2 : path1);
             if (img != null)
             {
-                g.DrawImage(img, X, Y, Width, Height);
+                if (isMouseDown)
+                    g.DrawImage(img, new Rectangle(X, Y + 10, Width, Height - 10), 0, 0, Width, Height - 10, GraphicsUnit.Pixel);
+                else
+                    g.DrawImage(img, X, Y, Width, Height);
+                
                 img.Dispose();
             }
 
@@ -60,6 +64,24 @@ namespace TaleofMonsters.Forms.Items.Regions
         public override void Left()
         {
             base.Left();
+            if (parent != null)
+            {
+                parent.Invalidate(new Rectangle(X, Y, Width, Height));
+            }
+        }
+
+        public override void MouseDown()
+        {
+            base.MouseDown();
+            if (parent != null)
+            {
+                parent.Invalidate(new Rectangle(X, Y, Width, Height));
+            }
+        }
+
+        public override void MouseUp()
+        {
+            base.MouseUp();
             if (parent != null)
             {
                 parent.Invalidate(new Rectangle(X, Y, Width, Height));

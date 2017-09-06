@@ -14,6 +14,7 @@ namespace TaleofMonsters.Forms.Items.Regions
         public object Parm { get; set; }//可选信息
 
         protected bool isIn;
+        protected bool isMouseDown;
         protected List<IRegionDecorator> decorators;
         protected RegionState state;
 
@@ -94,6 +95,16 @@ namespace TaleofMonsters.Forms.Items.Regions
         public virtual void Left()
         {
             isIn = false;
+        }
+
+        public virtual void MouseUp()
+        {
+            isMouseDown = false;
+        }
+
+        public virtual void MouseDown()
+        {
+            isMouseDown = true;
         }
     }
 

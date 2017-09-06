@@ -28,9 +28,11 @@ namespace TaleofMonsters.Forms.Items.Regions
         {
             subRegions = new Dictionary<int, SubVirtualRegion>();
             this.parent = parent;
-            parent.MouseMove+=parent_MouseMove;
-            parent.MouseClick+=parent_MouseClick;
-            parent.MouseLeave+=parent_MouseLeave;
+            parent.MouseMove += parent_MouseMove;
+            parent.MouseClick += parent_MouseClick;
+            parent.MouseUp += parent_MouseUp;
+            parent.MouseDown += parent_MouseDown;
+            parent.MouseLeave += parent_MouseLeave;
             Visible = true;
         }
 
@@ -123,6 +125,7 @@ namespace TaleofMonsters.Forms.Items.Regions
                         if (selectRegion!=null)
                         {
                             selectRegion.Left();
+                            selectRegion.MouseUp();
                         }
                         selectRegion = subRegion;
                         selectRegion.Enter();
@@ -137,6 +140,7 @@ namespace TaleofMonsters.Forms.Items.Regions
             if (selectRegion != null)
             {
                 selectRegion.Left();
+                selectRegion.MouseUp();
                 selectRegion = null;
                 if (RegionLeft!=null)
                 {
@@ -188,10 +192,24 @@ namespace TaleofMonsters.Forms.Items.Regions
             CheckMouseClick(e.Button);
         }
 
+        private void parent_MouseDown(object sender, MouseEventArgs e)
+        {
+            if(selectRegion != null && selectRegion.Id > 0)
+                selectRegion.MouseDown();
+        }
+
+        private void parent_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (selectRegion != null && selectRegion.Id > 0)
+                selectRegion.MouseUp();
+        }
+
         public void Dispose()
         {
             parent.MouseMove -= parent_MouseMove;
             parent.MouseClick -= parent_MouseClick;
+            parent.MouseLeave -= parent_MouseLeave;
+            parent.MouseDown -= parent_MouseDown;
             parent.MouseLeave -= parent_MouseLeave;
             parent = null;
         }
