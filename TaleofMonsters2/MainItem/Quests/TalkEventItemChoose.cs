@@ -45,7 +45,7 @@ namespace TaleofMonsters.MainItem.Quests
         {
             int index = 1;
             winRate = config.ChooseWinRate;
-            rollItemSpeedX = MathTool.GetRandom(20, 40);
+            rollItemSpeedX = MathTool.GetRandom(40, 70);
 
             if (config.ChooseFood > 0)
             {
@@ -121,14 +121,14 @@ namespace TaleofMonsters.MainItem.Quests
                 if (regionType == ImageRegionCellType.Gold)
                 {
                     int foodCost = (int)GameResourceBook.OutFoodSceneQuest(config.ChooseFood);
-                    string resStr = string.Format("消耗{0}黄金提高{1}%成功率", -foodCost, config.ChooseGoldAddon);
+                    string resStr = string.Format("消耗{0}黄金，{1}%成功率(+{2}%)", foodCost, winRate + config.ChooseGoldAddon, config.ChooseGoldAddon);
                     Image image = DrawTool.GetImageByString(resStr, 100);
                     tooltip.Show(image, parent, x, y);
                 }
                 else if (regionType == ImageRegionCellType.Food)
                 {
                     int goldCost = (int)GameResourceBook.OutGoldSceneQuest(config.Level, config.ChooseGold);
-                    string resStr = string.Format("消耗{0}食物提高{1}%成功率", -goldCost, config.ChooseFoodAddon);
+                    string resStr = string.Format("消耗{0}食物，{1}%成功率(+{2}%)", goldCost, winRate+ config.ChooseFoodAddon, config.ChooseFoodAddon);
                     Image image = DrawTool.GetImageByString(resStr, 100);
                     tooltip.Show(image, parent, x, y);
                 }
@@ -136,7 +136,7 @@ namespace TaleofMonsters.MainItem.Quests
 
             if (id ==20)
             {
-                tooltip.Show(string.Format("不追加({0}%成功率)", winRate), parent, x, y);
+                tooltip.Show(string.Format("不追加，{0}%成功率", winRate), parent, x, y);
             }
         }
 

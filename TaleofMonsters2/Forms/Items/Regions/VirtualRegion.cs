@@ -211,7 +211,7 @@ namespace TaleofMonsters.Forms.Items.Regions
             parent.MouseClick -= parent_MouseClick;
             parent.MouseLeave -= parent_MouseLeave;
             parent.MouseDown -= parent_MouseDown;
-            parent.MouseLeave -= parent_MouseLeave;
+            parent.MouseUp -= parent_MouseUp;
             parent = null;
         }
     }

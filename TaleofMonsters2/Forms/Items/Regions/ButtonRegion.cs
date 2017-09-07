@@ -28,7 +28,7 @@ namespace TaleofMonsters.Forms.Items.Regions
             if (drawImage != null)
             {
                 if (isMouseDown)
-                    g.DrawImage(drawImage, new Rectangle(X + 3, Y + 3, Width - 3, Height - 3), 0, 0, Width - 3, Height - 3, GraphicsUnit.Pixel);
+                    g.DrawImage(drawImage, new Rectangle(X + 2, Y + 2, Width - 2, Height - 2), 0, 0, Width - 2, Height - 2, GraphicsUnit.Pixel);
                 else
                     g.DrawImage(drawImage, X, Y, Width, Height);
 
@@ -47,7 +47,7 @@ namespace TaleofMonsters.Forms.Items.Regions
                     if (img != null)
                     {
                         if (isMouseDown)
-                            g.DrawImage(img, new Rectangle(X + 3, Y + 3, Width - 3, Height - 3), 0, 0, Width - 3, Height - 3, GraphicsUnit.Pixel);
+                            g.DrawImage(img, new Rectangle(X + 2, Y + 2, Width - 2, Height - 2), 0, 0, Width - 2, Height - 2, GraphicsUnit.Pixel);
                         else
                             g.DrawImage(img, X, Y, Width, Height);
 
@@ -66,7 +66,10 @@ namespace TaleofMonsters.Forms.Items.Regions
                     Image img = Controler.Loader.PicLoader.Read("Button", isIn | state != RegionState.Free ? path2 : path1);
                     if (img != null)
                     {
-                        g.DrawImage(img, X, Y, Width, Height);
+                        if (isMouseDown)
+                            g.DrawImage(img, new Rectangle(X + 2, Y + 2, Width - 2, Height - 2), 0, 0, Width - 2, Height - 2, GraphicsUnit.Pixel);
+                        else
+                            g.DrawImage(img, X, Y, Width, Height);
                         img.Dispose();
                     }
                 }
@@ -75,14 +78,14 @@ namespace TaleofMonsters.Forms.Items.Regions
             foreach (var decorator in decorators)
             {
                 if (isMouseDown)
-                    decorator.Draw(g, X + 3, Y + 3, Width-3, Height-3);
+                    decorator.Draw(g, X + 2, Y + 2, Width - 2, Height - 2);
                 else
                     decorator.Draw(g, X, Y, Width, Height);
             }
 
-            if (state== RegionState.Rectangled)
+            if (state == RegionState.Rectangled)
             {
-                g.DrawRectangle(Pens.Firebrick, X, Y, Width, Height);                
+                g.DrawRectangle(Pens.Firebrick, X, Y, Width, Height);
                 Brush brush = new SolidBrush(Color.FromArgb(100, Color.Red));
                 g.FillRectangle(brush, X, Y, Width, Height);
                 brush.Dispose();

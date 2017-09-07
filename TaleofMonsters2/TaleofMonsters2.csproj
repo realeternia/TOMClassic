@@ -342,7 +342,6 @@
     <Compile Include="Forms\Items\Regions\Decorators\RegionTextDecorator.cs" />
     <Compile Include="Forms\Items\Regions\Decorators\RegionBorderDecorator.cs" />
     <Compile Include="Forms\Items\Regions\PictureAnimRegion.cs" />
-    <Compile Include="Forms\Items\Regions\ItemUseRegion.cs" />
     <Compile Include="Forms\MagicBook\CardDeckStatistic.cs" />
     <Compile Include="Forms\MagicBook\CardDropViewForm.cs">
       <SubType>UserControl</SubType>
