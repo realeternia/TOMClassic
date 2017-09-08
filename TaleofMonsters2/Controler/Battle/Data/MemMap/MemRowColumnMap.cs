@@ -36,14 +36,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
 
         private bool isDirty;
         private Image cachImage;
-        private BattleMap bMap;
+        private BattleMapInfo bMapInfo;
 
         public MemRowColumnMap(string map, int tile)
         {
-            bMap = BattleMapBook.GetMap(map);
-            CardSize = stageWidth/bMap.XCount;
-            RowCount = bMap.YCount;
-            ColumnCount = bMap.XCount;
+            bMapInfo = BattleMapBook.GetMap(map);
+            CardSize = stageWidth/bMapInfo.XCount;
+            RowCount = bMapInfo.YCount;
+            ColumnCount = bMapInfo.XCount;
             
             InitCells(tile);
 
@@ -58,7 +58,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             {
                 for (int j = 0; j < RowCount; j++)
                 {
-                    int tarTile = bMap.Cells[i, j];
+                    int tarTile = bMapInfo.Cells[i, j];
                     if (tarTile == 0)
                     {
                         tarTile = tile == 0 ? TileConfig.Indexer.DefaultTile : tile;
@@ -71,7 +71,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
 
         public void InitUnit(Player player)
         {
-            var unitsPos = player.IsLeft ? bMap.LeftUnits : bMap.RightUnits;
+            var unitsPos = player.IsLeft ? bMapInfo.LeftUnits : bMapInfo.RightUnits;
             foreach (var unitInfo in unitsPos)
             {
                 var heroData = new Monster(unitInfo.UnitId);

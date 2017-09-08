@@ -4,7 +4,6 @@ using System.IO;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.DataType.Scenes

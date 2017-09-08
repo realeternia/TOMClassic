@@ -14,7 +14,7 @@
         }
     }
 
-    class Effects
+    internal class Effects
     {
         public static Effect None = new Effect("");
     }

@@ -20,7 +20,7 @@ namespace TaleofMonsters.DataType.Effects
         public bool PlayOnce { get; set; }
         private bool isDie;
 
-        internal CoverEffect(Effect effect, Point location, Size size)
+        public CoverEffect(Effect effect, Point location, Size size)
         {
             this.effect = effect;
             point = location;
@@ -29,7 +29,7 @@ namespace TaleofMonsters.DataType.Effects
             speedDownFactor = effect.SpeedDown;
         }
 
-        internal bool Next()
+        public bool Next()
         {
             speedRunIndex++;
             if ((speedRunIndex % speedDownFactor) != 0)
@@ -52,7 +52,7 @@ namespace TaleofMonsters.DataType.Effects
             return true;
         }
 
-        internal void Draw(Graphics g)
+        public void Draw(Graphics g)
         {
             if (isDie)
             {

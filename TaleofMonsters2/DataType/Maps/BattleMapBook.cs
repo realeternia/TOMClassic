@@ -8,9 +8,9 @@ namespace TaleofMonsters.DataType.Maps
 {
     internal static class BattleMapBook
     {
-        static Dictionary<string, BattleMap> mapType = new Dictionary<string, BattleMap>();
+        static Dictionary<string, BattleMapInfo> mapType = new Dictionary<string, BattleMapInfo>();
 
-        public static BattleMap GetMap(string name)
+        public static BattleMapInfo GetMap(string name)
         {
             if (!mapType.ContainsKey(name))
             {
@@ -19,32 +19,32 @@ namespace TaleofMonsters.DataType.Maps
             return mapType[name];
         }
 
-        private static BattleMap GetMapFromFile(string name)
+        private static BattleMapInfo GetMapFromFile(string name)
         {
             StreamReader sr = new StreamReader(DataLoader.Read("Map", name));
-            BattleMap map = new BattleMap();
+            BattleMapInfo mapInfo = new BattleMapInfo();
             var datas = sr.ReadLine().Split('\t');
-            map.XCount = int.Parse(datas[0]);
-            map.YCount = int.Parse(datas[1]);
-            map.Cells = new int[map.XCount, map.YCount];
-            for (int i = 0; i < map.YCount; i++)
+            mapInfo.XCount = int.Parse(datas[0]);
+            mapInfo.YCount = int.Parse(datas[1]);
+            mapInfo.Cells = new int[mapInfo.XCount, mapInfo.YCount];
+            for (int i = 0; i < mapInfo.YCount; i++)
             {
                 string line = sr.ReadLine();
                 if (line != null)
                 {
                     string[] mapinfos = line.Split('\t');
-                    for (int j = 0; j < map.XCount; j++)
+                    for (int j = 0; j < mapInfo.XCount; j++)
                     {
-                        map.Cells[j, i] = int.Parse(mapinfos[j]);
+                        mapInfo.Cells[j, i] = int.Parse(mapinfos[j]);
                     }
                 }
             }
             var unitCount = int.Parse(sr.ReadLine());//左边单位布置
-            map.LeftUnits = new BattleMapUnitInfo[unitCount];
+            mapInfo.LeftUnits = new BattleMapInfo.BattleMapUnitInfo[unitCount];
             for (int i = 0; i < unitCount; i++)
             {
                 string[] unitinfos = sr.ReadLine().Split('\t');
-                map.LeftUnits[i] = new BattleMapUnitInfo
+                mapInfo.LeftUnits[i] = new BattleMapInfo.BattleMapUnitInfo
                     {
                         X = int.Parse(unitinfos[0]),
                         Y = int.Parse(unitinfos[1]),
@@ -53,11 +53,11 @@ namespace TaleofMonsters.DataType.Maps
             }
 
             unitCount = int.Parse(sr.ReadLine());//右边单位布置
-            map.RightUnits = new BattleMapUnitInfo[unitCount];
+            mapInfo.RightUnits = new BattleMapInfo.BattleMapUnitInfo[unitCount];
             for (int i = 0; i < unitCount; i++)
             {
                 string[] unitinfos = sr.ReadLine().Split('\t');
-                map.RightUnits[i] = new BattleMapUnitInfo
+                mapInfo.RightUnits[i] = new BattleMapInfo.BattleMapUnitInfo
                 {
                     X = int.Parse(unitinfos[0]),
                     Y = int.Parse(unitinfos[1]),
@@ -65,22 +65,22 @@ namespace TaleofMonsters.DataType.Maps
                 };
             }
             sr.Close();
-            return map;
+            return mapInfo;
         }
 
         public static Image GetMapImage(string name, int nowtile)
         {
             Image img = new Bitmap(100, 100);
-            BattleMap mapInfo = GetMap(name);
+            BattleMapInfo mapInfoInfo = GetMap(name);
             Graphics g = Graphics.FromImage(img);
 
-            int cellSize = 100/mapInfo.XCount;
-            int yOff = (100 - cellSize*mapInfo.YCount)/2;
-            for (int i = 0; i < mapInfo.XCount; i++)
+            int cellSize = 100/mapInfoInfo.XCount;
+            int yOff = (100 - cellSize*mapInfoInfo.YCount)/2;
+            for (int i = 0; i < mapInfoInfo.XCount; i++)
             {
-                for (int j = 0; j < mapInfo.YCount; j++)
+                for (int j = 0; j < mapInfoInfo.YCount; j++)
                 {
-                    var tile = mapInfo.Cells[i, j];
+                    var tile = mapInfoInfo.Cells[i, j];
                     if (tile == 0)
                     {
                         tile = nowtile == 0 ? TileConfig.Indexer.DefaultTile : nowtile;

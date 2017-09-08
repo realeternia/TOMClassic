@@ -4,7 +4,7 @@ namespace TaleofMonsters.DataType.Skills
 {
     internal class Skill : ITargetMeasurable
     {
-        public SkillConfig SkillConfig;
+        public SkillConfig SkillConfig { get; private set; }
 
         private int lv = 1;
 
@@ -23,7 +23,7 @@ namespace TaleofMonsters.DataType.Skills
 
         public Skill(int id)
         {
-            SkillConfig = ConfigData.SkillDict[id];
+            SkillConfig = ConfigData.GetSkillConfig(id);
         }
 
         public string Target

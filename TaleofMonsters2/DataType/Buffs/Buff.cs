@@ -4,7 +4,7 @@ namespace TaleofMonsters.DataType.Buffs
 {
     internal class Buff
     {
-        public BuffConfig BuffConfig;
+        public BuffConfig BuffConfig { get; private set; }
 
         private int lv = 1;
 

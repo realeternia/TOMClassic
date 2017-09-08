@@ -42,20 +42,20 @@ namespace TaleofMonsters.DataType.Effects
             {
                 int frameUnitCount = int.Parse(sr.ReadLine());
                 EffectFrame frame = new EffectFrame();
-                frame.Units = new EffectFrameUnit[frameUnitCount];
+                frame.Units = new EffectFrame.EffectFrameUnit[frameUnitCount];
                 for (int j = 0; j < frameUnitCount; j++)
                 {
                     string read = sr.ReadLine();
                     string[] arrays = read.Split('\t');
-                    EffectFrameUnit fu = new EffectFrameUnit();
-                    fu.frameid = int.Parse(arrays[0]);
-                    fu.x = int.Parse(arrays[1]);
-                    fu.y = int.Parse(arrays[2]);
-                    fu.width = int.Parse(arrays[3]);
-                    fu.height = int.Parse(arrays[4]);
+                    var fu = new EffectFrame.EffectFrameUnit();
+                    fu.Frameid = int.Parse(arrays[0]);
+                    fu.X = int.Parse(arrays[1]);
+                    fu.Y = int.Parse(arrays[2]);
+                    fu.Width = int.Parse(arrays[3]);
+                    fu.Height = int.Parse(arrays[4]);
                     if (arrays.Length >= 6)
                     {
-                        fu.effect = int.Parse(arrays[5]);
+                        fu.Effect = int.Parse(arrays[5]);
                     }
                     frame.Units[j] = fu;
                 }

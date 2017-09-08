@@ -293,7 +293,6 @@
     <Compile Include="DataType\CardPieces\CardPieceRate.cs" />
     <Compile Include="DataType\Effects\CoverEffect.cs" />
     <Compile Include="DataType\Items\Consumer.cs" />
-    <Compile Include="DataType\Maps\BattleMapUnitInfo.cs" />
     <Compile Include="DataType\User\Db\DbFarmState.cs" />
     <Compile Include="DataType\Formulas\FormulaBook.cs" />
     <Compile Include="DataType\Others\GameResourceBook.cs" />
@@ -404,8 +403,7 @@
     <Compile Include="DataType\CardPieces\CardPieceBook.cs" />
     <Compile Include="Controler\Battle\Data\MemFlow\FlowSkillInfo.cs" />
     <Compile Include="Controler\Battle\Data\MemFlow\FlowResourceInfo.cs" />
-    <Compile Include="DataType\Others\JobBook.cs" />
-    <Compile Include="DataType\Maps\BattleMap.cs" />
+    <Compile Include="DataType\Maps\BattleMapInfo.cs" />
     <Compile Include="DataType\Maps\BattleMapBook.cs" />
     <Compile Include="DataType\User\Db\DbTournamentData.cs" />
     <Compile Include="DataType\Others\RankData.cs" />
@@ -521,7 +519,6 @@
       <DependentUpon>BattleForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DataType\Effects\EffectFrame.cs" />
-    <Compile Include="DataType\Effects\EffectFrameUnit.cs" />
     <Compile Include="DataType\Others\ExpTree.cs" />
     <Compile Include="DataType\Others\GameResource.cs" />
     <Compile Include="DataType\Items\HItemBook.cs" />
