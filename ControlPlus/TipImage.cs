@@ -113,7 +113,7 @@ namespace ControlPlus
                     case "R": return Color.Red;  //怪物
                     case "G": return Color.Green; //人物，npc
                     case "B": return Color.RoyalBlue; //场景
-                    case "P": return Color.MediumPurple; //幻兽
+                    case "P": return Color.MediumPurple; //幻兽，选择
                     case "Y": return Color.Yellow; //道具
                     case "O": return Color.DarkGoldenrod; //事件
                 }
