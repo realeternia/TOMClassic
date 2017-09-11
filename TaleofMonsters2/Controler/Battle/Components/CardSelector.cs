@@ -50,7 +50,8 @@ namespace TaleofMonsters.Controler.Battle.Components
             var margin = (Width - 2 * 150 - 120) / (cardCount - 1);
             for (int i = 0; i < cardCount; i++)
             {
-                region.AddRegion(new ButtonRegion(i +1, margin * i + 150, 100, 120, 120, "ErrorButton.PNG", "ErrorButton.PNG"));
+                region.AddRegion(new ButtonRegion(i + 1, margin * i + 150, 100, 120, 120, "ErrorButton.PNG", "ErrorButton.PNG"));
+                SetRegionVisible(i + 1, false);
             }
 
             UpdateCards();
@@ -118,9 +119,9 @@ namespace TaleofMonsters.Controler.Battle.Components
             canClick = false;
             bitmapButton1.ForeColor = Color.Red;
             bitmapButton1.Text = @"进入游戏";
-            SetRegionVisible(1, true);
-            SetRegionVisible(2, true);
-            SetRegionVisible(3, true);
+            SetRegionVisible(1, false);
+            SetRegionVisible(2, false);
+            SetRegionVisible(3, false);
             Invalidate();
         }
 

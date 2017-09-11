@@ -24,7 +24,7 @@ namespace TaleofMonsters.Controler.Battle.Components.CardSelect
         public void RegionClicked(int id)
         {
             keepCard[id - 1] = !keepCard[id - 1];
-            Selector.SetRegionVisible(id, keepCard[id - 1]);
+            Selector.SetRegionVisible(id, !keepCard[id - 1]);
         }
         public ActiveCard[] GetCards()
         {
