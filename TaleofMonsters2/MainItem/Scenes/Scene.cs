@@ -523,21 +523,22 @@ namespace TaleofMonsters.MainItem.Scenes
             return null;
         }
 
-        public bool HasSceneItemWithName(string name)
+        public int CountOpenedQuest(string name)
         {
+            int count = 0;
             foreach (var sceneObject in SceneInfo.Items)
             {
                 var quest = sceneObject as SceneQuest;
-                if (quest != null && quest.EventId > 0)
+                if (quest != null && quest.EventId > 0 && quest.Disabled)
                 {
                     var config = ConfigData.GetSceneQuestConfig(quest.EventId);
-                    if (config.Ename.StartsWith(name))
+                    if (config.Ename == name)
                     {
-                        return true;
+                        count++;
                     }
                 }
             }
-            return false;
+            return count;
         }
 
         public void CheckAllQuestOpened()

@@ -51,9 +51,9 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
             {
                 Disabled = UserProfile.InfoRival.GetRivalState(PeopleBook.GetPeopleId(config.EnemyName)).Avail;
             }
-            else if (parms[0] == "sceneno")
+            else if (parms[0] == "eventcount")
             {
-                Disabled = Scene.Instance.HasSceneItemWithName(parms[1]);
+                Disabled = Scene.Instance.CountOpenedQuest(config.CheckQuest) != int.Parse(parms[1]);
             }
             else if (parms[0] == "cantrade")
             {
