@@ -7,17 +7,17 @@ namespace TaleofMonsters.DataType.Others
         [FieldIndex(Index = 1)]
         public int Gold;
         [FieldIndex(Index = 2)]
-        public int Lumber;
+        public int Lumber; //建筑制作，农场，待搞
         [FieldIndex(Index = 3)]
-        public int Stone;
+        public int Stone; //建筑制作
         [FieldIndex(Index = 4)]
-        public int Mercury;//锻造使用，分解装备获得
+        public int Mercury; //购买祝福，购买法术卡
         [FieldIndex(Index = 5)]
-        public int Carbuncle;
+        public int Carbuncle;//购买怪物卡
         [FieldIndex(Index = 6)]
-        public int Sulfur;
+        public int Sulfur; 
         [FieldIndex(Index = 7)]
-        public int Gem;//合成卡牌用，分解卡牌获得
+        public int Gem; //购买武器卡
 
         public GameResource()
             : this(0, 0, 0, 0, 0, 0, 0)

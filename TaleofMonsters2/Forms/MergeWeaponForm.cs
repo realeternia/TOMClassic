@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
-using NarlonLib.Core;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Equips;
@@ -119,7 +118,7 @@ namespace TaleofMonsters.Forms
         {
             EquipConfig equipConfig = ConfigData.GetEquipConfig(currentInfo.Target);
 
-            UserProfile.InfoBag.SubResource(GameResourceType.Stone, GameResourceBook.OutStoneMerge(equipConfig.Quality + 1));
+            UserProfile.InfoBag.SubResource(GameResourceType.Gold, GameResourceBook.OutGoldMerge(equipConfig.Quality + 1));
             foreach (IntPair pairValue in currentInfo.Methods)
             {
                 UserProfile.InfoBag.DeleteItem(pairValue.Type, pairValue.Value);
@@ -143,9 +142,9 @@ namespace TaleofMonsters.Forms
                     return;
                 }
             }
-            if (UserProfile.InfoBag.HasResource( GameResourceType.Stone, GameResourceBook.OutStoneMerge(equipConfig.Quality+1)))
+            if (UserProfile.InfoBag.HasResource( GameResourceType.Gold, GameResourceBook.OutGoldMerge(equipConfig.Quality+1)))
             {
-                AddFlowCenter("石材不足", "Red");
+                AddFlowCenter("金钱不足", "Red");
                 return;
             }
 
@@ -263,8 +262,8 @@ namespace TaleofMonsters.Forms
             int targetid = selectPanel.SelectInfo;
             EquipConfig equipConfig = ConfigData.GetEquipConfig(targetid);
             font =new Font("微软雅黑", 14 * 1.33f,  FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString(GameResourceBook.OutStoneMerge(equipConfig.Quality + 1).ToString().PadLeft(5, ' '), font, PaintTool.GetBrushByResource((int)GameResourceType.Mercury), 273, 368);
-            e.Graphics.DrawImage(HSIcons.GetIconsByEName("res3"), 333, 370, 24, 24);
+            e.Graphics.DrawString(GameResourceBook.OutGoldMerge(equipConfig.Quality + 1).ToString().PadLeft(5, ' '), font, PaintTool.GetBrushByResource((int)GameResourceType.Gold), 273, 368);
+            e.Graphics.DrawImage(HSIcons.GetIconsByEName("res1"), 333, 370, 24, 24);
             font.Dispose();
 
             font =new Font("微软雅黑", 10*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);

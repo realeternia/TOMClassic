@@ -182,12 +182,33 @@
 
     internal enum GameResourceType
     {
+        /// <summary>
+        /// 黄金
+        /// </summary>
         Gold = 0,
+        /// <summary>
+        /// 木材
+        /// </summary>
         Lumber,
+        /// <summary>
+        /// 石头
+        /// </summary>
         Stone,
+        /// <summary>
+        /// 水银
+        /// </summary>
         Mercury,
+        /// <summary>
+        /// 红宝石
+        /// </summary>
         Carbuncle,
+        /// <summary>
+        /// 硫磺
+        /// </summary>
         Sulfur,
+        /// <summary>
+        /// 水晶
+        /// </summary>
         Gem
     }
 

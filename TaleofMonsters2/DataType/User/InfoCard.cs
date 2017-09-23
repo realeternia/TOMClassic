@@ -79,23 +79,13 @@ namespace TaleofMonsters.DataType.User
             return card;
         }
 
-        public void RemoveCardPiece(int id, bool returnResource)
+        public void RemoveCardPiece(int id)
         {
             DbDeckCard dc;
             if (Cards.TryGetValue(id, out dc))
             {
                 if (dc.Exp == 0)
-                {
                     return;
-                }
-
-                if (returnResource)
-                {
-                    var cardData = CardConfigManager.GetCardConfig(dc.BaseId);
-                    MainTipManager.AddTip(string.Format("|分解卡片-|{0}|{1}", HSTypes.I2QualityColor((int)cardData.Quality), cardData.Name), "White");
-                    var qual = CardConfigManager.GetCardConfig(dc.BaseId).Quality + 1;
-                    UserProfile.Profile.InfoBag.AddResource(GameResourceType.Gem, GameResourceBook.OutGemCardDecompose((int)qual));
-                }
 
                 dc.Exp--;
             }

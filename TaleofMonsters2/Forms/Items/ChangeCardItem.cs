@@ -117,11 +117,9 @@ namespace TaleofMonsters.Forms.Items
         private void pictureBoxBuy_Click(object sender, EventArgs e)
         {
             if (UserProfile.InfoCard.GetCardExp(card1) <= 0)
-            {
                 return;
-            }
 
-            UserProfile.InfoCard.RemoveCardPiece(card1, false);
+            UserProfile.InfoCard.RemoveCardPiece(card1);
             UserProfile.InfoCard.AddCard(card2);
             (parent as ChangeCardForm).RemoveChangeCardData(index);
 

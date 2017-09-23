@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
+using NarlonLib.Math;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
@@ -109,7 +110,7 @@ namespace TaleofMonsters.Forms.Items
         {
             if (info == 1 && product.Id > 0)
             {
-                Image image = CardAssistant.GetCard(product.Cid).GetPreview(CardPreviewType.Shop, product.Price.ToArray());
+                Image image = CardAssistant.GetCard(product.Cid).GetPreview(CardPreviewType.Shop, GetPrice().ToArray());
                 tooltip.Show(image, parent, mx, my, product.Id);
             }
         }
@@ -123,7 +124,7 @@ namespace TaleofMonsters.Forms.Items
         {
             if (info == 2 && product.Id > 0)
             {
-                GameResource res = product.Price;
+                GameResource res = GetPrice();
                 if (UserProfile.InfoBag.CheckResource(res.ToArray()))
                 {
                     UserProfile.InfoCard.AddCard(product.Cid);
@@ -137,6 +138,32 @@ namespace TaleofMonsters.Forms.Items
                     parent.AddFlowCenter("没有足够的资源!", "Red");
                 }
             }
+        }
+
+
+        public GameResource GetPrice()
+        {
+            var cardData = CardConfigManager.GetCardConfig(product.Cid);
+
+            GameResource res = new GameResource();
+            res.Gold = cardData.Star * 30;
+            var markType = (CardProductMarkTypes)product.Mark;
+            if (markType == CardProductMarkTypes.Sale)
+                res.Gold = MathTool.GetRound(res.Gold, 20);
+            else if (markType == CardProductMarkTypes.Gold)
+                res.Gold = res.Gold * 12 / 10;
+            else if (markType == CardProductMarkTypes.Hot)
+                res.Gold = res.Gold * 8 / 10;
+            else if (markType == CardProductMarkTypes.Only)
+                res.Gold = 300;
+
+            if (cardData.Type == CardTypes.Monster)
+                res.Add(GameResourceType.Carbuncle, (int)GameResourceBook.OutCarbuncleCardBuy((int)cardData.Quality + 1));
+            else if (cardData.Type == CardTypes.Weapon)
+                res.Add(GameResourceType.Gem, (int)GameResourceBook.OutGemCardBuy((int)cardData.Quality + 1));
+            else if (cardData.Type == CardTypes.Spell)
+                res.Add(GameResourceType.Mercury, (int)GameResourceBook.OutMercuryCardBuy((int)cardData.Quality + 1));
+            return res;
         }
 
         public void Draw(Graphics g)

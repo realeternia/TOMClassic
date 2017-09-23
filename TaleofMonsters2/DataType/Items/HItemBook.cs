@@ -60,7 +60,7 @@ namespace TaleofMonsters.DataType.Items
                 {
                     if (itemNameIdDict.ContainsKey(hItemConfig.Ename))
                     {
-                        NLog.Warn("GetItemId key={0} exsited", hItemConfig.Ename);
+                        NLog.Warn("GetItemId key={0} existed", hItemConfig.Ename);
                         continue;
                     }
                     itemNameIdDict[hItemConfig.Ename] = hItemConfig.Id;

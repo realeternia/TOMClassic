@@ -263,7 +263,6 @@ namespace TaleofMonsters.Forms
                 if (cardFromRegion)
                 {
                     popMenuDeck.AddItem("activate", "添加到卡组");
-                    popMenuDeck.AddItem("delete", "分解碎片", "Red");
                     popMenuDeck.AddItem("levelup", "升级");
                 }
                 else

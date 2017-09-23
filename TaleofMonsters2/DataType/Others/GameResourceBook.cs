@@ -56,6 +56,13 @@ namespace TaleofMonsters.DataType.Others
             return Math.Max(1, (uint)(ExpTree.GetResourceFactor(level) * GoldFactor * rate / 100));
         }
         /// <summary>
+        /// 消耗金钱制作装备图纸,level 1-5
+        /// </summary>
+        public static uint OutGoldMerge(int qual)
+        {
+            return (uint)((float)2 * 2 * Math.Sqrt(qual))*10;//2-5-10-16
+        }
+        /// <summary>
         /// 场景剧情获得食物
         /// </summary>
         public static uint InFoodSceneQuest(int rate, bool noRandom = false)
@@ -128,20 +135,6 @@ namespace TaleofMonsters.DataType.Others
             return Math.Max(1, (uint)(ExpTree.GetNextRequired(rLevel) / 2 / (15 + Math.Abs(level - rLevel) * 3) + 1));
         }
         /// <summary>
-        /// 购买卡牌消耗Gem
-        /// </summary>
-        public static uint OutGemCardBuy(int qual)
-        {
-            return (uint)(qual * (qual + 1) * Math.Sqrt(qual)) * 2; //2-8-20-40
-        }
-        /// <summary>
-        /// 分解卡牌获得Gem
-        /// </summary>
-        public static uint OutGemCardDecompose(int qual)
-        {
-            return (uint)(qual * (qual + 1) * Math.Sqrt(qual));//1-4-10-20
-        }
-        /// <summary>
         /// 消耗石材制作装备,level 1-5
         /// </summary>
         public static uint OutStoneMerge(int qual)
@@ -162,12 +155,34 @@ namespace TaleofMonsters.DataType.Others
         {
             return cost;
         }
+
+        /// <summary>
+        /// 购买武器卡牌消耗Gem
+        /// </summary>
+        public static uint OutGemCardBuy(int qual)
+        {
+            return (uint)(qual * (qual + 1) * Math.Sqrt(qual)) * 2; //2-8-20-40
+        }
+        /// <summary>
+        /// 购买怪物卡牌消耗Carbuncle
+        /// </summary>
+        public static uint OutCarbuncleCardBuy(int qual)
+        {
+            return (uint)(qual * (qual + 1) * Math.Sqrt(qual)) * 2; //2-8-20-40
+        }
         /// <summary>
         /// 消耗水银购买祝福
         /// </summary>
         public static uint OutMercuryBlessBuy(int level)
         {
             return (uint)(3*level);
+        }
+        /// <summary>
+        /// 购买法术卡牌消耗Mercury
+        /// </summary>
+        public static uint OutMercuryCardBuy(int qual)
+        {
+            return (uint)(qual * (qual + 1) * Math.Sqrt(qual)) * 2; //2-8-20-40
         }
     }
 }
