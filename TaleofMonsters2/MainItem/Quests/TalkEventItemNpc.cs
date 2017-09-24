@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using TaleofMonsters.DataType.Others;
 using TaleofMonsters.Forms;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
 
@@ -41,6 +42,10 @@ namespace TaleofMonsters.MainItem.Quests
                 var shop = new NpcShopForm();
                 shop.ShopName = config.ShopName;
                 PanelManager.DealPanel(shop);
+            }
+            else if (e.ParamList[0] == "wheel")
+            {
+                TreasureWheelBook.Show(int.Parse(e.ParamList[1]));
             }
         }
 
