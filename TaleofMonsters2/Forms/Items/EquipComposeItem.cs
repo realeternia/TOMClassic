@@ -93,10 +93,20 @@ namespace TaleofMonsters.Forms.Items
         private void pictureBoxBuy_Click(object sender, EventArgs e)
         {
             var equipConfig = ConfigData.GetEquipConfig(equipId);
-            var cost = GameResourceBook.OutStoneMerge(equipConfig.Quality + 1);
-            if (UserProfile.InfoBag.HasResource(GameResourceType.Stone, cost))
+
+            GameResource need = new GameResource();
+            if (equipConfig.ComposeStone > 0)
             {
-                UserProfile.InfoBag.SubResource(GameResourceType.Stone, cost);
+                need.Add(GameResourceType.Stone, (uint)(GameResourceBook.OutStoneCompose(equipConfig.Quality + 1) * equipConfig.ComposeStone / 100));
+            }
+            if (equipConfig.ComposeWood > 0)
+            {
+                need.Add(GameResourceType.Lumber, (uint)(GameResourceBook.OutWoodCompose(equipConfig.Quality + 1) * equipConfig.ComposeWood / 100));
+            }
+
+            if (UserProfile.InfoBag.CheckResource(need.ToArray()))
+            {
+                UserProfile.InfoBag.SubResource(need.ToArray());
                 UserProfile.InfoEquip.AddEquip(equipId, 24*60 * 3);
                 parent.Invalidate();
 
@@ -124,15 +134,38 @@ namespace TaleofMonsters.Forms.Items
                 virtualRegion.Draw(g);
 
                 var equipConfig = ConfigData.GetEquipConfig(equipId);
-                var cost = GameResourceBook.OutStoneMerge(equipConfig.Quality + 1);
+           
                 Font ft = new Font("宋体", 9*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
                 Brush b = new SolidBrush(Color.FromName(HSTypes.I2QualityColor(equipConfig.Quality)));
-                g.DrawString(equipConfig.Name, ft, b, x + 90, y + 10);
+                g.DrawString(equipConfig.Name, ft, Brushes.Black, x + 82 + 1, y + 10 + 1);
+                g.DrawString(equipConfig.Name, ft, b, x + 82, y + 10);
                 b.Dispose();
-                g.DrawString(string.Format("{0}", cost), ft, Brushes.White, x + 90+20, y + 32);
-                ft.Dispose();
 
-                g.DrawImage(HSIcons.GetIconsByEName("res3"), x + 90, y + 32 -3, 18, 18);
+                bool costStone = false;
+                if (equipConfig.ComposeStone > 0)
+                {
+                    int xOff = x + 82;
+                    var cost = (uint)(GameResourceBook.OutStoneCompose(equipConfig.Quality + 1) * equipConfig.ComposeStone / 100);
+                    g.DrawString(cost.ToString(), ft, Brushes.White, xOff + 20, y + 32);
+
+                    g.DrawImage(HSIcons.GetIconsByEName("res3"), xOff, y + 32 - 3, 18, 18);
+                    costStone = true;
+                }
+
+                if (equipConfig.ComposeWood > 0)
+                {
+                    int xOff = x + 82;
+                    if (costStone)
+                    {
+                        xOff += 46;
+                    }
+                    var cost = (uint)(GameResourceBook.OutWoodCompose(equipConfig.Quality + 1) * equipConfig.ComposeWood / 100);
+                    g.DrawString(cost.ToString(), ft, Brushes.White, xOff + 20, y + 32);
+
+                    g.DrawImage(HSIcons.GetIconsByEName("res2"), xOff, y + 32 - 3, 18, 18);
+                }
+
+                ft.Dispose();
             }
         }
     }

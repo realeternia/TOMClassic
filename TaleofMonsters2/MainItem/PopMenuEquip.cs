@@ -21,9 +21,12 @@ namespace TaleofMonsters.MainItem
         {
             if (target.Type == "decompose")
             {
-                var equipConfig = ConfigDatas.ConfigData.GetEquipConfig(UserProfile.InfoEquip.Equipoff[EquipIndex].BaseId);
+                var equip = UserProfile.InfoEquip.Equipoff[EquipIndex];
+                var equipConfig = ConfigDatas.ConfigData.GetEquipConfig(equip.BaseId);
+
+                var price = GameResourceBook.InGoldEquipDecompose(equipConfig.Quality) * equip.Dura / equipConfig.Durable + 1;
                 MainTipManager.AddTip(string.Format("|分解装备-|{0}|{1}", HSTypes.I2QualityColor(equipConfig.Quality), equipConfig.Name), "White");
-                UserProfile.Profile.InfoBag.AddResource(GameResourceType.Stone, GameResourceBook.InStoneEquipDecompose(equipConfig.Quality));
+                UserProfile.Profile.InfoBag.AddResource(GameResourceType.Gold, (uint)price);
 
                 UserProfile.InfoEquip.Equipoff[EquipIndex] = new DbEquip();
             }

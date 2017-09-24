@@ -61,8 +61,8 @@ namespace TaleofMonsters.MainItem
                 width = Math.Max(width, size.Width);
                 height += yOff;
             }
-            Width = (int)width+6;
-            Height = (int)height;
+            Width = (int)width+6+5;
+            Height = (int)height+3;
             fontsong.Dispose();
             g.Dispose();
             tempImg.Dispose();
@@ -94,7 +94,7 @@ namespace TaleofMonsters.MainItem
             foreach (var menuItemData in datas)
             {
                 Brush b = new SolidBrush(Color.FromName(menuItemData.Color));
-                e.Graphics.DrawString(menuItemData.Text, fontsong, b, 3, yOff*index);
+                e.Graphics.DrawString(menuItemData.Text, fontsong, b, 3, yOff*index + 3);
                 b.Dispose();
                 index++;
             }
