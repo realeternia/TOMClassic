@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ControlPlus;
 using NarlonLib.Control;
 using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
+using TaleofMonsters.Forms.Items.Regions.Decorators;
 
 namespace TaleofMonsters.Forms
 {
@@ -19,6 +22,8 @@ namespace TaleofMonsters.Forms
         private Point[] points;
         private int fuel;
         private int fuelAim;
+
+        private List<IntPair> treasureList = new List<IntPair>();
 
         public TreasureWheelForm()
         {
@@ -56,10 +61,35 @@ namespace TaleofMonsters.Forms
 #endregion
 
             virtualRegion = new VirtualRegion(panelBack);
-            for (int i = 0; i < points.Length; i++)
+            var wheelConfig = ConfigDatas.ConfigData.GetTreasureWheelConfig(1); //todo 1暂时写死
+#region 读取轮盘配置
+            treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item1), Value = wheelConfig.Count1 });
+            treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item2), Value = wheelConfig.Count2 });
+            treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item3), Value = wheelConfig.Count3 });
+            treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item4), Value = wheelConfig.Count4 });
+            treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item5), Value = wheelConfig.Count5 });
+            treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item6), Value = wheelConfig.Count6 });
+            treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item7), Value = wheelConfig.Count7 });
+            treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item8), Value = wheelConfig.Count8 });
+            treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item9), Value = wheelConfig.Count9 });
+            treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item10), Value = wheelConfig.Count10 });
+            treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item11), Value = wheelConfig.Count11 });
+            treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item12), Value = wheelConfig.Count12 });
+            treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item13), Value = wheelConfig.Count13 });
+            treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item14), Value = wheelConfig.Count14 });
+            treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item15), Value = wheelConfig.Count15 });
+            treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item16), Value = wheelConfig.Count16 });
+            treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item17), Value = wheelConfig.Count17 });
+            treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item18), Value = wheelConfig.Count18 });
+#endregion
+
+            for (int i = 0; i < treasureList.Count; i++)
             {
-                var itemId = HItemBook.GetItemId(ConfigDatas.ConfigData.GetTreasureWheelConfig(i + 1).Item);
-                virtualRegion.AddRegion(new PictureAnimRegion(i, points[i].X, points[i].Y, 40, 40, PictureRegionCellType.Item, itemId)); 
+                var targetItem = treasureList[i];
+                var region = new PictureAnimRegion(i, points[i].X, points[i].Y, 40, 40, PictureRegionCellType.Item, targetItem.Type);
+                region.AddDecorator(new RegionTextDecorator(5, 24, 10));
+                virtualRegion.AddRegion(region);
+                virtualRegion.SetRegionDecorator(i, 0, targetItem.Value.ToString());
             }
            
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
@@ -68,15 +98,15 @@ namespace TaleofMonsters.Forms
 
         public override void OnFrame(int tick, float timePass)
         {
-            if (fuel < fuelAim && (fuel<40 || (tick%(fuel/8+1)==0)))
+            if (fuel < fuelAim && (fuel < 40 || (tick%(fuel/8 + 1) == 0)))
             {
                 fuel++;
                 panelBack.Invalidate();
 
                 if (fuel == fuelAim)
                 {
-                    var itemId = HItemBook.GetItemId(ConfigDatas.ConfigData.GetTreasureWheelConfig((fuel % points.Length) + 1).Item);
-                    UserProfile.InfoBag.AddItem(itemId, 1);
+                    var targetItem = treasureList[fuel % points.Length];
+                    UserProfile.InfoBag.AddItem(targetItem.Type, targetItem.Value);
                     fuelAim = 0;
                 }
             }
@@ -84,7 +114,7 @@ namespace TaleofMonsters.Forms
 
         private void bitmapButtonC1_Click(object sender, EventArgs e)
         {
-            if (fuelAim>0)
+            if (fuelAim > 0)
             {
                 return;
             }
