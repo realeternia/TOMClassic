@@ -438,7 +438,7 @@ namespace TaleofMonsters.MainItem.Scenes
         private void DrawRes(uint resCount, Graphics g, Font font, int xStart, int xEnd, int y)
         {
             float lenth = TextRenderer.MeasureText(g, resCount.ToString(), font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
-            g.DrawString(UserProfile.InfoBag.Resource.Lumber.ToString(), font, Brushes.White, new PointF(xStart + (xEnd-xStart - lenth)/2, y));
+            g.DrawString(resCount.ToString(), font, Brushes.White, new PointF(xStart + (xEnd-xStart - lenth)/2, y));
         }
 
         private void DrawCellAndToken(Graphics g)

@@ -131,11 +131,12 @@ namespace TaleofMonsters.Forms.Items
                     UserProfile.InfoBag.SubResource(res.ToArray());
                     UserProfile.InfoWorld.RemoveCardProduct(product.Cid);
                     CardShopViewForm cardShopViewForm = parent as CardShopViewForm;
-                    if (cardShopViewForm != null) cardShopViewForm.ChangeShop();
+                    if (cardShopViewForm != null)
+                        cardShopViewForm.ChangeShop();
                 }
                 else
                 {
-                    parent.AddFlowCenter("没有足够的资源!", "Red");
+                    parent.AddFlowCenter(HSErrorTypes.GetDescript(HSErrorTypes.BagNotEnoughResource), "Red");
                 }
             }
         }

@@ -67,13 +67,13 @@ namespace TaleofMonsters.DataType.Others
         {
             switch ((int)type)
             {
-                case 0: return Gold ;
-                case 1: return Lumber ;
-                case 2: return Stone ;
-                case 3: return Mercury ;
-                case 4: return Carbuncle ;
-                case 5: return Sulfur ;
-                case 6: return Gem ;
+                case 0: return Gold;
+                case 1: return Lumber;
+                case 2: return Stone;
+                case 3: return Mercury;
+                case 4: return Carbuncle;
+                case 5: return Sulfur;
+                case 6: return Gem;
             }
             return 0;
         }
