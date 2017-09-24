@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using NarlonLib.Core;
 using NarlonLib.Tools;
 using TaleofMonsters.MainItem;
 
@@ -20,7 +19,7 @@ namespace TaleofMonsters.Forms
 
         private long lastMouseMoveTime;
         private List<FlowData> flows;
-        protected int formWidth; //����������ݷֱ��ʵı仯��óߴ�
+        protected int formWidth;
         protected int formHeight;
 
         public bool IsChangeBgm { get; set; }
@@ -135,7 +134,7 @@ namespace TaleofMonsters.Forms
         {
             if (flows.Count>0)
             {
-                Font ft = new Font("΢���ź�", 14*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+                Font ft = new Font("宋体", 14*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
 
                 FlowData[] datas = flows.ToArray();
                 foreach (FlowData flowData in datas)

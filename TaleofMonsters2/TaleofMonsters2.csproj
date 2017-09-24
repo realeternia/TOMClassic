@@ -170,6 +170,7 @@
     <Compile Include="Controler\World\WorldInfoManager.cs" />
     <Compile Include="DataType\Blesses\BlessBook.cs" />
     <Compile Include="DataType\Drops\DropBook.cs" />
+    <Compile Include="DataType\Others\TreasureWheelBook.cs" />
     <Compile Include="DataType\Quests\QuestBook.cs" />
     <Compile Include="DataType\Peoples\PeopleFightReason.cs" />
     <Compile Include="DataType\Scenes\SceneQuestBook.cs" />

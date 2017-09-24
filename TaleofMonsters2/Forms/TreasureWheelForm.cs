@@ -6,6 +6,7 @@ using ControlPlus;
 using NarlonLib.Control;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.Forms.Items.Core;
@@ -23,6 +24,7 @@ namespace TaleofMonsters.Forms
         private int fuel;
         private int fuelAim;
 
+        public int WheelId { get; set; } //配置表id
         private List<IntPair> treasureList = new List<IntPair>();
 
         public TreasureWheelForm()
@@ -36,10 +38,15 @@ namespace TaleofMonsters.Forms
             bitmapButtonC1.IconSize = new Size(16, 16);
             bitmapButtonC1.IconXY = new Point(4, 5);
             bitmapButtonC1.TextOffX = 8;
-            backImage = PicLoader.Read("System", "WheelBack.JPG");
 
-            points= new Point[18];
-#region 初始化位置
+        }
+
+        public override void Init(int width, int height)
+        {
+            base.Init(width, height);
+
+            points = new Point[18];
+            #region 初始化位置
             points[0] = new Point(15, 10);
             points[1] = new Point(65, 10);
             points[2] = new Point(115, 10);
@@ -58,11 +65,11 @@ namespace TaleofMonsters.Forms
             points[15] = new Point(15, 145);
             points[16] = new Point(15, 100);
             points[17] = new Point(15, 55);
-#endregion
+            #endregion
 
             virtualRegion = new VirtualRegion(panelBack);
-            var wheelConfig = ConfigDatas.ConfigData.GetTreasureWheelConfig(1); //todo 1暂时写死
-#region 读取轮盘配置
+            var wheelConfig = ConfigDatas.ConfigData.GetTreasureWheelConfig(WheelId);
+            #region 读取轮盘配置
             treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item1), Value = wheelConfig.Count1 });
             treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item2), Value = wheelConfig.Count2 });
             treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item3), Value = wheelConfig.Count3 });
@@ -81,7 +88,7 @@ namespace TaleofMonsters.Forms
             treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item16), Value = wheelConfig.Count16 });
             treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item17), Value = wheelConfig.Count17 });
             treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item18), Value = wheelConfig.Count18 });
-#endregion
+            #endregion
 
             for (int i = 0; i < treasureList.Count; i++)
             {
@@ -91,7 +98,8 @@ namespace TaleofMonsters.Forms
                 virtualRegion.AddRegion(region);
                 virtualRegion.SetRegionDecorator(i, 0, targetItem.Value.ToString());
             }
-           
+
+            backImage = PicLoader.Read("System", string.Format("{0}.JPG", wheelConfig.Image));
             virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
@@ -115,17 +123,26 @@ namespace TaleofMonsters.Forms
         private void bitmapButtonC1_Click(object sender, EventArgs e)
         {
             if (fuelAim > 0)
-            {
                 return;
-            }
 
-            if (MessageBoxEx2.Show("是否花10钻石开始转转盘?") == DialogResult.OK)
+            var wheelConfig = ConfigDatas.ConfigData.GetTreasureWheelConfig(WheelId);
+            if (MessageBoxEx2.Show(string.Format("是否花{0}金币转动转盘?", wheelConfig.GoldCost)) == DialogResult.OK)
             {
-                if (UserProfile.InfoBag.PayDiamond(10))
+                if (UserProfile.InfoBag.GetBlankCount() == 0)
                 {
-                    fuel = 0;
-                    fuelAim = NarlonLib.Math.MathTool.GetRandom(48, 66);
+               //     panelBack.AddFlowCenter(HSErrorTypes.GetDescript(HSErrorTypes.BagIsFull), "Red");
+                    return;
                 }
+
+                if (!UserProfile.InfoBag.HasResource(GameResourceType.Gold, (uint)wheelConfig.GoldCost))
+                {
+              //      AddFlowCenter(HSErrorTypes.GetDescript(HSErrorTypes.BagNotEnoughResource), "Red");
+                    return;
+                }
+
+                UserProfile.InfoBag.SubResource(GameResourceType.Gold, (uint)wheelConfig.GoldCost);
+                fuel = 0;
+                fuelAim = NarlonLib.Math.MathTool.GetRandom(48, 66);
             }
         }
 
@@ -143,11 +160,21 @@ namespace TaleofMonsters.Forms
             tooltip.Hide(this);
         }
 
-        private void panelIcons_Paint(object sender, PaintEventArgs e)
+        private void panelBack_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.DrawImage(backImage, 0, 0, panelBack.Width, panelBack.Height);
 
             virtualRegion.Draw(e.Graphics);
+
+            if (WheelId > 0)
+            {
+                var wheelConfig = ConfigDatas.ConfigData.GetTreasureWheelConfig(WheelId);
+                e.Graphics.DrawImage(HSIcons.GetIconsByEName("res1"), 63, 60, 20,20);
+                var font = new Font("宋体", 11 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+                e.Graphics.DrawString(wheelConfig.GoldCost.ToString(), font, Brushes.Black, 85+1, 62+1);
+                e.Graphics.DrawString(wheelConfig.GoldCost.ToString(), font, Brushes.White, 85, 62);
+                font.Dispose();
+            }
 
             int tar = fuel%points.Length;
             Pen pen = new Pen(Brushes.Yellow, 3);
@@ -155,7 +182,7 @@ namespace TaleofMonsters.Forms
             pen.Dispose();
         }
 
-        private void ExpBottleForm_Paint(object sender, PaintEventArgs e)
+        private void TreasureWheelForm_Paint(object sender, PaintEventArgs e)
         {
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 

@@ -38,14 +38,14 @@ namespace TaleofMonsters.Forms
             // 
             // colorLabel1
             // 
-            this.colorLabel1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
+            this.colorLabel1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
             this.colorLabel1.ForeColor = System.Drawing.Color.White;
             this.colorLabel1.Location = new System.Drawing.Point(12, 44);
             this.colorLabel1.Name = "colorLabel1";
             this.colorLabel1.Size = new System.Drawing.Size(326, 61);
             this.colorLabel1.TabIndex = 37;
-            this.colorLabel1.Text = "|通过点击下方|#0033cc|旋转||可以花费|#ff3300|10钻石||启动转盘。\r\n|转盘的光圈最后会停留在目标格，玩家可以获得|#339900|对应道具" +
-                "||。\r\n#ff0000|GOOD LUCK!";
+            this.colorLabel1.Text = "|通过点击下方|#0033cc|旋转||可以花费|#ff3300|一些金币||启动转盘。\r\n|转盘的光圈最后会停留在目标格，玩家可以获得|#339900|对应道具" +
+    "||。\r\n#ff0000|GOOD LUCK!";
             // 
             // bitmapButtonC1
             // 
@@ -57,6 +57,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonC1.ImageNormal = null;
             this.bitmapButtonC1.Location = new System.Drawing.Point(150, 362);
             this.bitmapButtonC1.Name = "bitmapButtonC1";
+            this.bitmapButtonC1.NoUseDrawNine = false;
             this.bitmapButtonC1.Size = new System.Drawing.Size(50, 30);
             this.bitmapButtonC1.TabIndex = 27;
             this.bitmapButtonC1.Tag = "1";
@@ -67,13 +68,13 @@ namespace TaleofMonsters.Forms
             // 
             // panelBack
             // 
-            this.panelBack.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
+            this.panelBack.Font = new System.Drawing.Font("Microsoft YaHei", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
             this.panelBack.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.panelBack.Location = new System.Drawing.Point(13, 107);
             this.panelBack.Name = "panelBack";
             this.panelBack.Size = new System.Drawing.Size(324, 244);
             this.panelBack.TabIndex = 2;
-            this.panelBack.Paint += new System.Windows.Forms.PaintEventHandler(this.panelIcons_Paint);
+            this.panelBack.Paint += new System.Windows.Forms.PaintEventHandler(this.panelBack_Paint);
             // 
             // bitmapButtonClose
             // 
@@ -85,6 +86,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonClose.ImageNormal = null;
             this.bitmapButtonClose.Location = new System.Drawing.Point(313, 13);
             this.bitmapButtonClose.Name = "bitmapButtonClose";
+            this.bitmapButtonClose.NoUseDrawNine = false;
             this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
             this.bitmapButtonClose.TabIndex = 39;
             this.bitmapButtonClose.TextOffX = 0;
@@ -101,7 +103,7 @@ namespace TaleofMonsters.Forms
             this.Controls.Add(this.panelBack);
             this.Name = "TreasureWheelForm";
             this.Size = new System.Drawing.Size(350, 408);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.ExpBottleForm_Paint);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.TreasureWheelForm_Paint);
             this.ResumeLayout(false);
 
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using ConfigDatas;
 using TaleofMonsters.Controler.GM;
+using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms;
 using TaleofMonsters.Forms.Items.Core;
@@ -196,7 +197,7 @@ namespace TaleofMonsters.MainItem
                     PanelManager.DealPanel(new TournamentViewForm());
                     break;
                 case SystemMenuIds.TreasureWheelForm:
-                    PanelManager.DealPanel(new TreasureWheelForm());
+                    TreasureWheelBook.Show(1);
                     break;
                 case SystemMenuIds.QuestionForm:
                     PanelManager.DealPanel(new QuestionForm());

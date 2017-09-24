@@ -27,6 +27,7 @@ namespace TaleofMonsters.Core
 
         public const int BagNotEnoughDimond = 3000;
         public const int BagNotEnoughResource = 3001;
+        public const int BagIsFull = 3002;
 
         public static string GetDescript(int id)
         {
