@@ -38,7 +38,7 @@ namespace TaleofMonsters.Forms
             bitmapButtonC1.IconSize = new Size(16, 16);
             bitmapButtonC1.IconXY = new Point(4, 5);
             bitmapButtonC1.TextOffX = 8;
-
+            DoubleBuffered = true;
         }
 
         public override void Init(int width, int height)
@@ -67,7 +67,7 @@ namespace TaleofMonsters.Forms
             points[17] = new Point(15, 55);
             #endregion
 
-            virtualRegion = new VirtualRegion(panelBack);
+            virtualRegion = new VirtualRegion(this);
             var wheelConfig = ConfigDatas.ConfigData.GetTreasureWheelConfig(WheelId);
             #region 读取轮盘配置
             treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item1), Value = wheelConfig.Count1 });
@@ -90,10 +90,12 @@ namespace TaleofMonsters.Forms
             treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item18), Value = wheelConfig.Count18 });
             #endregion
 
+            int xOff = 13;
+            int yOff = 107;
             for (int i = 0; i < treasureList.Count; i++)
             {
                 var targetItem = treasureList[i];
-                var region = new PictureAnimRegion(i, points[i].X, points[i].Y, 40, 40, PictureRegionCellType.Item, targetItem.Type);
+                var region = new PictureAnimRegion(i, points[i].X+ xOff, points[i].Y + yOff, 40, 40, PictureRegionCellType.Item, targetItem.Type);
                 region.AddDecorator(new RegionTextDecorator(5, 24, 10));
                 virtualRegion.AddRegion(region);
                 virtualRegion.SetRegionDecorator(i, 0, targetItem.Value.ToString());
@@ -106,10 +108,11 @@ namespace TaleofMonsters.Forms
 
         public override void OnFrame(int tick, float timePass)
         {
+            base.OnFrame(tick, timePass);
             if (fuel < fuelAim && (fuel < 40 || (tick%(fuel/8 + 1) == 0)))
             {
                 fuel++;
-                panelBack.Invalidate();
+                Invalidate();
 
                 if (fuel == fuelAim)
                 {
@@ -130,13 +133,13 @@ namespace TaleofMonsters.Forms
             {
                 if (UserProfile.InfoBag.GetBlankCount() == 0)
                 {
-               //     panelBack.AddFlowCenter(HSErrorTypes.GetDescript(HSErrorTypes.BagIsFull), "Red");
+                    AddFlowCenter(HSErrorTypes.GetDescript(HSErrorTypes.BagIsFull), "Red");
                     return;
                 }
 
                 if (!UserProfile.InfoBag.HasResource(GameResourceType.Gold, (uint)wheelConfig.GoldCost))
                 {
-              //      AddFlowCenter(HSErrorTypes.GetDescript(HSErrorTypes.BagNotEnoughResource), "Red");
+                    AddFlowCenter(HSErrorTypes.GetDescript(HSErrorTypes.BagNotEnoughResource), "Red");
                     return;
                 }
 
@@ -151,7 +154,7 @@ namespace TaleofMonsters.Forms
             if (key > 0)
             {
                 Image image = HItemBook.GetPreview(key);
-                tooltip.Show(image, this, x+panelBack.Location.X, y+panelBack.Location.Y);
+                tooltip.Show(image, this, x, y);
             }
         }
 
@@ -160,35 +163,34 @@ namespace TaleofMonsters.Forms
             tooltip.Hide(this);
         }
 
-        private void panelBack_Paint(object sender, PaintEventArgs e)
+        private void TreasureWheelForm_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawImage(backImage, 0, 0, panelBack.Width, panelBack.Height);
+            BorderPainter.Draw(e.Graphics, "", Width, Height);
+
+            Font font = new Font("黑体", 12 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+            e.Graphics.DrawString("幸运转盘", font, Brushes.White, Width / 2 - 40, 8);
+            font.Dispose();
+
+            int xOff = 13;
+            int yOff = 107;
+            e.Graphics.DrawImage(backImage, xOff, yOff, 324, 244);
 
             virtualRegion.Draw(e.Graphics);
 
             if (WheelId > 0)
             {
                 var wheelConfig = ConfigDatas.ConfigData.GetTreasureWheelConfig(WheelId);
-                e.Graphics.DrawImage(HSIcons.GetIconsByEName("res1"), 63, 60, 20,20);
-                var font = new Font("宋体", 11 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-                e.Graphics.DrawString(wheelConfig.GoldCost.ToString(), font, Brushes.Black, 85+1, 62+1);
-                e.Graphics.DrawString(wheelConfig.GoldCost.ToString(), font, Brushes.White, 85, 62);
-                font.Dispose();
+                e.Graphics.DrawImage(HSIcons.GetIconsByEName("res1"), xOff+ 63, yOff+ 60, 20, 20);
+                Font font2 = new Font("宋体", 11 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+                e.Graphics.DrawString(wheelConfig.GoldCost.ToString(), font2, Brushes.Black, xOff + 85 + 1, yOff + 62 + 1);
+                e.Graphics.DrawString(wheelConfig.GoldCost.ToString(), font2, Brushes.White, xOff + 85, yOff + 62);
+                font2.Dispose();
             }
 
-            int tar = fuel%points.Length;
+            int tar = fuel % points.Length;
             Pen pen = new Pen(Brushes.Yellow, 3);
-            e.Graphics.DrawRectangle(pen, points[tar].X, points[tar].Y, 40, 40);
+            e.Graphics.DrawRectangle(pen, points[tar].X+ xOff, points[tar].Y + yOff, 40, 40);
             pen.Dispose();
-        }
-
-        private void TreasureWheelForm_Paint(object sender, PaintEventArgs e)
-        {
-            BorderPainter.Draw(e.Graphics, "", Width, Height);
-
-            Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString("幸运转盘", font, Brushes.White, Width / 2 - 40, 8);
-            font.Dispose();
         }
 
         private void bitmapButtonClose_Click(object sender, EventArgs e)

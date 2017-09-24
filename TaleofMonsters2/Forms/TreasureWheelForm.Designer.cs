@@ -32,7 +32,6 @@ namespace TaleofMonsters.Forms
         {
             this.colorLabel1 = new NarlonLib.Control.ColorLabel();
             this.bitmapButtonC1 = new NarlonLib.Control.BitmapButton();
-            this.panelBack = new NarlonLib.Control.DoubleBuffedPanel();
             this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
             this.SuspendLayout();
             // 
@@ -66,16 +65,6 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonC1.UseVisualStyleBackColor = true;
             this.bitmapButtonC1.Click += new System.EventHandler(this.bitmapButtonC1_Click);
             // 
-            // panelBack
-            // 
-            this.panelBack.Font = new System.Drawing.Font("Microsoft YaHei", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
-            this.panelBack.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.panelBack.Location = new System.Drawing.Point(13, 107);
-            this.panelBack.Name = "panelBack";
-            this.panelBack.Size = new System.Drawing.Size(324, 244);
-            this.panelBack.TabIndex = 2;
-            this.panelBack.Paint += new System.Windows.Forms.PaintEventHandler(this.panelBack_Paint);
-            // 
             // bitmapButtonClose
             // 
             this.bitmapButtonClose.BorderColor = System.Drawing.Color.DarkBlue;
@@ -100,7 +89,6 @@ namespace TaleofMonsters.Forms
             this.Controls.Add(this.bitmapButtonClose);
             this.Controls.Add(this.colorLabel1);
             this.Controls.Add(this.bitmapButtonC1);
-            this.Controls.Add(this.panelBack);
             this.Name = "TreasureWheelForm";
             this.Size = new System.Drawing.Size(350, 408);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.TreasureWheelForm_Paint);
@@ -109,8 +97,6 @@ namespace TaleofMonsters.Forms
         }
 
         #endregion
-
-        private NarlonLib.Control.DoubleBuffedPanel panelBack;
         private BitmapButton bitmapButtonC1;
         private ColorLabel colorLabel1;
         private BitmapButton bitmapButtonClose;
