@@ -80,16 +80,17 @@ namespace TaleofMonsters.MainItem.Scenes
             width = w;
             height = h;
 
-            int xOff = (width - 688) / 2 + 103;
             vRegion = new VirtualRegion(parent);
 
-            vRegion.AddRegion(new SubVirtualRegion(1, xOff - 60 + 82 * 6, 13, 80, 20));
-            vRegion.AddRegion(new SubVirtualRegion(2, xOff-60, 13, 80, 20));
-            vRegion.AddRegion(new SubVirtualRegion(3, xOff - 60+82, 13, 80, 20));
-            vRegion.AddRegion(new SubVirtualRegion(4, xOff - 60 + 82*2, 13, 80, 20));
-            vRegion.AddRegion(new SubVirtualRegion(5, xOff - 60 + 82*3, 13, 80, 20));
-            vRegion.AddRegion(new SubVirtualRegion(6, xOff - 60 + 82*4, 13, 80, 20));
-            vRegion.AddRegion(new SubVirtualRegion(7, xOff - 60 + 82*5, 13, 80, 20));
+            int resXOff = (width - 688) / 2;
+            vRegion.AddRegion(new SubVirtualRegion(1, resXOff - 30 + 573, 13, 105, 20));
+
+            vRegion.AddRegion(new SubVirtualRegion(2, resXOff - 30 + 82, 13, 77, 20));
+            vRegion.AddRegion(new SubVirtualRegion(3, resXOff - 30 + 82*2, 13, 77, 20));
+            vRegion.AddRegion(new SubVirtualRegion(4, resXOff - 30 + 82*3, 13, 77, 20));
+            vRegion.AddRegion(new SubVirtualRegion(5, resXOff - 30 + 82*4, 13, 77, 20));
+            vRegion.AddRegion(new SubVirtualRegion(6, resXOff - 30 + 82*5, 13, 77, 20));
+            vRegion.AddRegion(new SubVirtualRegion(7, resXOff - 30 + 82*6, 13, 77, 20));
             
             vRegion.AddRegion(new SubVirtualRegion(10, 0, 0, 150, 50));//人物头像
             vRegion.AddRegion(new SubVirtualRegion(11, width - 145, 3, 115, 32));//场景信息
@@ -405,16 +406,18 @@ namespace TaleofMonsters.MainItem.Scenes
             var len = TextRenderer.MeasureText(g, sceneName, font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
             g.DrawString(sceneName, font, Brushes.White, new PointF(width - 85 - len / 2, 8));
 
-            int xOff = (width - 688)/2 + 103;
-            g.DrawString(UserProfile.InfoBag.Resource.Lumber.ToString(), font, Brushes.White, new PointF(xOff, 13));
-            g.DrawString(UserProfile.InfoBag.Resource.Stone.ToString(), font, Brushes.White, new PointF(xOff+82, 13));
-            g.DrawString(UserProfile.InfoBag.Resource.Mercury.ToString(), font, Brushes.White, new PointF(xOff+82*2, 13));
-            g.DrawString(UserProfile.InfoBag.Resource.Carbuncle.ToString(), font, Brushes.White, new PointF(xOff + 82 * 3, 13));
-            g.DrawString(UserProfile.InfoBag.Resource.Sulfur.ToString(), font, Brushes.White, new PointF(xOff + 82 * 4, 13));
-            g.DrawString(UserProfile.InfoBag.Resource.Gem.ToString(), font, Brushes.White, new PointF(xOff + 82 * 5, 13));
-            g.DrawString(UserProfile.InfoBag.Resource.Gold.ToString(), font, Brushes.White, new PointF(xOff + 82 * 6, 13));
+            Font font3 = new Font("Arial", 11 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+            var resBackX = (width - 688)/2;
+            DrawRes(UserProfile.InfoBag.Resource.Lumber, g, font3, resBackX+82, resBackX+82+48, 15);
+            DrawRes(UserProfile.InfoBag.Resource.Stone, g, font3, resBackX + 82*2, resBackX + 82 * 2 + 48, 15);
+            DrawRes(UserProfile.InfoBag.Resource.Mercury, g, font3, resBackX + 82 * 3, resBackX + 82 * 3 + 48, 15);
+            DrawRes(UserProfile.InfoBag.Resource.Carbuncle, g, font3, resBackX + 82 * 4, resBackX + 82 * 4 + 48, 15);
+            DrawRes(UserProfile.InfoBag.Resource.Sulfur, g, font3, resBackX + 82 * 5, resBackX + 82 * 5 + 48, 15);
+            DrawRes(UserProfile.InfoBag.Resource.Gem, g, font3, resBackX + 82 * 6, resBackX + 82 * 6 + 48, 15);
+            DrawRes(UserProfile.InfoBag.Resource.Gold, g, font3, resBackX +570, resBackX + 570+80, 15);
+            font3.Dispose();
 
-            xOff = (width - 688) / 2 + 30;
+            int xOff = (width - 688) / 2 + 30;
             g.FillRectangle(Brushes.DimGray, xOff, 41, 630, 8);
             b1 = new LinearGradientBrush(new Rectangle(xOff, 41, 630, 8), Color.White, Color.Gray, LinearGradientMode.Vertical);
             g.FillRectangle(b1, xOff, 41, Math.Min(UserProfile.InfoBasic.Exp*630/ExpTree.GetNextRequired(UserProfile.InfoBasic.Level), 630), 8);
@@ -430,6 +433,12 @@ namespace TaleofMonsters.MainItem.Scenes
             vRegion.Draw(g);
 
             DrawCellAndToken(g);
+        }
+
+        private void DrawRes(uint resCount, Graphics g, Font font, int xStart, int xEnd, int y)
+        {
+            float lenth = TextRenderer.MeasureText(g, resCount.ToString(), font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
+            g.DrawString(UserProfile.InfoBag.Resource.Lumber.ToString(), font, Brushes.White, new PointF(xStart + (xEnd-xStart - lenth)/2, y));
         }
 
         private void DrawCellAndToken(Graphics g)
