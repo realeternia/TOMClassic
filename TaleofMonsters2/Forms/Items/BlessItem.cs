@@ -93,13 +93,13 @@ namespace TaleofMonsters.Forms.Items
             if (blessId > 0)
             {
                 Image image = BlessBook.GetPreview(key);
-                tooltip.Show(image, parent, mx, my);
+                tooltip.Show(image, parent, mx, my, blessId);
             }
         }
 
         private void virtualRegion_RegionLeft()
         {
-            tooltip.Hide(parent);
+            tooltip.Hide(parent, blessId);
         }
 
         private void pictureBoxBuy_Click(object sender, EventArgs e)

@@ -7,7 +7,7 @@ namespace TaleofMonsters.DataType.Others
         [FieldIndex(Index = 1)]
         public uint Gold;
         [FieldIndex(Index = 2)]
-        public uint Lumber; //建筑制作，农场，待搞
+        public uint Lumber; //建筑制作，农场
         [FieldIndex(Index = 3)]
         public uint Stone; //建筑制作
         [FieldIndex(Index = 4)]
