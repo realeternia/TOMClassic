@@ -26,6 +26,7 @@ namespace TaleofMonsters.Core
         public const int SceneWarpNeedActive = 2002;
 
         public const int BagNotEnoughDimond = 3000;
+        public const int BagNotEnoughResource = 3001;
 
         public static string GetDescript(int id)
         {

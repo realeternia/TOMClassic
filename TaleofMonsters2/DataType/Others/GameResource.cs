@@ -15,7 +15,7 @@ namespace TaleofMonsters.DataType.Others
         [FieldIndex(Index = 5)]
         public uint Carbuncle;//购买怪物卡，贿赂怪物
         [FieldIndex(Index = 6)]
-        public uint Sulfur; //炼金(待实现)
+        public uint Sulfur; //刷， 炼金(待实现)
         [FieldIndex(Index = 7)]
         public uint Gem; //购买武器卡
 

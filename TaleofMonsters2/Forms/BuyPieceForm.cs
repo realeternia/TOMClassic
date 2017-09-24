@@ -5,11 +5,14 @@ using System.Windows.Forms;
 using ControlPlus;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Items;
+using TaleofMonsters.DataType.Others;
 using TaleofMonsters.Forms.Items;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Core;
+using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms
 {
@@ -43,7 +46,7 @@ namespace TaleofMonsters.Forms
             bitmapButtonDouble.NoUseDrawNine = true;
             colorWord = new ColorWordRegion(12, 38, 384, "微软雅黑", 11, Color.White);
             colorWord.Bold = true;
-            colorWord.UpdateText("|每|Red|6小时||随机更新5条购买素材，素材的|Lime|背景颜色||决定素材的最高品质。");
+            colorWord.UpdateText("|所有素材随机出现，素材的|Lime|背景颜色||决定素材的最高品质。");
         }
 
         public override void Init(int width, int height)
@@ -56,13 +59,13 @@ namespace TaleofMonsters.Forms
                 pieceControls[i] = new PieceItem(this, 8 + (i % 2) * 192, 111 + (i / 2) * 55, 193, 56);
                 pieceControls[i].Init(i);
             }
+            RemakePieceData();
             RefreshInfo();
             OnFrame(0, 0);
         }
 
         private void RefreshInfo()
         {
-            GetPieceData();
             for (int i = 0; i < 8; i++)
             {
                 pieceControls[i].RefreshData();
@@ -78,39 +81,56 @@ namespace TaleofMonsters.Forms
 
         private void bitmapButtonRefresh_Click(object sender, EventArgs e)
         {
-            if (MessageBoxEx2.Show("是否花5钻石增加一条素材?") == DialogResult.OK)
+            var cost = GameResourceBook.OutSulfurRefresh(0.5f);
+            if (MessageBoxEx2.Show(string.Format("是否花{0}硫磺增加一条素材?", cost)) == DialogResult.OK)
             {
-                if (UserProfile.InfoBag.PayDiamond(5))
+                if (UserProfile.InfoBag.HasResource(GameResourceType.Sulfur, cost))
                 {
+                    UserProfile.InfoBag.SubResource(GameResourceType.Sulfur, cost);
                     AddPieceData();
                     RefreshInfo();
+                }
+                else
+                {
+                    MainTipManager.AddTip(HSErrorTypes.GetDescript(HSErrorTypes.BagNotEnoughResource), "Red");
                 }
             }
         }
 
         private void bitmapButtonFresh_Click(object sender, EventArgs e)
         {
-            if (MessageBoxEx2.Show("是否花10钻石刷新所有素材?") == DialogResult.OK)
+            var cost = GameResourceBook.OutSulfurRefresh(1);
+            if (MessageBoxEx2.Show(string.Format("是否花{0}硫磺刷新所有素材?", cost)) == DialogResult.OK)
             {
-                if (UserProfile.InfoBag.PayDiamond(10))
+                if (UserProfile.InfoBag.HasResource(GameResourceType.Sulfur, cost))
                 {
+                    UserProfile.InfoBag.SubResource(GameResourceType.Sulfur, cost);
                     RefreshAllPieceData();
                     RefreshInfo();
+                }
+                else
+                {
+                    MainTipManager.AddTip(HSErrorTypes.GetDescript(HSErrorTypes.BagNotEnoughResource), "Red");
                 }
             }
         }
         private void bitmapButtonDouble_Click(object sender, EventArgs e)
         {
-            if (MessageBoxEx2.Show("是否花5钻石翻倍所有素材数量?") == DialogResult.OK)
+            var cost = GameResourceBook.OutSulfurRefresh(0.5f);
+            if (MessageBoxEx2.Show(string.Format("是否花{0}硫磺翻倍所有素材数量?", cost)) == DialogResult.OK)
             {
-                if (UserProfile.InfoBag.PayDiamond(5))
+                if (UserProfile.InfoBag.HasResource(GameResourceType.Sulfur, cost))
                 {
+                    UserProfile.InfoBag.SubResource(GameResourceType.Sulfur, cost);
                     DoubleAllPieceData();
                     RefreshInfo();
                 }
+                else
+                {
+                    MainTipManager.AddTip(HSErrorTypes.GetDescript(HSErrorTypes.BagNotEnoughResource), "Red");
+                }
             }
         }
-
 
         private void BuyPieceForm_Paint(object sender, PaintEventArgs e)
         {
@@ -127,15 +147,13 @@ namespace TaleofMonsters.Forms
             }
         }
 
-
-        private List<NpcPieceData> GetPieceData()
+        private void RemakePieceData()
         {
             changes = new List<NpcPieceData>();
             for (int i = 0; i < 5; i++)
             {
                 changes.Add(CreatePieceMethod(i));
             }
-            return changes;
         }
 
         private void AddPieceData()
@@ -180,6 +198,7 @@ namespace TaleofMonsters.Forms
                 memNpcPieceData.Count *= 2;
             }
         }
+
         private NpcPieceData CreatePieceMethod(int index)
         {
             NpcPieceData piece = new NpcPieceData();

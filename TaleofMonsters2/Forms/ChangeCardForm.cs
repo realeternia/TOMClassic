@@ -5,10 +5,14 @@ using System.Windows.Forms;
 using ControlPlus;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.Core;
+using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards.Monsters;
+using TaleofMonsters.DataType.Others;
 using TaleofMonsters.Forms.Items;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Core;
+using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms
 {
@@ -42,13 +46,13 @@ namespace TaleofMonsters.Forms
                 changeControls[i] = new ChangeCardItem(this, 8 + (i % 2) * 192, 111 + (i / 2) * 55, 193, 56);
                 changeControls[i].Init(i);
             }
+            GetChangeCardData();
             RefreshInfo();
             OnFrame(0, 0);
         }
 
         private void RefreshInfo()
         {
-            GetChangeCardData();
             for (int i = 0; i < 8; i++)
             {
                 changeControls[i].RefreshData();
@@ -67,7 +71,7 @@ namespace TaleofMonsters.Forms
             bitmapButtonFresh.NoUseDrawNine = true;
             colorWord = new ColorWordRegion(12, 38, 384, "微软雅黑", 11, Color.White);
             colorWord.Bold = true;
-            colorWord.UpdateText("|每|Red|24小时||随机更新5条交换公式，交换公式的|Lime|背景颜色||决定交换公式的最高品质。");
+            colorWord.UpdateText("|交换公式随机出现，交换公式的|Lime|背景颜色||决定交换公式的最高品质。");
         }
 
         private void pictureBoxCancel_Click(object sender, EventArgs e)
@@ -77,24 +81,36 @@ namespace TaleofMonsters.Forms
 
         private void bitmapButtonRefresh_Click(object sender, EventArgs e)
         {
-            if (MessageBoxEx2.Show("是否花5钻石增加一条交换公式?") == DialogResult.OK)
+            var cost = GameResourceBook.OutSulfurRefresh(0.5f);
+            if (MessageBoxEx2.Show(string.Format("是否花{0}硫磺增加一条交换公式?", cost)) == DialogResult.OK)
             {
-                if (UserProfile.InfoBag.PayDiamond(5))
+                if (UserProfile.InfoBag.HasResource(GameResourceType.Sulfur, cost))
                 {
+                    UserProfile.InfoBag.SubResource(GameResourceType.Sulfur, cost);
                     AddChangeCardData();
                     RefreshInfo();
+                }
+                else
+                {
+                    MainTipManager.AddTip(HSErrorTypes.GetDescript(HSErrorTypes.BagNotEnoughResource), "Red");
                 }
             }
         }
 
         private void bitmapButtonFresh_Click(object sender, EventArgs e)
         {
-            if (MessageBoxEx2.Show("是否花10钻石刷新所有交换公式?") == DialogResult.OK)
+            var cost = GameResourceBook.OutSulfurRefresh(1);
+            if (MessageBoxEx2.Show(string.Format("是否花{0}硫磺刷新所有交换公式?", cost)) == DialogResult.OK)
             {
-                if (UserProfile.InfoBag.PayDiamond(10))
+                if (UserProfile.InfoBag.HasResource(GameResourceType.Sulfur, cost))
                 {
+                    UserProfile.InfoBag.SubResource(GameResourceType.Sulfur, cost);
                     RefreshAllChangeCardData();
                     RefreshInfo();
+                }
+                else
+                {
+                    MainTipManager.AddTip(HSErrorTypes.GetDescript(HSErrorTypes.BagNotEnoughResource), "Red");
                 }
             }
         }

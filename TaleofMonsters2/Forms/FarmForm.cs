@@ -7,6 +7,7 @@ using NarlonLib.Core;
 using NarlonLib.Math;
 using NarlonLib.Tools;
 using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
@@ -96,7 +97,7 @@ namespace TaleofMonsters.Forms
                         }
                         else
                         {
-                            AddFlowCenter("资源不足", "Red");
+                            AddFlowCenter(HSErrorTypes.GetDescript(HSErrorTypes.BagNotEnoughResource), "Red");
                         }
                     }
                 }

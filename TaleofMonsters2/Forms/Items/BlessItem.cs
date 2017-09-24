@@ -110,7 +110,7 @@ namespace TaleofMonsters.Forms.Items
 
             if (!UserProfile.InfoBag.HasResource(GameResourceType.Mercury, cost))
             {
-                parent.AddFlowCenter("资源不足", "Red");
+                parent.AddFlowCenter(HSErrorTypes.GetDescript(HSErrorTypes.BagNotEnoughResource), "Red");
                 return;
             }
 

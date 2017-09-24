@@ -38,7 +38,7 @@ namespace TaleofMonsters.Forms.Items
             this.bitmapButtonBuy.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
             bitmapButtonBuy.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             bitmapButtonBuy.ForeColor = Color.White;
-            bitmapButtonBuy.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("oth9");
+            bitmapButtonBuy.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("tsk7");
             bitmapButtonBuy.IconSize = new Size(16, 16);
             bitmapButtonBuy.IconXY = new Point(10, 4);
             parent.Controls.Add(bitmapButtonBuy);

@@ -104,7 +104,7 @@ namespace TaleofMonsters.Forms.Items
             }
             else
             {
-                parent.AddFlowCenter("资源不足", "Red");
+                parent.AddFlowCenter(HSErrorTypes.GetDescript(HSErrorTypes.BagNotEnoughResource), "Red");
             }
         }
 

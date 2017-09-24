@@ -196,5 +196,12 @@ namespace TaleofMonsters.DataType.Others
         {
             return (uint)(qual * (qual + 1) * Math.Sqrt(qual)) * 2; //2-8-20-40
         }
+        /// <summary>
+        /// 刷新一些属性时效果
+        /// </summary>
+        public static uint OutSulfurRefresh(float factor)
+        {
+            return (uint)(10 * factor);
+        }
     }
 }
