@@ -112,7 +112,7 @@ namespace TaleofMonsters.Forms.Items
         {
             if (UserProfile.InfoBag.Resource.Gold >= price)
             {
-                UserProfile.InfoBag.Resource.Gold -= price;
+                UserProfile.InfoBag.Resource.Gold = (uint)(UserProfile.InfoBag.Resource.Gold- price);
                 UserProfile.InfoBag.AddItem(itemId, itemCount);
                 (parent as BuyPieceForm).RemovePieceData(index);
 

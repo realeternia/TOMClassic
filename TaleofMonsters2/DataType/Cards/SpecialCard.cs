@@ -68,7 +68,7 @@ namespace TaleofMonsters.DataType.Cards
         {
         }
 
-        public override Image GetPreview(CardPreviewType type, int[] parms)
+        public override Image GetPreview(CardPreviewType type, uint[] parms)
         {
             return null;
         }

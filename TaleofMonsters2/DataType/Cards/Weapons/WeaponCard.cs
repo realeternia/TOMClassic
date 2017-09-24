@@ -205,7 +205,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             return val > 0 ? string.Format("+{0,2:D}", val) : string.Format("-{0,2:D}", Math.Abs(val));
         }
 
-        public override Image GetPreview(CardPreviewType type, int[] parms)
+        public override Image GetPreview(CardPreviewType type, uint[] parms)
         {
             const string stars = "★★★★★★★★★★";
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();

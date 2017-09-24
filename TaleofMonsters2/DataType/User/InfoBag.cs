@@ -32,7 +32,7 @@ namespace TaleofMonsters.DataType.User
             CdGroupTime = new int[GameConstants.ItemCdGroupCount];
         }
 
-        public bool CheckResource(int[] resourceInfo)
+        public bool CheckResource(uint[] resourceInfo)
         {
             if (Resource.Gold >= resourceInfo[0] &&
                 Resource.Lumber >= resourceInfo[1] &&
@@ -56,33 +56,21 @@ namespace TaleofMonsters.DataType.User
             MainTipManager.AddTip(string.Format("|获得|Cyan|{0}||钻石", value), "White");
         }
 
-        public void AddResource(int[] res)
+        public void AddResource(uint[] res)
         {
-            Resource.Gold += res[0];
-            Resource.Lumber += res[1];
-            Resource.Stone += res[2];
-            Resource.Mercury += res[3];
-            Resource.Carbuncle += res[4];
-            Resource.Sulfur += res[5];
-            Resource.Gem += res[6];
-
             for (int i = 0; i < 7; i++)
             {
                 if (res[i] > 0)
-                    MainTipManager.AddTip(string.Format("|获得|{0}|{1}||x{2}", HSTypes.I2ResourceColor(i), HSTypes.I2Resource(i), res[i]), "White");
+                    AddResource((GameResourceType)i, res[i]);
             }
-
-            AchieveBook.CheckByCheckType("resource");
         }
 
         internal void AddResource(GameResourceType type, uint value)
         {
-            Resource.Add(type, (int)value);
-            if (type > 0)
-            {
-                MainTipManager.AddTip(string.Format("|获得|{0}|{1}||x{2}", HSTypes.I2ResourceColor((int)type), HSTypes.I2Resource((int)type), value), "White");
-                AchieveBook.CheckByCheckType("resource"); 
-            }
+            Resource.Add(type, value);
+
+            MainTipManager.AddTip(string.Format("|获得|{0}|{1}||x{2}", HSTypes.I2ResourceColor((int)type), HSTypes.I2Resource((int)type), value), "White");
+            AchieveBook.CheckByCheckType("resource");
         }
 
         public bool PayDiamond(int value)
@@ -97,23 +85,22 @@ namespace TaleofMonsters.DataType.User
             return true;
         }
 
-        public void SubResource(int[] res)
+        public void SubResource(uint[] res)
         {
-            Resource.Gold -= res[0];
-            Resource.Lumber -= res[1];
-            Resource.Stone -= res[2];
-            Resource.Mercury -= res[3];
-            Resource.Carbuncle -= res[4];
-            Resource.Sulfur -= res[5];
-            Resource.Gem -= res[6];
+            for (int i = 0; i < 7; i++)
+            {
+                if (res[i] > 0)
+                    SubResource((GameResourceType) i, res[i]);
+            }
         }
 
         internal void SubResource(GameResourceType type, uint value)
         {
-            Resource.Add(type, (int)-value);
+            Resource.Sub(type, value);
+
+            MainTipManager.AddTip(string.Format("|扣除|{0}|{1}||x{2}", HSTypes.I2ResourceColor((int)type), HSTypes.I2Resource((int)type), value), "White");
         }
-
-
+        
         public void AddItem(int id, int num)
         {
             HItemConfig itemConfig = ConfigData.GetHItemConfig(id);

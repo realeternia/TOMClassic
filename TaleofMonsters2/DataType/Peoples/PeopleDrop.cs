@@ -60,9 +60,9 @@ namespace TaleofMonsters.DataType.Peoples
             return dropRate*lvDiff/100;//千分之
         }
 
-        public int[] GetDropResource()
+        public uint[] GetDropResource()
         {
-            int[] rt = { 0, 0, 0, 0, 0, 0, 0 };
+            uint[] rt = { 0, 0, 0, 0, 0, 0, 0 };
             foreach (DropResource info in resources)
             {
                 uint percent = info.Percent;
@@ -72,7 +72,7 @@ namespace TaleofMonsters.DataType.Peoples
 //                }
                 if (MathTool.GetRandom(100) < percent)
                 {
-                    rt[info.Id - 1] = MathTool.GetRandom((int)info.Min, (int)info.Max + 1);
+                    rt[info.Id - 1] = (uint)MathTool.GetRandom((int)info.Min, (int)info.Max + 1);
                 }
             }
             return rt;

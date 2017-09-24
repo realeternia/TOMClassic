@@ -192,7 +192,7 @@ namespace TaleofMonsters.Forms
                     var cellType = cellTypeList[id - 2];
                     if (cellType == PictureRegionCellType.Card)
                     {
-                        image = CardAssistant.GetCard(key).GetPreview(CardPreviewType.Normal, new int[] { });
+                        image = CardAssistant.GetCard(key).GetPreview(CardPreviewType.Normal, new uint[] { });
                     }
                     else if (cellType == PictureRegionCellType.Item)
                     {

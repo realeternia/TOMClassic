@@ -5,26 +5,26 @@ namespace TaleofMonsters.DataType.Others
     public class GameResource
     {
         [FieldIndex(Index = 1)]
-        public int Gold;
+        public uint Gold;
         [FieldIndex(Index = 2)]
-        public int Lumber; //建筑制作，农场，待搞
+        public uint Lumber; //建筑制作，农场，待搞
         [FieldIndex(Index = 3)]
-        public int Stone; //建筑制作
+        public uint Stone; //建筑制作
         [FieldIndex(Index = 4)]
-        public int Mercury; //购买祝福，购买法术卡
+        public uint Mercury; //购买祝福，购买法术卡
         [FieldIndex(Index = 5)]
-        public int Carbuncle;//购买怪物卡
+        public uint Carbuncle;//购买怪物卡，贿赂怪物
         [FieldIndex(Index = 6)]
-        public int Sulfur; 
+        public uint Sulfur; //炼金(待实现)
         [FieldIndex(Index = 7)]
-        public int Gem; //购买武器卡
+        public uint Gem; //购买武器卡
 
         public GameResource()
             : this(0, 0, 0, 0, 0, 0, 0)
         {
         }
 
-        public GameResource(int gold, int lumber, int stone, int mercury, int carbuncle, int sulfur, int gem)
+        public GameResource(uint gold, uint lumber, uint stone, uint mercury, uint carbuncle, uint sulfur, uint gem)
         {
             Gold = gold;
             Lumber = lumber;
@@ -35,7 +35,7 @@ namespace TaleofMonsters.DataType.Others
             Gem = gem;
         }
 
-        internal void Add(GameResourceType type, int value)
+        internal void Add(GameResourceType type, uint value)
         {
             switch ((int)type)
             {
@@ -48,7 +48,22 @@ namespace TaleofMonsters.DataType.Others
                 case 6: Gem += value; break;
             }
         }
-        internal int Get(GameResourceType type)
+
+        internal void Sub(GameResourceType type, uint value)
+        {
+            switch ((int)type)
+            {
+                case 0: Gold -= value; break;
+                case 1: Lumber -= value; break;
+                case 2: Stone -= value; break;
+                case 3: Mercury -= value; break;
+                case 4: Carbuncle -= value; break;
+                case 5: Sulfur -= value; break;
+                case 6: Gem -= value; break;
+            }
+        }
+
+        internal uint Get(GameResourceType type)
         {
             switch ((int)type)
             {
@@ -89,7 +104,7 @@ namespace TaleofMonsters.DataType.Others
 
                 string[] infos = data.Split(';');
 
-                int value = int.Parse(infos[1]);
+                uint value = uint.Parse(infos[1]);
                 switch (int.Parse(infos[0]))
                 {
                     case 1: res.Gold += value; break;
@@ -104,9 +119,9 @@ namespace TaleofMonsters.DataType.Others
             return res;
         }
 
-        public int[] ToArray()
+        public uint[] ToArray()
         {
-            int[] rt = new int[7];
+            uint[] rt = new uint[7];
             rt[0] = Gold;
             rt[1] = Lumber;
             rt[2] = Stone;

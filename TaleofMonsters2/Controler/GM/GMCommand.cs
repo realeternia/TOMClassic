@@ -3,7 +3,6 @@ using ConfigDatas;
 using TaleofMonsters.Controler.Battle;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
@@ -74,14 +73,12 @@ namespace TaleofMonsters.Controler.GM
                         break;
                     case "gold": if (data.Length == 2)
                         {
-                            GameResource res = new GameResource();
-                            res.Gold = int.Parse(data[1]);
-                            UserProfile.InfoBag.AddResource(res.ToArray());
+                            UserProfile.InfoBag.AddResource(GameResourceType.Gold, uint.Parse(data[1]));
                         } break;
                     case "res": if (data.Length == 2)
                     {
-                        int v = int.Parse(data[1]);
-                            UserProfile.InfoBag.AddResource(new int[] { 0, v, v, v, v, v, v });
+                        var v = uint.Parse(data[1]);
+                            UserProfile.InfoBag.AddResource(new uint[] { 0, v, v, v, v, v, v });
                         } break;
                     case "dmd": if (data.Length == 2) UserProfile.InfoBag.AddDiamond(int.Parse(data[1])); break;
                     case "acv": if (data.Length == 2) UserProfile.Profile.InfoAchieve.SetAchieve(int.Parse(data[1])); break;

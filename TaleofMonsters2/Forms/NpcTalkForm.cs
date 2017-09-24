@@ -135,7 +135,7 @@ namespace TaleofMonsters.Forms
             }
 
             if (interactBlock!=null && interactBlock.Depth==0)
-            {
+            {//额外的任务目标
                 foreach (var questConfig in ConfigData.QuestDict.Values)
                 {
                     if (questConfig.NpcId == EventId)

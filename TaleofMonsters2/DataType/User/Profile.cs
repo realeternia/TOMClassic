@@ -1,5 +1,4 @@
 ﻿using System;
-using NarlonLib.Core;
 using TaleofMonsters.Controler.World;
 using TaleofMonsters.Core;
 using NarlonLib.Math;
@@ -72,13 +71,13 @@ namespace TaleofMonsters.DataType.User
                 case 12: return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.TotalDig);
                 case 13: return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.TotalFish);
                 case 14: return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.ContinueWin);
-                case 21: return InfoBag.Resource.Gold;
-                case 22: return InfoBag.Resource.Lumber;
-                case 23: return InfoBag.Resource.Stone;
-                case 24: return InfoBag.Resource.Mercury;
-                case 25: return InfoBag.Resource.Sulfur;
-                case 26: return InfoBag.Resource.Carbuncle;
-                case 27: return InfoBag.Resource.Gem;
+                case 21: return (int)InfoBag.Resource.Gold;
+                case 22: return (int)InfoBag.Resource.Lumber;
+                case 23: return (int)InfoBag.Resource.Stone;
+                case 24: return (int)InfoBag.Resource.Mercury;
+                case 25: return (int)InfoBag.Resource.Sulfur;
+                case 26: return (int)InfoBag.Resource.Carbuncle;
+                case 27: return (int)InfoBag.Resource.Gem;
                 case 30: return InfoCard.GetCardCountByType(CardTypes.Null);
                 case 31: return InfoCard.GetCardCountByType(CardTypes.Monster);
                 case 32: return InfoCard.GetCardCountByType(CardTypes.Weapon);

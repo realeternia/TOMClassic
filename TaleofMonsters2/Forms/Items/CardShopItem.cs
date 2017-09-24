@@ -146,10 +146,10 @@ namespace TaleofMonsters.Forms.Items
             var cardData = CardConfigManager.GetCardConfig(product.Cid);
 
             GameResource res = new GameResource();
-            res.Gold = cardData.Star * 30;
+            res.Gold = (uint)cardData.Star * 30;
             var markType = (CardProductMarkTypes)product.Mark;
             if (markType == CardProductMarkTypes.Sale)
-                res.Gold = MathTool.GetRound(res.Gold, 20);
+                res.Gold = (uint)MathTool.GetRound((int)res.Gold, 20);
             else if (markType == CardProductMarkTypes.Gold)
                 res.Gold = res.Gold * 12 / 10;
             else if (markType == CardProductMarkTypes.Hot)
@@ -158,11 +158,11 @@ namespace TaleofMonsters.Forms.Items
                 res.Gold = 300;
 
             if (cardData.Type == CardTypes.Monster)
-                res.Add(GameResourceType.Carbuncle, (int)GameResourceBook.OutCarbuncleCardBuy((int)cardData.Quality + 1));
+                res.Add(GameResourceType.Carbuncle, GameResourceBook.OutCarbuncleCardBuy((int)cardData.Quality + 1));
             else if (cardData.Type == CardTypes.Weapon)
-                res.Add(GameResourceType.Gem, (int)GameResourceBook.OutGemCardBuy((int)cardData.Quality + 1));
+                res.Add(GameResourceType.Gem, GameResourceBook.OutGemCardBuy((int)cardData.Quality + 1));
             else if (cardData.Type == CardTypes.Spell)
-                res.Add(GameResourceType.Mercury, (int)GameResourceBook.OutMercuryCardBuy((int)cardData.Quality + 1));
+                res.Add(GameResourceType.Mercury, GameResourceBook.OutMercuryCardBuy((int)cardData.Quality + 1));
             return res;
         }
 

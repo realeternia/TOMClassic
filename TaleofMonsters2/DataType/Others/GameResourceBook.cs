@@ -171,6 +171,18 @@ namespace TaleofMonsters.DataType.Others
             return (uint)(qual * (qual + 1) * Math.Sqrt(qual)) * 2; //2-8-20-40
         }
         /// <summary>
+        /// 战斗中贿赂怪物消耗Carbuncle
+        /// </summary>
+        public static uint OutCarbuncleBribe(int myLevel, int level)
+        {
+            int levelDiffer = level - myLevel;
+            if (levelDiffer < -5)
+                return 3;
+            if (levelDiffer <= 0)
+                return 5;
+            return (uint)(levelDiffer * (levelDiffer + 1)) + 5;
+        }
+        /// <summary>
         /// 消耗水银购买祝福
         /// </summary>
         public static uint OutMercuryBlessBuy(int level)

@@ -26,7 +26,7 @@ namespace TaleofMonsters.Controler.Battle
         private bool isWin;
         private int leftId;
         private int rightId;
-        private int[] resource;
+        private uint[] resource;
         private uint exp;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
         private VirtualRegion virtualRegion;
@@ -69,7 +69,7 @@ namespace TaleofMonsters.Controler.Battle
                 PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(rightId);
                 exp = GameResourceBook.InExpFight(UserProfile.InfoBasic.Level, peopleConfig.Level);
 
-                resource[0] = resource[0]*(100 + statisticData.GoldRatePlus)/100;
+                resource[0] = (uint)(resource[0]*(100 + statisticData.GoldRatePlus)/100);
                 exp = exp*(100 + (uint)statisticData.ExpRatePlus)/100;
 
                 if (isWin)
@@ -95,7 +95,7 @@ namespace TaleofMonsters.Controler.Battle
                 if (resource[0] > 0)
                 {
                     var pos = GetCellPosition();
-                    var pictureRegion = ComplexRegion.GetResShowRegion(cellIndex, pos, 45, ImageRegionCellType.Gold, resource[0]);
+                    var pictureRegion = ComplexRegion.GetResShowRegion(cellIndex, pos, 45, ImageRegionCellType.Gold, (int)resource[0]);
                     virtualRegion.AddRegion(pictureRegion);
                 }
 
@@ -115,7 +115,7 @@ namespace TaleofMonsters.Controler.Battle
             }
             else
             {
-                resource = (new GameResource()).ToArray();
+                resource = new uint[7];
             }
             show = true;
             Reward();

@@ -138,7 +138,7 @@ namespace TaleofMonsters.DataType.Cards.Spells
             sb.Dispose();
         }
 
-        public override Image GetPreview(CardPreviewType type, int[] parms)
+        public override Image GetPreview(CardPreviewType type, uint[] parms)
         {
             const string stars = "★★★★★★★★★★";
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
