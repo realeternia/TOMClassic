@@ -52,6 +52,12 @@ namespace TaleofMonsters.Forms.Items.Regions
         Exp,
         Food,
         Health,
-        Mental
+        Mental,
+        Lumber,
+        Stone,
+        Mercury,
+        Carbuncle,
+        Sulfur,
+        Gem
     }
 }

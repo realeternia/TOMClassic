@@ -20,6 +20,10 @@ namespace TaleofMonsters.MainItem.Quests
             {
                 PanelManager.DealPanel(new ChangeCardForm());
             }
+            else if (e.ParamList[0] == "changeres")
+            {
+                PanelManager.DealPanel(new ChangeResForm());
+            }
             else if (e.ParamList[0] == "selectjob")
             {
                 autoClose = false;

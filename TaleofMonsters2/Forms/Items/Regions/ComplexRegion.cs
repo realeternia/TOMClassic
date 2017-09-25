@@ -14,7 +14,7 @@ namespace TaleofMonsters.Forms.Items.Regions
             var pictureRegion = new ImageRegion(index, pos.X, pos.Y, size, size, type, HSIcons.GetIconsByEName(iconName));
             pictureRegion.Scale = 0.5f;
             pictureRegion.Parm = change.ToString();
-            var textControl = new RegionTextDecorator(3, size-20, 11, change > 0 ? Color.White : Color.Red, true);
+            var textControl = new RegionTextDecorator(3, size - 20, 11, change > 0 ? Color.White : Color.Red, true);
             textControl.SetState(change.ToString());
             pictureRegion.AddDecorator(textControl);
             pictureRegion.AddDecorator(new RegionBorderDecorator(borderColor));
@@ -60,6 +60,36 @@ namespace TaleofMonsters.Forms.Items.Regions
             {
                 iconName = "oth5";
                 borderColor = Color.Purple;
+            }
+            else if (type == ImageRegionCellType.Lumber)
+            {
+                iconName = "res2";
+                borderColor = Color.DarkGoldenrod;
+            }
+            else if (type == ImageRegionCellType.Stone)
+            {
+                iconName = "res3";
+                borderColor = Color.DarkKhaki;
+            }
+            else if (type == ImageRegionCellType.Mercury)
+            {
+                iconName = "res4";
+                borderColor = Color.White;
+            }
+            else if (type == ImageRegionCellType.Carbuncle)
+            {
+                iconName = "res5";
+                borderColor = Color.Red;
+            }
+            else if (type == ImageRegionCellType.Sulfur)
+            {
+                iconName = "res6";
+                borderColor = Color.Yellow;
+            }
+            else if (type == ImageRegionCellType.Gem)
+            {
+                iconName = "res7";
+                borderColor = Color.DodgerBlue;
             }
         }
     }
