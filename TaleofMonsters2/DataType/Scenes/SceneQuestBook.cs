@@ -106,6 +106,10 @@ namespace TaleofMonsters.DataType.Scenes
                 datas.Add(new RLIdValue { Id = 42000005, Value = config.QDoctor });
             if (config.QAngel > 0)//天使
                 datas.Add(new RLIdValue { Id = 42000006, Value = config.QAngel });
+            if (config.QWheel > 0)//轮盘
+                datas.Add(new RLIdValue { Id = 42000008, Value = config.QWheel });
+            if (config.QRes > 0)//期货
+                datas.Add(new RLIdValue { Id = 42000009, Value = config.QRes });
 
             if (!string.IsNullOrEmpty(config.Quest))
             {
