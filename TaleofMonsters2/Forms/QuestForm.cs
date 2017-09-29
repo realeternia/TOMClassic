@@ -16,7 +16,7 @@ namespace TaleofMonsters.Forms
     internal sealed partial class QuestForm : BasePanel
     {
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
         private ColorWordRegion colorWord;
         private int regionId;
 
@@ -30,9 +30,9 @@ namespace TaleofMonsters.Forms
 
         public void InitTasks()
         {
-            virtualRegion = new VirtualRegion(this);
-            virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
-            virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+            vRegion = new VirtualRegion(this);
+            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
+            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
             RefreshQuests();
 
             colorWord = new ColorWordRegion(190, 84, 440, "微软雅黑", 11, Color.White);
@@ -47,7 +47,7 @@ namespace TaleofMonsters.Forms
 
         private void RefreshQuests()
         {
-            virtualRegion.ClearRegion();
+            vRegion.ClearRegion();
             int index = 0;
             foreach (var questData in ConfigData.QuestDict.Values)
             {
@@ -74,7 +74,7 @@ namespace TaleofMonsters.Forms
                 var region = new ImageRegion(index++, 30 + questData.X * 24, 75 + questData.Y * 24, 20, 20, ImageRegionCellType.None, img);
                 region.SetKeyValue(questData.Id);
                 region.AddDecorator(new RegionBorderDecorator(borderColor));
-                virtualRegion.AddRegion(region);
+                vRegion.AddRegion(region);
             }
         }
 
@@ -124,7 +124,7 @@ namespace TaleofMonsters.Forms
             darkPen.Dispose();
             font.Dispose();
             e.Graphics.DrawRectangle(Pens.DimGray, 40, 85, 408, 284);
-            virtualRegion.Draw(e.Graphics);
+            vRegion.Draw(e.Graphics);
         }
 
         private void comboBoxType_SelectedIndexChanged(object sender, EventArgs e)

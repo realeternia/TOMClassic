@@ -20,7 +20,7 @@ namespace TaleofMonsters.Forms.Items
         private uint resCount2;
         private bool show;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
 
         private int x, y, width, height;
         private Control parent;
@@ -63,9 +63,9 @@ namespace TaleofMonsters.Forms.Items
                 case 7: backColor = Color.FromArgb(60, 60, 0); break;
             }
 
-            virtualRegion = new VirtualRegion(parent);
-            virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
-            virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+            vRegion = new VirtualRegion(parent);
+            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
+            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
 
         public void RefreshData()
@@ -80,11 +80,11 @@ namespace TaleofMonsters.Forms.Items
                 bitmapButtonBuy.Visible = !change.Used;
                 bitmapButtonBuy.Enabled = UserProfile.InfoBag.HasResource((GameResourceType)res1, resCount1);
 
-                virtualRegion.ClearRegion();
+                vRegion.ClearRegion();
                 var region = ComplexRegion.GetResShowRegion(1, new Point(x + 5, y + 8), 40, GetRegionType(res1), (int)resCount1);
-                virtualRegion.AddRegion(region);
+                vRegion.AddRegion(region);
                 region = ComplexRegion.GetResShowRegion(2, new Point(x + 97, y + 8), 40, GetRegionType(res2), (int)resCount2);
-                virtualRegion.AddRegion(region);
+                vRegion.AddRegion(region);
                 show = true;
             }
             else
@@ -93,7 +93,7 @@ namespace TaleofMonsters.Forms.Items
                 resCount1 = 0;
                 res2 = 0;
                 resCount2 = 0;
-                virtualRegion.ClearRegion();
+                vRegion.ClearRegion();
                 bitmapButtonBuy.Visible = false;
                 show = false;
             }
@@ -189,7 +189,7 @@ namespace TaleofMonsters.Forms.Items
                     font.Dispose();
                 }
 
-                virtualRegion.Draw(g);
+                vRegion.Draw(g);
             }
         }
     }

@@ -16,7 +16,7 @@ namespace TaleofMonsters.Forms.MiniGame
         private const int WorkFood = 4;
         private const int WorkSci = 5;
 
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
 
         private int eraGoodBad;
         private int eraBadGood;
@@ -38,20 +38,20 @@ namespace TaleofMonsters.Forms.MiniGame
             bitmapButtonC1.IconSize = new Size(16, 16);
             bitmapButtonC1.IconXY = new Point(4, 5);
             bitmapButtonC1.TextOffX = 8;
-            virtualRegion = new VirtualRegion(this);
+            vRegion = new VirtualRegion(this);
             for (int i = 0; i < 5; i++)
             {
                 ButtonRegion region = new ButtonRegion(i + 1, 40 + 55 * i, 310, 50, 50, string.Format("GameSanTi{0}.PNG", i + 1), string.Format("GameSanTi{0}On.PNG", i + 1));
                 region.AddDecorator(new RegionTextDecorator(10, 30, 10));
-                virtualRegion.AddRegion(region);
+                vRegion.AddRegion(region);
             }
-            virtualRegion.SetRegionDecorator(1, 0, "浸泡");
-            virtualRegion.SetRegionDecorator(2, 0, "脱水");
-            virtualRegion.SetRegionDecorator(3, 0, "医疗");
-            virtualRegion.SetRegionDecorator(4, 0, "农耕");
-            virtualRegion.SetRegionDecorator(5, 0, "科研");
+            vRegion.SetRegionDecorator(1, 0, "浸泡");
+            vRegion.SetRegionDecorator(2, 0, "脱水");
+            vRegion.SetRegionDecorator(3, 0, "医疗");
+            vRegion.SetRegionDecorator(4, 0, "农耕");
+            vRegion.SetRegionDecorator(5, 0, "科研");
             
-            virtualRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
+            vRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
         }
 
         public override void Init(int width, int height)
@@ -84,9 +84,9 @@ namespace TaleofMonsters.Forms.MiniGame
             selectWork = id;
             for (int i = 0; i < 5; i++)
             {
-                virtualRegion.SetRegionState(i + 1, RegionState.Free);
+                vRegion.SetRegionState(i + 1, RegionState.Free);
             }
-            virtualRegion.SetRegionState(id, RegionState.Rectangled);
+            vRegion.SetRegionState(id, RegionState.Rectangled);
             Invalidate(new Rectangle(xoff, yoff, 324, 244));
         }
 
@@ -208,7 +208,7 @@ namespace TaleofMonsters.Forms.MiniGame
             e.Graphics.DrawImage(img, 50 + xoff, 50 + yoff, 100, 100);
             img.Dispose();
 
-            virtualRegion.Draw(e.Graphics);
+            vRegion.Draw(e.Graphics);
 
             var font = new Font("宋体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             DrawShadeText(e.Graphics, string.Format("{0}({1})", isGoodEra ? "恒纪元" : "乱纪元", GetState()), font, isGoodEra?Brushes.Lime: Brushes.OrangeRed, xoff + 165, 35 + yoff);

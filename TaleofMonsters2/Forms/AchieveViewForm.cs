@@ -15,7 +15,7 @@ namespace TaleofMonsters.Forms
 {
     internal sealed partial class AchieveViewForm : BasePanel
     {
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
 
         private AchieveItem[] achieveControls;
         private int page;
@@ -25,20 +25,20 @@ namespace TaleofMonsters.Forms
         public AchieveViewForm()
         {
             InitializeComponent();
-            virtualRegion = new VirtualRegion(this);
+            vRegion = new VirtualRegion(this);
             for (int i = 0; i < 5; i++)
             {
                 ButtonRegion region = new ButtonRegion(i + 1, 9, 35 + 30 * i, 74, 24, "CommonButton1.JPG", "");
                 region.AddDecorator(new RegionTextDecorator(18, 7, 10, Color.Black));
-                virtualRegion.AddRegion(region);
+                vRegion.AddRegion(region);
             }
-            virtualRegion.SetRegionDecorator(1, 0, "常 规");
-            virtualRegion.SetRegionDecorator(2, 0, "资 源");
-            virtualRegion.SetRegionDecorator(3, 0, "杀 敌");
-            virtualRegion.SetRegionDecorator(4, 0, "召 唤");
-            virtualRegion.SetRegionDecorator(5, 0, "战 斗");
+            vRegion.SetRegionDecorator(1, 0, "常 规");
+            vRegion.SetRegionDecorator(2, 0, "资 源");
+            vRegion.SetRegionDecorator(3, 0, "杀 敌");
+            vRegion.SetRegionDecorator(4, 0, "召 唤");
+            vRegion.SetRegionDecorator(5, 0, "战 斗");
 
-            virtualRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
+            vRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
 
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
             this.nlPageSelector1 = new ControlPlus.NLPageSelector(this, 463, 422, 150);
@@ -79,9 +79,9 @@ namespace TaleofMonsters.Forms
             RefreshInfo();
             for (int i = 0; i < 5; i++)
             {
-                virtualRegion.SetRegionState(i + 1, RegionState.Free);
+                vRegion.SetRegionState(i + 1, RegionState.Free);
             }
-            virtualRegion.SetRegionState(type, RegionState.Blacken);
+            vRegion.SetRegionState(type, RegionState.Blacken);
             Invalidate(new Rectangle(9, 35, 66, 30*5));
         }
 
@@ -106,7 +106,7 @@ namespace TaleofMonsters.Forms
             e.Graphics.DrawString(" 成就 ", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
 
-            virtualRegion.Draw(e.Graphics);
+            vRegion.Draw(e.Graphics);
 
             foreach (AchieveItem ctl in achieveControls)
             {

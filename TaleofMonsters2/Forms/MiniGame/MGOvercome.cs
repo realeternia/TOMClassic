@@ -16,7 +16,7 @@ namespace TaleofMonsters.Forms.MiniGame
             None, Win, Loss, Draw
         }
 
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
 
         private int myChoice;
         private int rivalChoice;
@@ -34,20 +34,20 @@ namespace TaleofMonsters.Forms.MiniGame
             bitmapButtonC1.IconSize = new Size(16, 16);
             bitmapButtonC1.IconXY = new Point(4, 5);
             bitmapButtonC1.TextOffX = 8;
-            virtualRegion = new VirtualRegion(this);
+            vRegion = new VirtualRegion(this);
             for (int i = 0; i < 5; i++)
             {
                 ButtonRegion region = new ButtonRegion(i + 1, 35 + 55 * i, 310, 50, 50,"GameBackNormal1.PNG", "GameBackNormal1On.PNG");
                 region.AddDecorator(new RegionTextDecorator(10, 20, 10));
-                virtualRegion.AddRegion(region);
+                vRegion.AddRegion(region);
             }
-            virtualRegion.SetRegionDecorator(1, 0, " 水");
-            virtualRegion.SetRegionDecorator(2, 0, " 风");
-            virtualRegion.SetRegionDecorator(3, 0, " 火");
-            virtualRegion.SetRegionDecorator(4, 0, " 光");
-            virtualRegion.SetRegionDecorator(5, 0, " 暗");
+            vRegion.SetRegionDecorator(1, 0, " 水");
+            vRegion.SetRegionDecorator(2, 0, " 风");
+            vRegion.SetRegionDecorator(3, 0, " 火");
+            vRegion.SetRegionDecorator(4, 0, " 光");
+            vRegion.SetRegionDecorator(5, 0, " 暗");
 
-            virtualRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
+            vRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
         }
 
         public override void Init(int width, int height)
@@ -124,9 +124,9 @@ namespace TaleofMonsters.Forms.MiniGame
             myChoice = id - 1;
             for (int i = 0; i < 5; i++)
             {
-                virtualRegion.SetRegionState(i + 1, RegionState.Free);
+                vRegion.SetRegionState(i + 1, RegionState.Free);
             }
-            virtualRegion.SetRegionState(id, RegionState.Rectangled);
+            vRegion.SetRegionState(id, RegionState.Rectangled);
             state = WinState.None;
             Invalidate(new Rectangle(xoff, yoff, 324, 244));
         }
@@ -138,7 +138,7 @@ namespace TaleofMonsters.Forms.MiniGame
             if (!show)
                 return;
 
-            virtualRegion.Draw(e.Graphics);
+            vRegion.Draw(e.Graphics);
 
             var left = HSIcons.GetIconsByEName(GetIcon(myChoice));
             e.Graphics.DrawImage(left, 50, 160, 80, 80);

@@ -16,7 +16,7 @@ namespace TaleofMonsters.Forms.Items
         private int aid;
         private bool show;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
 
         private int x, y, width, height;
         private Control parent;
@@ -34,10 +34,10 @@ namespace TaleofMonsters.Forms.Items
         {
             index = idx;
 
-            virtualRegion = new VirtualRegion(parent);
-            virtualRegion.AddRegion(new PictureRegion(1, x + 3, y + 3, 76, 75, PictureRegionCellType.Achieve, 0));
-            virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
-            virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+            vRegion = new VirtualRegion(parent);
+            vRegion.AddRegion(new PictureRegion(1, x + 3, y + 3, 76, 75, PictureRegionCellType.Achieve, 0));
+            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
+            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
 
         public void RefreshData(int acid)
@@ -45,12 +45,12 @@ namespace TaleofMonsters.Forms.Items
             aid = acid;
             if (aid > 0)
             {
-                virtualRegion.SetRegionKey(1, aid);
+                vRegion.SetRegionKey(1, aid);
                 show = true;
             }
             else
             {
-                virtualRegion.SetRegionKey(1, 0);
+                vRegion.SetRegionKey(1, 0);
                 show = false;
             }
 
@@ -77,7 +77,7 @@ namespace TaleofMonsters.Forms.Items
             {
                 AchieveConfig achieveConfig = ConfigData.GetAchieveConfig(aid);
 
-                virtualRegion.Draw(g);
+                vRegion.Draw(g);
 
                 int bound = achieveConfig.Condition.Value;
                 int get = DataType.User.UserProfile.Profile.GetAchieveState(aid);

@@ -12,14 +12,13 @@ namespace TaleofMonsters.Forms.MagicBook
 {
     internal sealed partial class MagicBookViewForm : BasePanel
     {
-        private VirtualRegion virtualRegion;
-        private int last = -1;
+        private VirtualRegion vRegion;
 
         public MagicBookViewForm()
         {
             InitializeComponent();
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
-            virtualRegion = new VirtualRegion(this);
+            vRegion = new VirtualRegion(this);
             int xOff = 15;
             int yOff = 40;
             AddBookRegion(1, xOff + 55, yOff + 35, 51000129, "卡牌手册");
@@ -27,9 +26,9 @@ namespace TaleofMonsters.Forms.MagicBook
             AddBookRegion(3, xOff + 55 + 180, yOff + 35, 53000098,"对手分析");
             AddBookRegion(4, xOff + 55, yOff + 35 + 120, 52000061,"材料大全");
             AddBookRegion(5, xOff + 55 + 90, yOff + 35 +120, 53000110, "掉落系谱");
-            virtualRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
-            virtualRegion.RegionEntered+=new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
-            virtualRegion.RegionLeft+=new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+            vRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
+            vRegion.RegionEntered+=new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
+            vRegion.RegionLeft+=new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
 
         private void AddBookRegion(int id,int x, int y, int cardId, string text)
@@ -39,7 +38,7 @@ namespace TaleofMonsters.Forms.MagicBook
             textControl = new RegionTextDecorator(3, 80, 10, Color.Lime, true);
             textControl.SetState(text);
             region.AddDecorator(textControl);
-            virtualRegion.AddRegion(region);
+            vRegion.AddRegion(region);
         }
 
         public override void Init(int width, int height)
@@ -52,13 +51,11 @@ namespace TaleofMonsters.Forms.MagicBook
 
         private void virtualRegion_RegionLeft()
         {
-            last = -1;
             Invalidate();
         }
 
         private void virtualRegion_RegionEntered(int info, int i, int y1, int key)
         {
-            last = info;
             Invalidate();
         }
 
@@ -101,7 +98,7 @@ namespace TaleofMonsters.Forms.MagicBook
             e.Graphics.DrawImage(back, 5, 35, 672, 420);
             back.Dispose();
 
-            virtualRegion.Draw(e.Graphics);
+            vRegion.Draw(e.Graphics);
         }
 
     }

@@ -22,7 +22,7 @@ namespace TaleofMonsters.Forms
     internal sealed partial class MergeWeaponForm : BasePanel
     {
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
         private int[] itemCounts;
         private DbMergeData[] mergeInfos;
         private DbMergeData currentInfo;
@@ -33,16 +33,16 @@ namespace TaleofMonsters.Forms
         {
             InitializeComponent();
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
-            virtualRegion = new VirtualRegion(this);
-            virtualRegion.AddRegion(new PictureAnimRegion(1, 295, 100, 60, 60, PictureRegionCellType.Equip, 0));
-            virtualRegion.AddRegion(new PictureAnimRegion(2, 200, 259, 40, 40, PictureRegionCellType.Item, 0));
-            virtualRegion.AddRegion(new PictureAnimRegion(3, 410, 259, 40, 40, PictureRegionCellType.Item, 0));
-            virtualRegion.AddRegion(new PictureAnimRegion(4, 270, 259, 40, 40, PictureRegionCellType.Item, 0));
-            virtualRegion.AddRegion(new PictureAnimRegion(5, 340, 259, 40, 40, PictureRegionCellType.Item, 0));
+            vRegion = new VirtualRegion(this);
+            vRegion.AddRegion(new PictureAnimRegion(1, 295, 100, 60, 60, PictureRegionCellType.Equip, 0));
+            vRegion.AddRegion(new PictureAnimRegion(2, 200, 259, 40, 40, PictureRegionCellType.Item, 0));
+            vRegion.AddRegion(new PictureAnimRegion(3, 410, 259, 40, 40, PictureRegionCellType.Item, 0));
+            vRegion.AddRegion(new PictureAnimRegion(4, 270, 259, 40, 40, PictureRegionCellType.Item, 0));
+            vRegion.AddRegion(new PictureAnimRegion(5, 340, 259, 40, 40, PictureRegionCellType.Item, 0));
 
-            virtualRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
-            virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
-            virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+            vRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
+            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
+            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
 
             selectPanel = new NLSelectPanel(8, 34, 154, 400, this);
             selectPanel.ItemHeight = 50;
@@ -170,19 +170,19 @@ namespace TaleofMonsters.Forms
             }
 
             EquipConfig equipConfig = ConfigData.GetEquipConfig(targetid);
-            virtualRegion.SetRegionKey(1, equipConfig.Id);
+            vRegion.SetRegionKey(1, equipConfig.Id);
             itemCounts[0] = UserProfile.InfoEquip.GetEquipCount(equipConfig.Id);
 
             int index = 1;
             foreach (IntPair pair in currentInfo.Methods)
             {
-                virtualRegion.SetRegionKey(index+1, pair.Type);
+                vRegion.SetRegionKey(index+1, pair.Type);
                 itemCounts[index] = UserProfile.InfoBag.GetItemCount(pair.Type);
                 index++;
             }
             for (int i = index; i < 6; i++)
             {
-                virtualRegion.SetRegionKey(i+1, 0);
+                vRegion.SetRegionKey(i+1, 0);
             }
 
             Invalidate();
@@ -291,7 +291,7 @@ namespace TaleofMonsters.Forms
             e.Graphics.DrawImage(border, 295 - 10, 100 - 15, 80, 90);
             border.Dispose();
 
-            virtualRegion.Draw(e.Graphics);
+            vRegion.Draw(e.Graphics);
 
         }
     }

@@ -24,7 +24,7 @@ namespace TaleofMonsters.Forms
         private int constellation; //星座
         private HSCursor myCursor;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
         private DialogResult result;
 
         public CreatePlayerForm()
@@ -32,12 +32,12 @@ namespace TaleofMonsters.Forms
             InitializeComponent();
             FormBorderStyle = FormBorderStyle.None;
             myCursor = new HSCursor(this);
-            virtualRegion = new VirtualRegion(this);
-            virtualRegion.AddRegion(new SubVirtualRegion(1, 141, 159, 24, 24));
-            virtualRegion.AddRegion(new SubVirtualRegion(2, 141, 192, 24, 24));
-            virtualRegion.AddRegion(new SubVirtualRegion(3, 141, 225, 24, 24));
-            virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
-            virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+            vRegion = new VirtualRegion(this);
+            vRegion.AddRegion(new SubVirtualRegion(1, 141, 159, 24, 24));
+            vRegion.AddRegion(new SubVirtualRegion(2, 141, 192, 24, 24));
+            vRegion.AddRegion(new SubVirtualRegion(3, 141, 225, 24, 24));
+            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
+            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
 
         public DialogResult Result

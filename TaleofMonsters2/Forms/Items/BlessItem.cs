@@ -19,7 +19,7 @@ namespace TaleofMonsters.Forms.Items
         private int blessId;
         private bool show;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
 
         private int x, y, width, height;
         private BasePanel parent;
@@ -51,10 +51,10 @@ namespace TaleofMonsters.Forms.Items
         {
             index = idx;
 
-            virtualRegion = new VirtualRegion(parent);
-            virtualRegion.AddRegion(new PictureRegion(1, x + 3, y + 3, 76, 75, PictureRegionCellType.Bless, 0));
-            virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
-            virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+            vRegion = new VirtualRegion(parent);
+            vRegion.AddRegion(new PictureRegion(1, x + 3, y + 3, 76, 75, PictureRegionCellType.Bless, 0));
+            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
+            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
 
         public void RefreshData(int eid)
@@ -63,12 +63,12 @@ namespace TaleofMonsters.Forms.Items
             if (eid > 0)
             {
                 bitmapButtonBuy.Visible = true;
-                virtualRegion.SetRegionKey(1, eid);
+                vRegion.SetRegionKey(1, eid);
                 show = true;
             }
             else
             {
-                virtualRegion.SetRegionKey(1, 0);
+                vRegion.SetRegionKey(1, 0);
                 bitmapButtonBuy.Visible = false;
                 show = false;
             }
@@ -142,7 +142,7 @@ namespace TaleofMonsters.Forms.Items
             {
                 var blessConfig = ConfigData.GetBlessConfig(blessId);
 
-                virtualRegion.Draw(g);
+                vRegion.Draw(g);
 
                 var cost = GameResourceBook.OutMercuryBlessBuy(blessConfig.Level);
                 Font ft = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);

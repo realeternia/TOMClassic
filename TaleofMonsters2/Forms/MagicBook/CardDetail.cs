@@ -31,7 +31,7 @@ namespace TaleofMonsters.Forms.MagicBook
         private Card card;
         private List<MonsterSkill> skills;
         private CoverEffect coverEffect;
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
         public DeckCardRegion.InvalidateRegion Invalidate;
         public bool Enabled = true;
 
@@ -44,13 +44,13 @@ namespace TaleofMonsters.Forms.MagicBook
             Width = 200;
             Height = height;
 
-            virtualRegion = new VirtualRegion(control);
-            virtualRegion.AddRegion(new SubVirtualRegion(1, x + 60, y + 170, 24, 24));
-            virtualRegion.AddRegion(new SubVirtualRegion(2, x + 88, y + 170, 24, 24));
-            virtualRegion.AddRegion(new PictureRegion(3, x + 116, y + 170, 24, 24, PictureRegionCellType.CardQual, 0));
-            virtualRegion.AddRegion(new PictureRegion(4, x + 146, y + 25, 24, 24, PictureRegionCellType.Job, 0));
-            virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
-            virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+            vRegion = new VirtualRegion(control);
+            vRegion.AddRegion(new SubVirtualRegion(1, x + 60, y + 170, 24, 24));
+            vRegion.AddRegion(new SubVirtualRegion(2, x + 88, y + 170, 24, 24));
+            vRegion.AddRegion(new PictureRegion(3, x + 116, y + 170, 24, 24, PictureRegionCellType.CardQual, 0));
+            vRegion.AddRegion(new PictureRegion(4, x + 146, y + 25, 24, 24, PictureRegionCellType.Job, 0));
+            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
+            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
 
         public void SetInfo(DeckCard dcard)
@@ -62,13 +62,13 @@ namespace TaleofMonsters.Forms.MagicBook
             if (cid > 0)
             {
                 card = CardAssistant.GetCard(cid);
-                virtualRegion.SetRegionKey(3, (int)CardConfigManager.GetCardConfig(cid).Quality+1);
+                vRegion.SetRegionKey(3, (int)CardConfigManager.GetCardConfig(cid).Quality+1);
                 var jobId = CardConfigManager.GetCardConfig(cid).JobId;
                 if (jobId > 0)
                 {
                     jobId = ConfigData.GetJobConfig(jobId).JobIndex;
                 }
-                virtualRegion.SetRegionKey(4, jobId);
+                vRegion.SetRegionKey(4, jobId);
                 card.SetData(dcard);
                 if (card.GetCardType() == CardTypes.Monster)
                 {
@@ -142,7 +142,7 @@ namespace TaleofMonsters.Forms.MagicBook
                 {
                     coverEffect.Draw(g);
                 }
-                virtualRegion.Draw(g);
+                vRegion.Draw(g);
             }
         }
 

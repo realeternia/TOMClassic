@@ -18,7 +18,7 @@ namespace TaleofMonsters.Forms.Pops
         private int itemprice;
         private int count;
         private string fontcolor;
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
         private ImageToolTip toolTip =MainItem.SystemToolTip.Instance;
 
         public PopBuyProduct()
@@ -26,9 +26,9 @@ namespace TaleofMonsters.Forms.Pops
             InitializeComponent();
             BackgroundImage = PicLoader.Read("System", "DeckChoose.PNG");
             FormBorderStyle = FormBorderStyle.None;
-            virtualRegion = new VirtualRegion(this);
-            virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
-            virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+            vRegion = new VirtualRegion(this);
+            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
+            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
 
         private void PopBuyProduct_Load(object sender, EventArgs e)
@@ -72,7 +72,7 @@ namespace TaleofMonsters.Forms.Pops
 
         private void MessageBoxEx_Paint(object sender, PaintEventArgs e)
         {
-            virtualRegion.Draw(e.Graphics);
+            vRegion.Draw(e.Graphics);
 
             string itemname;
             var isEquip = ConfigIdManager.IsEquip(itemid);
@@ -101,7 +101,7 @@ namespace TaleofMonsters.Forms.Pops
             PopBuyProduct mb = new PopBuyProduct();
             mb.itemid = id;
             mb.itemprice = price;
-            mb.virtualRegion.AddRegion(new PictureRegion(1, 68, 44, 40, 40, !isEquip ? PictureRegionCellType.Item : PictureRegionCellType.Equip, id));
+            mb.vRegion.AddRegion(new PictureRegion(1, 68, 44, 40, 40, !isEquip ? PictureRegionCellType.Item : PictureRegionCellType.Equip, id));
             mb.ShowDialog();
         }
 

@@ -53,7 +53,7 @@ namespace TaleofMonsters.Forms
             #endregion
         }
 
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
         private DeckCardRegion cardRegion;//卡盒区域
         private DeckSelectCardRegion selectRegion;//卡组区域
         private DeckCard targetCard;
@@ -73,20 +73,20 @@ namespace TaleofMonsters.Forms
         public DeckViewForm()
         {
             InitializeComponent();
-            virtualRegion = new VirtualRegion(this);
+            vRegion = new VirtualRegion(this);
             SubVirtualRegion region;
             for (int i = 0; i < 2; i++)
             {
                 region = new ButtonRegion(i + 1, 12+120+85*i, 40, 74, 24, "CommonButton1.JPG", "");
                 region.AddDecorator(new RegionTextDecorator(8, 7, 10, Color.Black));
-                virtualRegion.AddRegion(region);
+                vRegion.AddRegion(region);
             }
-            virtualRegion.SetRegionDecorator(1, 0, "全部卡片");
-            virtualRegion.SetRegionDecorator(2, 0, " 新卡片");
+            vRegion.SetRegionDecorator(1, 0, "全部卡片");
+            vRegion.SetRegionDecorator(2, 0, " 新卡片");
 
-            virtualRegion.RegionClicked += OnVRegionClicked;
-            virtualRegion.RegionEntered += OnVRegionEntered;
-            virtualRegion.RegionLeft += OnVRegionLeft;
+            vRegion.RegionClicked += OnVRegionClicked;
+            vRegion.RegionEntered += OnVRegionEntered;
+            vRegion.RegionLeft += OnVRegionLeft;
 
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
             bitmapButtonClose.NoUseDrawNine = true;
@@ -222,9 +222,9 @@ namespace TaleofMonsters.Forms
             UpdateDeckButtonState();
             for (int i = 0; i < 3; i++)
             {
-                virtualRegion.SetRegionState(i + 1, RegionState.Free);
+                vRegion.SetRegionState(i + 1, RegionState.Free);
             }
-            virtualRegion.SetRegionState(type, RegionState.Blacken);
+            vRegion.SetRegionState(type, RegionState.Blacken);
             Invalidate();
         }
 
@@ -429,7 +429,7 @@ namespace TaleofMonsters.Forms
                     cardRegion.Draw(e.Graphics);
                     selectRegion.Draw(e.Graphics);
 
-                    virtualRegion.Draw(e.Graphics);
+                    vRegion.Draw(e.Graphics);
 
                     font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
                     e.Graphics.DrawString(UserProfile.InfoCard.SelectedDeck.Name, font, Brushes.White, 5, 580);

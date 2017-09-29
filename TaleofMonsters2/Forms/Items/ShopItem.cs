@@ -22,7 +22,7 @@ namespace TaleofMonsters.Forms.Items
         private int price;
         private bool show;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
 
         private int x, y, width, height;
         private BasePanel parent;
@@ -51,10 +51,10 @@ namespace TaleofMonsters.Forms.Items
         public void Init(int type)
         {
             priceType = type;
-            virtualRegion = new VirtualRegion(parent);
-            virtualRegion.AddRegion(new PictureAnimRegion(1, x + 5, y + 8, 40, 40, PictureRegionCellType.Card, 0));
-            virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
-            virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+            vRegion = new VirtualRegion(parent);
+            vRegion.AddRegion(new PictureAnimRegion(1, x + 5, y + 8, 40, 40, PictureRegionCellType.Card, 0));
+            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
+            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
 
         public void RefreshData(int id)
@@ -65,8 +65,8 @@ namespace TaleofMonsters.Forms.Items
             if (id != 0)
             {
                 var isEquip = ConfigIdManager.IsEquip(id);
-                virtualRegion.SetRegionKey(1, id);
-                virtualRegion.SetRegionType(1, !isEquip ? PictureRegionCellType.Item : PictureRegionCellType.Equip);
+                vRegion.SetRegionKey(1, id);
+                vRegion.SetRegionType(1, !isEquip ? PictureRegionCellType.Item : PictureRegionCellType.Equip);
                 if (!isEquip)
                 {
                     var itmConfig = ConfigData.GetHItemConfig(itemId);
@@ -160,7 +160,7 @@ namespace TaleofMonsters.Forms.Items
                 g.DrawImage(HSIcons.GetIconsByEName("res"+(priceType+1)), wid + 50+x, 32+y, 16, 16);
                 font.Dispose();
 
-                virtualRegion.Draw(g);
+                vRegion.Draw(g);
             }
         }
     }

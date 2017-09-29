@@ -54,7 +54,7 @@ namespace TaleofMonsters.Forms.MiniGame
         private uint countElf;
         private uint countDwalf;
 
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
 
         private VoteQuestion[] questions = new VoteQuestion[]
         {
@@ -87,14 +87,14 @@ namespace TaleofMonsters.Forms.MiniGame
             bitmapButtonC1.IconSize = new Size(16, 16);
             bitmapButtonC1.IconXY = new Point(4, 5);
             bitmapButtonC1.TextOffX = 8;
-            virtualRegion = new VirtualRegion(this);
+            vRegion = new VirtualRegion(this);
             for (int i = 0; i < 3; i++)
             {
                 ButtonRegion region = new ButtonRegion(i + 1, 30, 270+30*i, 20, 20, "GameBackNormal1.PNG", "GameBackNormal1On.PNG");
-                virtualRegion.AddRegion(region);
+                vRegion.AddRegion(region);
             }
             
-            virtualRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
+            vRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
         }
 
         public override void Init(int width, int height)
@@ -196,10 +196,10 @@ namespace TaleofMonsters.Forms.MiniGame
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    virtualRegion.SetRegionState(i + 1, RegionState.Free);
+                    vRegion.SetRegionState(i + 1, RegionState.Free);
                 }
                 selectQuestionId = targetQuestions[id-1];
-                virtualRegion.SetRegionState(id, RegionState.Rectangled);
+                vRegion.SetRegionState(id, RegionState.Rectangled);
                 Invalidate(new Rectangle(xoff, yoff, 324, 244));
             }
         }
@@ -212,7 +212,7 @@ namespace TaleofMonsters.Forms.MiniGame
             if (!show)
                 return;
 
-            virtualRegion.Draw(e.Graphics);
+            vRegion.Draw(e.Graphics);
 
             e.Graphics.DrawImage(HSIcons.GetIconsByEName("rac8"), xoff + 80, yoff + 10, 30, 30);
             e.Graphics.DrawImage(HSIcons.GetIconsByEName("rac9"), xoff + 140, yoff + 10, 30, 30);

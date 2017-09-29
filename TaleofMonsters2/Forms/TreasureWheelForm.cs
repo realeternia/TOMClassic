@@ -19,7 +19,7 @@ namespace TaleofMonsters.Forms
     {
         private Image backImage;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
         private Point[] points;
         private int fuel;
         private int fuelAim;
@@ -67,7 +67,7 @@ namespace TaleofMonsters.Forms
             points[17] = new Point(15, 55);
             #endregion
 
-            virtualRegion = new VirtualRegion(this);
+            vRegion = new VirtualRegion(this);
             var wheelConfig = ConfigDatas.ConfigData.GetTreasureWheelConfig(WheelId);
             #region 读取轮盘配置
             treasureList.Add(new IntPair() { Type = HItemBook.GetItemId(wheelConfig.Item1), Value = wheelConfig.Count1 });
@@ -97,13 +97,13 @@ namespace TaleofMonsters.Forms
                 var targetItem = treasureList[i];
                 var region = new PictureAnimRegion(i, points[i].X+ xOff, points[i].Y + yOff, 40, 40, PictureRegionCellType.Item, targetItem.Type);
                 region.AddDecorator(new RegionTextDecorator(5, 24, 10));
-                virtualRegion.AddRegion(region);
-                virtualRegion.SetRegionDecorator(i, 0, targetItem.Value.ToString());
+                vRegion.AddRegion(region);
+                vRegion.SetRegionDecorator(i, 0, targetItem.Value.ToString());
             }
 
             backImage = PicLoader.Read("System", string.Format("{0}.JPG", wheelConfig.Image));
-            virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
-            virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
+            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
 
         public override void OnFrame(int tick, float timePass)
@@ -175,7 +175,7 @@ namespace TaleofMonsters.Forms
             int yOff = 107;
             e.Graphics.DrawImage(backImage, xOff, yOff, 324, 244);
 
-            virtualRegion.Draw(e.Graphics);
+            vRegion.Draw(e.Graphics);
 
             if (WheelId > 0)
             {

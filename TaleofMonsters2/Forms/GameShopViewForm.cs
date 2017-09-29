@@ -19,7 +19,7 @@ namespace TaleofMonsters.Forms
         private int page;
         private List<int> productIds;
         private ControlPlus.NLPageSelector nlPageSelector1;
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
 
         public GameShopViewForm()
         {
@@ -28,19 +28,19 @@ namespace TaleofMonsters.Forms
             this.nlPageSelector1 = new ControlPlus.NLPageSelector(this, 365, 365, 150);
             nlPageSelector1.PageChange += nlPageSelector1_PageChange;
             productIds = new List<int>();
-            virtualRegion = new VirtualRegion(this);
+            vRegion = new VirtualRegion(this);
             for (int i = 0; i < 4; i++)
             {
                 SubVirtualRegion subRegion = new ButtonRegion(i + 1, 16 + 45 * i, 39, 42, 23, "ShopTag.JPG", "");
                 subRegion.AddDecorator(new RegionTextDecorator(8,7,9,Color.White, false));
-                virtualRegion.AddRegion(subRegion);
+                vRegion.AddRegion(subRegion);
             }
-            virtualRegion.SetRegionDecorator(1, 0, "礼包");
-            virtualRegion.SetRegionDecorator(2, 0, "战斗");
-            virtualRegion.SetRegionDecorator(3, 0, "道具");
-            virtualRegion.SetRegionDecorator(4, 0, "神器");
+            vRegion.SetRegionDecorator(1, 0, "礼包");
+            vRegion.SetRegionDecorator(2, 0, "战斗");
+            vRegion.SetRegionDecorator(3, 0, "道具");
+            vRegion.SetRegionDecorator(4, 0, "神器");
 
-            virtualRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClick);
+            vRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClick);
         }
 
         public override void Init(int width, int height)
@@ -69,10 +69,10 @@ namespace TaleofMonsters.Forms
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    virtualRegion.SetRegionState(i+1, RegionState.Free);
+                    vRegion.SetRegionState(i+1, RegionState.Free);
                 }
 
-                virtualRegion.SetRegionState(id, RegionState.Blacken);
+                vRegion.SetRegionState(id, RegionState.Blacken);
                 productIds.Clear();
                 foreach (GameShopConfig gameShopConfig in ConfigData.GameShopDict.Values)
                 {
@@ -101,7 +101,7 @@ namespace TaleofMonsters.Forms
             e.Graphics.DrawString("游戏商城", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
 
-            virtualRegion.Draw(e.Graphics);
+            vRegion.Draw(e.Graphics);
             foreach (GameShopItem ctl in itemControls)
             {
                 ctl.Draw(e.Graphics);

@@ -18,7 +18,7 @@ namespace TaleofMonsters.Forms.Items
     {
         private bool show;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
 
         private int productId;
         private int x, y, width, height;
@@ -47,10 +47,10 @@ namespace TaleofMonsters.Forms.Items
 
         public void Init()
         {
-            virtualRegion = new VirtualRegion(parent);
-            virtualRegion.AddRegion(new PictureAnimRegion(1, x + 11, y + 19, 56, 56, PictureRegionCellType.Item, 0));
-            virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
-            virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+            vRegion = new VirtualRegion(parent);
+            vRegion.AddRegion(new PictureAnimRegion(1, x + 11, y + 19, 56, 56, PictureRegionCellType.Item, 0));
+            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
+            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
 
         public void RefreshData(int id)//商品id
@@ -63,9 +63,9 @@ namespace TaleofMonsters.Forms.Items
             if (id != 0)
             {
                 var eid = HItemBook.GetItemId(gameShopConfig.Item);
-                virtualRegion.SetRegionKey(1, eid);
+                vRegion.SetRegionKey(1, eid);
                 var isEquip = ConfigIdManager.IsEquip(eid);
-                virtualRegion.SetRegionType(1, !isEquip ? PictureRegionCellType.Item : PictureRegionCellType.Equip);
+                vRegion.SetRegionType(1, !isEquip ? PictureRegionCellType.Item : PictureRegionCellType.Equip);
             }
 
             parent.Invalidate(new Rectangle(x, y, width, height));
@@ -152,7 +152,7 @@ namespace TaleofMonsters.Forms.Items
                 fontsong.Dispose();
                 g.DrawImage(HSIcons.GetIconsByEName("res8"), x + 110, y + 35, 16, 16);
 
-                virtualRegion.Draw(g);
+                vRegion.Draw(g);
             }
         }
     }

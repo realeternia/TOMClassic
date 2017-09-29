@@ -22,7 +22,7 @@ namespace TaleofMonsters.Forms.Items
         private DbCardProduct product;
         private bool show;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
 
         private int x, y, width, height;
         private BasePanel parent;
@@ -39,12 +39,12 @@ namespace TaleofMonsters.Forms.Items
 
         public void Init()
         {
-            virtualRegion = new VirtualRegion(parent);
-            virtualRegion.AddRegion(new SubVirtualRegion(1, x + 12, y + 14, 64, 84));
-            virtualRegion.AddRegion(new ButtonRegion(2, x + 55, y + 102, 17, 17, "BuyIcon.PNG", "BuyIconOn.PNG"));
-            virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
-            virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
-            virtualRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
+            vRegion = new VirtualRegion(parent);
+            vRegion.AddRegion(new SubVirtualRegion(1, x + 12, y + 14, 64, 84));
+            vRegion.AddRegion(new ButtonRegion(2, x + 55, y + 102, 17, 17, "BuyIcon.PNG", "BuyIconOn.PNG"));
+            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
+            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+            vRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
         }
 
         public void RefreshData(DbCardProduct pro)
@@ -53,7 +53,7 @@ namespace TaleofMonsters.Forms.Items
             product = pro;
             if (product.Id != 0)
             {
-                virtualRegion.SetRegionKey(1, product.Cid);
+                vRegion.SetRegionKey(1, product.Cid);
             }
 
             string effectName = "";
@@ -177,7 +177,7 @@ namespace TaleofMonsters.Forms.Items
             {
              //   g.FillRectangle(PaintTool.GetBrushByAttribute(CardConfigManager.GetCardConfig(product.Cid).Attr), x + 10, y + 12, 70 - 2, 90 - 2);
 
-                virtualRegion.Draw(g);
+                vRegion.Draw(g);
 
                 CardAssistant.DrawBase(g, product.Cid, x + 12, y + 14, 64, 84);
                 

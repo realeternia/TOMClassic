@@ -20,7 +20,7 @@ namespace TaleofMonsters.Forms.Items
         private int price;
         private bool show;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
 
         private int x, y, width, height;
         private BasePanel parent;
@@ -63,10 +63,10 @@ namespace TaleofMonsters.Forms.Items
                 case 7: backColor = Color.FromArgb(60, 60, 0); break;
             }
 
-            virtualRegion = new VirtualRegion(parent);
-            virtualRegion.AddRegion(new PictureAnimRegion(1, x + 5, y + 8, 40, 40, PictureRegionCellType.Item, 0));
-            virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
-            virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+            vRegion = new VirtualRegion(parent);
+            vRegion.AddRegion(new PictureAnimRegion(1, x + 5, y + 8, 40, 40, PictureRegionCellType.Item, 0));
+            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
+            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
 
         public void RefreshData()
@@ -77,7 +77,7 @@ namespace TaleofMonsters.Forms.Items
                 itemId = piece.Id;
                 itemCount = piece.Count;
                 bitmapButtonBuy.Visible = !piece.Used;
-                virtualRegion.SetRegionKey(1, itemId);
+                vRegion.SetRegionKey(1, itemId);
                 var itmConfig = ConfigData.GetHItemConfig(itemId);
                 price = (int)GameResourceBook.OutGoldSellItem(itmConfig.Rare, itmConfig.ValueFactor) * piece.Count * 2;//素材价格x2
                 show = true;
@@ -85,7 +85,7 @@ namespace TaleofMonsters.Forms.Items
             else
             {
                 itemId = 0;
-                virtualRegion.SetRegionKey(1, 0);
+                vRegion.SetRegionKey(1, 0);
                 bitmapButtonBuy.Visible = false;
                 show = false;
             }
@@ -144,7 +144,7 @@ namespace TaleofMonsters.Forms.Items
                 var wid = TextRenderer.MeasureText(g, price.ToString(), font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
                 g.DrawImage(HSIcons.GetIconsByEName("res1"), wid + 57+x, y+32, 16, 16);
 
-                virtualRegion.Draw(g);
+                vRegion.Draw(g);
                 g.DrawString(itemCount.ToString(), font, Brushes.Black, x+30, y+29);
                 g.DrawString(itemCount.ToString(), font, Brushes.White, x+29, y+28);
 

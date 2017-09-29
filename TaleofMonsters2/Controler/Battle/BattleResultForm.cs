@@ -7,7 +7,6 @@ using NarlonLib.Control;
 using NarlonLib.Drawing;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms;
@@ -29,7 +28,7 @@ namespace TaleofMonsters.Controler.Battle
         private uint[] resource;
         private uint exp;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
 
         private List<int> rewardItemList = new List<int>();
         private int cellIndex;
@@ -40,9 +39,9 @@ namespace TaleofMonsters.Controler.Battle
             NeedBlackForm = true;
             this.bitmapButtonClose2.ImageNormal = PicLoader.Read("Button.Panel", "CancelButton.JPG");
             bitmapButtonClose2.NoUseDrawNine = true;
-            virtualRegion = new VirtualRegion(this);
-            virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
-            virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+            vRegion = new VirtualRegion(this);
+            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
+            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
 
         public override void Init(int width, int height)
@@ -96,21 +95,21 @@ namespace TaleofMonsters.Controler.Battle
                 {
                     var pos = GetCellPosition();
                     var pictureRegion = ComplexRegion.GetResShowRegion(cellIndex, pos, 45, ImageRegionCellType.Gold, (int)resource[0]);
-                    virtualRegion.AddRegion(pictureRegion);
+                    vRegion.AddRegion(pictureRegion);
                 }
 
                 if (exp > 0)
                 {
                     var pos = GetCellPosition();
                     var pictureRegion = ComplexRegion.GetResShowRegion(cellIndex, pos, 45, ImageRegionCellType.Exp,(int)exp);
-                    virtualRegion.AddRegion(pictureRegion);
+                    vRegion.AddRegion(pictureRegion);
                 }
 
                 for (int i = 0; i < statisticData.Items.Count; i++)
                 {
                     rewardItemList.Add(statisticData.Items[i]);
                     var pos = GetCellPosition();
-                    virtualRegion.AddRegion(new PictureAnimRegion(cellIndex, pos.X, pos.Y, 45, 45, PictureRegionCellType.Item, statisticData.Items[i]));
+                    vRegion.AddRegion(new PictureAnimRegion(cellIndex, pos.X, pos.Y, 45, 45, PictureRegionCellType.Item, statisticData.Items[i]));
                 }
             }
             else
@@ -161,7 +160,7 @@ namespace TaleofMonsters.Controler.Battle
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
-            var region = virtualRegion.GetRegion(id);
+            var region = vRegion.GetRegion(id);
             if (region != null)
             {
                 region.ShowTip(tooltip, Parent, x, y);
@@ -191,7 +190,7 @@ namespace TaleofMonsters.Controler.Battle
             e.Graphics.DrawImage(back, 15, 35, 504, 354);
             back.Dispose();
 
-            virtualRegion.Draw(e.Graphics);
+            vRegion.Draw(e.Graphics);
 
             if (show)
             {

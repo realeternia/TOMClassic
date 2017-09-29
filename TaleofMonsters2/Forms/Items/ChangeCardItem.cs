@@ -17,7 +17,7 @@ namespace TaleofMonsters.Forms.Items
         private int card2;
         private bool show;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
 
         private int x, y, width, height;
         private Control parent;
@@ -60,11 +60,11 @@ namespace TaleofMonsters.Forms.Items
                 case 7: backColor = Color.FromArgb(60, 60, 0); break;
             }
 
-            virtualRegion = new VirtualRegion(parent);
-            virtualRegion.AddRegion(new PictureAnimRegion(1, x + 5, y + 8, 40, 40, PictureRegionCellType.Card, 0));
-            virtualRegion.AddRegion(new PictureAnimRegion(2, x + 97, y + 8, 40, 40, PictureRegionCellType.Card, 0));
-            virtualRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
-            virtualRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+            vRegion = new VirtualRegion(parent);
+            vRegion.AddRegion(new PictureAnimRegion(1, x + 5, y + 8, 40, 40, PictureRegionCellType.Card, 0));
+            vRegion.AddRegion(new PictureAnimRegion(2, x + 97, y + 8, 40, 40, PictureRegionCellType.Card, 0));
+            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
+            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
 
         public void RefreshData()
@@ -77,16 +77,16 @@ namespace TaleofMonsters.Forms.Items
                 bitmapButtonBuy.Visible = !change.Used;
                 bitmapButtonBuy.Enabled = UserProfile.InfoCard.GetCardExp(card1) > 0;
 
-                virtualRegion.SetRegionKey(1, card1);
-                virtualRegion.SetRegionKey(2, card2);
+                vRegion.SetRegionKey(1, card1);
+                vRegion.SetRegionKey(2, card2);
                 show = true;
             }
             else
             {
                 card1 = -1;
                 card2 = -1;
-                virtualRegion.SetRegionKey(1, 0);
-                virtualRegion.SetRegionKey(2, 0);
+                vRegion.SetRegionKey(1, 0);
+                vRegion.SetRegionKey(2, 0);
                 bitmapButtonBuy.Visible = false;
                 show = false;
             }
@@ -146,7 +146,7 @@ namespace TaleofMonsters.Forms.Items
                     font.Dispose();
                 }
 
-                virtualRegion.Draw(g);
+                vRegion.Draw(g);
             }
         }
     }

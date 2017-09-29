@@ -27,7 +27,7 @@ namespace TaleofMonsters.Forms
         private int baseid;
         private List<int> jobIdList;
         private int selectJobId;
-        private VirtualRegion virtualRegion;
+        private VirtualRegion vRegion;
         private ColorWordRegion jobDes;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
 
@@ -56,16 +56,16 @@ namespace TaleofMonsters.Forms
 
             jobDes = new ColorWordRegion(180, 70, 320, "宋体", 10, Color.White);
 
-            virtualRegion = new VirtualRegion(this);
+            vRegion = new VirtualRegion(this);
             PictureRegion region = new PictureRegion(1, 178, 266, 48, 48, PictureRegionCellType.HeroSkill, 0);
             region.AddDecorator(new RegionBorderDecorator(Color.DodgerBlue));
-            virtualRegion.AddRegion(region);
+            vRegion.AddRegion(region);
 
-            virtualRegion.AddRegion(new PictureRegion(2, 238, 266, 48, 48, PictureRegionCellType.Card, 0));
-            virtualRegion.AddRegion(new PictureRegion(3, 298, 266, 48, 48, PictureRegionCellType.Card, 0));
-            virtualRegion.AddRegion(new PictureRegion(4, 358, 266, 48, 48, PictureRegionCellType.Card, 0));
-            virtualRegion.RegionEntered += virtualRegion_RegionEntered;
-            virtualRegion.RegionLeft += virtualRegion_RegionLeft;
+            vRegion.AddRegion(new PictureRegion(2, 238, 266, 48, 48, PictureRegionCellType.Card, 0));
+            vRegion.AddRegion(new PictureRegion(3, 298, 266, 48, 48, PictureRegionCellType.Card, 0));
+            vRegion.AddRegion(new PictureRegion(4, 358, 266, 48, 48, PictureRegionCellType.Card, 0));
+            vRegion.RegionEntered += VRegionRegionEntered;
+            vRegion.RegionLeft += VRegionRegionLeft;
         }
 
         public override void Init(int width, int height)
@@ -96,10 +96,10 @@ namespace TaleofMonsters.Forms
             selectJobId = jobIdList[baseid + selectPanel.SelectIndex];
             JobConfig jobConfig = ConfigData.GetJobConfig(selectJobId);
             jobDes.UpdateText(jobConfig.Des);
-            virtualRegion.SetRegionKey(1, jobConfig.SkillId);
+            vRegion.SetRegionKey(1, jobConfig.SkillId);
             for (int i = 2; i < 5; i++)//把后面的物件都清除下
             {
-                virtualRegion.SetRegionKey(i, 0);
+                vRegion.SetRegionKey(i, 0);
             }
             cellTypeList.Clear();
 
@@ -113,8 +113,8 @@ namespace TaleofMonsters.Forms
                     {
                         if (cardId > 0)
                         {
-                            virtualRegion.SetRegionType(imgIndex, PictureRegionCellType.Card);
-                            virtualRegion.SetRegionKey(imgIndex++, cardId);
+                            vRegion.SetRegionType(imgIndex, PictureRegionCellType.Card);
+                            vRegion.SetRegionKey(imgIndex++, cardId);
                             cellTypeList.Add(PictureRegionCellType.Card);
                         }
                     }
@@ -123,8 +123,8 @@ namespace TaleofMonsters.Forms
                 {
                     foreach (var ename in jobConfig.InitialEquip)
                     {
-                        virtualRegion.SetRegionType(imgIndex, PictureRegionCellType.Equip);
-                        virtualRegion.SetRegionKey(imgIndex++, HItemBook.GetItemId(ename));
+                        vRegion.SetRegionType(imgIndex, PictureRegionCellType.Equip);
+                        vRegion.SetRegionKey(imgIndex++, HItemBook.GetItemId(ename));
                         cellTypeList.Add(PictureRegionCellType.Equip);
                     }
                 }
@@ -132,8 +132,8 @@ namespace TaleofMonsters.Forms
                 {
                     foreach (var ename in jobConfig.InitialItem)
                     {
-                        virtualRegion.SetRegionType(imgIndex, PictureRegionCellType.Item);
-                        virtualRegion.SetRegionKey(imgIndex++, HItemBook.GetItemId(ename));
+                        vRegion.SetRegionType(imgIndex, PictureRegionCellType.Item);
+                        vRegion.SetRegionKey(imgIndex++, HItemBook.GetItemId(ename));
                         cellTypeList.Add(PictureRegionCellType.Item);
                     }
                 }
@@ -178,7 +178,7 @@ namespace TaleofMonsters.Forms
        
         }
 
-        private void virtualRegion_RegionEntered(int id, int x, int y, int key)
+        private void VRegionRegionEntered(int id, int x, int y, int key)
         {
             Image image = null;
             if (id == 1)
@@ -211,7 +211,7 @@ namespace TaleofMonsters.Forms
             }
         }
 
-        private void virtualRegion_RegionLeft()
+        private void VRegionRegionLeft()
         {
             tooltip.Hide(this);
         }
@@ -230,7 +230,7 @@ namespace TaleofMonsters.Forms
             font.Dispose();
 
             jobDes.Draw(e.Graphics);
-            virtualRegion.Draw(e.Graphics);
+            vRegion.Draw(e.Graphics);
             
             if (selectJobId > 0)
             {
