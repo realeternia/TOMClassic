@@ -1,10 +1,16 @@
 using System.Drawing;
+using System.Windows.Forms;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Interface;
 using ConfigDatas;
+using NarlonLib.Control;
 using TaleofMonsters.Controler.Battle;
+using TaleofMonsters.DataType.Blesses;
+using TaleofMonsters.DataType.Equips;
+using TaleofMonsters.DataType.Items;
+using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.Scenes;
 
 namespace TaleofMonsters.Forms.Items.Regions
@@ -142,6 +148,32 @@ namespace TaleofMonsters.Forms.Items.Regions
         }
 
         public float Scale { get; set; } //ÖÐÐÄÍ¼Æ¬Ëõ·Å
+
+        public override void ShowTip(ImageToolTip tooltip, Control form, int x, int y)
+        {
+            var regionType = GetVType();
+            if (regionType == PictureRegionCellType.Item)
+            {
+                Image image = HItemBook.GetPreview(nid);
+                tooltip.Show(image, form, x, y);
+            }
+            else if (regionType == PictureRegionCellType.Equip)
+            {
+                Equip equip = new Equip(nid);
+                Image image = equip.GetPreview();
+                tooltip.Show(image, form, x, y);
+            }
+            else if (regionType == PictureRegionCellType.Bless)
+            {
+                Image image = BlessBook.GetPreview(nid);
+                tooltip.Show(image, form, x, y);
+            }
+            else if (regionType == PictureRegionCellType.People)
+            {
+                Image image = PeopleBook.GetPreview(nid);
+                tooltip.Show(image, form, x, y);
+            }
+        }
     }
 
     internal enum PictureRegionCellType

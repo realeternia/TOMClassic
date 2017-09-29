@@ -161,42 +161,10 @@ namespace TaleofMonsters.Controler.Battle
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
+            var region = virtualRegion.GetRegion(id);
+            if (region != null)
             {
-                var region = virtualRegion.GetRegion(id) as PictureAnimRegion;
-                if (region != null)
-                {
-                    var regionType = region.GetVType();
-                    if (regionType == PictureRegionCellType.Item)
-                    {
-                        Image image = HItemBook.GetPreview(key);
-                        tooltip.Show(image, this, x, y);
-                    }
-                }
-            }
-            {
-                var region = virtualRegion.GetRegion(id) as ImageRegion;
-                if (region != null)
-                {
-                    var regionType = region.GetVType();
-                    if (regionType == ImageRegionCellType.Gold)
-                    {
-                        string resStr = string.Format("黄金:{0}", region.Parm);
-                        Image image = DrawTool.GetImageByString(resStr, 100);
-                        tooltip.Show(image, this, x, y);
-                    }
-                    else if (regionType == ImageRegionCellType.Food)
-                    {
-                        string resStr = string.Format("食物:{0}", region.Parm);
-                        Image image = DrawTool.GetImageByString(resStr, 100);
-                        tooltip.Show(image, this, x, y);
-                    }
-                    else if (regionType == ImageRegionCellType.Exp)
-                    {
-                        string resStr = string.Format("经验值:{0}", region.Parm);
-                        Image image = DrawTool.GetImageByString(resStr, 100);
-                        tooltip.Show(image, this, x, y);
-                    }
-                }
+                region.ShowTip(tooltip, Parent, x, y);
             }
         }
 

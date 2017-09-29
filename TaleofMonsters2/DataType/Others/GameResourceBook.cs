@@ -30,7 +30,7 @@ namespace TaleofMonsters.DataType.Others
         /// </summary>
         public static uint InGoldFight(int level, bool isPeople)
         {
-            uint get = Math.Max(1, (uint) (ExpTree.GetResourceFactor(level)*GoldFactor/2));
+            uint get = Math.Max(1, (uint) (ExpTree.GetGoldFactor(level)*GoldFactor/2));
             return isPeople ? get : get/2;
         }
         /// <summary>
@@ -42,7 +42,7 @@ namespace TaleofMonsters.DataType.Others
                 return 0;
             double[] factor = new[] {0.2, 0.5, 0.5, 1, 1, 1.5, 2.2};
             rate = (int) (rate*(noRandom ? 1 : factor[MathTool.GetRandom(factor.Length)]));
-            return Math.Max(1, (uint)(ExpTree.GetResourceFactor(level)*GoldFactor*rate/100));
+            return Math.Max(1, (uint)(ExpTree.GetGoldFactor(level)*GoldFactor*rate/100));
         }
         /// <summary>
         /// 场景剧情消耗金币
@@ -53,7 +53,7 @@ namespace TaleofMonsters.DataType.Others
                 return 0;
             double[] factor = new[] { 0.5, 1, 1, 1.5};
             rate = (int) (rate*(noRandom ? 1 : factor[MathTool.GetRandom(factor.Length)]))*3/4;
-            return Math.Max(1, (uint)(ExpTree.GetResourceFactor(level) * GoldFactor * rate / 100));
+            return Math.Max(1, (uint)(ExpTree.GetGoldFactor(level) * GoldFactor * rate / 100));
         }
         /// <summary>
         /// 消耗金钱制作装备图纸,level 1-5
@@ -133,6 +133,24 @@ namespace TaleofMonsters.DataType.Others
         public static uint InExpFight(int level, int rLevel)
         {
             return Math.Max(1, (uint)(ExpTree.GetNextRequired(rLevel) / 2 / (15 + Math.Abs(level - rLevel) * 3) + 1));
+        }
+
+
+        /// <summary>
+        /// 资源获得通用入口
+        /// </summary>
+        public static uint InResSceneQuest(int resId, int level, int rate, bool noRandom = false)
+        {
+            if (rate <= 0)
+                return 0;
+            double[] factor = new[] { 0.2, 0.5, 0.5, 1, 1, 1.5, 2.2 };
+            rate = (int)(rate * (noRandom ? 1 : factor[MathTool.GetRandom(factor.Length)]));
+            var count = (uint) (ExpTree.GetResFactor(level)*rate/100);
+            if (resId == (int)GameResourceType.Lumber || resId == (int)GameResourceType.Stone)
+            {
+                count *= 3;
+            }
+            return Math.Max(1, count);
         }
         /// <summary>
         /// 消耗石材制作装备,level 1-5

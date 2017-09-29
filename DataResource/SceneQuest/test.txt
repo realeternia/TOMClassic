@@ -21,6 +21,8 @@
 						end
 	a开启隐藏房间。
 		ehide
+	a奖励。
+		ereward
 	a呃，还没有…
 		s有一个怪物走了过来
 			a拿钱走人

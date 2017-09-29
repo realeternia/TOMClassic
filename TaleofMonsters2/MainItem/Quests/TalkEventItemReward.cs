@@ -35,6 +35,7 @@ namespace TaleofMonsters.MainItem.Quests
 
             int index = 1;
             DoReward(ref index, "gold", GetMulti() + BlessManager.RewardGoldMulti, RewardGold);
+            DoReward(ref index, "res", GetMulti(), RewardRes);
             DoReward(ref index, "food", GetMulti() + BlessManager.RewardFoodMulti, RewardFood);
             DoReward(ref index, "health", GetMulti() + BlessManager.RewardHealthMulti, RewardHealth);
             DoReward(ref index, "mental", GetMulti() + BlessManager.RewardMentalMulti, RewardMental);
@@ -252,74 +253,28 @@ namespace TaleofMonsters.MainItem.Quests
                 index++;
             }
         }
+
+        private void RewardRes(ref int index)
+        {
+            var resId = config.RewardResId;
+            var resGet = GameResourceBook.InResSceneQuest(resId, level, config.RewardResAmount);
+            if (resGet > 0)
+            {
+                UserProfile.Profile.InfoBag.AddResource((GameResourceType) resId, resGet);
+                var pictureRegion = ComplexRegion.GetResShowRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25),
+                                                                     60, ImageRegionCellType.Lumber + resId - 1, (int)resGet);
+                vRegion.AddRegion(pictureRegion);
+                index++;
+            }
+        }
         #endregion
-        
+
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
+            var region = vRegion.GetRegion(id);
+            if (region != null)
             {
-                var region = vRegion.GetRegion(id) as PictureRegion;
-                if (region != null)
-                {
-                    var regionType = region.GetVType();
-                    if (regionType == PictureRegionCellType.Item)
-                    {
-                        Image image = HItemBook.GetPreview(key);
-                        tooltip.Show(image, parent, x, y);
-                    }
-                    else if (regionType == PictureRegionCellType.Equip)
-                    {
-                        Equip equip = new Equip(key);
-                        Image image = equip.GetPreview();
-                        tooltip.Show(image, parent, x, y);
-                    }
-                    else if (regionType == PictureRegionCellType.Bless)
-                    {
-                        Image image = BlessBook.GetPreview(key);
-                        tooltip.Show(image, parent, x, y);
-                    }
-                    else if (regionType == PictureRegionCellType.People)
-                    {
-                        Image image = PeopleBook.GetPreview(key);
-                        tooltip.Show(image, parent, x, y);
-                    }
-                }
-            }
-            {
-                var region = vRegion.GetRegion(id) as ImageRegion;
-                if (region != null)
-                {
-                    var regionType = region.GetVType();
-                    if (regionType == ImageRegionCellType.Gold)
-                    {
-                        string resStr = string.Format("黄金:{0}", region.Parm);
-                        Image image = DrawTool.GetImageByString(resStr, 100);
-                        tooltip.Show(image, parent, x, y);
-                    }
-                    else if (regionType == ImageRegionCellType.Food)
-                    {
-                        string resStr = string.Format("食物:{0}", region.Parm);
-                        Image image = DrawTool.GetImageByString(resStr, 100);
-                        tooltip.Show(image, parent, x, y);
-                    }
-                    else if (regionType == ImageRegionCellType.Health)
-                    {
-                        string resStr = string.Format("生命:{0}", region.Parm);
-                        Image image = DrawTool.GetImageByString(resStr, 100);
-                        tooltip.Show(image, parent, x, y);
-                    }
-                    else if (regionType == ImageRegionCellType.Mental)
-                    {
-                        string resStr = string.Format("精神:{0}", region.Parm);
-                        Image image = DrawTool.GetImageByString(resStr, 100);
-                        tooltip.Show(image, parent, x, y);
-                    }
-                    else if (regionType == ImageRegionCellType.Exp)
-                    {
-                        string resStr = string.Format("经验值:{0}", region.Parm);
-                        Image image = DrawTool.GetImageByString(resStr, 100);
-                        tooltip.Show(image, parent, x, y);
-                    }
-                }
+                region.ShowTip(tooltip, parent, x, y);
             }
         }
 

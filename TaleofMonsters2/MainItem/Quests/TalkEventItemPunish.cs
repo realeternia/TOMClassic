@@ -150,48 +150,10 @@ namespace TaleofMonsters.MainItem.Quests
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
+            var region = vRegion.GetRegion(id);
+            if (region != null)
             {
-                var region = vRegion.GetRegion(id) as PictureRegion;
-                if (region != null)
-                {
-                    var regionType = region.GetVType();
-                    if (regionType == PictureRegionCellType.Bless)
-                    {
-                        Image image = BlessBook.GetPreview(key);
-                        tooltip.Show(image, parent, x, y);
-                    }
-                }
-            }
-            {
-                var region = vRegion.GetRegion(id) as ImageRegion;
-                if (region != null)
-                {
-                    var regionType = region.GetVType();
-                    if (regionType == ImageRegionCellType.Gold)
-                    {
-                        string resStr = string.Format("黄金:{0}", region.Parm);
-                        Image image = DrawTool.GetImageByString(resStr, 100);
-                        tooltip.Show(image, parent, x, y);
-                    }
-                    else if (regionType == ImageRegionCellType.Food)
-                    {
-                        string resStr = string.Format("食物:{0}", region.Parm);
-                        Image image = DrawTool.GetImageByString(resStr, 100);
-                        tooltip.Show(image, parent, x, y);
-                    }
-                    else if (regionType == ImageRegionCellType.Health)
-                    {
-                        string resStr = string.Format("生命:{0}", region.Parm);
-                        Image image = DrawTool.GetImageByString(resStr, 100);
-                        tooltip.Show(image, parent, x, y);
-                    }
-                    else if (regionType == ImageRegionCellType.Mental)
-                    {
-                        string resStr = string.Format("精神:{0}", region.Parm);
-                        Image image = DrawTool.GetImageByString(resStr, 100);
-                        tooltip.Show(image, parent, x, y);
-                    }
-                }
+                region.ShowTip(tooltip, parent, x, y);
             }
         }
 

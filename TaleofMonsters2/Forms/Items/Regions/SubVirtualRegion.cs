@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
+using NarlonLib.Control;
 using TaleofMonsters.Core.Interface;
 
 namespace TaleofMonsters.Forms.Items.Regions
@@ -108,6 +110,11 @@ namespace TaleofMonsters.Forms.Items.Regions
         public virtual void MouseDown()
         {
             isMouseDown = true;
+        }
+
+        public virtual void ShowTip(ImageToolTip tooltip, Control form, int x, int y)
+        {
+            
         }
     }
 
