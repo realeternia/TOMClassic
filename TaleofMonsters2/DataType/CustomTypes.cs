@@ -333,7 +333,7 @@
         LastCardShopTime = 1000,
         LastMergeTime = 1001,
         LastBlessShopTime = 1002,
-       // LastNpcPieceTime = 1003,
+        LastDailyCardTime = 1003,
         LastQuestionTime = 1004,
 
         SceneQuestRandPeopleId = 1101,

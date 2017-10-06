@@ -38,7 +38,8 @@ namespace TaleofMonsters.DataType.User
         public List<int> BlessShopItems;
         [FieldIndex(Index = 10)]
         public List<int> SavedDungeonQuests;
-
+        [FieldIndex(Index = 11)]
+        public List<int> DailyCardData;
 
         public InfoWorld()
         {
@@ -50,6 +51,7 @@ namespace TaleofMonsters.DataType.User
             Blesses = new Dictionary<int, int>();
             BlessShopItems = new List<int>();
             SavedDungeonQuests = new List<int>();
+            DailyCardData = new List<int>();
         }
 
         internal DbCardProduct[] GetCardProductsByType(CardTypes type)
@@ -350,7 +352,7 @@ namespace TaleofMonsters.DataType.User
             }
         }
 
-        internal List<int> GetBlessShopData()
+        public List<int> GetBlessShopData()
         {
             int time = TimeTool.DateTimeToUnixTime(DateTime.Now);
             if (BlessShopItems == null || UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastBlessShopTime) < time - GameConstants.BlessShopDura)
@@ -369,6 +371,25 @@ namespace TaleofMonsters.DataType.User
             }
 
             return BlessShopItems;
+        }
+
+        public List<int> GetDailyCardData()
+        {
+            int time = TimeTool.DateTimeToUnixTime(DateTime.Now);
+            if (DailyCardData == null || TimeManager.IsDifferDay(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastDailyCardTime) ,time))
+            {
+                DailyCardData = new List<int>();
+
+                DailyCardData.Clear();
+                DailyCardData.Add(HItemBook.GetRandRareItemIdWithGroup(HItemRandomGroups.Gather, MathTool.GetRandom(1, 6)));
+                DailyCardData.Add(HItemBook.GetRandRareItemIdWithGroup(HItemRandomGroups.Fight, MathTool.GetRandom(1, 6)));
+                DailyCardData.Add(HItemBook.GetRandRareItemIdWithGroup(HItemRandomGroups.Fight, MathTool.GetRandom(1, 5)));
+                DailyCardData.Add(HItemBook.GetRandRareItemIdWithGroup(HItemRandomGroups.Shopping, 2));
+                DailyCardData.Add(CardConfigManager.GetRandomCard(0, MathTool.GetRandom(1, 4)));
+                UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastDailyCardTime, time);
+            }
+
+            return DailyCardData;
         }
     }
 }

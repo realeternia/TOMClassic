@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Control;
-using NarlonLib.Math;
-using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
@@ -49,11 +47,13 @@ namespace TaleofMonsters.Forms
 
             points = new Point[4];
             items = new int[4];
-            items[0] = HItemBook.GetRandRareItemIdWithGroup(HItemRandomGroups.Gather, MathTool.GetRandom(1, 6));
-            items[1] = HItemBook.GetRandRareItemIdWithGroup(HItemRandomGroups.Fight, MathTool.GetRandom(1, 6));
-            items[2] = HItemBook.GetRandRareItemIdWithGroup(HItemRandomGroups.Fight, MathTool.GetRandom(1, 5));
-            items[3] = HItemBook.GetRandRareItemIdWithGroup(HItemRandomGroups.Shopping, 2);
-            cardId = CardConfigManager.GetRandomCard(0, MathTool.GetRandom(1, 4));
+            var dts = UserProfile.InfoWorld.GetDailyCardData();
+            
+            items[0] = dts[0];
+            items[1] = dts[1];
+            items[2] = dts[2];
+            items[3] = dts[3];
+            cardId = dts[4];
 
             #region 初始化位置
             points[0] = new Point(65, 30);
