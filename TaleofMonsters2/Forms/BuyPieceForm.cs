@@ -137,7 +137,7 @@ namespace TaleofMonsters.Forms
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
             Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString("素材", font, Brushes.White, Width / 2 - 40, 8);
+            e.Graphics.DrawString("素材收集人", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
 
             colorWord.Draw(e.Graphics);

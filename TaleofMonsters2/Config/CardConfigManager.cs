@@ -26,8 +26,7 @@ namespace TaleofMonsters.Config
             return Id+" " + Name;
         }
     }
-
-
+    
     internal static class CardConfigManager
     {
         private class CardInfoList

@@ -199,6 +199,9 @@ namespace TaleofMonsters.MainItem
                 case SystemMenuIds.TreasureWheelForm:
                     TreasureWheelBook.Show(1);
                     break;
+                case SystemMenuIds.DailyCardForm:
+                    PanelManager.DealPanel(new DailyCardForm());
+                    break;
                 case SystemMenuIds.QuestionForm:
                     PanelManager.DealPanel(new QuestionForm());
                     break;
@@ -278,6 +281,7 @@ namespace TaleofMonsters.MainItem
         CardShopViewForm = 36,
         TournamentViewForm = 37,
         TreasureWheelForm = 39,
+        DailyCardForm = 40,
         QuestionForm = 41,
         MinigameForm = 42,
         GameUpToNumber = 1100,
