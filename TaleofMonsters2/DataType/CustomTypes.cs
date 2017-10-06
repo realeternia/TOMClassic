@@ -104,6 +104,7 @@
         None = 0,
         Gather = 1,
         Fight = 2,
+        Shopping=3,
     }
 
     internal enum BuffEffectTypes

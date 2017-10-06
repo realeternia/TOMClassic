@@ -12,18 +12,18 @@ namespace TaleofMonsters.DataType.Others
         /// </summary>
         public static uint InGoldSellItem(int rare, int rate)
         {
-            int[] rareArray = {1, 4, 8, 14, 22, 36, 60, 100};
+            int[] rareArray = {2, 3, 5, 8, 12, 18, 25, 40};
             
-            return (uint)(rareArray[rare] * GoldFactor * rate / 100);
+            return (uint)(rareArray[rare] * GoldFactor * rate / 100) / GoldFactor;
         } 
         /// <summary>
         /// 购买道具付出
         /// </summary>
         public static uint OutGoldSellItem(int rare, int rate)
         {
-            int[] rareArray = { 1, 4, 8, 14, 22, 36, 60, 100 };
+            int[] rareArray = { 2, 3, 5, 8, 12, 18, 25, 40 };
 
-            return (uint)(rareArray[rare] * GoldFactor * rate / 100) * 2;
+            return (uint)(rareArray[rare] * GoldFactor * rate / 100);
         }
         /// <summary>
         /// 战斗获得金币

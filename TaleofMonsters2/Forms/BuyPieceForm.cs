@@ -203,7 +203,7 @@ namespace TaleofMonsters.Forms
         {
             NpcPieceData piece = new NpcPieceData();
             int rare = MathTool.GetRandom(Math.Max(index / 2, 1), index / 2 + 3);
-            piece.Id = HItemBook.GetRandRareItemId(HItemRandomGroups.Fight, rare);
+            piece.Id = HItemBook.GetRandRareItemIdWithGroup(HItemRandomGroups.Fight, rare);
             piece.Count = MathTool.GetRandom((8 - rare) / 2, 8 - rare);
 
             return piece;

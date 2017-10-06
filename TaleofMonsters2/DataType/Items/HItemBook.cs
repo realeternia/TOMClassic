@@ -14,20 +14,78 @@ namespace TaleofMonsters.DataType.Items
 {
     internal static class HItemBook
     {
+        class ItemRandomData
+        {
+            public int ItemId;
+            public int Counter;
+        }
+
+        class RareItemListData
+        {
+            public List<ItemRandomData> ItemList;//随机组 
+            public int CounterTotal;
+
+            public RareItemListData()
+            {
+                ItemList = new List<ItemRandomData>();
+            }
+        }
+
+        private static List<RareItemListData> rareItemList;
+
+        public static int GetRandRareItemId(int rare)
+        {
+            if (rareItemList == null)
+            {
+                rareItemList = new List<RareItemListData>();
+                for (int i = 0; i < 8; i++) //7个稀有度
+                    rareItemList.Add(new RareItemListData());
+
+                foreach (var hItemConfig in ConfigData.HItemDict.Values)
+                {
+                    if (hItemConfig.Frequency > 0) //需要随机
+                    {
+                        var counter = rareItemList[hItemConfig.Rare].CounterTotal + hItemConfig.Frequency;
+                        rareItemList[hItemConfig.Rare].CounterTotal = counter;
+                        var item = new ItemRandomData();
+                        item.ItemId = hItemConfig.Id;
+                        item.Counter = counter;
+                        rareItemList[hItemConfig.Rare].ItemList.Add(item);
+                    }
+                }
+            }
+
+            var rareList = rareItemList[rare].ItemList;
+            int roll = MathTool.GetRandom(rareItemList[rare].CounterTotal);
+
+            int low = 1;
+            int high = rareList.Count - 1;
+            while (high > low+1)//binary search
+            {
+                int middle = (high+low)/2;
+                if (roll<rareList[middle].Counter)
+                    high = middle;
+                else
+                    low = middle;
+            }
+            return rareList[low].ItemId;
+        }
+
         private static Dictionary<HItemRandomGroups, Dictionary<int, List<int>>> rareMidDict;//随机组，稀有度
 
-        public static int GetRandRareItemId(HItemRandomGroups group, int rare)
+        public static int GetRandRareItemIdWithGroup(HItemRandomGroups group, int rare)
         {
             if (rareMidDict == null)
             {
                 rareMidDict = new Dictionary<HItemRandomGroups, Dictionary<int, List<int>>>();
                 rareMidDict[HItemRandomGroups.Gather] = new Dictionary<int, List<int>>();
-                rareMidDict[HItemRandomGroups.Fight] = new Dictionary<int, List<int>>();//目前只有2个随机组
+                rareMidDict[HItemRandomGroups.Fight] = new Dictionary<int, List<int>>();
+                rareMidDict[HItemRandomGroups.Shopping] = new Dictionary<int, List<int>>();//目前只有3个随机组
                 foreach (var hItemConfig in ConfigData.HItemDict.Values)
                 {
                     if (hItemConfig.RandomGroup > 0)
                     {
-                        var group1 = (HItemRandomGroups) hItemConfig.RandomGroup;
+                        var group1 = (HItemRandomGroups)hItemConfig.RandomGroup;
                         if (!rareMidDict[group1].ContainsKey(hItemConfig.Rare))
                         {
                             rareMidDict[group1].Add(hItemConfig.Rare, new List<int>());

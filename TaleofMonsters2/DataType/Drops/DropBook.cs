@@ -118,7 +118,7 @@ namespace TaleofMonsters.DataType.Drops
                 }
             }
 
-            items.Add(HItemBook.GetRandRareItemId(HItemRandomGroups.Fight, rare));
+            items.Add(HItemBook.GetRandRareItemIdWithGroup(HItemRandomGroups.Fight, rare));
         }
     }
 }
