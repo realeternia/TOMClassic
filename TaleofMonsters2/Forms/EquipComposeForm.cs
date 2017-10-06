@@ -21,11 +21,11 @@ namespace TaleofMonsters.Forms
         {
             InitializeComponent();            
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
-            this.bitmapButton1.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack1.PNG");
+            this.bitmapButton1.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack3.PNG");
             this.bitmapButton2.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack1.PNG");
-            this.bitmapButton3.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack4.PNG");
-            this.bitmapButton4.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack4.PNG");
-            this.bitmapButton5.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack3.PNG");
+            this.bitmapButton3.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack1.PNG");
+            this.bitmapButton4.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack1.PNG");
+            this.bitmapButton5.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack1.PNG");
 
             this.nlPageSelector1 = new ControlPlus.NLPageSelector(this, 398, 310, 150);
             nlPageSelector1.PageChange += nlPageSelector1_PageChange;
@@ -40,16 +40,16 @@ namespace TaleofMonsters.Forms
                 equipControls[i] = new EquipComposeItem(this, 10 + (i % 3) * 180, 63 + (i / 3) * 82, 180, 82);
                 equipControls[i].Init(i);
             }
-            InitEquips(0);
+            InitEquips(1);
         }
 
-        private void InitEquips(int qual)
+        private void InitEquips(int pos)
         {
             equipIdList = new List<int>();
             foreach (var eid in UserProfile.Profile.InfoEquip.EquipComposeAvail)
             {
                 var equipConfig = ConfigData.GetEquipConfig(eid);
-                if (equipConfig.Id > 0 && equipConfig.Quality == qual)
+                if (equipConfig.Id > 0 && equipConfig.Position == pos)
                     equipIdList.Add(equipConfig.Id);
             }
             page = 0;
