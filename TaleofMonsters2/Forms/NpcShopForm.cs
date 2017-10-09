@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Forms.Items;
@@ -28,23 +29,25 @@ namespace TaleofMonsters.Forms
         {
             base.Init(width, height);
 
-            var shopInfo = ConfigData.GetNpcShopConfig(GetShopId());
-            items = new int[shopInfo.SellTable.Length];
-            for (int i = 0; i < items.Length; i++)
+            var shopConfig = ConfigData.GetNpcShopConfig(GetShopId());
+            var itemList = new List<int>();
+            for (int i = 0; i < shopConfig.SellTable.Length; i++)
             {
-                items[i] = HItemBook.GetItemId(shopInfo.SellTable[i]);
+                itemList.Add(HItemBook.GetItemId(shopConfig.SellTable[i]));
             }
 
-            if (shopInfo.RandomChooseX > 0)
+            if (shopConfig.RandomChooseX > 0)
             {
-                items = NLRandomPicker<int>.RandomPickN(items, (uint)shopInfo.RandomChooseX);
+                foreach (var itemName in NLRandomPicker<string>.RandomPickN(shopConfig.SellRandomTable, (uint)shopConfig.RandomChooseX))
+                    itemList.Add(HItemBook.GetItemId(itemName));
             }
+            items = itemList.ToArray();
 
             itemControls = new ShopItem[MaxCellCount];
             for (int i = 0; i < MaxCellCount; i++)
             {
                 itemControls[i] = new ShopItem(this, 8 + (i % 3) * 142, 35 + (i / 3) * 55, 143, 56);
-                itemControls[i].Init(shopInfo.MoneyType);
+                itemControls[i].Init(shopConfig.MoneyType);
             }
             RefreshInfo();
         }
