@@ -55,9 +55,11 @@ namespace ExcelToCsv
             swTotal.WriteLine("\t\t}");
             swTotal.WriteLine(string.Format("\t\tprivate static void Load{0}()", keyname));
             swTotal.WriteLine("\t\t{");
+
             foreach (var data in datas.Tables)
             {
                 DataTable tb = (DataTable) data;
+                var hasAlias = tb.Rows[2][1].ToString() == "Alias";
                 for (int i = 3; i < tb.Rows.Count; i++)
                 {
                     if (tb.Rows[i].ItemArray[0].ToString() == "")
@@ -67,17 +69,14 @@ namespace ExcelToCsv
                     }
 
                     var idStr = tb.Rows[i].ItemArray[0].ToString();
-                    int mainId = 0;
-                    if (idStr.Contains("|")) //包含常量定义
+                    int mainId = int.Parse(idStr);
+                    if (hasAlias) //包含常量定义
                     {
-                        var datasV = idStr.Split('|');
-                        indexerBlock.Add(string.Format("public static readonly int {0} = {1};", datasV[1], datasV[0])); //后者是常量
-                        mainId = int.Parse(datasV[0]);//id
+                        var datasV = tb.Rows[i].ItemArray[1].ToString();
+                        if (!string.IsNullOrEmpty(datasV))
+                            indexerBlock.Add(string.Format("public static readonly int {0} = {1};", datasV, idStr)); //后者是常量
                     }
-                    else
-                    {
-                        mainId = int.Parse(idStr);//id
-                    }
+
                     if (mainId <= 0)
                     {
                         Console.Write("omit " + mainId);
@@ -96,12 +95,8 @@ namespace ExcelToCsv
             //再写各个类定义文件
             StreamWriter sw = new StreamWriter(string.Format("./ConfigData/{0}.cs", keyname), false, Encoding.UTF8);
          
-            object[] infos = datas.Tables[0].Rows[0].ItemArray;
+            object[] infos = datas.Tables[0].Rows[2].ItemArray;
             object[] types = datas.Tables[0].Rows[1].ItemArray;
-            if (infos[0].ToString() != "Id")
-            {
-                infos = datas.Tables[0].Rows[2].ItemArray;
-            }
 
             sw.WriteLine("namespace ConfigDatas");
             sw.WriteLine("{");
@@ -129,14 +124,17 @@ namespace ExcelToCsv
             }
             sw.WriteLine("\t\t}");
 
-            sw.WriteLine("\t\tpublic class Indexer");
-            sw.WriteLine("\t\t{");
-            foreach (var str in indexerBlock)
+            if (indexerBlock.Count > 0)
             {
-                sw.WriteLine(str);
+                sw.WriteLine("\t\tpublic class Indexer");
+                sw.WriteLine("\t\t{");
+                foreach (var str in indexerBlock)
+                {
+                    sw.WriteLine(str);
+                }
+                sw.WriteLine("\t\t}");
             }
-            sw.WriteLine("\t\t}");
-
+            
             sw.WriteLine("\t}");
             sw.WriteLine("}");
             sw.Close();
