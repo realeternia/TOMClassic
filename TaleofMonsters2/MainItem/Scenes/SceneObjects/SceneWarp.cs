@@ -22,14 +22,14 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 
             if (Disabled)
             {
-                MainTipManager.AddTip(HSErrorTypes.GetDescript(HSErrorTypes.SceneWarpNeedActive), "Red");
+                MainTipManager.AddTip(HSErrors.GetDescript(ErrorConfig.Indexer.SceneWarpNeedActive), "Red");
                 return;
             }
 
             int sceneLevel = ConfigData.GetSceneConfig(TargetMap).Level;
             if (sceneLevel > UserProfile.InfoBasic.Level)
             {
-                MainTipManager.AddTip(string.Format(HSErrorTypes.GetDescript(HSErrorTypes.SceneLevelNeed), sceneLevel), "Red");
+                MainTipManager.AddTip(string.Format(HSErrors.GetDescript(ErrorConfig.Indexer.SceneLevelNeed), sceneLevel), "Red");
                 return;
             }
 

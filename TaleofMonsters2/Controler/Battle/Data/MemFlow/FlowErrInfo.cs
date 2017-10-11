@@ -8,7 +8,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemFlow
         internal FlowErrInfo(int err, Point point, int offX, int offY) 
             : base("", point, -2, "White", offX, offY, 0, 2, 30)
         {
-            word = HSErrorTypes.GetDescript(err);
+            word = HSErrors.GetDescript(err);
             color = Color.Red;
         }
 

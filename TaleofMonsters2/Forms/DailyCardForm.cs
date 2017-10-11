@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using ConfigDatas;
 using NarlonLib.Control;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
@@ -103,7 +104,7 @@ namespace TaleofMonsters.Forms
             {
                 if (UserProfile.InfoBag.GetItemCount(item) <= 0)
                 {
-                    AddFlowCenter(HSErrorTypes.GetDescript(HSErrorTypes.BagNotEnoughItems), "Red");
+                    AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughItems), "Red");
                     return;
                 }
             }

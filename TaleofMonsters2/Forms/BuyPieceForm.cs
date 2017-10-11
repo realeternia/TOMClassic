@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using ConfigDatas;
 using ControlPlus;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
@@ -92,7 +93,7 @@ namespace TaleofMonsters.Forms
                 }
                 else
                 {
-                    MainTipManager.AddTip(HSErrorTypes.GetDescript(HSErrorTypes.BagNotEnoughResource), "Red");
+                    MainTipManager.AddTip(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughResource), "Red");
                 }
             }
         }
@@ -110,7 +111,7 @@ namespace TaleofMonsters.Forms
                 }
                 else
                 {
-                    MainTipManager.AddTip(HSErrorTypes.GetDescript(HSErrorTypes.BagNotEnoughResource), "Red");
+                    MainTipManager.AddTip(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughResource), "Red");
                 }
             }
         }
@@ -127,7 +128,7 @@ namespace TaleofMonsters.Forms
                 }
                 else
                 {
-                    MainTipManager.AddTip(HSErrorTypes.GetDescript(HSErrorTypes.BagNotEnoughResource), "Red");
+                    MainTipManager.AddTip(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughResource), "Red");
                 }
             }
         }

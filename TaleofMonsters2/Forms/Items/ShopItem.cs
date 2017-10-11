@@ -115,7 +115,7 @@ namespace TaleofMonsters.Forms.Items
         {
             if (!UserProfile.InfoBag.HasResource((GameResourceType)priceType, (uint)price))
             {
-                parent.AddFlowCenter(HSErrorTypes.GetDescript(HSErrorTypes.BagNotEnoughResource), "Red");
+                parent.AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughResource), "Red");
                 return;
             }
 

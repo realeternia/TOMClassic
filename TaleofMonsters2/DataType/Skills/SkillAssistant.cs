@@ -101,7 +101,7 @@ namespace TaleofMonsters.DataType.Skills
                 src.AuroManager.CheckAuroEffect();
             }
 
-            if (tileMatching || src.HasSkill(GameConstants.SkillTileId))//地形
+            if (tileMatching || src.HasSkill(SkillConfig.Indexer.TileChange))//地形
             {
                 src.BuffManager.AddBuff(BuffConfig.Indexer.Tile, 1, 0.05);
             }

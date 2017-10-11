@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using ConfigDatas;
 using ControlPlus;
 using NarlonLib.Control;
 using TaleofMonsters.Controler.Loader;
@@ -133,13 +134,13 @@ namespace TaleofMonsters.Forms
             {
                 if (UserProfile.InfoBag.GetBlankCount() == 0)
                 {
-                    AddFlowCenter(HSErrorTypes.GetDescript(HSErrorTypes.BagIsFull), "Red");
+                    AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagIsFull), "Red");
                     return;
                 }
 
                 if (!UserProfile.InfoBag.HasResource(GameResourceType.Gold, (uint)wheelConfig.GoldCost))
                 {
-                    AddFlowCenter(HSErrorTypes.GetDescript(HSErrorTypes.BagNotEnoughResource), "Red");
+                    AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughResource), "Red");
                     return;
                 }
 

@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
-using NarlonLib.Core;
 using NarlonLib.Tools;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Components.CardSelect;
@@ -303,7 +302,7 @@ namespace TaleofMonsters.Controler.Battle
                 if (leftSelectCard != null && (myCursor.Name == "summon" || myCursor.Name == "equip" || myCursor.Name == "cast" || myCursor.Name == "sidekick"))
                 {
                     int result;
-                    if ((result = BattleManager.Instance.PlayerManager.LeftPlayer.CheckUseCard(leftSelectCard, BattleManager.Instance.PlayerManager.LeftPlayer, BattleManager.Instance.PlayerManager.RightPlayer)) != HSErrorTypes.OK)
+                    if ((result = BattleManager.Instance.PlayerManager.LeftPlayer.CheckUseCard(leftSelectCard, BattleManager.Instance.PlayerManager.LeftPlayer, BattleManager.Instance.PlayerManager.RightPlayer)) != ErrorConfig.Indexer.OK)
                     {
                         BattleManager.Instance.FlowWordQueue.Add(new FlowErrInfo(result, new Point(mouseX, mouseY), 0, 0));
                         return;

@@ -1,6 +1,6 @@
-﻿using TaleofMonsters.Config;
+﻿using ConfigDatas;
+using TaleofMonsters.Config;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Decks;
 
 namespace TaleofMonsters.DataType.User.Db
@@ -72,25 +72,25 @@ namespace TaleofMonsters.DataType.User.Db
 
                     int cardJob = CardConfigManager.GetCardConfig(tCard.BaseId).JobId;
                     if (newCardJob > 0 && cardJob > 0 && newCardJob != cardJob)
-                        return HSErrorTypes.CardJobTwice;
+                        return ErrorConfig.Indexer.CardJobTwice;
                 }
             }
 
             if (cardConfig.Quality == CardQualityTypes.Legend && count >= GameConstants.CardLimitLegend)
             {
-                return HSErrorTypes.DeckCardTypeLimitLegend;
+                return ErrorConfig.Indexer.DeckCardTypeLimitLegend;
             }
             if (cardConfig.Quality != CardQualityTypes.Legend && count >= GameConstants.CardLimit)
             {
-                return HSErrorTypes.DeckCardTypeLimit;
+                return ErrorConfig.Indexer.DeckCardTypeLimit;
             }
             if (firstBlank==-1)
             {
-                return HSErrorTypes.DeckIsFull;
+                return ErrorConfig.Indexer.DeckIsFull;
             }
             SetCardAt(firstBlank, card.BaseId);
 
-            return HSErrorTypes.OK;
+            return ErrorConfig.Indexer.OK;
         }
 
         public void RemoveCardById(int id)

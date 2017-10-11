@@ -45,8 +45,6 @@ namespace TaleofMonsters.Core
         public const int LukToRoll = 100; //每点幸运造成的额外roll点，万分之
         public const int MaxDropItemGetOnBattle = 10; //每次可以获得战利品数量上限
 
-        public const int SkillTileId = 55610001;
-
         public const float SceneTileGradient = 0.33f;
         public const int SceneTileStandardWidth = 100;
         public const int SceneTileStandardHeight = 65;

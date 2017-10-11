@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using ConfigDatas;
 using ControlPlus;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Decks;
@@ -22,9 +23,9 @@ namespace TaleofMonsters.MainItem
             if (target.Type == "activate")
             {
                 int result = UserProfile.InfoCard.SelectedDeck.AddCard(TargetCard);
-                if (result != HSErrorTypes.OK)
+                if (result != ErrorConfig.Indexer.OK)
                 {
-                    Form.AddFlowCenter(HSErrorTypes.GetDescript(result), "Red");
+                    Form.AddFlowCenter(HSErrors.GetDescript(result), "Red");
                 }
                 else
                 {
@@ -40,7 +41,7 @@ namespace TaleofMonsters.MainItem
             {
                 if (!UserProfile.InfoCard.CanLevelUp(TargetCard.BaseId))
                 {
-                    Form.AddFlowCenter(HSErrorTypes.GetDescript(HSErrorTypes.CardExpNotEnough2), "Red");
+                    Form.AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.CardExpNotEnough2), "Red");
                 }
                 else if (MessageBoxEx2.Show("确定消耗所有碎片提升等级？") == DialogResult.OK)
                 {

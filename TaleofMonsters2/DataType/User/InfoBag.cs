@@ -77,7 +77,7 @@ namespace TaleofMonsters.DataType.User
         {
             if (Diamond < value)
             {
-                MainTipManager.AddTip(HSErrorTypes.GetDescript(HSErrorTypes.BagNotEnoughDimond), "Red");
+                MainTipManager.AddTip(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughDimond), "Red");
                 return false;
             }
             Diamond -= value;

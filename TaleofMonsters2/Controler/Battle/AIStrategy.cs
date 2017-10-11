@@ -52,7 +52,7 @@ namespace TaleofMonsters.Controler.Battle
             if (player.SelectCardId != 0)
             {
                 ActiveCard card = player.CardsDesk.GetSelectCard();
-                if (player.CheckUseCard(card, player, rival) != HSErrorTypes.OK)
+                if (player.CheckUseCard(card, player, rival) != ErrorConfig.Indexer.OK)
                 {
                     return;
                 }

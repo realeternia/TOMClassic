@@ -295,18 +295,18 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public int CheckUseCard(ActiveCard selectCard, Player left, Player right)
         {
             if (Mp < selectCard.Mp)
-                return HSErrorTypes.BattleLackMp;
+                return ErrorConfig.Indexer.BattleLackMp;
 
             if (Lp < selectCard.Lp)
-                return HSErrorTypes.BattleLackLp;
+                return ErrorConfig.Indexer.BattleLackLp;
 
             if (Pp < selectCard.Pp)
-                return HSErrorTypes.BattleLackPp;
+                return ErrorConfig.Indexer.BattleLackPp;
 
             if (selectCard.IsHeroSkill && CardManager.HeroSkillCd > 0)
-                return HSErrorTypes.BattleHeroSkillInCd;
+                return ErrorConfig.Indexer.BattleHeroSkillInCd;
 
-            return HSErrorTypes.OK;
+            return ErrorConfig.Indexer.OK;
         }
 
         public bool BeforeUseCard(ActiveCard selectCard, Point location)
@@ -585,8 +585,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
             BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect("longly"), Tower as LiveMonster, true));
             Tower.OnMagicDamage(null, Tower.MaxHp.Source / 10, (int)CardElements.None);
-            BattleManager.Instance.FlowWordQueue.Add(new FlowErrInfo(noCard ? HSErrorTypes.CardOutPunish :
-                HSErrorTypes.CardFullPunish, Tower.Position, 0, 3));
+            BattleManager.Instance.FlowWordQueue.Add(new FlowErrInfo(noCard ? ErrorConfig.Indexer.CardOutPunish :
+                ErrorConfig.Indexer.CardFullPunish, Tower.Position, 0, 3));
         }
 
         public virtual List<int> GetInitialMonster()
