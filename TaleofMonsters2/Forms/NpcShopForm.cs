@@ -47,7 +47,7 @@ namespace TaleofMonsters.Forms
             for (int i = 0; i < MaxCellCount; i++)
             {
                 itemControls[i] = new ShopItem(this, 8 + (i % 3) * 142, 35 + (i / 3) * 55, 143, 56);
-                itemControls[i].Init(shopConfig.MoneyType);
+                itemControls[i].Init(shopConfig.MoneyType, shopConfig.RandomPrice);
             }
             RefreshInfo();
         }

@@ -3,11 +3,10 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
-using TaleofMonsters.Config;
+using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Equips;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
@@ -17,9 +16,15 @@ namespace TaleofMonsters.Forms.Items
 {
     internal class ShopItem
     {
+        private enum PriceRandTypes
+        {
+            None, Good1, Good2, Good3, Bad1, Bad2, Bad3
+        }
+
         private int itemId;
         private int priceType;//货币类型
         private int price;
+        private PriceRandTypes randomType;
         private bool show;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
         private VirtualRegion vRegion;
@@ -48,11 +53,13 @@ namespace TaleofMonsters.Forms.Items
             parent.Controls.Add(bitmapButtonBuy);
         }
 
-        public void Init(int type)
+        public void Init(int type, bool isRandom)
         {
             priceType = type;
+            if (isRandom)
+                randomType = GetTypes();
             vRegion = new VirtualRegion(parent);
-            vRegion.AddRegion(new PictureAnimRegion(1, x + 5, y + 8, 40, 40, PictureRegionCellType.Card, 0));
+            vRegion.AddRegion(new PictureAnimRegion(1, x + 5, y + 8, 40, 40, PictureRegionCellType.Item, 0));
             vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
@@ -64,18 +71,10 @@ namespace TaleofMonsters.Forms.Items
             itemId = id;
             if (id != 0)
             {
-                var isEquip = ConfigIdManager.IsEquip(id);
                 vRegion.SetRegionKey(1, id);
-                vRegion.SetRegionType(1, !isEquip ? PictureRegionCellType.Item : PictureRegionCellType.Equip);
-                if (!isEquip)
-                {
-                    var itmConfig = ConfigData.GetHItemConfig(itemId);
-                    price = (int)GameResourceBook.OutGoldSellItem(itmConfig.Rare, itmConfig.ValueFactor);
-                }
-                else
-                {
-                    price = ConfigData.GetEquipConfig(itemId).Value;
-                }
+                var itmConfig = ConfigData.GetHItemConfig(itemId);
+                price = (int)GameResourceBook.OutGoldSellItem(itmConfig.Rare, itmConfig.ValueFactor);
+                RecheckPrice();
             }
 
             if (priceType > 0) //非金币购买
@@ -91,17 +90,7 @@ namespace TaleofMonsters.Forms.Items
         {
             if (info == 1 && itemId > 0)
             {
-                Image image = null;
-                var isEquip = ConfigIdManager.IsEquip(itemId);
-                if (!isEquip)
-                {
-                    image = HItemBook.GetPreview(itemId);
-                }
-                else
-                {
-                    Equip equip = new Equip(itemId);
-                    image = equip.GetPreview();
-                }
+                Image image = HItemBook.GetPreview(itemId);
                 tooltip.Show(image, parent, mx, my, itemId);
             }
         }
@@ -120,15 +109,7 @@ namespace TaleofMonsters.Forms.Items
             }
 
             UserProfile.InfoBag.SubResource((GameResourceType) priceType, (uint)price);
-            var isEquip = ConfigIdManager.IsEquip(itemId);
-            if (!isEquip)
-            {
-                UserProfile.InfoBag.AddItem(itemId, 1);
-            }
-            else
-            {
-                UserProfile.InfoEquip.AddEquip(itemId, 0);
-            }
+            UserProfile.InfoBag.AddItem(itemId, 1);
         }
 
         public void Draw(Graphics g)
@@ -138,30 +119,67 @@ namespace TaleofMonsters.Forms.Items
             if (show)
             {
                 Font font = new Font("微软雅黑", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-                var isEquip = ConfigIdManager.IsEquip(itemId);
-                if (!isEquip)
-                {
-                    HItemConfig itemConfig = ConfigData.GetHItemConfig(itemId);
+                HItemConfig itemConfig = ConfigData.GetHItemConfig(itemId);
 
-                    Brush brush = new SolidBrush(Color.FromName(HSTypes.I2RareColor(itemConfig.Rare)));
-                    g.DrawString(itemConfig.Name, font, brush, x+50, y+7);
-                    brush.Dispose();
-                }
-                else
-                {
-                    EquipConfig equipConfig = ConfigData.GetEquipConfig(itemId);
+                Brush brush = new SolidBrush(Color.FromName(HSTypes.I2RareColor(itemConfig.Rare)));
+                g.DrawString(itemConfig.Name, font, brush, x + 50, y + 7);
+                brush.Dispose();
 
-                    Brush brush = new SolidBrush(Color.FromName(HSTypes.I2RareColor(equipConfig.Quality)));
-                    g.DrawString(equipConfig.Name, font, brush, x + 50, y + 7);
-                    brush.Dispose();
-                }
                 g.DrawString(price.ToString(), font, Brushes.Gold,x+ 50,y+ 30);
                 var wid = TextRenderer.MeasureText(g, price.ToString(), font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
                 g.DrawImage(HSIcons.GetIconsByEName("res"+(priceType+1)), wid + 50+x, 32+y, 16, 16);
                 font.Dispose();
 
                 vRegion.Draw(g);
+
+                string iconType = "";
+                int repeat = 0;
+                switch (randomType)
+                {
+                    case PriceRandTypes.Good1: iconType = "oth12"; repeat=1; break;
+                    case PriceRandTypes.Good2: iconType = "oth12"; repeat = 2; break;
+                    case PriceRandTypes.Good3: iconType = "oth12"; repeat = 3; break;
+                    case PriceRandTypes.Bad1: iconType = "oth13"; repeat = 1; break;
+                    case PriceRandTypes.Bad2: iconType = "oth13"; repeat = 2; break;
+                    case PriceRandTypes.Bad3: iconType = "oth13"; repeat = 3; break;
+                }
+
+                for (int i = 0; i < repeat; i++)
+                    g.DrawImage(HSIcons.GetIconsByEName(iconType), x + 5 + 5 + 7 * i, y + 8 + 20, 16, 16);
             }
+        }
+
+        private PriceRandTypes GetTypes()
+        {
+            var roll = MathTool.GetRandom(100);
+            if (roll <= 40)
+                return PriceRandTypes.None;
+            if (roll <= 60)
+                return PriceRandTypes.Good1;
+            if (roll <= 75)
+                return PriceRandTypes.Bad1;
+            if (roll <= 85)
+                return PriceRandTypes.Good2;
+            if (roll <= 90)
+                return PriceRandTypes.Good3;
+            if (roll <= 95)
+                return PriceRandTypes.Bad2;
+            return PriceRandTypes.Bad3;
+        }
+
+        private void RecheckPrice()
+        {
+            var newPrice = price;
+            switch (randomType)
+            {
+                case PriceRandTypes.Good1: newPrice = (int)Math.Min(price-1, price*MathTool.GetRandom(0.88,0.95)); break;
+                case PriceRandTypes.Good2: newPrice = (int)Math.Min(price - 1, price * MathTool.GetRandom(0.70, 0.85)); break;
+                case PriceRandTypes.Good3: newPrice = (int)Math.Min(price - 1, price * MathTool.GetRandom(0.50, 0.65)); break;
+                case PriceRandTypes.Bad1: newPrice = (int)Math.Max(price + 1, price * MathTool.GetRandom(1.05, 1.15)); break;
+                case PriceRandTypes.Bad2: newPrice = (int)Math.Max(price + 1, price * MathTool.GetRandom(1.2, 1.4)); break;
+                case PriceRandTypes.Bad3: newPrice = (int)Math.Max(price + 1, price * MathTool.GetRandom(1.5, 1.8)); break;
+            }
+            price = newPrice;
         }
     }
 }
