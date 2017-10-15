@@ -11,6 +11,7 @@ using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Regions;
+using TaleofMonsters.Forms.Items.Regions.Decorators;
 
 namespace TaleofMonsters.Forms.Items
 {
@@ -24,6 +25,7 @@ namespace TaleofMonsters.Forms.Items
         private int itemId;
         private int priceType;//货币类型
         private int price;
+        private int limitCount; //销售上限
         private PriceRandTypes randomType;
         private bool show;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
@@ -53,11 +55,12 @@ namespace TaleofMonsters.Forms.Items
             parent.Controls.Add(bitmapButtonBuy);
         }
 
-        public void Init(int type, bool isRandom)
+        public void Init(int type, bool isRandom, int limit)
         {
             priceType = type;
             if (isRandom)
                 randomType = GetTypes();
+            limitCount = limit;
             vRegion = new VirtualRegion(parent);
             vRegion.AddRegion(new PictureAnimRegion(1, x + 5, y + 8, 40, 40, PictureRegionCellType.Item, 0));
             vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
@@ -108,6 +111,16 @@ namespace TaleofMonsters.Forms.Items
                 return;
             }
 
+            if (limitCount == 0)
+                return;
+
+            limitCount --;
+            if (limitCount == 0)
+            {
+                vRegion.SetRegionDecorator(1, 1, new RegionCoverDecorator(Color.FromArgb(100, Color.Black)));
+                bitmapButtonBuy.Hide();
+            }
+
             UserProfile.InfoBag.SubResource((GameResourceType) priceType, (uint)price);
             UserProfile.InfoBag.AddItem(itemId, 1);
         }
@@ -121,8 +134,11 @@ namespace TaleofMonsters.Forms.Items
                 Font font = new Font("微软雅黑", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
                 HItemConfig itemConfig = ConfigData.GetHItemConfig(itemId);
 
+                var sellName = itemConfig.Name;
+                if (limitCount < 10)
+                    sellName = string.Format("{0} (余{1})", itemConfig.Name, limitCount);
                 Brush brush = new SolidBrush(Color.FromName(HSTypes.I2RareColor(itemConfig.Rare)));
-                g.DrawString(itemConfig.Name, font, brush, x + 50, y + 7);
+                g.DrawString(sellName, font, brush, x + 50, y + 7);
                 brush.Dispose();
 
                 g.DrawString(price.ToString(), font, Brushes.Gold,x+ 50,y+ 30);
