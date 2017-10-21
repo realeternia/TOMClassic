@@ -45,7 +45,7 @@ namespace TaleofMonsters.MainItem.Scenes
                 SceneInfo.SceneScriptPosData cellConfigData;
                 mapCellDict.TryGetValue(specialPosData.Id, out cellConfigData);
 
-                info.AddCellIntial(cellConfigData, specialPosData, id, reason);
+                info.AddCellInitial(cellConfigData, specialPosData, id, reason);
             }
 
             return info;

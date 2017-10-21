@@ -24,7 +24,7 @@ namespace TaleofMonsters.MainItem.Scenes
             Items = new List<SceneObject>();
         }
 
-        public void AddCellIntial(SceneInfo.SceneScriptPosData cellConfigData, DbSceneSpecialPosData specialPosData, int id, SceneFreshReason reason)
+        public void AddCellInitial(SceneInfo.SceneScriptPosData cellConfigData, DbSceneSpecialPosData specialPosData, int id, SceneFreshReason reason)
         {
             SceneObject so;
             if (cellConfigData.Id > 0)
