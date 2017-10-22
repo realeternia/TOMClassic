@@ -228,6 +228,7 @@ namespace TaleofMonsters.Forms
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine(sceneConfig.Name, "Lime", 20);
             tipData.AddTextNewLine(string.Format("地图等级: {0}", sceneConfig.Level), sceneConfig.Level>UserProfile.InfoBasic.Level?"Red": "White");
+            tipData.AddTextNewLine(string.Format("所属: {0}", sceneConfig.Sector), "White", 20);
 
             //string[] icons = SceneBook.GetNPCIconsOnMap(id);
             //if (icons.Length > 0)
