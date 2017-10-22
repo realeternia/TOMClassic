@@ -7,7 +7,6 @@ using ControlPlus;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.MainItem.Scenes;
@@ -46,9 +45,12 @@ namespace TaleofMonsters.Forms
 
                 Image image = PicLoader.Read("MapIcon", string.Format("{0}.PNG", sceneConfig.Icon));
                 iconSizeDict[sceneConfig.Id] = new Size(image.Width, image.Height);
-                Rectangle destRect = new Rectangle(sceneConfig.IconX, sceneConfig.IconY, image.Width, image.Height);
-                g.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, 
-                    sceneConfig.Level > UserProfile.InfoBasic.Level ? HSImageAttributes.ToRed : HSImageAttributes.ToGray);
+
+                Rectangle destRect = new Rectangle(sceneConfig.IconX-2, sceneConfig.IconY-2, image.Width+4, image.Height+4);
+                Rectangle destRect2 = new Rectangle(sceneConfig.IconX, sceneConfig.IconY, image.Width, image.Height);
+
+                g.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, HSImageAttributes.FromColor(Color.FromName(sceneConfig.IconColor)));
+                g.DrawImage(image, destRect2, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
                 image.Dispose();
 
                 if (sceneConfig.Id == UserProfile.InfoBasic.MapId)
@@ -133,9 +135,7 @@ namespace TaleofMonsters.Forms
         private void WorldMapViewForm_Click(object sender, EventArgs e)
         {
             if (selectName =="")
-            {
                 return;
-            }
 
             foreach (var mapIconConfig in ConfigData.SceneDict.Values)
             {
