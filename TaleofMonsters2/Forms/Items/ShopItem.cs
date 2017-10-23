@@ -111,6 +111,12 @@ namespace TaleofMonsters.Forms.Items
                 return;
             }
 
+            if (UserProfile.InfoBag.GetBlankCount() <= 0)
+            {
+                parent.AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagIsFull), "Red");
+                return;
+            }
+
             if (limitCount == 0)
                 return;
 
