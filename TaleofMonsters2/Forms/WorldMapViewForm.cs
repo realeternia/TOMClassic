@@ -7,6 +7,7 @@ using ControlPlus;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.MainItem.Scenes;
@@ -230,15 +231,9 @@ namespace TaleofMonsters.Forms
             tipData.AddTextNewLine(string.Format("地图等级: {0}", sceneConfig.Level), sceneConfig.Level>UserProfile.InfoBasic.Level?"Red": "White");
             tipData.AddTextNewLine(string.Format("所属: {0}", sceneConfig.Sector), "White", 20);
 
-            //string[] icons = SceneBook.GetNPCIconsOnMap(id);
-            //if (icons.Length > 0)
-            //{
-            //    tipData.AddTextNewLine("设施", "Green");
-            //    foreach (string icon in icons)
-            //    {
-            //        tipData.AddImage(HSIcons.GetIconsByEName(icon));
-            //    }
-            //}
+            var sceneInfo = SceneBook.LoadSceneFile(id, 0, 0, new Random());
+            var questCount = SceneQuestBook.GetQuestCount(id);
+            tipData.AddTextNewLine(string.Format("饱和度：{0:0.0}/{1}", sceneInfo.SpecialCellCount + questCount, sceneInfo.CellCount), "Green");
 
             if (sceneConfig.Func != "")
             {

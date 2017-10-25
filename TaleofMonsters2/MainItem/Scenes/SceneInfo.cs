@@ -38,6 +38,9 @@ namespace TaleofMonsters.MainItem.Scenes
         public List<SceneScriptPosData> MapData { get; private set; } //随机后的结果也会到这里
         public List<SceneScriptSpecialData> SpecialData { get; private set; } //写死的npc等等
 
+        public int CellCount { get { return MapData.Count; } }
+        public int SpecialCellCount { get { return SpecialData.Count; } }
+
         public SceneInfo(int id)
         {
             Id = id;

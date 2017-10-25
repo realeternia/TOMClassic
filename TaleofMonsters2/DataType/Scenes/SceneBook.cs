@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
@@ -10,8 +11,9 @@ namespace TaleofMonsters.DataType.Scenes
 {
     internal static class SceneBook
     {
-        public static SceneInfo LoadSceneFile(int id, int mapWidth, int mapHeight, string filePath, Random r)
+        public static SceneInfo LoadSceneFile(int id, int mapWidth, int mapHeight, Random r)
         {
+            var filePath = ConfigData.GetSceneConfig(id).TilePath;
             StreamReader sr = new StreamReader(DataLoader.Read("Scene", string.Format("{0}.txt", filePath)));
             SceneInfo info = new SceneInfo(id);
 

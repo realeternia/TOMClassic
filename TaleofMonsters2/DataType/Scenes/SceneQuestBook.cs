@@ -141,6 +141,53 @@ namespace TaleofMonsters.DataType.Scenes
             return datas;
         }
 
+        /// <summary>
+        /// 统计场景内随机事件的数量使用
+        /// </summary>
+        public static float GetQuestCount(int mapId)
+        {
+            var config = ConfigData.GetSceneConfig(mapId);
+            float questCount = 0;
+            if (config.QPortal > 0)//地磁反转
+                questCount++;
+            if (config.QCardChange > 0)//卡牌商人
+                questCount++;
+            if (config.QPiece > 0)//素材商人
+                questCount++;
+            if (config.QMerchant > 0)//商人
+                questCount++;
+            if (config.QDoctor > 0)//医生
+                questCount++;
+            if (config.QAngel > 0)//天使
+                questCount++;
+            if (config.QWheel > 0)//轮盘
+                questCount++;
+            if (config.QRes > 0)//期货
+                questCount++;
+
+            if (!string.IsNullOrEmpty(config.Quest))
+            {
+                string[] infos = config.Quest.Split('|');
+                foreach (var info in infos)
+                {
+                    string[] questData = info.Split(';');
+                    questCount += int.Parse(questData[1]);
+                }
+            }
+            if (!string.IsNullOrEmpty(config.QuestRandom))
+            {
+                string[] infos = config.QuestRandom.Split('|');
+                foreach (var info in infos)
+                {
+                    string[] questData = info.Split(';');
+                    int rate = int.Parse(questData[1]);
+                    questCount += (float)rate/100;
+                }
+            }
+
+            return questCount;
+        }
+
         public static List<RLIdValue> GetDungeonQuestConfigData(int mapId)
         {
             var config = ConfigData.GetSceneConfig(mapId);
