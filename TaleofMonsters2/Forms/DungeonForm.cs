@@ -6,14 +6,12 @@ using ConfigDatas;
 using NarlonLib.Control;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.User;
-using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
+using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.Forms
 {
@@ -23,6 +21,7 @@ namespace TaleofMonsters.Forms
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
         private VirtualRegion vRegion;
         private List<int> gismoList;
+        private string title = "";
 
         public int DungeonId { get; set; }
 
@@ -33,7 +32,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonC1.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
             bitmapButtonC1.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             bitmapButtonC1.ForeColor = Color.White;
-            bitmapButtonC1.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("tsk7");
+            bitmapButtonC1.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("hatt5");
             bitmapButtonC1.IconSize = new Size(16, 16);
             bitmapButtonC1.IconXY = new Point(4, 5);
             bitmapButtonC1.TextOffX = 8;
@@ -44,6 +43,8 @@ namespace TaleofMonsters.Forms
         {
             base.Init(width, height);
 
+            var dungeonConfig = ConfigData.GetDungeonConfig(DungeonId);
+            title = dungeonConfig.Name;
             gismoList = DungeonBook.GetGismoListByDungeon(DungeonId);
 
             vRegion = new VirtualRegion(this);
@@ -54,16 +55,14 @@ namespace TaleofMonsters.Forms
             for (int i = 0; i < gismoList.Count; i++)
             {
                 var targetItem = gismoList[i];
-                var region = new PictureAnimRegion(i, points[i].X+ xOff, points[i].Y + yOff, 40, 40, PictureRegionCellType.Item, targetItem.Type);
-                region.AddDecorator(new RegionTextDecorator(5, 24, 10));
+                var region = new PictureRegion(i, 45*(i%7)+ xOff+5, 45 * (i / 7) + yOff+5, 40, 40, PictureRegionCellType.Gismo, targetItem);
                 vRegion.AddRegion(region);
-                vRegion.SetRegionDecorator(i, 0, targetItem.Value.ToString());
 
-                if (UserProfile.InfoBag.GetItemCount(gismoList[i]) <= 0)
-                    region.AddDecorator(new RegionCoverDecorator(black));
+                //if (UserProfile.InfoBag.GetItemCount(gismoList[i]) <= 0)
+                  //  region.AddDecorator(new RegionCoverDecorator(black));
             }
 
-            backImage = PicLoader.Read("System", "DailyBack.JPG");
+            backImage = PicLoader.Read("Dungeon", string.Format("{0}.JPG", dungeonConfig.BgImage));
             vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
@@ -75,34 +74,19 @@ namespace TaleofMonsters.Forms
 
         private void bitmapButtonC1_Click(object sender, EventArgs e)
         {
-            foreach (var item in gismoList)
-            {
-                if (UserProfile.InfoBag.GetItemCount(item) <= 0)
-                {
-                    AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughItems), "Red");
-                    return;
-                }
-            }
-
-            foreach (var item in gismoList)
-                UserProfile.InfoBag.DeleteItem(item, 1);
-
-            AddFlowCenter("合成成功", "Lime");
+            var dungeonConfig = ConfigData.GetDungeonConfig(DungeonId); //传送
+            Scene.Instance.ChangeMap(dungeonConfig.EntryScene, true);
+            UserProfile.InfoBasic.Position = Scene.Instance.SceneInfo.GetStartPos(); //如果没配置了出生点，就随机一个点
+            Close();
         }
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
-            if (id == 10)
+            var region = vRegion.GetRegion(id);
+            if (region != null)
             {
-                Image image = CardAssistant.GetCard(key).GetPreview(CardPreviewType.Normal, new uint[] { });
-                tooltip.Show(image, this, x, y, key);
+                region.ShowTip(tooltip, Parent, x + Location.X, y + Location.Y);
             }
-            else if (key > 0)
-            {
-                Image image = HItemBook.GetPreview(key);
-                tooltip.Show(image, this, x, y);
-            }
-
         }
 
         private void virtualRegion_RegionLeft()
@@ -110,12 +94,12 @@ namespace TaleofMonsters.Forms
             tooltip.Hide(this);
         }
 
-        private void DailyCardForm_Paint(object sender, PaintEventArgs e)
+        private void DungeonForm_Paint(object sender, PaintEventArgs e)
         {
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
             Font font = new Font("黑体", 12 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString("每日合成", font, Brushes.White, Width / 2 - 40, 8);
+            e.Graphics.DrawString(title, font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
 
             int xOff = 13;

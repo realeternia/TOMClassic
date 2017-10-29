@@ -75,6 +75,10 @@ namespace TaleofMonsters.Forms.Items.Regions
                 {
                     img = DataType.Achieves.AchieveBook.GetAchieveImage(nid);
                 }
+                else if (type == PictureRegionCellType.Gismo)
+                {
+                    img = DataType.Scenes.DungeonBook.GetGismoImage(nid);
+                }
                 else if (type == PictureRegionCellType.People)
                 {
                     img = DataType.Peoples.PeopleBook.GetPersonImage(nid);
@@ -173,6 +177,11 @@ namespace TaleofMonsters.Forms.Items.Regions
                 Image image = BlessBook.GetPreview(nid);
                 tooltip.Show(image, form, x, y);
             }
+            else if (regionType == PictureRegionCellType.Gismo)
+            {
+                Image image = DungeonBook.GetPreview(nid);
+                tooltip.Show(image, form, x, y);
+            }
             else if (regionType == PictureRegionCellType.People)
             {
                 Image image = PeopleBook.GetPreview(nid);
@@ -187,6 +196,7 @@ namespace TaleofMonsters.Forms.Items.Regions
         Equip,
         Card,
         Achieve,
+        Gismo,
         HeroSkill,
         People,
         CardQual,

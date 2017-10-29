@@ -59,7 +59,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonC1.Size = new System.Drawing.Size(50, 30);
             this.bitmapButtonC1.TabIndex = 27;
             this.bitmapButtonC1.Tag = "1";
-            this.bitmapButtonC1.Text = "合成";
+            this.bitmapButtonC1.Text = "进入";
             this.bitmapButtonC1.TextOffX = 0;
             this.bitmapButtonC1.UseVisualStyleBackColor = true;
             this.bitmapButtonC1.Click += new System.EventHandler(this.bitmapButtonC1_Click);
@@ -90,7 +90,7 @@ namespace TaleofMonsters.Forms
             this.Controls.Add(this.bitmapButtonC1);
             this.Name = "DungeonForm";
             this.Size = new System.Drawing.Size(350, 408);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.DailyCardForm_Paint);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.DungeonForm_Paint);
             this.ResumeLayout(false);
 
         }

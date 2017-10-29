@@ -7,7 +7,6 @@ using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User;
-using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.DataType.Achieves
 {
@@ -45,7 +44,7 @@ namespace TaleofMonsters.DataType.Achieves
 
         public static Image GetPreview(int id)
         {
-            AchieveConfig achieveConfig = ConfigData.AchieveDict[id];
+            AchieveConfig achieveConfig = ConfigData.GetAchieveConfig(id);
 
             int wid = 120, heg = 10;
             Font fontsong = new Font("宋体", 9*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
