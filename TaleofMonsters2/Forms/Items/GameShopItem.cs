@@ -11,6 +11,7 @@ using TaleofMonsters.Forms.Pops;
 using ConfigDatas;
 using TaleofMonsters.Config;
 using TaleofMonsters.DataType.Others;
+using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.Forms.Items
 {
@@ -22,10 +23,10 @@ namespace TaleofMonsters.Forms.Items
 
         private int productId;
         private int x, y, width, height;
-        private Control parent;
+        private BasePanel parent;
         private BitmapButton bitmapButtonBuy;
 
-        public GameShopItem(UserControl prt, int x, int y, int width, int height)
+        public GameShopItem(BasePanel prt, int x, int y, int width, int height)
         {
             parent = prt;
             this.x = x;
@@ -109,7 +110,13 @@ namespace TaleofMonsters.Forms.Items
 
         private void pictureBoxBuy_Click(object sender, EventArgs e)
         {
-            GameShopConfig gameShopConfig = ConfigData.GetGameShopConfig(productId);
+            if (UserProfile.InfoBag.GetBlankCount() <= 0)
+            {
+                parent.AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagIsFull), "Red");
+                return;
+            }
+
+            var gameShopConfig = ConfigData.GetGameShopConfig(productId);
             var eid = HItemBook.GetItemId(gameShopConfig.Item);
             var itmConfig = ConfigData.GetHItemConfig(eid);
             var itemPrice = GameResourceBook.OutGoldSellItem(itmConfig.Rare, itmConfig.ValueFactor);

@@ -47,6 +47,12 @@ namespace TaleofMonsters.MainItem.Quests
                 shop.ShopName = config.ShopName;
                 PanelManager.DealPanel(shop);
             }
+            else if (e.ParamList[0] == "dungeon")
+            {
+                var dungeon = new DungeonForm();
+                dungeon.DungeonId = config.DungeonId;
+                PanelManager.DealPanel(dungeon);
+            }
             else if (e.ParamList[0] == "wheel")
             {
                 TreasureWheelBook.Show(int.Parse(e.ParamList[1]));
