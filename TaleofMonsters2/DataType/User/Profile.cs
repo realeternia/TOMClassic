@@ -1,10 +1,8 @@
 ﻿using System;
 using TaleofMonsters.Controler.World;
 using TaleofMonsters.Core;
-using NarlonLib.Math;
 using ConfigDatas;
 using NarlonLib.Tools;
-using TaleofMonsters.Controler.Battle.Tool;
 
 namespace TaleofMonsters.DataType.User
 {
@@ -31,7 +29,7 @@ namespace TaleofMonsters.DataType.User
         [FieldIndex(Index = 12)]
         public InfoRecord InfoRecord;
         [FieldIndex(Index = 13)]
-        public InfoAchieve InfoAchieve;
+        public InfoGismo InfoGismo;
         [FieldIndex(Index = 14)]
         public InfoWorld InfoWorld;
 
@@ -45,81 +43,8 @@ namespace TaleofMonsters.DataType.User
             InfoFarm=new InfoFarm();
             InfoQuest=new InfoQuest();
             InfoRecord=new InfoRecord();
-            InfoAchieve=new InfoAchieve();
+            InfoGismo=new InfoGismo();
             InfoWorld = new InfoWorld();
-        }
-
-        public int GetAchieveState(int id)
-        {
-            if (InfoAchieve.GetAchieve(id))
-            {
-                return int.MaxValue;
-            }
-
-            AchieveConfig achieveConfig = ConfigData.GetAchieveConfig(id);
-            switch (achieveConfig.Condition.Id)
-            {
-                case 1: return InfoBasic.Level;
-                case 2: return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.TotalWin);
-                case 3: return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.TotalKill);
-                case 4: return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.TotalSummon);
-                case 5: return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.TotalWeapon);
-                case 6: return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.TotalSpell);
-                case 8: return InfoRival.GetRivalAvailCount();
-                case 9: return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.TotalOnline);
-                case 11: return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.TotalPick);
-                case 12: return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.TotalDig);
-                case 13: return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.TotalFish);
-                case 14: return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.ContinueWin);
-                case 21: return (int)InfoBag.Resource.Gold;
-                case 22: return (int)InfoBag.Resource.Lumber;
-                case 23: return (int)InfoBag.Resource.Stone;
-                case 24: return (int)InfoBag.Resource.Mercury;
-                case 25: return (int)InfoBag.Resource.Sulfur;
-                case 26: return (int)InfoBag.Resource.Carbuncle;
-                case 27: return (int)InfoBag.Resource.Gem;
-                case 30: return InfoCard.GetCardCountByType(CardTypes.Null);
-                case 31: return InfoCard.GetCardCountByType(CardTypes.Monster);
-                case 32: return InfoCard.GetCardCountByType(CardTypes.Weapon);
-                case 33: return InfoCard.GetCardCountByType(CardTypes.Spell);
-                case 50: return BattleManager.Instance.StatisticData.FastWin;
-                case 51: return BattleManager.Instance.StatisticData.Round;
-                case 52: return BattleManager.Instance.StatisticData.Left.MonsterAdd;
-                case 53: return BattleManager.Instance.StatisticData.Left.WeaponAdd;
-                case 54: return BattleManager.Instance.StatisticData.Left.SpellAdd;
-                case 55: return BattleManager.Instance.StatisticData.Items.Count;
-                case 56: return BattleManager.Instance.StatisticData.ZeroDie;
-                case 57: return BattleManager.Instance.StatisticData.OnlyMagic;
-                case 58: return BattleManager.Instance.StatisticData.OnlySummon;
-                case 60: return BattleManager.Instance.StatisticData.AlmostLost;
-            }
-
-            if (MathTool.ValueBetween(achieveConfig.Condition.Id, 100,108))
-            {
-                return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.TotalKillByType + achieveConfig.Condition.Id - 100);
-            }
-            if (MathTool.ValueBetween(achieveConfig.Condition.Id, 110, 125))
-            {
-                return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.TotalKillByRace + achieveConfig.Condition.Id - 110);
-            }
-            if (MathTool.ValueBetween(achieveConfig.Condition.Id, 131, 138))
-            {
-                return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.TotalKillByLevel + achieveConfig.Condition.Id - 130);
-            }
-            if (MathTool.ValueBetween(achieveConfig.Condition.Id, 200, 216))
-            {
-                return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.TotalSummonByType + achieveConfig.Condition.Id - 200);
-            }
-            if (MathTool.ValueBetween(achieveConfig.Condition.Id, 220, 235))
-            {
-                return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.TotalSummonByRace + achieveConfig.Condition.Id - 220);
-            }
-            if (MathTool.ValueBetween(achieveConfig.Condition.Id, 241, 248))
-            {
-                return InfoRecord.GetRecordById((int)MemPlayerRecordTypes.TotalSummonByLevel + achieveConfig.Condition.Id - 240);
-            }
-
-            return 0;
         }
 
         public void OnCreate(int constellation, int bldType, int headId)

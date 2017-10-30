@@ -160,9 +160,6 @@ namespace TaleofMonsters.MainItem
                 case SystemMenuIds.ItemForm:
                     PanelManager.DealPanel(new ItemForm());
                     break;
-                case SystemMenuIds.AchieveViewForm:
-                    PanelManager.DealPanel(new AchieveViewForm());
-                    break;
                 case SystemMenuIds.PeopleViewForm:
                     PanelManager.DealPanel(new PeopleViewForm());
                     break;
@@ -253,9 +250,6 @@ namespace TaleofMonsters.MainItem
                 case Keys.M:
                     CheckItemClick(SystemMenuIds.WorldMapViewForm);
                     break;
-                case Keys.A:
-                    CheckItemClick(SystemMenuIds.AchieveViewForm);
-                    break;
                 case Keys.Oemtilde:
                     GMMode = !GMMode;
                     MainForm.Instance.RefreshView();
@@ -268,7 +262,6 @@ namespace TaleofMonsters.MainItem
     {
         SystemMenu = 1,
         GameShopViewForm = 2,
-        AchieveViewForm = 3,
         TaskForm = 6,
         PeopleViewForm = 7,
         DeckViewForm = 8,

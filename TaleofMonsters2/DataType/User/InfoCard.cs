@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using TaleofMonsters.Config;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Achieves;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.MainItem;
@@ -73,7 +72,6 @@ namespace TaleofMonsters.DataType.User
             if (Newcards.Count > 10)
                 Newcards.RemoveAt(0);
 
-            AchieveBook.CheckByCheckType("card");
             MainTipManager.AddTip(string.Format("|获得卡片-|{0}|{1}", HSTypes.I2QualityColor((int)cardData.Quality), cardData.Name), "White");
 
             return card;

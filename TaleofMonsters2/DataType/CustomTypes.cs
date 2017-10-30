@@ -117,14 +117,6 @@
         Shield = 102,
         Chaos = 103,
     }
-    internal enum AchieveTypes
-    {
-        Common = 1,
-        Resource = 2,
-        Fight = 3,
-        Summon = 4,
-        Battle = 5,
-    }
 
     internal enum CardProductMarkTypes
     {

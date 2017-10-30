@@ -82,7 +82,7 @@ namespace TaleofMonsters.Core
             register.Register(typeof(IntPair), 3);
             register.Register(typeof(InfoBag), 4);
             register.Register(typeof(DbDeckCard), 5);
-            register.Register(typeof(InfoAchieve), 6);
+            register.Register(typeof(InfoGismo), 6);
             register.Register(typeof(InfoEquip), 7);
             register.Register(typeof(DbFarmState), 8);
             register.Register(typeof(DbEquip), 9);

@@ -4,7 +4,6 @@ using ConfigDatas;
 using NarlonLib.Core;
 using NarlonLib.Tools;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Achieves;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.MainItem;
@@ -70,7 +69,6 @@ namespace TaleofMonsters.DataType.User
             Resource.Add(type, value);
 
             MainTipManager.AddTip(string.Format("|获得|{0}|{1}||x{2}", HSTypes.I2ResourceColor((int)type), HSTypes.I2Resource((int)type), value), "White");
-            AchieveBook.CheckByCheckType("resource");
         }
 
         public bool PayDiamond(int value)

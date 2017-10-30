@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Achieves;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.User.Db;
 
@@ -41,8 +40,6 @@ namespace TaleofMonsters.DataType.User
                     Rivals[id].Loss++;
                 }
             }
-
-            AchieveBook.CheckByCheckType("fight");
         }
 
         public void SetRivalAvail(int id)
@@ -56,7 +53,6 @@ namespace TaleofMonsters.DataType.User
             {
                 state.Avail = true;
             }
-            AchieveBook.CheckByCheckType("people");
         }
 
         public int GetRivalAvailCount()

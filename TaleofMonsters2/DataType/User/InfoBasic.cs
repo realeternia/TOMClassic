@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using ConfigDatas;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Achieves;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.MainItem;
 
@@ -34,7 +33,6 @@ namespace TaleofMonsters.DataType.User
 
             Exp += ex;
             MainTipManager.AddTip(string.Format("|获得|Cyan|{0}||点经验值", ex), "White");
-            AchieveBook.CheckByCheckType("exp");
 
             if (Exp >= ExpTree.GetNextRequired(Level))
             {

@@ -71,10 +71,6 @@ namespace TaleofMonsters.Forms.Items.Regions
                         g.DrawImage(PicLoader.Read("Border", cardBorder), X, Y, Width, Height);
                     };
                 }
-                else if (type == PictureRegionCellType.Achieve)
-                {
-                    img = DataType.Achieves.AchieveBook.GetAchieveImage(nid);
-                }
                 else if (type == PictureRegionCellType.Gismo)
                 {
                     img = DataType.Scenes.DungeonBook.GetGismoImage(nid);
@@ -195,7 +191,6 @@ namespace TaleofMonsters.Forms.Items.Regions
         Item,
         Equip,
         Card,
-        Achieve,
         Gismo,
         HeroSkill,
         People,

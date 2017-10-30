@@ -318,7 +318,7 @@
     <Compile Include="DataType\Formulas\FormulaBook.cs" />
     <Compile Include="DataType\Others\GameResourceBook.cs" />
     <Compile Include="DataType\Others\LevelInfoBook.cs" />
-    <Compile Include="DataType\User\InfoAchieve.cs" />
+    <Compile Include="DataType\User\InfoGismo.cs" />
     <Compile Include="DataType\User\InfoBag.cs" />
     <Compile Include="DataType\User\InfoBasic.cs" />
     <Compile Include="DataType\User\InfoCard.cs" />
@@ -357,7 +357,6 @@
     <Compile Include="Forms\Items\GameShopItem.cs" />
     <Compile Include="Forms\Items\CardShopItem.cs" />
     <Compile Include="Forms\Items\Regions\ButtonRegion.cs" />
-    <Compile Include="Forms\Items\AchieveItem.cs" />
     <Compile Include="Forms\Items\LevelInfoItem.cs" />
     <Compile Include="Forms\Items\Regions\Decorators\RegionTextDecorator.cs" />
     <Compile Include="Forms\Items\Regions\Decorators\RegionBorderDecorator.cs" />
@@ -417,7 +416,6 @@
     <Compile Include="Forms\CardBagForm.Designer.cs">
       <DependentUpon>CardBagForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataType\Achieves\AchieveBook.cs" />
     <Compile Include="DataType\User\Db\DbDeckData.cs" />
     <Compile Include="DataType\Decks\DeckBook.cs" />
     <Compile Include="DataType\Decks\DeckCard.cs" />
@@ -610,12 +608,6 @@
     </Compile>
     <Compile Include="Forms\WorldMapViewForm.Designer.cs">
       <DependentUpon>WorldMapViewForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\AchieveViewForm.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Forms\AchieveViewForm.Designer.cs">
-      <DependentUpon>AchieveViewForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ChangeCardForm.cs">
       <SubType>UserControl</SubType>
@@ -915,10 +907,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\WorldMapViewForm.resx">
       <DependentUpon>WorldMapViewForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\AchieveViewForm.resx">
-      <DependentUpon>AchieveViewForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChangeCardForm.resx">
