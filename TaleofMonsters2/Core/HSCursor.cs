@@ -39,7 +39,7 @@ namespace TaleofMonsters.Core
         public void ChangeCursor(string cname)
         {
             if (cname != name)
-                ChangeCursor("Cursor", string.Format("{0}.PNG", cname), 0, 0);
+                ChangeCursor("System.Cursor", string.Format("{0}.PNG", cname), 0, 0);
         }
 
         public void ChangeCursor(string path, string cname)
@@ -57,7 +57,7 @@ namespace TaleofMonsters.Core
                 Image img = PicLoader.Read(path, cname);
                 if (img == null)
                 {
-                    img = PicLoader.Read("Cursor", "default.PNG");
+                    img = PicLoader.Read("System.Cursor", "default.PNG");
                 }
                 SetCursorSize(img, new Point(0, 0), width, height);
             }
