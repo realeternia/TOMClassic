@@ -41,7 +41,7 @@ namespace TaleofMonsters.Forms.Items.Core
 
             if (head != "")
             {
-                Image headimg = PicLoader.Read("Headline", string.Format("{0}.PNG", head));
+                Image headimg = PicLoader.Read("System.Headline", string.Format("{0}.PNG", head));
                 int wd = (width - 100)*4/5;
                 g.DrawImage(headimg, (width - wd)/2, 0, wd, headimg.Height);
                 headimg.Dispose();

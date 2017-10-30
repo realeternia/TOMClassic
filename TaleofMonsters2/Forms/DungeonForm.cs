@@ -45,6 +45,7 @@ namespace TaleofMonsters.Forms
 
             var dungeonConfig = ConfigData.GetDungeonConfig(DungeonId);
             title = dungeonConfig.Name;
+            colorLabel1.Text = dungeonConfig.Des;
             gismoList = DungeonBook.GetGismoListByDungeon(DungeonId);
 
             vRegion = new VirtualRegion(this);

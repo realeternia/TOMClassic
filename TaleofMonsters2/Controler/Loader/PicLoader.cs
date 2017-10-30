@@ -12,7 +12,7 @@ namespace TaleofMonsters.Controler.Loader
 
         public static Image Read(string dir, string path)
         {
-            if (!Config.Config.ShowImage && dir != "Cursor")
+            if (!Config.Config.ShowImage && dir != "System.Cursor")
             {
                 dir = "System";
                 path = "blank.PNG";

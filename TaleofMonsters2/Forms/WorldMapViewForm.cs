@@ -44,7 +44,7 @@ namespace TaleofMonsters.Forms
                 if (sceneConfig.Icon=="")
                     continue;
 
-                Image image = PicLoader.Read("MapIcon", string.Format("{0}.PNG", sceneConfig.Icon));
+                Image image = PicLoader.Read("Map.MapIcon", string.Format("{0}.PNG", sceneConfig.Icon));
                 iconSizeDict[sceneConfig.Id] = new Size(image.Width, image.Height);
 
                 Rectangle destRect = new Rectangle(sceneConfig.IconX-2, sceneConfig.IconY-2, image.Width+4, image.Height+4);
@@ -196,7 +196,7 @@ namespace TaleofMonsters.Forms
 
                     if (x > baseX && y > baseY && x + width < baseX + 750 && y + height < baseY + 500)
                     {
-                        Image image = PicLoader.Read("MapIcon", string.Format("{0}.PNG", mapIconConfig.Icon));
+                        Image image = PicLoader.Read("Map.MapIcon", string.Format("{0}.PNG", mapIconConfig.Icon));
                         Rectangle destRect = new Rectangle(x - baseX + 11, y - baseY + 31, width + 8, height + 8);
                         Rectangle destRect2 = new Rectangle(x - baseX + 15, y - baseY + 35, width, height);
                         e.Graphics.DrawImage(image, destRect, 0, 0, width, height, GraphicsUnit.Pixel);
