@@ -110,13 +110,17 @@ namespace TaleofMonsters.Forms.Items.Regions
                 {
                     if (Scale == 1)
                     {
-                        g.DrawImage(img, X, Y, Width, Height);
+                        if (Enabled)
+                            g.DrawImage(img, X, Y, Width, Height);
+                        else
+                            g.DrawImage(img, new Rectangle(X, Y, Width, Height), 0,0,
+                                img.Width,img.Height,GraphicsUnit.Pixel, HSImageAttributes.ToGray);
                     }
                     else
                     {
                         int realWidth = (int)(Width*Scale);
                         int realHeight = (int)(Height * Scale);
-                        g.DrawImage(img, X + (Width- realWidth)/2, Y + (Height- realHeight)/2, realWidth, realHeight);
+                        g.DrawImage(img, X + (Width - realWidth) / 2, Y + (Height - realHeight) / 2, realWidth, realHeight);
                     }
                 }
                 if (action != null)

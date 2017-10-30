@@ -16,6 +16,7 @@ namespace TaleofMonsters.Forms.Items.Regions
         public object Parm { get; set; }//可选信息
 
         public bool Visible { get; set; }
+        public bool Enabled { get; set; }
 
         protected bool isIn;
         protected bool isMouseDown;
@@ -35,6 +36,7 @@ namespace TaleofMonsters.Forms.Items.Regions
             Height = height;
             decorators = new List<IRegionDecorator>();
             Visible = true;
+            Enabled = true;
         }
 
         public void SetParent(VirtualRegion r)

@@ -51,15 +51,14 @@ namespace TaleofMonsters.Forms
 
             int xOff = 13;
             int yOff = 107;
-            Color black = Color.FromArgb(180, Color.Black);
             for (int i = 0; i < gismoList.Count; i++)
             {
                 var targetItem = gismoList[i];
-                var region = new PictureRegion(i, 45*(i%7)+ xOff+5, 45 * (i / 7) + yOff+5, 40, 40, PictureRegionCellType.Gismo, targetItem);
+                var region = new PictureRegion(i, 52*(i%6)+ xOff+5, 52 * (i / 6) + yOff+5, 48, 48, PictureRegionCellType.Gismo, targetItem);
                 vRegion.AddRegion(region);
 
-                //if (UserProfile.InfoBag.GetItemCount(gismoList[i]) <= 0)
-                  //  region.AddDecorator(new RegionCoverDecorator(black));
+                if (!UserProfile.Profile.InfoGismo.GetGismo(gismoList[i]))
+                    region.Enabled = false;
             }
 
             backImage = PicLoader.Read("Dungeon", string.Format("{0}.JPG", dungeonConfig.BgImage));
