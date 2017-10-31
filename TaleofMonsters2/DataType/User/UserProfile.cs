@@ -29,6 +29,11 @@ namespace TaleofMonsters.DataType.User
             get { return Profile.InfoCard; }
         }
 
+        public static InfoDungeon InfoDungeon
+        {
+            get { return Profile.InfoDungeon; }
+        }
+
         public static InfoRival InfoRival
         {
             get { return Profile.InfoRival; }

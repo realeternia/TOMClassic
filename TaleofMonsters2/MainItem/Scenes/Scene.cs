@@ -85,7 +85,7 @@ namespace TaleofMonsters.MainItem.Scenes
             int resXOff = (width - 688) / 2;
             vRegion.AddRegion(new SubVirtualRegion(1, resXOff - 30 + 573, 13, 105, 20));
 
-            vRegion.AddRegion(new SubVirtualRegion(2, resXOff - 30 + 82, 13, 77, 20));
+            vRegion.AddRegion(new SubVirtualRegion(2, resXOff - 30 + 82, 13, 77, 20)); //资源
             vRegion.AddRegion(new SubVirtualRegion(3, resXOff - 30 + 82*2, 13, 77, 20));
             vRegion.AddRegion(new SubVirtualRegion(4, resXOff - 30 + 82*3, 13, 77, 20));
             vRegion.AddRegion(new SubVirtualRegion(5, resXOff - 30 + 82*4, 13, 77, 20));
@@ -427,8 +427,11 @@ namespace TaleofMonsters.MainItem.Scenes
             font.Dispose();
             font2.Dispose();
 
-            g.DrawImage(miniMap, width-160, 43, 150, 150);
-            g.DrawImage(miniBack, width - 190, 38, 185, 160);
+            if (UserProfile.InfoDungeon.DungeonId <= 0)
+            {
+                g.DrawImage(miniMap, width - 160, 43, 150, 150);
+                g.DrawImage(miniBack, width - 190, 38, 185, 160);
+            }
 
             vRegion.Draw(g);
 

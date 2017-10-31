@@ -16,29 +16,27 @@ namespace TaleofMonsters.DataType.User
 
         public DbRivalState GetRivalState(int id)
         {
-            if (!Rivals.ContainsKey(id))
-            {
-                return new DbRivalState(id);
-            }
-            return Rivals[id];
+            DbRivalState result = null;
+            if (Rivals.TryGetValue(id, out result))
+                return result;
+            return new DbRivalState(id);
         }
 
         public void AddRivalState(int id, bool isWin)
         {
             if (PeopleBook.IsPeople(id))//打怪不记录战绩
             {
-                if (!Rivals.ContainsKey(id))
+                DbRivalState result = null;
+                if (!Rivals.TryGetValue(id, out result))
                 {
-                    Rivals[id] = new DbRivalState(id);
+                    result = new DbRivalState(id);
+                    Rivals[id] = result;
                 }
+
                 if (isWin)
-                {
-                    Rivals[id].Win++;
-                }
+                    result.Win++;
                 else
-                {
-                    Rivals[id].Loss++;
-                }
+                    result.Loss++;
             }
         }
 

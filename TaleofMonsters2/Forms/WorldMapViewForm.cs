@@ -80,25 +80,7 @@ namespace TaleofMonsters.Forms
         {
             int truex = e.X - 15;
             int truey = e.Y - 35;
-
-            string newSel = "";
-            foreach (var mapIconConfig in ConfigData.SceneDict.Values)
-            {
-                if (mapIconConfig.Icon == "")
-                    continue;
-
-                var iconSize = iconSizeDict[mapIconConfig.Id];
-                if (truex > mapIconConfig.IconX - baseX && truey > mapIconConfig.IconY - baseY && truex < mapIconConfig.IconX - baseX + iconSize.Width && truey < mapIconConfig.IconY - baseY + iconSize.Height)
-                {
-                    newSel = mapIconConfig.Icon;
-                }
-            }
-            if (newSel != selectName)
-            {
-                selectName = newSel;
-                Invalidate();
-            }
-
+            
             if (mouseHold)
             {
                 if (MathTool.GetDistance(e.Location, dragStartPos)>3)
@@ -115,6 +97,24 @@ namespace TaleofMonsters.Forms
             else
             {
                 dragStartPos = e.Location;
+
+                string newSel = "";
+                foreach (var mapIconConfig in ConfigData.SceneDict.Values)
+                {
+                    if (mapIconConfig.Icon == "")
+                        continue;
+
+                    var iconSize = iconSizeDict[mapIconConfig.Id];
+                    if (truex > mapIconConfig.IconX - baseX && truey > mapIconConfig.IconY - baseY && truex < mapIconConfig.IconX - baseX + iconSize.Width && truey < mapIconConfig.IconY - baseY + iconSize.Height)
+                    {
+                        newSel = mapIconConfig.Icon;
+                    }
+                }
+                if (newSel != selectName)
+                {
+                    selectName = newSel;
+                    Invalidate();
+                }
             }
         }
 

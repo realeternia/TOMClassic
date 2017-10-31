@@ -179,6 +179,7 @@
     <Compile Include="DataType\User\Db\DbEquip.cs" />
     <Compile Include="DataType\User\Db\DbDeckCard.cs" />
     <Compile Include="DataType\User\Db\DbSceneSpecialPosData.cs" />
+    <Compile Include="DataType\User\InfoDungeon.cs" />
     <Compile Include="Forms\ChangeResForm.cs">
       <SubType>UserControl</SubType>
     </Compile>

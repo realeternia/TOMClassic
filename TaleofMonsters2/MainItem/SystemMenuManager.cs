@@ -54,10 +54,15 @@ namespace TaleofMonsters.MainItem
             foreach (var toolBarItemData in menuItems)
             {
                 int itemFlow = toolBarItemData.MainIconConfig.Flow;
-                if (!toolBarItemData.Enable || itemFlow == -1 || UserProfile.InfoBasic.Level < toolBarItemData.MainIconConfig.Level)
-                {
+                if (!toolBarItemData.Enable || itemFlow == -1)
                     continue;
-                }
+
+                if (UserProfile.InfoBasic.Level < toolBarItemData.MainIconConfig.Level)
+                    continue;
+
+                if (!toolBarItemData.MainIconConfig.ShowInDungeon && UserProfile.InfoDungeon.DungeonId > 0 || 
+                    !toolBarItemData.MainIconConfig.ShowInScene && UserProfile.InfoDungeon.DungeonId <= 0)
+                    continue;
 
                 if (itemFlow > 0)
                 {

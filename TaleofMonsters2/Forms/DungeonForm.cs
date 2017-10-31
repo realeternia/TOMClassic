@@ -10,7 +10,6 @@ using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
-using TaleofMonsters.Forms.Items.Regions.Decorators;
 using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.Forms
@@ -74,9 +73,10 @@ namespace TaleofMonsters.Forms
 
         private void bitmapButtonC1_Click(object sender, EventArgs e)
         {
-            var dungeonConfig = ConfigData.GetDungeonConfig(DungeonId); //传送
+            var dungeonConfig = ConfigData.GetDungeonConfig(DungeonId); //进入副本
             Scene.Instance.ChangeMap(dungeonConfig.EntryScene, true);
             UserProfile.InfoBasic.Position = Scene.Instance.SceneInfo.GetStartPos(); //如果没配置了出生点，就随机一个点
+            UserProfile.InfoDungeon.Enter(DungeonId);
             Close();
         }
 
