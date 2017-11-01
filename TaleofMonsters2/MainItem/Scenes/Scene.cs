@@ -449,10 +449,14 @@ namespace TaleofMonsters.MainItem.Scenes
                 g.DrawImage(miniMap, width - 160, 43, 150, 150);
                 g.DrawImage(miniBack, width - 190, 38, 185, 160);
             }
+            else
+            {
+                DrawDungeonAttr(g);
+            }
 
             vRegion.Draw(g);
 
-            DrawCellAndToken(g);
+            DrawCellAndToken(g); //绘制地图格子
         }
 
         private void DrawRes(uint resCount, Graphics g, Font font, int xStart, int xEnd, int y)
@@ -460,6 +464,47 @@ namespace TaleofMonsters.MainItem.Scenes
             float lenth = TextRenderer.MeasureText(g, resCount.ToString(), font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
             g.DrawString(resCount.ToString(), font, Brushes.White, new PointF(xStart + (xEnd-xStart - lenth)/2, y));
         }
+
+        private static void DrawDungeonAttr(Graphics g)
+        {
+            Font font2;
+            Image tipBack = PicLoader.Read("System", "TipBack.PNG");
+            font2 = new Font("宋体", 10 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            int index = 0;
+            if (UserProfile.InfoDungeon.Str >= 0)
+            {
+                g.DrawImage(tipBack, 2, 120 + 30 * index, tipBack.Width, tipBack.Height);
+                g.DrawString(string.Format("力量：{0}", UserProfile.InfoDungeon.Str), font2, Brushes.IndianRed, 8, 5 + 120 + 30 * index);
+                index++;
+            }
+            if (UserProfile.InfoDungeon.Agi >= 0)
+            {
+                g.DrawImage(tipBack, 2, 120 + 30 * index, tipBack.Width, tipBack.Height);
+                g.DrawString(string.Format("敏捷：{0}", UserProfile.InfoDungeon.Agi), font2, Brushes.LawnGreen, 8, 5 + 120 + 30 * index);
+                index++;
+            }
+            if (UserProfile.InfoDungeon.Intl >= 0)
+            {
+                g.DrawImage(tipBack, 2, 120 + 30 * index, tipBack.Width, tipBack.Height);
+                g.DrawString(string.Format("智慧：{0}", UserProfile.InfoDungeon.Intl), font2, Brushes.DeepSkyBlue, 8, 5 + 120 + 30 * index);
+                index++;
+            }
+            if (UserProfile.InfoDungeon.Perc >= 0)
+            {
+                g.DrawImage(tipBack, 2, 120 + 30 * index, tipBack.Width, tipBack.Height);
+                g.DrawString(string.Format("感知：{0}", UserProfile.InfoDungeon.Perc), font2, Brushes.MediumPurple, 8, 5 + 120 + 30 * index);
+                index++;
+            }
+            if (UserProfile.InfoDungeon.Endu >= 0)
+            {
+                g.DrawImage(tipBack, 2, 120 + 30 * index, tipBack.Width, tipBack.Height);
+                g.DrawString(string.Format("耐力：{0}", UserProfile.InfoDungeon.Endu), font2, Brushes.Bisque, 8, 5 + 120 + 30 * index);
+                index++;
+            }
+            tipBack.Dispose();
+            font2.Dispose();
+        }
+
 
         private void DrawCellAndToken(Graphics g)
         {
