@@ -154,6 +154,23 @@ namespace TaleofMonsters.MainItem.Scenes
             parent.Invalidate();
         }
 
+        public void EnterDungeon(int dungeonId)
+        {
+            var dungeonConfig = ConfigData.GetDungeonConfig(dungeonId);//进入副本
+            UserProfile.InfoDungeon.Enter(dungeonId);
+            ChangeMap(dungeonConfig.EntryScene, true);
+            UserProfile.InfoBasic.Position = SceneInfo.GetStartPos(); //如果没配置了出生点，就随机一个点
+        }
+
+        public void LeaveDungeon()
+        {
+            var dungeonId = UserProfile.InfoDungeon.DungeonId;
+            var dungeonConfig = ConfigData.GetDungeonConfig(dungeonId);
+            UserProfile.InfoDungeon.Leave();
+            ChangeMap(dungeonConfig.ExitScene, true);
+            UserProfile.InfoBasic.Position = SceneInfo.GetStartPos(); //如果没配置了出生点，就随机一个点
+        }
+
         private void OnBlessChange()
         {
             for (int i = 0; i < 10; i++)

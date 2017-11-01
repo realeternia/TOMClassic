@@ -73,10 +73,7 @@ namespace TaleofMonsters.Forms
 
         private void bitmapButtonC1_Click(object sender, EventArgs e)
         {
-            var dungeonConfig = ConfigData.GetDungeonConfig(DungeonId); //进入副本
-            Scene.Instance.ChangeMap(dungeonConfig.EntryScene, true);
-            UserProfile.InfoBasic.Position = Scene.Instance.SceneInfo.GetStartPos(); //如果没配置了出生点，就随机一个点
-            UserProfile.InfoDungeon.Enter(DungeonId);
+            Scene.Instance.EnterDungeon(DungeonId);
             Close();
         }
 

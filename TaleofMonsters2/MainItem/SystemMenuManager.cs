@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using ConfigDatas;
+using ControlPlus;
 using TaleofMonsters.Controler.GM;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.MagicBook;
+using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.MainItem 
 {
@@ -152,15 +154,19 @@ namespace TaleofMonsters.MainItem
             foreach (var toolBarItemData in activeItems)
             {
                 if ((SystemMenuIds)toolBarItemData.Id == id && toolBarItemData.InCD)
-                {
                     return;
-                }
             }
 
             switch (id)
             {
                 case SystemMenuIds.SystemMenu:
                     PanelManager.DealPanel(new SystemMenu());
+                    break;
+                case SystemMenuIds.LeaveDungeon:
+                    if (MessageBoxEx2.Show("确定离开副本?") == DialogResult.OK)
+                    {
+                        Scene.Instance.LeaveDungeon();
+                    }
                     break;
                 case SystemMenuIds.ItemForm:
                     PanelManager.DealPanel(new ItemForm());
@@ -273,6 +279,7 @@ namespace TaleofMonsters.MainItem
         EquipComposeForm = 10,
         ItemForm = 11,
         EquipmentForm = 12,
+        LeaveDungeon = 31,
         MagicBookViewForm = 32,
         WorldMapViewForm = 33,
         ConnectForm = 34,
