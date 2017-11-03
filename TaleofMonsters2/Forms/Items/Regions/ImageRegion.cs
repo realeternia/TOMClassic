@@ -117,6 +117,36 @@ namespace TaleofMonsters.Forms.Items.Regions
                 Image image = DrawTool.GetImageByString(resStr, 100);
                 tooltip.Show(image, form, x, y);
             }
+            else if (regionType == ImageRegionCellType.Str)
+            {
+                string resStr = string.Format("力量（副本属性）+{0}", Parm);
+                Image image = DrawTool.GetImageByString(resStr, 120);
+                tooltip.Show(image, form, x, y);
+            }
+            else if (regionType == ImageRegionCellType.Agi)
+            {
+                string resStr = string.Format("敏捷（副本属性）+{0}", Parm);
+                Image image = DrawTool.GetImageByString(resStr, 120);
+                tooltip.Show(image, form, x, y);
+            }
+            else if (regionType == ImageRegionCellType.Intl)
+            {
+                string resStr = string.Format("智慧（副本属性）+{0}", Parm);
+                Image image = DrawTool.GetImageByString(resStr, 120);
+                tooltip.Show(image, form, x, y);
+            }
+            else if (regionType == ImageRegionCellType.Perc)
+            {
+                string resStr = string.Format("感知（副本属性）+{0}", Parm);
+                Image image = DrawTool.GetImageByString(resStr, 120);
+                tooltip.Show(image, form, x, y);
+            }
+            else if (regionType == ImageRegionCellType.Endu)
+            {
+                string resStr = string.Format("耐力（副本属性）+{0}", Parm);
+                Image image = DrawTool.GetImageByString(resStr, 120);
+                tooltip.Show(image, form, x, y);
+            }
         }
     }
 
@@ -133,6 +163,11 @@ namespace TaleofMonsters.Forms.Items.Regions
         Mercury,
         Carbuncle,
         Sulfur,
-        Gem
+        Gem,
+        Str,
+        Agi,
+        Intl,
+        Perc,
+        Endu
     }
 }

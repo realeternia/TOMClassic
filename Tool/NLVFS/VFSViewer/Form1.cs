@@ -15,7 +15,7 @@ namespace VFSViewer
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            var targetFile = @"F:\TOMClassic\Trunk\bin\Debug\PicResource.vfs";
+            var targetFile = @".\PicResource.vfs";
             NLVFS.NLVFS.LoadVfsFile(targetFile);
             foreach (var path in NLVFS.NLVFS.GetPathList())
             {

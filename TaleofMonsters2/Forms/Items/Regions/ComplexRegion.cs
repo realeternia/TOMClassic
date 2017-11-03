@@ -91,6 +91,31 @@ namespace TaleofMonsters.Forms.Items.Regions
                 iconName = "res7";
                 borderColor = Color.DodgerBlue;
             }
+            else if (type == ImageRegionCellType.Str)
+            {
+                iconName = "abl1";
+                borderColor = Color.YellowGreen;
+            }
+            else if (type == ImageRegionCellType.Agi)
+            {
+                iconName = "abl2";
+                borderColor = Color.YellowGreen;
+            }
+            else if (type == ImageRegionCellType.Intl)
+            {
+                iconName = "abl3";
+                borderColor = Color.YellowGreen;
+            }
+            else if (type == ImageRegionCellType.Perc)
+            {
+                iconName = "abl4";
+                borderColor = Color.YellowGreen;
+            }
+            else if (type == ImageRegionCellType.Endu)
+            {
+                iconName = "abl5";
+                borderColor = Color.YellowGreen;
+            }
         }
     }
 }

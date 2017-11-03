@@ -57,7 +57,7 @@ namespace TaleofMonsters.Core
                 Image img = PicLoader.Read(path, cname);
                 if (img == null)
                 {
-                    img = PicLoader.Read("System.Cursor", "default.PNG");
+                    img = PicLoader.Read("system.cursor", "default.PNG");
                 }
                 SetCursorSize(img, new Point(0, 0), width, height);
             }
