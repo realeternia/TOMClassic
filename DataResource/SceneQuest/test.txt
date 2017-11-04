@@ -1,5 +1,5 @@
 ﻿s|欢迎来到|Cyan|幻兽传说卡片版||的世界。你是否玩过一个叫做|Red|幻兽传说||的魔兽RPG地图？
-	a当然玩过。
+	a交易。
 		epay
 			r0
 				s你不愿意给出自己的素材
@@ -20,11 +20,11 @@
 					a这个给你吧
 						end
 	a开启隐藏房间。
-		ehide
+		ehide·
 	a奖励。
 		ereward
-	a|cantest-str-n2|交易。
-		etest|str|n2
+	a|cantest-str-n2-t|能力鉴定。
+		etest|str|n2|t
 			r0
 				s你挂了
 					a好啊
@@ -33,7 +33,17 @@
 				s你赢了
 					a好啊
 						end
-	a呃，还没有…
+	a|cantest-agi-0|能力鉴定。
+		etest|agi|0
+			r0
+				s你挂了
+					a好啊
+						epunish
+			r1
+				s你赢了
+					a好啊
+						end
+	a试试剧情
 		s有一个怪物走了过来
 			a拿钱走人
 				ereward

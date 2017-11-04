@@ -113,16 +113,39 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
             {
                 string type = parms[1];
                 string bias = parms[2];
+                bool canConvert = parms.Length >= 4; //3,t，是否允许转换成幸运检测
 
                 int sourceVal = UserProfile.InfoDungeon.GetAttrByStr(type);
-                Disabled = sourceVal < 0;
+                Disabled = UserProfile.InfoDungeon.DungeonId <= 0 || sourceVal < 0;
+                if (Disabled && UserProfile.InfoDungeon.DungeonId <= 0 && canConvert)
+                    Disabled = false;
 
-                if (sourceVal >= 0) //副本中
+                if (!Disabled)
                 {
-                    var attrNeed = UserProfile.InfoDungeon.GetRequireAttrByStr(type, bias);
-                    Script = string.Format("进行{0}考验(判定{1})", GetTestAttrStr(type), attrNeed);
+                    var biasData = 0;
+                    if (bias[0] == 'n')
+                        biasData = -int.Parse(bias.Substring(1));
+                    else
+                        biasData = int.Parse(bias);
+
+                    if (UserProfile.InfoDungeon.DungeonId > 0)
+                    {
+                        var attrNeed = UserProfile.InfoDungeon.GetRequireAttrByStr(type, biasData);
+                        Script = string.Format("进行{0}考验(判定{1} {2:0.0}%胜率)", GetTestAttrStr(type), attrNeed, 
+                            GetWinRate(UserProfile.InfoDungeon.GetAttrByStr(type)+0.5f, attrNeed));
+                    }
+                    else //因为convert了
+                    {
+                        Script = string.Format("进行运气考验(判定{0} {1:0.0}%胜率)", 3 + biasData, 
+                            GetWinRate(3.5f, 3 + biasData));
+                    }
                 }
             }
+        }
+
+        private float GetWinRate(float myData, float needData)
+        {
+            return myData*100/(myData + needData);
         }
 
         private string GetTradeStr(uint goldNeed, uint foodNeed, uint healthNeed, uint mentalNeed)

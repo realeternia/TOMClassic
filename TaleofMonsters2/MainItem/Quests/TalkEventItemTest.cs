@@ -25,9 +25,24 @@ namespace TaleofMonsters.MainItem.Quests
         {
             string type = evt.ParamList[0];
             string bias = evt.ParamList[1];
+            bool canConvert = evt.ParamList.Count >= 3; //3,t，是否允许转换成幸运检测
 
-            attrVal = Math.Max(1, UserProfile.InfoDungeon.GetAttrByStr(type));
-            markNeed = UserProfile.InfoDungeon.GetRequireAttrByStr(type, bias);
+            var biasData = 0;
+            if (bias[0] == 'n')
+                biasData = -int.Parse(bias.Substring(1));
+            else
+                biasData = int.Parse(bias);
+
+            if (UserProfile.InfoDungeon.DungeonId > 0)
+            {
+                attrVal = Math.Max(1, UserProfile.InfoDungeon.GetAttrByStr(type));
+                markNeed = UserProfile.InfoDungeon.GetRequireAttrByStr(type, biasData);
+            }
+            else
+            {
+                attrVal = 3;
+                markNeed = 3 + biasData;
+            }
 
             rollItemX = new List<int>();
             rollItemSpeedX = new List<int>();
