@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using NarlonLib.Tools;
 using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 
@@ -14,16 +13,12 @@ namespace TaleofMonsters.MainItem.Scenes.SceneRules
         public void Init(int id, int minute)
         {
             mapId = id;
-            if (UserProfile.InfoWorld.SavedDungeonQuests.Count == 0)
+            if (UserProfile.InfoWorld.SavedDungeonQuests.Count == 0 && UserProfile.InfoDungeon.DungeonId > 0)
             {
                 UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.DungeonQuestOffside, 0);
-                foreach (var questData in SceneQuestBook.GetDungeonQuestConfigData(mapId))
-                {
+                foreach (var questData in SceneQuestBook.GetDungeonQuestConfigData(UserProfile.InfoDungeon.DungeonId))
                     for (int j = 0; j < questData.Value; j++)
-                    {
                         UserProfile.InfoWorld.SavedDungeonQuests.Add(questData.Id);
-                    }
-                }
                 ArraysUtils.RandomShuffle(UserProfile.InfoWorld.SavedDungeonQuests);
             }
         }
@@ -33,9 +28,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneRules
             foreach (var questData in SceneQuestBook.GetQuestConfigData(mapId))
             {
                 for (int j = 0; j < questData.Value; j++)
-                {
                     randQuestList.Add(questData.Id);
-                }
             }
 
             int offset = UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.DungeonQuestOffside);

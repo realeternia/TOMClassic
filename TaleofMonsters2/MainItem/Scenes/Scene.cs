@@ -39,6 +39,8 @@ namespace TaleofMonsters.MainItem.Scenes
                 OnMoveEnd(f);
             }
         }
+
+        public delegate void SwitchMapAction();
         #endregion
         private class MovingData
         {
@@ -113,7 +115,7 @@ namespace TaleofMonsters.MainItem.Scenes
             miniBack = PicLoader.Read("System", "MiniBack.PNG");
         }
 
-        public void ChangeMap(int mapid, bool isWarp)
+        public void ChangeMap(int mapid, bool isWarp, SwitchMapAction action = null)
         {
             if (backPicture != null)
                 backPicture.Dispose();
@@ -127,6 +129,8 @@ namespace TaleofMonsters.MainItem.Scenes
 
             UserProfile.Profile.OnSwitchScene(isWarp);
             UserProfile.InfoBasic.MapId = mapid;//这句必须在存档后
+            if (action != null)
+                action();
 
             BlessManager.OnChangeMap();
             OnBlessChange();
@@ -151,23 +155,23 @@ namespace TaleofMonsters.MainItem.Scenes
         public void EnterDungeon(int dungeonId)
         {
             var dungeonConfig = ConfigData.GetDungeonConfig(dungeonId);//进入副本
-            ChangeMap(dungeonConfig.EntryScene, true);
-            UserProfile.InfoDungeon.Enter(dungeonId);
-            UserProfile.InfoBasic.Position = SceneInfo.GetStartPos(); //如果没配置了出生点，就随机一个点
-
-            SystemMenuManager.ResetIconState(); //reset main icon state
+            ChangeMap(dungeonConfig.EntryScene, true, ()=>
+            {
+                UserProfile.InfoDungeon.Enter(dungeonId);
+                UserProfile.InfoBasic.Position = SceneInfo.GetStartPos(); //如果没配置了出生点，就随机一个点
+            });
         }
 
         public void LeaveDungeon()
         {
             var dungeonId = UserProfile.InfoDungeon.DungeonId;
             var dungeonConfig = ConfigData.GetDungeonConfig(dungeonId);
-          
-            ChangeMap(dungeonConfig.ExitScene, true);
-            UserProfile.InfoDungeon.Leave();
-            UserProfile.InfoBasic.Position = SceneInfo.GetStartPos(); //如果没配置了出生点，就随机一个点
 
-            SystemMenuManager.ResetIconState(); //reset main icon state
+            ChangeMap(dungeonConfig.ExitScene, true, () =>
+            {
+                UserProfile.InfoDungeon.Leave();
+                UserProfile.InfoBasic.Position = SceneInfo.GetStartPos(); //如果没配置了出生点，就随机一个点
+            });
         }
 
         private void OnBlessChange()

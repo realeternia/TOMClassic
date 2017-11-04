@@ -188,9 +188,10 @@ namespace TaleofMonsters.DataType.Scenes
             return questCount;
         }
 
-        public static List<RLIdValue> GetDungeonQuestConfigData(int mapId)
+
+        public static List<RLIdValue> GetDungeonQuestConfigData(int dungeonId)
         {
-            var config = ConfigData.GetSceneConfig(mapId);
+            var config = ConfigData.GetDungeonConfig(dungeonId);
             List<RLIdValue> datas = new List<RLIdValue>();
             if (!string.IsNullOrEmpty(config.QuestDungeon))
             {
@@ -198,15 +199,14 @@ namespace TaleofMonsters.DataType.Scenes
                 foreach (var info in infos)
                 {
                     string[] questData = info.Split(';');
-                    int qid = GetSceneQuestByName(questData[0]);
-                    if (IsQuestAvail(qid))
-                        datas.Add(new RLIdValue {Id = qid, Value = int.Parse(questData[1])});
+                    int qid = SceneQuestBook.GetSceneQuestByName(questData[0]);
+                    if (SceneQuestBook.IsQuestAvail(qid))
+                        datas.Add(new RLIdValue { Id = qid, Value = int.Parse(questData[1]) });
                 }
             }
             return datas;
         }
-
-        public static SceneQuestBlock GetQuestData(int eventId, int level, string name)
+                public static SceneQuestBlock GetQuestData(int eventId, int level, string name)
         {
             Dictionary<int, SceneQuestBlock> levelCachDict = new Dictionary<int, SceneQuestBlock>();//存下每一深度的最后节点
             SceneQuestBlock root = null;
