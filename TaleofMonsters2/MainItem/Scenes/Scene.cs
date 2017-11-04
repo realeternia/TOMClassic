@@ -135,17 +135,11 @@ namespace TaleofMonsters.MainItem.Scenes
             SystemMenuManager.ResetIconState(); //reset main icon state todo remove check
 
             if (sceneConfig.Type == (int)SceneTypes.Dungeon)
-            {
                 Rule = new SceneRuleDungeon();
-            }
             else if (sceneConfig.Type == (int)SceneTypes.Town)
-            {
                 Rule = new SceneRuleTown();
-            }
             else
-            {
                 Rule = new SceneRuleCommon();
-            }
             TimeMinutes = (int)DateTime.Now.TimeOfDay.TotalMinutes;
             Rule.Init(mapid, TimeMinutes);
             SceneInfo = SceneManager.RefreshSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, isWarp ? SceneFreshReason.Warp : SceneFreshReason.Load );
@@ -157,18 +151,23 @@ namespace TaleofMonsters.MainItem.Scenes
         public void EnterDungeon(int dungeonId)
         {
             var dungeonConfig = ConfigData.GetDungeonConfig(dungeonId);//进入副本
-            UserProfile.InfoDungeon.Enter(dungeonId);
             ChangeMap(dungeonConfig.EntryScene, true);
+            UserProfile.InfoDungeon.Enter(dungeonId);
             UserProfile.InfoBasic.Position = SceneInfo.GetStartPos(); //如果没配置了出生点，就随机一个点
+
+            SystemMenuManager.ResetIconState(); //reset main icon state
         }
 
         public void LeaveDungeon()
         {
             var dungeonId = UserProfile.InfoDungeon.DungeonId;
             var dungeonConfig = ConfigData.GetDungeonConfig(dungeonId);
-            UserProfile.InfoDungeon.Leave();
+          
             ChangeMap(dungeonConfig.ExitScene, true);
+            UserProfile.InfoDungeon.Leave();
             UserProfile.InfoBasic.Position = SceneInfo.GetStartPos(); //如果没配置了出生点，就随机一个点
+
+            SystemMenuManager.ResetIconState(); //reset main icon state
         }
 
         private void OnBlessChange()
@@ -279,9 +278,17 @@ namespace TaleofMonsters.MainItem.Scenes
                 var goldSub = (uint)Math.Ceiling((double)UserProfile.InfoBag.Resource.Gold / 5);
                 MessageBoxEx.Show(string.Format("你死了，失去了{0}的金钱", goldSub));
                 UserProfile.Profile.OnDie();
-                var config = ConfigData.GetSceneConfig(UserProfile.InfoBasic.MapId);
-                ChangeMap(config.ReviveScene, true);
-                UserProfile.InfoBasic.Position = SceneInfo.GetRevivePos();
+              
+                if (UserProfile.InfoDungeon.DungeonId > 0)
+                {
+                    LeaveDungeon();
+                }
+                else
+                {
+                    var config = ConfigData.GetSceneConfig(UserProfile.InfoBasic.MapId);
+                    ChangeMap(config.ReviveScene, true);
+                    UserProfile.InfoBasic.Position = SceneInfo.GetRevivePos();
+                }
             }
 
             CheckAllQuestOpened();

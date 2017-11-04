@@ -111,7 +111,7 @@ namespace TaleofMonsters.Forms
             bitmapButtonDel.NoUseDrawNine = true;
           
             cardDetail = new CardDetail(this, 605, 35, 565);
-            cardDetail.Enabled = false;
+            cardDetail.Enabled = true;
             cardDetail.Invalidate += DetailInvalidate;
             deckStatistic = new CardDeckStatistic(605, 35, 565);
             cardRegion = new DeckCardRegion(5+120, 35 + yoff, 480, 510);

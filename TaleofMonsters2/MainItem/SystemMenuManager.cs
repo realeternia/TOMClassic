@@ -103,10 +103,9 @@ namespace TaleofMonsters.MainItem
             foreach (var toolBarItemData in menuItems)
             {
                 if (toolBarItemData.Id >= 1000)
-                {
                     toolBarItemData.Enable = false;
-                }
             }
+
             var funcStr = ConfigData.GetSceneConfig(UserProfile.InfoBasic.MapId).Func;
             if (funcStr != null)
             {

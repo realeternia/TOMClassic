@@ -280,6 +280,7 @@
     <Compile Include="MainItem\Quests\TalkEventItemPunish.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemPay.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemRewardQuest.cs" />
+    <Compile Include="MainItem\Quests\TalkEventItemTest.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemRoll.cs" />
     <Compile Include="MainItem\Quests\SceneQuests\SceneQuestEvent.cs" />
     <Compile Include="MainItem\Quests\SceneQuests\SceneQuestRollItem.cs" />

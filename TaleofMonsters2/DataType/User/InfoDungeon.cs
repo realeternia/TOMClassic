@@ -33,5 +33,37 @@ namespace TaleofMonsters.DataType.User
         {
             DungeonId = 0;
         }
+
+        public int GetAttrByStr(string type)
+        {
+            switch (type)
+            {
+                case "str": return Str;
+                case "agi": return Agi;
+                case "intl": return Intl;
+                case "perc": return Perc;
+                case "endu": return Endu;
+            }
+            return -1;
+        }
+
+        public int GetRequireAttrByStr(string type, string bias)
+        {
+            var dungeonConfig = ConfigData.GetDungeonConfig(DungeonId);
+            var biasData = 0;
+            if (bias[0] == 'n')
+                biasData = -int.Parse(bias.Substring(1));
+            else
+                biasData = int.Parse(bias);
+            switch (type)
+            {
+                case "str": return dungeonConfig.Str + biasData;
+                case "agi": return dungeonConfig.Agi + biasData;
+                case "intl": return dungeonConfig.Intl + biasData;
+                case "perc": return dungeonConfig.Perc + biasData;
+                case "endu": return dungeonConfig.Endu + biasData;
+            }
+            return 1;
+        }
     }
 }

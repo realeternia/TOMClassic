@@ -142,10 +142,10 @@ namespace TaleofMonsters.Forms
             {
                 if (mapIconConfig.Icon == selectName && mapIconConfig.Id != UserProfile.InfoBasic.MapId)
                 {
-                    //if (UserProfile.InfoBasic.Level < mapIconConfig.Level)
-                    //{
-                    //    return;
-                    //}
+                    if (UserProfile.InfoDungeon.DungeonId > 0) //副本中不允许外传
+                    {
+                        return;
+                    }
 
                     if (MessageBoxEx2.Show("是否花10钻石立刻移动到该地区?") == DialogResult.OK)
                     {

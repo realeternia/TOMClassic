@@ -109,6 +109,20 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
                 UserProfile.InfoRecord.SetRecordById((int) MemPlayerRecordTypes.SceneQuestRandPeopleId, pid);
                 Script = string.Format("偶遇了{0}，我们来切磋一下吧", ConfigData.GetPeopleConfig(pid).Name);
             }
+            else if (parms[0] == "cantest")
+            {
+                string type = parms[1];
+                string bias = parms[2];
+
+                int sourceVal = UserProfile.InfoDungeon.GetAttrByStr(type);
+                Disabled = sourceVal < 0;
+
+                if (sourceVal >= 0) //副本中
+                {
+                    var attrNeed = UserProfile.InfoDungeon.GetRequireAttrByStr(type, bias);
+                    Script = string.Format("进行{0}考验(判定{1})", GetTestAttrStr(type), attrNeed);
+                }
+            }
         }
 
         private string GetTradeStr(uint goldNeed, uint foodNeed, uint healthNeed, uint mentalNeed)
@@ -120,6 +134,19 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
             if (mentalNeed > 0) addStr += mentalNeed + "点精神 ";
 
             return addStr;
+        }
+
+        private string GetTestAttrStr(string type)
+        {
+            switch (type)
+            {
+                case "str": return "力量";
+                case "agi": return "敏捷";
+                case "intl": return "智慧";
+                case "perc": return "感知";
+                case "endu": return "耐力";
+            }
+            return "未知";
         }
     }
 }

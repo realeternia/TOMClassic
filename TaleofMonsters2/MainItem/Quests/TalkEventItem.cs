@@ -25,6 +25,7 @@ namespace TaleofMonsters.MainItem.Quests
                 case "rewardq": return new TalkEventItemRewardQuest(eventId, level, c, r, e);
                 case "trade": return new TalkEventItemTrade(eventId, level, c, r, e); 
                 case "punish": return new TalkEventItemPunish(eventId, level, c, r, e);
+                case "test": return new TalkEventItemTest(eventId, level, r, e);
                 case "pay": return new TalkEventItemPay(eventId, level, c, r, e);
                 case "npc": return new TalkEventItemNpc(eventId, level, r, e);
                 case "nd": return new TalkEventItemEnd(eventId, level, r, e);

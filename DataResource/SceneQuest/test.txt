@@ -23,6 +23,16 @@
 		ehide
 	a奖励。
 		ereward
+	a|cantest-str-n2|交易。
+		etest|str|n2
+			r0
+				s你挂了
+					a好啊
+						epunish
+			r1
+				s你赢了
+					a好啊
+						end
 	a呃，还没有…
 		s有一个怪物走了过来
 			a拿钱走人
