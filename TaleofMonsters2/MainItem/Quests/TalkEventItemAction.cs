@@ -17,7 +17,6 @@ namespace TaleofMonsters.MainItem.Quests
                 case "ruin": Scene.Instance.Ruin(); break;
                 case "teleport": Scene.Instance.EnableTeleport(); break;
                 case "portal": Scene.Instance.RandomPortal(); break;
-                case "move": Scene.Instance.MoveTo(config.Position); break;
                 case "moveback": Scene.Instance.MoveTo(UserProfile.InfoBasic.LastPosition); break;
                 case "hiddenway": Scene.Instance.HiddenWay(); break;
                 case "next": foreach (var parm in config.NextQuest) //支持多个next同时触发
