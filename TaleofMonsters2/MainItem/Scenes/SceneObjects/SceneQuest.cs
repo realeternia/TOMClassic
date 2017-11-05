@@ -46,7 +46,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             }
             else
             {
-                Scene.Instance.OnEventFinish();
+                Scene.Instance.CheckALiveAndQuestState();
             }
         }
 

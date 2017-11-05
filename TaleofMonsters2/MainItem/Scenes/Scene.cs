@@ -31,12 +31,12 @@ namespace TaleofMonsters.MainItem.Scenes
         {
             if (MainForm.Instance.InvokeRequired)
             {
-                TimelySceneCallback d = OnMoveEnd;
+                TimelySceneCallback d = CheckALiveAndQuestState;
                 MainForm.Instance.Invoke(d, new object[] { f });
             }
             else
             {
-                OnMoveEnd(f);
+                CheckALiveAndQuestState(f);
             }
         }
 
@@ -207,9 +207,7 @@ namespace TaleofMonsters.MainItem.Scenes
             g.Dispose();
 
             if (miniMap != null)
-            {
                 miniMap.Dispose();
-            }
             miniMap = new Bitmap(150, 150); //绘制小地图
             g = Graphics.FromImage(miniMap);
             Rectangle destRect = new Rectangle(0, 0, 150, 150);
@@ -261,7 +259,7 @@ namespace TaleofMonsters.MainItem.Scenes
             }
         }
 
-        private static void OnMoveEnd(SceneObject o)
+        private static void CheckALiveAndQuestState(SceneObject o)
         {
             try //因为这一步会被invoke，所以单独套一层try
             {
@@ -275,7 +273,12 @@ namespace TaleofMonsters.MainItem.Scenes
             
         }
 
-        public void OnEventFinish()
+        public void OnEventEnd(int id, string type)
+        {
+            UserProfile.InfoDungeon.OnEventEnd(id, type);
+        }
+
+        public void CheckALiveAndQuestState()
         {
             if (UserProfile.InfoBasic.HealthPoint <= 0 || UserProfile.InfoBasic.MentalPoint <= 0)
             {
@@ -389,9 +392,7 @@ namespace TaleofMonsters.MainItem.Scenes
             g.DrawImage(mainBottom, 0, height-35, width, 35);
             
             if (UserProfile.Profile == null || UserProfile.InfoBasic.MapId == 0)
-            {
                 return;
-            }
 
             Font font = new Font("微软雅黑", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             Font font2 = new Font("宋体", 9*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);

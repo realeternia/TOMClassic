@@ -81,7 +81,8 @@ namespace TaleofMonsters.Forms
                 if (interactBlock == null)//一般是最后一选了
                 {
                     Close();
-                    Scene.Instance.OnEventFinish();
+                    Scene.Instance.OnEventEnd(config.Id, evtItem != null ? evtItem.Type : "");
+                    Scene.Instance.CheckALiveAndQuestState();
                     return;
                 }
                 
@@ -117,7 +118,8 @@ namespace TaleofMonsters.Forms
                 if (evtItem != null && evtItem.AutoClose())
                 {
                     Close();
-                    Scene.Instance.OnEventFinish();
+                    Scene.Instance.OnEventEnd(config.Id, evtItem != null ? evtItem.Type : "");
+                    Scene.Instance.CheckALiveAndQuestState();
                 }
                 this.Invalidate();
             }

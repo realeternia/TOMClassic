@@ -175,6 +175,7 @@
     <Compile Include="DataType\Peoples\PeopleFightReason.cs" />
     <Compile Include="DataType\Scenes\DungeonBook.cs" />
     <Compile Include="DataType\Scenes\SceneQuestBook.cs" />
+    <Compile Include="DataType\User\Db\DbGismoState.cs" />
     <Compile Include="DataType\User\Db\DbQuestData.cs" />
     <Compile Include="DataType\User\Db\DbEquip.cs" />
     <Compile Include="DataType\User\Db\DbDeckCard.cs" />

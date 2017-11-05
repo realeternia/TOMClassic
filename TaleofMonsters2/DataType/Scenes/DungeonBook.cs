@@ -4,6 +4,7 @@ using ConfigDatas;
 using ControlPlus;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
+using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.DataType.Scenes
 {
@@ -36,11 +37,13 @@ namespace TaleofMonsters.DataType.Scenes
         public static Image GetPreview(int key)
         {
             var config = ConfigData.GetDungeonGismoConfig(key);
-            //if (UserProfile.InfoWorld.Blesses.ContainsKey(key))
-            //    lastTime = UserProfile.InfoWorld.Blesses[key];
             TipImage tipData = new TipImage();
-            var color = "White";;
-            tipData.AddTextNewLine(config.Name, color, 20);
+
+            var hasGismo = UserProfile.InfoGismo.GetGismo(key);
+            if (hasGismo)
+                tipData.AddTextNewLine(config.Name, "White", 20);
+            else
+                tipData.AddTextNewLine(config.Name + "(未开启)", "Red", 20);
             tipData.AddLine(2);
             tipData.AddTextLines(config.Descript, "White", 15, true);
             return tipData.Image;

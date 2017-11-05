@@ -11,7 +11,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
         public override void MoveEnd()
         {
             base.MoveEnd();
-            Scene.Instance.OnEventFinish();
+            Scene.Instance.CheckALiveAndQuestState();
         }
 
         public override void Draw(Graphics g, bool isTarget)

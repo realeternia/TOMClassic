@@ -34,6 +34,11 @@ namespace TaleofMonsters.DataType.User
             get { return Profile.InfoDungeon; }
         }
 
+        public static InfoGismo InfoGismo
+        {
+            get { return Profile.InfoGismo; }
+        }
+
         public static InfoRival InfoRival
         {
             get { return Profile.InfoRival; }

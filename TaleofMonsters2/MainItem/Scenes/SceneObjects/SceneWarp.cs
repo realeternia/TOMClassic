@@ -38,7 +38,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             Scene.Instance.MoveTo(Scene.Instance.GetWarpPosByMapId(lastMapId));
 
 
-            Scene.Instance.OnEventFinish();
+            Scene.Instance.CheckALiveAndQuestState();
         }
 
         public override bool CanBeReplaced()

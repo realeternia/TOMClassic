@@ -27,9 +27,7 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
                 {
                     CheckCondition(infos[i]);
                     if (Disabled)
-                    {
                         return; //有一个条件不满足就结束
-                    }
                 }
                 if (infos.Length > 1)
                 {

@@ -41,6 +41,8 @@ namespace TaleofMonsters.MainItem.Quests
         protected int level;
 
         public TalkEventState RunningState { get; set; }
+        public int Id { get { return config.Id; } }
+        public string Type { get { return evt.Type; } }
 
         public TalkEventItem(int evtId, int l, Rectangle r, SceneQuestEvent e)
         {

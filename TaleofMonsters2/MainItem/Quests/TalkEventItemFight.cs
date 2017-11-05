@@ -60,6 +60,7 @@ namespace TaleofMonsters.MainItem.Quests
             result = evt.ChooseTarget(0);
             isEndFight = true;
 
+            UserProfile.InfoDungeon.FightLoss ++;
             if (BlessManager.FightFailSubHealth > 0)
             {
                 var healthSub = GameResourceBook.OutHealthSceneQuest(BlessManager.FightFailSubHealth * 100);
@@ -83,6 +84,8 @@ namespace TaleofMonsters.MainItem.Quests
             result = evt.ChooseTarget(1);
             isEndFight = true;
 
+            UserProfile.InfoDungeon.FightWin++;
+            UserProfile.InfoGismo.CheckWinCount();
             if (BlessManager.FightWinAddHealth > 0)
             {
                 var healthAdd = GameResourceBook.InHealthSceneQuest(BlessManager.FightWinAddHealth * 100);

@@ -5,7 +5,6 @@ using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
 using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.Forms.Items.Core;
