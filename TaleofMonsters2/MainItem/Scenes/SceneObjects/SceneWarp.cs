@@ -35,7 +35,8 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 
             int lastMapId = UserProfile.InfoBasic.MapId;
             Scene.Instance.ChangeMap(TargetMap, true);
-            UserProfile.InfoBasic.Position = Scene.Instance.GetWarpPosByMapId(lastMapId);
+            Scene.Instance.MoveTo(Scene.Instance.GetWarpPosByMapId(lastMapId));
+
 
             Scene.Instance.OnEventFinish();
         }

@@ -158,7 +158,7 @@ namespace TaleofMonsters.MainItem.Scenes
             ChangeMap(dungeonConfig.EntryScene, true, ()=>
             {
                 UserProfile.InfoDungeon.Enter(dungeonId);
-                UserProfile.InfoBasic.Position = SceneInfo.GetStartPos(); //如果没配置了出生点，就随机一个点
+                MoveTo(SceneInfo.GetStartPos());
             });
         }
 
@@ -170,7 +170,7 @@ namespace TaleofMonsters.MainItem.Scenes
             ChangeMap(dungeonConfig.ExitScene, true, () =>
             {
                 UserProfile.InfoDungeon.Leave();
-                UserProfile.InfoBasic.Position = SceneInfo.GetStartPos(); //如果没配置了出生点，就随机一个点
+                MoveTo(SceneInfo.GetStartPos());
             });
         }
 
@@ -235,7 +235,7 @@ namespace TaleofMonsters.MainItem.Scenes
                     {
                         if (sceneObject.Id == movingData.DestId)
                         {
-                            UserProfile.Profile.InfoBasic.Position = sceneObject.Id;
+                            MoveTo(sceneObject.Id);
                             TimelyCheck(sceneObject);
                             parent.Invalidate();
                         }
@@ -291,7 +291,7 @@ namespace TaleofMonsters.MainItem.Scenes
                 {
                     var config = ConfigData.GetSceneConfig(UserProfile.InfoBasic.MapId);
                     ChangeMap(config.ReviveScene, true);
-                    UserProfile.InfoBasic.Position = SceneInfo.GetRevivePos();
+                    MoveTo(SceneInfo.GetRevivePos());
                 }
             }
 
@@ -575,9 +575,7 @@ namespace TaleofMonsters.MainItem.Scenes
             {
                 var sceQuest = sceneObject as SceneQuest;
                 if (sceQuest != null && sceQuest.EventId == eid && sceneObject.Disabled)
-                {
                     count++;
-                }
             }
             return count;
         }
@@ -588,9 +586,7 @@ namespace TaleofMonsters.MainItem.Scenes
             {
                 var warp = sceneObject as SceneWarp;
                 if (warp != null && warp.TargetMap == mapId)
-                {
                     return warp.Id;
-                }
             }
             return 0;
         }
@@ -601,9 +597,7 @@ namespace TaleofMonsters.MainItem.Scenes
             foreach (var sceneObject in SceneInfo.Items)
             {
                 if (sceneObject != null && sceneObject.Id == pos)
-                {
                     return sceneObject;
-                }
             }
             return null;
         }
@@ -618,9 +612,7 @@ namespace TaleofMonsters.MainItem.Scenes
                 {
                     var config = ConfigData.GetSceneQuestConfig(quest.EventId);
                     if (config.Ename == name)
-                    {
                         count++;
-                    }
                 }
             }
             return count;
@@ -635,9 +627,7 @@ namespace TaleofMonsters.MainItem.Scenes
             {
                 var quest = sceneObject as SceneQuest;
                 if (quest != null && !quest.MapSetting && !quest.Disabled)
-                {
                     return;
-                }
             }
             QuestBook.CheckAllQuestWith("allopen");
             allEventFinished = true;
@@ -702,9 +692,7 @@ namespace TaleofMonsters.MainItem.Scenes
             foreach (var sceneObject in SceneInfo.Items)
             {
                 if (sceneObject is SceneWarp)
-                {
                     sceneObject.SetEnable(true);//激活所有的传说门
-                }
             }
             parent.Invalidate();
         }
@@ -717,6 +705,7 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public void MoveTo(int target)
         {
+            UserProfile.InfoBasic.LastPosition = UserProfile.InfoBasic.Position;
             UserProfile.InfoBasic.Position = target;
             parent.Invalidate();
         }
@@ -757,9 +746,7 @@ namespace TaleofMonsters.MainItem.Scenes
             foreach (var sceneObject in SceneInfo.Items)
             {
                 if (sceneObject is SceneQuest)
-                {
                     sceneObject.AddFlag(SceneObject.ScenePosFlagType.Detected);
-                }
             }
         }
 
@@ -768,9 +755,7 @@ namespace TaleofMonsters.MainItem.Scenes
             foreach (var sceneObject in SceneInfo.Items)
             {
                 if (sceneObject is SceneQuest && SceneManager.GetDistance(sceneObject.Id, UserProfile.InfoBasic.Position) <= range)
-                {
                     sceneObject.AddFlag(SceneObject.ScenePosFlagType.Detected);
-                }
             }
         }
         public void DetectRandom(int count)
@@ -780,16 +765,12 @@ namespace TaleofMonsters.MainItem.Scenes
             {
                 if (sceneObject is SceneQuest && !sceneObject.Disabled && 
                     !sceneObject.MapSetting && !sceneObject.HasFlag(SceneObject.ScenePosFlagType.Detected))
-                {
                     toChoose.Add(sceneObject);
-                }
             }
 
             var results = NLRandomPicker<SceneObject>.RandomPickN(toChoose, (uint)count);
             foreach (var sceneObject in results)
-            {
                 sceneObject.AddFlag(SceneObject.ScenePosFlagType.Detected);
-            }
         }
     }
 }

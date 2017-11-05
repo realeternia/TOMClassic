@@ -20,6 +20,7 @@ namespace TaleofMonsters.DataType.User
         [FieldIndex(Index = 21)] public int DungeonRandomSeed;
         [FieldIndex(Index = 22)] public int LastRival; //上一个peopleview的对手id
         [FieldIndex(Index = 23)] public int Position;
+        [FieldIndex(Index = 27)] public int LastPosition;
         [FieldIndex(Index = 24)] public uint HealthPoint; //健康度
         [FieldIndex(Index = 25)] public uint MentalPoint; //精神
         [FieldIndex(Index = 26)] public List<int> AvailJobList = new List<int>(); //解锁职业列表
@@ -27,9 +28,7 @@ namespace TaleofMonsters.DataType.User
         public void AddExp(int ex)
         {
             if (Level >= ExpTree.MaxLevel)
-            {
                 return;
-            }
 
             Exp += ex;
             MainTipManager.AddTip(string.Format("|获得|Cyan|{0}||点经验值", ex), "White");
