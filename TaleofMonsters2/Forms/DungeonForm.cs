@@ -19,6 +19,7 @@ namespace TaleofMonsters.Forms
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
         private VirtualRegion vRegion;
         private List<int> gismoList;
+        private int gismoGet;
         private string title = "";
 
         public int DungeonId { get; set; }
@@ -58,6 +59,8 @@ namespace TaleofMonsters.Forms
 
                 if (!UserProfile.Profile.InfoGismo.GetGismo(gismoList[i]))
                     region.Enabled = false;
+                else
+                    gismoGet++;
             }
 
             backImage = PicLoader.Read("Dungeon", string.Format("{0}.JPG", dungeonConfig.BgImage));
@@ -101,6 +104,10 @@ namespace TaleofMonsters.Forms
             int xOff = 13;
             int yOff = 107;
             e.Graphics.DrawImage(backImage, xOff, yOff, 324, 244);
+
+            font = new Font("黑体", 12 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            e.Graphics.DrawString(string.Format("进度：{0}/{1}",gismoGet,gismoList.Count), font, Brushes.White, xOff + 220, yOff + 220);
+            font.Dispose();
 
             vRegion.Draw(e.Graphics);
         }

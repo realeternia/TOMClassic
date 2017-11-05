@@ -41,9 +41,14 @@ namespace TaleofMonsters.DataType.Scenes
 
             var hasGismo = UserProfile.InfoGismo.GetGismo(key);
             if (hasGismo)
+            {
                 tipData.AddTextNewLine(config.Name, "White", 20);
+            }
             else
+            {
                 tipData.AddTextNewLine(config.Name + "(未开启)", "Red", 20);
+                tipData.AddTextNewLine("难度："+ ("★★★★★").Substring(5 - config.Hard), "Gold", 20);
+            }
             tipData.AddLine(2);
             tipData.AddTextLines(config.Descript, "White", 15, true);
             return tipData.Image;

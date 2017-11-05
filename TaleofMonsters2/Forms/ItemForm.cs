@@ -244,6 +244,9 @@ namespace TaleofMonsters.Forms
             if (tar == -1)
                 return;
 
+            if (baseid + tar >= UserProfile.InfoBag.Items.Length)
+                return;
+
             HItemConfig itemConfig = ConfigData.GetHItemConfig(UserProfile.InfoBag.Items[baseid + tar].Type);
             if (itemConfig.IsUsable && itemConfig.SubType != (int)HItemTypes.Fight)
             {

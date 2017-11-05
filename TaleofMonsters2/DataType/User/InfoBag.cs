@@ -265,13 +265,13 @@ namespace TaleofMonsters.DataType.User
         public void SortItem()
         {
             Array.Sort(Items, new CompareByMid());
-            for (int i = 0; i < 999; i++)
+            for (int i = 0; i < Items.Length; i++)
             {
                 var pickItem = Items[i];
                 if (pickItem.Type == 0 || pickItem.Value == 0)
                     break;
                 int max = ConfigData.GetHItemConfig(pickItem.Type).MaxPile;
-                if (pickItem.Value < max && i+1 <= Items.Length && pickItem.Type == Items[i + 1].Type)
+                if (pickItem.Value < max && i+1 < Items.Length && pickItem.Type == Items[i + 1].Type)
                 {
                     if (pickItem.Value + Items[i + 1].Value <= max)
                     {
