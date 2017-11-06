@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using ConfigDatas;
-using NarlonLib.Core;
 using NarlonLib.Tools;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User.Db;
@@ -49,18 +48,6 @@ namespace TaleofMonsters.DataType.User
             }
         }
 
-        //public void DeleteEquip(int id)
-        //{
-        //    for (int i = 0; i < GameConstants.EquipOffCount; i++)
-        //    {
-        //        if (Equipoff[i] == id)
-        //        {
-        //            Equipoff[i] = 0;
-        //            return;
-        //        }
-        //    }
-        //}
-
         public int GetBlankEquipPos()
         {
             int i;
@@ -80,9 +67,7 @@ namespace TaleofMonsters.DataType.User
             for (int i = 0; i < GameConstants.EquipOffCount; i++)
             {
                 if (Equipoff[i].BaseId == id)
-                {
                     count++;
-                }
             }
             return count;
         }
@@ -115,9 +100,7 @@ namespace TaleofMonsters.DataType.User
         public void AddEquipCompose(int eid)
         {
             if (!EquipComposeAvail.Contains(eid))
-            {
                 EquipComposeAvail.Add(eid);
-            }
         }
 
         public bool CanEquip(int equipId, int slotId)
@@ -130,9 +113,7 @@ namespace TaleofMonsters.DataType.User
                     return false;
                 EquipConfig equipConfig = ConfigData.GetEquipConfig(Equipon[MainHouseIndex-1].BaseId);
                 if (equipConfig.SlotId != null && Array.IndexOf(equipConfig.SlotId, slotId) < 0)
-                {
                     return false;
-                }
             }
 
             if (equipId > 0)
@@ -143,6 +124,19 @@ namespace TaleofMonsters.DataType.User
             return true;
         }
 
+        public void DoEquip(int equipPos, int slotId)
+        {
+            var oldItem = UserProfile.InfoEquip.Equipon[equipPos];
+            UserProfile.InfoEquip.Equipon[equipPos] = UserProfile.InfoEquip.Equipoff[slotId];
+            UserProfile.InfoEquip.Equipoff[slotId] = oldItem;
+        }
+
+        public void PutOff(int equipPos, int slotId)
+        {
+            UserProfile.InfoEquip.Equipoff[slotId] = UserProfile.InfoEquip.Equipon[equipPos];
+            UserProfile.InfoEquip.Equipon[equipPos] = new DbEquip();
+        }
+        
         public List<int> GetValidEquipsList()
         {
             List<int> equips = new List<int>();
@@ -151,14 +145,10 @@ namespace TaleofMonsters.DataType.User
             {
                 var equip = Equipon[i];
                 if (equip.BaseId == 0)
-                {
                     continue;
-                }
 
                 if (CanEquip(equip.BaseId, i+1))
-                {
                     equips.Add(equip.BaseId);
-                }
             }
             return equips;
         }

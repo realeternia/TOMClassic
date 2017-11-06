@@ -171,9 +171,8 @@ namespace TaleofMonsters.Forms
                         if (UserProfile.InfoEquip.CanEquip(equipConfig.Id, id))
                         {
                             var oldItem = UserProfile.InfoEquip.Equipon[id - 1];
-                            UserProfile.InfoEquip.Equipon[id - 1] = UserProfile.InfoEquip.Equipoff[selectTar];
+                            UserProfile.InfoEquip.DoEquip(id - 1, selectTar);
                             vRegion.SetRegionKey(id, UserProfile.InfoEquip.Equipon[id - 1].BaseId);
-                            UserProfile.InfoEquip.Equipoff[selectTar] = oldItem;
                             vRegion.SetRegionKey(selectTar + 20, oldItem.BaseId);
                             RefreshEquip();
                             selectTar = -1;
@@ -185,9 +184,9 @@ namespace TaleofMonsters.Forms
                         int i = UserProfile.InfoEquip.GetBlankEquipPos();
                         if (i == -1)//没有空格了
                             return;
-                        UserProfile.InfoEquip.Equipoff[i] = UserProfile.InfoEquip.Equipon[id - 1];
+
+                        UserProfile.InfoEquip.PutOff(id - 1, i);
                         vRegion.SetRegionKey(i + 20, UserProfile.InfoEquip.Equipoff[i].BaseId);
-                        UserProfile.InfoEquip.Equipon[id - 1] = new DbEquip();
                         vRegion.SetRegionKey(id, 0);
                         RefreshEquip();
                     }
