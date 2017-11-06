@@ -46,7 +46,7 @@ namespace TaleofMonsters.DataType.Scenes
             }
             else
             {
-                tipData.AddTextNewLine(config.Name + "(未开启)", "Red", 20);
+                tipData.AddTextNewLine(config.Name + "(未达成)", "Red", 20);
                 tipData.AddTextNewLine("难度："+ ("★★★★★").Substring(5 - config.Hard), "Gold", 20);
             }
             tipData.AddLine(2);

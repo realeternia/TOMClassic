@@ -84,7 +84,7 @@ namespace TaleofMonsters.DataType.Scenes
         {
             if (questConfig.TriggerRate == 0)
                 return true;
-            return MathTool.GetRandom(100) >= questConfig.TriggerRate;
+            return MathTool.GetRandom(100) < questConfig.TriggerRate;
         }
 
         /// <summary>
