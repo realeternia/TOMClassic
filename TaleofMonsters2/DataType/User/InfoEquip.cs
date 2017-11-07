@@ -82,18 +82,18 @@ namespace TaleofMonsters.DataType.User
                 if (!checkOnly && equip.BaseId > 0 && equip.Dura > 0)
                     equip.Dura--;
                 if (equip.BaseId > 0 && equip.Dura == 0)
-                    equip.Reset();
+                    ResetItem(equip);
                 if (equip.ExpireTime > 0 && TimeTool.GetNowUnixTime() > equip.ExpireTime)
-                    equip.Reset();
+                    ResetItem(equip);
             }
             foreach (var equip in Equipoff)
             {
                 if (!checkOnly && equip.BaseId > 0 && equip.Dura > 0)
                     equip.Dura--;
                 if (equip.BaseId > 0 && equip.Dura == 0)
-                    equip.Reset();
+                    ResetItem(equip);
                 if (equip.ExpireTime > 0 && TimeTool.GetNowUnixTime() > equip.ExpireTime)
-                    equip.Reset();
+                    ResetItem(equip);
             }
         }
 
@@ -129,12 +129,20 @@ namespace TaleofMonsters.DataType.User
             var oldItem = UserProfile.InfoEquip.Equipon[equipPos];
             UserProfile.InfoEquip.Equipon[equipPos] = UserProfile.InfoEquip.Equipoff[slotId];
             UserProfile.InfoEquip.Equipoff[slotId] = oldItem;
+            UserProfile.InfoDungeon.RecalculateAttr(); //会影响力量啥的属性
         }
 
         public void PutOff(int equipPos, int slotId)
         {
             UserProfile.InfoEquip.Equipoff[slotId] = UserProfile.InfoEquip.Equipon[equipPos];
             UserProfile.InfoEquip.Equipon[equipPos] = new DbEquip();
+            UserProfile.InfoDungeon.RecalculateAttr(); //会影响力量啥的属性
+        }
+
+        private void ResetItem(DbEquip equip)
+        {
+            equip.Reset();
+            UserProfile.InfoDungeon.RecalculateAttr(); //会影响力量啥的属性
         }
         
         public List<int> GetValidEquipsList()

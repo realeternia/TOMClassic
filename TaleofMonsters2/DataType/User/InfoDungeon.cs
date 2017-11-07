@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Log;
 using TaleofMonsters.Core;
@@ -20,6 +21,12 @@ namespace TaleofMonsters.DataType.User
         [FieldIndex(Index = 11)] public int FightWin;
         [FieldIndex(Index = 12)] public int FightLoss;
 
+        [FieldIndex(Index = 22)] public int StrAddon; //力量改变值
+        [FieldIndex(Index = 23)] public int AgiAddon; //敏捷改变值
+        [FieldIndex(Index = 24)] public int IntlAddon; //智慧改变值
+        [FieldIndex(Index = 25)] public int PercAddon; //感知改变值
+        [FieldIndex(Index = 26)] public int EnduAddon; //耐力改变值
+
         public InfoDungeon()
         {
             EventList = new List<DbGismoState>();
@@ -28,16 +35,18 @@ namespace TaleofMonsters.DataType.User
         public void Enter(int dungeonId) //进入副本需要初始化
         {
             DungeonId = dungeonId;
-            var dungeonConfig = ConfigData.GetDungeonConfig(dungeonId);
-            Str = dungeonConfig.Str;
-            Agi = dungeonConfig.Agi;
-            Intl = dungeonConfig.Intl;
-            Perc = dungeonConfig.Perc;
-            Endu = dungeonConfig.Endu;
 
             EventList = new List<DbGismoState>();
             FightWin = 0;
             FightLoss = 0;
+
+            StrAddon = 0;
+            AgiAddon = 0;
+            IntlAddon = 0;
+            PercAddon = 0;
+            EnduAddon = 0;
+
+            RecalculateAttr();
         }
 
         public void Leave()
@@ -84,6 +93,73 @@ namespace TaleofMonsters.DataType.User
             }
 
             return count >= countNeed;
+        }
+
+        public void ChangeAttr(int strC, int agiC, int intlC, int percC, int enduC)
+        {
+            if (strC != 0)
+                StrAddon += strC;
+            if (agiC != 0)
+                AgiAddon += agiC;
+            if (intlC != 0)
+                IntlAddon += intlC;
+            if (percC != 0)
+                PercAddon += percC;
+            if (enduC != 0)
+                EnduAddon += enduC;
+
+            RecalculateAttr();
+        }
+
+        public void RecalculateAttr()
+        {
+            if (DungeonId <= 0)
+                return;
+
+            var dungeonConfig = ConfigData.GetDungeonConfig(DungeonId);
+            Str = dungeonConfig.Str;
+            Agi = dungeonConfig.Agi;
+            Intl = dungeonConfig.Intl;
+            Perc = dungeonConfig.Perc;
+            Endu = dungeonConfig.Endu;
+
+            Str += StrAddon; //加成属性，一般来自sq
+            Agi += AgiAddon;
+            Intl += IntlAddon;
+            Perc += PercAddon;
+            Endu += EnduAddon;
+
+            foreach (var dbEquip in UserProfile.InfoEquip.Equipon) //装备的属性修改
+            {
+                if (dbEquip.BaseId > 0)
+                {
+                    var equipConfig = ConfigData.GetEquipConfig(dbEquip.BaseId);
+                    if (equipConfig.DungeonAttrs != null && equipConfig.DungeonAttrs.Length > 0)
+                    {
+                        if (dungeonConfig.Str >= 0)
+                            Str += equipConfig.DungeonAttrs[0];
+                        if (dungeonConfig.Agi >= 0)
+                            Agi += equipConfig.DungeonAttrs[1];
+                        if (dungeonConfig.Intl >= 0)
+                            Intl += equipConfig.DungeonAttrs[2];
+                        if (dungeonConfig.Perc >= 0)
+                            Perc += equipConfig.DungeonAttrs[3];
+                        if (dungeonConfig.Endu >= 0)
+                            Endu += equipConfig.DungeonAttrs[4];
+                    }
+                }
+            }
+
+            if (dungeonConfig.Str >= 0)
+                Str = Math.Max(1, Str);
+            if (dungeonConfig.Agi >= 0)
+                Agi = Math.Max(1, Agi);
+            if (dungeonConfig.Intl >= 0)
+                Intl = Math.Max(1, Intl);
+            if (dungeonConfig.Perc >= 0)
+                Perc = Math.Max(1, Perc);
+            if (dungeonConfig.Endu >= 0)
+                Endu = Math.Max(1, Endu);
         }
 
         public int GetAttrByStr(string type)

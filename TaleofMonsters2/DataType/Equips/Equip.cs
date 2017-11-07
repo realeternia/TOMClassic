@@ -138,11 +138,18 @@ namespace TaleofMonsters.DataType.Equips
                 EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig((int)(EquipAttrs.Range + 1));
                 tipData.AddTextNewLine(string.Format(eAddon.Format, equipConfig.Range), HSTypes.I2EaddonColor(eAddon.Rare));
             }
+            if (equipConfig.SlotId != null && equipConfig.SlotId.Length > 0)
+            {
+                string availStr = "开启:";
+                foreach (var availId in equipConfig.SlotId)
+                    availStr += ConfigData.GetEquipSlotConfig(availId).Name + " ";
+                tipData.AddTextNewLine(availStr, "Lime");
+            }
             if (!string.IsNullOrEmpty(equipConfig.Des))
             {
                 tipData.AddTextNewLine(equipConfig.Des, "Lime");
             }
-            if (equipConfig.EnergyRate[0] !=0|| equipConfig.EnergyRate[1] !=0|| equipConfig.EnergyRate[2] != 0)
+            if (equipConfig.EnergyRate[0] != 0 || equipConfig.EnergyRate[1] != 0 || equipConfig.EnergyRate[2] != 0)
             {
                 tipData.AddLine();
                 tipData.AddTextNewLine("能量回复比率修正", "White");
@@ -153,7 +160,25 @@ namespace TaleofMonsters.DataType.Equips
                 tipData.AddTextNewLine(string.Format("MP {0}", equipConfig.EnergyRate[2].ToString().PadLeft(3, ' ')), "Blue");
                 tipData.AddBarTwo(100, equipConfig.EnergyRate[2], Color.Cyan, Color.Blue);
             }
-            
+            if (equipConfig.DungeonAttrs != null && equipConfig.DungeonAttrs.Length > 0)
+            {
+                tipData.AddTextNewLine("副本判定属性", "White");
+                if (equipConfig.DungeonAttrs[0] != 0)
+                    tipData.AddTextNewLine(string.Format("力量 {0}{1}", equipConfig.DungeonAttrs[0] > 0 ? "+":"",
+                        equipConfig.DungeonAttrs[0]), "IndianRed");
+                if (equipConfig.DungeonAttrs[1] != 0)
+                    tipData.AddTextNewLine(string.Format("敏捷 {0}{1}", equipConfig.DungeonAttrs[1] > 0 ? "+" : "",
+                        equipConfig.DungeonAttrs[1]), "LawnGreen");
+                if (equipConfig.DungeonAttrs[2] != 0)
+                    tipData.AddTextNewLine(string.Format("智慧 {0}{1}", equipConfig.DungeonAttrs[2] > 0 ? "+" : "",
+                        equipConfig.DungeonAttrs[2]), "DeepSkyBlue");
+                if (equipConfig.DungeonAttrs[3] != 0)
+                    tipData.AddTextNewLine(string.Format("感知 {0}{1}", equipConfig.DungeonAttrs[3] > 0 ? "+" : "",
+                        equipConfig.DungeonAttrs[3]), "MediumPurple");
+                if (equipConfig.DungeonAttrs[4] != 0)
+                    tipData.AddTextNewLine(string.Format("耐力 {0}{1}", equipConfig.DungeonAttrs[4] > 0 ? "+" : "",
+                        equipConfig.DungeonAttrs[4]), "Bisque");
+            }
             if (equipConfig.HeroSkillId > 0)
             {
                 tipData.AddLine();

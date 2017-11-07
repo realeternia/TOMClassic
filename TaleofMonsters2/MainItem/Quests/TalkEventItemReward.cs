@@ -271,7 +271,7 @@ namespace TaleofMonsters.MainItem.Quests
             var strGet = config.RewardStr;
             if (strGet > 0 && UserProfile.InfoDungeon.Str >= 0)
             {
-                UserProfile.InfoDungeon.Str += strGet;
+                UserProfile.InfoDungeon.ChangeAttr(strGet, 0, 0, 0, 0);
                 var pictureRegion = ComplexRegion.GetResShowRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25),
                                                                      60, ImageRegionCellType.Str, strGet);
                 vRegion.AddRegion(pictureRegion);
@@ -281,7 +281,7 @@ namespace TaleofMonsters.MainItem.Quests
             var agiGet = config.RewardAgi;
             if (agiGet > 0 && UserProfile.InfoDungeon.Agi >= 0)
             {
-                UserProfile.InfoDungeon.Agi += agiGet;
+                UserProfile.InfoDungeon.ChangeAttr(0, agiGet, 0, 0, 0);
                 var pictureRegion = ComplexRegion.GetResShowRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25),
                                                                      60, ImageRegionCellType.Agi, agiGet);
                 vRegion.AddRegion(pictureRegion);
@@ -291,7 +291,7 @@ namespace TaleofMonsters.MainItem.Quests
             var intlGet = config.RewardIntl;
             if (intlGet > 0 && UserProfile.InfoDungeon.Intl >= 0)
             {
-                UserProfile.InfoDungeon.Intl += intlGet;
+                UserProfile.InfoDungeon.ChangeAttr(0, 0, intlGet, 0, 0);
                 var pictureRegion = ComplexRegion.GetResShowRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25),
                                                                      60, ImageRegionCellType.Intl, intlGet);
                 vRegion.AddRegion(pictureRegion);
@@ -301,7 +301,7 @@ namespace TaleofMonsters.MainItem.Quests
             var percGet = config.RewardPerc;
             if (percGet > 0 && UserProfile.InfoDungeon.Perc >= 0)
             {
-                UserProfile.InfoDungeon.Perc += percGet;
+                UserProfile.InfoDungeon.ChangeAttr(0, 0, 0, percGet, 0);
                 var pictureRegion = ComplexRegion.GetResShowRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25),
                                                                      60, ImageRegionCellType.Perc, percGet);
                 vRegion.AddRegion(pictureRegion);
@@ -311,7 +311,7 @@ namespace TaleofMonsters.MainItem.Quests
             var enduGet = config.RewardEndu;
             if (enduGet > 0 && UserProfile.InfoDungeon.Endu >= 0)
             {
-                UserProfile.InfoDungeon.Endu += enduGet;
+                UserProfile.InfoDungeon.ChangeAttr(0, 0, 0, 0, enduGet);
                 var pictureRegion = ComplexRegion.GetResShowRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25),
                                                                      60, ImageRegionCellType.Endu, enduGet);
                 vRegion.AddRegion(pictureRegion);
