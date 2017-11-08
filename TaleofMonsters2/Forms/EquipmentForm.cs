@@ -130,7 +130,7 @@ namespace TaleofMonsters.Forms
             {
                 image = GetAttrPreview(id-10);
             }
-            else if(id>=20)
+            else if (id >= 20)
             {
                 var itemId = UserProfile.InfoEquip.Equipoff[id - 20].BaseId;
                 if (itemId != 0)
@@ -143,13 +143,9 @@ namespace TaleofMonsters.Forms
             }
 
             if (image != null)
-            {
                 tooltip.Show(image, this, x, y);
-            }
             else
-            {
                 tooltip.Hide(this);
-            }
         }
 
         private void virtualRegion_RegionLeft()
@@ -273,6 +269,8 @@ namespace TaleofMonsters.Forms
             jobInfo.Lp += jobConfig.EnergyRate[0];
             jobInfo.Pp += jobConfig.EnergyRate[1];
             jobInfo.Mp += jobConfig.EnergyRate[2];
+
+            MainForm.Instance.RefreshView(); //副本属性需要刷新
         }
 
         private void EquipmentForm_Paint(object sender, PaintEventArgs e)
