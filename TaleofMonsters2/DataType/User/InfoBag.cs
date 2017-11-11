@@ -24,9 +24,7 @@ namespace TaleofMonsters.DataType.User
             Resource = new GameResource();
             Items = new IntPair[100];
             for (int i = 0; i < 100; i++)
-            {
                 Items[i] = new IntPair();
-            }
             CdGroupStartTime = new int[GameConstants.ItemCdGroupCount];
             CdGroupTime = new int[GameConstants.ItemCdGroupCount];
         }

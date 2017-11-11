@@ -6,6 +6,7 @@ using TaleofMonsters.Core;
 using TaleofMonsters.Core.Interface;
 using ConfigDatas;
 using NarlonLib.Control;
+using NarlonLib.Drawing;
 using TaleofMonsters.Controler.Battle;
 using TaleofMonsters.DataType.Blesses;
 using TaleofMonsters.DataType.Equips;
@@ -100,12 +101,17 @@ namespace TaleofMonsters.Forms.Items.Regions
                 }
                 else if (type == PictureRegionCellType.Bless)
                 {
-                    img = DataType.Blesses.BlessBook.GetBlessImage(nid);
+                    img = BlessBook.GetBlessImage(nid);
                 }
                 else if (type == PictureRegionCellType.SceneQuest)
                 {
                     img = SceneQuestBook.GetSceneQuestImage(nid);
                 }
+                else if (type == PictureRegionCellType.DungeonItem)
+                {
+                    img = DungeonBook.GetDungeonItemImage(nid);
+                }
+
                 if (img != null)
                 {
                     if (Scale == 1)
@@ -187,6 +193,12 @@ namespace TaleofMonsters.Forms.Items.Regions
                 Image image = PeopleBook.GetPreview(nid);
                 tooltip.Show(image, form, x, y);
             }
+            else if (regionType == PictureRegionCellType.DungeonItem)
+            {
+                var itemConfig = ConfigData.GetDungeonItemConfig(nid);
+                Image image = DrawTool.GetImageByString(itemConfig.Name, 100);
+                tooltip.Show(image, form, x, y);
+            }
         }
     }
 
@@ -202,5 +214,6 @@ namespace TaleofMonsters.Forms.Items.Regions
         Job,
         Bless,
         SceneQuest,
+        DungeonItem,
     }
 }

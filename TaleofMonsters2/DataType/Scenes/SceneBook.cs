@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType.User;
 using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.DataType.Scenes
@@ -114,5 +116,40 @@ namespace TaleofMonsters.DataType.Scenes
             }
         }
 
+        public static Image GetScenePreview(Scene scene)
+        {
+            var config = ConfigData.GetSceneConfig(UserProfile.InfoBasic.MapId);
+            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+            tipData.AddTextNewLine(string.Format("{0}(Lv{1})", config.Name, config.Level), "LightBlue", 20);
+            tipData.AddLine(2);
+            tipData.AddTextNewLine(string.Format("格子:{0}", scene.SceneInfo.Items.Count), "White");
+
+            if (UserProfile.InfoDungeon.DungeonId <= 0) //普通场景
+            {
+                foreach (var questData in SceneQuestBook.GetQuestConfigData(UserProfile.InfoBasic.MapId))
+                {
+                    var questConfig = ConfigData.GetSceneQuestConfig(questData.Id);
+                    if (questConfig.Type == (int)SceneQuestTypes.Hidden)
+                        continue;
+                    var happend = scene.GetDisableEventCount(questData.Id);
+                    var evtLevel = questConfig.Level == 0 ? config.Level : questConfig.Level;
+                    tipData.AddTextNewLine(string.Format(" {0}Lv{3}({1}/{2})", questConfig.Name,
+                        happend, questData.Value, evtLevel), happend == questData.Value ? "DimGray" : HSTypes.I2QuestDangerColor(questConfig.Danger));
+                }
+            }
+            else if(UserProfile.InfoDungeon.Items.Count > 0)
+            {
+                tipData.AddLine(1);
+                foreach (var pickItem in UserProfile.InfoDungeon.Items)
+                {
+                    var itemConfig = ConfigData.GetDungeonItemConfig(pickItem.Type);
+                    tipData.AddTextNewLine(string.Format(" {0}x", itemConfig.Name), "White");
+                    tipData.AddText(string.Format("{0}", pickItem.Value), "Lime");
+                }
+            }
+
+            return tipData.Image;
+        }
     }
+
 }

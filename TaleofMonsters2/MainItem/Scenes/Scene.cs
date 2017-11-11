@@ -366,7 +366,7 @@ namespace TaleofMonsters.MainItem.Scenes
             }
             else if (id == 11)
             {
-                Image image = GetSceneImage();
+                Image image = SceneBook.GetScenePreview(this);
                 tooltip.Show(image, parent, width - image.Width, 35);
             }
             else if (id < 10)
@@ -570,7 +570,7 @@ namespace TaleofMonsters.MainItem.Scenes
             }
         }
 
-        private int GetDisableEventCount(int eid)
+        public int GetDisableEventCount(int eid)
         {
             int count = 0;
             foreach (var sceneObject in SceneInfo.Items)
@@ -633,26 +633,6 @@ namespace TaleofMonsters.MainItem.Scenes
             }
             QuestBook.CheckAllQuestWith("allopen");
             allEventFinished = true;
-        }
-
-        private Image GetSceneImage()
-        {
-            var config = ConfigData.GetSceneConfig(UserProfile.InfoBasic.MapId);
-            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
-            tipData.AddTextNewLine(string.Format("{0}(Lv{1})", sceneName, config.Level), "LightBlue", 20);
-            tipData.AddLine(2);
-            tipData.AddTextNewLine(string.Format("格子:{0}", SceneInfo.Items.Count), "White");
-            foreach (var questData in SceneQuestBook.GetQuestConfigData(UserProfile.InfoBasic.MapId))
-            {
-                var questConfig = ConfigData.GetSceneQuestConfig(questData.Id);
-                if (questConfig.Type == (int)SceneQuestTypes.Hidden)
-                    continue;
-                var happend = GetDisableEventCount(questData.Id);
-                var evtLevel = questConfig.Level == 0 ? config.Level : questConfig.Level;
-                tipData.AddTextNewLine(string.Format(" {0}Lv{3}({1}/{2})", questConfig.Name,
-                    happend, questData.Value, evtLevel), happend == questData.Value ? "DimGray" : HSTypes.I2QuestDangerColor(questConfig.Danger));
-            }
-            return tipData.Image;
         }
 
         private Image GetPlayerImage()

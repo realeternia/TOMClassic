@@ -4,6 +4,7 @@ using ConfigDatas;
 using NarlonLib.Log;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User.Db;
+using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.DataType.User
 {
@@ -20,6 +21,7 @@ namespace TaleofMonsters.DataType.User
         [FieldIndex(Index = 7)] public List<DbGismoState> EventList; //完成的任务列表，如果0，表示任务失败
         [FieldIndex(Index = 11)] public int FightWin;
         [FieldIndex(Index = 12)] public int FightLoss;
+        [FieldIndex(Index = 13)] public List<IntPair> Items; //副本道具
 
         [FieldIndex(Index = 22)] public int StrAddon; //力量改变值
         [FieldIndex(Index = 23)] public int AgiAddon; //敏捷改变值
@@ -30,6 +32,7 @@ namespace TaleofMonsters.DataType.User
         public InfoDungeon()
         {
             EventList = new List<DbGismoState>();
+            Items = new List<IntPair>();
         }
 
         public void Enter(int dungeonId) //进入副本需要初始化
@@ -37,6 +40,7 @@ namespace TaleofMonsters.DataType.User
             DungeonId = dungeonId;
 
             EventList = new List<DbGismoState>();
+            Items = new List<IntPair>();
             FightWin = 0;
             FightLoss = 0;
 
@@ -52,6 +56,7 @@ namespace TaleofMonsters.DataType.User
         public void Leave()
         {
             DungeonId = 0;
+            Items.Clear();
         }
 
         public int Step { get { return EventList.Count; } }
@@ -187,6 +192,25 @@ namespace TaleofMonsters.DataType.User
                 case "endu": return dungeonConfig.Endu + biasData;
             }
             return 1;
+        }
+
+        public void AddDungeonItem(int itemId, int count)
+        {
+            if (DungeonId <= 0)
+                return;
+
+            DungeonItemConfig itemConfig = ConfigData.GetDungeonItemConfig(itemId);
+            foreach (var pickItem in Items)
+            {
+                if (pickItem.Type == itemId)
+                {
+                    pickItem.Value += count;
+                    MainTipManager.AddTip(string.Format("|获得副本道具-|Lime|{0}||x{1}(总计{2})", itemConfig.Name, count, pickItem.Value), "White");
+                    return;
+                }
+            }
+            Items.Add(new IntPair() {Type = itemId, Value = count});
+            MainTipManager.AddTip(string.Format("|获得副本道具-|Lime|{0}||x{1}(总计{2})", itemConfig.Name, count, count), "White");
         }
     }
 }

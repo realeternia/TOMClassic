@@ -2,6 +2,7 @@
 using System.Drawing;
 using ConfigDatas;
 using ControlPlus;
+using NarlonLib.Log;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
 using TaleofMonsters.DataType.User;
@@ -10,6 +11,37 @@ namespace TaleofMonsters.DataType.Scenes
 {
     internal static class DungeonBook
     {
+        private static Dictionary<string, int> itemNameIdDict;
+        public static int GetDungeonItemId(string ename)
+        {
+            if (itemNameIdDict == null)
+            {
+                itemNameIdDict = new Dictionary<string, int>();
+                foreach (var hItemConfig in ConfigData.DungeonItemDict.Values)
+                {
+                    if (itemNameIdDict.ContainsKey(hItemConfig.Ename))
+                    {
+                        NLog.Warn("GetDungeonItemId key={0} exsited", hItemConfig.Ename);
+                        continue;
+                    }
+                    itemNameIdDict[hItemConfig.Ename] = hItemConfig.Id;
+                }
+            }
+            return itemNameIdDict[ename];
+        }
+
+        public static Image GetDungeonItemImage(int id)
+        {
+            var itemConfig = ConfigData.GetDungeonItemConfig(id);
+            string fname = string.Format("Dungeon/Item/{0}.PNG", itemConfig.Url);
+            if (!ImageManager.HasImage(fname))
+            {
+                Image image = PicLoader.Read("Dungeon.Item", string.Format("{0}.PNG", itemConfig.Url));
+                ImageManager.AddImage(fname, image);
+            }
+            return ImageManager.GetImage(fname);
+        }
+
         public static List<int> GetGismoListByDungeon(int dungeonId)
         {
             List<int> gisList = new List<int>();

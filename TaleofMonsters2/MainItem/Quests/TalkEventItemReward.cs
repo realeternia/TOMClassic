@@ -8,8 +8,10 @@ using TaleofMonsters.DataType.Drops;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Peoples;
+using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Regions;
+using TaleofMonsters.Forms.Items.Regions.Decorators;
 using TaleofMonsters.MainItem.Blesses;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
 
@@ -55,9 +57,7 @@ namespace TaleofMonsters.MainItem.Quests
             if (IsBonusAvail(type))
             {
                 for (int i = 0; i < times; i++)
-                {
                     action(ref index);
-                }
             }
         }
 
@@ -66,9 +66,7 @@ namespace TaleofMonsters.MainItem.Quests
             foreach (var item in evt.ParamList)
             {
                 if (item != "x2" || item != "x3")
-                {
                     return true;
-                }
             }
             return false;
         }
@@ -78,13 +76,9 @@ namespace TaleofMonsters.MainItem.Quests
             foreach (var item in evt.ParamList)
             {
                 if (item == tp)
-                {
                     return true;
-                }
                 if (item != "x2" && item != "x3")
-                {
                     return false;
-                }
             }
             return true;
         }
@@ -94,13 +88,9 @@ namespace TaleofMonsters.MainItem.Quests
             foreach (var item in evt.ParamList)
             {
                 if (item == "x2")
-                {
                     return 2;
-                }
                 if (item == "x3")
-                {
                     return 3;
-                }
             }
             return 1;
         }
@@ -148,6 +138,20 @@ namespace TaleofMonsters.MainItem.Quests
                     }
                     index++;
                 }
+            }
+            if (!string.IsNullOrEmpty(config.DungeonItemId) && UserProfile.InfoDungeon.DungeonId > 0)
+            {
+                var itemId = DungeonBook.GetDungeonItemId(config.DungeonItemId);
+                UserProfile.InfoDungeon.AddDungeonItem(itemId, config.DungeonItemCount);
+                var pictureRegion = new PictureRegion(index, pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25, 60, 60,
+                    PictureRegionCellType.DungeonItem, itemId);
+                pictureRegion.Scale = 0.7f;
+                var textControl = new RegionTextDecorator(3, 60 - 20, 11, Color.White, true);
+                textControl.SetState(config.DungeonItemCount.ToString());
+                pictureRegion.AddDecorator(textControl);
+                pictureRegion.AddDecorator(new RegionBorderDecorator(Color.White));
+                vRegion.AddRegion(pictureRegion);
+                index++;
             }
         }
 
