@@ -146,7 +146,8 @@ namespace TaleofMonsters.MainItem.Scenes
                 Rule = new SceneRuleCommon();
             TimeMinutes = (int)DateTime.Now.TimeOfDay.TotalMinutes;
             Rule.Init(mapid, TimeMinutes);
-            SceneInfo = SceneManager.RefreshSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, isWarp ? SceneFreshReason.Warp : SceneFreshReason.Load );
+            SceneInfo = SceneManager.RefreshSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, isWarp ? SceneFreshReason.Warp : SceneFreshReason.Load);
+
             if (UserProfile.InfoBasic.Position == 0 && SceneInfo.Items.Count > 0)//兜底处理
                 UserProfile.InfoBasic.Position = SceneInfo.Items[0].Id;
             parent.Invalidate();
@@ -158,8 +159,8 @@ namespace TaleofMonsters.MainItem.Scenes
             ChangeMap(dungeonConfig.EntryScene, true, ()=>
             {
                 UserProfile.InfoDungeon.Enter(dungeonId);
-                MoveTo(SceneInfo.GetStartPos());
             });
+            MoveTo(SceneInfo.GetStartPos());
         }
 
         public void LeaveDungeon()
@@ -170,8 +171,8 @@ namespace TaleofMonsters.MainItem.Scenes
             ChangeMap(dungeonConfig.ExitScene, true, () =>
             {
                 UserProfile.InfoDungeon.Leave();
-                MoveTo(SceneInfo.GetStartPos());
             });
+            MoveTo(SceneInfo.GetStartPos());
         }
 
         private void OnBlessChange()
