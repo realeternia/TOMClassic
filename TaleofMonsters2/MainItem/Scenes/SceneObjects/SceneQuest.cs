@@ -19,9 +19,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
         public override bool OnClick()
         {
             if (!base.OnClick())
-            {
                 return false;
-            }
             
             return true;
         }
@@ -33,16 +31,6 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             if (!Disabled)
             {
                 BeginEvent();
-
-                var config = ConfigData.GetSceneQuestConfig(EventId);
-                if (!config.TriggerMulti)
-                {
-                    SetEnable(false);
-                }
-                else
-                {//多次触发都变成预设
-                    SetMapSetting(true);
-                }
             }
             else
             {
@@ -54,10 +42,11 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
         {
             if (EventId == 0)
             {
+                SetEnable(false);
                 return;
             }
 
-            PanelManager.DealPanel(new NpcTalkForm { EventId = EventId });
+            PanelManager.DealPanel(new NpcTalkForm { EventId = EventId, CellId = Id });
         }
 
         public override bool CanBeReplaced()
@@ -71,9 +60,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             base.Draw(g, isTarget);
 
             if (Disabled && EventId == 0)
-            {
                 return;
-            }
 
             Image markQuest = PicLoader.Read("Map", MapSetting ? "SymEvent.PNG": "SymQuest.PNG");
             int drawWidth = markQuest.Width * Width / GameConstants.SceneTileStandardWidth;

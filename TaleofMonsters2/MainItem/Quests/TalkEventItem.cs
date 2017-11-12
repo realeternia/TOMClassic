@@ -13,7 +13,7 @@ namespace TaleofMonsters.MainItem.Quests
             Running, Finish
         }
 
-        public static TalkEventItem CreateEventItem(int eventId, int level, Control c, Rectangle r, SceneQuestEvent e)
+        public static TalkEventItem CreateEventItem(int cellId, int eventId, int level, Control c, Rectangle r, SceneQuestEvent e)
         {
             switch (e.Type)
             {
@@ -29,7 +29,7 @@ namespace TaleofMonsters.MainItem.Quests
                 case "pay": return new TalkEventItemPay(eventId, level, c, r, e);
                 case "npc": return new TalkEventItemNpc(eventId, level, r, e);
                 case "nd": return new TalkEventItemEnd(eventId, level, r, e);
-                default: return new TalkEventItemAction(eventId, level, r, e); 
+                default: return new TalkEventItemAction(cellId, eventId, level, r, e); 
             }
         }
 

@@ -26,6 +26,7 @@ namespace TaleofMonsters.Forms
         private TalkEventItem evtItem; //事件交互区
 
         public int EventId { get; set; }
+        public int CellId { get; set; } //格子id
         private int eventLevel;
 
         public NpcTalkForm()
@@ -81,7 +82,7 @@ namespace TaleofMonsters.Forms
                 if (interactBlock == null)//一般是最后一选了
                 {
                     Close();
-                    Scene.Instance.OnEventEnd(config.Id, evtItem != null ? evtItem.Type : "");
+                    Scene.Instance.OnEventEnd(CellId, config.Id, evtItem != null ? evtItem.Type : "");
                     Scene.Instance.CheckALiveAndQuestState();
                     return;
                 }
@@ -112,13 +113,14 @@ namespace TaleofMonsters.Forms
                     {
                         tar = -1; //为了修一个显示bug
                     }
-                    evtItem = TalkEventItem.CreateEventItem(EventId, eventLevel, this, new Rectangle(10, Height - 10 - 5 * 20 - 160, Width - 20, 160), evt);
+                    var region = new Rectangle(10, Height - 10 - 5*20 - 160, Width - 20, 160);
+                    evtItem = TalkEventItem.CreateEventItem(CellId, EventId, eventLevel, this, region, evt);
                 }
 
                 if (evtItem != null && evtItem.AutoClose())
                 {
                     Close();
-                    Scene.Instance.OnEventEnd(config.Id, evtItem != null ? evtItem.Type : "");
+                    Scene.Instance.OnEventEnd(CellId, config.Id, evtItem != null ? evtItem.Type : "");
                     Scene.Instance.CheckALiveAndQuestState();
                 }
                 this.Invalidate();

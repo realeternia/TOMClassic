@@ -8,7 +8,7 @@ namespace TaleofMonsters.MainItem.Quests
 {
     internal class TalkEventItemAction : TalkEventItem
     {
-        public TalkEventItemAction(int evtId, int level, Rectangle r, SceneQuestEvent e)
+        public TalkEventItemAction(int cellId, int evtId, int level, Rectangle r, SceneQuestEvent e)
             : base(evtId, level, r, e)
         {
             switch (e.Type)
@@ -29,6 +29,7 @@ namespace TaleofMonsters.MainItem.Quests
                     break;
                 case "detect": Scene.Instance.DetectNear(int.Parse(evt.ParamList[0])); break;
                 case "detectrd": Scene.Instance.DetectRandom(int.Parse(evt.ParamList[0])); break;
+                case "disable": Scene.Instance.GetObjectByPos(cellId).SetEnable(false); break;
                 case "quest": UserProfile.InfoQuest.SetQuestState(int.Parse(evt.ParamList[0]), QuestStates.Receive); break;
                 case "questp": UserProfile.InfoQuest.AddQuestProgress(int.Parse(evt.ParamList[0]), byte.Parse(evt.ParamList[1])); break;
             }

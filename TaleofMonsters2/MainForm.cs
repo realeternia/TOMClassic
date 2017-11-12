@@ -195,9 +195,7 @@ namespace TaleofMonsters
             foreach (var control in tabPageGame.Controls)
             {
                 if (control.GetType() == type)
-                {
                     return control as BasePanel;
-                }
             }
 
             return null;
@@ -223,9 +221,7 @@ namespace TaleofMonsters
                     {
                         timeTick++;
                         if (timeTick > 1000)
-                        {
                             timeTick -= 1000;
-                        }
                         foreach (var control in tabPageGame.Controls)
                         {
                             if (control is BasePanel)
@@ -239,15 +235,11 @@ namespace TaleofMonsters
                             SystemMenuManager.UpdateAll(tabPageGame);
 
                             if (MainTipManager.OnFrame())
-                            {
                                 tabPageGame.Invalidate();
-                            }
                         }
 
                         if (SystemMenuManager.GMMode)
-                        {
                             GMCodeZone.OnFrame();
-                        }
 
                         Scene.Instance.TimeGo(0.05f);
                     }

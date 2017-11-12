@@ -274,9 +274,22 @@ namespace TaleofMonsters.MainItem.Scenes
             
         }
 
-        public void OnEventEnd(int id, string type)
+        public void OnEventEnd(int cellId, int evtId, string type)
         {
-            UserProfile.InfoDungeon.OnEventEnd(id, type);
+            var scenePos = GetObjectByPos(cellId);
+            if (scenePos != null && !scenePos.Disabled) //可能被手动关闭了
+            {
+                var config = ConfigData.GetSceneQuestConfig(evtId);
+                if (!config.TriggerMulti)
+                {
+                    scenePos.SetEnable(false);
+                }
+                else
+                {//多次触发都变成预设
+                    scenePos.SetMapSetting(true);
+                }
+            }
+            UserProfile.InfoDungeon.OnEventEnd(evtId, type);
         }
 
         public void CheckALiveAndQuestState()
