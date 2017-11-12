@@ -23,20 +23,15 @@ namespace TaleofMonsters.MainItem.Quests
         public TalkEventItemTest(int evtId, int level, Rectangle r, SceneQuestEvent e)
             : base(evtId, level, r, e)
         {
-            string type = evt.ParamList[0];
-            string bias = evt.ParamList[1];
-            bool canConvert = evt.ParamList.Count >= 3; //3,t，是否允许转换成幸运检测
-
-            var biasData = 0;
-            if (bias[0] == 'n')
-                biasData = -int.Parse(bias.Substring(1));
-            else
-                biasData = int.Parse(bias);
+            var type = int.Parse(evt.ParamList[0]);
+            bool canConvert = type == 1; //是否允许转换成幸运检测
+            var testType = type == 1 ? config.TestType1 : config.TestType2;
+            var biasData = type == 1 ? config.TestBias1 : config.TestBias2;
 
             if (UserProfile.InfoDungeon.DungeonId > 0)
             {
-                attrVal = Math.Max(1, UserProfile.InfoDungeon.GetAttrByStr(type));
-                markNeed = UserProfile.InfoDungeon.GetRequireAttrByStr(type, biasData);
+                attrVal = Math.Max(1, UserProfile.InfoDungeon.GetAttrByStr(testType));
+                markNeed = UserProfile.InfoDungeon.GetRequireAttrByStr(testType, biasData);
             }
             else
             {

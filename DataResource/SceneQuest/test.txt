@@ -23,8 +23,8 @@
 		ehide·
 	a奖励。
 		ereward
-	a|cantest-str-n2-t|能力鉴定。
-		etest|str|n2|t
+	a|cantest-1|能力鉴定。
+		etest|1
 			r0
 				s你挂了
 					a好啊
@@ -33,8 +33,8 @@
 				s你赢了
 					a好啊
 						end
-	a|cantest-agi-0|能力鉴定。
-		etest|agi|0
+	a|cantest-2|能力鉴定。
+		etest|2
 			r0
 				s你挂了
 					a好啊

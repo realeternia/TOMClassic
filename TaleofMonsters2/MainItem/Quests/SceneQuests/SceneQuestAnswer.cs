@@ -109,28 +109,23 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
             }
             else if (parms[0] == "cantest")
             {
-                string type = parms[1];
-                string bias = parms[2];
-                bool canConvert = parms.Length >= 4; //3,t，是否允许转换成幸运检测
+                int type = int.Parse(parms[1]);
+                bool canConvert = type == 1; //是否允许转换成幸运检测
 
-                int sourceVal = UserProfile.InfoDungeon.GetAttrByStr(type);
+                var testType = type == 1 ? config.TestType1 : config.TestType2;
+                int sourceVal = UserProfile.InfoDungeon.GetAttrByStr(testType);
                 Disabled = UserProfile.InfoDungeon.DungeonId <= 0 || sourceVal < 0;
                 if (Disabled && UserProfile.InfoDungeon.DungeonId <= 0 && canConvert)
                     Disabled = false;
 
                 if (!Disabled)
                 {
-                    var biasData = 0;
-                    if (bias[0] == 'n')
-                        biasData = -int.Parse(bias.Substring(1));
-                    else
-                        biasData = int.Parse(bias);
-
+                    var biasData = type == 1 ? config.TestBias1 : config.TestBias2;
                     if (UserProfile.InfoDungeon.DungeonId > 0)
                     {
-                        var attrNeed = UserProfile.InfoDungeon.GetRequireAttrByStr(type, biasData);
-                        Script = string.Format("进行{0}考验(判定{1} {2:0.0}%胜率)", GetTestAttrStr(type), attrNeed, 
-                            GetWinRate(UserProfile.InfoDungeon.GetAttrByStr(type)+0.5f, attrNeed));
+                        var attrNeed = UserProfile.InfoDungeon.GetRequireAttrByStr(testType, biasData);
+                        Script = string.Format("进行{0}考验(判定{1} {2:0.0}%胜率)", GetTestAttrStr(testType), attrNeed, 
+                            GetWinRate(UserProfile.InfoDungeon.GetAttrByStr(testType) +0.5f, attrNeed));
                     }
                     else //因为convert了
                     {
