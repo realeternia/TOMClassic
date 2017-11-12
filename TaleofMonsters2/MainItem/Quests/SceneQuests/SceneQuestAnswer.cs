@@ -115,13 +115,13 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
                 var testType = type == 1 ? config.TestType1 : config.TestType2;
                 int sourceVal = UserProfile.InfoDungeon.GetAttrByStr(testType);
                 Disabled = UserProfile.InfoDungeon.DungeonId <= 0 || sourceVal < 0;
-                if (Disabled && UserProfile.InfoDungeon.DungeonId <= 0 && canConvert)
+                if (Disabled && canConvert)
                     Disabled = false;
 
                 if (!Disabled)
                 {
                     var biasData = type == 1 ? config.TestBias1 : config.TestBias2;
-                    if (UserProfile.InfoDungeon.DungeonId > 0)
+                    if (UserProfile.InfoDungeon.DungeonId > 0 && UserProfile.InfoDungeon.GetAttrByStr(testType) >= 0)
                     {
                         var attrNeed = UserProfile.InfoDungeon.GetRequireAttrByStr(testType, biasData);
                         Script = string.Format("进行{0}考验(判定{1} {2:0.0}%胜率)", GetTestAttrStr(testType), attrNeed, 
@@ -138,7 +138,11 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
 
         private float GetWinRate(float myData, float needData)
         {
-            return myData*100/(myData + needData);
+            if (myData*2 < needData)
+                return 0;
+            if (myData*2 == needData)
+                return (float)Math.Pow(1/3, myData) * 100;
+            return myData*115/(myData + needData);
         }
 
         private string GetTradeStr(uint goldNeed, uint foodNeed, uint healthNeed, uint mentalNeed)
