@@ -53,13 +53,13 @@ namespace TaleofMonsters.DataType.Scenes
 
         private static bool IsQuestTimeAvail(SceneQuestConfig questConfig)
         {
-            var minutes = Scene.Instance.TimeMinutes;
+            var nowHour = Scene.Instance.TimeMinutes / 24;
             if (questConfig.TriggerHourBegin == questConfig.TriggerHourEnd)
                 return true;
             if (questConfig.TriggerHourEnd > questConfig.TriggerHourBegin)
-                return minutes >= questConfig.TriggerHourBegin && minutes < questConfig.TriggerHourEnd;
+                return nowHour >= questConfig.TriggerHourBegin && nowHour < questConfig.TriggerHourEnd;
             else //后半夜到第二天
-                return minutes < questConfig.TriggerHourEnd || minutes >= questConfig.TriggerHourBegin;
+                return nowHour < questConfig.TriggerHourEnd || nowHour >= questConfig.TriggerHourBegin;
         }
 
         private static bool IsQuestFlagAvail(SceneQuestConfig questConfig)
@@ -76,6 +76,18 @@ namespace TaleofMonsters.DataType.Scenes
             {
                 var qid = QuestBook.GetQuestIdByName(questConfig.TriggerQuestFinished);
                 return UserProfile.InfoQuest.IsQuestFinish(qid) || UserProfile.InfoQuest.IsQuestCanReward(qid);
+            }
+            if (questConfig.TriggerOnceInDungeon && UserProfile.InfoDungeon.DungeonId > 0)
+            {
+                if (!UserProfile.InfoDungeon.Quests.Contains(questConfig.Id))
+                {
+                    UserProfile.InfoDungeon.Quests.Add(questConfig.Id);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             return true;
         }
@@ -206,7 +218,7 @@ namespace TaleofMonsters.DataType.Scenes
             }
             return datas;
         }
-                public static SceneQuestBlock GetQuestData(int eventId, int level, string name)
+        public static SceneQuestBlock GetQuestData(int eventId, int level, string name)
         {
             Dictionary<int, SceneQuestBlock> levelCachDict = new Dictionary<int, SceneQuestBlock>();//存下每一深度的最后节点
             SceneQuestBlock root = null;
