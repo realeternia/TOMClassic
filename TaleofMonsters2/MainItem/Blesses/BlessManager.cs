@@ -82,6 +82,8 @@ namespace TaleofMonsters.MainItem.Blesses
                 cache.FightWinAddHealth += config.FightWinAddHealth;
                 cache.FightFailSubHealth += config.FightFailSubHealth;
                 cache.FightFailSubMental += config.FightFailSubMental;
+                cache.RollAlwaysFailBig |= config.RollAlwaysFailBig;
+                cache.RollAlwaysWinBig |= config.RollAlwaysWinBig;
             }
         }
 
@@ -178,6 +180,13 @@ namespace TaleofMonsters.MainItem.Blesses
         {
             get { return cache.FightFailSubMental; }
         }
-
+        public static bool RollAlwaysWinBig
+        {
+            get { return cache.RollAlwaysWinBig; }
+        }
+        public static bool RollAlwaysFailBig
+        {
+            get { return cache.RollAlwaysFailBig; }
+        }
     }
 }

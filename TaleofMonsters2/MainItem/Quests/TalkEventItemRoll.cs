@@ -21,6 +21,36 @@ namespace TaleofMonsters.MainItem.Quests
         {
             rollItemX = MathTool.GetRandom(0, pos.Width);
             rollItemSpeedX = MathTool.GetRandom(20, 40);
+
+            Init();
+        }
+
+        private void Init()
+        {
+            if (BlessManager.RollAlwaysFailBig)
+            {
+                bool hasFailBig = evt.ParamList.Contains("大失败");
+                if (hasFailBig)
+                {
+                    for (int i = 0; i < evt.ParamList.Count; i++)
+                    {
+                        if (evt.ParamList[i] == "失败")
+                            evt.ParamList[i] = "大失败";
+                    }
+                }
+            }
+            if (BlessManager.RollAlwaysWinBig)
+            {
+                bool hasWinBig = evt.ParamList.Contains("大成功");
+                if (hasWinBig)
+                {
+                    for (int i = 0; i < evt.ParamList.Count; i++)
+                    {
+                        if (evt.ParamList[i] == "成功")
+                            evt.ParamList[i] = "大成功";
+                    }
+                }
+            }
         }
 
         public override void OnFrame(int tick)
@@ -40,17 +70,11 @@ namespace TaleofMonsters.MainItem.Quests
             if (MathTool.GetRandom(10) < 2)
             {
                 if (rollItemSpeedX > 0)
-                {
                     rollItemSpeedX = rollItemSpeedX - MathTool.GetRandom(1, 3);
-                }
                 else
-                {
                     rollItemSpeedX = rollItemSpeedX + MathTool.GetRandom(1, 3);
-                }
                 if (Math.Abs(rollItemSpeedX) <= 1)
-                {
                     OnStop();
-                }
             }
         }
 
@@ -59,24 +83,20 @@ namespace TaleofMonsters.MainItem.Quests
             if (result == null)
             {
                 RunningState = TalkEventState.Finish;
-                int frameSize = (pos.Width - FrameOff*2) /evt.ParamList.Count;
+                int frameSize = (pos.Width - FrameOff*2)/evt.ParamList.Count;
                 result = evt.ChooseTarget(rollItemX/frameSize);
 
                 if (BlessManager.RollFailSubHealth > 0 && evt.ParamList[rollItemX/frameSize].Contains("失败"))
                 {
                     var healthSub = GameResourceBook.OutHealthSceneQuest(BlessManager.RollFailSubHealth*100);
                     if (healthSub > 0)
-                    {
                         UserProfile.Profile.InfoBasic.SubHealth(healthSub);
-                    }
                 } 
                 if (BlessManager.RollWinAddGold > 0 && evt.ParamList[rollItemX / frameSize].Contains("成功"))
                 {
                     var goldAdd = GameResourceBook.InGoldSceneQuest(level, BlessManager.RollWinAddGold * 100);
                     if (goldAdd > 0)
-                    {
                         UserProfile.Profile.InfoBag.AddResource(GameResourceType.Gold, goldAdd);
-                    }
                 }
             }
         }
