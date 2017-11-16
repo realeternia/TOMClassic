@@ -28,7 +28,10 @@ namespace TaleofMonsters.MainItem.Quests
             vRegion = new VirtualRegion(parent);
             vRegion.RegionEntered += virtualRegion_RegionEntered;
             vRegion.RegionLeft += virtualRegion_RegionLeft;
+        }
 
+        public override void Init()
+        {
             DoTrade();
         }
 
@@ -36,7 +39,7 @@ namespace TaleofMonsters.MainItem.Quests
         {
             int multi = int.Parse(evt.ParamList[0]);
             int index = 1;
-            if (config.TradeGold>0)
+            if (config.TradeGold > 0)
             {
                 var goldGet = GameResourceBook.InGoldSceneQuest(level, config.TradeGold * multi, true);
                 if (goldGet > 0)
@@ -60,7 +63,7 @@ namespace TaleofMonsters.MainItem.Quests
                     index++;
                 }
             }
-            if (config.TradeFood>0)
+            if (config.TradeFood > 0)
             {
                 var foodGet = Math.Min(100, GameResourceBook.InFoodSceneQuest(config.TradeFood * multi, true));
                 if (foodGet > 0)
@@ -84,7 +87,7 @@ namespace TaleofMonsters.MainItem.Quests
                     index++;
                 }
             }
-            if (config.TradeHealth>0)
+            if (config.TradeHealth > 0)
             {
                 var healthGet = Math.Min(100, GameResourceBook.InHealthSceneQuest(config.TradeHealth * multi, true));
                 if (healthGet > 0)
@@ -108,7 +111,7 @@ namespace TaleofMonsters.MainItem.Quests
                     index++;
                 }
             }
-            if (config.TradeMental>0)
+            if (config.TradeMental > 0)
             {
                 var mentalGet = Math.Min(100, GameResourceBook.InMentalSceneQuest(config.TradeMental * multi, true));
                 if (mentalGet > 0)
@@ -121,7 +124,7 @@ namespace TaleofMonsters.MainItem.Quests
                     index++;
                 }
             }
-            else if (config.TradeMental<0)
+            else if (config.TradeMental < 0)
             {
                 var mentalLoss = Math.Min(100, GameResourceBook.OutMentalSceneQuest(-config.TradeMental * multi, true));
                 if (mentalLoss > 0)

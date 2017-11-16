@@ -21,11 +21,9 @@ namespace TaleofMonsters.MainItem.Quests
         {
             rollItemX = MathTool.GetRandom(0, pos.Width);
             rollItemSpeedX = MathTool.GetRandom(20, 40);
-
-            Init();
         }
 
-        private void Init()
+        public override void Init()
         {
             if (BlessManager.RollAlwaysFailBig)
             {

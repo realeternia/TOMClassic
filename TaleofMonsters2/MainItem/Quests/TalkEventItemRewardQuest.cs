@@ -5,7 +5,6 @@ using ConfigDatas;
 using NarlonLib.Control;
 using NarlonLib.Drawing;
 using TaleofMonsters.Config;
-using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Blesses;
 using TaleofMonsters.DataType.Drops;
@@ -37,7 +36,10 @@ namespace TaleofMonsters.MainItem.Quests
             vRegion.RegionLeft += virtualRegion_RegionLeft;
 
             questConfig = ConfigData.GetQuestConfig(int.Parse(evt.ParamList[0]));
+        }
 
+        public override void Init()
+        {
             int index = 1;
             DoReward(ref index, "gold", 1, RewardGold);
             DoReward(ref index, "food", 1, RewardFood);

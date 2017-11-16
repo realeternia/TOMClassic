@@ -12,50 +12,55 @@ namespace TaleofMonsters.MainItem.Quests
             : base(evtId, level, r, e)
         {
             autoClose = true;
-            if (e.ParamList[0] == "buypiece")
+
+        }
+
+        public override void Init()
+        {
+            if (evt.ParamList[0] == "buypiece")
             {
                 PanelManager.DealPanel(new BuyPieceForm());
             }
-            else if (e.ParamList[0] == "changecard")
+            else if (evt.ParamList[0] == "changecard")
             {
                 PanelManager.DealPanel(new ChangeCardForm());
             }
-            else if (e.ParamList[0] == "changeres")
+            else if (evt.ParamList[0] == "changeres")
             {
                 PanelManager.DealPanel(new ChangeResForm());
             }
-            else if (e.ParamList[0] == "selectjob")
+            else if (evt.ParamList[0] == "selectjob")
             {
                 autoClose = false;
                 PanelManager.DealPanel(new SelectJobForm());
             }
-            else if (e.ParamList[0] == "merge")
+            else if (evt.ParamList[0] == "merge")
             {
                 PanelManager.DealPanel(new MergeWeaponForm());
             }
-            else if (e.ParamList[0] == "farm")
+            else if (evt.ParamList[0] == "farm")
             {
                 PanelManager.DealPanel(new FarmForm());
             }
-            else if (e.ParamList[0] == "bless")
+            else if (evt.ParamList[0] == "bless")
             {
                 PanelManager.DealPanel(new BlessForm());
             }
-            else if (e.ParamList[0] == "shop")
+            else if (evt.ParamList[0] == "shop")
             {
                 var shop = new NpcShopForm();
                 shop.ShopName = config.ShopName;
                 PanelManager.DealPanel(shop);
             }
-            else if (e.ParamList[0] == "dungeon")
+            else if (evt.ParamList[0] == "dungeon")
             {
                 var dungeon = new DungeonForm();
                 dungeon.DungeonId = config.DungeonId;
                 PanelManager.DealPanel(dungeon);
             }
-            else if (e.ParamList[0] == "wheel")
+            else if (evt.ParamList[0] == "wheel")
             {
-                TreasureWheelBook.Show(int.Parse(e.ParamList[1]));
+                TreasureWheelBook.Show(int.Parse(evt.ParamList[1]));
             }
         }
 

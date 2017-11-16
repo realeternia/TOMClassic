@@ -10,6 +10,11 @@ namespace TaleofMonsters.MainItem.Quests
         public TalkEventItemGame(int evtId, int level, Rectangle r, SceneQuestEvent e)
             : base(evtId, level, r, e)
         {
+        
+        }
+
+        public override void Init()
+        {
             int gameId = config.MiniGameId;
             PanelManager.ShowGameWindow(gameId, OnResult);
         }

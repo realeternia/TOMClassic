@@ -53,6 +53,10 @@ namespace TaleofMonsters.MainItem.Quests
             RunningState = TalkEventState.Running;
         }
 
+        public virtual void Init()
+        {
+            
+        }
 
         public SceneQuestBlock GetResult()
         {

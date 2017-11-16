@@ -35,6 +35,11 @@ namespace TaleofMonsters.MainItem.Quests
             CalculateRequire();
         }
 
+        public override void Init()
+        {
+            CalculateRequire();
+        }
+
         private void CalculateRequire()
         {
             int index = 1;

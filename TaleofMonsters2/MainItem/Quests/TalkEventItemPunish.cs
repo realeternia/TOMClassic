@@ -1,8 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Control;
-using NarlonLib.Drawing;
-using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Blesses;
 using TaleofMonsters.DataType.Others;
@@ -27,7 +25,10 @@ namespace TaleofMonsters.MainItem.Quests
             vRegion = new VirtualRegion(parent);
             vRegion.RegionEntered += virtualRegion_RegionEntered;
             vRegion.RegionLeft += virtualRegion_RegionLeft;
+        }
 
+        public override void Init()
+        {
             int index = 1;
             DoPunish(ref index, "gold", GetMulti() + BlessManager.PunishGoldMulti, PunishGold);
             DoPunish(ref index, "food", GetMulti() + BlessManager.PunishFoodMulti, PunishFood);

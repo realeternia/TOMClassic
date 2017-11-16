@@ -115,6 +115,7 @@ namespace TaleofMonsters.Forms
                     }
                     var region = new Rectangle(10, Height - 10 - 5*20 - 160, Width - 20, 160);
                     evtItem = TalkEventItem.CreateEventItem(CellId, EventId, eventLevel, this, region, evt);
+                    evtItem.Init();
                 }
 
                 if (evtItem != null && evtItem.AutoClose())

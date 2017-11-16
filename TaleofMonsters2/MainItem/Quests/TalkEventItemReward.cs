@@ -31,10 +31,13 @@ namespace TaleofMonsters.MainItem.Quests
             vRegion = new VirtualRegion(parent);
             vRegion.RegionEntered += virtualRegion_RegionEntered;
             vRegion.RegionLeft += virtualRegion_RegionLeft;
+        }
 
+        public override void Init()
+        {
             int index = 1;
             DoReward(ref index, "gold", GetMulti() + BlessManager.RewardGoldMulti, RewardGold);
-            DoReward(ref index, "res", GetMulti(), RewardRes);
+            DoReward(ref index, "res", 1 + BlessManager.RewardResMulti, RewardRes);
             DoReward(ref index, "food", GetMulti() + BlessManager.RewardFoodMulti, RewardFood);
             DoReward(ref index, "health", GetMulti() + BlessManager.RewardHealthMulti, RewardHealth);
             DoReward(ref index, "mental", GetMulti() + BlessManager.RewardMentalMulti, RewardMental);

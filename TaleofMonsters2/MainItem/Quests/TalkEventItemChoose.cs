@@ -37,10 +37,13 @@ namespace TaleofMonsters.MainItem.Quests
             vRegion.RegionEntered += virtualRegion_RegionEntered;
             vRegion.RegionLeft += virtualRegion_RegionLeft;
             vRegion.RegionClicked += virtualRegion_RegionClicked;
+        }
 
+        public override void Init()
+        {
             CalculateRequire();
         }
-        
+
         private void CalculateRequire()
         {
             int index = 1;

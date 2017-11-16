@@ -70,6 +70,7 @@ namespace TaleofMonsters.MainItem.Blesses
                 cache.PunishGoldMulti += config.PunishGoldMulti;
                 cache.PunishHealthMulti += config.PunishHealthMulti;
                 cache.PunishMentalMulti += config.PunishMentalMulti;
+                cache.RewardResMulti += config.RewardResMulti;
                 cache.RewardExpMulti += config.RewardExpMulti;
                 cache.RewardFoodMulti += config.RewardFoodMulti;
                 cache.RewardGoldMulti += config.RewardGoldMulti;
@@ -150,6 +151,10 @@ namespace TaleofMonsters.MainItem.Blesses
         public static int RewardMentalMulti
         {
             get { return cache.RewardMentalMulti; }
+        }
+        public static int RewardResMulti
+        {
+            get { return cache.RewardResMulti; }
         }
         public static int RollWinAddGold
         {

@@ -20,6 +20,11 @@ namespace TaleofMonsters.MainItem.Quests
         public TalkEventItemFight(int evtId, int level, Rectangle r, SceneQuestEvent e)
             : base(evtId, level, r, e)
         {
+
+        }
+
+        public override void Init()
+        {
             int enemyId = PeopleBook.GetPeopleId(config.EnemyName);
             HsActionCallback winCallback = OnWin;
             HsActionCallback failCallback = OnFail;
@@ -27,12 +32,12 @@ namespace TaleofMonsters.MainItem.Quests
             parm.Reason = PeopleFightReason.SceneQuest;
             if (evt.ParamList.Count > 1)
             {
-                parm.RuleAddon = (PeopleFightRuleAddon)Enum.Parse(typeof (PeopleFightRuleAddon), evt.ParamList[0]);
+                parm.RuleAddon = (PeopleFightRuleAddon)Enum.Parse(typeof(PeopleFightRuleAddon), evt.ParamList[0]);
                 parm.RuleLevel = int.Parse(evt.ParamList[1]);
             }
             if (enemyId == 1)//特殊处理标记
             {
-                enemyId = UserProfile.InfoRecord.GetRecordById((int) MemPlayerRecordTypes.SceneQuestRandPeopleId);
+                enemyId = UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.SceneQuestRandPeopleId);
             }
             int fightLevel = Math.Max(1, level + BlessManager.FightLevelChange);
             var peopleConfig = ConfigData.GetPeopleConfig(enemyId);

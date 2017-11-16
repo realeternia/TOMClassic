@@ -8,10 +8,17 @@ namespace TaleofMonsters.MainItem.Quests
 {
     internal class TalkEventItemAction : TalkEventItem
     {
+        private int cellId;
+
         public TalkEventItemAction(int cellId, int evtId, int level, Rectangle r, SceneQuestEvent e)
             : base(evtId, level, r, e)
         {
-            switch (e.Type)
+            this.cellId = cellId;
+        }
+
+        public override void Init()
+        {
+            switch (evt.Type)
             {
                 case "reset": Scene.Instance.ResetScene(); break;
                 case "ruin": Scene.Instance.Ruin(); break;
@@ -19,9 +26,11 @@ namespace TaleofMonsters.MainItem.Quests
                 case "portal": Scene.Instance.RandomPortal(); break;
                 case "moveback": Scene.Instance.MoveTo(UserProfile.InfoBasic.LastPosition); break;
                 case "hiddenway": Scene.Instance.HiddenWay(); break;
-                case "next": foreach (var parm in config.NextQuest) //支持多个next同时触发
+                case "next":
+                    foreach (var parm in config.NextQuest) //支持多个next同时触发
                         Scene.Instance.QuestNext(parm); break;
-                case "hide": foreach (var parm in config.HiddenRoomQuest) //如果地图不支持，就当啥都没发生
+                case "hide":
+                    foreach (var parm in config.HiddenRoomQuest) //如果地图不支持，就当啥都没发生
                         Scene.Instance.OpenHidden(parm); break;
                 case "changemap":
                     Scene.Instance.ChangeMap(config.SceneId, true);
