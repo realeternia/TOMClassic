@@ -1,10 +1,12 @@
 ﻿using System;
 using ConfigDatas;
+using NarlonLib.Math;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Drops;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.MainItem.Blesses;
 using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.MainItem.Quests.SceneQuests
@@ -56,18 +58,20 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
             else if (parms[0] == "cantrade")
             {
                 int multi = int.Parse(parms[1]);
+                double multiNeed = multi*MathTool.Clamp(1 + BlessManager.TradeNeedRate, 0.2, 5);
+                double multiGet = multi * MathTool.Clamp(1 + BlessManager.TradeAddRate, 0.2, 5);
                 uint goldNeed = 0;
                 if (config.TradeGold < 0)
-                    goldNeed = GameResourceBook.OutGoldSceneQuest(level, -config.TradeGold*multi, true);
+                    goldNeed = GameResourceBook.OutGoldSceneQuest(level, (int)(-config.TradeGold* multiNeed), true);
                 uint foodNeed = 0;
                 if (config.TradeFood < 0)
-                    foodNeed = Math.Min(100, GameResourceBook.OutFoodSceneQuest(-config.TradeFood*multi, true));
+                    foodNeed = Math.Min(100, GameResourceBook.OutFoodSceneQuest((int)(-config.TradeFood* multiNeed), true));
                 uint healthNeed = 0;
                 if (config.TradeHealth < 0)
-                    healthNeed = Math.Min(100, GameResourceBook.OutHealthSceneQuest(-config.TradeHealth*multi, true));
+                    healthNeed = Math.Min(100, GameResourceBook.OutHealthSceneQuest((int)(-config.TradeHealth* multiNeed), true));
                 uint mentalNeed = 0;
                 if (config.TradeMental < 0)
-                    mentalNeed = Math.Min(100, GameResourceBook.OutMentalSceneQuest(-config.TradeMental*multi, true));
+                    mentalNeed = Math.Min(100, GameResourceBook.OutMentalSceneQuest((int)(-config.TradeMental* multiNeed), true));
                 Disabled = !UserProfile.Profile.InfoBag.HasResource(GameResourceType.Gold, goldNeed) ||
                            UserProfile.Profile.InfoBasic.FoodPoint < foodNeed ||
                            UserProfile.Profile.InfoBasic.HealthPoint < healthNeed ||
@@ -77,16 +81,16 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
                 {
                     uint goldAdd = 0;
                     if (config.TradeGold > 0)
-                        goldAdd = GameResourceBook.InGoldSceneQuest(level, config.TradeGold*multi, true);
+                        goldAdd = GameResourceBook.InGoldSceneQuest(level, (int)(config.TradeGold* multiGet), true);
                     uint foodAdd = 0;
                     if (config.TradeFood > 0)
-                        foodAdd = Math.Min(100, GameResourceBook.InFoodSceneQuest(config.TradeFood*multi, true));
+                        foodAdd = Math.Min(100, GameResourceBook.InFoodSceneQuest((int)(config.TradeFood* multiGet), true));
                     uint healthAdd = 0;
                     if (config.TradeHealth > 0)
-                        healthAdd = Math.Min(100, GameResourceBook.InHealthSceneQuest(config.TradeHealth*multi, true));
+                        healthAdd = Math.Min(100, GameResourceBook.InHealthSceneQuest((int)(config.TradeHealth* multiGet), true));
                     uint mentalAdd = 0;
                     if (config.TradeMental > 0)
-                        mentalAdd = Math.Min(100, GameResourceBook.InMentalSceneQuest(config.TradeMental*multi, true));
+                        mentalAdd = Math.Min(100, GameResourceBook.InMentalSceneQuest((int)(config.TradeMental* multiGet), true));
                     Script = string.Format("获得{0}(消耗{1})",
                         GetTradeStr(goldAdd, foodAdd, healthAdd, mentalAdd),
                         GetTradeStr(goldNeed, foodNeed, healthNeed, mentalNeed));

@@ -85,6 +85,8 @@ namespace TaleofMonsters.MainItem.Blesses
                 cache.FightFailSubMental += config.FightFailSubMental;
                 cache.RollAlwaysFailBig |= config.RollAlwaysFailBig;
                 cache.RollAlwaysWinBig |= config.RollAlwaysWinBig;
+                cache.TradeAddRate += config.TradeAddRate;
+                cache.TradeNeedRate += config.TradeNeedRate;
             }
         }
 
@@ -192,6 +194,14 @@ namespace TaleofMonsters.MainItem.Blesses
         public static bool RollAlwaysFailBig
         {
             get { return cache.RollAlwaysFailBig; }
+        }
+        public static double TradeNeedRate
+        {
+            get { return cache.TradeNeedRate; }
+        }
+        public static double TradeAddRate
+        {
+            get { return cache.TradeAddRate; }
         }
     }
 }
