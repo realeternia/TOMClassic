@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using NarlonLib.Math;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.MainItem.Blesses;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
 
 namespace TaleofMonsters.MainItem.Quests
@@ -38,21 +39,45 @@ namespace TaleofMonsters.MainItem.Quests
                 attrVal = 3;
                 markNeed = 3 + biasData;
             }
+        }
 
+        public override void Init()
+        {
             rollItemX = new List<int>();
             rollItemSpeedX = new List<int>();
             hasStop = new List<bool>();
-            for (int i = 0; i < attrVal; i++)
+
+            var ballCount = attrVal;
+            if (BlessManager.TestBallChange != 0)
+                ballCount = MathTool.Clamp(ballCount + BlessManager.TestBallChange, 1, 99);
+            for (int i = 0; i < ballCount; i++)
             {
                 rollItemX.Add(MathTool.GetRandom(0, pos.Width));
                 rollItemSpeedX.Add(MathTool.GetRandom(20, 40));
                 hasStop.Add(false);
             }
+            if (BlessManager.TestAdjustPointTwo != 0)
+            {
+                var pointChange = MathTool.Clamp(2 + BlessManager.TestAdjustPointTwo, 0, 99);
+                for (int i = 0; i < markArray.Length; i++)
+                {
+                    if (markArray[i] == 2)
+                        markArray[i] = pointChange;
+                }
+            }
+            if (rollItemX.Count > 1 && BlessManager.TestBallSynchonize)
+            {//同调
+                for (int i = 1; i < rollItemX.Count; i++)
+                {
+                    rollItemX[i] = rollItemX[0];
+                    rollItemSpeedX[i] = rollItemSpeedX[0];
+                }
+            }
         }
 
         public override void OnFrame(int tick)
         {
-            for (int i = 0; i < attrVal; i++)
+            for (int i = 0; i < hasStop.Count; i++)
             {
                 if (hasStop[i])
                     continue;
@@ -72,24 +97,16 @@ namespace TaleofMonsters.MainItem.Quests
                 if (MathTool.GetRandom(10) < 2)
                 {
                     if (rollItemSpeedX[i] > 0)
-                    {
                         rollItemSpeedX[i] = rollItemSpeedX[i] - MathTool.GetRandom(1, 3);
-                    }
                     else
-                    {
                         rollItemSpeedX[i] = rollItemSpeedX[i] + MathTool.GetRandom(1, 3);
-                    }
                     if (Math.Abs(rollItemSpeedX[i]) <= 1)
-                    {
                         hasStop[i] = true;
-                    }
                 }
             }
 
             if (hasStop.IndexOf(false) < 0)
-            {
                 OnStop();
-            }
         }
 
         private void OnStop()
@@ -142,9 +159,9 @@ namespace TaleofMonsters.MainItem.Quests
                 g.FillRectangle(b, pos.X + i * frameSize + FrameOff, pos.Y + 25 + 30, frameSize - 2, 5);
                 g.DrawString(markArray[i] + "分", font, b, pos.X + i * frameSize + FrameOff + frameSize / 2 - 20, pos.Y + 25 + 10);
             }
-            for (int i = 0; i < attrVal; i++)
+            for (int i = 0; i < rollItemX.Count; i++)
             {
-                g.FillEllipse(Brushes.Yellow, new Rectangle(pos.X + rollItemX[i] + FrameOff - 6, pos.Y + 25 + 40 + i * 15, 12, 12));
+                g.FillEllipse(i >= attrVal ? Brushes.MediumPurple : Brushes.Yellow, new Rectangle(pos.X + rollItemX[i] + FrameOff - 6, pos.Y + 25 + 40 + i * 15, 12, 12));
                 g.FillEllipse(Brushes.OrangeRed, new Rectangle(pos.X + rollItemX[i] + FrameOff - 1, pos.Y + 25 + 40 + 5 + i*15, 3, 3));
             }
             font.Dispose();

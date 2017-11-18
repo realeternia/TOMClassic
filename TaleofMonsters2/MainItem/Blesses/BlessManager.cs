@@ -87,6 +87,9 @@ namespace TaleofMonsters.MainItem.Blesses
                 cache.RollAlwaysWinBig |= config.RollAlwaysWinBig;
                 cache.TradeAddRate += config.TradeAddRate;
                 cache.TradeNeedRate += config.TradeNeedRate;
+                cache.TestAdjustPointTwo += config.TestAdjustPointTwo;
+                cache.TestBallChange += config.TestBallChange;
+                cache.TestBallSynchonize |= config.TestBallSynchonize;
             }
         }
 
@@ -202,6 +205,18 @@ namespace TaleofMonsters.MainItem.Blesses
         public static double TradeAddRate
         {
             get { return cache.TradeAddRate; }
+        }
+        public static int TestAdjustPointTwo
+        {
+            get { return cache.TestAdjustPointTwo; }
+        }
+        public static int TestBallChange
+        {
+            get { return cache.TestBallChange; }
+        }
+        public static bool TestBallSynchonize
+        {
+            get { return cache.TestBallSynchonize; }
         }
     }
 }
