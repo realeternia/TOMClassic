@@ -66,6 +66,7 @@ namespace TaleofMonsters.MainItem.Blesses
                 var config = ConfigData.GetBlessConfig(key);
                 cache.MoveFoodChange += config.MoveFoodChange;
                 cache.MoveDistance += config.MoveDistance;
+                cache.MoveCostHp |= config.MoveCostHp;
                 cache.PunishFoodMulti += config.PunishFoodMulti;
                 cache.PunishGoldMulti += config.PunishGoldMulti;
                 cache.PunishHealthMulti += config.PunishHealthMulti;
@@ -106,9 +107,7 @@ namespace TaleofMonsters.MainItem.Blesses
             if (count != UserProfile.InfoWorld.Blesses.Count)
             {
                 if (Update != null)
-                {
                     Update();
-                }
                 RebuildCache();
             }
         }
@@ -120,6 +119,10 @@ namespace TaleofMonsters.MainItem.Blesses
         public static int MoveDistance
         {
             get { return cache.MoveDistance; }
+        }
+        public static bool MoveCostHp
+        {
+            get { return cache.MoveCostHp; }
         }
         public static int PunishFoodMulti
         {

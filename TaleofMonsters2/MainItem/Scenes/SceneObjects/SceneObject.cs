@@ -75,7 +75,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                 return false;
             }
 
-            uint moveCost = (uint)Math.Max(0, GameConstants.SceneMoveCost+BlessManager.MoveFoodChange);
+            uint moveCost = (uint) Math.Max(0, GameConstants.SceneMoveCost + BlessManager.MoveFoodChange);
             if (UserProfile.Profile.InfoBasic.FoodPoint >= moveCost)
             {
                 UserProfile.InfoBasic.SubFood(moveCost);
@@ -85,6 +85,8 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             {
                 UserProfile.InfoBasic.SubHealth(moveCost * 2);
             }
+            if (BlessManager.MoveCostHp)
+                UserProfile.InfoBasic.SubHealth(moveCost);
 
             return true;
         }

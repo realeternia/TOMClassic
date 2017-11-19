@@ -7,7 +7,6 @@ using System.Threading;
 using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus; 
-using NarlonLib.Core;
 using NarlonLib.Log;
 using NarlonLib.Tools;
 using TaleofMonsters.Config;
@@ -175,9 +174,7 @@ namespace TaleofMonsters
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (viewStack1.SelectedIndex == 1)
-            {
                 PanelManager.CheckHotKey(e, false);
-            }
         }
 
         private void buttonExit_Click(object sender, EventArgs e)
@@ -206,6 +203,7 @@ namespace TaleofMonsters
             tabPageGame.Controls.Add(panel);
             panel.BringToFront();
         }
+
         public void RemovePanelAct(BasePanel panel)
         {
             tabPageGame.Controls.Remove(panel);
@@ -225,9 +223,7 @@ namespace TaleofMonsters
                         foreach (var control in tabPageGame.Controls)
                         {
                             if (control is BasePanel)
-                            {
                                 (control as BasePanel).OnFrame(timeTick, 0.05f);
-                            }
                         }
 
                         if (SystemMenuManager.IsHotkeyEnabled && (timeTick % 5) == 0)
@@ -276,9 +272,7 @@ namespace TaleofMonsters
                 MainTipManager.DrawAll(e.Graphics);
 
                 if (SystemMenuManager.GMMode) //希望在最上层，所以必须最后绘制
-                {
                     GMCodeZone.Paint(e.Graphics, tabPageGame.Width, tabPageGame.Height);
-                }
             }
             catch (Exception err)
             {

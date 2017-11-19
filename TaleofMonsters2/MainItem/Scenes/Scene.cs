@@ -251,9 +251,7 @@ namespace TaleofMonsters.MainItem.Scenes
                     {
                         TimeMinutes = time;
                         if (time == 0)
-                        {
                             UserProfile.Profile.OnNewDay();
-                        }
                         parent.Invalidate();
                     }
                 }
