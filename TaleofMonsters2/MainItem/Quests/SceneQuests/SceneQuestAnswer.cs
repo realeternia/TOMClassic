@@ -141,8 +141,8 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
             }
             else if (parms[0] == "hasditem")
             {
-                var itemId = DungeonBook.GetDungeonItemId(config.DungeonItemId);
-                Disabled = !UserProfile.InfoDungeon.HasDungeonItem(itemId, config.DungeonItemCount);
+                var itemId = DungeonBook.GetDungeonItemId(config.NeedDungeonItemId);
+                Disabled = !UserProfile.InfoDungeon.HasDungeonItem(itemId, config.NeedDungeonItemCount);
             }
         }
 
