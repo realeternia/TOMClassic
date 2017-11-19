@@ -145,7 +145,9 @@
     {
         Common = 1,
         MapSetting = 2,
-        Hidden = 3,
+        Rare = 3,
+        Series = 4,
+        Dungeon = 5
     }
     internal enum RegionTypes
     {
