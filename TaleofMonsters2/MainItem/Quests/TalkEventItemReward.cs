@@ -142,15 +142,16 @@ namespace TaleofMonsters.MainItem.Quests
                     index++;
                 }
             }
-            if (!string.IsNullOrEmpty(config.DungeonItemId) && UserProfile.InfoDungeon.DungeonId > 0)
+
+            if (!string.IsNullOrEmpty(config.RewardDungeonItemId) && UserProfile.InfoDungeon.DungeonId > 0)
             {
-                var itemId = DungeonBook.GetDungeonItemId(config.DungeonItemId);
-                UserProfile.InfoDungeon.AddDungeonItem(itemId, config.DungeonItemCount);
+                var itemId = DungeonBook.GetDungeonItemId(config.RewardDungeonItemId);
+                UserProfile.InfoDungeon.AddDungeonItem(itemId, config.RewardDungeonItemCount);
                 var pictureRegion = new PictureRegion(index, pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25, 60, 60,
                     PictureRegionCellType.DungeonItem, itemId);
                 pictureRegion.Scale = 0.7f;
                 var textControl = new RegionTextDecorator(3, 60 - 20, 11, Color.White, true);
-                textControl.SetState(config.DungeonItemCount.ToString());
+                textControl.SetState(config.RewardDungeonItemCount.ToString());
                 pictureRegion.AddDecorator(textControl);
                 pictureRegion.AddDecorator(new RegionBorderDecorator(Color.White));
                 vRegion.AddRegion(pictureRegion);
@@ -168,11 +169,12 @@ namespace TaleofMonsters.MainItem.Quests
                                                        60, 60, PictureRegionCellType.Bless, blessId));
                 index++;
             }
-            if (config.RewardBlessId > 0)
+            if (!string.IsNullOrEmpty(config.RewardBlessName))
             {
-                BlessManager.AddBless(config.RewardBlessId);
+                var blessId = BlessBook.GetBlessByName(config.RewardBlessName);
+                BlessManager.AddBless(blessId);
                 vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25,
-                                                       60, 60, PictureRegionCellType.Bless, config.RewardBlessId));
+                                                       60, 60, PictureRegionCellType.Bless, blessId));
                 index++;
             }
         }

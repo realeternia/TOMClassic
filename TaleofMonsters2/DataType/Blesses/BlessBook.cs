@@ -12,6 +12,25 @@ namespace TaleofMonsters.DataType.Blesses
 {
     internal static class BlessBook
     {
+        private static Dictionary<string, int> blessNameDict = null;
+        public static int GetBlessByName(string name)
+        {
+            if (blessNameDict == null)
+            {
+                blessNameDict = new Dictionary<string, int>();
+                foreach (var blessConfig in ConfigData.BlessDict.Values)
+                {
+                    blessNameDict.Add(blessConfig.Ename, blessConfig.Id);
+                }
+            }
+            int blessId;
+            if (!blessNameDict.TryGetValue(name, out blessId))
+            {
+                throw new KeyNotFoundException("bless name not found " + name);
+            }
+            return blessId;
+        }
+
         private static Dictionary<int, List<int>> activeBlessDict = new Dictionary<int, List<int>>();
         private static Dictionary<int, List<int>> negativeBlessDict = new Dictionary<int, List<int>>();
         static BlessBook()

@@ -129,7 +129,7 @@ namespace TaleofMonsters.DataType.Scenes
                 foreach (var questData in SceneQuestBook.GetQuestConfigData(UserProfile.InfoBasic.MapId))
                 {
                     var questConfig = ConfigData.GetSceneQuestConfig(questData.Id);
-                    if (questConfig.Type == (int)SceneQuestTypes.Hidden)
+                    if (questConfig.Type == (int)SceneQuestTypes.Rare)
                         continue;
                     var happend = scene.GetDisableEventCount(questData.Id);
                     var evtLevel = questConfig.Level == 0 ? config.Level : questConfig.Level;
