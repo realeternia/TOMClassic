@@ -197,6 +197,21 @@ namespace TaleofMonsters.DataType.User
             return 1;
         }
 
+        public bool HasDungeonItem(int itemId, int count)
+        {
+            if (DungeonId <= 0)
+                return false;
+
+            foreach (var pickItem in Items)
+            {
+                if (pickItem.Type == itemId)
+                {
+                    return pickItem.Value >= count;
+                }
+            }
+            return false;
+        }
+
         public void AddDungeonItem(int itemId, int count)
         {
             if (DungeonId <= 0)
@@ -214,6 +229,23 @@ namespace TaleofMonsters.DataType.User
             }
             Items.Add(new IntPair() {Type = itemId, Value = count});
             MainTipManager.AddTip(string.Format("|获得副本道具-|Lime|{0}||x{1}(总计{2})", itemConfig.Name, count, count), "White");
+        }
+
+        public void RemoveDungeonItem(int itemId, int count)
+        {
+            if (DungeonId <= 0)
+                return;
+
+            DungeonItemConfig itemConfig = ConfigData.GetDungeonItemConfig(itemId);
+            foreach (var pickItem in Items)
+            {
+                if (pickItem.Type == itemId)
+                {
+                    pickItem.Value = Math.Max(0, pickItem.Value - count);
+                    MainTipManager.AddTip(string.Format("|扣除副本道具-|Lime|{0}||x{1}(剩余{2})", itemConfig.Name, count, pickItem.Value), "White");
+                    return;
+                }
+            }
         }
     }
 }

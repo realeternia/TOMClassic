@@ -5,6 +5,7 @@ using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Drops;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Peoples;
+using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.MainItem.Blesses;
 using TaleofMonsters.MainItem.Scenes;
@@ -137,6 +138,11 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
                             GetWinRate(3.5f, 3 + biasData));
                     }
                 }
+            }
+            else if (parms[0] == "hasditem")
+            {
+                var itemId = DungeonBook.GetDungeonItemId(config.DungeonItemId);
+                Disabled = !UserProfile.InfoDungeon.HasDungeonItem(itemId, config.DungeonItemCount);
             }
         }
 

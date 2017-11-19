@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
 using TaleofMonsters.MainItem.Scenes;
@@ -41,12 +42,19 @@ namespace TaleofMonsters.MainItem.Quests
                 case "disable": Scene.Instance.GetObjectByPos(cellId).SetEnable(false); break;
                 case "quest": UserProfile.InfoQuest.SetQuestState(int.Parse(evt.ParamList[0]), QuestStates.Receive); break;
                 case "questp": UserProfile.InfoQuest.AddQuestProgress(int.Parse(evt.ParamList[0]), byte.Parse(evt.ParamList[1])); break;
+                case "removeditem": var itemId = DungeonBook.GetDungeonItemId(config.DungeonItemId);
+                    UserProfile.InfoDungeon.RemoveDungeonItem(itemId, config.NeedDungeonItemCount); break;
+            }
+
+            if (evt.Children.Count > 0)
+            {
+                result = evt.Children[0];//应该是一个say
             }
         }
 
         public override bool AutoClose()
         {
-            return true;
+            return result == null; //没有后续就自动关闭
         }
     }
 }

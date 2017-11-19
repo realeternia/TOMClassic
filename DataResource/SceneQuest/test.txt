@@ -19,8 +19,13 @@
 				s你交出一个道具
 					a这个给你吧
 						end
+	a|hasditem|交出东西
+		eremoveditem
+			sbalala
+				a好吧
+					ereward
 	a开启隐藏房间。
-		ehide·
+		ehide
 	a奖励。
 		ereward
 	a|cantest-1|能力鉴定。
