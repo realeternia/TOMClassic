@@ -12,7 +12,6 @@ namespace TaleofMonsters.MainItem.Quests
             : base(evtId, level, r, e)
         {
             autoClose = true;
-
         }
 
         public override void Init()
