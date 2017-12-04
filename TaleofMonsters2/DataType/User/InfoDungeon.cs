@@ -88,7 +88,7 @@ namespace TaleofMonsters.DataType.User
                 var checkData = EventList[i];
                 if (checkData.BaseId == qid)
                 {
-                    if (state != "" && state != checkData.ResultName)
+                    if (!string.IsNullOrEmpty(state) && state != checkData.ResultName)
                         break;
 
                     count++;
@@ -96,6 +96,36 @@ namespace TaleofMonsters.DataType.User
                 else
                 {
                     if(needContinue)
+                        break;
+                }
+            }
+
+            return count >= countNeed;
+        }
+
+        public bool CheckQuestTagCount(string tag, string state, int countNeed, bool needContinue)
+        {
+            if (EventList.Count == 0)
+                return false;
+
+            var lastQuestConfig = ConfigData.GetDungeonGismoConfig(EventList[EventList.Count - 1].BaseId);
+            if (lastQuestConfig.FinishSceneQuestTag != tag)
+                return false;
+
+            int count = 0;
+            for (int i = EventList.Count - 1; i >= 0; i--)
+            {
+                var checkQuestConfig = ConfigData.GetDungeonGismoConfig(EventList[i].BaseId);
+                if (checkQuestConfig.FinishSceneQuestTag == tag)
+                {
+                    if (!string.IsNullOrEmpty(state) && state != EventList[i].ResultName)
+                        break;
+
+                    count++;
+                }
+                else
+                {
+                    if (needContinue)
                         break;
                 }
             }
@@ -223,11 +253,13 @@ namespace TaleofMonsters.DataType.User
                 if (pickItem.Type == itemId)
                 {
                     pickItem.Value += count;
+                    UserProfile.InfoGismo.CheckDungeonItem();
                     MainTipManager.AddTip(string.Format("|获得副本道具-|Lime|{0}||x{1}(总计{2})", itemConfig.Name, count, pickItem.Value), "White");
                     return;
                 }
             }
             Items.Add(new IntPair() {Type = itemId, Value = count});
+            UserProfile.InfoGismo.CheckDungeonItem();
             MainTipManager.AddTip(string.Format("|获得副本道具-|Lime|{0}||x{1}(总计{2})", itemConfig.Name, count, count), "White");
         }
 

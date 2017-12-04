@@ -82,6 +82,39 @@ namespace TaleofMonsters.DataType.User
                                 AddGismo(gismoId);
                         }
                     }
+                    else if (!string.IsNullOrEmpty(gismoConfig.FinishSceneQuestTag))
+                    {
+                        if (gismoConfig.FinishContinueCount > 0)
+                        {
+                            if (UserProfile.InfoDungeon.CheckQuestTagCount(gismoConfig.FinishSceneQuestTag, gismoConfig.FinishState, gismoConfig.FinishContinueCount, true))
+                                AddGismo(gismoId);
+                        }
+                        else if (gismoConfig.FinishCount > 0)
+                        {
+                            if (UserProfile.InfoDungeon.CheckQuestTagCount(gismoConfig.FinishSceneQuestTag, gismoConfig.FinishState, gismoConfig.FinishCount, false))
+                                AddGismo(gismoId);
+                        }
+                    }
+                }
+            }
+        }
+
+        public void CheckDungeonItem()
+        {
+            if (CheckState())
+            {
+                foreach (var gismoId in gismoList)
+                {
+                    if (GetGismo(gismoId)) //已经有了
+                        continue;
+
+                    var gismoConfig = ConfigData.GetDungeonGismoConfig(gismoId);
+                    if (!CheckEnvironmentState(gismoConfig))
+                        return;
+
+                    if (!string.IsNullOrEmpty(gismoConfig.NeedDungeonItemId) 
+                        && UserProfile.InfoDungeon.HasDungeonItem(DungeonBook.GetDungeonItemId(gismoConfig.NeedDungeonItemId), gismoConfig.NeedDungeonItemCount))
+                        AddGismo(gismoId);
                 }
             }
         }
