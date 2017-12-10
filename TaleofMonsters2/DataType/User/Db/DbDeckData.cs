@@ -1,4 +1,5 @@
-﻿using ConfigDatas;
+﻿using System;
+using ConfigDatas;
 using TaleofMonsters.Config;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Decks;

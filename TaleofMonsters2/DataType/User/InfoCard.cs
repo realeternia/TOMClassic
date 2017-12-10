@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using TaleofMonsters.Config;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.MainItem;
@@ -14,9 +15,11 @@ namespace TaleofMonsters.DataType.User
         [FieldIndex(Index = 2)]
         public List<int> Newcards = new List<int>();
         [FieldIndex(Index = 3)] 
-        public DbDeckData[] Decks;
+        public DbDeckData[] Decks; 
         [FieldIndex(Index = 4)]
         public int DeckId; //上次出战的卡组
+        [FieldIndex(Index = 5)]
+        public List<DbDeckCard> DungeonDeck; //副本卡组
 
         public InfoCard()
         {
@@ -37,19 +40,14 @@ namespace TaleofMonsters.DataType.User
             foreach (var cd in Cards.Values)
             {
                 if (ConfigIdManager.GetCardType(cd.BaseId) == type)
-                {
                     count++;
-                }
             }
             return count;
         }
 
         public DbDeckData SelectedDeck
         {
-            get
-            {
-                return Decks[DeckId];
-            }
+            get { return Decks[DeckId]; }
         }
 
         /// <summary>
@@ -163,6 +161,17 @@ namespace TaleofMonsters.DataType.User
                 }
                 card.Exp = (ushort)(card.Exp - expNeed);
                 card.Level++;
+            }
+        }
+
+        public void SelectDungeonDeck(int deckId)
+        {
+            DungeonDeck = new List<DbDeckCard>();
+            for (int i = 0; i < GameConstants.DeckCardCount; i++)
+            {
+                int id = UserProfile.InfoCard.SelectedDeck.GetCardAt(i);
+                var pickCard = new DeckCard(UserProfile.InfoCard.GetDeckCardById(id));
+                DungeonDeck.Add(new DbDeckCard(pickCard.BaseId, pickCard.Level, pickCard.Exp));
             }
         }
     }

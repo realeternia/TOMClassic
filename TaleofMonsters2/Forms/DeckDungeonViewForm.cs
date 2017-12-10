@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Log;
-using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Decks;
@@ -17,42 +15,10 @@ namespace TaleofMonsters.Forms
 {
     internal sealed partial class DeckDungeonViewForm : BasePanel
     {
-        private class CompareDeckCardByType : IComparer<DeckCard>
-        {
-            #region IComparer<CardDescript> 成员
-
-            public int Compare(DeckCard cx, DeckCard cy)
-            {
-                if (cx.BaseId == cy.BaseId && cy.BaseId == 0)
-                {
-                    return 0;
-                }
-                if (cy.BaseId == 0)
-                {
-                    return -1;
-                }
-                if (cx.BaseId == 0)
-                {
-                    return 1;
-                }
-                int typex = CardConfigManager.GetCardConfig(cx.BaseId).Attr;
-                int typey = CardConfigManager.GetCardConfig(cy.BaseId).Attr;
-                if (typex != typey)
-                {
-                    return typex.CompareTo(typey);
-                }
-
-                return cx.BaseId.CompareTo(cy.BaseId);
-            }
-
-            #endregion
-        }
-
         private DeckCardRegion cardRegion;//卡盒区域
         private DeckCard targetCard;
 
         private bool show;
-        private int floor;
 
         private CardDetail cardDetail;
 
@@ -91,7 +57,7 @@ namespace TaleofMonsters.Forms
             base.Init(width, height);
             show = true;
 
-            ChangeDeck(1);
+            InstallDeckCard(); 
 
             SoundManager.PlayBGM("TOM003.mp3");
             IsChangeBgm = true;
@@ -112,44 +78,14 @@ namespace TaleofMonsters.Forms
         private void InstallDeckCard()
         {
             DeckCard[] dcards = null;
-            DbDeckData dk = UserProfile.InfoCard.SelectedDeck;
-            dcards = new DeckCard[GameConstants.DeckCardCount];
-            for (int i = 0; i < GameConstants.DeckCardCount; i++)
+            dcards = new DeckCard[UserProfile.InfoCard.DungeonDeck.Count];
+            for (int i = 0; i < UserProfile.InfoCard.DungeonDeck.Count; i++)
             {
-                int cid = dk.GetCardAt(i);
-                dcards[i] = new DeckCard(UserProfile.InfoCard.GetDeckCardById(cid));
+                var selectCard = UserProfile.InfoCard.DungeonDeck[i];
+                dcards[i] = new DeckCard(selectCard.BaseId, selectCard.Level, selectCard.Exp);
             }
-        }
-
-        private void ChangeDeck(int type)
-        {
-            InstallDeckCard();
-
-            floor = type;
-            DeckCard[] dcards = null;
-            if (floor == 1)
-            {
-                dcards = new DeckCard[UserProfile.InfoCard.Cards.Count];
-                int i = 0;
-                foreach (var card in UserProfile.InfoCard.Cards.Values)
-                {
-                    dcards[i++] = new DeckCard(card);
-                }
-                Array.Sort(dcards, new CompareDeckCardByType());
-            }
-            else if (floor == 2)
-            {
-                dcards = new DeckCard[UserProfile.InfoCard.Newcards.Count];
-                for (int i = 0; i < dcards.Length; i++)
-                {
-                    dcards[i] = new DeckCard(UserProfile.InfoCard.GetDeckCardById(UserProfile.InfoCard.Newcards[i]));
-                }
-            }
-
             cardRegion.ChangeDeck(dcards);
             SetTargetCard(dcards[0]);
-
-            Invalidate();
         }
 
         private void SetTargetCard(DeckCard card)

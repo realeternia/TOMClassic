@@ -82,7 +82,6 @@ namespace TaleofMonsters.Controler.GM
                         } break;
                     case "dmd": if (data.Length == 2) UserProfile.InfoBag.AddDiamond(int.Parse(data[1])); break;
                     case "acv": if (data.Length == 2) UserProfile.Profile.InfoGismo.AddGismo(int.Parse(data[1])); break;
-                    case "view": if (data.Length == 3) PeopleBook.ViewMatch(int.Parse(data[1]), int.Parse(data[2]), "default", TileConfig.Indexer.DefaultTile); break;
                     case "fbat": if (data.Length == 3)
                         {
                             FastBattle.Instance.StartGame(int.Parse(data[1]), int.Parse(data[2]), "default", TileConfig.Indexer.DefaultTile);

@@ -36,7 +36,7 @@ namespace TaleofMonsters.Controler.Battle
             BattleManager.Instance.Init();
             BattleManager.Instance.EffectQueue.SetFast();
             BattleManager.Instance.FlowWordQueue.SetFast();
-            BattleManager.Instance.PlayerManager.Init(left, right,1);//temp
+         //   BattleManager.Instance.PlayerManager.Init(left, right,1);//todo 
             BattleManager.Instance.MemMap = new MemRowColumnMap(map, tile);
 
             using (CardList cl = new CardList())

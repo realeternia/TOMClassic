@@ -7,6 +7,8 @@ using NarlonLib.Tools;
 using TaleofMonsters.Controler.Battle;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
+using TaleofMonsters.Core;
+using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Pops;
 using TaleofMonsters.MainItem;
@@ -107,33 +109,36 @@ namespace TaleofMonsters.DataType.Peoples
             return pids.GetRange(0, count).ToArray();
         }
 
-        public static void Fight(int pid, string map, int rlevel, PeopleFightParm reason, HsActionCallback winEvent, HsActionCallback lossEvent, HsActionCallback cancelEvent)
+        public static void Fight(int pid, string map, int rlevel, PeopleFightParm reason, 
+            HsActionCallback winEvent, HsActionCallback lossEvent, HsActionCallback cancelEvent)
         {
-            bool rt = PopDeckChoose.Show(map, UserProfile.InfoCard.GetDeckNames());
-            if (!rt)
+            List<DeckCard> cards = new List<DeckCard>();
+            if (UserProfile.InfoDungeon.DungeonId <= 0)//在副本中不需要选择卡组
             {
-                if (cancelEvent != null)
+                bool rt = PopDeckChoose.Show(map, UserProfile.InfoCard.GetDeckNames());
+                if (!rt)
                 {
-                    cancelEvent();
+                    if (cancelEvent != null)
+                        cancelEvent();
+                    return;
                 }
-                return;
+                for (int i = 0; i < GameConstants.DeckCardCount; i++)
+                {
+                    int id = UserProfile.InfoCard.SelectedDeck.GetCardAt(i);
+                    cards.Add(new DeckCard(UserProfile.InfoCard.GetDeckCardById(id)));
+                }
+            }
+            else
+            {
+                foreach (var cardData in UserProfile.InfoCard.DungeonDeck)
+                    cards.Add(new DeckCard(cardData.BaseId, cardData.Level, cardData.Exp));
             }
 
             BattleForm bf = new BattleForm();
             bf.BattleWin = winEvent;
             bf.BattleLose = lossEvent;
-            bf.Init(0, pid, map, rlevel, reason);
+            bf.Init(0, cards.ToArray(), pid, map, rlevel, reason);
             PanelManager.DealPanel(bf);
-        }
-
-        public static void ViewMatch(int left, int right, string map, int tile)
-        {//todo
-            //BattleForm bf = new BattleForm();
-            //bf.Init(left, right, map, tile);
-            //PanelManager.DealPanel(new BlackWallForm());
-            //bf.ShowDialog();
-            //PanelManager.DealPanel(new BlackWallForm());
-            //PanelManager.DealPanel(new BattleResultForm());
         }
     }
 }

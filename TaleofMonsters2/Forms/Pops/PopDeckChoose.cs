@@ -17,7 +17,7 @@ namespace TaleofMonsters.Forms.Pops
         private int selectPage = 0;
 
         private int tile;
-        private bool comfirm;
+        private bool confirm;
         private Image img; //地形图片
 
         public PopDeckChoose()
@@ -69,7 +69,7 @@ namespace TaleofMonsters.Forms.Pops
             mb.pageSelector.SetTarget(UserProfile.InfoCard.DeckId);
             mb.ShowDialog();
 
-            return mb.comfirm;
+            return mb.confirm;
         }
 
         private void buttonOk_Click(object sender, EventArgs e)
@@ -91,7 +91,7 @@ namespace TaleofMonsters.Forms.Pops
                 }
             }
 
-            comfirm = true;
+            confirm = true;
             UserProfile.InfoCard.DeckId = selectPage;
             Close();
         }

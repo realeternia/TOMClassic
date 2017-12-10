@@ -1,7 +1,7 @@
 ﻿using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.Players;
-using TaleofMonsters.Controler.Battle.Data.Players.Frag;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Decks;
 
 namespace TaleofMonsters.Controler.Battle.DataTent
 {
@@ -10,14 +10,14 @@ namespace TaleofMonsters.Controler.Battle.DataTent
         public Player LeftPlayer { get; set; }
         public Player RightPlayer { get; set; }
 
-        public void Init(int left, int right, int rlevel)
+        public void Init(int left, DeckCard[] leftCards, int right, int rlevel)
         {
             PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(right);
             if (left == 0)
             {
                 switch (peopleConfig.Method)
                 {
-                    case "common": LeftPlayer = new HumanPlayer(true); break;
+                    case "common": LeftPlayer = new HumanPlayer(true, leftCards); break;
                     case "rand": LeftPlayer = new RandomPlayer(right, true, true); break;
                     default: LeftPlayer = new AIPlayer(right, peopleConfig.Method, true, rlevel, true); break;
                 }
@@ -29,7 +29,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
 
             switch (peopleConfig.Emethod)
             {
-                case "common": RightPlayer = new HumanPlayer(false); RightPlayer.PeopleId = right; break;
+                case "common": RightPlayer = new HumanPlayer(false, leftCards); RightPlayer.PeopleId = right; break;
                 case "rand": RightPlayer = new RandomPlayer(right, false, false); break;
                 case "mirror": RightPlayer = new MirrorPlayer(right, LeftPlayer.Cards, false); break;
                 default: RightPlayer = new AIPlayer(right, peopleConfig.Emethod, false, rlevel, false); break;

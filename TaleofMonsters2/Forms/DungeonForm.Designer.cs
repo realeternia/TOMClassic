@@ -31,7 +31,7 @@ namespace TaleofMonsters.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.colorLabel1 = new Label();
+            this.colorLabel1 = new System.Windows.Forms.Label();
             this.bitmapButtonC1 = new NarlonLib.Control.BitmapButton();
             this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
             this.SuspendLayout();
@@ -54,7 +54,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonC1.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonC1.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonC1.ImageNormal = null;
-            this.bitmapButtonC1.Location = new System.Drawing.Point(150, 362);
+            this.bitmapButtonC1.Location = new System.Drawing.Point(150, 392);
             this.bitmapButtonC1.Name = "bitmapButtonC1";
             this.bitmapButtonC1.NoUseDrawNine = false;
             this.bitmapButtonC1.Size = new System.Drawing.Size(50, 30);
@@ -90,7 +90,7 @@ namespace TaleofMonsters.Forms
             this.Controls.Add(this.colorLabel1);
             this.Controls.Add(this.bitmapButtonC1);
             this.Name = "DungeonForm";
-            this.Size = new System.Drawing.Size(350, 408);
+            this.Size = new System.Drawing.Size(350, 438);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.DungeonForm_Paint);
             this.ResumeLayout(false);
 
