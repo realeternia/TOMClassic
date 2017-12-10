@@ -176,6 +176,9 @@ namespace TaleofMonsters.MainItem
                 case SystemMenuIds.DeckViewForm:
                     PanelManager.DealPanel(new DeckViewForm());
                     break;
+                case SystemMenuIds.DeckViewDungeonForm:
+                    PanelManager.DealPanel(new DeckDungeonViewForm());
+                    break;
                 case SystemMenuIds.GameShopViewForm:
                     PanelManager.DealPanel(new GameShopViewForm());
                     break;
@@ -275,6 +278,7 @@ namespace TaleofMonsters.MainItem
         TaskForm = 6,
         PeopleViewForm = 7,
         DeckViewForm = 8,
+        DeckViewDungeonForm = 9,
         EquipComposeForm = 10,
         ItemForm = 11,
         EquipmentForm = 12,
