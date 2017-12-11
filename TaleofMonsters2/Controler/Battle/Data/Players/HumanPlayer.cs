@@ -8,14 +8,14 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 {
     internal class HumanPlayer : Player
     {
-        public HumanPlayer(bool isLeft, DeckCard[] cd)
+        public HumanPlayer(bool isLeft, DeckCard[] cardInitial)
             : base(true, isLeft)
         {
             PeopleId = 0;
             Level = UserProfile.InfoBasic.Level;
             Job = UserProfile.InfoBasic.Job;
 
-            Cards = new ActiveCards(cd);
+            Cards = new ActiveCards(cardInitial);
 
             int[] energyRate = {0, 0, 0};
             CalculateEquipAndSkill(UserProfile.InfoEquip.GetValidEquipsList(), energyRate);

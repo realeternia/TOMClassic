@@ -22,24 +22,15 @@ namespace TaleofMonsters.DataType.User
 {
     public class InfoWorld
     {
-        [FieldIndex(Index = 3)]
-        public List<DbCardProduct> CardProducts;
-        [FieldIndex(Index = 4)]
-        public Dictionary<int, DbTournamentData> Tournaments;
-        [FieldIndex(Index = 5)]
-        public Dictionary<int, int> Ranks;
-        [FieldIndex(Index = 6)]
-        public List<DbMergeData> MergeMethods;
-        [FieldIndex(Index = 7)]
-        public List<DbSceneSpecialPosData> PosInfos; //记录当前场景随机后的格子信息
-        [FieldIndex(Index = 8)]
-        public Dictionary<int, int> Blesses;
-        [FieldIndex(Index = 9)]
-        public List<int> BlessShopItems;
-        [FieldIndex(Index = 10)]
-        public List<int> SavedDungeonQuests;
-        [FieldIndex(Index = 11)]
-        public List<int> DailyCardData;
+        [FieldIndex(Index = 3)] public List<DbCardProduct> CardProducts;
+        [FieldIndex(Index = 4)] public Dictionary<int, DbTournamentData> Tournaments;
+        [FieldIndex(Index = 5)] public Dictionary<int, int> Ranks;
+        [FieldIndex(Index = 6)] public List<DbMergeData> MergeMethods;
+        [FieldIndex(Index = 7)] public List<DbSceneSpecialPosData> PosInfos; //记录当前场景随机后的格子信息
+        [FieldIndex(Index = 8)] public Dictionary<int, int> Blesses;
+        [FieldIndex(Index = 9)] public List<int> BlessShopItems;
+        [FieldIndex(Index = 10)] public List<int> SavedDungeonQuests;
+        [FieldIndex(Index = 11)] public List<int> DailyCardData;
 
         public InfoWorld()
         {

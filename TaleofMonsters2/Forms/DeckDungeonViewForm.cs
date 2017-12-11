@@ -79,7 +79,7 @@ namespace TaleofMonsters.Forms
         {
             DeckCard[] dcards = null;
             dcards = new DeckCard[UserProfile.InfoCard.DungeonDeck.Count];
-            for (int i = 0; i < UserProfile.InfoCard.DungeonDeck.Count; i++)
+            for (int i = 0; i < dcards.Length; i++)
             {
                 var selectCard = UserProfile.InfoCard.DungeonDeck[i];
                 dcards[i] = new DeckCard(selectCard.BaseId, selectCard.Level, selectCard.Exp);

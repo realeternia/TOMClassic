@@ -11,10 +11,8 @@ namespace TaleofMonsters.DataType.User
 {
     public class InfoQuest
     {
-        [FieldIndex(Index = 1)]
-        public List<DbQuestData> QuestRunning; //目前进行到的任务id
-        [FieldIndex(Index = 2)]
-        public List<int> QuestFinish;
+        [FieldIndex(Index = 1)] public List<DbQuestData> QuestRunning; //目前进行到的任务id
+        [FieldIndex(Index = 2)] public List<int> QuestFinish;
 
         public InfoQuest()
         {

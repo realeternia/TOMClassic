@@ -8,32 +8,19 @@ namespace TaleofMonsters.DataType.User
 {
     public class Profile
     {
-        [FieldIndex(Index = 1)]
-        public int Pid;
-        [FieldIndex(Index = 2)]
-        public string Name;
-        [FieldIndex(Index = 3)]
-        public InfoBasic InfoBasic;
-        [FieldIndex(Index = 4)]
-        public InfoBag InfoBag;
-        [FieldIndex(Index = 5)]
-        public InfoCard InfoCard;
-        [FieldIndex(Index = 6)]
-        public InfoDungeon InfoDungeon;
-        [FieldIndex(Index = 8)]
-        public InfoRival InfoRival;
-        [FieldIndex(Index = 9)]
-        public InfoFarm InfoFarm;
-        [FieldIndex(Index = 10)]
-        public InfoEquip InfoEquip;
-        [FieldIndex(Index = 11)]
-        public InfoQuest InfoQuest;
-        [FieldIndex(Index = 12)]
-        public InfoRecord InfoRecord;
-        [FieldIndex(Index = 13)]
-        public InfoGismo InfoGismo;
-        [FieldIndex(Index = 14)]
-        public InfoWorld InfoWorld;
+        [FieldIndex(Index = 1)] public int Pid;
+        [FieldIndex(Index = 2)] public string Name;
+        [FieldIndex(Index = 3)] public InfoBasic InfoBasic;
+        [FieldIndex(Index = 4)] public InfoBag InfoBag;
+        [FieldIndex(Index = 5)] public InfoCard InfoCard;
+        [FieldIndex(Index = 6)] public InfoDungeon InfoDungeon;
+        [FieldIndex(Index = 8)] public InfoRival InfoRival;
+        [FieldIndex(Index = 9)] public InfoFarm InfoFarm;
+        [FieldIndex(Index = 10)] public InfoEquip InfoEquip;
+        [FieldIndex(Index = 11)] public InfoQuest InfoQuest;
+        [FieldIndex(Index = 12)] public InfoRecord InfoRecord;
+        [FieldIndex(Index = 13)] public InfoGismo InfoGismo;
+        [FieldIndex(Index = 14)] public InfoWorld InfoWorld;
 
         public Profile()
         {
