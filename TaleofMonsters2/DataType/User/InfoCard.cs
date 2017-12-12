@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NarlonLib.Tools;
 using TaleofMonsters.Config;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Others;
@@ -166,6 +167,9 @@ namespace TaleofMonsters.DataType.User
                 int id = UserProfile.InfoCard.SelectedDeck.GetCardAt(i);
                 DungeonDeck.Add(UserProfile.InfoCard.GetDeckCardById(id));
             }
+            ArraysUtils.RandomShuffle(DungeonDeck);//洗牌
+            var halfCount = DungeonDeck.Count/2;
+            DungeonDeck.RemoveRange(halfCount, halfCount); //随机丢弃一半的卡牌
         }
     }
 }

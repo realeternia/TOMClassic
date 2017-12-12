@@ -53,9 +53,9 @@ namespace TaleofMonsters.Forms
 
             cardCount = 1;
             var consumerConfig = ConfigData.GetItemConsumerConfig(itemId);
-            if (consumerConfig.RandomCardCatalog != null && consumerConfig.RandomCardCatalog.Length > 0)
+            if (consumerConfig.RandomCardCount > 0)
             {
-                cardCount = consumerConfig.RandomCardCatalog[0];
+                cardCount = consumerConfig.RandomCardCount;
             }
 
             coverEffect = new CoverEffect[cardCount];
@@ -198,15 +198,7 @@ namespace TaleofMonsters.Forms
         private int UseScard()
         {
             var consumerConfig = ConfigData.GetItemConsumerConfig(itemId);
-            var type = consumerConfig.RandomCardCatalog[1];
-            var info = consumerConfig.RandomCardCatalog[2];
-            if (type == 1)
-                return CardConfigManager.GetRateCard(consumerConfig.RandomCardRate, CardConfigManager.GetRandomAttrCard, info);
-            if (type == 2)
-                return CardConfigManager.GetRateCard(consumerConfig.RandomCardRate, CardConfigManager.GetRandomTypeCard, info);
-            if (type == 3)
-                return CardConfigManager.GetRateCard(consumerConfig.RandomCardRate, CardConfigManager.GetRandomRaceCard, info);
-            return CardConfigManager.GetRateCard(consumerConfig.RandomCardRate, CardConfigManager.GetRandomCard, 0);
+            return CardConfigManager.GetRateCardStr(consumerConfig.RandomCardCatalog, consumerConfig.RandomCardRate);
         }
     }
 }

@@ -100,9 +100,7 @@ namespace TaleofMonsters.DataType.Peoples
             foreach (PeopleConfig peopleConfig in ConfigData.PeopleDict.Values)
             {
                 if (IsPeople(peopleConfig.Id) && peopleConfig.Level >= minLevel && peopleConfig.Level <= maxLevel)
-                {
                     pids.Add(peopleConfig.Id);
-                }
             }
 
             ArraysUtils.RandomShuffle(pids);

@@ -203,6 +203,7 @@ namespace TaleofMonsters.Config
             InitAllCard();
         }
 
+        #region 各种缓存初始化
         private static void InitAllCard()
         {
             allCardData = new CardInfoList();
@@ -304,6 +305,7 @@ namespace TaleofMonsters.Config
                 typeCardDict[i].EndInit();
             }
         }
+        #endregion
 
         public static CardConfigData GetCardConfig(int id)
         {
@@ -315,12 +317,15 @@ namespace TaleofMonsters.Config
             return new CardConfigData();
         }
 
-        public static int GetRandomCard(int seed, int quality=-1)
+        #region 获取随机卡牌的算法
+        internal delegate int RandomCardSelectorDelegate(int raceId, int quality);
+
+        internal static int GetRandomCard(int seed, int quality=-1)
         {
             return allCardData.GetRandom(quality);
         }
 
-        public static int GetRandomJobCard(int jobId, int quality=-1)
+        internal static int GetRandomJobCard(int jobId, int quality=-1)
         {
             CardInfoList rtData;
             if (jobCardDict.TryGetValue(jobId, out rtData))
@@ -332,7 +337,7 @@ namespace TaleofMonsters.Config
             return 0;
         }
 
-        public static int GetRandomAttrCard(int attrId, int quality = -1)
+        internal static int GetRandomAttrCard(int attrId, int quality = -1)
         {
             CardInfoList rtData;
             if (attrCardDict.TryGetValue(attrId, out rtData))
@@ -342,7 +347,7 @@ namespace TaleofMonsters.Config
             return 0;
         }
 
-        public static int GetRandomRaceCard(int raceId, int quality = -1)
+        internal static int GetRandomRaceCard(int raceId, int quality = -1)
         {
             CardInfoList rtData;
             if (raceCardDict.TryGetValue(raceId, out rtData))
@@ -352,7 +357,7 @@ namespace TaleofMonsters.Config
             return 0;
         }
 
-        public static int GetRandomTypeCard(int typeId, int quality = -1)
+        internal static int GetRandomTypeCard(int typeId, int quality = -1)
         {
             CardInfoList rtData;
             if (typeCardDict.TryGetValue(typeId, out rtData))
@@ -362,9 +367,9 @@ namespace TaleofMonsters.Config
             return 0;
         }
 
-        internal delegate int RandomCardSelectorDelegate(int raceId, int quality);
+#endregion
 
-        public static int GetRateCard(int[] rate, RandomCardSelectorDelegate del, int funcInfo)
+        private static int GetRateCard(int[] rate, RandomCardSelectorDelegate del, int funcInfo)
         {
             while (true)
             {
@@ -399,6 +404,33 @@ namespace TaleofMonsters.Config
             }
 
             return 0;
+        }
+
+        public static int GetRateCardStr(string ruleStr, int[] dropRate)
+        {
+            var ruleDats = ruleStr.Split(',');
+            var type = ruleDats[0];
+            var ruleInfo = int.Parse(ruleDats[1]);
+            if (dropRate == null)
+            {
+                if (ruleDats.Length >= 3)
+                {
+                    dropRate = new[] { 0, 0, 0, 0, 0 };
+                    dropRate[int.Parse(ruleDats[2])] = 1000;
+                }
+                else
+                {
+                    dropRate = new[] {0, 720, 250, 30, 10};//默认卡包的概率
+                }
+            }
+
+            if (type == "attr")
+                return GetRateCard(dropRate, GetRandomAttrCard, ruleInfo);
+            if (type == "type")
+                return GetRateCard(dropRate, GetRandomTypeCard, ruleInfo);
+            if (type == "race")
+                return GetRateCard(dropRate, GetRandomRaceCard, ruleInfo);
+            return GetRateCard(dropRate, GetRandomCard, ruleInfo);
         }
     }
 }
