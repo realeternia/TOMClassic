@@ -7,13 +7,14 @@ using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Forms.Items.Core;
 using ConfigDatas;
 using TaleofMonsters.Config;
+using TaleofMonsters.Core;
+using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.Forms
 {
     internal sealed partial class SelectCardForm : BasePanel
     {
         private NLSelectPanel selectPanel;
-        private int baseid;
         private List<int> cardIdList;
         private int selectDeckIndex; //1,2,3
         public int SceneQuestId { get; set; }
@@ -30,7 +31,24 @@ namespace TaleofMonsters.Forms
             bitmapButtonSelect.IconXY = new Point(8, 5);
             bitmapButtonSelect.TextOffX = 8;
 
-            selectPanel = new NLSelectPanel(8, 38, 486, 300, this);
+            bitmapButtonSelect2.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
+            bitmapButtonSelect2.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            bitmapButtonSelect2.ForeColor = Color.White;
+            bitmapButtonSelect2.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("oth2");
+            bitmapButtonSelect2.IconSize = new Size(16, 16);
+            bitmapButtonSelect2.IconXY = new Point(8, 5);
+            bitmapButtonSelect2.TextOffX = 8;
+
+
+            bitmapButtonSelect3.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
+            bitmapButtonSelect3.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            bitmapButtonSelect3.ForeColor = Color.White;
+            bitmapButtonSelect3.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("oth2");
+            bitmapButtonSelect3.IconSize = new Size(16, 16);
+            bitmapButtonSelect3.IconXY = new Point(8, 5);
+            bitmapButtonSelect3.TextOffX = 8;
+
+            selectPanel = new NLSelectPanel(3, 38, 600, 300-30, this);
             selectPanel.ItemHeight = 300;
             selectPanel.ItemsPerRow = 3;
             selectPanel.SelectIndexChanged += selectPanel_SelectedIndexChanged;
@@ -68,69 +86,57 @@ namespace TaleofMonsters.Forms
 
         private void selectPanel_DrawCell(Graphics g, int info, int xOff, int yOff, bool inMouseOn, bool isTarget, bool onlyBorder)
         {
-            if (isTarget)
+            if (inMouseOn)
             {
-                g.FillRectangle(Brushes.DarkGreen, xOff, yOff, 162, 300);
+                g.FillRectangle(Brushes.DarkGreen, xOff, yOff, 200, 300 - 30);
             }
-            else if (inMouseOn)
-            {
-                g.FillRectangle(Brushes.DarkCyan, xOff, yOff, 162, 300);
-            }
-            g.DrawRectangle(Pens.Thistle, 1 + xOff, yOff, 162 - 2, 300 - 4);
+            g.DrawRectangle(Pens.Thistle, 1 + xOff, yOff, 200 - 2, 300 - 30);
 
             if (!onlyBorder)
             {
                 var cardStart = (info - 1)*3;
-                Font font = new Font("微软雅黑", 11.25F * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+                Font font = new Font("微软雅黑", 11 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+                Font fontStar = new Font("微软雅黑", 15 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
                 for (int i = 0; i < 3; i++)
                 {
+                    var border = PicLoader.Read("Border", "cardborder.PNG");
+                    g.DrawImage(border, xOff, yOff + 10 + i * 40, 196, 32);
+                    border.Dispose();
+
                     var cardId = cardIdList[i+cardStart];
-                    var img = DataType.Cards.CardAssistant.GetCardImage(cardId, 32, 32);
-                    g.DrawImage(img, xOff, yOff + i * 50, 32, 32);
+                    var img = DataType.Cards.CardAssistant.GetCardImage(cardId, 80, 80);
+                    g.DrawImage(img, new Rectangle(xOff+110, yOff+15 + i * 40, 80, 22), 0, 6, 80, 24, GraphicsUnit.Pixel);
+
+                    var mask = PicLoader.Read("Border", "cardmask.PNG");
+                    g.DrawImage(mask, xOff + 110, yOff + 15 + i * 40, 80, 22);
+                    mask.Dispose();
 
                     var cardData = CardConfigManager.GetCardConfig(cardId);
-                    string cardBorder = DataType.Cards.CardAssistant.GetCardBorder(cardData);
-                    var borderImg = PicLoader.Read("Border", cardBorder);
-                    g.DrawImage(borderImg, xOff, yOff+i*50, 32, 32);
-                    borderImg.Dispose();
-
-                    g.DrawString(cardData.Name, font, Brushes.White, xOff+20, yOff + i * 50);
+                    Color color = Color.FromName(HSTypes.I2QualityColor((int)cardData.Quality));
+                    g.DrawString(cardData.Star.ToString(), fontStar, Brushes.Gold, xOff + 5, yOff + 12 + i * 40);
+                    var brush = new SolidBrush(color);
+                    g.DrawString(cardData.Name, font, brush, xOff+30, yOff + 15 + i * 40);
+                    brush.Dispose();
                 }
+                fontStar.Dispose();
                 font.Dispose();
             }
        
         }
 
-        private void SelectJobForm_Paint(object sender, PaintEventArgs e)
+        private void SelectCardForm_Paint(object sender, PaintEventArgs e)
         {
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
             Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString("选择职业", font, Brushes.White, Width / 2 - 40, 8);
+            e.Graphics.DrawString("选择卡牌", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
-            
-            e.Graphics.DrawRectangle(Pens.DodgerBlue, 8, 39, 153, 279);
-            e.Graphics.DrawRectangle(Pens.DodgerBlue, 170, 38, 330, 125);
-            e.Graphics.DrawRectangle(Pens.DodgerBlue, 170, 168, 330, 86);
-            e.Graphics.DrawRectangle(Pens.DodgerBlue, 170, 259, 330, 59);
         }
 
         private void bitmapButtonSelect_Click(object sender, EventArgs e)
         {
-            //var jobConfig = ConfigData.GetJobConfig(selectJobId);
-            //if (jobConfig.IsSpecial || jobConfig.InitialLocked && !UserProfile.Profile.InfoBasic.AvailJobList.Contains(selectJobId))
-            //    return;
-
-            //if (UserProfile.InfoBasic.Job != JobConfig.Indexer.NewBie)
-            //{//转职
-            //    UserProfile.InfoBasic.Job = selectJobId;
-            //}
-            //else
-            //{//第一次选职业
-            //    UserProfile.InfoBasic.Job = selectJobId;
-            //    SendJobReward();
-            //}
-
+            for (int i = 0; i < 3; i++)
+                UserProfile.InfoCard.AddDungeonCard(cardIdList[selectDeckIndex*3-3+i]);
             Close();
         }
     }

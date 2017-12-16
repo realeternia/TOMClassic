@@ -6,7 +6,6 @@ using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.User;
-using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.Forms.Items;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.MagicBook;
@@ -94,23 +93,23 @@ namespace TaleofMonsters.Forms
             cardDetail.SetInfo(targetCard);
         }
 
-        private void DeckViewForm_MouseMove(object sender, MouseEventArgs e)
+        private void DeckDungeonViewForm_MouseMove(object sender, MouseEventArgs e)
         {
             cardRegion.CheckMouseMove(e.X, e.Y);
         }
 
-        private void DeckViewForm_MouseClick(object sender, MouseEventArgs e)
+        private void DeckDungeonViewForm_MouseClick(object sender, MouseEventArgs e)
         {
             var tCard = cardRegion.GetTargetCard();
             SetTargetCard(tCard);
         }
 
-        private void DeckViewForm_Paint(object sender, PaintEventArgs e)
+        private void DeckDungeonViewForm_Paint(object sender, PaintEventArgs e)
         {
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
             Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString("我的卡组", font, Brushes.White, Width / 2 - 40, 8);
+            e.Graphics.DrawString("副本卡组", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
 
             try

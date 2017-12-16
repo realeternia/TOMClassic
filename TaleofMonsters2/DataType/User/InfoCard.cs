@@ -171,5 +171,19 @@ namespace TaleofMonsters.DataType.User
             var halfCount = DungeonDeck.Count/2;
             DungeonDeck.RemoveRange(halfCount, halfCount); //随机丢弃一半的卡牌
         }
+
+        public void AddDungeonCard(int cardId)
+        {
+            if (DungeonDeck == null) //不在副本中，可能是空
+                return;
+            if (DungeonDeck.Count >= 30)
+                DungeonDeck.RemoveAt(0);
+            var newCard = new DbDeckCard
+            {
+                BaseId = cardId,
+                Level = 1
+            };
+            DungeonDeck.Add(newCard);
+        }
     }
 }

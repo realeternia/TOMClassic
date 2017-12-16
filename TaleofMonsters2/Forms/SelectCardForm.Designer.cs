@@ -31,6 +31,8 @@ namespace TaleofMonsters.Forms
         private void InitializeComponent()
         {
             this.bitmapButtonSelect = new NarlonLib.Control.BitmapButton();
+            this.bitmapButtonSelect2 = new NarlonLib.Control.BitmapButton();
+            this.bitmapButtonSelect3 = new NarlonLib.Control.BitmapButton();
             this.SuspendLayout();
             // 
             // bitmapButtonSelect
@@ -41,7 +43,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonSelect.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonSelect.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonSelect.ImageNormal = null;
-            this.bitmapButtonSelect.Location = new System.Drawing.Point(309, 323);
+            this.bitmapButtonSelect.Location = new System.Drawing.Point(78, 256);
             this.bitmapButtonSelect.Name = "bitmapButtonSelect";
             this.bitmapButtonSelect.NoUseDrawNine = false;
             this.bitmapButtonSelect.Size = new System.Drawing.Size(56, 30);
@@ -52,15 +54,55 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonSelect.UseVisualStyleBackColor = true;
             this.bitmapButtonSelect.Click += new System.EventHandler(this.bitmapButtonSelect_Click);
             // 
+            // bitmapButtonSelect2
+            // 
+            this.bitmapButtonSelect2.BorderColor = System.Drawing.Color.DarkBlue;
+            this.bitmapButtonSelect2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bitmapButtonSelect2.IconImage = null;
+            this.bitmapButtonSelect2.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonSelect2.IconXY = new System.Drawing.Point(0, 0);
+            this.bitmapButtonSelect2.ImageNormal = null;
+            this.bitmapButtonSelect2.Location = new System.Drawing.Point(278, 256);
+            this.bitmapButtonSelect2.Name = "bitmapButtonSelect2";
+            this.bitmapButtonSelect2.NoUseDrawNine = false;
+            this.bitmapButtonSelect2.Size = new System.Drawing.Size(56, 30);
+            this.bitmapButtonSelect2.TabIndex = 31;
+            this.bitmapButtonSelect2.Tag = "1";
+            this.bitmapButtonSelect2.Text = "选择";
+            this.bitmapButtonSelect2.TextOffX = 0;
+            this.bitmapButtonSelect2.UseVisualStyleBackColor = true;
+            this.bitmapButtonSelect2.Click += new System.EventHandler(this.bitmapButtonSelect_Click);
+            // 
+            // bitmapButtonSelect3
+            // 
+            this.bitmapButtonSelect3.BorderColor = System.Drawing.Color.DarkBlue;
+            this.bitmapButtonSelect3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bitmapButtonSelect3.IconImage = null;
+            this.bitmapButtonSelect3.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonSelect3.IconXY = new System.Drawing.Point(0, 0);
+            this.bitmapButtonSelect3.ImageNormal = null;
+            this.bitmapButtonSelect3.Location = new System.Drawing.Point(478, 256);
+            this.bitmapButtonSelect3.Name = "bitmapButtonSelect3";
+            this.bitmapButtonSelect3.NoUseDrawNine = false;
+            this.bitmapButtonSelect3.Size = new System.Drawing.Size(56, 30);
+            this.bitmapButtonSelect3.TabIndex = 32;
+            this.bitmapButtonSelect3.Tag = "1";
+            this.bitmapButtonSelect3.Text = "选择";
+            this.bitmapButtonSelect3.TextOffX = 0;
+            this.bitmapButtonSelect3.UseVisualStyleBackColor = true;
+            this.bitmapButtonSelect3.Click += new System.EventHandler(this.bitmapButtonSelect_Click);
+            // 
             // SelectCardForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.bitmapButtonSelect3);
+            this.Controls.Add(this.bitmapButtonSelect2);
             this.Controls.Add(this.bitmapButtonSelect);
             this.DoubleBuffered = true;
             this.Name = "SelectCardForm";
-            this.Size = new System.Drawing.Size(513, 362);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.SelectJobForm_Paint);
+            this.Size = new System.Drawing.Size(606, 315);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.SelectCardForm_Paint);
             this.ResumeLayout(false);
 
         }
@@ -68,5 +110,7 @@ namespace TaleofMonsters.Forms
         #endregion
 
         private BitmapButton bitmapButtonSelect;
+        private BitmapButton bitmapButtonSelect2;
+        private BitmapButton bitmapButtonSelect3;
     }
 }

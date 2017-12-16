@@ -58,9 +58,9 @@ namespace TaleofMonsters.Forms
             this.DoubleBuffered = true;
             this.Name = "DeckDungeonViewForm";
             this.Size = new System.Drawing.Size(685, 605);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.DeckViewForm_Paint);
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DeckViewForm_MouseClick);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DeckViewForm_MouseMove);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.DeckDungeonViewForm_Paint);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DeckDungeonViewForm_MouseClick);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DeckDungeonViewForm_MouseMove);
             this.ResumeLayout(false);
 
         }
