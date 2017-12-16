@@ -48,5 +48,7 @@ namespace TaleofMonsters.Core
         public const float SceneTileGradient = 0.33f;
         public const int SceneTileStandardWidth = 100;
         public const int SceneTileStandardHeight = 65;
+
+        public const int DungeonCardLimit = 40;
     }
 }

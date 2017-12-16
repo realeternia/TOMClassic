@@ -176,7 +176,7 @@ namespace TaleofMonsters.DataType.User
         {
             if (DungeonDeck == null) //不在副本中，可能是空
                 return;
-            if (DungeonDeck.Count >= 30)
+            if (DungeonDeck.Count >= GameConstants.DungeonCardLimit)
                 DungeonDeck.RemoveAt(0);
             var newCard = new DbDeckCard
             {
