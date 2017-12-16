@@ -408,7 +408,7 @@ namespace TaleofMonsters.Config
 
         public static int GetRateCardStr(string ruleStr, int[] dropRate)
         {
-            var ruleDats = ruleStr.Split(',');
+            var ruleDats = ruleStr.Split('.');
             var type = ruleDats[0];
             var ruleInfo = int.Parse(ruleDats[1]);
             if (dropRate == null)

@@ -28,6 +28,9 @@
 		ehide
 	a奖励。
 		ereward
+			s但是
+				a很好
+					enpc|cards
 	a|cantest-1|能力鉴定。
 		etest|1
 			r0

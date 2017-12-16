@@ -61,12 +61,16 @@ namespace TaleofMonsters.MainItem.Quests
             {
                 TreasureWheelBook.Show(int.Parse(evt.ParamList[1]));
             }
+            else if (evt.ParamList[0] == "cards")
+            {
+                var cards = new SelectCardForm();
+                cards.SceneQuestId = config.Id;
+                PanelManager.DealPanel(cards);
+            }
+
+            inited = true;
         }
 
-        public override void OnFrame(int tick)
-        {
-            RunningState = TalkEventState.Finish;
-        }
         public override bool AutoClose()
         {
             return autoClose;

@@ -53,6 +53,7 @@ namespace TaleofMonsters.MainItem.Quests
             }
 
             UserProfile.InfoQuest.OnSceneQuestSuccess(config.Ename, IsPartialSuccess());
+            inited = true;
         }
 
         private void DoReward(ref int index, string type, int times, RewardAction action)
@@ -344,10 +345,6 @@ namespace TaleofMonsters.MainItem.Quests
             tooltip.Hide(parent);
         }
 
-        public override void OnFrame(int tick)
-        {
-            RunningState = TalkEventState.Finish;
-        }
         public override void Draw(Graphics g)
         {
            // g.DrawRectangle(Pens.White, pos);

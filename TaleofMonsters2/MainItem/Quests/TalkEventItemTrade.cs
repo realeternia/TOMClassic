@@ -35,6 +35,7 @@ namespace TaleofMonsters.MainItem.Quests
         public override void Init()
         {
             DoTrade();
+            inited = true;
         }
 
         private void DoTrade()
@@ -210,10 +211,6 @@ namespace TaleofMonsters.MainItem.Quests
             tooltip.Hide(parent);
         }
 
-        public override void OnFrame(int tick)
-        {
-            RunningState = TalkEventState.Finish;
-        }
         public override void Draw(Graphics g)
         {
            // g.DrawRectangle(Pens.White, pos);

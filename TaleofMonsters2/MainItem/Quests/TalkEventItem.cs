@@ -43,6 +43,7 @@ namespace TaleofMonsters.MainItem.Quests
         public TalkEventState RunningState { get; set; }
         public int Id { get { return config.Id; } }
         public string Type { get { return evt.Type; } }
+        protected bool inited;
 
         public TalkEventItem(int evtId, int l, Rectangle r, SceneQuestEvent e)
         {
@@ -55,7 +56,7 @@ namespace TaleofMonsters.MainItem.Quests
 
         public virtual void Init()
         {
-            
+            inited = true;
         }
 
         public SceneQuestBlock GetResult()
@@ -65,7 +66,8 @@ namespace TaleofMonsters.MainItem.Quests
 
         public virtual void OnFrame(int tick)
         {
-            RunningState = TalkEventState.Finish;
+            if (inited)
+                RunningState = TalkEventState.Finish;
         }
 
         public virtual void Draw(Graphics g)

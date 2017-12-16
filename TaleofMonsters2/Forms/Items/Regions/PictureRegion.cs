@@ -69,7 +69,9 @@ namespace TaleofMonsters.Forms.Items.Regions
                     {
                         var cardData = CardConfigManager.GetCardConfig(nid);
                         string cardBorder = DataType.Cards.CardAssistant.GetCardBorder(cardData);
-                        g.DrawImage(PicLoader.Read("Border", cardBorder), X, Y, Width, Height);
+                        var borderImg = PicLoader.Read("Border", cardBorder);
+                        g.DrawImage(borderImg, X, Y, Width, Height);
+                        borderImg.Dispose();
                     };
                 }
                 else if (type == PictureRegionCellType.Gismo)
