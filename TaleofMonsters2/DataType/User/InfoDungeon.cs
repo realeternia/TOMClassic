@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Log;
+using NarlonLib.Math;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.MainItem;
@@ -19,6 +20,8 @@ namespace TaleofMonsters.DataType.User
         [FieldIndex(Index = 6)] public int Endu; //耐力
 
         [FieldIndex(Index = 7)] public List<DbGismoState> EventList; //完成的任务列表，如果0，表示任务失败
+        [FieldIndex(Index = 8)] public int StoryId; //故事id
+
         [FieldIndex(Index = 11)] public int FightWin;
         [FieldIndex(Index = 12)] public int FightLoss;
         [FieldIndex(Index = 13)] public List<IntPair> Items; //副本道具
@@ -40,6 +43,7 @@ namespace TaleofMonsters.DataType.User
         public void Enter(int dungeonId) //进入副本需要初始化
         {
             DungeonId = dungeonId;
+            StoryId = GetStoryId(dungeonId);
 
             EventList = new List<DbGismoState>();
             Items = new List<IntPair>();
@@ -278,6 +282,21 @@ namespace TaleofMonsters.DataType.User
                     return;
                 }
             }
+        }
+
+        private int GetStoryId(int dungeonId)
+        {
+            List<int> storyList = new List<int>();
+            List<float> rateList = new List<float>();
+            foreach (var storyConfig in ConfigData.DungeonStoryDict.Values)
+            {
+                if (storyConfig.DungeonId == dungeonId)
+                {
+                    storyList.Add(storyConfig.Id);
+                    rateList.Add(storyConfig.Rate);
+                }
+            }
+            return NLRandomPicker<int>.RandomPickN(storyList.ToArray(), rateList.ToArray(), 1)[0];
         }
     }
 }

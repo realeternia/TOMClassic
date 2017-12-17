@@ -126,25 +126,29 @@ namespace TaleofMonsters.DataType.User
                     }
                 }
             }
-            for (int i = 0; i < BagCount; i++)
+            if (count > 0)
             {
-                var pickItem = Items[i];
-                if (pickItem.Type == 0)
+                for (int i = 0; i < BagCount; i++)
                 {
-                    pickItem.Type = id;
-                    if (count <= max)
+                    var pickItem = Items[i];
+                    if (pickItem.Type == 0)
                     {
-                        pickItem.Value = count;
-                        count = 0;
-                        break;
-                    }
-                    else
-                    {
-                        pickItem.Value = max;
-                        count -= max;
+                        pickItem.Type = id;
+                        if (count <= max)
+                        {
+                            pickItem.Value = count;
+                            count = 0;
+                            break;
+                        }
+                        else
+                        {
+                            pickItem.Value = max;
+                            count -= max;
+                        }
                     }
                 }
             }
+         
             if (num > count)
                 MainTipManager.AddTip(string.Format("|获得物品-|{0}|{1}||x{2}", HSTypes.I2RareColor(itemConfig.Rare), itemConfig.Name, num - count), "White");
         }

@@ -163,9 +163,7 @@ namespace TaleofMonsters.MainItem
                     break;
                 case SystemMenuIds.LeaveDungeon:
                     if (MessageBoxEx2.Show("确定离开副本?") == DialogResult.OK)
-                    {
                         Scene.Instance.LeaveDungeon();
-                    }
                     break;
                 case SystemMenuIds.ItemForm:
                     PanelManager.DealPanel(new ItemForm());
@@ -217,6 +215,9 @@ namespace TaleofMonsters.MainItem
                     break;
                 case SystemMenuIds.MinigameForm:
                     PanelManager.DealPanel(new MinigameForm());
+                    break;
+                case SystemMenuIds.StoryForm:
+                    PanelManager.DealPanel(new StoryForm());
                     break;
             }
         }
@@ -292,6 +293,7 @@ namespace TaleofMonsters.MainItem
         DailyCardForm = 40,
         QuestionForm = 41,
         MinigameForm = 42,
+        StoryForm = 43,
         GameUpToNumber = 1100,
         GameIconsCatch = 1101,
         GameBattleRobot = 1102,

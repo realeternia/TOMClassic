@@ -284,6 +284,12 @@
     <Compile Include="Forms\SelectCardForm.Designer.cs">
       <DependentUpon>SelectCardForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\StoryForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\StoryForm.Designer.cs">
+      <DependentUpon>StoryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainItem\Blesses\BlessManager.cs" />
     <Compile Include="MainItem\Quests\TalkEventItem.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemEnd.cs" />
@@ -926,6 +932,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DailyCardForm.resx">
       <DependentUpon>DailyCardForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StoryForm.resx">
+      <DependentUpon>StoryForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\WorldMapViewForm.resx">

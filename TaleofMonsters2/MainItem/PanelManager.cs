@@ -75,9 +75,7 @@ namespace TaleofMonsters.MainItem
         public static bool CloseLastPanel()
         {
             if (panelList.Count <= 0)
-            {
                 return false;
-            }
 
             RemovePanel(panelList[panelList.Count - 1]);
 
@@ -89,16 +87,12 @@ namespace TaleofMonsters.MainItem
             if (isUp)
             {
                 foreach (var basePanel in panelList)
-                {
                     basePanel.OnHsKeyUp(e);
-                }
             }
             else
             {
                 foreach (var basePanel in panelList)
-                {
                     basePanel.OnHsKeyDown(e);
-                }
             }
         }
 
