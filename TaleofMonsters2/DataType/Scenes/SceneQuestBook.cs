@@ -199,8 +199,7 @@ namespace TaleofMonsters.DataType.Scenes
 
             return questCount;
         }
-
-
+        
         public static List<RLIdValue> GetDungeonQuestConfigData(int dungeonId)
         {
             var config = ConfigData.GetDungeonConfig(dungeonId);
@@ -218,6 +217,7 @@ namespace TaleofMonsters.DataType.Scenes
             }
             return datas;
         }
+
         public static SceneQuestBlock GetQuestData(int eventId, int level, string name)
         {
             Dictionary<int, SceneQuestBlock> levelCachDict = new Dictionary<int, SceneQuestBlock>();//存下每一深度的最后节点

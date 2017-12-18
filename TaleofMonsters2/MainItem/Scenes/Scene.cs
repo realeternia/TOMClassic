@@ -155,6 +155,7 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public void EnterDungeon(int dungeonId)
         {
+            UserProfile.InfoDungeon.GenStoryId(dungeonId);
             var dungeonConfig = ConfigData.GetDungeonConfig(dungeonId);//进入副本
             ChangeMap(dungeonConfig.EntryScene, true, ()=>
             {

@@ -80,9 +80,7 @@ namespace TaleofMonsters.MainItem.Scenes
             foreach (var scenePosData in mapScriptData)
             {
                 if (scenePosData.HiddenIndex > 0)
-                {
                     continue; //隐藏格子需要后续触发
-                }
 
                 DbSceneSpecialPosData specialData;
                 mapMemorySpecialData.TryGetValue(scenePosData.Id, out specialData);
@@ -101,6 +99,7 @@ namespace TaleofMonsters.MainItem.Scenes
                         specialData.Type = "Tile";
                     }
                 }
+                Scene.Instance.Rule.CheckReplace(specialData);//副本内可能需要做story替换
                 mapMemorySpecialData[specialData.Id] = specialData;
 
                 posList.Add(specialData);

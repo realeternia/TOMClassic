@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using NarlonLib.Log;
 using NarlonLib.Tools;
-using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.DataType.User.Db;
 
 namespace TaleofMonsters.MainItem.Scenes.SceneRules
 {
@@ -37,6 +37,10 @@ namespace TaleofMonsters.MainItem.Scenes.SceneRules
                 ArraysUtils.Fill(randQuestList, 0, questCellCount);
             }
             ArraysUtils.RandomShuffle(randQuestList);
+        }
+
+        public void CheckReplace(DbSceneSpecialPosData cellData)
+        {
         }
     }
 }

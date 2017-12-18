@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.DataType.User.Db;
 
 namespace TaleofMonsters.MainItem.Scenes.SceneRules
 {
@@ -13,6 +14,10 @@ namespace TaleofMonsters.MainItem.Scenes.SceneRules
         public void Generate(List<int> randQuestList, int questCellCount)
         {
 
+        }
+
+        public void CheckReplace(DbSceneSpecialPosData cellData)
+        {
         }
     }
 }

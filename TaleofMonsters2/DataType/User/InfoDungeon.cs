@@ -43,7 +43,6 @@ namespace TaleofMonsters.DataType.User
         public void Enter(int dungeonId) //进入副本需要初始化
         {
             DungeonId = dungeonId;
-            StoryId = GetStoryId(dungeonId);
 
             EventList = new List<DbGismoState>();
             Items = new List<IntPair>();
@@ -284,7 +283,7 @@ namespace TaleofMonsters.DataType.User
             }
         }
 
-        private int GetStoryId(int dungeonId)
+        public void GenStoryId(int dungeonId)
         {
             List<int> storyList = new List<int>();
             List<float> rateList = new List<float>();
@@ -296,7 +295,7 @@ namespace TaleofMonsters.DataType.User
                     rateList.Add(storyConfig.Rate);
                 }
             }
-            return NLRandomPicker<int>.RandomPickN(storyList.ToArray(), rateList.ToArray(), 1)[0];
+            StoryId = NLRandomPicker<int>.RandomPickN(storyList.ToArray(), rateList.ToArray(), 1)[0];
         }
     }
 }

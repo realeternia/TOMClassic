@@ -1,14 +1,17 @@
 ﻿using System.Collections.Generic;
+using ConfigDatas;
 using NarlonLib.Tools;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.DataType.User.Db;
 
 namespace TaleofMonsters.MainItem.Scenes.SceneRules
 {
     internal class SceneRuleDungeon : ISceneRule
     {
         private int mapId;
+        private Dictionary<int, int> questReplaceDict = new Dictionary<int, int>();//尝试替换一些quest的id
         
         public void Init(int id, int minute)
         {
@@ -21,6 +24,23 @@ namespace TaleofMonsters.MainItem.Scenes.SceneRules
                         UserProfile.InfoWorld.SavedDungeonQuests.Add(questData.Id);
                 ArraysUtils.RandomShuffle(UserProfile.InfoWorld.SavedDungeonQuests);
             }
+
+            if (UserProfile.InfoDungeon.StoryId > 0)
+            {
+                var storyConfig = ConfigData.GetDungeonStoryConfig(UserProfile.InfoDungeon.StoryId);
+                if (!string.IsNullOrEmpty(storyConfig.EventReplace))
+                {
+                    var items = storyConfig.EventReplace.Split(',');
+                    foreach (var checkItem in items)
+                    {
+                        var checkDatas = checkItem.Split('=');
+                        var questId1 = SceneQuestBook.GetSceneQuestByName(checkDatas[0]);
+                        var questId2 = SceneQuestBook.GetSceneQuestByName(checkDatas[1]);
+                        questReplaceDict[questId1] = questId2;
+                    }
+                }
+            }
+            
         }
 
         public void Generate(List<int> randQuestList, int questCellCount)
@@ -48,6 +68,14 @@ namespace TaleofMonsters.MainItem.Scenes.SceneRules
             }
             UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.DungeonQuestOffside, offset);
             ArraysUtils.RandomShuffle(randQuestList);
+        }
+
+        public void CheckReplace(DbSceneSpecialPosData cellData)
+        {
+            if (questReplaceDict.ContainsKey(cellData.Info))
+            {
+                cellData.Info = questReplaceDict[cellData.Info];
+            }
         }
     }
 }
