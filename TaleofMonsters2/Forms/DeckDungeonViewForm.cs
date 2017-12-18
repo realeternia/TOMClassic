@@ -32,6 +32,7 @@ namespace TaleofMonsters.Forms
             cardDetail.Enabled = true;
             cardDetail.Invalidate += DetailInvalidate;
             cardRegion = new DeckCardRegion(5, 35, 476, 510);
+            cardRegion.IsDungeonMode = true;
             cardRegion.Invalidate += DeckInvalidate;
         }
 

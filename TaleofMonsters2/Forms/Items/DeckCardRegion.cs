@@ -34,6 +34,8 @@ namespace TaleofMonsters.Forms.Items
         private int tar = -1;
         private DeckCard[] dcards;
 
+        public bool IsDungeonMode { get; set; } //副本卡组显示模式
+
         public DeckCardRegion(int x, int y, int width, int height)
         {
             xCount = width / cardWidth;
@@ -51,26 +53,21 @@ namespace TaleofMonsters.Forms.Items
         private void RefreshDict()
         {
             cardAttr.Clear();
-            for (int i = 0; i < GameConstants.DeckCardCount; i++)
+            if (!IsDungeonMode)
             {
-                AddCardAttr(UserProfile.InfoCard.SelectedDeck.GetCardAt(i), "D");
-            }
-            foreach (int cid in UserProfile.InfoCard.Newcards)
-            {
-                AddCardAttr(cid, "N");
+                for (int i = 0; i < GameConstants.DeckCardCount; i++)
+                    AddCardAttr(UserProfile.InfoCard.SelectedDeck.GetCardAt(i), "D");
+                foreach (int cid in UserProfile.InfoCard.Newcards)
+                    AddCardAttr(cid, "N");
             }
         }
 
         private void AddCardAttr(int cardid, string mark)
         {
             if (cardAttr.ContainsKey(cardid))
-            {
                 cardAttr[cardid] += mark;
-            }
             else
-            {
                 cardAttr.Add(cardid, mark);
-            }
         }
 
         private string GetCardAttr(int cardid)
@@ -94,9 +91,7 @@ namespace TaleofMonsters.Forms.Items
         public DeckCard GetTargetCard()
         {
             if (tar >= 0 && tar < dcards.Length)
-            {
                 return dcards[tar];
-            }
             return null;
         }
 
@@ -149,9 +144,7 @@ namespace TaleofMonsters.Forms.Items
             }
 
             if (card.BaseId <= 0)
-            {
                 return;
-            }
 
             var cardConfigData = CardConfigManager.GetCardConfig(card.BaseId);
             Font font = new Font("宋体", 5*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -171,32 +164,39 @@ namespace TaleofMonsters.Forms.Items
                 brush.Dispose();
             }
 
-            if (attr.Contains("D"))
-            {
-                Image mark = PicLoader.Read("System", "MarkSelect.PNG");
-                g.DrawImage(mark, x+ cardWidth - 21, y+cardHeight-25, 21, 25);
-                if (attr.Contains("DD"))//2张出战
-                {
-                    g.DrawImage(mark, x + cardWidth - 21, y + cardHeight - 25 - 15, 21, 25);
-                }
-                mark.Dispose();
-            }
-            if (attr.Contains("N"))
-            {
-                Image mark = PicLoader.Read("System", "MarkNew.PNG");
-                g.DrawImage(mark, x, y, 30, 30);
-                mark.Dispose();
-            }
-
-            g.FillEllipse(Brushes.Black, x + 3, y + 4 + cardHeight - 26,16,16);
-            Font fontsong = new Font("宋体", 9*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+            g.FillEllipse(Brushes.Black, x + 3, y + 4 + cardHeight - 26, 16, 16);
+            Font fontsong = new Font("宋体", 9 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             string text = string.Format("{0:00}", card.Level);
-            g.DrawString(text, fontsong, Brushes.Yellow, x + 4, y + 4 + cardHeight-23);
-            if (card.Exp >= ConfigData.GetLevelExpConfig(card.Level).CardExp)//可以升级
+            g.DrawString(text, fontsong, Brushes.Yellow, x + 4, y + 4 + cardHeight - 23);
+
+            if (!IsDungeonMode)
             {
-                g.DrawString(text, fontsong, Brushes.Lime, x + 4, y + 4 + cardHeight - 23);
-                Image mark = PicLoader.Read("System", "ArrowU.PNG");
-                g.DrawImage(mark, x + 2, y + 4 + cardHeight - 43, 18, 16);
+                if (attr.Contains("D"))
+                {
+                    Image mark = PicLoader.Read("System", "MarkSelect.PNG");
+                    g.DrawImage(mark, x + cardWidth - 21, y + cardHeight - 25, 21, 25);
+                    if (attr.Contains("DD")) //2张出战
+                        g.DrawImage(mark, x + cardWidth - 21, y + cardHeight - 25 - 15, 21, 25);
+                    mark.Dispose();
+                }
+                if (attr.Contains("N"))
+                {
+                    Image mark = PicLoader.Read("System", "MarkNew.PNG");
+                    g.DrawImage(mark, x, y, 30, 30);
+                    mark.Dispose();
+                }
+                if (card.Exp >= ConfigData.GetLevelExpConfig(card.Level).CardExp)//可以升级
+                {
+                    g.DrawString(text, fontsong, Brushes.Lime, x + 4, y + 4 + cardHeight - 23);
+                    Image mark = PicLoader.Read("System", "ArrowU.PNG");
+                    g.DrawImage(mark, x + 2, y + 4 + cardHeight - 43, 18, 16);
+                    mark.Dispose();
+                }
+            }
+            else if (IsDungeonMode && card.Exp == 99) //特殊处理
+            {
+                Image mark = PicLoader.Read("System", "MarkDun.PNG");
+                g.DrawImage(mark, x + cardWidth - 33, y+1, 30, 30);
                 mark.Dispose();
             }
             fontsong.Dispose();
@@ -212,17 +212,11 @@ namespace TaleofMonsters.Forms.Items
                 if (temp != tar)
                 {
                     if (temp < dcards.Length)
-                    {
                         tar = temp;
-                    }
                     else
-                    {
                         tar = -1;
-                    }
                     if (Invalidate != null)
-                    {
                         Invalidate();
-                    }
                 }
             }
             else
@@ -231,9 +225,7 @@ namespace TaleofMonsters.Forms.Items
                 {
                     tar = -1;
                     if (Invalidate != null)
-                    {
                         Invalidate();
-                    }
                 }
             }
         }

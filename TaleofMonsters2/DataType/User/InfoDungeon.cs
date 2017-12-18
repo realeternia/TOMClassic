@@ -56,6 +56,7 @@ namespace TaleofMonsters.DataType.User
             PercAddon = 0;
             EnduAddon = 0;
 
+            CheckStoryCard();
             RecalculateAttr();
         }
 
@@ -163,6 +164,7 @@ namespace TaleofMonsters.DataType.User
             Intl = dungeonConfig.Intl;
             Perc = dungeonConfig.Perc;
             Endu = dungeonConfig.Endu;
+            CheckStoryAttr();
 
             Str += StrAddon; //加成属性，一般来自sq
             Agi += AgiAddon;
@@ -283,6 +285,7 @@ namespace TaleofMonsters.DataType.User
             }
         }
 
+        #region 故事相关
         public void GenStoryId(int dungeonId)
         {
             List<int> storyList = new List<int>();
@@ -297,5 +300,35 @@ namespace TaleofMonsters.DataType.User
             }
             StoryId = NLRandomPicker<int>.RandomPickN(storyList.ToArray(), rateList.ToArray(), 1)[0];
         }
+
+        public void CheckStoryAttr()
+        {
+            if (StoryId <= 0)
+                return;
+
+            var storyConfig = ConfigData.GetDungeonStoryConfig(StoryId);
+            if (!string.IsNullOrEmpty(storyConfig.AttrType))
+            {
+                switch (storyConfig.AttrType)
+                {
+                    case "str": Str += storyConfig.AttrBias; break;
+                    case "agi": Agi += storyConfig.AttrBias; break;
+                    case "intl": Intl += storyConfig.AttrBias; break;
+                    case "perc": Perc += storyConfig.AttrBias; break;
+                    case "endu": Endu += storyConfig.AttrBias; break;
+                }
+            }
+        }
+
+        public void CheckStoryCard()
+        {
+            if (StoryId <= 0)
+                return;
+
+            var storyConfig = ConfigData.GetDungeonStoryConfig(StoryId);
+            if (storyConfig.CardId > 0)
+                UserProfile.InfoCard.AddDungeonCard(storyConfig.CardId);
+        }
+        #endregion
     }
 }

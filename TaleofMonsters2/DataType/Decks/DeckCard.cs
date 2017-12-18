@@ -28,9 +28,7 @@ namespace TaleofMonsters.DataType.Decks
             get
             {
                 if (ConfigIdManager.GetCardType(BaseId) != CardTypes.Spell)
-                {
                     return 0;
-                }
                 return CardConfigManager.GetCardConfig(BaseId).Cost;
             }
         }
@@ -40,9 +38,7 @@ namespace TaleofMonsters.DataType.Decks
             get
             {
                 if (ConfigIdManager.GetCardType(BaseId) != CardTypes.Monster)
-                {
                     return 0;
-                }
                 return CardConfigManager.GetCardConfig(BaseId).Cost;
             }
         }
@@ -52,19 +48,14 @@ namespace TaleofMonsters.DataType.Decks
             get
             {
                 if (ConfigIdManager.GetCardType(BaseId) != CardTypes.Weapon)
-                {
                     return 0;
-                }
                 return CardConfigManager.GetCardConfig(BaseId).Cost;
             }
         }
 
         public int Star
         {
-            get
-            {
-                return CardConfigManager.GetCardConfig(BaseId).Star;
-            }
+            get { return CardConfigManager.GetCardConfig(BaseId).Star; }
         }
 
         public override string ToString()

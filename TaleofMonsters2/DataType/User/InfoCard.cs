@@ -181,7 +181,8 @@ namespace TaleofMonsters.DataType.User
             var newCard = new DbDeckCard
             {
                 BaseId = cardId,
-                Level = 1
+                Level = 1,
+                Exp = 99
             };
             DungeonDeck.Add(newCard);
         }
