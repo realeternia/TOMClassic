@@ -41,7 +41,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonClose.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonClose.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonClose.ImageNormal = null;
-            this.bitmapButtonClose.Location = new System.Drawing.Point(313, 13);
+            this.bitmapButtonClose.Location = new System.Drawing.Point(446, 14);
             this.bitmapButtonClose.Name = "bitmapButtonClose";
             this.bitmapButtonClose.NoUseDrawNine = false;
             this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
@@ -56,7 +56,7 @@ namespace TaleofMonsters.Forms
             this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.bitmapButtonClose);
             this.Name = "StoryForm";
-            this.Size = new System.Drawing.Size(350, 294);
+            this.Size = new System.Drawing.Size(500, 414);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.StoryForm_Paint);
             this.ResumeLayout(false);
 

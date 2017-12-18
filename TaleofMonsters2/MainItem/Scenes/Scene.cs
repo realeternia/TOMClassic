@@ -160,6 +160,7 @@ namespace TaleofMonsters.MainItem.Scenes
             ChangeMap(dungeonConfig.EntryScene, true, ()=>
             {
                 UserProfile.InfoDungeon.Enter(dungeonId);
+                SystemMenuManager.CheckItemClick(SystemMenuIds.StoryForm);
             });
             MoveTo(SceneInfo.GetStartPos());
         }

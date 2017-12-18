@@ -35,7 +35,7 @@ namespace TaleofMonsters.Forms
             int yOff = 40;
             
             var img = PicLoader.Read("Dungeon.Story", string.Format("{0}.JPG", storyConfig.Image));
-            e.Graphics.DrawImage(img, xOff, yOff, 324, 244);
+            e.Graphics.DrawImage(img, xOff, yOff, 474, 364);
             img.Dispose();
 
             Font font2 = new Font("宋体", 11 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
