@@ -6,6 +6,7 @@ using NarlonLib.Math;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.MainItem;
+using TaleofMonsters.MainItem.Blesses;
 
 namespace TaleofMonsters.DataType.User
 {
@@ -56,7 +57,7 @@ namespace TaleofMonsters.DataType.User
             PercAddon = 0;
             EnduAddon = 0;
 
-            CheckStoryCard();
+            CheckStoryOnEnter();
             RecalculateAttr();
         }
 
@@ -320,7 +321,7 @@ namespace TaleofMonsters.DataType.User
             }
         }
 
-        public void CheckStoryCard()
+        public void CheckStoryOnEnter()
         {
             if (StoryId <= 0)
                 return;
@@ -328,6 +329,8 @@ namespace TaleofMonsters.DataType.User
             var storyConfig = ConfigData.GetDungeonStoryConfig(StoryId);
             if (storyConfig.CardId > 0)
                 UserProfile.InfoCard.AddDungeonCard(storyConfig.CardId);
+            if(storyConfig.BlessId > 0)
+                BlessManager.AddBless(storyConfig.BlessId, 999);
         }
         #endregion
     }

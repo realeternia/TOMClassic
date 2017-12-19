@@ -18,9 +18,10 @@ namespace TaleofMonsters.MainItem.Blesses
             RebuildCache();
         }
 
-        public static void AddBless(int id)
+        public static void AddBless(int id, int time = 0)
         {
-            var time = ConfigData.GetBlessConfig(id).Round;
+            if (time == 0)
+                time = ConfigData.GetBlessConfig(id).Round;
             if (UserProfile.InfoWorld.Blesses.Count >= 10) //最大10个bless
                 return;
             if (UserProfile.InfoWorld.Blesses.ContainsKey(id))
@@ -28,9 +29,7 @@ namespace TaleofMonsters.MainItem.Blesses
             else
                 UserProfile.InfoWorld.Blesses[id] = time;
             if (Update != null)
-            {
                 Update();
-            }
             RebuildCache();
         }
 
