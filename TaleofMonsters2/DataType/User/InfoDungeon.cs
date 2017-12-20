@@ -63,6 +63,8 @@ namespace TaleofMonsters.DataType.User
 
         public void Leave()
         {
+            CheckStoryOnLeave();
+
             DungeonId = 0;
             Items.Clear();
         }
@@ -293,11 +295,14 @@ namespace TaleofMonsters.DataType.User
             List<float> rateList = new List<float>();
             foreach (var storyConfig in ConfigData.DungeonStoryDict.Values)
             {
-                if (storyConfig.DungeonId == dungeonId)
-                {
-                    storyList.Add(storyConfig.Id);
-                    rateList.Add(storyConfig.Rate);
-                }
+                if (storyConfig.DungeonId != dungeonId)
+                    continue;
+                if (storyConfig.NeedLevel > 0 && UserProfile.InfoBasic.Level < storyConfig.NeedLevel)
+                    continue;
+                if (storyConfig.NeedGismoId > 0 && !UserProfile.InfoGismo.GetGismo(storyConfig.NeedGismoId))
+                    continue;
+                storyList.Add(storyConfig.Id);
+                rateList.Add(storyConfig.Rate);
             }
             StoryId = NLRandomPicker<int>.RandomPickN(storyList.ToArray(), rateList.ToArray(), 1)[0];
         }
@@ -332,6 +337,17 @@ namespace TaleofMonsters.DataType.User
             if(storyConfig.BlessId > 0)
                 BlessManager.AddBless(storyConfig.BlessId, 999);
         }
+
+        public void CheckStoryOnLeave()
+        {
+            if (StoryId <= 0)
+                return;
+
+            var storyConfig = ConfigData.GetDungeonStoryConfig(StoryId);
+            if (storyConfig.BlessId > 0)
+                BlessManager.RemoveBless(storyConfig.BlessId);
+        }
+
         #endregion
     }
 }
