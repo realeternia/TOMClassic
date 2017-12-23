@@ -386,7 +386,7 @@ namespace TaleofMonsters.MainItem.Scenes
             {
                 var resName = HSTypes.I2Resource(id - 1);
                 string resStr = string.Format("{0}:{1}", resName, UserProfile.Profile.InfoBag.Resource.Get((GameResourceType)(id-1)));
-                Image image = DrawTool.GetImageByString(resStr, 100);
+                Image image = DrawTool.GetImageByString(resStr, HSTypes.I2ResourceTip(id-1), 120, Color.White);
                 tooltip.Show(image, parent, x, y);
             }
         }

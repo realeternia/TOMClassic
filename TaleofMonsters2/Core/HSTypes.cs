@@ -142,6 +142,20 @@
             return rt[id];
         }
 
+        public static string I2ResourceTip(int id)
+        {
+            string[] rt = {
+                "世界的基本货币",
+                "用来建造建筑和扩建农场",
+                "用来建造建筑",
+                "用来购买祝福和魔法卡牌",
+                "用来贿赂和购买怪物卡牌",
+                "用来刷新和重置玩法",
+                "用来购买武器卡牌"
+                          };
+            return rt[id];
+        }
+
         public static string I2CardLevelColor(int id)
         {
             string[] rt = { "", "White", "White", "DodgerBlue", "DodgerBlue", "Yellow", "Orange", "Red", "Red" };
