@@ -243,5 +243,21 @@
                           };
             return rt[aid];
         }
+
+        public static string I2TemperatureName(int id)
+        {
+            string[] rt = { "-", "严寒", "冷", "常温", "热", "酷暑" };
+            return rt[id];
+        }
+        public static string I2HumitityName(int id)
+        {
+            string[] rt = { "-", "极湿", "潮湿", "舒适", "干燥", "极干" };
+            return rt[id];
+        }
+        public static string I2AltitudeName(int id)
+        {
+            string[] rt = { "-", "谷底", "低地", "平原", "山丘", "高原" };
+            return rt[id];
+        }
     }
 }

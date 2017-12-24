@@ -195,6 +195,12 @@ namespace TaleofMonsters.DataType.Items
                 tipData.AddText(string.Format("{0:0}%  ", (float)consumerConfig.RandomCardRate[2] * 100 / totalRate), "White");
                 tipData.AddLine();
             }
+            if (hItemConfig.ShowCollectTip)
+            {
+                ItemCollectConfig collectConfig = ConfigData.GetItemCollectConfig(id);
+                tipData.AddTextNewLine(string.Format("产出环境:{0} {1} {2}", HSTypes.I2TemperatureName(collectConfig.Temperature),
+                    HSTypes.I2HumitityName(collectConfig.Humitity), HSTypes.I2AltitudeName(collectConfig.Altitude)), "Green");
+            }
             tipData.AddTextNewLine(string.Format("出售价格:{0}", GameResourceBook.InGoldSellItem(hItemConfig.Rare, hItemConfig.ValueFactor)), "Yellow");
             tipData.AddImage(HSIcons.GetIconsByEName("res1"));
             tipData.AddImageXY(GetHItemImage(id), 8, 8, 48, 48, 7, 24, 32, 32);

@@ -122,6 +122,10 @@ namespace TaleofMonsters.DataType.Scenes
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine(string.Format("{0}(Lv{1})", config.Name, config.Level), "LightBlue", 20);
             tipData.AddLine(2);
+            tipData.AddTextNewLine(string.Format(" 温度:{0}", HSTypes.I2TemperatureName(config.Temperature)), "Red");
+            tipData.AddTextNewLine(string.Format(" 湿度:{0}", HSTypes.I2HumitityName(config.Humitity)), "LightBlue");
+            tipData.AddTextNewLine(string.Format(" 高度:{0}", HSTypes.I2AltitudeName(config.Altitude)), "LightGreen");
+            tipData.AddLine(2);
             tipData.AddTextNewLine(string.Format("格子:{0}", scene.SceneInfo.Items.Count), "White");
 
             if (UserProfile.InfoDungeon.DungeonId <= 0) //普通场景
