@@ -155,6 +155,7 @@ namespace TaleofMonsters.Forms.MagicBook
                     nlClickLabel1.AddLabel(name, cid);
                 }
                 nlClickLabel1.Invalidate();
+                Invalidate(new Rectangle(65 + 5, cardHeight * yCount + 37 + 21, cardWidth * xCount, 30));
             }
         }
 
