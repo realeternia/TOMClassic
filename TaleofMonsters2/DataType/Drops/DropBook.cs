@@ -122,6 +122,9 @@ namespace TaleofMonsters.DataType.Drops
             items.Add(HItemBook.GetRandRareItemIdWithGroup(HItemRandomGroups.Fight, rare));
         }
 
+        /// <summary>
+        /// 按概率获得采集道具列表
+        /// </summary>
         public static int[] GetCollectItems(int type, int sceneId)
         {
             List<int> itemList = new List<int>();
@@ -146,7 +149,7 @@ namespace TaleofMonsters.DataType.Drops
 
             int attrDiffer = Math.Abs(itemCollectConfig.Temperature - sceneConfig.Temperature) +
                              Math.Abs(itemCollectConfig.Humitity - sceneConfig.Humitity) +
-                             Math.Abs(itemCollectConfig.Altitude - sceneConfig.Altitude);
+                             Math.Abs(itemCollectConfig.Altitude - sceneConfig.Altitude) + 1;
 
             if (attrDiffer > 0)
                 baseDrop /= attrDiffer;
