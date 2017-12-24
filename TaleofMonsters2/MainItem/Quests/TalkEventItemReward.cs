@@ -14,6 +14,7 @@ using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
 using TaleofMonsters.MainItem.Blesses;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
+using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.MainItem.Quests
 {
@@ -140,6 +141,17 @@ namespace TaleofMonsters.MainItem.Quests
                         vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25,
                                                             60, 60, PictureRegionCellType.Item, itemId));
                     }
+                    index++;
+                }
+            }
+            if (config.RewardCollectType > 0)
+            {
+                var itemList = DropBook.GetCollectItems(config.RewardCollectType, Scene.Instance.SceneInfo.Script.Id);
+                foreach (var itemId in itemList)
+                {
+                    UserProfile.InfoBag.AddItem(itemId, 1);
+                    vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25,
+                                                        60, 60, PictureRegionCellType.Item, itemId));
                     index++;
                 }
             }
