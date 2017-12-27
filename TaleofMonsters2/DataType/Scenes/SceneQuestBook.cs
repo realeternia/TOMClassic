@@ -187,15 +187,15 @@ namespace TaleofMonsters.DataType.Scenes
             if (config.QRes > 0)//期货
                 questCount += config.QRes;
             if (config.QItemDrug > 0) //草药
-                questCount += config.QItemDrug;
+                questCount += (float)config.QItemDrug;
             if (config.QItemFish > 0)//鱼
-                questCount += config.QItemFish;
+                questCount += (float)config.QItemFish;
             if (config.QItemOre > 0)//矿石
-                questCount += config.QItemOre;
+                questCount += (float)config.QItemOre;
             if (config.QItemMushroom > 0)//蘑菇
-                questCount += config.QItemMushroom;
+                questCount += (float)config.QItemMushroom;
             if (config.QItemWood > 0)//枯树
-                questCount += config.QItemWood;
+                questCount += (float)config.QItemWood;
 
             if (!string.IsNullOrEmpty(config.Quest))
             {

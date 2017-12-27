@@ -106,30 +106,7 @@ namespace TaleofMonsters.MainItem
                     toolBarItemData.Enable = false;
             }
 
-            var funcStr = ConfigData.GetSceneConfig(UserProfile.InfoBasic.MapId).Func;
-            if (funcStr != null)
-            {
-                string[] funcs = funcStr.Split(';');
-                foreach (string func in funcs)
-                {
-                    if (func != "")
-                        SetIconEnable((SystemMenuIds) Enum.Parse(typeof (SystemMenuIds), func), true);
-                }
-            }
-
             Reload();
-        }
-
-        private static void SetIconEnable(SystemMenuIds id, bool enable)
-        {
-            foreach (var toolBarItemData in menuItems)
-            {
-                if ((SystemMenuIds)toolBarItemData.Id == id)
-                {
-                    toolBarItemData.Enable = enable;
-                    return;
-                }
-            }
         }
 
         public static void UpdateAll(Control parent)

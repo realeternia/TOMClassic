@@ -233,15 +233,6 @@ namespace TaleofMonsters.Forms
             var questCount = SceneQuestBook.GetQuestCount(id);
             tipData.AddTextNewLine(string.Format("饱和度：{0:0.0}/{1}", sceneInfo.SpecialCellCount + questCount, sceneInfo.CellCount), "Green");
 
-            if (sceneConfig.Func != "")
-            {
-                tipData.AddTextNewLine("特色", "Pink");
-                string[] funcs = sceneConfig.Func.Split(';');
-                foreach (string fun in funcs)
-                {
-                    tipData.AddImage(HSIcons.GetIconsByEName(string.Format("npc{0}", fun.ToLower())));
-                }
-            }
             return tipData.Image;
         }
     }
