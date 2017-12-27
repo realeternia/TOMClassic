@@ -49,19 +49,19 @@ namespace NarlonLib.Math
             return r.NextDouble()*(max - min) + min;
         }
 
-	public static int GetSqrtMulti10(int value)
-	{
-		int[] datas = {0, 10, 14, 17, 20, 22, 24, 26, 28, 30};
-		if(value < 0)
-		{
-			return 0;
-		}
-		if(value > 9)
-		{
-			return datas[9];
-		}
-		return datas[value];
-	}
+        public static int GetSqrtMulti10(int value)
+        {
+	        int[] datas = {0, 10, 14, 17, 20, 22, 24, 26, 28, 30};
+	        if(value < 0)
+	        {
+		        return 0;
+	        }
+	        if(value > 9)
+	        {
+		        return datas[9];
+	        }
+	        return datas[value];
+        }
 
         public static int GetRound(int value, int checker)
         {

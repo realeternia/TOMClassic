@@ -122,6 +122,16 @@ namespace TaleofMonsters.DataType.Scenes
                 datas.Add(new RLIdValue { Id = 42000008, Value = config.QWheel });
             if (config.QRes > 0)//期货
                 datas.Add(new RLIdValue { Id = 42000009, Value = config.QRes });
+            if (config.QItemDrug > 0 && MathTool.GetRandom(0d,1) > config.QItemDrug)//草药
+                datas.Add(new RLIdValue { Id = 42000010, Value = 1 });
+            if (config.QItemFish > 0 && MathTool.GetRandom(0d, 1) > config.QItemFish)//鱼
+                datas.Add(new RLIdValue { Id = 42000011, Value = 1 });
+            if (config.QItemOre > 0 && MathTool.GetRandom(0d, 1) > config.QItemOre)//矿石
+                datas.Add(new RLIdValue { Id = 42000012, Value = 1 });
+            if (config.QItemMushroom > 0 && MathTool.GetRandom(0d, 1) > config.QItemMushroom)//蘑菇
+                datas.Add(new RLIdValue { Id = 42000013, Value = 1 });
+            if (config.QItemWood > 0 && MathTool.GetRandom(0d, 1) > config.QItemWood)//蘑菇
+                datas.Add(new RLIdValue { Id = 42000014, Value = 1 });
 
             if (!string.IsNullOrEmpty(config.Quest))
             {
@@ -161,21 +171,31 @@ namespace TaleofMonsters.DataType.Scenes
             var config = ConfigData.GetSceneConfig(mapId);
             float questCount = 0;
             if (config.QPortal > 0)//地磁反转
-                questCount++;
+                questCount += config.QPortal;
             if (config.QCardChange > 0)//卡牌商人
-                questCount++;
+                questCount += config.QCardChange;
             if (config.QPiece > 0)//素材商人
-                questCount++;
+                questCount += config.QPiece;
             if (config.QMerchant > 0)//商人
-                questCount++;
+                questCount += config.QMerchant;
             if (config.QDoctor > 0)//医生
-                questCount++;
+                questCount += config.QDoctor;
             if (config.QAngel > 0)//天使
-                questCount++;
+                questCount += config.QAngel;
             if (config.QWheel > 0)//轮盘
-                questCount++;
+                questCount += config.QWheel;
             if (config.QRes > 0)//期货
-                questCount++;
+                questCount += config.QRes;
+            if (config.QItemDrug > 0) //草药
+                questCount += config.QItemDrug;
+            if (config.QItemFish > 0)//鱼
+                questCount += config.QItemFish;
+            if (config.QItemOre > 0)//矿石
+                questCount += config.QItemOre;
+            if (config.QItemMushroom > 0)//蘑菇
+                questCount += config.QItemMushroom;
+            if (config.QItemWood > 0)//枯树
+                questCount += config.QItemWood;
 
             if (!string.IsNullOrEmpty(config.Quest))
             {
