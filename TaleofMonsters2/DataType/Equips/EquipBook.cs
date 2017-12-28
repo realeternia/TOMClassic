@@ -27,7 +27,7 @@ namespace TaleofMonsters.DataType.Equips
             List<int> datas = new List<int>();
             foreach (var equipConfig in ConfigData.EquipDict.Values)
             {
-                if (equipConfig.Disable || !equipConfig.CanMerge)
+                if (!equipConfig.CanMerge)
                     continue;
                 datas.Add(equipConfig.Id);//返回所有
             }
@@ -41,8 +41,6 @@ namespace TaleofMonsters.DataType.Equips
                 equipQualDict = new Dictionary<int, List<int>>();
                 foreach (var equipConfig in ConfigData.EquipDict.Values)
                 {
-                    if (equipConfig.Disable)
-                        continue;
                     if (!equipConfig.RandomDrop)
                         continue;
                     if (!equipQualDict.ContainsKey(equipConfig.Quality))
