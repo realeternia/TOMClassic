@@ -11,6 +11,7 @@ using ControlPlus;
 using TaleofMonsters.Config;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.Forms.MagicBook
 {
@@ -92,7 +93,7 @@ namespace TaleofMonsters.Forms.MagicBook
             cardDetail.SetInfo(-1);
             UpdateButtonState();
             InitItems();
-            Invalidate(new Rectangle(65, 35, cardWidth * xCount+200, 630));
+            Invalidate(new Rectangle(65, 35, cardWidth*xCount + 200, 630));
         }
 
         private void buttonNext_Click(object sender, EventArgs e)
@@ -107,7 +108,7 @@ namespace TaleofMonsters.Forms.MagicBook
             cardDetail.SetInfo(-1);
             UpdateButtonState();
             InitItems();
-            Invalidate(new Rectangle(65, 35, cardWidth * xCount+200, 630));
+            Invalidate(new Rectangle(65, 35, cardWidth*xCount + 200, 630));
         }
 
         private void InitItems()
@@ -119,11 +120,6 @@ namespace TaleofMonsters.Forms.MagicBook
             for (int i = former - 1; i < former + cardLimit - 1; i++)
                 datas.Add(items[i]);
             selectPanel.AddContent(datas);
-        }
-
-        private void DropItemViewerForm_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void nlClickLabel1_SelectionChange(Object value)
@@ -145,7 +141,9 @@ namespace TaleofMonsters.Forms.MagicBook
             {
                 HItemConfig itemConfig = ConfigData.GetHItemConfig(items[tar]);
                 const string stars = "★★★★★★★★★★";
-                itemDesStr = string.Format("{0}({2}){1}", itemConfig.Name, itemConfig.Descript, stars.Substring(10 - itemConfig.Rare));
+                var itemHas = UserProfile.InfoBag.GetItemCount(itemConfig.Id);
+                itemDesStr = string.Format("{0}({2}){3}{1}", itemConfig.Name, itemConfig.Descript, stars.Substring(10 - itemConfig.Rare),
+                    itemHas > 0 ? string.Format("(拥有{0})", itemHas) : "");
 
                 nlClickLabel1.ClearLabel();
                 int[] cardIds = CardPieceBook.GetCardIdsByItemId(items[tar]);
@@ -164,6 +162,12 @@ namespace TaleofMonsters.Forms.MagicBook
             if (!onlyBorder)
             {
                 g.DrawImage(HItemBook.GetHItemImage(info), xOff, yOff, cardWidth, cardHeight);
+                if (UserProfile.InfoBag.GetItemCount(info) <= 0)
+                {//没有获得卡牌标黑
+                    var brush = new SolidBrush(Color.FromArgb(150, Color.Black));
+                    g.FillRectangle(brush, xOff, yOff, cardWidth, cardHeight);
+                    brush.Dispose();
+                }
                 var itemConfig = ConfigData.GetHItemConfig(info);
                 var pen = new Pen(Color.FromName(HSTypes.I2RareColor(itemConfig.Rare)), 2);
                 g.DrawRectangle(pen, xOff, yOff, cardWidth - 2, cardHeight - 2);

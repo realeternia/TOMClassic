@@ -9,6 +9,7 @@ using TaleofMonsters.Core;
 using TaleofMonsters.Forms.Items.Core;
 using ConfigDatas;
 using ControlPlus;
+using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.Forms.MagicBook
 {
@@ -333,13 +334,15 @@ namespace TaleofMonsters.Forms.MagicBook
                     g.DrawImage(HSIcons.GetIconsByEName("job" + jobConfig.JobIndex), xOff + cardWidth - 24, yOff + 4, 20, 20);
                     brush.Dispose();
                 }
+
+                if (UserProfile.InfoCard.GetCardCount(info) <= 0)
+                {//没有获得卡牌标黑
+                    var brush = new SolidBrush(Color.FromArgb(150, Color.Black));
+                    g.FillRectangle(brush, xOff, yOff, cardWidth, cardHeight);
+                    brush.Dispose();
+                }
             }
          
-        }
-        
-        private void CardViewForm_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void CardViewForm_Paint(object sender, PaintEventArgs e)

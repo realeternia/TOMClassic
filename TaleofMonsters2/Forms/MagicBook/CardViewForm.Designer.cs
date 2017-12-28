@@ -160,7 +160,6 @@ namespace TaleofMonsters.Forms.MagicBook
             this.DoubleBuffered = true;
             this.Name = "CardViewForm";
             this.Size = new System.Drawing.Size(823, 575);
-            this.Click += new System.EventHandler(this.CardViewForm_Click);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.CardViewForm_Paint);
             this.ResumeLayout(false);
 
