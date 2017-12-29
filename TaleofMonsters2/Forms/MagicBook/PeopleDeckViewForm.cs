@@ -6,6 +6,7 @@ using ConfigDatas;
 using ControlPlus;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.Forms.Items.Core;
@@ -116,11 +117,6 @@ namespace TaleofMonsters.Forms.MagicBook
             selectPanel.AddContent(datas);
         }
 
-        private void PeopleDeckViewForm_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void nlClickLabel1_SelectionChange(Object value)
         {
             cardDetail.SetInfo(value as DeckCard);
@@ -145,14 +141,15 @@ namespace TaleofMonsters.Forms.MagicBook
                 nlClickLabel1.ClearLabel();
                 foreach (DeckCard card in cards)
                 {
-                    CardConfigData ccd = CardConfigManager.GetCardConfig(card.BaseId);
-                    if (ccd.Id == 0)
-                    {
+                    CardConfigData pickCard = CardConfigManager.GetCardConfig(card.BaseId);
+                    if (pickCard.Id == 0)
                         continue;
-                    }
-                    var name = CardConfigManager.GetCardConfig(card.BaseId).Name;
-                    string cardstr = string.Format("{0}", name);
-                    nlClickLabel1.AddLabel(cardstr, card);
+
+                    var cardConfig = CardConfigManager.GetCardConfig(card.BaseId);
+                    var colorName = HSTypes.I2QualityColor((int)cardConfig.Quality);
+                    if (colorName == "White")
+                        colorName = "DarkGray";
+                    nlClickLabel1.AddLabel(cardConfig.Name, card, Color.FromName(colorName));
                 }
 
                 nlClickLabel1.Invalidate();
@@ -177,7 +174,7 @@ namespace TaleofMonsters.Forms.MagicBook
             }
         }
 
-        private void MonsterSkillViewForm_Paint(object sender, PaintEventArgs e)
+        private void PeopleDeckViewForm_Paint(object sender, PaintEventArgs e)
         {
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 

@@ -249,11 +249,19 @@ namespace TaleofMonsters.Forms.MagicBook
                 nlClickLabel1.ClearLabel();
                 foreach (int mid in MonsterBook.GetSkillMids(skill.Id))
                 {
-                    nlClickLabel1.AddLabel(ConfigData.GetMonsterConfig(mid).Name, mid);
+                    var cardConfig = ConfigData.GetMonsterConfig(mid);
+                    var colorName = HSTypes.I2QualityColor(cardConfig.Quality);
+                    if (colorName == "White")
+                        colorName = "DarkGray";
+                    nlClickLabel1.AddLabel(cardConfig.Name, mid, Color.FromName(colorName));
                 }
                 foreach (int wid in WeaponBook.GetSkillWids(skill.Id))
                 {
-                    nlClickLabel1.AddLabel(ConfigData.GetWeaponConfig(wid).Name, wid);
+                    var cardConfig = ConfigData.GetMonsterConfig(wid);
+                    var colorName = HSTypes.I2QualityColor(cardConfig.Quality);
+                    if (colorName == "White")
+                        colorName = "DarkGray";
+                    nlClickLabel1.AddLabel(cardConfig.Name, wid, Color.FromName(colorName));
                 }
                 nlClickLabel1.Invalidate();
             }

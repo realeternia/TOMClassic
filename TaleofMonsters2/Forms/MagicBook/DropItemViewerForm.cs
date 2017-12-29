@@ -149,8 +149,11 @@ namespace TaleofMonsters.Forms.MagicBook
                 int[] cardIds = CardPieceBook.GetCardIdsByItemId(items[tar]);
                 foreach (int cid in cardIds)
                 {
-                    var name = CardConfigManager.GetCardConfig(cid).Name;
-                    nlClickLabel1.AddLabel(name, cid);
+                    var cardConfig = CardConfigManager.GetCardConfig(cid);
+                    var colorName = HSTypes.I2QualityColor((int)cardConfig.Quality);
+                    if (colorName == "White")
+                        colorName = "DarkGray";
+                    nlClickLabel1.AddLabel(cardConfig.Name, cid, Color.FromName(colorName));
                 }
                 nlClickLabel1.Invalidate();
                 Invalidate(new Rectangle(65 + 5, cardHeight * yCount + 37 + 21, cardWidth * xCount, 30));
