@@ -43,7 +43,7 @@ namespace TaleofMonsters.Forms
             this.colorLabel1.Name = "colorLabel1";
             this.colorLabel1.Size = new System.Drawing.Size(326, 61);
             this.colorLabel1.TabIndex = 37;
-            this.colorLabel1.Text = "|只要收集齐以下材料，就可以兑换一张指定的|#0033cc|卡牌||。\r\n|每天0点，公式重置，当天内可以无限次兑换。\r\n#ff0000|祝你顺利!";
+            this.colorLabel1.Text = "|只要收集齐以下材料，就可以兑换一张指定的|#0033cc|卡牌||。每天0点，公式重置，当天内可以无限次兑换。|#ff0000|祝你顺利!";
             // 
             // bitmapButtonC1
             // 

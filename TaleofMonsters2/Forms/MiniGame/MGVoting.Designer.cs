@@ -41,9 +41,8 @@ namespace TaleofMonsters.Forms.MiniGame
             this.colorLabel1.Name = "colorLabel1";
             this.colorLabel1.Size = new System.Drawing.Size(326, 86);
             this.colorLabel1.TabIndex = 37;
-            this.colorLabel1.Text = "#ff0000|塔塔木村||开始选举新一任的村长。\r\n|你需要竭尽所能，能去到更多的选票来完成当选村长。\r\n|游戏一共有|#ff0000|10||天，每天你可以颁" +
-    "布一条法令。\r\n|对于每条法令，不同种族居民会产生不同的支持率变化。\r\n#0066ff|总支持率||等于各种族人数乘以该种族的支持率。\r\n|最终得分=|#ffc" +
-    "c00|最终支持率||。";
+            this.colorLabel1.Text = "#ff0000|塔塔木村||开始选举新一任的村长。你需要竭尽所能，能去到更多的选票来完成当选村长。游戏一共有|#ff0000|10||天，每天你可以颁布一条法令。" +
+    "对于每条法令，不同种族居民会产生不同的支持率变化。|#0066ff|总支持率||等于各种族人数乘以该种族的支持率。最终得分=|#ffcc00|最终支持率||。";
             // 
             // bitmapButtonC1
             // 

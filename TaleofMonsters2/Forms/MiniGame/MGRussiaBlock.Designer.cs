@@ -41,8 +41,8 @@ namespace TaleofMonsters.Forms.MiniGame
             this.colorLabel1.Name = "colorLabel1";
             this.colorLabel1.Size = new System.Drawing.Size(326, 86);
             this.colorLabel1.TabIndex = 37;
-            this.colorLabel1.Text = "|本游戏是经典的|#ff6600|俄罗斯方块||玩法。\r\n|每放置一个物件获得1分，消除一行获得10分。\r\n|键|#ff3333|A S D||移动物件，键|#3" +
-    "333ff|H J||旋转物件\r\n|如果没有空间放置新物件则|#0033cc|游戏结束||。";
+            this.colorLabel1.Text = "|本游戏是经典的|#ff6600|俄罗斯方块||玩法。每放置一个物件获得1分，消除一行获得10分。键|#ff3333|A S D||移动物件，键|#3333ff|" +
+    "H J||旋转物件。如果没有空间放置新物件则|#0033cc|游戏结束||。";
             // 
             // bitmapButtonC1
             // 

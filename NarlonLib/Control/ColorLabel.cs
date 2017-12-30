@@ -1,3 +1,4 @@
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Drawing;
@@ -16,7 +17,7 @@ namespace NarlonLib.Control
         protected override void OnPaint(PaintEventArgs e)
         {
             string info = Text;
-            string[] datas = info.Split('\n');
+            string[] datas = info.Split(new string[] {"|n"}, StringSplitOptions.None);
             int line = 0;
 
             foreach (string data in datas)
@@ -40,10 +41,12 @@ namespace NarlonLib.Control
                     while (textWidth + xoff > Width-5)//自动回车功能的支持
                     {
                         int showCharCount = textToDraw.Length*(Width - 5 - xoff)/textWidth;
+                        var lineText = textToDraw.Substring(0, showCharCount);
                         if (TextBorder)
-                            e.Graphics.DrawString(textToDraw.Substring(0, showCharCount), Font, Brushes.DimGray, xoff + 1, Font.Height * line + 1, StringFormat.GenericTypographic);
-                        e.Graphics.DrawString(textToDraw.Substring(0, showCharCount), Font, brush, xoff, Font.Height * line, StringFormat.GenericTypographic);
-                        textWidth -= Width - 5 - xoff;
+                            e.Graphics.DrawString(lineText, Font, Brushes.DimGray, xoff + 1, Font.Height * line + 1, StringFormat.GenericTypographic);
+                        e.Graphics.DrawString(lineText, Font, brush, xoff, Font.Height * line, StringFormat.GenericTypographic);
+                        var lineTextWidth = TextRenderer.MeasureText(e.Graphics, lineText, Font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
+                        textWidth -= lineTextWidth;
                         xoff = 0;
                         line++;
                         textToDraw = textToDraw.Substring(showCharCount);

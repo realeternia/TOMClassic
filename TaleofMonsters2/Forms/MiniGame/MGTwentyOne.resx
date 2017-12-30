@@ -118,11 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="colorLabel1.Text" xml:space="preserve">
-    <value>#ff0000|21点||游戏分成多个回合进行。
-|每个回合获胜得|#ffcc00|2分||，打平各得|#339900|1分||。
-|每回合中，牌分计数和比较高的一方获胜，如果超过|#ff0000|21||分失败
-|手牌1-9分别计|#ffcc00|1-9||分，10-J-Q-K计|#ffcc00|10||分。
-|如果一方累计得分达到|#00cc00|10||分，比赛结束。
-|最终得分=|#336699|50+5x我的积分-5x对方积分</value>
+    <value>#ff0000|21点||游戏分成多个回合进行。每个回合获胜得|#ffcc00|2分||，打平各得|#339900|1分||。每回合中，牌分计数和比较高的一方获胜，如果超过|#ff0000|21||分失败。手牌1-9分别计|#ffcc00|1-9||分，10-J-Q-K计|#ffcc00|10||分。如果一方累计得分达到|#00cc00|10||分，比赛结束。|n|最终得分=|#336699|50+5x我的积分-5x对方积分</value>
   </data>
 </root>

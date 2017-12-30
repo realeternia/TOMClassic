@@ -74,9 +74,9 @@ namespace TaleofMonsters.Forms.MiniGame
             this.colorLabel1.Name = "colorLabel1";
             this.colorLabel1.Size = new System.Drawing.Size(326, 86);
             this.colorLabel1.TabIndex = 37;
-            this.colorLabel1.Text = "|游戏中隐藏着由|#ff9900|某4种元素||按一定顺序拼接的串，你要做的就\r\n|是猜出|#44cc00|这个顺序。\r\n|每次猜测后，下方面板会给予一定的提示，" +
-    "|#ffcc00|黄色问号表示位\r\n#ffcc00|置和符号都正确，|#66ccff|蓝色问号表示该符号存在，但位置错误。\r\n|猜对四个元素及位置则|#ff00" +
-    "00|游戏结束||。\r\n|最终得分=120-|#ff0000|回合数||*5。";
+            this.colorLabel1.Text = "|游戏中隐藏着由|#ff9900|某4种元素||按一定顺序拼接的串，你要做的就是猜出|#44cc00|这个顺序。每次猜测后，下方面板会给予一定的提示，|#ffcc" +
+    "00|黄色问号表示位|#ffcc00|置和符号都正确，|#66ccff|蓝色问号表示该符号存在，但位置错误。猜对四个元素及位置则|#ff0000|游戏结束||。" +
+    "|n|最终得分=120-|#ff0000|回合数||*5。";
             // 
             // bitmapButtonC9
             // 

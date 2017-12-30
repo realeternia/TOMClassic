@@ -41,8 +41,8 @@ namespace TaleofMonsters.Forms.MiniGame
             this.colorLabel1.Name = "colorLabel1";
             this.colorLabel1.Size = new System.Drawing.Size(326, 86);
             this.colorLabel1.TabIndex = 37;
-            this.colorLabel1.Text = "|这是一个类似于|#ff0000|石子剪刀布||的游戏。\r\n|不同的是，这次是元素之间具有相互克制的效果。\r\n#00cc66|水>火>风>水 光>暗>[水或风或火" +
-    "]>光\r\n|和电脑进行|#ff0000|10||轮pk，计算总分。\r\n|每次获胜得|#00cc66|3||分，战平得|#ff9900|1||分。";
+            this.colorLabel1.Text = "|这是一个类似于|#ff0000|石子剪刀布||的游戏。不同的是，这次是元素之间具有相互克制的效果。|#00cc66|水>火>风>水 光>暗>[水或风或火]>光和" +
+    "电脑进行|#ff0000|10||轮pk，计算总分。每次获胜得|#00cc66|3||分，战平得|#ff9900|1||分。";
             // 
             // bitmapButtonC1
             // 

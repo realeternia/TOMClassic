@@ -118,11 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="colorLabel1.Text" xml:space="preserve">
-    <value>|机器人大战，由双方机器人|#33cc33|轮流发动攻击||。
-|攻击时可以按不同的武器对敌人造成指定的伤害，不同的武器
-|有不同的命中率，激光刀|#ffcc33|100%||，导弹|#ffcc33|75%||，空袭|#ffcc33|50%||。
-|防御时根据选用不同的防守方式，如果防住对方的攻击(|#00ccff|格斗
-#00ccff|盾-激光刀，拦截弹-导弹，干扰器-空袭||)，则伤害减轻。
-#ffcc00|其中一方生命降为0||则|#ff0000|游戏结束||；最终得分为|#0033cc|剩余生命值||。</value>
+    <value>|机器人大战，由双方机器人|#33cc33|轮流发动攻击||。攻击时可以按不同的武器对敌人造成指定的伤害，不同的武器有不同的命中率，激光刀|#ffcc33|100%||，导弹|#ffcc33|75%||，空袭|#ffcc33|50%||。防御时根据选用不同的防守方式，如果防住对方的攻击(|#00ccff|格斗盾-激光刀，拦截弹-导弹，干扰器-空袭||)，则伤害减轻。|n#ffcc00|其中一方生命降为0||则|#ff0000|游戏结束||；最终得分为|#0033cc|剩余生命值||。</value>
   </data>
 </root>

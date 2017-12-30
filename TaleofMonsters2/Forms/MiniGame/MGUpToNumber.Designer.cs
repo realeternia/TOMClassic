@@ -41,9 +41,9 @@ namespace TaleofMonsters.Forms.MiniGame
             this.colorLabel1.Name = "colorLabel1";
             this.colorLabel1.Size = new System.Drawing.Size(326, 86);
             this.colorLabel1.TabIndex = 37;
-            this.colorLabel1.Text = "|需要向大锅中添加规定数量的各种食材。\r\n|每次添加时，随机加入|#ff0000|2-5||单位的食材，四种食材每单位的\r\n|分数为|#00cc66|5-4-5-" +
-    "2||。而四种食材需要的上限为|#ff9900|8-5-4-15||。\r\n|如果任意单位食材数量超过要求，则|#0033cc|游戏结束||。\r\n|最终总分达到|" +
-    "#ffcc00|100||分，则|#0033cc|游戏结束||。";
+            this.colorLabel1.Text = "|需要向大锅中添加规定数量的各种食材。每次添加时，随机加入|#ff0000|2-5||单位的食材，四种食材每单位的。分数为|#00cc66|5-4-5-2||。而" +
+    "四种食材需要的上限为|#ff9900|8-5-4-15||。如果任意单位食材数量超过要求，则|#0033cc|游戏结束||。|n|最终总分达到|#ffcc00|" +
+    "100||分，则|#0033cc|游戏结束||。";
             // 
             // bitmapButtonC1
             // 
