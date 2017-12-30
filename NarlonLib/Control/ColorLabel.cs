@@ -6,6 +6,8 @@ namespace NarlonLib.Control
 {
     public partial class ColorLabel : Label
     {
+        public bool TextBorder;
+
         public ColorLabel()
         {
             InitializeComponent();
@@ -20,28 +22,39 @@ namespace NarlonLib.Control
             foreach (string data in datas)
             {
                 int xoff = 0;
-                if (data.IndexOf('|') >= 0)
+                var checkData = data;
+                if (checkData.IndexOf('|') < 0)
+                    checkData = "|" + checkData; //强行加一个头
+
+                string[] text = checkData.Split('|');
+                for (int i = 0; i < text.Length; i += 2)
                 {
-                    string[] text = data.Split('|');
-                    for (int i = 0; i < text.Length; i += 2)
+                    Color color = ForeColor;
+                    if (text[i] != "")
+                        color = DrawTool.GetColorFromHtml(text[i]);
+
+                    var textWidth = TextRenderer.MeasureText(e.Graphics, text[i + 1], Font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
+
+                    Brush brush = new SolidBrush(color);
+                    var textToDraw = text[i+1];
+                    while (textWidth + xoff > Width-5)//自动回车功能的支持
                     {
-                        Color color = ForeColor;
-                        if (text[i] != "")
-                        {
-                            color = DrawTool.GetColorFromHtml(text[i]);
-                        }
-                        Brush brush = new SolidBrush(color);
-                        e.Graphics.DrawString(text[i + 1], Font, brush, xoff, Font.Height * line, StringFormat.GenericTypographic);
-                        brush.Dispose();
-                        xoff += (int)TextRenderer.MeasureText(e.Graphics, text[i + 1], Font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
+                        int showCharCount = textToDraw.Length*(Width - 5 - xoff)/textWidth;
+                        if (TextBorder)
+                            e.Graphics.DrawString(textToDraw.Substring(0, showCharCount), Font, Brushes.DimGray, xoff + 1, Font.Height * line + 1, StringFormat.GenericTypographic);
+                        e.Graphics.DrawString(textToDraw.Substring(0, showCharCount), Font, brush, xoff, Font.Height * line, StringFormat.GenericTypographic);
+                        textWidth -= Width - 5 - xoff;
+                        xoff = 0;
+                        line++;
+                        textToDraw = textToDraw.Substring(showCharCount);
                     }
-                }
-                else
-                {
-                    Brush brush = new SolidBrush(ForeColor);
-                    e.Graphics.DrawString(data, Font, brush, 0, Font.Height * line, StringFormat.GenericTypographic);
+                    if (TextBorder)
+                        e.Graphics.DrawString(textToDraw, Font, Brushes.DimGray, xoff + 1, Font.Height * line + 1, StringFormat.GenericTypographic);
+                    e.Graphics.DrawString(textToDraw, Font, brush, xoff, Font.Height * line, StringFormat.GenericTypographic);
                     brush.Dispose();
+                    xoff += textWidth;
                 }
+
                 line++;
             }
         }

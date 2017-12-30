@@ -20,6 +20,10 @@ namespace TaleofMonsters.Forms
         public override void Init(int width, int height)
         {
             base.Init(width, height);
+
+            var storyConfig = ConfigData.GetDungeonStoryConfig(UserProfile.InfoDungeon.StoryId);
+            colorLabel1.TextBorder = true;
+            colorLabel1.Text = storyConfig.Descript;
         }
 
         private void StoryForm_Paint(object sender, PaintEventArgs e)
@@ -37,17 +41,6 @@ namespace TaleofMonsters.Forms
             var img = PicLoader.Read("Dungeon.Story", string.Format("{0}.JPG", storyConfig.Image));
             e.Graphics.DrawImage(img, xOff, yOff, 474, 364);
             img.Dispose();
-
-            Font font2 = new Font("宋体", 11 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            e.Graphics.DrawString(storyConfig.Descript, font2, Brushes.White, xOff + 5 + 1, yOff + 5 + 1);
-            if (!string.IsNullOrEmpty(storyConfig.RuleStr))
-            {
-                var items = storyConfig.RuleStr.Split('|');
-                int line = 0;
-                foreach (var item in items)
-                    e.Graphics.DrawString("★"+item, font2, Brushes.Lime, xOff + 15 + 1, yOff + 35 + 20*(line++) + 1);
-            } 
-            font2.Dispose();
         }
 
         private void bitmapButtonClose_Click(object sender, EventArgs e)

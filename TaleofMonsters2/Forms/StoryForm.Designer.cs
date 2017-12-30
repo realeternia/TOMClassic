@@ -31,6 +31,7 @@ namespace TaleofMonsters.Forms
         private void InitializeComponent()
         {
             this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
+            this.colorLabel1 = new NarlonLib.Control.ColorLabel();
             this.SuspendLayout();
             // 
             // bitmapButtonClose
@@ -50,10 +51,22 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonClose.UseVisualStyleBackColor = true;
             this.bitmapButtonClose.Click += new System.EventHandler(this.bitmapButtonClose_Click);
             // 
+            // colorLabel1
+            // 
+            this.colorLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.colorLabel1.Font = new System.Drawing.Font("SimSun", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
+            this.colorLabel1.ForeColor = System.Drawing.Color.White;
+            this.colorLabel1.Location = new System.Drawing.Point(18, 60);
+            this.colorLabel1.Name = "colorLabel1";
+            this.colorLabel1.Size = new System.Drawing.Size(464, 163);
+            this.colorLabel1.TabIndex = 40;
+            this.colorLabel1.Text = "|这是一个";
+            // 
             // StoryForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.colorLabel1);
             this.Controls.Add(this.bitmapButtonClose);
             this.Name = "StoryForm";
             this.Size = new System.Drawing.Size(500, 414);
@@ -64,5 +77,6 @@ namespace TaleofMonsters.Forms
 
         #endregion
         private BitmapButton bitmapButtonClose;
+        private ColorLabel colorLabel1;
     }
 }
