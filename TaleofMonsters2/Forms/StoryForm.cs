@@ -41,6 +41,10 @@ namespace TaleofMonsters.Forms
             var img = PicLoader.Read("Dungeon.Story", string.Format("{0}.JPG", storyConfig.Image));
             e.Graphics.DrawImage(img, xOff, yOff, 474, 364);
             img.Dispose();
+
+            var brush = new SolidBrush(Color.FromArgb(100, Color.Black));
+            e.Graphics.FillRectangle(brush, xOff, yOff, 474, 364);
+            brush.Dispose();
         }
 
         private void bitmapButtonClose_Click(object sender, EventArgs e)

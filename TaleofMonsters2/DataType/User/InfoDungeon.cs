@@ -4,6 +4,7 @@ using ConfigDatas;
 using NarlonLib.Log;
 using NarlonLib.Math;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType.Blesses;
 using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.MainItem;
 using TaleofMonsters.MainItem.Blesses;
@@ -334,8 +335,8 @@ namespace TaleofMonsters.DataType.User
             var storyConfig = ConfigData.GetDungeonStoryConfig(StoryId);
             if (storyConfig.CardId > 0)
                 UserProfile.InfoCard.AddDungeonCard(storyConfig.CardId);
-            if(storyConfig.BlessId > 0)
-                BlessManager.AddBless(storyConfig.BlessId, 999);
+            if(!string.IsNullOrEmpty(storyConfig.BlessId))
+                BlessManager.AddBless(BlessBook.GetBlessByName(storyConfig.BlessId), 999);
         }
 
         public void CheckStoryOnLeave()
@@ -344,8 +345,8 @@ namespace TaleofMonsters.DataType.User
                 return;
 
             var storyConfig = ConfigData.GetDungeonStoryConfig(StoryId);
-            if (storyConfig.BlessId > 0)
-                BlessManager.RemoveBless(storyConfig.BlessId);
+            if (!string.IsNullOrEmpty(storyConfig.BlessId))
+                BlessManager.RemoveBless(BlessBook.GetBlessByName(storyConfig.BlessId));
         }
 
         #endregion

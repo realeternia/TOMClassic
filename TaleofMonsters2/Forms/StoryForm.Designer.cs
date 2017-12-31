@@ -56,7 +56,7 @@ namespace TaleofMonsters.Forms
             this.colorLabel1.BackColor = System.Drawing.Color.Transparent;
             this.colorLabel1.Font = new System.Drawing.Font("SimSun", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
             this.colorLabel1.ForeColor = System.Drawing.Color.White;
-            this.colorLabel1.Location = new System.Drawing.Point(18, 60);
+            this.colorLabel1.Location = new System.Drawing.Point(22, 51);
             this.colorLabel1.Name = "colorLabel1";
             this.colorLabel1.Size = new System.Drawing.Size(464, 163);
             this.colorLabel1.TabIndex = 40;
