@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
-using NarlonLib.Drawing;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Peoples;
@@ -49,15 +48,8 @@ namespace TaleofMonsters.Controler.Battle
             base.Init(width, height);
 
             isWin = BattleManager.Instance.StatisticData.PlayerWin;
-            if (isWin)
-            {
-                SoundManager.Play("System", "QuestCompleted.wav");
-            }
-            else
-            {
-                SoundManager.Play("System", "Failed.mp3");
-            }
-            
+            SoundManager.Play("System", isWin ? "QuestCompleted.wav" : "Failed.mp3");
+
             rightId = BattleManager.Instance.PlayerManager.RightPlayer.PeopleId;
             leftId = BattleManager.Instance.PlayerManager.LeftPlayer.PeopleId;
             if (leftId == 0)
@@ -125,9 +117,7 @@ namespace TaleofMonsters.Controler.Battle
         private void Reward()
         {
             if (leftId > 0)
-            {
                 return;
-            }
 
             if (isWin)
             {
@@ -143,9 +133,7 @@ namespace TaleofMonsters.Controler.Battle
             }
 
             foreach (var itemId in rewardItemList)
-            {
                 UserProfile.InfoBag.AddItem(itemId, 1);
-            }
             UserProfile.InfoBasic.AddExp((int)exp);
             UserProfile.InfoBag.AddResource(resource);
         }
@@ -163,7 +151,7 @@ namespace TaleofMonsters.Controler.Battle
             var region = vRegion.GetRegion(id);
             if (region != null)
             {
-                region.ShowTip(tooltip, Parent, x, y);
+                region.ShowTip(tooltip, Parent, x + Location.X, y + Location.Y);
             }
         }
 
@@ -247,13 +235,9 @@ namespace TaleofMonsters.Controler.Battle
         private static string GetDamageStr(int dam)
         {
             if (dam < 100)
-            {
                 return string.Format("{0,2:D}", dam);
-            }
             if (dam < 1000)
-            {
                 return dam.ToString();
-            }
             return string.Format("{0}K", dam/1000);
         }
         
