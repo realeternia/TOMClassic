@@ -49,7 +49,7 @@ namespace TaleofMonsters.MainItem.Scenes
         }
 
         private static void FilterSpecialData(List<SceneInfo.SceneScriptSpecialData> mapSpecialData, Dictionary<int, DbSceneSpecialPosData> mapMemSpecialData)
-        {
+        {//把写死在场景上的事件判定一次
             foreach (var specialPosData in mapSpecialData)
             {
                 if (specialPosData.Type == "Quest")
@@ -100,6 +100,8 @@ namespace TaleofMonsters.MainItem.Scenes
                     }
                 }
                 Scene.Instance.Rule.CheckReplace(specialData);//副本内可能需要做story替换
+                if (!SceneQuestBook.IsQuestAvail(specialData.Info))
+                    specialData.Info = 0; //兜底一次，放置事件在副本内可以反复触发
                 mapMemorySpecialData[specialData.Id] = specialData;
 
                 posList.Add(specialData);

@@ -22,11 +22,23 @@ namespace TaleofMonsters.MainItem.Scenes.SceneRules
                 foreach (var questData in SceneQuestBook.GetDungeonQuestConfigData(UserProfile.InfoDungeon.DungeonId))
                     for (int j = 0; j < questData.Value; j++)
                         UserProfile.InfoWorld.SavedDungeonQuests.Add(questData.Id);
+                if (UserProfile.InfoDungeon.StoryId > 0)
+                {//增加任务
+                    var storyConfig = ConfigData.GetDungeonStoryConfig(UserProfile.InfoDungeon.StoryId);
+                    if (storyConfig.EventAdd != null && storyConfig.EventAdd.Length > 0)
+                    {
+                        foreach (var checkItem in storyConfig.EventAdd)
+                        {
+                            var questId = SceneQuestBook.GetSceneQuestByName(checkItem);
+                            UserProfile.InfoWorld.SavedDungeonQuests.Add(questId);
+                        }
+                    }
+                }
                 ArraysUtils.RandomShuffle(UserProfile.InfoWorld.SavedDungeonQuests);
             }
 
             if (UserProfile.InfoDungeon.StoryId > 0)
-            {
+            {//替换任务
                 var storyConfig = ConfigData.GetDungeonStoryConfig(UserProfile.InfoDungeon.StoryId);
                 if (!string.IsNullOrEmpty(storyConfig.EventReplace))
                 {

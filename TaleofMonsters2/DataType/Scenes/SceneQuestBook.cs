@@ -231,8 +231,7 @@ namespace TaleofMonsters.DataType.Scenes
                 {
                     string[] questData = info.Split(';');
                     int qid = GetSceneQuestByName(questData[0]);
-                    if (IsQuestAvail(qid))
-                        datas.Add(new RLIdValue { Id = qid, Value = int.Parse(questData[1]) });
+                    datas.Add(new RLIdValue {Id = qid, Value = int.Parse(questData[1])});
                 }
             }
             return datas;

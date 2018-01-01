@@ -145,6 +145,11 @@ namespace TaleofMonsters.DataType.User
                 if (UserProfile.InfoDungeon.Step > config.StepCost)
                     return false;
             }
+            if (config.NeedStory > 0)
+            {
+                if (UserProfile.InfoDungeon.StoryId != config.NeedStory)
+                    return false;
+            }
             return true;
         }
     }
