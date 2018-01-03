@@ -71,9 +71,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
         public virtual bool OnClick()
         {
             if (!SceneManager.CanPlayerMove(Id, UserProfile.Profile.InfoBasic.Position))
-            {
                 return false;
-            }
 
             uint moveCost = (uint) Math.Max(0, GameConstants.SceneMoveCost + BlessManager.MoveFoodChange);
             if (UserProfile.Profile.InfoBasic.FoodPoint >= moveCost)
@@ -87,7 +85,8 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             }
             if (BlessManager.MoveCostHp)
                 UserProfile.InfoBasic.SubHealth(moveCost);
-
+            if (Disabled && BlessManager.MoveSameCostFood)
+                UserProfile.InfoBasic.SubFood(moveCost);
             return true;
         }
 

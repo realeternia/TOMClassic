@@ -66,6 +66,7 @@ namespace TaleofMonsters.MainItem.Blesses
                 cache.MoveFoodChange += config.MoveFoodChange;
                 cache.MoveDistance += config.MoveDistance;
                 cache.MoveCostHp |= config.MoveCostHp;
+                cache.MoveSameCostFood |= config.MoveSameCostFood;
                 cache.PunishFoodMulti += config.PunishFoodMulti;
                 cache.PunishGoldMulti += config.PunishGoldMulti;
                 cache.PunishHealthMulti += config.PunishHealthMulti;
@@ -122,6 +123,10 @@ namespace TaleofMonsters.MainItem.Blesses
         public static bool MoveCostHp
         {
             get { return cache.MoveCostHp; }
+        }
+        public static bool MoveSameCostFood
+        {
+            get { return cache.MoveSameCostFood; }
         }
         public static int PunishFoodMulti
         {
