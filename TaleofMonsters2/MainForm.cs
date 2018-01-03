@@ -31,7 +31,8 @@ namespace TaleofMonsters
         private Thread workThread;
         private int timeTick;
         private long lastMouseMoveTime;
-        
+        private MainFlowController flowController;
+
         public MainForm()
         {
             InitializeComponent();
@@ -49,6 +50,7 @@ namespace TaleofMonsters
                 Height = 720;
             }
             myCursor = new HSCursor(this);
+            flowController = new MainFlowController(tabPageGame);
             Instance = this;
         }
         
@@ -110,6 +112,14 @@ namespace TaleofMonsters
             }
             page = pg;
             viewStack1.SelectedIndex = page;
+        }
+
+        private void AddFlow(string msg, string color)
+        {           
+            if (!string.IsNullOrEmpty(msg))
+            {
+                flowController.Add(msg, Color.FromName(color), new Point(200,200));
+            }
         }
 
         private void buttonLogin_Click(object sender, EventArgs e)
@@ -238,6 +248,8 @@ namespace TaleofMonsters
                             GMCodeZone.OnFrame();
 
                         Scene.Instance.TimeGo(0.05f);
+                        if (flowController != null)
+                            flowController.CheckTick();
                     }
                     catch (Exception e)
                     {
@@ -270,6 +282,7 @@ namespace TaleofMonsters
 
                 SystemMenuManager.DrawAll(e.Graphics);
                 MainTipManager.DrawAll(e.Graphics);
+                flowController.DrawAll(e.Graphics);
 
                 if (SystemMenuManager.GMMode) //希望在最上层，所以必须最后绘制
                     GMCodeZone.Paint(e.Graphics, tabPageGame.Width, tabPageGame.Height);

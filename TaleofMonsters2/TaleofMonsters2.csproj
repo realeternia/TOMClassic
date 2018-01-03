@@ -291,6 +291,7 @@
       <DependentUpon>StoryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainItem\Blesses\BlessManager.cs" />
+    <Compile Include="MainItem\MainFlowController.cs" />
     <Compile Include="MainItem\Quests\TalkEventItem.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemEnd.cs" />
     <Compile Include="MainItem\Quests\TalkEventItemGame.cs" />
