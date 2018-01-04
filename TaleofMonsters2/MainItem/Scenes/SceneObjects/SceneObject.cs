@@ -46,12 +46,14 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 
             UserProfile.Profile.InfoWorld.UpdatePosMapSetting(Id, isSet);
         }
+
         public void AddFlag(ScenePosFlagType flagType)
         {
             Flag |= (uint)flagType;
 
             UserProfile.Profile.InfoWorld.UpdatePosFlag(Id, Flag);
         }
+
         public bool HasFlag(ScenePosFlagType flagType)
         {
             return (Flag & (uint)flagType) != 0;
@@ -74,19 +76,31 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                 return false;
 
             uint moveCost = (uint) Math.Max(0, GameConstants.SceneMoveCost + BlessManager.MoveFoodChange);
+            uint healthSub = 0;
+            uint foodSub = 0;
             if (UserProfile.Profile.InfoBasic.FoodPoint >= moveCost)
             {
-                UserProfile.InfoBasic.SubFood(moveCost);
+                foodSub += moveCost;
                 UserProfile.InfoBasic.AddHealth(moveCost);
             }
             else
             {
-                UserProfile.InfoBasic.SubHealth(moveCost * 2);
+                healthSub += (moveCost * 2);
             }
             if (BlessManager.MoveCostHp)
-                UserProfile.InfoBasic.SubHealth(moveCost);
+                healthSub += moveCost;
             if (Disabled && BlessManager.MoveSameCostFood)
-                UserProfile.InfoBasic.SubFood(moveCost);
+                foodSub += moveCost;
+            if (healthSub > 0)
+            {
+                UserProfile.InfoBasic.SubHealth(healthSub);
+                MainForm.Instance.AddFlow((-healthSub).ToString(), "oth5", Color.Red, new Point(X, Y - 30));
+            }
+            if (foodSub > 0)
+            {
+                UserProfile.InfoBasic.SubFood(foodSub);
+                MainForm.Instance.AddFlow((-foodSub).ToString(), "oth7", Color.Green, new Point(X, Y - 30));
+            }
             return true;
         }
 

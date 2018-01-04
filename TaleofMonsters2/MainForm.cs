@@ -114,11 +114,11 @@ namespace TaleofMonsters
             viewStack1.SelectedIndex = page;
         }
 
-        private void AddFlow(string msg, string color)
+        public void AddFlow(string msg, string icon, Color color, Point pos)
         {           
             if (!string.IsNullOrEmpty(msg))
             {
-                flowController.Add(msg, Color.FromName(color), new Point(200,200));
+                flowController.Add(msg, icon, color, pos);
             }
         }
 
