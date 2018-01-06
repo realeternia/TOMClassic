@@ -54,7 +54,7 @@ namespace TaleofMonsters.MainItem.Scenes
             {
                 if (specialPosData.Type == "Quest")
                 {
-                    if (!SceneQuestBook.IsQuestAvail(specialPosData.Info))
+                    if (!SceneQuestBook.IsQuestAvail(specialPosData.Info, true))
                         continue;
                 }
                 mapMemSpecialData[specialPosData.Id] = new DbSceneSpecialPosData
@@ -100,7 +100,7 @@ namespace TaleofMonsters.MainItem.Scenes
                     }
                 }
                 Scene.Instance.Rule.CheckReplace(specialData);//副本内可能需要做story替换
-                if (!SceneQuestBook.IsQuestAvail(specialData.Info))
+                if (!SceneQuestBook.IsQuestAvail(specialData.Info, false))
                     specialData.Info = 0; //兜底一次，放置事件在副本内可以反复触发
                 mapMemorySpecialData[specialData.Id] = specialData;
 

@@ -45,10 +45,15 @@ namespace TaleofMonsters.DataType.Scenes
             return ImageManager.GetImage(fname);
         }
 
-        public static bool IsQuestAvail(int qid)
+        public static bool IsQuestAvail(int qid, bool checkRandom)
         {
             var questConfig = ConfigData.GetSceneQuestConfig(qid);
-            return IsQuestTimeAvail(questConfig) && IsQuestFlagAvail(questConfig) && IsQuestRateAvail(questConfig);
+            if (checkRandom)
+            {
+                if (!IsQuestRateAvail(questConfig))
+                    return false;
+            }
+            return IsQuestTimeAvail(questConfig) && IsQuestFlagAvail(questConfig);
         }
 
         private static bool IsQuestTimeAvail(SceneQuestConfig questConfig)
@@ -77,17 +82,9 @@ namespace TaleofMonsters.DataType.Scenes
                 var qid = QuestBook.GetQuestIdByName(questConfig.TriggerQuestFinished);
                 return UserProfile.InfoQuest.IsQuestFinish(qid) || UserProfile.InfoQuest.IsQuestCanReward(qid);
             }
-            if (questConfig.TriggerOnceInDungeon && UserProfile.InfoDungeon.DungeonId > 0)
+            if (questConfig.TriggerLimitInDungeon > 0 && UserProfile.InfoDungeon.DungeonId > 0)
             {
-                if (!UserProfile.InfoDungeon.Quests.Contains(questConfig.Id))
-                {
-                    UserProfile.InfoDungeon.Quests.Add(questConfig.Id);
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return UserProfile.InfoDungeon.GetQuestCount(questConfig.Id) < questConfig.TriggerLimitInDungeon;
             }
             return true;
         }
@@ -140,7 +137,7 @@ namespace TaleofMonsters.DataType.Scenes
                 {
                     string[] questData = info.Split(';');
                     int qid = GetSceneQuestByName(questData[0]);
-                    if(IsQuestAvail(qid))
+                    if(IsQuestAvail(qid, true))
                         datas.Add(new RLIdValue { Id = qid, Value = int.Parse(questData[1]) });
                 }
             }
@@ -154,7 +151,7 @@ namespace TaleofMonsters.DataType.Scenes
                     if (MathTool.GetRandom(100)<rate)//概率事件
                     {
                         int qid = GetSceneQuestByName(questData[0]);
-                        if (IsQuestAvail(qid))
+                        if (IsQuestAvail(qid, true))
                             datas.Add(new RLIdValue { Id = qid, Value = 1 });
                     }
                 }

@@ -27,7 +27,6 @@ namespace TaleofMonsters.DataType.User
         [FieldIndex(Index = 11)] public int FightWin;
         [FieldIndex(Index = 12)] public int FightLoss;
         [FieldIndex(Index = 13)] public List<IntPair> Items; //副本道具
-        [FieldIndex(Index = 14)] public List<int> Quests; //sqlist
 
         [FieldIndex(Index = 22)] public int StrAddon; //力量改变值
         [FieldIndex(Index = 23)] public int AgiAddon; //敏捷改变值
@@ -39,7 +38,6 @@ namespace TaleofMonsters.DataType.User
         {
             EventList = new List<DbGismoState>();
             Items = new List<IntPair>();
-            Quests = new List<int>();
         }
 
         public void Enter(int dungeonId) //进入副本需要初始化
@@ -48,7 +46,6 @@ namespace TaleofMonsters.DataType.User
 
             EventList = new List<DbGismoState>();
             Items = new List<IntPair>();
-            Quests = new List<int>();
             FightWin = 0;
             FightLoss = 0;
 
@@ -80,6 +77,17 @@ namespace TaleofMonsters.DataType.User
                 UserProfile.InfoGismo.CheckEventList();
                 NLog.Debug("OnEventEnd " +id.ToString() + " " + type);
             }
+        }
+
+        /// <summary>
+        /// 获取一个任务已经完成的次数
+        /// </summary>
+        public int GetQuestCount(int qid)
+        {
+            if (DungeonId <= 0)
+                return 0;
+
+            return EventList.FindAll(v => v.BaseId == qid).Count;
         }
 
         public bool CheckQuestCount(int qid, string state, int countNeed, bool needContinue)
