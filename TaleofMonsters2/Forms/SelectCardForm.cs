@@ -88,7 +88,9 @@ namespace TaleofMonsters.Forms
         {
             if (inMouseOn)
             {
-                g.FillRectangle(Brushes.DarkGreen, xOff, yOff, 200, 300 - 30);
+                var brush = new SolidBrush(Color.FromArgb(30,30,30));
+                g.FillRectangle(brush, xOff, yOff, 200, 300 - 30);
+                brush.Dispose();
             }
             g.DrawRectangle(Pens.Thistle, 1 + xOff, yOff, 200 - 2, 300 - 30);
 

@@ -340,13 +340,9 @@ namespace TaleofMonsters.MainItem.Scenes
             foreach (var sceneObject in SceneInfo.Items)
             {
                 if (sceneObject.Id == cellTar)
-                {
                     dest = sceneObject;
-                }
                 if (sceneObject.Id == UserProfile.InfoBasic.Position)
-                {
                     src = sceneObject;
-                }
             }
 
             if (dest!=null && dest.OnClick())

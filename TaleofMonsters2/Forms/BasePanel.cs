@@ -49,21 +49,17 @@ namespace TaleofMonsters.Forms
             if (flows.Count>0)
             {
                 FlowData[] datas = flows.ToArray();
-                foreach (FlowData flowData in datas)
+                foreach (var flowData in datas)
                 {
                     flowData.Time--;
                     if (flowData.Time<11)
-                    {
                         flowData.Y -= 2 + (12-flowData.Time)/4*3;
-                    }                    
                 }
 
-                foreach (FlowData flowData in datas)
+                foreach (var flowData in datas)
                 {
                     if (flowData.Time < 0)
-                    {
                         flows.Remove(flowData);
-                    }
                 }
                 Invalidate();
             }

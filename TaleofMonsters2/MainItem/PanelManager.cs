@@ -11,7 +11,7 @@ namespace TaleofMonsters.MainItem
     internal class PanelManager
     {
         private static List<BasePanel> panelList = new List<BasePanel>(); //受到esc影响关闭的面板，都在这里
-        public static int panelCount;
+        public static int PanelCount;
 
         private static int formWidth;
         private static int formHeight;
@@ -47,7 +47,7 @@ namespace TaleofMonsters.MainItem
             }
             panel.Init(formWidth, formHeight);
             MainForm.Instance.AddPanelAct(panel);
-            panelCount++;
+            PanelCount++;
         }
 
         public static void RemovePanel(BasePanel panel)
@@ -64,7 +64,7 @@ namespace TaleofMonsters.MainItem
             panel.OnRemove();
             MainForm.Instance.RemovePanelAct(panel);
             panelList.Remove(panel);
-            panelCount--;
+            PanelCount--;
         }
 
         public static BasePanel FindPanel(Type type)

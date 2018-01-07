@@ -136,9 +136,7 @@ namespace TaleofMonsters.DataType.User
             {
                 int expNeed = ExpTree.GetNextRequiredCard(card.Level);
                 if (card.Exp < expNeed)
-                {
                     return false;
-                }
                 return true;
             }
             return false;
@@ -185,6 +183,8 @@ namespace TaleofMonsters.DataType.User
                 Exp = 99
             };
             DungeonDeck.Add(newCard);
+            var cardData = CardConfigManager.GetCardConfig(cardId);
+            MainTipManager.AddTip(string.Format("|获得副本卡片-|{0}|{1}", HSTypes.I2QualityColor((int)cardData.Quality), cardData.Name), "White");
         }
     }
 }

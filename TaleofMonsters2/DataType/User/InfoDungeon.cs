@@ -252,9 +252,7 @@ namespace TaleofMonsters.DataType.User
             foreach (var pickItem in Items)
             {
                 if (pickItem.Type == itemId)
-                {
                     return pickItem.Value >= count;
-                }
             }
             return false;
         }
