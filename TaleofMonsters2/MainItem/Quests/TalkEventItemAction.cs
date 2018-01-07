@@ -19,6 +19,7 @@ namespace TaleofMonsters.MainItem.Quests
 
         public override void Init()
         {
+            base.Init();
             switch (evt.Type)
             {
                 case "reset": Scene.Instance.ResetScene(); break;

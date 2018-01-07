@@ -4,7 +4,7 @@
 			r1
 				s还好，你获得了朋友的协助，逃出了流沙
 					a很好
-						edisable
+						eaction|disable
 			r2
 				s虽然你逃了出来，但还是丢失了很多东西
 					a真不幸

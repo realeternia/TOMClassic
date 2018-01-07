@@ -61,9 +61,7 @@ namespace TaleofMonsters.Forms
                 {
                     interactBlock = evtItem.GetResult();
                     if (interactBlock is SceneQuestSay)
-                    {
                         SetupQuestItem();
-                    }
                     else if (interactBlock == null)
                     {
                         answerList.Clear();
@@ -110,9 +108,7 @@ namespace TaleofMonsters.Forms
                 {
                     var evt = interactBlock.Children[0] as SceneQuestEvent;
                     if (evt.Type == "npc")
-                    {
                         tar = -1; //为了修一个显示bug
-                    }
                     var region = new Rectangle(10, Height - 10 - 5*20 - 160, Width - 20, 160);
                     evtItem = TalkEventItem.CreateEventItem(CellId, EventId, eventLevel, this, region, evt);
                     evtItem.Init();
@@ -183,9 +179,7 @@ namespace TaleofMonsters.Forms
                 event1.ParamList[1] = questConfig.ProgressAdd.ToString();
             }
             foreach (var child in sb.Children)
-            {
                 ModifyQuestState(child, questConfig);
-            }
         }
 
         private void NpcTalkForm_Paint(object sender, PaintEventArgs e)
@@ -204,9 +198,7 @@ namespace TaleofMonsters.Forms
                 border.Dispose();
 
                 if (evtItem != null)
-                {
                     evtItem.Draw(e.Graphics);
-                }
 
                 colorWord.Draw(e.Graphics);
 
@@ -217,9 +209,7 @@ namespace TaleofMonsters.Forms
                     foreach (var word in answerList)
                     {
                         if (id == tar)
-                        {
                             e.Graphics.FillRectangle(Brushes.DarkBlue, 10, id * 20 + Height - 10 - answerList.Count * 20, Width - 20, 20);
-                        }
 
                         int textOff = 20;
                         if (!string.IsNullOrEmpty(word.Prefix))

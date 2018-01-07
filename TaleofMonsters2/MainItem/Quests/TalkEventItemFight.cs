@@ -36,9 +36,7 @@ namespace TaleofMonsters.MainItem.Quests
                 parm.RuleLevel = int.Parse(evt.ParamList[1]);
             }
             if (enemyId == 1)//特殊处理标记
-            {
                 enemyId = UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.SceneQuestRandPeopleId);
-            }
             int fightLevel = Math.Max(1, level + BlessManager.FightLevelChange);
             var peopleConfig = ConfigData.GetPeopleConfig(enemyId);
 
@@ -70,17 +68,13 @@ namespace TaleofMonsters.MainItem.Quests
             {
                 var healthSub = GameResourceBook.OutHealthSceneQuest(BlessManager.FightFailSubHealth * 100);
                 if (healthSub > 0)
-                {
                     UserProfile.Profile.InfoBasic.SubHealth(healthSub);
-                }
             }
             if (BlessManager.FightFailSubMental > 0)
             {
                 var mentalSub = GameResourceBook.OutMentalSceneQuest(BlessManager.FightFailSubMental * 100);
                 if (mentalSub > 0)
-                {
                     UserProfile.Profile.InfoBasic.SubMental(mentalSub);
-                }
             }
         }
 
@@ -95,17 +89,13 @@ namespace TaleofMonsters.MainItem.Quests
             {
                 var healthAdd = GameResourceBook.InHealthSceneQuest(BlessManager.FightWinAddHealth * 100);
                 if (healthAdd > 0)
-                {
                     UserProfile.Profile.InfoBasic.AddHealth(healthAdd);
-                }
             }
             if (BlessManager.FightWinAddExp > 0)
             {
                 var expAdd = GameResourceBook.InExpSceneQuest(level, BlessManager.FightWinAddExp * 100);
                 if (expAdd > 0)
-                {
                     UserProfile.Profile.InfoBasic.AddExp((int)expAdd);
-                }
             }
         }
 
