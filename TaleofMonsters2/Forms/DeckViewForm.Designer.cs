@@ -171,7 +171,7 @@ namespace TaleofMonsters.Forms
             this.Controls.Add(this.bitmapButtonPre);
             this.DoubleBuffered = true;
             this.Name = "DeckViewForm";
-            this.Size = new System.Drawing.Size(810, 605);
+            this.Size = new System.Drawing.Size(840, 605);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.DeckViewForm_Paint);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DeckViewForm_MouseClick);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DeckViewForm_MouseMove);

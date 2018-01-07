@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
 using TaleofMonsters.Config;
+using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards;
@@ -95,9 +96,7 @@ namespace TaleofMonsters.Forms.Items
         public DeckCard GetTargetCard()
         {
             if (tar >= 0 && tar < dcards.Length)
-            {
                 return dcards[tar];
-            }
             return null;
         }
 
@@ -111,17 +110,11 @@ namespace TaleofMonsters.Forms.Items
                 if (temp != tar)
                 {
                     if (temp < dcards.Length)
-                    {
                         tar = temp;
-                    }
                     else
-                    {
                         tar = -1;
-                    }
                     if (Invalidate != null)
-                    {
                         Invalidate();
-                    }
                 }
             }
             else
@@ -130,73 +123,81 @@ namespace TaleofMonsters.Forms.Items
                 {
                     tar = -1;
                     if (Invalidate != null)
-                    {
                         Invalidate();
-                    }
                 }
             }
         }
 
-        public void Draw(Graphics eg)
+        public void Draw(Graphics g)
         {
-            eg.DrawRectangle(Pens.White,X,Y,Width,Height);
+            g.DrawRectangle(Pens.White,X,Y,Width,Height);
 
-            Font fontsong = new Font("宋体", 11*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            Font fontBold = new Font("宋体", 11*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+            Font fontsong = new Font("宋体", 10.5f*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            Font fontBold = new Font("宋体", 10.5f * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+            var border = PicLoader.Read("Border", "cardborder2.PNG");
+            var mask = PicLoader.Read("Border", "cardmask.PNG");
             for (int i = 0; i < dcards.Length; i++)
             {
                 int yoff = i * cellHeight;
                 if (dcards[i].BaseId <= 0)
                 {//如果没有卡
-                    eg.DrawRectangle(Pens.DimGray, X, Y + yoff, Width, cellHeight);
+                    g.DrawRectangle(Pens.DimGray, X, Y + yoff, Width, cellHeight);
                     continue;
                 }
 
+                var cardConfigData = CardConfigManager.GetCardConfig(dcards[i].BaseId);
+                var cardImg = CardAssistant.GetCardImage(dcards[i].BaseId, 80, 80);
+                g.DrawImage(border, X, Y + yoff, Width-25, cellHeight);
+                g.DrawImage(cardImg, new Rectangle(X+Width-50, Y + yoff, 50, cellHeight), 0, 6, 80, 30, GraphicsUnit.Pixel);
+                g.DrawImage(mask, X + Width - 50, Y + yoff, 50, cellHeight);
+
                 if (tar == i)
                 {
-                    eg.FillRectangle(Brushes.DarkBlue, X, Y + yoff, Width, cellHeight);
+                    var blueBrush = new SolidBrush(Color.FromArgb(150, Color.Yellow));
+                    g.FillRectangle(blueBrush, X, Y + yoff, Width, cellHeight);
+                    blueBrush.Dispose();
                 }
-                var cardConfigData = CardConfigManager.GetCardConfig(dcards[i].BaseId);
-                var cardImg = CardAssistant.GetCardImage(dcards[i].BaseId, 30, 30);
-                eg.DrawImage(cardImg, new Rectangle(X, Y + yoff, 30, cellHeight), 0, 6, 30, cellHeight, GraphicsUnit.Pixel);
+
+                int nameOff = 22;
                 if (cardConfigData.JobId > 0)
                 {
                     var jobConfig = ConfigData.GetJobConfig(cardConfigData.JobId);
                     Brush brush = new SolidBrush(Color.FromName(jobConfig.Color));
-                    eg.FillRectangle(brush, X + Width - cellHeight, Y + yoff, cellHeight, cellHeight);
-                    eg.DrawImage(HSIcons.GetIconsByEName("job" + jobConfig.JobIndex), X+Width-cellHeight, Y + yoff, cellHeight, cellHeight);
+                    g.FillRectangle(brush, X + nameOff, Y + yoff, cellHeight, cellHeight);
+                    g.DrawImage(HSIcons.GetIconsByEName("job" + jobConfig.JobIndex), X+ nameOff, Y + yoff, cellHeight, cellHeight);
                     brush.Dispose();
+                    nameOff += cellHeight;
                 }
-                eg.DrawString(cardConfigData.Star.ToString(), fontBold, Brushes.Gold, X-1, Y + yoff);
+                g.DrawString(cardConfigData.Star.ToString(), fontBold, Brushes.Gold, X+5, Y + yoff+2);
                 Color color = Color.FromName(HSTypes.I2QualityColor((int)cardConfigData.Quality));
                 Brush colorBrush = new SolidBrush(color);
                 var cardName = cardConfigData.Name;
-                if (cardName.Length>4)
-                {
+                if (cardName.Length > 4)
                     cardName = cardName.Substring(0, 4);
-                }
-                eg.DrawString(string.Format("{0}({1})", cardName, dcards[i].Level), fontsong, colorBrush, X + 30, Y + yoff);
+                g.DrawString(string.Format("{0}Lv{1}", cardName, dcards[i].Level), fontsong, colorBrush, X + nameOff, Y + yoff+2);
                 colorBrush.Dispose();
             }
 
             if (monsterCount > 0)
             {
                 Pen p = new Pen(Color.Yellow, 2);
-                eg.DrawRectangle(p, X, Y, Width-1, monsterCount * cellHeight - 1);
+                g.DrawRectangle(p, X, Y, Width-1, monsterCount * cellHeight - 1);
                 p.Dispose();
             }
             if (weaponCount > 0)
             {
                 Pen p = new Pen(Color.Red, 2);
-                eg.DrawRectangle(p, X, Y + monsterCount * cellHeight, Width-1,  weaponCount * cellHeight-1);
+                g.DrawRectangle(p, X, Y + monsterCount * cellHeight, Width-1,  weaponCount * cellHeight-1);
                 p.Dispose();
             }
             if (spellCount > 0)
             {
                 Pen p = new Pen(Color.Blue, 2);
-                eg.DrawRectangle(p, X, Y + (monsterCount + weaponCount) * cellHeight, Width-1, spellCount * cellHeight-1);
+                g.DrawRectangle(p, X, Y + (monsterCount + weaponCount) * cellHeight, Width-1, spellCount * cellHeight-1);
                 p.Dispose();
             }
+            border.Dispose();
+            mask.Dispose();
             fontsong.Dispose();
             fontBold.Dispose();
         }

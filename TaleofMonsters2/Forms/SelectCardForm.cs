@@ -99,20 +99,17 @@ namespace TaleofMonsters.Forms
                 var cardStart = (info - 1)*3;
                 Font font = new Font("微软雅黑", 11 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
                 Font fontStar = new Font("微软雅黑", 15 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+                var border = PicLoader.Read("Border", "cardborder.PNG");
+                var mask = PicLoader.Read("Border", "cardmask.PNG");
                 for (int i = 0; i < 3; i++)
                 {
-                    var border = PicLoader.Read("Border", "cardborder.PNG");
                     g.DrawImage(border, xOff, yOff + 10 + i * 40, 196, 32);
-                    border.Dispose();
 
                     var cardId = cardIdList[i+cardStart];
                     var img = DataType.Cards.CardAssistant.GetCardImage(cardId, 80, 80);
                     g.DrawImage(img, new Rectangle(xOff+110, yOff+15 + i * 40, 80, 22), 0, 6, 80, 24, GraphicsUnit.Pixel);
-
-                    var mask = PicLoader.Read("Border", "cardmask.PNG");
                     g.DrawImage(mask, xOff + 110, yOff + 15 + i * 40, 80, 22);
-                    mask.Dispose();
-
+                  
                     var cardData = CardConfigManager.GetCardConfig(cardId);
                     Color color = Color.FromName(HSTypes.I2QualityColor((int)cardData.Quality));
                     g.DrawString(cardData.Star.ToString(), fontStar, Brushes.Gold, xOff + 5, yOff + 12 + i * 40);
@@ -120,6 +117,8 @@ namespace TaleofMonsters.Forms
                     g.DrawString(cardData.Name, font, brush, xOff+30, yOff + 15 + i * 40);
                     brush.Dispose();
                 }
+                border.Dispose();
+                mask.Dispose();
                 fontStar.Dispose();
                 font.Dispose();
             }

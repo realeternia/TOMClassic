@@ -77,7 +77,7 @@ namespace TaleofMonsters.Forms
             SubVirtualRegion region;
             for (int i = 0; i < 2; i++)
             {
-                region = new ButtonRegion(i + 1, 12+120+85*i, 40, 74, 24, "CommonButton1.JPG", "");
+                region = new ButtonRegion(i + 1, 12+150+85*i, 40, 74, 24, "CommonButton1.JPG", "");
                 region.AddDecorator(new RegionTextDecorator(8, 7, 10, Color.Black));
                 vRegion.AddRegion(region);
             }
@@ -110,13 +110,13 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonDel.ImageNormal = PicLoader.Read("Button.Panel", "DelButton.JPG");
             bitmapButtonDel.NoUseDrawNine = true;
           
-            cardDetail = new CardDetail(this, 605, 35, 565);
+            cardDetail = new CardDetail(this, 635, 35, 565);
             cardDetail.Enabled = true;
             cardDetail.Invalidate += DetailInvalidate;
-            deckStatistic = new CardDeckStatistic(605, 35, 565);
-            cardRegion = new DeckCardRegion(5+120, 35 + yoff, 480, 510);
+            deckStatistic = new CardDeckStatistic(635, 35, 565);
+            cardRegion = new DeckCardRegion(5+150, 35 + yoff, 480, 510);
             cardRegion.Invalidate += DeckInvalidate;
-            selectRegion = new DeckSelectCardRegion(5, 35, 120, 540);
+            selectRegion = new DeckSelectCardRegion(5, 35, 150, 540);
             selectRegion.Invalidate += SelectDeckInvalidate;
 
             popMenuDeck = new PopMenuDeck();
