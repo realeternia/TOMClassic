@@ -48,32 +48,25 @@ namespace TaleofMonsters.DataType.Items
         private static bool UseItem(ItemConsumerConfig itemConfig)
         {
             if (itemConfig.ResourceId > 0)
-            {
                 UserProfile.InfoBag.AddResource((GameResourceType)(itemConfig.ResourceId - 1), (uint)itemConfig.ResourceCount);
-            }
             if (itemConfig.GainExp > 0)
-            {
                 UserProfile.InfoBasic.AddExp(itemConfig.GainExp);
-            }
             if (itemConfig.GainFood > 0)
-            {
                 UserProfile.InfoBasic.AddFood((uint)itemConfig.GainFood);
-            }
             if (itemConfig.GainHealth > 0)
-            {
                 UserProfile.InfoBasic.AddHealth((uint)itemConfig.GainHealth);
-            }
             if (itemConfig.GainMental > 0)
-            {
                 UserProfile.InfoBasic.AddMental((uint)itemConfig.GainMental);
-            }
             if (itemConfig.BlessId > 0)
-            {
                 BlessManager.AddBless(itemConfig.BlessId);
-            }
             if (!string.IsNullOrEmpty(itemConfig.Instruction))
-            {
                 CheckInstruction(itemConfig.Instruction);
+            if (itemConfig.DungeonAttr != null && itemConfig.DungeonAttr.Length > 0)
+            {
+                if (UserProfile.InfoDungeon.DungeonId < 0)
+                    return false;
+                UserProfile.InfoDungeon.ChangeAttr(itemConfig.DungeonAttr[0], itemConfig.DungeonAttr[1]
+                    , itemConfig.DungeonAttr[2], itemConfig.DungeonAttr[3], itemConfig.DungeonAttr[4]);
             }
             return true;
         }
@@ -82,23 +75,13 @@ namespace TaleofMonsters.DataType.Items
         {
             var player = BattleManager.Instance.PlayerManager.LeftPlayer;
             if (itemConfig.GainLp > 0)
-            {
                 player.AddLp(itemConfig.GainLp);
-            }
             if (itemConfig.GainPp > 0)
-            {
                 player.AddPp(itemConfig.GainPp);
-            }
             if (itemConfig.GainMp > 0)
-            {
                 player.AddMp(itemConfig.GainMp);
-            }
-
             if (itemConfig.DirectDamage > 0)
-            {
                 player.SpecialAttr.DirectDamage += itemConfig.DirectDamage;
-            }
-
             if (itemConfig.FightRandomCardType > 0)
             {
                 int cardId = CardConfigManager.GetRandomTypeCard(itemConfig.FightRandomCardType);
@@ -106,18 +89,9 @@ namespace TaleofMonsters.DataType.Items
                 player.CardManager.AddCard(card);
             }
             if (!string.IsNullOrEmpty(itemConfig.HolyWord))
-            {
                 player.AddHolyWord(itemConfig.HolyWord);
-            }
-
-            if (itemConfig.AttrAddAfterSummon != null && itemConfig.AttrAddAfterSummon.Length>0)
-            {
-                player.AddMonsterAddon(itemConfig.AttrAddAfterSummon);
-            }
             if (itemConfig.AddTowerHp > 0)
-            {
                 player.AddTowerHp(itemConfig.AddTowerHp);
-            }
             return true;
         }
 
@@ -151,13 +125,9 @@ namespace TaleofMonsters.DataType.Items
                 {
                     var isEquip = ConfigIdManager.IsEquip(itemId);
                     if (isEquip)
-                    {
                         UserProfile.InfoEquip.AddEquip(itemId, 60*24);
-                    }
                     else
-                    {
                         UserProfile.InfoBag.AddItem(itemId, 1);
-                    }
                     countList.Add(1);
                 }
                 var form = new ItemPackageForm();

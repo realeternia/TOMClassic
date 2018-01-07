@@ -101,7 +101,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public int CardNumber { get { return CardManager.GetCardNumber(); } }
 
         private List<string> holyWordList = new List<string>(); //圣言，一些特殊效果的指令
-        private List<int[]> monsterAddonOnce = new List<int[]>(); //一次性的强化
 
         protected bool noCardOutPunish; //没有卡牌消耗完的惩罚
 
@@ -373,14 +372,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 LiveMonster newMon = new LiveMonster(card.Level, mon, location, IsLeft);
                 BattleManager.Instance.MonsterQueue.Add(newMon);
 
-                var addon = GetAllMonsterAddonAndClear();//这个属性目前可以来自药水
-                if (addon.Length > 0)
-                {
-                    foreach (var add in addon)
-                        if (add.Length > 1)
-                            newMon.AddBasicData(add[0], add[1]);
-                }
-
                 var rival = Rival as Player;
                 rival.TrapHolder.CheckTrapOnSummon(newMon, rival);
             }
@@ -558,18 +549,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public bool HasHolyWord(string word)
         {
             return holyWordList.Contains(word);
-        }
-
-        public void AddMonsterAddon(int[] addon)
-        {
-            monsterAddonOnce.Add(addon);
-        }
-
-        public int[][] GetAllMonsterAddonAndClear()
-        {
-            var data = monsterAddonOnce.ToArray();
-            monsterAddonOnce.Clear();
-            return data;
         }
 
         public void AddTowerHp(int hp)
