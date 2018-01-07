@@ -231,6 +231,16 @@ namespace TaleofMonsters.DataType.Scenes
                     datas.Add(new RLIdValue {Id = qid, Value = int.Parse(questData[1])});
                 }
             }
+            if (!string.IsNullOrEmpty(config.QuestDungeonRate))
+            {
+                string[] infos = config.QuestDungeonRate.Split('|');
+                foreach (var info in infos)
+                {
+                    string[] questData = info.Split(';');
+                    int qid = GetSceneQuestByName(questData[0]);
+                    datas.Add(new RLIdValue { Id = qid, Value = int.Parse(questData[1]) });
+                }
+            }
             return datas;
         }
 
