@@ -13,16 +13,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             List<Point> availPoints = new List<Point>();
             foreach (var point in posList)
             {
-                if (BattleLocationManager.IsPlaceCanMove(point.X, point.Y))
-                {
+                if (BattleManager.Instance.MemMap.IsPlaceCanMove(point.X, point.Y))
                     availPoints.Add(point);
-                }
             }
             
             while (availPoints.Count > count)
-            {
                 availPoints.RemoveAt(MathTool.GetRandom(availPoints.Count));
-            }
 
             return availPoints;
         }
@@ -46,16 +42,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             List<Point> availPoints = new List<Point>();
             foreach (var point in posList)
             {
-                if (BattleLocationManager.IsPlaceCanMove(point.X, point.Y))
-                {
+                if (BattleManager.Instance.MemMap.IsPlaceCanMove(point.X, point.Y))
                     availPoints.Add(point);
-                }
             }
 
             if (availPoints.Count > 0)
-            {
                 return availPoints[MathTool.GetRandom(availPoints.Count)];
-            }
             return new Point(-1);
         }
 
@@ -71,24 +63,16 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             if (type == "back") //击退
             {
                 if (!isLeft)
-                {
                     posLis.Add(new Point(pos.X + size, pos.Y));
-                }
                 else
-                {
                     posLis.Add(new Point(pos.X - size, pos.Y));
-                }
             }
             if (type == "come") //拉过来
             {
                 if (!isLeft)
-                {
                     posLis.Add(new Point(pos.X - size, pos.Y));
-                }
                 else
-                {
                     posLis.Add(new Point(pos.X + size, pos.Y));
-                }
             }
             if (type == "around") //随机
             {
@@ -99,7 +83,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             }
             if (type == "rand") //随机
             {
-                posLis.Add(BattleLocationManager.GetRandomPoint());
+                posLis.Add(BattleManager.Instance.MemMap.GetRandomPoint());
             }
             return posLis;
         }

@@ -13,6 +13,9 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             get { return MonsterConfig.Id; }
         }
 
+        public int AtkP { get; set; }
+        public int VitP { get; set; }
+
         public int Atk { get; set; }
         public int Hp { get; set; }//成长属性
 
@@ -33,6 +36,8 @@ namespace TaleofMonsters.DataType.Cards.Monsters
         public Monster(int id)
         {
             MonsterConfig = ConfigData.GetMonsterConfig(id);
+            AtkP = MonsterConfig.AtkP;
+            VitP = MonsterConfig.VitP;
             Def = MonsterConfig.Def;
             Spd = MonsterConfig.Spd;
             Mag = MonsterConfig.Mag;
@@ -82,8 +87,8 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             Level = level;
 
             int standardValue = (20 + MonsterConfig.Star * 12) * (level*8 + 92) / 100 * (200 + modify) / 200;
-            Atk = standardValue * (100 + MonsterConfig.AtkP) / 100; //200
-            Hp = standardValue * (100 + MonsterConfig.VitP) / 100 * 5; //200
+            Atk = standardValue * (100 + AtkP) / 100; //200
+            Hp = standardValue * (100 + VitP) / 100 * 5; //200
             if (Range!=10)
             {
                 Atk = (int)(Atk * CardAssistant.GetCardFactorOnRange(Range));

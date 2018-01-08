@@ -35,7 +35,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
         {
             mon.OwnerPlayer.Modifier.CheckMonsterEvent(true, mon);
             monsters.Add(mon);
-            BattleLocationManager.UpdateCellOwner(mon.Position.X, mon.Position.Y, mon.Id);
+            BattleManager.Instance.MemMap.UpdateCellOwner(mon.Position, mon.Id);
             mon.OnInit();
             if (mon.IsLeft)
                 LeftCount++;
@@ -52,7 +52,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
         {
             mon.OwnerPlayer.Modifier.CheckMonsterEvent(false, mon);
             if (BattleManager.Instance.MemMap.GetMouseCell(mon.Position.X, mon.Position.Y).Owner == -mon.Id)
-                BattleLocationManager.ClearCellOwner(mon.Position.X, mon.Position.Y);
+                BattleManager.Instance.MemMap.UpdateCellOwner(mon.Position, 0);
             monsters.Remove(mon);                                
         }
 

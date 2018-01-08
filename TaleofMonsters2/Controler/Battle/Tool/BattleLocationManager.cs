@@ -24,24 +24,26 @@ namespace TaleofMonsters.Controler.Battle.Tool
         {
             MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(dest.X, dest.Y);
             if (!point.CanMove) //todo 暂时不考虑飞行单位
-            {
                 return;
-            }
 
             if (point.Owner != 0)
-            {
                 return;
-            }
 
-            ClearCellOwner(lm.Position.X, lm.Position.Y);
+            BattleManager.Instance.MemMap.UpdateCellOwner(lm.Position, 0);
             lm.Position = new Point(point.X, point.Y);
-            UpdateCellOwner(point.X, point.Y, lm.Id);
+            BattleManager.Instance.MemMap.UpdateCellOwner(lm.Position, lm.Id);
         }
 
         public static bool IsPlaceBlank(int tx, int ty)
         {
             MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
             return point.Owner == 0;
+        }
+
+        public static bool IsPlaceTomb(int tx, int ty)
+        {
+            MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
+            return point.Owner < 0;
         }
 
         public static bool IsPlaceCanSummon(int mid, int tx, int ty, bool isLeft)
@@ -65,21 +67,6 @@ namespace TaleofMonsters.Controler.Battle.Tool
             }
         }
 
-        public static bool IsPlaceCanMove(int tx, int ty)
-        {
-            if (tx < 0 || ty < 0 || tx >= BattleManager.Instance.MemMap.StageWidth || ty >= BattleManager.Instance.MemMap.StageHeight)
-                return false;
-
-            MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
-            return point.CanMove && point.Owner == 0;
-        }
-
-        public static bool IsPlaceTomb(int tx, int ty)
-        {
-            MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
-            return point.Owner < 0;
-        }
-
         public static bool IsPlaceCanCast(int tx, int ty, string target) //玩家专用函数
         {
             if (BattleTargetManager.IsSpellNullTarget(target))
@@ -94,16 +81,12 @@ namespace TaleofMonsters.Controler.Battle.Tool
                 if (BattleTargetManager.IsSpellTombTarget(target))
                 {
                     if (!IsPlaceTomb(tx, ty) || !deskMon.IsGhost)
-                    {
                         return false;
-                    }
                 }
                 else if (BattleTargetManager.IsSpellUnitTarget(target))
                 {
                     if (deskMon.IsGhost)
-                    {
                         return false;
-                    }
                 }
 
                 if (deskMon.IsLeft && BattleTargetManager.IsPlaceFriendMonster(target))
@@ -171,38 +154,6 @@ namespace TaleofMonsters.Controler.Battle.Tool
                     return false;
             }
             return true;
-        }
-
-        public static void UpdateCellOwner(int x, int y, int owner)
-        {
-            int cardSize = BattleManager.Instance.MemMap.CardSize;
-            int mid = BattleManager.Instance.MemMap.Cells[x / cardSize, y / cardSize].Owner;
-            if (mid < 0)//小于0，理论上不能走
-            {
-                return;
-            }
-            BattleManager.Instance.MemMap.Cells[x / cardSize, y / cardSize].UpdateOwner(owner);
-        }
-
-        public static void ClearCellOwner(int x, int y)
-        {
-            int cardSize = BattleManager.Instance.MemMap.CardSize;
-            BattleManager.Instance.MemMap.Cells[x / cardSize, y / cardSize].UpdateOwner(0);
-        }
-
-        public static Point GetRandomPoint()
-        {
-            bool paavail = false;
-            Point pa = new Point(0);
-            while (!paavail)
-            {
-                int size = BattleManager.Instance.MemMap.CardSize;
-                int xoff = MathTool.GetRandom(BattleManager.Instance.MemMap.Cells.GetLength(0));
-                int yoff = MathTool.GetRandom(BattleManager.Instance.MemMap.Cells.GetLength(1));
-                pa = new Point(xoff * size, yoff * size);
-                paavail = IsPlaceCanMove(pa.X, pa.Y);
-            }
-            return pa;
         }
     }
 }

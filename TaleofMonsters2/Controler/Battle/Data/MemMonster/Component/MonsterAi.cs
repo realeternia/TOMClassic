@@ -39,9 +39,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                     if (targetEnemy.IsAlive && CanAttack(targetEnemy))
                     {
                         if (monster.AddAts())
-                        {
                             CheckFight(targetEnemy);
-                        }
                         return;
                     }
                 }
@@ -111,8 +109,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             else
             {
                 BasicMissileControler controler = new TraceMissileControler(monster, nearestEnemy);
-                Missile mi = new Missile(monster.Arrow, monster.Position.X, monster.Position.Y, controler);
-                BattleManager.Instance.MissileQueue.Add(mi);
+                Missile selectMissile = new Missile(monster.Arrow, monster.Position.X, monster.Position.Y, controler);
+                BattleManager.Instance.MissileQueue.Add(selectMissile);
             }
 
             if (monster.RealSpd != 0) //会返回一些ats
@@ -140,7 +138,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 goX = false;
             }
 
-            if (!BattleLocationManager.IsPlaceCanMove(aimPos.X, aimPos.Y))
+            if (!BattleManager.Instance.MemMap.IsPlaceCanMove(aimPos.X, aimPos.Y))
             {
                 if (goX)//绕过不可行走区域
                     aimPos = MonsterPositionHelper.GetAvailPoint(monster.Position, "side", monster.IsLeft,1);
@@ -149,14 +147,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             }
 
             if (aimPos.X != monster.Position.X || aimPos.Y != monster.Position.Y)
-            {
                 BattleLocationManager.SetToPosition(monster, aimPos);
-            }
 
             if (monster.ReadMov > 10) //会返回一些ats
-            {
                 monster.AddActionRate((float) (monster.ReadMov - 10)/monster.ReadMov);
-            }
             monster.MovRound++;
         }
 
@@ -171,9 +165,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             int score = 10000-mon.Hp;
             score += mon.RealRange*10;//优先打远程单位
             if (MonsterBook.HasTag(mon.CardId, "taunt"))
-            {
                 score += 100000;
-            }
             return score;
         }
     }

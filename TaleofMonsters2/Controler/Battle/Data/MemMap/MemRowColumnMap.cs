@@ -8,11 +8,12 @@ using TaleofMonsters.DataType.Maps;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType.Others;
 using ConfigDatas;
+using NarlonLib.Math;
 using TaleofMonsters.DataType;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMap
 {
-    internal class MemRowColumnMap:IMap
+    internal class MemRowColumnMap : IMap
     {
         private const int stageWidth = 880;
         private const int stageHeight = 396;
@@ -22,15 +23,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         public int ColumnCount { get; private set; }
         public int RowCount { get; private set; }
 
-        public int StageWidth
-        {
-            get { return stageWidth; }
-        }
-
-        public int StageHeight
-        {
-            get { return stageHeight; }
-        }
+        public int StageWidth { get { return stageWidth; } }
+        public int StageHeight { get { return stageHeight; } }
 
         public MemMapPoint[,] Cells { get; set; }
 
@@ -72,18 +66,29 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             var unitsPos = player.IsLeft ? bMapInfo.LeftUnits : bMapInfo.RightUnits;
             foreach (var unitInfo in unitsPos)
             {
-                var isKingTower = ConfigData.GetMonsterConfig(unitInfo.UnitId).Type == (int) CardTypeSub.KingTower;
+                var oldTowerConfig = ConfigData.GetMonsterConfig(unitInfo.UnitId);
+                var isKingTower = oldTowerConfig.Type == (int) CardTypeSub.KingTower;
                 var unitId = unitInfo.UnitId;
+                var towerData = new Monster(unitId);
                 if (isKingTower)
                 {
                     if (player.PeopleId > 0) //王塔替换
                     {
                         var peopleConfig = ConfigData.GetPeopleConfig(player.PeopleId);
                         if (peopleConfig.KingTowerId > 0)
+                        {
                             unitId = peopleConfig.KingTowerId;
+                            var newTowerConfig = ConfigData.GetMonsterConfig(unitId);
+                            towerData = new Monster(unitId);
+                            if (newTowerConfig.Type != (int) CardTypeSub.KingTower) //普通单位转化为王塔
+                            {
+                                towerData.AtkP += oldTowerConfig.AtkP;
+                                towerData.VitP += oldTowerConfig.VitP;
+                            }
+                        }
                     }
                 }
-                var towerData = new Monster(unitId);
+
                 var level = ConfigData.GetLevelExpConfig(player.Level).TowerLevel;
                 var towerUnit = new TowerMonster(level, towerData, isKingTower, new Point(unitInfo.X * CardSize, unitInfo.Y * CardSize), player.IsLeft);
 
@@ -94,16 +99,16 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             var monList = player.GetInitialMonster();//只有aiplayer有效
             if (monList != null && monList.Count >= 3)
             {
-                for (int i = 0; i < monList.Count; i+=3)
+                for (int i = 0; i < monList.Count; i += 3)
                 {
                     int mid = monList[i];
-                    int xoff = monList[i+1];
-                    int yoff = monList[i+2];
+                    int xoff = monList[i + 1];
+                    int yoff = monList[i + 2];
 
                     var level = ConfigData.GetLevelExpConfig(player.Level).TowerLevel;
                     var mon = new Monster(mid);
                     mon.UpgradeToLevel(level);
-                    var pos = new Point(xoff * CardSize, yoff * CardSize);
+                    var pos = new Point(xoff*CardSize, yoff*CardSize);
                     LiveMonster lm = new LiveMonster(level, mon, pos, player.IsLeft);
                     BattleManager.Instance.MonsterQueue.Add(lm);
                 }
@@ -125,13 +130,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             int[] xOrder;
             int rowid = y/CardSize;
             if (isLeft)
-            {
-                xOrder = isShooter ? new int[] {10, 9, 8, 7, 6} : new int[] {6, 7, 8, 9 ,10};
-            }
+                xOrder = isShooter ? new int[] {10, 9, 8, 7, 6} : new int[] {6, 7, 8, 9, 10};
             else
-            {
-                xOrder = isShooter ? new int[] { 0,1,2,3,4 } : new int[] { 4,3,2,1,0 };
-            }
+                xOrder = isShooter ? new int[] {0, 1, 2, 3, 4} : new int[] {4, 3, 2, 1, 0};
 
             for (int j = rowid; j >= 0; j--)
             {
@@ -139,9 +140,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                 {
                     var cell = Cells[i, j];
                     if (cell.Owner > 0 && cell.Owner != mid)
-                    {
                         return cell.Owner;
-                    }
                 }
             }
 
@@ -153,15 +152,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             foreach (var memMapPoint in Cells)
             {
                 if (BattleLocationManager.IsPointInRegionType(RegionTypes.Circle, point.X, point.Y, memMapPoint.ToPoint(), dis, true))//地形和方向无关，随便填一个
-                {
                     memMapPoint.Tile = tile;
-                }
             }
             tiles.Clear();
             foreach (var memMapPoint in Cells)
-            {
                 tiles[memMapPoint.Tile == 9 ? 0 : memMapPoint.Tile]++;
-            }
             isDirty = true;
         }
 
@@ -169,26 +164,35 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         {
             for (int i = 1; i < ColumnCount-1; i++)
             {
-                LiveMonster lm = BattleLocationManager.GetPlaceMonster(i * CardSize, y);
-                if (lm == null)
+                LiveMonster pickMon = BattleLocationManager.GetPlaceMonster(i * CardSize, y);
+                if (pickMon == null)
                     continue;
 
-                if (lm.IsGhost || isLeft && lm.IsLeft)
+                if (pickMon.IsGhost || isLeft && pickMon.IsLeft)
                     continue;
 
-                lm.Action.SetToPosition(type, 1);
+                pickMon.Action.SetToPosition(type, 1);
             }
+        }
+        
+        public bool IsPlaceCanMove(int tx, int ty)
+        {
+            if (tx < 0 || ty < 0 || tx >= StageWidth || ty >= StageHeight)
+                return false;
+
+            MemMapPoint point = GetMouseCell(tx, ty);
+            return point.CanMove && point.Owner == 0;
         }
 
         public MonsterCollection GetAllMonster(System.Drawing.Point mouse)
         {
             List<IMonster> monsters = new List<IMonster>();
-            foreach (LiveMonster mon in BattleManager.Instance.MonsterQueue.Enumerator)
+            foreach (var pickMon in BattleManager.Instance.MonsterQueue.Enumerator)
             {
-                if (mon.IsGhost)
+                if (pickMon.IsGhost)
                     continue;
 
-                monsters.Add(mon);
+                monsters.Add(pickMon);
             }
             return new MonsterCollection(monsters, mouse);
         }
@@ -197,17 +201,17 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         {
             List<IMonster> monsters = new List<IMonster>();
             RegionTypes rt = BattleTargetManager.GetRegionType(shape[0]);
-            foreach (var mon in BattleManager.Instance.MonsterQueue.Enumerator)
+            foreach (var pickMon in BattleManager.Instance.MonsterQueue.Enumerator)
             {
-                if (mon.IsGhost)
+                if (pickMon.IsGhost)
                     continue;
 
-                if ((BattleTargetManager.IsSpellEnemyMonster(target[0]) && isLeft != mon.Owner.IsLeft) || (BattleTargetManager.IsSpellFriendMonster(target[0]) && isLeft == mon.Owner.IsLeft))
+                if ((BattleTargetManager.IsSpellEnemyMonster(target[0]) && isLeft != pickMon.Owner.IsLeft) || (BattleTargetManager.IsSpellFriendMonster(target[0]) && isLeft == pickMon.Owner.IsLeft))
                 {
-                    if (!BattleLocationManager.IsPointInRegionType(rt, mouse.X, mouse.Y, mon.Position, range, isLeft))
+                    if (!BattleLocationManager.IsPointInRegionType(rt, mouse.X, mouse.Y, pickMon.Position, range, isLeft))
                         continue;
 
-                    monsters.Add(mon);
+                    monsters.Add(pickMon);
                 }
             }
 
@@ -218,17 +222,17 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         {
             List<IMonster> monsters = new List<IMonster>();
             RegionTypes rt = BattleTargetManager.GetRegionType(shape[0]);
-            foreach (var mon in BattleManager.Instance.MonsterQueue.Enumerator)
+            foreach (var pickMon in BattleManager.Instance.MonsterQueue.Enumerator)
             {
-                if (!mon.IsGhost)
+                if (!pickMon.IsGhost)
                     continue;
 
-                if ((BattleTargetManager.IsSpellEnemyMonster(target[0]) && isLeft != mon.Owner.IsLeft) || (BattleTargetManager.IsSpellFriendMonster(target[0]) && isLeft == mon.Owner.IsLeft))
+                if ((BattleTargetManager.IsSpellEnemyMonster(target[0]) && isLeft != pickMon.Owner.IsLeft) || (BattleTargetManager.IsSpellFriendMonster(target[0]) && isLeft == pickMon.Owner.IsLeft))
                 {
-                    if (!BattleLocationManager.IsPointInRegionType(rt, mouse.X, mouse.Y, mon.Position, range, isLeft))
+                    if (!BattleLocationManager.IsPointInRegionType(rt, mouse.X, mouse.Y, pickMon.Position, range, isLeft))
                         continue;
 
-                    monsters.Add(mon);
+                    monsters.Add(pickMon);
                 }
             }
 
@@ -242,31 +246,25 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             lm.DeleteWeapon();
             lm.AddHp(addHp);
             if (lm.Owner != player)//复活了对方的怪，就招过来了
-            {
                 lm.Action.Rebel();
-            }
         }
 
         public void ReviveUnit(IPlayer player, Point mouse, int addHp)
         {
-            int oid = BattleManager.Instance.MemMap.GetMouseCell(mouse.X, mouse.Y).Owner;
+            int oid = GetMouseCell(mouse.X, mouse.Y).Owner;
             if (oid < 0)
-            {
                 ReviveUnit(player, BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(-oid), addHp);
-            }
         }
 
         public void UpdateCellOwner(Point mouse, int ownerId)
         {
-            if (ownerId == 0)
-                BattleLocationManager.ClearCellOwner(mouse.X, mouse.Y);
-            else
-                BattleLocationManager.UpdateCellOwner(mouse.X, mouse.Y, ownerId);    
+            var cell = GetMouseCell(mouse.X, mouse.Y);
+            cell.UpdateOwner(ownerId);
         }
 
         public void RemoveTomb(Point mouse)
         {
-            int oid = BattleManager.Instance.MemMap.GetMouseCell(mouse.X, mouse.Y).Owner;
+            int oid = GetMouseCell(mouse.X, mouse.Y).Owner;
             if (oid < 0)
             {
                 var mon = BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(-oid);
@@ -276,7 +274,15 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
 
         public Point GetRandomPoint()
         {
-            return BattleLocationManager.GetRandomPoint();
+            bool paavail = false;
+            Point pa = new Point(0);
+            while (!paavail)
+            {
+                pa.X = MathTool.GetRandom(Cells.GetLength(0)) * CardSize;
+                pa.Y = MathTool.GetRandom(Cells.GetLength(1)) * CardSize;
+                paavail = IsPlaceCanMove(pa.X, pa.Y);
+            }
+            return pa;
         }
 
         public void Draw(Graphics g)
@@ -285,9 +291,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             {
                 isDirty = false;
                 if (cachImage!=null)
-                {
                     cachImage.Dispose();
-                }
                 cachImage = new Bitmap(stageWidth, stageHeight);
                 Graphics cg = Graphics.FromImage(cachImage);
 
