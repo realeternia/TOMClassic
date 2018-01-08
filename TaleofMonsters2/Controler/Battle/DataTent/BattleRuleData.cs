@@ -10,13 +10,12 @@ namespace TaleofMonsters.Controler.Battle.DataTent
 {
     internal class BattleRuleData
     {
-        public BattleRuleData()
-        {
-
-        }
-
         public PeopleFightParm Parm { get; set; }
 
+        public BattleRuleData()
+        {
+        }
+        
         public void CheckPlayerData(Player p)
         {
             if (Parm.Reason == PeopleFightReason.SceneQuest)
@@ -47,16 +46,12 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 if (lm.IsLeft) //必然是玩家
                 {//health低的惩罚
                     if (UserProfile.InfoBasic.HealthPoint < 60)
-                    {
                         lm.AddHpRate(Math.Max(1.0, UserProfile.InfoBasic.HealthPoint)/60 - 1);
-                    }
                 }
                 else
                 {
                     if (Parm.RuleAddon == PeopleFightRuleAddon.TowerHp)
-                    {
                         lm.AddMaxHp(lm.MaxHp.Source*(Parm.RuleLevel*40)/100);
-                    }
                 }
             }
         }
@@ -69,9 +64,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 if (!p.IsLeft)
                 {
                     if (Parm.RuleAddon == PeopleFightRuleAddon.AddUnit)
-                    {
                         list.AddRange(addon);
-                    }
                 }
             }
         }
@@ -83,9 +76,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 if (!p.IsLeft)
                 {
                     if (Parm.RuleAddon == PeopleFightRuleAddon.Card)
-                    {
                         p.DrawNextNCard(null, Parm.RuleLevel, AddCardReasons.InitCard);
-                    }
                 }
             }
         }

@@ -3,7 +3,6 @@ using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
-using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;
 
 namespace TaleofMonsters.Controler.Battle.DataTent
@@ -39,13 +38,9 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             BattleLocationManager.UpdateCellOwner(mon.Position.X, mon.Position.Y, mon.Id);
             mon.OnInit();
             if (mon.IsLeft)
-            {
                 LeftCount++;
-            }
             else
-            {
                 RightCount++;
-            }
         }
 
         public void AddDelay(LiveMonster mon)
@@ -83,9 +78,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             for (int i = 0; i < monsters.Count; i++)
             {
                 if (monsters[i].Id == System.Math.Abs(id))
-                {
                     return monsters[i];
-                }
             }
             return null;
         }
@@ -94,11 +87,9 @@ namespace TaleofMonsters.Controler.Battle.DataTent
         {
             for (int i = 0; i < monsters.Count; i++)
             {
-                var lm = monsters[i];
-                if (lm.IsLeft == isLeft && lm.Type == (int)CardTypeSub.KingTower)
-                {
-                    return lm;
-                }
+                var towerUnit = monsters[i] as TowerMonster;
+                if (towerUnit != null && towerUnit.IsLeft == isLeft && towerUnit.IsKing)
+                    return towerUnit;
             }
             return null;
         }
@@ -130,9 +121,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                         else
                             mon.GhostTime+=0.01f;
                         if (mon.GhostTime>=1)
-                        {
                             removeMids.Add(mon.Id);
-                        }
                     }
                 }
                 else
@@ -144,7 +133,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             BattleManager.Instance.PlayerManager.LeftPlayer.SpecialAttr.DirectDamage = 0;//伤害清除
             BattleManager.Instance.PlayerManager.RightPlayer.SpecialAttr.DirectDamage = 0;
 
-            foreach (int mid in removeMids)
+            foreach (var mid in removeMids)
             {
                 Remove(mid);
             }
@@ -160,18 +149,14 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             }
 
             foreach (var lm in toAdd)//添加延时怪
-            {
                 Add(lm);
-            }
             toAdd.Clear();
         }
 
         public void OnPlayerUseCard(IPlayer caster, int cardType, int lv)
         {
             foreach (var mon in monsters)
-            {
                 mon.SkillManager.CheckUseCard(caster, cardType, lv);
-            }
         }
 
         public void Clear()

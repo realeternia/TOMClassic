@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using ConfigDatas;
+using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards.Monsters;
@@ -8,9 +9,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 {
     internal class TowerMonster : LiveMonster
     {
-        public TowerMonster(int level, Monster mon, Point point, bool isLeft) 
+        public bool IsKing { get; private set; }
+
+        public TowerMonster(int level, Monster mon, bool isKing, Point point, bool isLeft) 
             : base(level, mon, point, isLeft)
         {
+            IsKing = isKing;
         }
 
         protected override void DrawImg(Graphics g)
@@ -20,13 +24,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             {
                 img = MonsterBook.GetMonsterImage(Avatar.Id, 100, 100);
                 if (img != null)
-                {
                     g.DrawImage(img, 0, 0, 100, 100);
-                }
                 return;
             }
-            
-            if ( OwnerPlayer.Modifier.CoreId != 0)
+
+            if (OwnerPlayer.Modifier.CoreId != 0)
             {
                 EquipConfig equipConfig = ConfigData.GetEquipConfig(OwnerPlayer.Modifier.CoreId);
                 img = PicLoader.Read("Equip.Big", string.Format("{0}.JPG", equipConfig.Url));
@@ -40,9 +42,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             {
                 img = MonsterBook.GetMonsterImage(Avatar.Id, 100, 100);
                 if (img != null)
-                {
                     g.DrawImage(img, 0, 0, 100, 100);
-                }
             }
 
             if (OwnerPlayer.Modifier.Wall1Id != 0)
@@ -91,12 +91,18 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
                 string arrow = Avatar.MonsterConfig.Arrow;
                 if (wid > 0)
-                {
                     arrow = ConfigData.GetEquipConfig(wid).Arrow;
-                }
 
                 return arrow;
             }
+        }
+
+        public override void OnDie()
+        {
+            base.OnDie();
+
+            if(IsKing)
+                OwnerPlayer.IsAlive = false;
         }
     }
 }

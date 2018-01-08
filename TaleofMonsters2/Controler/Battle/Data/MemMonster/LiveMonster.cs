@@ -344,41 +344,27 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             return false;
         }
 
-        public void OnDie()
+        public virtual void OnDie()
         {
             GhostTime = 0.01f;//开始死亡
             BattleManager.Instance.MemMap.GetMouseCell(Position.X,Position.Y).UpdateOwner(-Id);
-            if (Avatar.MonsterConfig.Type == (int)CardTypeSub.KingTower)
+            if (!IsLeft)
             {
-                if (!IsLeft)
+                if (Rival is HumanPlayer)
                 {
-                    if (Rival is HumanPlayer)
+                    if (BattleManager.Instance.StatisticData.Items.Count < GameConstants.MaxDropItemGetOnBattle)
                     {
+                        int itemId = CardPieceBook.CheckPieceDrop(Avatar.Id, peakDamagerLuk);
+                        if (itemId > 0)
+                        {
+                            BattleManager.Instance.StatisticData.AddItemGet(itemId);
+                            BattleManager.Instance.FlowWordQueue.Add(new FlowItemInfo(itemId, Position, 20, 50));
+                        }
                         UserProfile.Profile.OnKillMonster(Avatar.MonsterConfig.Star, Avatar.MonsterConfig.Type, Avatar.MonsterConfig.Type);
                     }
                 }
-                OwnerPlayer.IsAlive = false;
             }
-            else
-            {
-                if (!IsLeft)
-                {
-                    if (Rival is HumanPlayer)
-                    {
-                        if (BattleManager.Instance.StatisticData.Items.Count < GameConstants.MaxDropItemGetOnBattle)
-                        {
-                            int itemId = CardPieceBook.CheckPieceDrop(Avatar.Id, peakDamagerLuk);
-                            if (itemId > 0)
-                            {
-                                BattleManager.Instance.StatisticData.AddItemGet(itemId);
-                                BattleManager.Instance.FlowWordQueue.Add(new FlowItemInfo(itemId, Position, 20, 50));
-                            }
-                            UserProfile.Profile.OnKillMonster(Avatar.MonsterConfig.Star, Avatar.MonsterConfig.Type, Avatar.MonsterConfig.Type);
-                        }
-                    }
-                }
-                BattleManager.Instance.StatisticData.GetPlayer(!IsLeft).Kill++;
-            }
+            BattleManager.Instance.StatisticData.GetPlayer(!IsLeft).Kill++;
 
             SkillManager.CheckRemoveEffect();
             var rival = Rival as Player;

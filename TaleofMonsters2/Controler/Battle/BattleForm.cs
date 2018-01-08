@@ -257,9 +257,7 @@ namespace TaleofMonsters.Controler.Battle
                     
                     LiveMonster target = BattleLocationManager.GetPlaceMonster(mouseX, mouseY);
                     if (target != null && isMouseIn && !magicRegion.Active)
-                    {
                         target.LiveMonsterToolTip.DrawCardToolTips(g);
-                    }
 #if !DEBUG
                 if (IsGamePaused)
                 {
@@ -287,7 +285,6 @@ namespace TaleofMonsters.Controler.Battle
                 fontFps.Dispose();
             }
         }
-
 
         private void panelBattle_MouseClick(object sender, MouseEventArgs e)
         {
@@ -448,9 +445,7 @@ namespace TaleofMonsters.Controler.Battle
                     {
                         var type = BattleTargetManager.GetRegionType(skillConfig.Target[2]);
                         if (type != RegionTypes.None)
-                        {
                             magicRegion.Add(type, skillConfig.Range, MagicRegion.GetTargetColor(skillConfig.Target[1]));
-                        }
                     }
                 }
                 else if (leftSelectCard.CardType == CardTypes.Spell)
@@ -458,9 +453,7 @@ namespace TaleofMonsters.Controler.Battle
                     var spellConfig = ConfigData.GetSpellConfig(leftSelectCard.CardId);
                     var type = BattleTargetManager.GetRegionType(spellConfig.Target[2]);
                     if (type != RegionTypes.None)
-                    {
                         magicRegion.Add(type, spellConfig.Range, MagicRegion.GetTargetColor(spellConfig.Target[1]));
-                    }
                 }
             }
         }
@@ -480,9 +473,7 @@ namespace TaleofMonsters.Controler.Battle
         private bool CloseCheck()
         {
             if (!isHuman)
-            {
                 return false;
-            }
 
             IsGamePaused = true;
             if (ControlPlus.MessageBoxEx2.Show("现在退出战斗，将会被判输哦！") == DialogResult.Cancel)
@@ -502,9 +493,7 @@ namespace TaleofMonsters.Controler.Battle
         private void buttonClose_Click(object sender, EventArgs e)
         {
             if (CloseCheck())
-            {
                 OnGameOver();
-            }
         }
 
         private void OnVRegionClick(int id, int x, int y, MouseButtons button)
@@ -574,16 +563,12 @@ namespace TaleofMonsters.Controler.Battle
             if (BattleManager.Instance.StatisticData.PlayerWin)
             {
                 if (BattleWin != null)
-                {
                     BattleWin();
-                }
             }
             else
             {
                 if (BattleLose != null)
-                {
                     BattleLose();
-                }
             }
         }
 

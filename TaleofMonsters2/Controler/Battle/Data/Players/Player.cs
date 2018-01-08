@@ -127,9 +127,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         {
             var jobConfig = ConfigData.GetJobConfig(Job);
             if (jobConfig.SkillId > 0)
-            {
                 HeroSkillList.Add(jobConfig.SkillId);//添加职业技能
-            }
 
             var equipList = equipids.ConvertAll(equipId => new Equip(equipId));
             List<int> monsterBoostItemList = new List<int>();
@@ -142,19 +140,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 }
 
                 if (equipConfig.HeroSkillId > 0)
-                {
                     HeroSkillList.Add(equipConfig.HeroSkillId); //添加装备附带的技能
-                }
-
                 if (equipConfig.PickMethod != null)
-                {
                     monsterBoostItemList.Add(equip.TemplateId);
-                }
-
                 if (equipConfig.Position == (int)EquipTypes.Core)
-                {
                     Modifier.CoreId = equipConfig.Id;
-                }
                 else if (equipConfig.Position == (int)EquipTypes.Wall)
                 {
                     if (Modifier.Wall1Id == 0)
@@ -175,9 +165,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             Modifier.UpdateInfo(addon, monsterBoostItemList);
 
             if (HeroSkillList.Count > 3)
-            {
                 HeroSkillList = HeroSkillList.GetRange(HeroSkillList.Count - 3, 3); //最多保留3个技能
-            }
         }
 
         public void Update(bool isFast, float pastRound, int round)
@@ -223,9 +211,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
             var lm =BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(killerId);
             if (lm != null)
-            {
                 BattleManager.Instance.FlowWordQueue.Add(new FlowManaInfo(manas, lm.Position, 0, 40));
-            }
         }
 
         public float GetRoundRate()
@@ -248,9 +234,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             {
                 List<PlayerManaTypes> addonList = new List<PlayerManaTypes>();
                 for (int i = 0; i < addon; i++)
-                {
                     addonList.Add((PlayerManaTypes)type);
-                }
                 BattleManager.Instance.FlowWordQueue.Add(new FlowManaInfo(addonList, mon.Position, 0, 40));
             }
         }
@@ -286,9 +270,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
 
             if (ManaChanged != null) //todo 先ws下
-            {
                 ManaChanged();
-            }
         }
 
         public int CheckUseCard(ActiveCard selectCard, Player left, Player right)
@@ -358,9 +340,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public void UseMonster(ActiveCard card, Point location)
         {
             if (!BeforeUseCard(card, location))
-            {
                 return;
-            }
 
             try
             {
@@ -388,9 +368,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public void UseWeapon(LiveMonster lm, ActiveCard card)
         {
             if (!BeforeUseCard(card, lm.Position))
-            {
                 return;
-            }
 
             try
             {
@@ -415,9 +393,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public void UseSideKick(LiveMonster lm, ActiveCard card)
         {
             if (!BeforeUseCard(card, lm.Position))
-            {
                 return;
-            }
 
             try
             {
@@ -442,9 +418,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public void DoSpell(LiveMonster target, ActiveCard card, Point location)
         {
             if (!BeforeUseCard(card, location))
-            {
                 return;
-            }
 
             try
             {
@@ -508,9 +482,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             AddCardReason(mon, reason);
 
             if (CardLeftChanged != null && cardCount != Cards.LeftCount)
-            {
                 CardLeftChanged();
-            }
         }
         public void DiscoverCard(IMonster mon, int[] cardId, int lv, DiscoverCardActionType type)
         {
@@ -518,9 +490,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             {
                 CardSelectMethodDiscover discover = new CardSelectMethodDiscover(cardId, lv, type);
                 if (OnShowCardSelector != null)
-                {
                     OnShowCardSelector(this, discover);
-                }
             }
             else
             {
@@ -541,9 +511,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public void AddHolyWord(string word)
         {
             if (!holyWordList.Contains(word))
-            {
                 holyWordList.Add(word);
-            }
         }
 
         public bool HasHolyWord(string word)

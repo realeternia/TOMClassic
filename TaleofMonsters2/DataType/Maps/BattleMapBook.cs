@@ -34,9 +34,7 @@ namespace TaleofMonsters.DataType.Maps
                 {
                     string[] mapinfos = line.Split('\t');
                     for (int j = 0; j < mapInfo.XCount; j++)
-                    {
                         mapInfo.Cells[j, i] = int.Parse(mapinfos[j]);
-                    }
                 }
             }
             var unitCount = int.Parse(sr.ReadLine());//左边单位布置

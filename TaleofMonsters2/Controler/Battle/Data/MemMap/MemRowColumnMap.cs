@@ -60,9 +60,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                 {
                     int tarTile = bMapInfo.Cells[i, j];
                     if (tarTile == 0)
-                    {
                         tarTile = tile == 0 ? TileConfig.Indexer.DefaultTile : tile;
-                    }
                     Cells[i, j] = new MemMapPoint(i, i*CardSize, j*CardSize, ColumnCount, tarTile);
                     tiles[tarTile == TileConfig.Indexer.DefaultTile ? 0 : tarTile]++;
                 }
@@ -74,13 +72,23 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             var unitsPos = player.IsLeft ? bMapInfo.LeftUnits : bMapInfo.RightUnits;
             foreach (var unitInfo in unitsPos)
             {
-                var heroData = new Monster(unitInfo.UnitId);
+                var isKingTower = ConfigData.GetMonsterConfig(unitInfo.UnitId).Type == (int) CardTypeSub.KingTower;
+                var unitId = unitInfo.UnitId;
+                if (isKingTower)
+                {
+                    if (player.PeopleId > 0) //王塔替换
+                    {
+                        var peopleConfig = ConfigData.GetPeopleConfig(player.PeopleId);
+                        if (peopleConfig.KingTowerId > 0)
+                            unitId = peopleConfig.KingTowerId;
+                    }
+                }
+                var towerData = new Monster(unitId);
                 var level = ConfigData.GetLevelExpConfig(player.Level).TowerLevel;
-                var lm = new TowerMonster(level, heroData, new Point(unitInfo.X * CardSize, unitInfo.Y * CardSize), player.IsLeft);
+                var towerUnit = new TowerMonster(level, towerData, isKingTower, new Point(unitInfo.X * CardSize, unitInfo.Y * CardSize), player.IsLeft);
 
-                BattleManager.Instance.RuleData.CheckTowerData(lm);
-
-                BattleManager.Instance.MonsterQueue.Add(lm);
+                BattleManager.Instance.RuleData.CheckTowerData(towerUnit);
+                BattleManager.Instance.MonsterQueue.Add(towerUnit);
             }
 
             var monList = player.GetInitialMonster();//只有aiplayer有效
