@@ -43,24 +43,18 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                 trapList.Remove(trap);
                 self.OnTrapChange();
                 if (OnTrapRemove != null)
-                {
                     OnTrapRemove(trap.SpellId, trap.Level, self.IsLeft);
-                }
             }
         }
 
         private void RemoveTrap(Trap trap, SpellTrapConfig config)
         {
             if (MathTool.GetRandom(100) >= trap.Rate)
-            {
                 self.AddMp(-config.ManaCost);
-            }
             trapList.RemoveAll(s => s.Id == trap.Id);
             self.OnTrapChange();
             if (OnTrapRemove != null)
-            {
                 OnTrapRemove(trap.SpellId, trap.Level, self.IsLeft);
-            }
         }
 
         public bool CheckTrapOnUseCard(ActiveCard selectCard, Point location, IPlayer rival)

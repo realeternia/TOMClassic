@@ -118,7 +118,7 @@
     <Compile Include="Controler\Battle\Data\MemMonster\Component\AuroManager.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\Component\MonsterAction.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\Component\MonsterPositionHelper.cs" />
-    <Compile Include="Controler\Battle\Data\MemMonster\LiveMonsterToolTip.cs" />
+    <Compile Include="Controler\Battle\Data\MemMonster\Component\LiveMonsterToolTip.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\Component\MonsterAi.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\Component\MonsterCoverBox.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\TowerMonster.cs" />
@@ -145,7 +145,6 @@
     <Compile Include="Controler\Battle\Data\MemMap\MemMapPoint.cs" />
     <Compile Include="Controler\Battle\Data\MemMap\MemRowColumnMap.cs" />
     <Compile Include="Controler\Battle\Data\MemSpell\MemBaseSpell.cs" />
-    <Compile Include="Controler\Battle\Data\MemMonster\MonsterIdSpeed.cs" />
     <Compile Include="Controler\Battle\Data\Players\Frag\EnergyGenerator.cs" />
     <Compile Include="Controler\Battle\Data\Players\Frag\CardManager.cs" />
     <Compile Include="Controler\Battle\Data\Players\MirrorPlayer.cs" />

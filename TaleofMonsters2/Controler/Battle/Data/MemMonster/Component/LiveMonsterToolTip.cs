@@ -4,7 +4,7 @@ using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Skills;
 
-namespace TaleofMonsters.Controler.Battle.Data.MemMonster
+namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 {
     internal class LiveMonsterToolTip
     {

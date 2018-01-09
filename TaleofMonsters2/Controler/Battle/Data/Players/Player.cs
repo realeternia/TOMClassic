@@ -135,9 +135,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             {
                 EquipConfig equipConfig = ConfigData.GetEquipConfig(equip.TemplateId);
                 for (int i = 0; i < 3; i++)
-                {
                     energyData[i] += equipConfig.EnergyRate[i];
-                }
 
                 if (equipConfig.HeroSkillId > 0)
                     HeroSkillList.Add(equipConfig.HeroSkillId); //添加装备附带的技能
@@ -257,17 +255,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         private void AddManaData(PlayerManaTypes type, int num)
         {
             if (type == PlayerManaTypes.Mp || type == PlayerManaTypes.All)
-            {
                 Mp = Math.Min(Mp + num, EnergyGenerator.LimitMp);
-            }
             if (type == PlayerManaTypes.Lp || type == PlayerManaTypes.All)
-            {
                 Lp = Math.Min(Lp + num, EnergyGenerator.LimitLp);
-            }
             if (type == PlayerManaTypes.Pp || type == PlayerManaTypes.All)
-            {
                 Pp = Math.Min(Pp + num, EnergyGenerator.LimitPp);
-            }
 
             if (ManaChanged != null) //todo 先ws下
                 ManaChanged();
@@ -298,9 +290,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
             var rival = Rival as Player;
             if (rival.TrapHolder.CheckTrapOnUseCard(selectCard, location, rival))
-            {
                 return false;
-            }
 
             SpikeManager.OnUseCard(selectCard.CardType);
             BattleManager.Instance.MonsterQueue.OnPlayerUseCard(this, (int)selectCard.CardType, selectCard.Level);
@@ -332,9 +322,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public void OnKillMonster(int id, int dieLevel, int dieStar, Point position)
         {
             if (OnKillEnemy != null)
-            {
                 OnKillEnemy(id, dieLevel, IsLeft);
-            }
         }
         
         public void UseMonster(ActiveCard card, Point location)
@@ -431,9 +419,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 SpellAssistant.CheckSpellEffect(spell, IsLeft, target, location);
 
                 if (SpikeManager.HasSpike("mirrorspell"))
-                {
                     Rival.Action.AddCard(null, card.CardId, card.Level);
-                }
             }
             catch (Exception e)
             {

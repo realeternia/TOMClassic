@@ -81,15 +81,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             foreach (var spike in spikeList)
             {
                 if (spike.CanTimeOut)
-                {
                     spike.RoundLeft -= pastRound;
-                }
             }
             var toRemove = spikeList.FindAll(a => a.CanTimeOut && a.RoundLeft <= 0);
             foreach (var spike in toRemove)
-            {
                 RemoveSpike(spike.Id);
-            }
         }
 
         public void OnUseCard(CardTypes type)

@@ -13,10 +13,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
         private LiveMonster self;
         private Weapon avatar;
 
-        public int CardId
-        {
-            get { return avatar.Id; }
-        }
+        public int CardId { get { return avatar.Id; } }
         public int Life { get; private set; }
         public int Level { get; private set; }
         public string Arrow { get { return avatar.WeaponConfig.Arrow; } }
@@ -34,25 +31,19 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
         public void OnHit()
         {
             if (avatar.WeaponConfig.Type == (int)CardTypeSub.Weapon || avatar.WeaponConfig.Type == (int)CardTypeSub.Scroll)
-            {
                 SubWeaponLife();
-            }
         }
         
         public void OnHited()
         {
             if (avatar.WeaponConfig.Type == (int)CardTypeSub.Armor)
-            {
                 SubWeaponLife();
-            }
         }
 
         public void OnRound()
         {
             if (avatar.WeaponConfig.Type == (int)CardTypeSub.Ring)
-            {
                 SubWeaponLife();
-            }
         }
 
         private void SubWeaponLife()
@@ -93,13 +84,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
             src.Atk += avatar.Atk * symbol;
             //src.MaxHp += avatar.Hp * symbol;
             if (avatar.PArmor > 0)
-            {
                 src.HpBar.AddPArmor(avatar.PArmor * symbol);
-            }
             if (avatar.MArmor > 0)
-            {
                 src.HpBar.AddMArmor(avatar.MArmor * symbol);
-            }
             src.Def += avatar.Def * symbol;
             src.Mag += avatar.Mag * symbol;
             src.Hit += avatar.Hit * symbol;
@@ -111,35 +98,23 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
             if (weaponConfig.Type == (int)CardTypeSub.Scroll)
             {
                 if (symbol == 1)
-                {
                     src.AttackType = weaponConfig.Attr;
-                }
                 else
-                {
                     src.AttackType = (int)CardElements.None;
-                }
 
             }
             if (weaponConfig.SkillId != 0)
             {
                 if (symbol == 1)
-                {
                     src.SkillManager.AddSkill(weaponConfig.SkillId, Level, weaponConfig.Percent, SkillSourceTypes.Weapon);
-                }
                 else
-                {
                     src.SkillManager.RemoveSkill(weaponConfig.SkillId);
-                }
             }
         }
 
         public string Des
         {
-            get
-            {
-                return string.Format("{0}Lv{3}({1}/{2})", avatar.WeaponConfig.Name,
-                    Life, avatar.Dura, Level);
-            }
+            get { return string.Format("{0}Lv{3}({1}/{2})", avatar.WeaponConfig.Name, Life, avatar.Dura, Level); }
         }
     }
 }

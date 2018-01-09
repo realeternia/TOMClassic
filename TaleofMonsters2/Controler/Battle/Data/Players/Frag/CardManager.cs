@@ -30,13 +30,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             {
                 ActiveCard next = self.Cards.GetNextCard();
                 if (next != ActiveCards.NoneCard)
-                {
                     AddCard(next);
-                }
                 else
-                {
                     self.OnGetCardFail(true); //卡组抽完有惩罚
-                }
             }
             else
             {
@@ -47,9 +43,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         {
             int count = GetCardNumber();
             if (id < count)
-            {
                 cards[id] = card;
-            }
             if (self.CardsDesk != null)
                 self.CardsDesk.UpdateSlot(cards);
         }
@@ -64,13 +58,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             card.Combo = self.Combo;
             int count = GetCardNumber();
             if (count < GameConstants.CardSlotMaxCount)
-            {
                 cards[count] = card;
-            }
             if (spikeManager.HasSpike("copycard") && count < GameConstants.CardSlotMaxCount-1)
-            {
                 cards[count+1] = card.GetCopy();
-            }
             if (self.CardsDesk != null)
                 self.CardsDesk.UpdateSlot(cards);
         }
@@ -78,7 +68,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         public void UpdateCardCost()
         {
             var spikeManager = self.SpikeManager;
-            foreach (ActiveCard activeCard in cards)
+            foreach (var activeCard in cards)
             {
                 activeCard.LpCostChange = spikeManager.LpCost;
                 activeCard.MpCostChange = spikeManager.MpCost;
@@ -92,10 +82,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         public void UpdateCardCombo()
         {
             var isCombo = self.Combo;
-            foreach (ActiveCard activeCard in cards)
-            {
+            foreach (var activeCard in cards)
                 activeCard.Combo = isCombo;
-            }
             if (self.CardsDesk != null)
                 self.CardsDesk.UpdateSlot(cards);
         }
@@ -126,9 +114,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                 }
             }
             if (self.CardsDesk != null)
-            {
                 self.CardsDesk.UpdateSlot(cards);
-            }
         }
 
         /// <summary>
@@ -139,14 +125,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         {
             var newCard = self.Cards.ReplaceCard(cards[index - 1]);
             if (newCard == ActiveCards.NoneCard)
-            {
                 return;
-            }
+
             cards[index - 1] = newCard;
             if (self.CardsDesk != null)
-            {
                 self.CardsDesk.UpdateSlot(cards);
-            }
         }
 
         public void DeleteRandomCardFor(IPlayer p, int levelChange)
@@ -160,9 +143,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                 card.ChangeLevel((byte)(card.Level + levelChange));
                 Player player = p as Player;
                 if (player != null)
-                {
                     player.CardManager.AddCard(card);
-                }
             }
         }
 
@@ -176,9 +157,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                 card.ChangeLevel((byte)(card.Level + levelChange));
                 Player player = p as Player;
                 if (player != null)
-                {
                     player.CardManager.AddCard(card);
-                }
             }
         }
 
@@ -199,21 +178,16 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             }
             ArraysUtils.RandomShuffle(indexs);
             for (int i = 0; i < Math.Min(n, indexs.Count); i++)
-            {
                 AddCard(cards[indexs[i]].GetCopy());
-            }
         }
 
         public void DeleteAllCard()
         {
             for (int i = 0; i < GameConstants.CardSlotMaxCount; i++)
-            {
                 cards[i] = ActiveCards.NoneCard;
-            }
+
             if (self.CardsDesk != null)
-            {
                 self.CardsDesk.UpdateSlot(cards);
-            }
         }
 
         public int GetCardNumber()
@@ -245,25 +219,17 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             foreach (ActiveCard activeCard in cards)
             {
                 if (type != 0 && ConfigIdManager.GetCardType(activeCard.CardId) != (CardTypes)type)
-                {
                     continue;
-                }
 
                 activeCard.Level = (byte)(activeCard.Level + n);
                 if (activeCard.Level < 1)
-                {
                     activeCard.Level = 1;
-                }
                 else if (activeCard.Level > GameConstants.CardMaxLevel)
-                {
                     activeCard.Level = GameConstants.CardMaxLevel;
-                }
             }
 
             if (self.CardsDesk != null)
-            {
                 self.CardsDesk.UpdateSlot(cards);
-            }
         }
     }
 }

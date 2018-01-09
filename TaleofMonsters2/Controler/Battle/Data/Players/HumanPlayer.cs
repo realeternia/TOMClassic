@@ -21,21 +21,16 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             CalculateEquipAndSkill(UserProfile.InfoEquip.GetValidEquipsList(), energyRate);
             EnergyGenerator.SetRate(energyRate, UserProfile.InfoBasic.Job);
             EnergyGenerator.Next(0);
-
-
+            
             BattleManager.Instance.RuleData.CheckPlayerData(this);
         }
 
         public override void AddResource(GameResourceType type, int number)
         {
             if (number > 0)
-            {
                 UserProfile.InfoBag.AddResource(type, (uint)number);
-            }
             else if (number < 0)
-            {
                 UserProfile.InfoBag.SubResource(type, (uint)(-number));
-            }
         }
 
         public override void InitialCards()

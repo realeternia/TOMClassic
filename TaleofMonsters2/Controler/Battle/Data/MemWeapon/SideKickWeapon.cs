@@ -11,10 +11,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
         private LiveMonster self;
         private Monster avatar;
 
-        public int CardId
-        {
-            get { return avatar.Id; }
-        }
+        public int CardId { get { return avatar.Id; } }
         public int Level { get; private set; }
         public string Arrow { get { return avatar.MonsterConfig.Arrow; } }
         public int Range { get { return avatar.MonsterConfig.Range; } }
@@ -54,8 +51,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
 
         public IBattleWeapon GetCopy()
         {
-            SideKickWeapon newWeapon = new SideKickWeapon(self, Level, avatar);
-            return newWeapon;
+            return new SideKickWeapon(self, Level, avatar);
         }
 
         public void CheckWeaponEffect(LiveMonster src, int symbol)
@@ -63,9 +59,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
             src.Atk += avatar.Atk * GameConstants.SideKickFactor * symbol;
             src.MaxHp += avatar.Hp * GameConstants.SideKickFactor * symbol;
             if (symbol > 0 && avatar.Hp > 0)//加buff时候
-            {
                 src.AddHp(avatar.Hp);//顺便把hp也加上
-            }
 
             src.Def += avatar.Def * symbol;
             src.Mag += avatar.Mag * symbol;
@@ -78,10 +72,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
 
         public string Des
         {
-            get
-            {
-                return string.Format("{0}(支援)", avatar.MonsterConfig.Name);
-            }
+            get { return string.Format("{0}(支援)", avatar.MonsterConfig.Name); }
         }
     }
 }
