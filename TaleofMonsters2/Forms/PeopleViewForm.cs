@@ -6,6 +6,7 @@ using ConfigDatas;
 using NarlonLib.Control;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.User.Db;
@@ -243,8 +244,12 @@ namespace TaleofMonsters.Forms
                     e.Graphics.DrawString("来自", fontsong, Brushes.DarkGray, xoff+100, yoff+28);
                     e.Graphics.DrawString(peopleConfig.World, fontsong, Brushes.Cyan, xoff + 140, yoff + 28);
                     e.Graphics.DrawString("属性", fontsong, Brushes.DarkGray, xoff+100, yoff+46);
-                    for (int i = 0; i < peopleConfig.Deck.Length; i++)
-                        e.Graphics.DrawImage(HSIcons.GetIconsByEName(peopleConfig.Deck[i]), xoff + 140 + i * 18, yoff + 46, 16, 16);
+                    if (peopleConfig.Type != 101) //活动卡包都是随机的，就不显示了
+                    {
+                        int i = 0;
+                        foreach (var deckAttr in DeckBook.GetDeckAttrs(peopleConfig.Emethod, peopleConfig.Level))
+                            e.Graphics.DrawImage(HSIcons.GetIconsByEName(deckAttr), xoff + 140 + i++*18, yoff + 46, 16, 16);
+                    }
                     int win = people[realTar].Win;
                     int loss = people[realTar].Loss;
                     int rate = 0;

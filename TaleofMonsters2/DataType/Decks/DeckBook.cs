@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using ConfigDatas;
+using NarlonLib.Core;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
@@ -10,6 +11,29 @@ namespace TaleofMonsters.DataType.Decks
 {
     internal static class DeckBook
     {
+        private class DeckCardAttrData
+        {
+            internal class DeckCardAttrCompareByCount : IComparer<DeckCardAttrData>
+            {
+                #region IComparer<DeckCardAttrData> 成员
+
+                public int Compare(DeckCardAttrData x, DeckCardAttrData y)
+                {
+                    return y.Count.CompareTo(x.Count);
+                }
+
+                #endregion
+            }
+
+            public string Type;
+            public int Count;
+
+            public override string ToString()
+            {
+                return string.Format("{0}:{1}", Type, Count);
+            }
+        }
+
         private static Dictionary<string, DeckCard[]> deckCacheDict = new Dictionary<string, DeckCard[]>();
 
         private static int[] FitBigDesire = {0, 2, 3, 5, 7, 6, 4, 3};
@@ -17,18 +41,59 @@ namespace TaleofMonsters.DataType.Decks
         public static DeckCard[] GetDeckByName(string name, int level)
         {
             if (!deckCacheDict.ContainsKey(name))
-            {
                 MakeLoad(name, level);
-            }
 
             var deckTpCopy = deckCacheDict[name];
             var cards = new DeckCard[30];
             for (int i = 0; i < cards.Length; i++)
-            {
                 cards[i] = new DeckCard(deckTpCopy[i].BaseId, deckTpCopy[i].Level, deckTpCopy[i].Exp);
-            }
 
             return cards;
+        }
+
+        /// <summary>
+        /// 获得卡组的特殊性属性标签
+        /// </summary>
+        public static string[] GetDeckAttrs(string name, int level)
+        {
+            if (!deckCacheDict.ContainsKey(name))
+                MakeLoad(name, level);
+
+            var deckTpCopy = deckCacheDict[name];
+            AutoDictionary<string, int> statDict = new AutoDictionary<string, int>();
+            foreach (var cardData in deckTpCopy)
+            {
+                var cardConfig = CardConfigManager.GetCardConfig(cardData.BaseId);
+                if (cardConfig.Type == CardTypes.Monster)
+                {
+                    statDict["atr" + cardConfig.Attr] ++;
+                    statDict["rac" + cardConfig.TypeSub]++;
+                }
+                else if (cardConfig.Type == CardTypes.Weapon)
+                {
+                    statDict["wep" + (cardConfig.TypeSub - 99)]++;
+                    if (cardConfig.Attr > 0)
+                        statDict["atr" + cardConfig.Attr]++;
+                }
+                else if (cardConfig.Type == CardTypes.Spell)
+                {
+                    statDict["spl" + (cardConfig.TypeSub - 199)]++;
+                    if (cardConfig.Attr > 0)
+                        statDict["atr" + cardConfig.Attr]++;
+                }
+            }
+            List<DeckCardAttrData> attrDatas = new List<DeckCardAttrData>();
+            foreach (var keyValuePair in statDict)
+                attrDatas.Add(new DeckCardAttrData {Type = keyValuePair.Key, Count = keyValuePair.Value});
+            attrDatas.Sort(new DeckCardAttrData.DeckCardAttrCompareByCount());
+
+            List<string> checkDatasList = new List<string>();
+            for (int i = 0; i < 2; i++)
+            {
+                if(attrDatas.Count > i && attrDatas[i].Count > 5)
+                    checkDatasList.Add(attrDatas[i].Type);
+            }
+            return checkDatasList.ToArray();
         }
 
         private static void MakeLoad(string name, int level)
@@ -88,27 +153,17 @@ namespace TaleofMonsters.DataType.Decks
         {
             CardConfigManager.RandomCardSelectorDelegate randMethod = null;
             if (catalog == "race")
-            {
                 randMethod = CardConfigManager.GetRandomRaceCard;
-            }
             else if (catalog == "attr")
-            {
                 randMethod = CardConfigManager.GetRandomAttrCard;
-            }
             else if (catalog == "type")
-            {
                 randMethod = CardConfigManager.GetRandomTypeCard;
-            }
             else
-            {
                 randMethod = CardConfigManager.GetRandomCard;
-            }
 
             var toPick = new List<CardConfigData>();
             for (int i = 0; i < 3; i++)//每次从3张牌选
-            {
                 toPick.Add(CardConfigManager.GetCardConfig(randMethod(keyId, -1)));
-            }
             if (pickMethod == "small")
             {
                 toPick.Sort((a,b)=> a.Star-b.Star);
