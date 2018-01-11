@@ -12,7 +12,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             Job = ConfigDatas.JobConfig.Indexer.NewBie;
 
             DeckCard[] cds = DeckBook.GetDeckByName("test", Level);
-            Cards = new ActiveCards(cds);
+            DeckCards = new ActiveCards(cds);
             EnergyGenerator.Next(0);
         }
     }

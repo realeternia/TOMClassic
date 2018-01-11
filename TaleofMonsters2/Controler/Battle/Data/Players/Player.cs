@@ -75,30 +75,16 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public ICardList CardsDesk { get; set; }
 
-        public IMonster Tower
-        {
-            get { return BattleManager.Instance.MonsterQueue.GetKingTower(IsLeft); }
-        }
-
-        public IPlayer Rival
-        {
-            get { return IsLeft ? BattleManager.Instance.PlayerManager.RightPlayer : BattleManager.Instance.PlayerManager.LeftPlayer; }
-        }
-        public int SelectCardId
-        {
-            get { return CardsDesk.GetSelectCard().CardId; }
-        }
-
-        public int SelectId
-        {
-            get { return CardsDesk.GetSelectId(); }
-        }
+        public IMonster Tower { get { return BattleManager.Instance.MonsterQueue.GetKingTower(IsLeft); } }
+        public IPlayer Rival { get { return IsLeft ? BattleManager.Instance.PlayerManager.RightPlayer : BattleManager.Instance.PlayerManager.LeftPlayer; } }
+        public int SelectCardId { get { return CardsDesk.GetSelectCard().CardId; } }
+        public int SelectId { get { return CardsDesk.GetSelectId(); } }
 
         public int PeopleId { get; set; }
 
-        public ActiveCards Cards { get; protected set; }//自己搭配的卡组
+        public ActiveCards DeckCards { get; protected set; }//牌库的牌
 
-        public int CardNumber { get { return CardManager.GetCardNumber(); } }
+        public int CardNumber { get { return CardManager.GetCardNumber(); } } //手牌数量
 
         private List<string> holyWordList = new List<string>(); //圣言，一些特殊效果的指令
 
@@ -179,9 +165,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 EnergyGenerator.Next(round);
             }
             if (ManaChanged != null)//todo 先ws下
-            {
                 ManaChanged();
-            }
             SpikeManager.OnRound(pastRound);
             comboTime -= pastRound;
             if (comboTime<=0)
@@ -461,13 +445,13 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void DrawNextNCard(IMonster mon, int n, AddCardReasons reason)
         {
-            var cardCount = Cards.LeftCount;
+            var cardCount = DeckCards.LeftCount;
             for (int i = 0; i < n; i++)
                 CardManager.GetNextCard();
 
             AddCardReason(mon, reason);
 
-            if (CardLeftChanged != null && cardCount != Cards.LeftCount)
+            if (CardLeftChanged != null && cardCount != DeckCards.LeftCount)
                 CardLeftChanged();
         }
         public void DiscoverCard(IMonster mon, int[] cardId, int lv, DiscoverCardActionType type)

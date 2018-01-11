@@ -33,9 +33,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         public void RemoveAllCover()
         {
             foreach (var activeEffect in coverEffectList)
-            {
                 activeEffect.IsFinished = RunState.Finished;
-            }
             coverEffectList.Clear();
         }
     }

@@ -28,7 +28,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         {
             if (GetCardNumber() < GameConstants.CardSlotMaxCount)
             {
-                ActiveCard next = self.Cards.GetNextCard();
+                ActiveCard next = self.DeckCards.GetNextCard();
                 if (next != ActiveCards.NoneCard)
                     AddCard(next);
                 else
@@ -123,7 +123,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         /// <param name="index">偏移</param>
         public void RedrawCardAt(int index)
         {
-            var newCard = self.Cards.ReplaceCard(cards[index - 1]);
+            var newCard = self.DeckCards.ReplaceCard(cards[index - 1]);
             if (newCard == ActiveCards.NoneCard)
                 return;
 

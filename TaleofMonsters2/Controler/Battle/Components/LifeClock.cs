@@ -202,7 +202,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             e.Graphics.DrawImage(HSIcons.GetIconsByEName("tsk7"), IsLeft ? Width - 75 : 30,44,18,18);//画剩余卡牌数
             if (player != null)
             { 
-                e.Graphics.DrawString(player.Cards.LeftCount.ToString(), font, Brushes.White, IsLeft ? Width-52 : 53, 44);
+                e.Graphics.DrawString(player.DeckCards.LeftCount.ToString(), font, Brushes.White, IsLeft ? Width-52 : 53, 44);
                 if (player.TrapHolder.Count > 0)
                 {
                     var icon = HSIcons.GetIconsByEName("tsk6");

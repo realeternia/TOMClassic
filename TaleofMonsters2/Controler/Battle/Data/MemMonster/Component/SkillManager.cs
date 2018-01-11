@@ -122,25 +122,19 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         public void CheckInitialEffect()
         {
             foreach (var skill in Skills.ToArray())
-            {
                 skill.CheckInitialEffect();
-            }
         }
 
         public void CheckRemoveEffect()
         {
             foreach (var skill in Skills.ToArray())
-            {
                 skill.CheckRemoveEffect();
-            }
         }
 
         public bool CheckSpecial(float pastRound)
         {
             if (self.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
-            {
                 return false;
-            }
 
             foreach (var skill in Skills.ToArray())
             {
@@ -156,9 +150,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         public void CheckUseCard(IPlayer caster, int cardType, int lv)
         {
             if (self.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
-            {
                 return;
-            }
 
             foreach (var skill in Skills.ToArray())
             {
@@ -198,9 +190,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             {
                 var key = MemBaseSkill.GetBurstKey(src.Id, dest.Id);
                 if (skill.IsBurst(key))
-                {
                     skill.CheckHit(src, dest, ref rhit, key);
-                }
             }
         }
 
@@ -218,9 +208,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             {
                 var key = MemBaseSkill.GetBurstKey(src.Id, dest.Id);
                 if (skill.IsBurst(key))
-                {
                     skill.CheckDamage(src, dest, isActive, damage, ref nodef, key);
-                }
             }
         }
 
@@ -236,9 +224,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             {
                 var key = MemBaseSkill.GetBurstKey(src.Id, dest.Id);
                 if (skill.IsBurst(key))
-                {
                     skill.CheckHitEffectAfter(src, dest, damage, key);
-                }
             }
         }
 
@@ -248,9 +234,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             {
                 var round = skill.GetPercent();
                 if (round > 0)
-                {
                     return round;
-                }
             }
             return 0;
         }

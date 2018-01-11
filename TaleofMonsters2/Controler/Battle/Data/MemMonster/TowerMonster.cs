@@ -10,6 +10,16 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
     {
         public bool IsKing { get; private set; }
 
+        public override bool CanMove
+        {
+            get
+            {
+                if (OwnerPlayer.DeckCards.LeftCount <= 0) //如果手牌没了，可以御驾亲征
+                    return true;
+                return base.CanMove;
+            }
+        }
+
         public TowerMonster(int level, Monster mon, bool isKing, Point point, bool isLeft) 
             : base(level, mon, point, isLeft)
         {

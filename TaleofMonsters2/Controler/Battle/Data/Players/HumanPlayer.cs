@@ -15,7 +15,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             Level = UserProfile.InfoBasic.Level;
             Job = UserProfile.InfoBasic.Job;
 
-            Cards = new ActiveCards(cardInitial);
+            DeckCards = new ActiveCards(cardInitial);
 
             int[] energyRate = {0, 0, 0};
             CalculateEquipAndSkill(UserProfile.InfoEquip.GetValidEquipsList(), energyRate);

@@ -56,7 +56,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                         lastTarget = targetEnemy.Id;
                     }
                 }
-                else if (monster.ReadMov>0 && monster.CanMove)//判定是否需要移动
+                else if (monster.ReadMov > 0 && monster.CanMove) //判定是否需要移动
                 {
                     if (monster.AddAts())
                     {

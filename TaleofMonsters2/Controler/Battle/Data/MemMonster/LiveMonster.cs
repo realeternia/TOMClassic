@@ -49,31 +49,18 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public IMap Map { get { return BattleManager.Instance.MemMap; } }
         public IMonsterAction Action { get; private set; }
         public bool IsLeft { get; set; }
-        public int ActPoint { get; set; }
+        private int actPoint; //行动点数
         public IBattleWeapon Weapon { get; set; }
 
-        public int CardId
-        {
-            get { return Avatar.Id; }
-        }
-
-        public int WeaponId
-        {
-            get { return Weapon == null ? 0 : Weapon.CardId; }
-        }
-        public int WeaponType
-        {
-            get { return Weapon != null ? Weapon.Type - CardTypeSub.Weapon + 1 : 0; }
-        }
+        public int CardId { get { return Avatar.Id; } }
+        public int WeaponId { get { return Weapon == null ? 0 : Weapon.CardId; } }
+        public int WeaponType { get { return Weapon != null ? Weapon.Type - CardTypeSub.Weapon + 1 : 0; } }
 
         public int Star { get { return Avatar.MonsterConfig.Star; } }
         public int Attr { get { return Avatar.MonsterConfig.Attr; } }
         public int Type { get { return Avatar.MonsterConfig.Type; } }
 
-        public bool CanMove
-        {
-            get { return !BuffManager.HasBuff(BuffEffectTypes.NoMove); }
-        }
+        public virtual bool CanMove { get { return !BuffManager.HasBuff(BuffEffectTypes.NoMove); } }
         public bool CanAttack { get; set; }
         public int AttackType { get; set; }//只有武器可以改变，技能不行
         public AttrModifyData Atk { get; set; }
@@ -89,31 +76,17 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public double CrtDamAddRate { get; set; }
         public int MovRound { get; set; }
-        public void AddActionRate(double value)
-        {
-            ActPoint += (int)(GameConstants.LimitAts * value);
-        }
 
         public bool IsSummoned { get; set; } //是否召唤单位
 
-        public int Hp
-        {
-            get { return HpBar.Life; }
-        }
-        public double HpRate
-        {
-            get { return (double)Hp * 100 / Avatar.Hp; }
-        }
+        public int Hp { get { return HpBar.Life; } }
+        public double HpRate { get { return (double)Hp * 100 / Avatar.Hp; } }
+        public bool IsAlive { get { return Hp > 0; } }
 
         public Point CenterPosition
         {
             get { return new Point(Position.X + BattleManager.Instance.MemMap.CardSize / 2, 
                 Position.Y + BattleManager.Instance.MemMap.CardSize / 2); }
-        }
-
-        public bool IsAlive
-        {
-            get { return Hp > 0; }
         }
 
         public int RealAtk
@@ -259,7 +232,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
             Position = point;
             IsLeft = isLeft;
-            ActPoint = 0;
+            actPoint = 0;
             roundPast = 0;
             HpBar = new HpBar(this);
             SkillManager = new SkillManager(this);
@@ -326,13 +299,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 HpBar.OnDamage(damage);
                 SkillAssistant.CheckHitEffectAfter(src, this, damage);
                 if (src.WeaponId > 0)
-                {
                     src.Weapon.OnHit();
-                }
                 if (WeaponId > 0)
-                {
                     Weapon.OnHited();
-                }
                 if (damage.Value > 0)
                 {
                     BuffManager.CheckRecoverOnHit();
@@ -386,17 +355,13 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 pastRoundTotal -= 1;
                 HpBar.OnRound();
                 if (WeaponId > 0)
-                {
                     Weapon.OnRound();
-                }
             }
 
             BuffManager.BuffCount();
 
             if (SkillManager.CheckSpecial(pastRound))
-            {
                 return;//特殊技能触发
-            }
 
             aiController.CheckAction();
         }
@@ -405,10 +370,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             if (BuffManager.HasBuff(BuffEffectTypes.NoAction))
                 return false;
-            ActPoint += GameConstants.RoundAts;//200ms + 30
-            if (ActPoint >= GameConstants.LimitAts)
+            actPoint += GameConstants.RoundAts;//200ms + 30
+            if (actPoint >= GameConstants.LimitAts)
             {
-                ActPoint = ActPoint - GameConstants.LimitAts;
+                actPoint = actPoint - GameConstants.LimitAts;
                 return true;
             }
             return false;
@@ -427,10 +392,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void CheckMagicDamage(HitDamage damage)
         {
-            if (damage.Element>0&&antiMagic[damage.Element-1]>0)
-            {
-                damage.SetDamage(DamageTypes.Magic,Math.Max(damage.Value*(100 - antiMagic[damage.Element - 1])/100,0));
-            }
+            if (damage.Element > 0 && antiMagic[damage.Element - 1] > 0)
+                damage.SetDamage(DamageTypes.Magic, Math.Max(damage.Value*(100 - antiMagic[damage.Element - 1])/100, 0));
         }
 
         public bool CanAddWeapon()
@@ -473,9 +436,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
 
             if (BuffManager.HasBuff(BuffEffectTypes.Shield))
-            {
                 dam.SetDamage(DamageTypes.All, 1);
-            }
         }
 
 
@@ -491,9 +452,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         private void MakeSound(bool onSummon)
         {
             if (Avatar.MonsterConfig.Sound == "")
-            {
                 return;
-            }
 
             var soundPath = string.Format(onSummon ? "{0}_Play_01.mp3" : "{0}_Death_03.mp3", Avatar.MonsterConfig.Sound);
             SoundManager.Play("Unit", soundPath);
@@ -503,9 +462,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             var img = MonsterBook.GetMonsterImage(Avatar.Id, 100, 100);
             if (img != null)
-            {
                 g.DrawImage(img, 0, 0, 100, 100);
-            }
         }
 
         public void DrawOnBattle(Graphics g2, Color uponColor)
@@ -538,12 +495,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                     //画集气槽
                     g.FillPie(Brushes.Purple, 65, 65, 30, 30, 0, skillPercent * 360 / 100);
                     //画行动槽
-                    g.FillPie(CanAttack ? Brushes.Yellow : Brushes.LightGray, 70, 70, 20, 20, 0, ActPoint * 360 / GameConstants.LimitAts);
+                    g.FillPie(CanAttack ? Brushes.Yellow : Brushes.LightGray, 70, 70, 20, 20, 0, actPoint * 360 / GameConstants.LimitAts);
                 }
                 else
                 {
                     //画行动槽
-                    g.FillPie(CanAttack ? Brushes.Yellow : Brushes.LightGray, 65, 65, 30, 30, 0, ActPoint * 360 / GameConstants.LimitAts);
+                    g.FillPie(CanAttack ? Brushes.Yellow : Brushes.LightGray, 65, 65, 30, 30, 0, actPoint * 360 / GameConstants.LimitAts);
                 }
 
                 var starIcon = HSIcons.GetIconsByEName("sysstar");
@@ -610,22 +567,16 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             var lifeRate = Hp / MaxHp;
             MaxHp.Source += value;
             if (value > 0)
-            {
                 AddHp(value);//顺便把hp也加上
-            }
             else
-            {
                 AddHp(lifeRate * value);
-            }
         }
         public void AddAntiMagic(string type, int value)
         {
             if (type == "All")
             {
                 for (int i = 0; i < antiMagic.Length; i++)
-                {
                     antiMagic[i] += value;
-                }
             }
             else
             {
@@ -658,6 +609,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             var dam = new HitDamage((int)damValue, (int)damValue, element, DamageTypes.Magic);
             CheckMagicDamage(dam);
             HpBar.OnDamage(dam);
+        }
+
+        public void AddActionRate(double value)
+        {
+            actPoint += (int)(GameConstants.LimitAts * value);
         }
 
         public void ClearTarget()
