@@ -29,6 +29,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
         public int Level { get; set; }
 
         public string Name { get; set; }
+        public int Star { get; set; }
 
         public Monster(int id)
         {
@@ -44,6 +45,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             Crt = MonsterConfig.Crt;
             Mov = MonsterConfig.Mov;
             Range = MonsterConfig.Range;
+            Star = MonsterConfig.Star;
 
             Name = MonsterConfig.Name;
             UpgradeToLevel1();
@@ -83,7 +85,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
 
             Level = level;
 
-            int standardValue = (18 + MonsterConfig.Star * 12) * (level*8 + 92) / 100 * (200 + modify) / 200;
+            int standardValue = (18 + Star * 12) * (level*8 + 92) / 100 * (200 + modify) / 200;
             Atk = standardValue * (100 + AtkP) / 100; //200
             Hp = standardValue * (100 + VitP) / 100 * 5; //200
             if (Range!=10)

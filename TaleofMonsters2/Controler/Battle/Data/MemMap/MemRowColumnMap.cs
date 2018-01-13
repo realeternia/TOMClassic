@@ -63,12 +63,15 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
 
         public void InitUnit(Player player)
         {
-            var unitsPos = player.IsLeft ? bMapInfo.LeftUnits : bMapInfo.RightUnits;
-            foreach (var unitInfo in unitsPos)
+            var mapConfig = BattleMapBook.GetMapConfig(bMapInfo.Name);
+            var unitsPos = player.IsLeft ? mapConfig.LeftMon : mapConfig.RightMon;
+            for (int i = 0; i < unitsPos.Length; i+=3)
             {
-                var oldTowerConfig = ConfigData.GetMonsterConfig(unitInfo.UnitId);
+                var xPos = unitsPos[i];
+                var yPos = unitsPos[i+1];
+                var unitId = unitsPos[i+2];
+                var oldTowerConfig = ConfigData.GetMonsterConfig(unitId);
                 var isKingTower = oldTowerConfig.Type == (int) CardTypeSub.KingTower;
-                var unitId = unitInfo.UnitId;
                 var towerData = new Monster(unitId);
                 if (isKingTower)
                 {
@@ -87,10 +90,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                             }
                         }
                     }
+                    towerData.Star = mapConfig.TowerStar;
                 }
 
                 var level = ConfigData.GetLevelExpConfig(player.Level).TowerLevel;
-                var towerUnit = new TowerMonster(level, towerData, isKingTower, new Point(unitInfo.X * CardSize, unitInfo.Y * CardSize), player.IsLeft);
+                var towerUnit = new TowerMonster(level, towerData, isKingTower, new Point(xPos * CardSize, yPos * CardSize), player.IsLeft);
 
                 BattleManager.Instance.RuleData.CheckTowerData(towerUnit);
                 BattleManager.Instance.MonsterQueue.Add(towerUnit);

@@ -28,7 +28,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
 
         public override int Star
         {
-            get { return monster.MonsterConfig.Star; }
+            get { return monster.Star; }
         }
 
         public override int Type
@@ -90,7 +90,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
 
             int basel = 210;
             Font font = new Font("宋体", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            g.DrawString(("★★★★★★★★★★").Substring(10 - monster.MonsterConfig.Star), font, Brushes.Yellow, offX + 30, offY + 30);
+            g.DrawString(("★★★★★★★★★★").Substring(10 - monster.Star), font, Brushes.Yellow, offX + 30, offY + 30);
             font.Dispose();
 
             basel += offY;
@@ -203,7 +203,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             var cardQual = Config.CardConfigManager.GetCardConfig(CardId).Quality;
             tipData.AddTextNewLine(monster.Name, HSTypes.I2QualityColor((int)cardQual), 20);
             tipData.AddText(string.Format("Lv{0}({1})", card.Level, monster.MonsterConfig.Ename), "MediumAquamarine");
-            tipData.AddTextNewLine(stars.Substring(10 - monster.MonsterConfig.Star), "Yellow", 20);
+            tipData.AddTextNewLine(stars.Substring(10 - monster.Star), "Yellow", 20);
             tipData.AddLine();
             if (monster.MonsterConfig.JobId > 0)
             {

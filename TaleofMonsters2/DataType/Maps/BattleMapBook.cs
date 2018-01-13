@@ -8,15 +8,27 @@ namespace TaleofMonsters.DataType.Maps
 {
     internal static class BattleMapBook
     {
-        static Dictionary<string, BattleMapInfo> mapType = new Dictionary<string, BattleMapInfo>();
-
+        private static Dictionary<string, BattleMapInfo> mapType = new Dictionary<string, BattleMapInfo>();
+        
         public static BattleMapInfo GetMap(string name)
         {
             if (!mapType.ContainsKey(name))
             {
-                mapType.Add(name, GetMapFromFile(string.Format("{0}.map", name)));
+                var mapData = GetMapFromFile(string.Format("{0}.map", name));
+                mapData.Name = name;
+                mapType.Add(name, mapData);
             }
             return mapType[name];
+        }
+
+        public static BattleMapConfig GetMapConfig(string mapName)
+        {
+            foreach (var mapConfig in ConfigData.BattleMapDict.Values)
+            {
+                if (mapConfig.Name == mapName)
+                    return mapConfig;
+            }
+            return null;
         }
 
         private static BattleMapInfo GetMapFromFile(string name)
@@ -36,31 +48,6 @@ namespace TaleofMonsters.DataType.Maps
                     for (int j = 0; j < mapInfo.XCount; j++)
                         mapInfo.Cells[j, i] = int.Parse(mapinfos[j]);
                 }
-            }
-            var unitCount = int.Parse(sr.ReadLine());//左边单位布置
-            mapInfo.LeftUnits = new BattleMapInfo.BattleMapUnitInfo[unitCount];
-            for (int i = 0; i < unitCount; i++)
-            {
-                string[] unitinfos = sr.ReadLine().Split('\t');
-                mapInfo.LeftUnits[i] = new BattleMapInfo.BattleMapUnitInfo
-                    {
-                        X = int.Parse(unitinfos[0]),
-                        Y = int.Parse(unitinfos[1]),
-                        UnitId = int.Parse(unitinfos[2])
-                    };
-            }
-
-            unitCount = int.Parse(sr.ReadLine());//右边单位布置
-            mapInfo.RightUnits = new BattleMapInfo.BattleMapUnitInfo[unitCount];
-            for (int i = 0; i < unitCount; i++)
-            {
-                string[] unitinfos = sr.ReadLine().Split('\t');
-                mapInfo.RightUnits[i] = new BattleMapInfo.BattleMapUnitInfo
-                {
-                    X = int.Parse(unitinfos[0]),
-                    Y = int.Parse(unitinfos[1]),
-                    UnitId = int.Parse(unitinfos[2])
-                };
             }
             sr.Close();
             return mapInfo;

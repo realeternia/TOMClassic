@@ -56,7 +56,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public int WeaponId { get { return Weapon == null ? 0 : Weapon.CardId; } }
         public int WeaponType { get { return Weapon != null ? Weapon.Type - CardTypeSub.Weapon + 1 : 0; } }
 
-        public int Star { get { return Avatar.MonsterConfig.Star; } }
+        public int Star { get { return Avatar.Star; } }
         public int Attr { get { return Avatar.MonsterConfig.Attr; } }
         public int Type { get { return Avatar.MonsterConfig.Type; } }
 
@@ -329,7 +329,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                             BattleManager.Instance.StatisticData.AddItemGet(itemId);
                             BattleManager.Instance.FlowWordQueue.Add(new FlowItemInfo(itemId, Position, 20, 50));
                         }
-                        UserProfile.Profile.OnKillMonster(Avatar.MonsterConfig.Star, Avatar.MonsterConfig.Type, Avatar.MonsterConfig.Type);
+                        UserProfile.Profile.OnKillMonster(Avatar.Star, Avatar.MonsterConfig.Type, Avatar.MonsterConfig.Type);
                     }
                 }
             }
@@ -337,7 +337,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
             SkillManager.CheckRemoveEffect();
             var rival = Rival as Player;
-            rival.OnKillMonster(Avatar.Id, Level, Avatar.MonsterConfig.Star, Position);
+            rival.OnKillMonster(Avatar.Id, Level, Avatar.Star, Position);
 
             MakeSound(false);
         }
@@ -504,7 +504,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 }
 
                 var starIcon = HSIcons.GetIconsByEName("sysstar");
-                for (int i = 0; i < Avatar.MonsterConfig.Star; i++)
+                for (int i = 0; i < Avatar.Star; i++)
                 {
                     g.DrawImage(starIcon, i*12, 8, 16, 16);
                 }

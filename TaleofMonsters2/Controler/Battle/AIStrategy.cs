@@ -68,7 +68,7 @@ namespace TaleofMonsters.Controler.Battle
                             if (!monster.CanAddWeapon())//建筑无法使用武器
                                 continue;
 
-                            if (tar == -1 || monster.Avatar.MonsterConfig.Star >BattleManager.Instance.MonsterQueue[tar].Avatar.MonsterConfig.Star)
+                            if (tar == -1 || monster.Avatar.Star >BattleManager.Instance.MonsterQueue[tar].Avatar.Star)
                                 tar = i;
                         }
                     }
@@ -82,7 +82,7 @@ namespace TaleofMonsters.Controler.Battle
                     {
                         var targetStar = -1;
                         if (tar >= 0)
-                            targetStar = BattleManager.Instance.MonsterQueue[tar].Avatar.MonsterConfig.Star;
+                            targetStar = BattleManager.Instance.MonsterQueue[tar].Avatar.Star;
                         for (int i = 0; i <BattleManager.Instance.MonsterQueue.Count; i++)
                         {
                             LiveMonster monster =BattleManager.Instance.MonsterQueue[i];
@@ -90,10 +90,10 @@ namespace TaleofMonsters.Controler.Battle
                                 continue;
                             if ((monster.IsLeft != isLeft && spellConfig.Target[1] != 'F') || (monster.IsLeft == isLeft && spellConfig.Target[1] != 'E'))
                             {
-                                if (tar == -1 || monster.Avatar.MonsterConfig.Star > targetStar)
+                                if (tar == -1 || monster.Avatar.Star > targetStar)
                                 {
                                     tar = i;
-                                    targetStar = monster.Avatar.MonsterConfig.Star;
+                                    targetStar = monster.Avatar.Star;
                                 }
                             }
                         }
