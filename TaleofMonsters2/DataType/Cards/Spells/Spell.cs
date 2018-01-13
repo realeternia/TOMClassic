@@ -8,10 +8,7 @@ namespace TaleofMonsters.DataType.Cards.Spells
     internal class Spell : ISpell
     {
         public SpellConfig SpellConfig;
-        public int Id
-        {
-            get { return SpellConfig.Id; }
-        }
+        public int Id { get { return SpellConfig.Id; } }
 
         public int Level { get; set; }
 
@@ -91,7 +88,7 @@ namespace TaleofMonsters.DataType.Cards.Spells
             
             Level = level;
 
-            int standardValue = (20 + SpellConfig.Star*12)*(level*8 + 92)/100*(200 + modify) /200;
+            int standardValue = (18 + SpellConfig.Star*12)*(level*8 + 92)/100*(200 + modify) /200;
             Damage = standardValue * (SpellConfig.Damage) / 100 * 5;
             Cure = standardValue * (SpellConfig.Cure) / 100 * 5;
             Atk = standardValue * (SpellConfig.Atk) / 100;//和monster的攻击一样
@@ -108,9 +105,7 @@ namespace TaleofMonsters.DataType.Cards.Spells
             double standardValue3 = Math.Sqrt(((double)level + 7) / 8) * (100 + SpellConfig.Modify) / 100;
             Rate = SpellConfig.Rate * standardValue3;
             if (Rate > 100)
-            {
                 Rate = 100;
-            }
         }
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Control;
-using NarlonLib.Core;
 using NarlonLib.Drawing;
 using NarlonLib.Tools;
 using TaleofMonsters.Core;
@@ -67,9 +66,10 @@ namespace TaleofMonsters.Controler.Battle.Components
             public virtual void Draw(Graphics g)
             {
                 var img = CardAssistant.GetCardImage(CardId, ItemWidth, ItemWidth);
-               g.DrawImage(img, X, 2, ItemWidth, ItemWidth);
+                if (img != null)
+                    g.DrawImage(img, X, 2, ItemWidth, ItemWidth);
                 Pen p = new Pen(IsLeft ? Brushes.Red : Brushes.Blue, 1);
-               g.DrawRectangle(p, X, 2, ItemWidth, ItemWidth);
+                g.DrawRectangle(p, X, 2, ItemWidth, ItemWidth);
                 p.Dispose();
             }
         }
@@ -251,9 +251,7 @@ namespace TaleofMonsters.Controler.Battle.Components
         private void CardFlow_Paint(object sender, PaintEventArgs e)
         {
             foreach (var cardInfo in cardList)
-            {
                 cardInfo.Draw(e.Graphics);
-            }
         }
 
         private void CardFlow_MouseMove(object sender, MouseEventArgs e)

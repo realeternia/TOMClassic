@@ -8,10 +8,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
     {
         public WeaponConfig WeaponConfig;
 
-        public int Id
-        {
-            get { return WeaponConfig.Id; }
-        }
+        public int Id { get { return WeaponConfig.Id; } }
 
         public int Atk { get; set; }
         public int PArmor { get; set; }
@@ -46,16 +43,6 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             UpgradeToLevel1();
         }
 
-        public void AddAtk(int addon)
-        {
-            Atk += addon;
-        }
-
-        public void AddDef(int addon)
-        {
-            Def += addon;
-        }
-
         public void AddStrengthLevel(int value)
         {
             int basedata = value*MathTool.GetSqrtMulti10(WeaponConfig.Star);
@@ -63,14 +50,6 @@ namespace TaleofMonsters.DataType.Cards.Weapons
                 Atk += 2*basedata/10;
             else if (WeaponConfig.Type == (int)CardTypeSub.Armor)
                 Def += 1*basedata/10;
-        }
-
-        public void RemoveNegaPoint()
-        {
-            if (Atk < 0)
-                Atk = 0;
-            if (Def < 0)
-                Def = 0;
         }
 
         public CardProductMarkTypes GetSellMark()
@@ -105,21 +84,16 @@ namespace TaleofMonsters.DataType.Cards.Weapons
         {
             var modify = CardAssistant.GetCardModify((CardQualityTypes)WeaponConfig.Quality, WeaponConfig.Modify);
 
-            int standardValue = (20 + WeaponConfig.Star * 12) * (level*8 + 92) / 100 * (200 + modify) / 200;
+            int standardValue = (18 + WeaponConfig.Star * 12) * (level*8 + 92) / 100 * (200 + modify) / 200;
             standardValue = (int)((float)standardValue * 4 / WeaponConfig.Dura * (1 + (WeaponConfig.Dura - 4) * 0.1));//耐久低的武器总值削减
             Atk = standardValue * (WeaponConfig.AtkP) / 100;
             PArmor = standardValue * (WeaponConfig.PArmor) / 100*5;
             MArmor = standardValue * (WeaponConfig.MArmor) / 100 * 5;
 
             if (Range > 10)
-            {
                 Atk = (int)(Atk * CardAssistant.GetCardFactorOnRange(Range));
-            }
-
             if (Mov > 10)
-            {
                 Atk = (int)(Atk * CardAssistant.GetCardFactorOnMove(Mov));
-            }
         }
     }
 }
