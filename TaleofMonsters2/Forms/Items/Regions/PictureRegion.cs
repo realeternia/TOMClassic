@@ -34,6 +34,7 @@ namespace TaleofMonsters.Forms.Items.Regions
             if (nid > 0)
             {
                 Image img = null;
+                HsActionCallback preAction = null;
                 HsActionCallback action = null;
                 if (type == PictureRegionCellType.Item)
                 {
@@ -81,6 +82,16 @@ namespace TaleofMonsters.Forms.Items.Regions
                 else if (type == PictureRegionCellType.People)
                 {
                     img = DataType.Peoples.PeopleBook.GetPersonImage(nid);
+                    preAction = () =>
+                    {
+                        var peopleConfig = ConfigData.GetPeopleConfig(nid);
+                        if (peopleConfig.Quality > 0)
+                        {
+                            var brush = new SolidBrush(Color.FromName(HSTypes.I2QualityColor(peopleConfig.Quality)));
+                            g.FillRectangle(brush, X + 3, Y + 3, Width - 6, Height - 6);
+                            brush.Dispose();
+                        }
+                    };
                 }
                 else if (type == PictureRegionCellType.HeroSkill)
                 {
@@ -114,6 +125,8 @@ namespace TaleofMonsters.Forms.Items.Regions
                     img = DungeonBook.GetDungeonItemImage(nid);
                 }
 
+                if (preAction != null)
+                    preAction();
                 if (img != null)
                 {
                     if (Scale == 1)
@@ -132,9 +145,7 @@ namespace TaleofMonsters.Forms.Items.Regions
                     }
                 }
                 if (action != null)
-                {
                     action();
-                }
             }
 
             foreach (IRegionDecorator decorator in decorators)

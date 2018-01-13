@@ -23,7 +23,7 @@ namespace TaleofMonsters.Forms
         private bool showImage;
         private int realTar = -1;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
-        private List<DbRivalState> people;
+        private List<DbRivalState> peopleList;
         private VirtualRegion vRegion;
 
         private List<int> types;
@@ -32,7 +32,7 @@ namespace TaleofMonsters.Forms
         {
             InitializeComponent();
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
-            people = new List<DbRivalState>();
+            peopleList = new List<DbRivalState>();
             vRegion = new VirtualRegion(this);
             vRegion.AddRegion(new PictureRegion(1, 41, 40, 70, 70, PictureRegionCellType.People, 0));
             for (int i = 0; i < 20; i++)
@@ -76,9 +76,7 @@ namespace TaleofMonsters.Forms
             IsChangeBgm = true;
 
             if (UserProfile.InfoBasic.LastRival > 0)
-            {
                 FastBind(UserProfile.InfoBasic.LastRival);
-            }
         }
 
         private void Fight()
@@ -86,7 +84,7 @@ namespace TaleofMonsters.Forms
             if (realTar == -1)
                 return;
 
-            PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(people[realTar].Pid);
+            PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(peopleList[realTar].Pid);
             if (peopleConfig.Emethod == "")
             {
                 ControlPlus.MessageBoxEx.Show("目前版本暂不开放！");
@@ -101,15 +99,13 @@ namespace TaleofMonsters.Forms
         private static List<int> GetPeopleAvailTypes()
         {
             List<int> typeLists = new List<int>();
-            foreach (var person in UserProfile.InfoRival.Rivals.Values)
+            foreach (var rivalData in UserProfile.InfoRival.Rivals.Values)
             {
-                if (person.Avail)
+                if (rivalData.Avail)
                 {
-                    int personType = ConfigData.GetPeopleConfig(person.Pid).Type;
-                    if (personType!=0 && !typeLists.Contains(personType))
-                    {
+                    int personType = ConfigData.GetPeopleConfig(rivalData.Pid).Type;
+                    if (personType != 0 && !typeLists.Contains(personType))
                         typeLists.Add(personType);
-                    }
                 }
             }
             typeLists.Sort();
@@ -118,8 +114,7 @@ namespace TaleofMonsters.Forms
 
         private void Bind(int type)
         {
-            people.Clear();
-            int off = 2;
+            peopleList.Clear();
 
             for (int i = 0; i < 20; i++)
             {
@@ -127,32 +122,35 @@ namespace TaleofMonsters.Forms
                 vRegion.SetRegionDecorator(i + 2, 0, "");
             }
 
-            foreach (var person in UserProfile.InfoRival.Rivals.Values)
+            foreach (var rivalData in UserProfile.InfoRival.Rivals.Values)
             {
-                if (person.Avail)
+                if (rivalData.Avail)
                 {
-                    PeopleConfig personInfo = ConfigData.GetPeopleConfig(person.Pid);
-                    if (personInfo.Type == type)
-                    {
-                        people.Add(person);
-                        vRegion.SetRegionKey(off, person.Pid);
-                        vRegion.SetRegionDecorator(off, 0, personInfo.Name);
-                        off++;
-                    }
+                    PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(rivalData.Pid);
+                    if (peopleConfig.Type == type)
+                        peopleList.Add(rivalData);
                 }
             }
 
+            peopleList.Sort(new DbRivalState.CompareByQuality());
+            int off = 2;
+            foreach (var rivalData in peopleList)
+            {
+                vRegion.SetRegionKey(off, rivalData.Pid);
+                PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(rivalData.Pid);
+                vRegion.SetRegionDecorator(off, 0, peopleConfig.Name);
+                off++;
+            }
             realTar = 0;
-            vRegion.SetRegionKey(1, people[realTar].Pid);
+            vRegion.SetRegionKey(1, peopleList[realTar].Pid);
             Invalidate();
         }
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
-
             if (id == 1 && realTar != -1)
             {
-                Image image = PeopleBook.GetPreview(people[realTar].Pid);
+                Image image = PeopleBook.GetPreview(peopleList[realTar].Pid);
                 tooltip.Show(image, this, x, y);
             }
             else
@@ -173,11 +171,11 @@ namespace TaleofMonsters.Forms
                 if (id > 1 && id < 30)
                 {
                     int tar = id - 2;                   
-                    if (tar < people.Count)
+                    if (tar < peopleList.Count)
                     {
                         realTar = tar;
-                        vRegion.SetRegionKey(1, people[realTar].Pid);
-                        UserProfile.InfoBasic.LastRival = people[realTar].Pid;
+                        vRegion.SetRegionKey(1, peopleList[realTar].Pid);
+                        UserProfile.InfoBasic.LastRival = peopleList[realTar].Pid;
                         Invalidate();
                     }
                 }
@@ -202,9 +200,9 @@ namespace TaleofMonsters.Forms
                 return;
             Bind(peopleConfig.Type);
             vRegion.SetRegionKey(1, id);
-            for (int i = 0; i < people.Count; i++)
+            for (int i = 0; i < peopleList.Count; i++)
             {
-                if (people[i].Pid == id)
+                if (peopleList[i].Pid == id)
                 {
                     realTar = i;
                     break;
@@ -239,7 +237,7 @@ namespace TaleofMonsters.Forms
                     int xoff = 35;
                     int yoff = 35;
                     Font fontsong = new Font("宋体", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-                    PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(people[realTar].Pid);
+                    PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(peopleList[realTar].Pid);
                     e.Graphics.DrawString(string.Format("{0} (Lv{1})", peopleConfig.Name, peopleConfig.Level), fontsong, Brushes.White, xoff + 100, yoff + 10);
                     e.Graphics.DrawString("来自", fontsong, Brushes.DarkGray, xoff+100, yoff+28);
                     e.Graphics.DrawString(peopleConfig.World, fontsong, Brushes.Cyan, xoff + 140, yoff + 28);
@@ -250,8 +248,8 @@ namespace TaleofMonsters.Forms
                         foreach (var deckAttr in DeckBook.GetDeckAttrs(peopleConfig.Emethod, peopleConfig.Level))
                             e.Graphics.DrawImage(HSIcons.GetIconsByEName(deckAttr), xoff + 140 + i++*18, yoff + 46, 16, 16);
                     }
-                    int win = people[realTar].Win;
-                    int loss = people[realTar].Loss;
+                    int win = peopleList[realTar].Win;
+                    int loss = peopleList[realTar].Loss;
                     int rate = 0;
                     if (win + loss != 0)
                         rate = win * 100 / (win + loss);

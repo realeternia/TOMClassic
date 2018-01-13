@@ -1,4 +1,6 @@
-﻿using TaleofMonsters.Core;
+﻿using System.Collections.Generic;
+using ConfigDatas;
+using TaleofMonsters.Core;
 
 namespace TaleofMonsters.DataType.User.Db
 {
@@ -20,6 +22,27 @@ namespace TaleofMonsters.DataType.User.Db
             Win = 0;
             Loss = 0;
             Avail = false;
+        }
+
+
+        internal class CompareByQuality : IComparer<DbRivalState>
+        {
+            #region IComparer<DbRivalState> 成员
+
+            public int Compare(DbRivalState x, DbRivalState y)
+            {
+                if (x.Pid == 0)
+                    return 1;
+                if (y.Pid == 0)
+                    return -1;
+                var xPeople = ConfigData.GetPeopleConfig(x.Pid);
+                var yPeople = ConfigData.GetPeopleConfig(y.Pid);
+                if (xPeople.Quality != yPeople.Quality)
+                    return xPeople.Quality.CompareTo(yPeople.Quality);
+                return xPeople.Level.CompareTo(yPeople.Level);
+            }
+
+            #endregion
         }
     }
 }

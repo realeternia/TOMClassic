@@ -14,27 +14,21 @@ namespace TaleofMonsters.Forms.Items.Regions
             base.Draw(g);
 
             if (isIn && nid > 0)
-            {
                 g.DrawRectangle(Pens.Yellow, X, Y, Width - 1, Height - 1);
-            }
         }
 
         public override void Enter()
         {
             base.Enter();
             if (parent != null)
-            {
                 parent.Invalidate(new Rectangle(X, Y, Width, Height));
-            }
         }
 
         public override void Left()
         {
             base.Left();
             if (parent != null)
-            {
                 parent.Invalidate(new Rectangle(X, Y, Width, Height));
-            }
         }
     }
 }
