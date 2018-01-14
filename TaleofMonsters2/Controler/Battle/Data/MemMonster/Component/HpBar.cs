@@ -37,10 +37,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             {
                 lastRate = rate;
                 rate = value;
-                if (lastRate<rate)
-                {
+                if (lastRate < rate)
                     lastRate = rate;
-                }
             }
         }
 
@@ -77,18 +75,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         }
         public void Update()
         {
-            if (rate<lastRate)
-            {
+            if (rate < lastRate)
                 lastRate -= Math.Max((lastRate - rate)/5, 1);
-            }
         }
 
         public void OnRound()
         {
             if (HpReg > 0)
-            {
                 Life += HpReg;
-            }
 
             if (self.Avatar.MonsterConfig.LifeRound > 0)
             {//这里使用默认的生命值来扣
@@ -138,10 +132,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
             g.FillRectangle(Brushes.Lime, 0, 2, hpLenth, 8);
             g.FillRectangle(Brushes.Red, Math.Max(rate* hpLenth/100, 0), 2, Math.Min(hpLenth - rate * hpLenth / 100, hpLenth), 8);
-            if (rate<lastRate)
-            {
-                g.FillRectangle(Brushes.Yellow, rate * hpLenth / 100, 2, (lastRate - rate) * hpLenth / 100, 8);
-            }            
+            if (rate < lastRate)
+                g.FillRectangle(Brushes.Yellow, rate*hpLenth/100, 2, (lastRate - rate)*hpLenth/100, 8);
         }
     }
 }

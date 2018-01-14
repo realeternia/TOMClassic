@@ -42,9 +42,7 @@ namespace TaleofMonsters.DataType.Peoples
             foreach (var peopleData in ConfigData.PeopleDict.Values)
             {
                 if (peopleData.InRandomQuest && peopleData.Level>=levelMin && peopleData.Level<=levelMax)
-                {
                     ids.Add(peopleData.Id);
-                }
             }
             return ids[MathTool.GetRandom(ids.Count)];
         }

@@ -58,7 +58,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public int Star { get { return Avatar.Star; } }
         public int Attr { get { return Avatar.MonsterConfig.Attr; } }
-        public int Type { get { return Avatar.MonsterConfig.Type; } }
+        public int Type { get { return Avatar.MonsterConfig.Type; } } //种族
 
         public virtual bool CanMove { get { return !BuffManager.HasBuff(BuffEffectTypes.NoMove); } }
         public bool CanAttack { get; set; }
@@ -80,6 +80,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public bool IsSummoned { get; set; } //是否召唤单位
 
         public int Hp { get { return HpBar.Life; } }
+
         public double HpRate { get { return (double)Hp * 100 / Avatar.Hp; } }
         public bool IsAlive { get { return Hp > 0; } }
 
@@ -543,14 +544,31 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void AddHp(double addon)
         {
+            if (Type == (int)CardTypeSub.Machine || Type == (int)CardTypeSub.KingTower || Type == (int)CardTypeSub.Machine)
+                addon=1;
             HpBar.AddHp((int)addon);
         }
 
         public void AddHpRate(double value)
         {
-            HpBar.AddHp((int)(RealMaxHp * value));
+            var healValue = (int) (RealMaxHp*value);
+            if (Type == (int)CardTypeSub.Machine || Type == (int)CardTypeSub.KingTower || Type == (int)CardTypeSub.Machine)
+                healValue = 1;
+            HpBar.AddHp(healValue);
         }
-        
+
+        public void DecHp(double addon)
+        {
+            HpBar.AddHp(-(int)addon);
+        }
+
+        public void RepairHp(double addon)
+        {
+            if (Type != (int)CardTypeSub.Machine && Type != (int)CardTypeSub.KingTower && Type != (int)CardTypeSub.Machine)
+                addon = 1;
+            HpBar.AddHp((int)addon);
+        }
+
         public bool HasSkill(int sid)
         {
             return SkillManager.HasSkill(sid);
@@ -558,7 +576,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         
         public void AddMaxHp(double value)
         {
-            if (Avatar.MonsterConfig.IsBuilding && value < 0)
+            if (Avatar.MonsterConfig.IsBuilding)
             {
                 BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", Position, 0, "Gold", 26, 0, 0, 1, 15));
                 return;

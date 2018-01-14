@@ -26,9 +26,7 @@ namespace TaleofMonsters.DataType.User.Db
         {
             CardIds = new int[GameConstants.DeckCardCount];
             for (int i = 0; i < GameConstants.DeckCardCount; i++)
-            {
                 CardIds[i] = -1;
-            }
             Name = string.Format("卡组{0}", index);
         }
 
@@ -112,9 +110,7 @@ namespace TaleofMonsters.DataType.User.Db
             for (int i = 0; i < GameConstants.DeckCardCount; i++)
             {
                 if (CardIds[i] == id)
-                {
                     return true;
-                }
             }
             return false;
         }
@@ -129,13 +125,9 @@ namespace TaleofMonsters.DataType.User.Db
                 {
                     var cardType = ConfigIdManager.GetCardType(CardIds[i]);
                     if (cardType == CardTypes.Monster)
-                    {
                         Mcount = Mcount + 1;
-                    }
                     else
-                    {
                         Wcount = Wcount + 1;
-                    }
                 }
             }
         }

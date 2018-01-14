@@ -8,6 +8,8 @@ namespace ConfigDatas
         int CardId { get; }
         void AddHp(double addon);
         void AddHpRate(double value);
+        void DecHp(double addon);
+        void RepairHp(double addon);
         double HpRate{get;}
         int Hp{get;}
         int WeaponId{get;}
