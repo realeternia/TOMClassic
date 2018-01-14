@@ -25,6 +25,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
         public int Crt { get; set; }
         public int Mov { get; set; }
         public int Range { get; set; }
+        public int Cure { get; set; } //治疗
 
         public int Level { get; set; }
 
@@ -88,6 +89,8 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             int standardValue = (18 + Star * 12) * (level*8 + 92) / 100 * (200 + modify) / 200;
             Atk = standardValue * (100 + AtkP) / 100; //200
             Hp = standardValue * (100 + VitP) / 100 * 5; //200
+            Cure = standardValue;
+
             if (Range!=10)
             {
                 Atk = (int)(Atk * CardAssistant.GetCardFactorOnRange(Range));

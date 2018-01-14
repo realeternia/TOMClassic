@@ -32,6 +32,7 @@ namespace ConfigDatas
         AttrModifyData Dhit { get; set; }
         AttrModifyData Crt { get; set; }
         AttrModifyData Luk { get; set; }
+        int Cure { get; }
 
         double CrtDamAddRate { get; set; } //暴击时伤害倍数增加
 

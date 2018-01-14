@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
 using NarlonLib.Log;
@@ -74,6 +73,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public AttrModifyData Crt { get; set; }
         public AttrModifyData Luk { get; set; }
 
+        public int Cure { get { return Avatar.Cure; } }
         public double CrtDamAddRate { get; set; }
         public int MovRound { get; set; }
 
