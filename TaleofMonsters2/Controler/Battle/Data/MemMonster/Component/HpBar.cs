@@ -111,6 +111,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         public void AddHp(int val)
         {
             Life += val;
+            if (val > 0)
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("+" + val, self.CenterPosition, "Lime")); //»ØÑª
         }
 
         public void Draw(Graphics g)
