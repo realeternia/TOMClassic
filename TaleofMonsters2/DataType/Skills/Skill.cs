@@ -15,10 +15,7 @@ namespace TaleofMonsters.DataType.Skills
 
         public string Name
         {
-            get
-            {
-                return SkillConfig.Name;
-            }
+            get { return SkillConfig.Name; }
         }
 
         public Skill(int id)

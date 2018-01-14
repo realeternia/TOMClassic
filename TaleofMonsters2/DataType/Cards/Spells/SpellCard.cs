@@ -63,18 +63,14 @@ namespace TaleofMonsters.DataType.Cards.Spells
         {
             card = card1.Card;
             if (card1.Level > 1)
-            {
                 spell.UpgradeToLevel(card1.Level);
-            }
         }
 
         public override void SetData(DeckCard card1)
         {
             card = card1;
             if (card1.Level > 1)
-            {
                 spell.UpgradeToLevel(card1.Level);
-            }
         }
 
         public override void DrawOnCardDetail(Graphics g, int offX, int offY)

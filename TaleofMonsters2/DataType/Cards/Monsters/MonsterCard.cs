@@ -70,18 +70,14 @@ namespace TaleofMonsters.DataType.Cards.Monsters
         {
             card = card1.Card;
             if (card1.Level > 1)
-            {
                 monster.UpgradeToLevel(card1.Level);
-            }
         }
 
         public override void SetData(DeckCard card1)
         {
             card = card1;
             if (card1.Level > 1)
-            {
                 monster.UpgradeToLevel(card1.Level);
-            }
         }
 
         public override void DrawOnCardDetail(Graphics g, int offX, int offY)
@@ -216,33 +212,19 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             tipData.AddTextNewLine(string.Format("攻击 {0,3:D}  生命 {1,3:D}", monster.Atk, monster.Hp), "White");
             tipData.AddTextNewLine(string.Format("移动 {0,3:D}  射程 {1,3:D}", monster.Mov, monster.Range), "White");
             if (monster.Def>0)
-            {
                 tipData.AddTextNewLine(string.Format("防御 +{0}", monster.Def), "Lime");
-            }
             if (monster.Mag > 0)
-            {
                 tipData.AddTextNewLine(string.Format("魔力 +{0}", monster.Mag), "Lime");
-            }
             if (monster.Spd > 0)
-            {
                 tipData.AddTextNewLine(string.Format("攻速 +{0}", monster.Spd), "Lime");
-            }
             if (monster.Hit > 0)
-            {
                 tipData.AddTextNewLine(string.Format("命中 +{0}", monster.Hit), "Lime");
-            }
             if (monster.Dhit > 0)
-            {
                 tipData.AddTextNewLine(string.Format("回避 +{0}", monster.Dhit), "Lime");
-            }
             if (monster.Crt > 0)
-            {
                 tipData.AddTextNewLine(string.Format("暴击 +{0}", monster.Crt), "Lime");
-            }
             if (monster.Luk > 0)
-            {
                 tipData.AddTextNewLine(string.Format("幸运 +{0}", monster.Luk), "Lime");
-            }
 
             var skillList = MonsterBook.GetSkillList(monster.MonsterConfig.Id);
             if (skillList.Count > 0)

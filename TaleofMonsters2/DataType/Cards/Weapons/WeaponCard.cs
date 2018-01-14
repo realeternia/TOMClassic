@@ -64,18 +64,14 @@ namespace TaleofMonsters.DataType.Cards.Weapons
         {
             card = card1.Card;
             if (card1.Level > 1)
-            {
                 weapon.UpgradeToLevel(card1.Level);
-            }
         }
 
         public override void SetData(DeckCard card1)
         {
             card = card1; 
             if (card1.Level > 1)
-            {
                 weapon.UpgradeToLevel(card1.Level);
-            }
         }
 
         public override void DrawOnCardDetail(Graphics g, int offX, int offY)
@@ -223,54 +219,30 @@ namespace TaleofMonsters.DataType.Cards.Weapons
             tipData.AddImage(HSIcons.GetIconsByEName("wep" + (weapon.WeaponConfig.Type - 100+1)));
             tipData.AddImage(HSIcons.GetIconsByEName("atr" + weapon.WeaponConfig.Attr));
             if (weapon.Atk > 0)
-            {
                 tipData.AddTextNewLine(string.Format("攻击 +{0}", weapon.Atk), "White");
-            }
             if (weapon.PArmor > 0)
-            {
                 tipData.AddTextNewLine(string.Format("物甲 +{0}", weapon.PArmor), "White");
-            }
             if (weapon.MArmor > 0)
-            {
                 tipData.AddTextNewLine(string.Format("魔甲 +{0}", weapon.PArmor), "White");
-            }
             if (weapon.Range > 0)
-            {
                 tipData.AddTextNewLine(string.Format("射程 ={0}", weapon.Range), "White");
-            }
             if (weapon.Mov > 0)
-            {
                 tipData.AddTextNewLine(string.Format("移动 ={0}", weapon.Mov), "White");
-            }
 
             if (weapon.Def > 0)
-            {
                 tipData.AddTextNewLine(string.Format("防御 +{0}", weapon.Def), "Lime");
-            }
             if (weapon.Mag > 0)
-            {
                 tipData.AddTextNewLine(string.Format("魔力 +{0}", weapon.Mag), "Lime");
-            }
             if (weapon.Spd > 0)
-            {
                 tipData.AddTextNewLine(string.Format("攻速 +{0}", weapon.Spd), "Lime");
-            }
             if (weapon.Hit > 0)
-            {
                 tipData.AddTextNewLine(string.Format("命中 +{0}", weapon.Hit), "Lime");
-            }
             if (weapon.Dhit > 0)
-            {
                 tipData.AddTextNewLine(string.Format("回避 +{0}", weapon.Dhit), "Lime");
-            }
             if (weapon.Crt > 0)
-            {
                 tipData.AddTextNewLine(string.Format("暴击 +{0}", weapon.Crt), "Lime");
-            }
             if (weapon.Luk > 0)
-            {
                 tipData.AddTextNewLine(string.Format("幸运 +{0}", weapon.Luk), "Lime");
-            }
             tipData.AddTextNewLine(string.Format("耐久 {0}", weapon.Dura), "Lime");
             if (weapon.WeaponConfig.SkillId > 0)
             {
