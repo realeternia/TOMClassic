@@ -40,21 +40,6 @@ namespace TaleofMonsters.MainItem.Quests
             int fightLevel = Math.Max(1, level + BlessManager.FightLevelChange);
             var peopleConfig = ConfigData.GetPeopleConfig(enemyId);
 
-            if (config.CanBribe)
-            {
-                var cost = GameResourceBook.OutCarbuncleBribe(UserProfile.InfoBasic.Level, fightLevel);
-                if (UserProfile.InfoBag.HasResource(GameResourceType.Carbuncle, cost))
-                {
-                    if (MessageBoxEx2.Show(string.Format("是否花{0}红宝石来贿赂怪物?", cost)) == DialogResult.OK)
-                    {
-                        UserProfile.InfoBag.SubResource(GameResourceType.Carbuncle, cost);
-
-                        OnWin();
-                        return;
-                    }
-                }
-            }
-
             PeopleBook.Fight(enemyId, peopleConfig.BattleMap, fightLevel, parm, winCallback, failCallback, failCallback);
         }
 

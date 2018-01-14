@@ -1,13 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Core;
+using TaleofMonsters.MainItem.Blesses;
 using TaleofMonsters.MainItem.Quests;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
 using TaleofMonsters.MainItem.Scenes;
@@ -133,6 +137,24 @@ namespace TaleofMonsters.Forms
                 if (sceneQuestBlock.Disabled)
                     continue;
                 answerList.Add(sceneQuestBlock);
+
+                if (sceneQuestBlock.Children != null && sceneQuestBlock.Children[0].Script.StartsWith("fight"))
+                {
+                    sceneQuestBlock.Prefix = "fight";
+                    if (config.CanBribe)//判断战斗贿赂
+                    {
+                        int fightLevel = Math.Max(1, eventLevel + BlessManager.FightLevelChange);
+                        var cost = GameResourceBook.OutCarbuncleBribe(UserProfile.InfoBasic.Level, fightLevel);
+                        if (UserProfile.InfoBag.HasResource(GameResourceType.Carbuncle, cost))
+                        {
+                            var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockbribe");
+                            questBlock.Prefix = "bribe";
+                            questBlock.Children[0].Children[0].Children[0] = sceneQuestBlock.Children[0].Children[1].Children[0].Children[0];//找到成功的结果
+                            answerList.Add(questBlock);
+                        }
+                    }
+                }
+
             }
 
             if (interactBlock!=null && interactBlock.Depth==0)
@@ -214,14 +236,7 @@ namespace TaleofMonsters.Forms
                         int textOff = 20;
                         if (!string.IsNullOrEmpty(word.Prefix))
                         {
-                            string icon = "";
-                            if (word.Prefix.StartsWith("questfin")) icon = "npc3";
-                            else if (word.Prefix.StartsWith("quest")) icon = "npc1";
-                            else if (word.Prefix.StartsWith("rival")) icon = "tsk1";
-                            else if (word.Prefix.StartsWith("shop")) icon = "oth7";
-                            else if (word.Prefix.StartsWith("addon")) icon = "tsk5";
-                            else if (word.Prefix.StartsWith("cantrade")) icon = "tsk3";
-                            else if (word.Prefix.StartsWith("cantest")) icon = "oth1";
+                            var icon = GetItemIcon(word);
                             if (icon != "")
                             {
                                 e.Graphics.DrawImage(HSIcons.GetIconsByEName(icon), textOff, id * 20 + Height - 10 - answerList.Count * 20 + 2, 18, 18);
@@ -235,6 +250,21 @@ namespace TaleofMonsters.Forms
                     font.Dispose();
                 }
             }
+        }
+
+        private static string GetItemIcon(SceneQuestBlock word)
+        {
+            string icon = "";
+            if (word.Prefix.StartsWith("questfin")) icon = "npc3";
+            else if (word.Prefix.StartsWith("quest")) icon = "npc1";
+            else if (word.Prefix.StartsWith("rival")) icon = "tsk1";
+            else if (word.Prefix.StartsWith("shop")) icon = "oth7";
+            else if (word.Prefix.StartsWith("addon")) icon = "tsk5";
+            else if (word.Prefix.StartsWith("cantrade")) icon = "tsk3";
+            else if (word.Prefix.StartsWith("cantest")) icon = "oth1";
+            else if (word.Prefix.StartsWith("bribe")) icon = "res5";
+            else if (word.Prefix.StartsWith("fight")) icon = "abl1";
+            return icon;
         }
 
         private void NpcTalkForm_MouseMove(object sender, MouseEventArgs e)

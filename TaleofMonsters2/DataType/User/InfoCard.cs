@@ -20,17 +20,13 @@ namespace TaleofMonsters.DataType.User
         {
             Decks = new DbDeckData[GameConstants.PlayDeckCount];
             for (int i = 0; i < Decks.Length; i++)
-            {
                 Decks[i] = new DbDeckData(i + 1);
-            }
         }
 
         internal int GetCardCountByType(CardTypes type)
         {
             if (type == CardTypes.Null)
-            {
                 return Cards.Count;
-            }
             int count = 0;
             foreach (var cd in Cards.Values)
             {
@@ -85,28 +81,14 @@ namespace TaleofMonsters.DataType.User
         public int GetCardCount(int id)//只有0或1
         {
             if (Cards.ContainsKey(id))
-            {
                 return 1;
-            }
             return 0;
-        }
-
-        public string[] GetDeckNames()
-        {
-            string[] names = new string[Decks.Length];
-            for (int i = 0; i < Decks.Length; i++)
-            {
-                names[i] = Decks[i].Name;
-            }
-            return names;
         }
 
         public DbDeckCard GetDeckCardById(int id)
         {
             if (Cards.ContainsKey(id))
-            {
                 return Cards[id];
-            }
             return new DbDeckCard();
         }
 
@@ -114,9 +96,7 @@ namespace TaleofMonsters.DataType.User
         {
             var card = GetDeckCardById(cardId);
             if (card.BaseId > 0)
-            {
                 return card.Exp;
-            }
             return 0;
         }
 
@@ -124,9 +104,7 @@ namespace TaleofMonsters.DataType.User
         {
             var card = GetDeckCardById(cardId);
             if (card.BaseId > 0)
-            {
                 card.AddExp(expadd);
-            }
         }
 
         public bool CanLevelUp(int cardId)
@@ -149,9 +127,7 @@ namespace TaleofMonsters.DataType.User
             {
                 int expNeed = ExpTree.GetNextRequiredCard(card.Level);
                 if (card.Exp < expNeed)
-                {
                     return;
-                }
                 card.Exp = (ushort)(card.Exp - expNeed);
                 card.Level++;
             }

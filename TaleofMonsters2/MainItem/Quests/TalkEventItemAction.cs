@@ -1,7 +1,10 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.MainItem.Blesses;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
 using TaleofMonsters.MainItem.Scenes;
 
@@ -46,6 +49,10 @@ namespace TaleofMonsters.MainItem.Quests
                 case "questp": UserProfile.InfoQuest.AddQuestProgress(int.Parse(evt.ParamList[0]), byte.Parse(evt.ParamList[1])); break;
                 case "removeditem": var itemId = DungeonBook.GetDungeonItemId(config.NeedDungeonItemId);
                     UserProfile.InfoDungeon.RemoveDungeonItem(itemId, config.NeedDungeonItemCount); break;
+                case "bribe":
+                    int fightLevel = Math.Max(1, level + BlessManager.FightLevelChange);
+                    var cost = GameResourceBook.OutCarbuncleBribe(UserProfile.InfoBasic.Level, fightLevel);
+                    UserProfile.InfoBag.SubResource(GameResourceType.Carbuncle, cost); break;
             }
 
             if (evt.Children.Count > 0)

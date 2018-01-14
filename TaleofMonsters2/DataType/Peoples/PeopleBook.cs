@@ -113,7 +113,7 @@ namespace TaleofMonsters.DataType.Peoples
             List<DeckCard> cards = new List<DeckCard>();
             if (UserProfile.InfoDungeon.DungeonId <= 0)//在副本中不需要选择卡组
             {
-                bool rt = PopDeckChoose.Show(map, UserProfile.InfoCard.GetDeckNames());
+                bool rt = PopDeckChoose.Show(map);
                 if (!rt)
                 {
                     if (cancelEvent != null)

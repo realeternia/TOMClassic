@@ -8,7 +8,7 @@
 			r1
 				s真厉害，你打开了宝盒，虽然可能有一些运气成分。
 					a很好
-						eaction|disable
+						edisable
 							s这里有一些远古的卡牌，似乎可以给你很大的帮助
 								a恩，很好
 									enpc|cards

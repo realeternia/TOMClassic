@@ -61,7 +61,7 @@ namespace TaleofMonsters.Forms.Pops
             font.Dispose();
         }
 
-        public static bool Show(string map, string[] datas)
+        public static bool Show(string map)
         {
             PopDeckChoose mb = new PopDeckChoose();
             mb.tile = 0;
