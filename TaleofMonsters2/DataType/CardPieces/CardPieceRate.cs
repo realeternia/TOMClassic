@@ -47,21 +47,13 @@ namespace TaleofMonsters.DataType.CardPieces
         private static int CheckBound(int clevel, HItemConfig itemConfig, int percent)
         {
             if (clevel > itemConfig.Rare)
-            {
-                percent += (clevel - itemConfig.Rare)*2 * 100;
-            }
+                percent += (clevel - itemConfig.Rare)*2*100;
             else if (clevel == itemConfig.Rare)
-            {
-                percent+=100;
-            }
-            if (percent < 50)//最小概率0.5%
-            {
+                percent += 100;
+            if (percent < 50) //最小概率0.5%
                 percent = 50;
-            }
             else if (percent > 1500)
-            {
                 percent = 1500;
-            }
             return percent;
         }
     }

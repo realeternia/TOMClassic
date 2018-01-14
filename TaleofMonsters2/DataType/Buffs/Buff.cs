@@ -25,10 +25,7 @@ namespace TaleofMonsters.DataType.Buffs
 
         public string Descript
         {
-            get
-            {
-                return BuffConfig.GetDescript(lv);
-            }
+            get { return BuffConfig.GetDescript(lv); }
         }
 
     }

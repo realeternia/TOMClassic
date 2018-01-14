@@ -1,5 +1,4 @@
-﻿using TaleofMonsters.Controler.Battle.Data.MemCard;
-using TaleofMonsters.Controler.Loader;
+﻿using TaleofMonsters.Controler.Loader;
 using System.Drawing;
 using TaleofMonsters.DataType.Decks;
 
@@ -58,10 +57,6 @@ namespace TaleofMonsters.DataType.Cards
         public override CardTypes GetCardType()
         {
             return CardTypes.Null;
-        }
-
-        public override void SetData(ActiveCard card)
-        {            
         }
 
         public override void SetData(DeckCard card1)

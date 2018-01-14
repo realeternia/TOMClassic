@@ -4,7 +4,6 @@ using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.HeroSkills;
 using System.Drawing;
-using NarlonLib.Core;
 using NarlonLib.Tools;
 using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Skills;
@@ -75,9 +74,7 @@ namespace TaleofMonsters.DataType.Equips
             Range = equipConfig.Range;
 
             if (equipConfig.CommonSkillId > 0)
-            {
                 CommonSkillList.Add(new RLIdValue {Id = equipConfig.CommonSkillId, Value = equipConfig.CommonSkillRate});
-            }
         }
 
         public Image GetPreview()
@@ -214,13 +211,9 @@ namespace TaleofMonsters.DataType.Equips
             }
             tipData.AddLine();
             if (Dura > 0)//实例化了
-            {
                 tipData.AddTextNewLine(string.Format("耐久:{0}/{1}", Dura, equipConfig.Durable), "White");
-            }
             else
-            {
                 tipData.AddTextNewLine(string.Format("最大耐久:{0}", equipConfig.Durable), "White");
-            }
             if (ExpireTime > 0)//存在过期
             {
                 var expireTime = TimeTool.UnixTimeToDateTime(ExpireTime);

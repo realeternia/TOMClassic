@@ -19,24 +19,18 @@ namespace TaleofMonsters.DataType.CardPieces
 
             int blankTotal = 10000;
             foreach (var cardPieceRate in pieces[id])
-            {
                 blankTotal -= cardPieceRate.Rate;
-            }
 
             int roll = MathTool.GetRandom(10000 + luk*GameConstants.LukToRoll);//万分之roll点
             if (roll < blankTotal)
-            {
                 return 0;
-            }
 
             int baseValue = blankTotal;
             foreach (var cardPieceRate in pieces[id])
             {
                 baseValue += cardPieceRate.Rate;
-                if (baseValue>roll)
-                {
+                if (baseValue > roll)
                     return cardPieceRate.ItemId;
-                }
             }
             
             return 0;
@@ -65,9 +59,7 @@ namespace TaleofMonsters.DataType.CardPieces
                     {
                         var rate = CardPieceRate.FromCardRacePiece(cardPieceConfig.Id, monsterConfig.Star);
                         if (rate.Rate > 0)
-                        {
                             pieces[id].Add(rate);
-                        }
                     }
                 }
 
@@ -78,9 +70,7 @@ namespace TaleofMonsters.DataType.CardPieces
         public static List<CardPieceRate> GetDropListByCardId(int id)
         {
             if (id <= 0)
-            {
                 return new List<CardPieceRate>();
-            }
 
             TryUpdateCache(id);
 
@@ -94,9 +84,7 @@ namespace TaleofMonsters.DataType.CardPieces
             foreach (var monsterConfig in ConfigData.MonsterDict.Values)
             {
                 if (monsterConfig.DropId1== config.Ename || monsterConfig.DropId2 == config.Ename)
-                {
                     data.Add(monsterConfig.Id);
-                }
             }
 
             return data.ToArray();

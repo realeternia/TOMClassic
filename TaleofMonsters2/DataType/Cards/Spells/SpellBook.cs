@@ -69,9 +69,7 @@ namespace TaleofMonsters.DataType.Cards.Spells
                 }
 #endif
                 if (image.Width != width || image.Height != height)
-                {
                     image = image.GetThumbnailImage(width, height, null, new IntPtr(0));
-                }
                 ImageManager.AddImage(fname, image);
             }
             return ImageManager.GetImage(fname);

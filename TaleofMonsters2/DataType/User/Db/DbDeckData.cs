@@ -76,17 +76,11 @@ namespace TaleofMonsters.DataType.User.Db
             }
 
             if (cardConfig.Quality == CardQualityTypes.Legend && count >= GameConstants.CardLimitLegend)
-            {
                 return ErrorConfig.Indexer.DeckCardTypeLimitLegend;
-            }
             if (cardConfig.Quality != CardQualityTypes.Legend && count >= GameConstants.CardLimit)
-            {
                 return ErrorConfig.Indexer.DeckCardTypeLimit;
-            }
-            if (firstBlank==-1)
-            {
+            if (firstBlank == -1)
                 return ErrorConfig.Indexer.DeckIsFull;
-            }
             SetCardAt(firstBlank, card.BaseId);
 
             return ErrorConfig.Indexer.OK;

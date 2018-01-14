@@ -42,17 +42,11 @@ namespace TaleofMonsters.DataType.Drops
             for (int j = 0; j < dropConfig.Count; j++)
             {
                 if (dropConfig.Items.Length > 0)
-                {
                     DropItems(dropConfig.Items, dropConfig.ItemRate, items);
-                }
                 else if (dropConfig.EquipQualityMin > 0 || dropConfig.EquipQualityMax > 0)
-                {
                     DropEquips(dropConfig.EquipQualityMin, dropConfig.EquipQualityMax, items);
-                }
                 else if(dropConfig.RandomItemRate.Length > 0)
-                {
                     DropLevelItems(dropConfig.RandomItemRate, items);
-                }
             }
             return items;
         }
@@ -84,9 +78,7 @@ namespace TaleofMonsters.DataType.Drops
             {
                 resultQual = qualMin;
                 while (MathTool.GetRandom(3) == 0 && resultQual < qualMax)
-                {
                     resultQual ++;
-                }
             }
 
             int resultItemId = 0;
@@ -102,10 +94,8 @@ namespace TaleofMonsters.DataType.Drops
         private static void DropLevelItems(int[] itemLevelRate, List<int> items)
         {
             int sum = 0;
-            foreach (var r in itemLevelRate)
-            {
-                sum += r;
-            }
+            foreach (var rate in itemLevelRate)
+                sum += rate;
             int roll = MathTool.GetRandom(sum);
             int rare = 0;
             sum = 0;

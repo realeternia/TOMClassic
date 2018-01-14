@@ -13,14 +13,10 @@ namespace TaleofMonsters.DataType.Others
             int type = ConfigDatas.ConfigData.GetTileConfig(id).Type;
 
             if (type == 0)
-            {
                 return false;
-            }
 
             if (mtype == type)
-            {
                 return true;
-            }
 
             return false;
         }
@@ -32,9 +28,7 @@ namespace TaleofMonsters.DataType.Others
             {
                 Image image = PicLoader.Read("Tiles", string.Format("{0}.JPG", ConfigData.GetTileConfig(id).Icon));
                 if (image.Width != width || image.Height != height)
-                {
                     image = image.GetThumbnailImage(width, height, null, new IntPtr(0));
-                }
                 ImageManager.AddImage(fname, image);
             }
             return ImageManager.GetImage(fname);

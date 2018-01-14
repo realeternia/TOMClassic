@@ -6,10 +6,8 @@ namespace TaleofMonsters.DataType.User.Db
 {
     public class DbMergeData
     {
-        [FieldIndex(Index = 1)]
-        public int Target;//武器id
-        [FieldIndex(Index =2)]
-        public List<IntPair> Methods;//公式
+        [FieldIndex(Index = 1)] public int Target;//武器id
+        [FieldIndex(Index =2)] public List<IntPair> Methods;//公式
 
         public DbMergeData()
         {
@@ -19,11 +17,6 @@ namespace TaleofMonsters.DataType.User.Db
         public void Set(List<IntPair> mthd)
         {
             Methods = mthd;
-        }
-
-        public int Count
-        {
-            get { return Methods.Count; }
         }
     }
 

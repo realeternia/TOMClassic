@@ -37,9 +37,7 @@ namespace TaleofMonsters.DataType.User
             {
                 int oldLevel = Level;
                 while (CheckNewLevel()) //循环升级
-                {
                     OnLevel(Level);
-                }
 
                 MainItem.SystemMenuManager.ResetIconState();
                 MainForm.Instance.RefreshView();
@@ -51,60 +49,42 @@ namespace TaleofMonsters.DataType.User
         public void AddFood(uint val)
         {
             FoodPoint += val;
-            if (FoodPoint>=100)
-            {
+            if (FoodPoint >= 100)
                 FoodPoint = 100;
-            }
         }
         public void SubFood(uint val)
         {
             if (val > FoodPoint)
-            {
                 FoodPoint = 0;
-            }
             else
-            {
                 FoodPoint -= val;
-            }
         }
 
         public void AddHealth(uint val)
         {
             HealthPoint += val;
             if (HealthPoint >= 100)
-            {
                 HealthPoint = 100;
-            }
         }
         public void SubHealth(uint val)
         {
             if (val > HealthPoint)
-            {
                 HealthPoint = 0;
-            }
             else
-            {
                 HealthPoint -= val;
-            }
         }
         public void AddMental(uint val)
         {
             MentalPoint += val;
             if (MentalPoint >= 100)
-            {
                 MentalPoint = 100;
-            }
         }
         public void SubMental(uint val)
         {
             if (val > MentalPoint)
-            {
                 MentalPoint = 0;
-            }
             else
-            {
                 MentalPoint -= val;
-            }
         }
 
         private bool CheckNewLevel()
@@ -124,9 +104,7 @@ namespace TaleofMonsters.DataType.User
             foreach (var peopleConfig in ConfigData.PeopleDict.Values)
             {
                 if (peopleConfig.AutoAddLevel == lv)
-                {
                     UserProfile.InfoRival.SetRivalAvail(peopleConfig.Id);
-                }
             }
           
         }

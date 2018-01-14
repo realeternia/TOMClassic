@@ -71,9 +71,7 @@ namespace TaleofMonsters.DataType.Peoples
 //                    percent *= 2;
 //                }
                 if (MathTool.GetRandom(100) < percent)
-                {
                     rt[info.Id - 1] = (uint)MathTool.GetRandom((int)info.Min, (int)info.Max + 1);
-                }
             }
             return rt;
         }

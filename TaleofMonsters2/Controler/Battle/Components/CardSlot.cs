@@ -32,7 +32,7 @@ namespace TaleofMonsters.Controler.Battle.Components
         {
             ACard = tcard;
             Card = CardAssistant.GetCard(tcard.CardId);
-            Card.SetData(ACard);
+            Card.SetData(ACard.Card);
         }
 
         public void CardSlot_Paint( PaintEventArgs e)

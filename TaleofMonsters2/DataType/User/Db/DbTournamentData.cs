@@ -38,21 +38,13 @@ namespace TaleofMonsters.DataType.User.Db
             int left;
             int right;
             if (match.LeftType == 1)
-            {
                 left = Pids[match.LeftValue];
-            }
             else
-            {
                 left = Results[match.LeftValue].Winner;
-            }
             if (match.RightType == 1)
-            {
                 right = Pids[match.RightValue];
-            }
             else
-            {
                 right = Results[match.RightValue].Winner;
-            }
 
             currentMid = mid;
             currentAutoGiveUp = autoGiveup;
@@ -117,9 +109,7 @@ namespace TaleofMonsters.DataType.User.Db
             List<int[]> ranks = GetRanks();
             TournamentConfig tournamentConfig = ConfigData.GetTournamentConfig(Id);
             for (int i = 0; i < tournamentConfig.Awards.Length; i++)
-            {
                 UserProfile.InfoWorld.UpdatePeopleRank(ranks[i][0], tournamentConfig.Awards[i]);
-            }
 
             for (int i = 0; i < tournamentConfig.Resource.Count; i++)
             {

@@ -22,9 +22,7 @@ namespace TaleofMonsters.DataType.Scenes
             {
                 sceneQuestNameDict = new Dictionary<string, int>();
                 foreach (SceneQuestConfig questConfig in ConfigData.SceneQuestDict.Values)
-                {
                     sceneQuestNameDict.Add(questConfig.Ename, questConfig.Id);
-                }
             }
             int questId;
             if (!sceneQuestNameDict.TryGetValue(name, out questId))
@@ -70,22 +68,16 @@ namespace TaleofMonsters.DataType.Scenes
         private static bool IsQuestFlagAvail(SceneQuestConfig questConfig)
         {
             if (!string.IsNullOrEmpty(questConfig.TriggerQuestNotReceive))
-            {
                 return UserProfile.InfoQuest.IsQuestNotReceive(QuestBook.GetQuestIdByName(questConfig.TriggerQuestNotReceive));
-            }
             if (!string.IsNullOrEmpty(questConfig.TriggerQuestReceived))
-            {
                 return UserProfile.InfoQuest.IsQuestCanProgress(QuestBook.GetQuestIdByName(questConfig.TriggerQuestReceived));
-            }
             if (!string.IsNullOrEmpty(questConfig.TriggerQuestFinished))
             {
                 var qid = QuestBook.GetQuestIdByName(questConfig.TriggerQuestFinished);
                 return UserProfile.InfoQuest.IsQuestFinish(qid) || UserProfile.InfoQuest.IsQuestCanReward(qid);
             }
             if (questConfig.TriggerLimitInDungeon > 0 && UserProfile.InfoDungeon.DungeonId > 0)
-            {
                 return UserProfile.InfoDungeon.GetQuestCount(questConfig.Id) < questConfig.TriggerLimitInDungeon;
-            }
             return true;
         }
 
@@ -269,13 +261,9 @@ namespace TaleofMonsters.DataType.Scenes
 
                 levelCachDict[data.Depth] = data;
                 if (root == null)
-                {
                     root = data;
-                }
                 else
-                {
                     levelCachDict[data.Depth-1].Children.Add(data);
-                }
             }
             sr.Close();
 
@@ -288,9 +276,7 @@ namespace TaleofMonsters.DataType.Scenes
             for (int i = 0; i < str.Length; i++)
             {
                 if (str[i] != '\t')
-                {
                     break;
-                }
                 tabCount++;
             }
             str = str.Substring(tabCount);

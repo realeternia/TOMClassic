@@ -14,9 +14,7 @@ namespace TaleofMonsters.DataType.Buffs
             foreach (int eff in buffConfig.Effect)
             {
                 if ((int)etype == eff)
-                {
                     return true;
-                }
             }
             return false;
         }

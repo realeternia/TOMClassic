@@ -14,9 +14,7 @@ namespace TaleofMonsters.DataType.Others
             foreach (LevelInfoConfig levelInfoConfig in ConfigData.LevelInfoDict.Values)
             {
                 if (levelInfoConfig.Level > oldLevel && levelInfoConfig.Level <= level)
-                {
                     ids.Add(levelInfoConfig.Id);
-                }
             }
             return ids.ToArray();
         }

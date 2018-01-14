@@ -30,22 +30,14 @@ namespace TaleofMonsters.DataType.Cards
         {
             string cardBorder = "";
             if (card.Type == CardTypes.Monster)
-            {
                 cardBorder = "border4.PNG";
-            }
             else if (card.Type == CardTypes.Weapon)
-            {
                 cardBorder = "border5.PNG";
-            }
             else
-            {
                 cardBorder = "border6.PNG";
-            }
 
             if (card.Quality == CardQualityTypes.Legend)//传说卡
-            {
                 cardBorder = "border2.PNG";
-            }
             return cardBorder;
         }
 

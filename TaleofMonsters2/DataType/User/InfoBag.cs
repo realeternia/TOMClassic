@@ -203,9 +203,7 @@ namespace TaleofMonsters.DataType.User
             {
                 var pickItem = Items[i];
                 if (pickItem.Type == id)
-                {
                     count += pickItem.Value;
-                }
             }
             return count;
         }
@@ -216,9 +214,7 @@ namespace TaleofMonsters.DataType.User
             {
                 var pickItem = Items[i];
                 if (pickItem.Type == 0)
-                {
                     count ++;
-                }
             }
             return count;
         }
@@ -297,9 +293,7 @@ namespace TaleofMonsters.DataType.User
             {
                 HItemConfig itemConfig = ConfigData.GetHItemConfig(Items[i].Type);
                 if (itemConfig != null && itemConfig.Type == type)
-                {
                     counter[itemConfig.Id] += Items[i].Value;
-                }
             }
             List<IntPair> datas = new List<IntPair>();
             foreach (int itemId in counter.Keys())
@@ -321,9 +315,7 @@ namespace TaleofMonsters.DataType.User
             {
                 HItemConfig itemConfig = ConfigData.GetHItemConfig(Items[i].Type);
                 if (itemConfig != null && itemConfig.Attributes != null && Array.IndexOf(itemConfig.Attributes, attrName) >= 0)
-                {
                     counter[itemConfig.Id] += Items[i].Value;
-                }
             }
             List<IntPair> datas = new List<IntPair>();
             foreach (int itemId in counter.Keys())
@@ -362,13 +354,9 @@ namespace TaleofMonsters.DataType.User
                 {
                     var nowTime = TimeTool.GetNowUnixTime();
                     if (nowTime >= CdGroupTime[group - 1])
-                    {
                         return 0;
-                    }
                     else
-                    {
                         return (float)(nowTime - CdGroupStartTime[group - 1]) / (CdGroupTime[group - 1] - CdGroupStartTime[group - 1]);
-                    }
                 }
             }
             return 0;

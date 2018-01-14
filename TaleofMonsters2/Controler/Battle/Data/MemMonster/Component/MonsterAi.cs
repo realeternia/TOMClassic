@@ -114,9 +114,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             }
 
             if (monster.RealSpd != 0) //会返回一些ats
-            {
                 monster.AddActionRate((monster.RealSpd)*GameConstants.SpdToRate/100);
-            }
             monster.MovRound = 0;
         }
 

@@ -95,9 +95,7 @@ namespace TaleofMonsters.DataType.User
                 if (MathTool.GetRandom(100) < rate)
                 {
                     if (mark == 0)
-                    {
                         mark = mon.GetSellMark();
-                    }
                     CardProducts.Add(new DbCardProduct(index++, mon.Id, (int)mark));
                 }
             }
@@ -116,9 +114,7 @@ namespace TaleofMonsters.DataType.User
                 if (MathTool.GetRandom(100) < rate)
                 {
                     if (mark == 0)
-                    {
                         mark = wpn.GetSellMark();
-                    }
                     CardProducts.Add(new DbCardProduct(index++, wpn.Id, (int)mark));
                 }
             }
@@ -137,9 +133,7 @@ namespace TaleofMonsters.DataType.User
                 if (MathTool.GetRandom(100) < rate)
                 {
                     if (mark == 0)
-                    {
                         mark = spl.GetSellMark();
-                    }
                     CardProducts.Add(new DbCardProduct(index++, spl.Id, (int)mark));
                 }
             }
@@ -154,9 +148,7 @@ namespace TaleofMonsters.DataType.User
         public DbTournamentData GetTournamentData(int tid)
         {
             if (Tournaments == null)
-            {
                 Tournaments = new Dictionary<int, DbTournamentData>();
-            }
             if (!Tournaments.ContainsKey(tid))
             {
                 DbTournamentData tourdata = new DbTournamentData(tid);
@@ -174,9 +166,7 @@ namespace TaleofMonsters.DataType.User
                     DbTournamentData tourdata = GetTournamentData(tournamentConfig.Id);
                     tourdata.Pids = PeopleBook.GetRandNPeople(tournamentConfig.PlayerCount, tournamentConfig.MinLevel, tournamentConfig.MaxLevel);
                     if (tourdata.Engage)
-                    {
                         tourdata.Pids[MathTool.GetRandom(tournamentConfig.PlayerCount)] = -1; //player
-                    }
                     tourdata.Results = new MatchResult[tournamentConfig.MaxLevel];
                 }
 
@@ -186,9 +176,7 @@ namespace TaleofMonsters.DataType.User
                     {
                         TournamentMatchConfig tournamentMatchConfig = ConfigData.GetTournamentMatchConfig(mid);
                         if (tournamentMatchConfig.Date == day && Tournaments[tournamentConfig.Id].Results[tournamentMatchConfig.Offset].Winner == 0)
-                        {
                             Tournaments[tournamentConfig.Id].CheckMatch(tournamentMatchConfig.Offset, true);
-                        }
                     }
                 }
                 if (tournamentConfig.EndDate == day)
@@ -203,13 +191,9 @@ namespace TaleofMonsters.DataType.User
             if (!Ranks.ContainsKey(personid))
             {
                 if (personid > 0)
-                {
                     Ranks.Add(personid, ConfigData.GetPeopleConfig(personid).Level * 10);
-                }
                 else
-                {
                     Ranks.Add(personid, 0);
-                }
             }
             Ranks[personid] += mark;
         }
@@ -221,9 +205,7 @@ namespace TaleofMonsters.DataType.User
                 if (PeopleBook.IsPeople(peopleConfig.Id))
                 {
                     if (!Ranks.ContainsKey(peopleConfig.Id))
-                    {
                         Ranks.Add(peopleConfig.Id, peopleConfig.Level * 10);
-                    }
                 }
             }
             List<RankData> rks = new List<RankData>();
@@ -245,9 +227,7 @@ namespace TaleofMonsters.DataType.User
                 ArraysUtils.RandomShuffle(newids);
                 MergeMethods = new List<DbMergeData>();
                 for (int i = 0; i < 8; i++)
-                {
                     MergeMethods.Add(CreateMergeMethod(newids[i]));
-                }
                 UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastMergeTime, TimeManager.GetTimeOnNextInterval(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastMergeTime), time, GameConstants.MergeWeaponDura));
             }
 

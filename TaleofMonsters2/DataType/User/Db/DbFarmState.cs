@@ -14,8 +14,8 @@ namespace TaleofMonsters.DataType.User.Db
 
         public DbFarmState(int type, int time)
         {
-            this.Type = type;
-            this.Time = time;
+            Type = type;
+            Time = time;
         }
 
         public override string ToString()

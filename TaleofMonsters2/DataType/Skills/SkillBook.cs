@@ -21,9 +21,7 @@ namespace TaleofMonsters.DataType.Skills
                 foreach (SkillConfig skillConfig in ConfigData.SkillDict.Values)
                 {
                     if (skillConfig.IsRandom)
-                    {
                         randomSkillIds.Add(skillConfig.Id);
-                    }
                 }
             }
             return randomSkillIds[MathTool.GetRandom(randomSkillIds.Count)];            
@@ -72,9 +70,7 @@ namespace TaleofMonsters.DataType.Skills
 #endif
 
                 if (image.Width != width || image.Height != height)
-                {
                     image = image.GetThumbnailImage(width, height, null, new IntPtr(0));
-                }
                 ImageManager.AddImage(fname, image);
             }
             return ImageManager.GetImage(fname);

@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using NarlonLib.Math;
-using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Decks;
 using ConfigDatas;
@@ -57,13 +56,6 @@ namespace TaleofMonsters.DataType.Cards.Spells
         public override CardTypes GetCardType()
         {
             return CardTypes.Spell;
-        }
-
-        public override void SetData(ActiveCard card1)
-        {
-            card = card1.Card;
-            if (card1.Level > 1)
-                spell.UpgradeToLevel(card1.Level);
         }
 
         public override void SetData(DeckCard card1)

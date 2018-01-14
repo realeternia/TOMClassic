@@ -11,9 +11,7 @@ namespace TaleofMonsters.DataType.Quests
             foreach (var questData in ConfigData.QuestDict.Values)
             {
                 if (questData.Ename == f)
-                {
                     return questData.Id;
-                }
             }
 
             return 0;
@@ -25,17 +23,13 @@ namespace TaleofMonsters.DataType.Quests
             {
                 var config = ConfigData.GetQuestConfig(questId);
                 if (config.Ename == f)
-                {
                     return true;
-                }
             }
             foreach (var questData in UserProfile.InfoQuest.QuestRunning)
             {
                 var config = ConfigData.GetQuestConfig(questData.QuestId);
                 if (config.Ename == f)
-                {
                     return questData.State >= (byte) QuestStates.Accomplish;
-                }
             }
             return false;
         }
@@ -59,9 +53,7 @@ namespace TaleofMonsters.DataType.Quests
             {
                 var config = ConfigData.GetQuestConfig(questData.QuestId);
                 if (config.NeedAction == mark && UserProfile.InfoQuest.IsQuestCanProgress(config.Id))
-                {
                     UserProfile.InfoQuest.AddQuestProgress(config.Id, 10);
-                }
             }
         }
 
@@ -70,25 +62,15 @@ namespace TaleofMonsters.DataType.Quests
             string rt = "";
             var questConfig = ConfigData.GetQuestConfig(qid);
             if (questConfig.RewardGold > 0)
-            {
                 rt += "金钱 ";
-            }
             if (questConfig.RewardExp > 0)
-            {
                 rt += "经验 ";
-            }
             if (string.IsNullOrEmpty(questConfig.RewardItem) || string.IsNullOrEmpty(questConfig.RewardDrop))
-            {
                 rt += "道具 ";
-            }
             if (questConfig.RewardFood > 0|| questConfig.RewardHealth > 0|| questConfig.RewardMental > 0)
-            {
                 rt += "生存 ";
-            }
             if (questConfig.RewardBlessLevel > 0)
-            {
                 rt += "祝福 ";
-            }
             return rt;
         }
 

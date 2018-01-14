@@ -22,9 +22,7 @@ namespace TaleofMonsters.DataType.User.Db
         public void AddExp(int addon)
         {
             if (Level >= ExpTree.MaxLevel)
-            {
                 return;
-            }
 
             Exp = (ushort)(Exp + addon);
         }

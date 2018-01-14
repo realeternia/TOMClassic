@@ -21,9 +21,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
                 foreach (WeaponConfig weaponConfig in ConfigData.WeaponDict.Values)
                 {
                     if (weaponConfig.IsSpecial == 0)
-                    {
                         randomWeaponIdList.Add(weaponConfig.Id);
-                    }
                 }
             }
             return randomWeaponIdList[MathTool.GetRandom(randomWeaponIdList.Count)];  
@@ -31,15 +29,13 @@ namespace TaleofMonsters.DataType.Cards.Weapons
 
         public static int[] GetSkillWids(int sid)
         {
-            List<int> sids = new List<int>();
+            List<int> idList = new List<int>();
             foreach (WeaponConfig weaponConfig in ConfigData.WeaponDict.Values)
             {
                 if (weaponConfig.SkillId==sid && weaponConfig.IsSpecial == 0)
-                {
-                    sids.Add(weaponConfig.Id);
-                }
+                    idList.Add(weaponConfig.Id);
             }
-            return sids.ToArray();
+            return idList.ToArray();
         }
 
         public static string GetAttrByString(int id, string des)
@@ -79,9 +75,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
 #endif
 
                 if (image.Width != width || image.Height != height)
-                {
                     image = image.GetThumbnailImage(width, height, null, new IntPtr(0));
-                }
                 ImageManager.AddImage(fname, image);
             }
             return ImageManager.GetImage(fname);

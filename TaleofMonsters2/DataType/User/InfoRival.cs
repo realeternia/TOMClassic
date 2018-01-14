@@ -44,13 +44,9 @@ namespace TaleofMonsters.DataType.User
         {
             DbRivalState state;
             if (!Rivals.TryGetValue(id, out state))
-            {
                 Rivals[id] = new DbRivalState(id) {Avail = true};
-            }
             else
-            {
                 state.Avail = true;
-            }
         }
 
         public int GetRivalAvailCount()

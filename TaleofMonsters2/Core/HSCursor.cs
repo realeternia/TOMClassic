@@ -10,55 +10,48 @@ namespace TaleofMonsters.Core
 
         private void ChangeSub(Cursor cursor)
         {
-            if (mother.InvokeRequired)
+            if (parent.InvokeRequired)
             {
                 ChangeSubMethod aus = new ChangeSubMethod(ChangeSub);
-                mother.Invoke(aus, new Cursor[] { cursor });
+                parent.Invoke(aus, new Cursor[] { cursor });
             }
             else
             {
-                mother.Cursor = cursor;
+                parent.Cursor = cursor;
             }
         }
 
-        string name;
-        Control mother;
+        private Control parent;
 
-        public string Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
+        public string Name { get; set; }
 
-        public HSCursor(Control mother)
+        public HSCursor(Control control)
         {
-            this.mother = mother;
-            name = "null";
+            parent = control;
+            Name = "null";
         }
 
         public void ChangeCursor(string cname)
         {
-            if (cname != name)
+            if (cname != Name)
                 ChangeCursor("System.Cursor", string.Format("{0}.PNG", cname), 0, 0);
         }
 
         public void ChangeCursor(string path, string cname)
         {
-            if (cname != name)
+            if (cname != Name)
                 ChangeCursor(path, cname, 0, 0);
         }
 
         public void ChangeCursor(string path, string cname, int width, int height)
         {
             string keyname = cname.Substring(0, cname.IndexOf('.'));
-            if (keyname != name)
+            if (keyname != Name)
             {
-                name = keyname;
+                Name = keyname;
                 Image img = PicLoader.Read(path, cname);
                 if (img == null)
-                {
                     img = PicLoader.Read("system.cursor", "default.PNG");
-                }
                 SetCursorSize(img, new Point(0, 0), width, height);
             }
         }
@@ -71,13 +64,9 @@ namespace TaleofMonsters.Core
             Graphics g = Graphics.FromImage(myNewCursor);
             g.Clear(Color.FromArgb(0, 0, 0, 0));
             if (width == 0 && height == 0)
-            {
                 g.DrawImage(cursor, cursor.Width - hotX, cursor.Height - hotY, cursor.Width, cursor.Height);
-            }
             else
-            {
                 g.DrawImage(cursor, width - hotX, height - hotY, width, height);
-            }
             ChangeSub(new Cursor(myNewCursor.GetHicon()));
             g.Dispose();
             myNewCursor.Dispose();

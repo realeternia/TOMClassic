@@ -22,9 +22,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
                 foreach (MonsterConfig monsterConfig in ConfigData.MonsterDict.Values)
                 {
                     if (monsterConfig.IsSpecial == 0)
-                    {
                         randomMonsterIdList.Add(monsterConfig.Id);
-                    }
                 }
             }
             return randomMonsterIdList[MathTool.GetRandom(randomMonsterIdList.Count)];
@@ -40,9 +38,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
                     if (monsterConfig.IsSpecial > 0)
                         continue;
                     if (!starMidDict.ContainsKey(monsterConfig.Star))
-                    {
                         starMidDict.Add(monsterConfig.Star, new List<int>());
-                    }
                     starMidDict[monsterConfig.Star].Add(monsterConfig.Id);
                 }
             }
@@ -107,9 +103,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
                 }
 #endif
                 if (image.Width != width || image.Height != height)
-                {
                     image = image.GetThumbnailImage(width, height, null, new IntPtr(0));
-                }                
                 ImageManager.AddImage(fname, image);
             }
             return ImageManager.GetImage(fname);
@@ -121,9 +115,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
            {
                var skilConfig = ConfigData.GetSkillConfig(skill.Id);
                if (skilConfig.Target != "" && skilConfig.OnAdd != null && skilConfig.PointSelf)
-               {
                    return skilConfig;
-               }
            }
            return null;
        }
@@ -134,9 +126,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             {
                 var skilConfig = ConfigData.GetSkillConfig(skill.Id);
                 if (skilConfig.Tag == tag)
-                {
                     return true;
-                }
             }
             return false;
         }
@@ -146,13 +136,9 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             var monsterConfig = ConfigData.GetMonsterConfig(mid);
             List<RLIdValue> idValues = new List<RLIdValue>();
             if (monsterConfig.Skill1 > 0)
-            {
                 idValues.Add(new RLIdValue {Id = monsterConfig.Skill1, Value = monsterConfig.SkillRate1});
-            }
             if (monsterConfig.Skill2 > 0)
-            {
                 idValues.Add(new RLIdValue {Id = monsterConfig.Skill2, Value = monsterConfig.SkillRate2});
-            }
             return idValues;
         }
     }

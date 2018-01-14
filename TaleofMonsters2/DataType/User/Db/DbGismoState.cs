@@ -16,10 +16,5 @@ namespace TaleofMonsters.DataType.User.Db
             BaseId = baseId;
             ResultName = result;
         }
-
-        public void Update(string result)
-        {
-            ResultName = result;
-        }
     }
 }

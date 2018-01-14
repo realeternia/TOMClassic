@@ -19,9 +19,7 @@ namespace TaleofMonsters.DataType.Blesses
             {
                 blessNameDict = new Dictionary<string, int>();
                 foreach (var blessConfig in ConfigData.BlessDict.Values)
-                {
                     blessNameDict.Add(blessConfig.Ename, blessConfig.Id);
-                }
             }
             int blessId;
             if (!blessNameDict.TryGetValue(name, out blessId))
