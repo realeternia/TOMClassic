@@ -1,4 +1,4 @@
-startx=150
+startx=80
 starty=280
 width=12
 height=8
