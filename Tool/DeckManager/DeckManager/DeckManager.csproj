@@ -76,7 +76,14 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="HSTypes.cs" />
+    <Compile Include="ImageCache.cs" />
     <Compile Include="IntPair.cs" />
+    <Compile Include="NLComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="NLComboBox.designer.cs">
+      <DependentUpon>NLComboBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

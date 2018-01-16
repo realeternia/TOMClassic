@@ -18,10 +18,12 @@ namespace DeckManager
             }
         }
 
+        private string fileName;
         private CardDescript[] cards;
 
-        public void MakeLoad(string name, int level)
+        public void Load(string name)
         {
+            fileName = name;
             var deck = new List<CardDescript>();
             StreamReader sr = new StreamReader(name);
 
@@ -63,9 +65,59 @@ namespace DeckManager
             cards = deck.ToArray();
         }
 
+        public void Save()
+        {
+            Array.Sort(cards, new CompareByStarCard());
+
+            StreamWriter sw = new StreamWriter(fileName);
+            for (int i = 0; i < 30; i++)
+            {
+                if (cards[i].Id > 0)
+                {
+                    sw.WriteLine("Id={0}//{1}", cards[i].Id, CardConfigManager.GetCardConfig(cards[i].Id).Name);
+                }
+                else
+                {
+                    sw.WriteLine("Rand={0}", cards[i].Type);
+                }
+            }
+            sw.Close();
+        }
+
         public CardDescript GetCardId(int id)
         {
             return cards[id];
         }
+
+        public void Replace(int index, int id)
+        {
+            cards[index].Id = id;
+            cards[index].Type = "";
+        }
+    }
+
+    class CompareByStarCard : IComparer<CardDeck.CardDescript>
+    {
+        #region IComparer<int> ≥…‘±
+
+        public int Compare(CardDeck.CardDescript cx, CardDeck.CardDescript cy)
+        {
+            if (cx.Id == 0 && cy.Id == 0)
+                return cx.Type.CompareTo(cy.Type);
+            if (cx.Id == 0)
+                return 1;
+            if (cy.Id == 0)
+                return -1;
+
+            var x = CardConfigManager.GetCardConfig(cx.Id);
+            var y = CardConfigManager.GetCardConfig(cy.Id);
+            if (x.Type != y.Type)
+                return x.Type.CompareTo(y.Type);
+            if (x.Star != y.Star)
+                return x.Star.CompareTo(y.Star);
+            return x.Id.CompareTo(y.Id);
+        }
+
+        #endregion
     }
 }

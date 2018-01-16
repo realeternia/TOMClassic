@@ -10,10 +10,9 @@ namespace DeckManager
     public partial class Form1 : Form
     {
         private CardDeck deck;
-        private Image[] images = new Image[30];
         private string path;
-        private const string pathParent = "../../PicResource/";
 
+        private List<int> cards = new List<int>();
         private bool isDirty = true;
         private Bitmap cacheImage;
 
@@ -35,6 +34,8 @@ namespace DeckManager
                 LoadFromFile(path);
 
             ConfigDatas.ConfigData.LoadData();
+            comboBoxCatalog.SelectedIndex = 0;
+            ChangeCards();
         }
 
         private void LoadFromFile(string txt)
@@ -43,43 +44,12 @@ namespace DeckManager
             try
             {
                 deck = new CardDeck();
-                deck.MakeLoad(txt, 1);
-                UpdateImages();
+                deck.Load(txt);
             }
             catch (Exception e)
             {
                 MessageBox.Show("错误的文件格式"+e, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void UpdateImages()
-        {
-            for (int i = 0; i < 30; i++)
-            {
-                int cardId = deck.GetCardId(i).Id;
-                if (cardId == 0)
-                {
-                    images[i] = null;
-                    continue;
-                }
-
-                if (cardId < 52000000)
-                {
-                    var config = ConfigData.GetMonsterConfig(cardId);
-                    images[i] = Image.FromFile(string.Format("{0}Monsters/{1}.JPG", pathParent, config.Icon));
-                }
-                else if (cardId < 53000000)
-                {
-                    var config = ConfigData.GetWeaponConfig(cardId);
-                    images[i] = Image.FromFile(string.Format("{0}Weapon/{1}.JPG", pathParent, config.Icon));
-                }
-                else
-                {
-                    var config = ConfigData.GetSpellConfig(cardId);
-                    images[i] = Image.FromFile(string.Format("{0}Spell/{1}.JPG", pathParent, config.Icon));
-                }
-            }
-            panel1.Invalidate();
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -91,17 +61,12 @@ namespace DeckManager
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    if (images[j * 3 + i] != null)
-                        e.Graphics.DrawImage(images[j * 3 + i], i * wid, j * het, wid, het);
                     if (deck != null)
                     {
                         var cardData = deck.GetCardId(j * 3 + i);
                         if (cardData.Id > 0)
                         {
-                            var cardConfig = CardConfigManager.GetCardConfig(cardData.Id);
-                            var brush = new SolidBrush(Color.FromName(HSTypes.I2QualityColor((int)cardConfig.Quality)));
-                            e.Graphics.DrawString(cardConfig.Name, ft, brush, i * wid, j * het);
-                            brush.Dispose();
+                            DrawCardImg(e.Graphics, cardData.Id, ft, i * wid, j * het, wid, het);
                         }
                         else
                         {
@@ -121,38 +86,37 @@ namespace DeckManager
             ft.Dispose();
         }
 
+        private static void DrawCardImg(Graphics g, int cardId, Font ft, int x, int y, int wid, int het)
+        {
+            var img = ImageCache.GetImage(cardId);
+            g.DrawImage(img, x, y, wid, het);
+            var cardConfig = CardConfigManager.GetCardConfig(cardId);
+            var brush = new SolidBrush(Color.FromName(HSTypes.I2QualityColor((int) cardConfig.Quality)));
+            g.DrawString(cardConfig.Name, ft, Brushes.LightBlue, x + 4, y + het - 16);
+            g.DrawString(cardConfig.Name, ft, brush, x+3, y + het - 17);
+            brush.Dispose();
+
+            Font ft2 = new Font("宋体", 6);
+            g.DrawString(("★★★★★★★★★★").Substring(10 - cardConfig.Star), ft2, Brushes.Yellow, x + 1, y + 3);
+            ft2.Dispose();
+        }
+
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
             int index = 0;
-            int wid = 50;
-            int heg = 50;
+            int wid = 60;
+            int heg = 60;
             int xCount = panel2.Width / wid;
             if (isDirty)
             {
-               var cardIdList = new List<int>();
-                foreach (var monsterConfig in ConfigData.MonsterDict.Values)
-                    if (monsterConfig.IsSpecial == 0)
-                        cardIdList.Add(monsterConfig.Id);
-                foreach (var weaponConfig in ConfigData.WeaponDict.Values)
-                    if (weaponConfig.IsSpecial == 0)
-                        cardIdList.Add(weaponConfig.Id);
-                foreach (var spellConfig in ConfigData.SpellDict.Values)
-                    if (spellConfig.IsSpecial == 0)
-                        cardIdList.Add(spellConfig.Id);
-
-                panel2.Height = (cardIdList.Count / xCount + 1) * 50;
+                panel2.Height = (cards.Count / xCount + 1) * wid;
                 cacheImage = new Bitmap(panel2.Width, panel2.Height);
 
                 Graphics g = Graphics.FromImage(cacheImage);
                 Font ft = new Font("宋体", 9);
-                foreach (var cardId in cardIdList)
+                foreach (var cardId in cards)
                 {
-                    var cardConfig = CardConfigManager.GetCardConfig(cardId);
-                    var img = Image.FromFile(string.Format("{0}{1}/{2}.JPG", pathParent, cardConfig.GetImageFolderName(), cardConfig.Icon));
-                    g.DrawImage(img, (index % xCount) * wid, (index / xCount) * heg, wid, heg);
-                    var brush = new SolidBrush(Color.FromName(HSTypes.I2QualityColor((int)cardConfig.Quality)));
-                    g.DrawString(cardConfig.Name, ft, brush, (index % xCount) * wid, (index / xCount) * heg);
-                    brush.Dispose();
+                    DrawCardImg(g, cardId, ft, (index % xCount) * wid, (index / xCount) * heg, wid, heg);
                     index++;
                 }
                 ft.Dispose();
@@ -182,6 +146,7 @@ namespace DeckManager
         {
             string path = ((System.Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
             LoadFromFile(path);
+            panel1.Invalidate();
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -215,6 +180,214 @@ namespace DeckManager
 
         private void panel2_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            int wid = 60;
+            int het = 60;
+            int xCount = panel2.Width / wid;
+            if (e.X > 0 && e.X < wid*xCount)
+            {
+                var nowIndex = e.X/wid + e.Y/het*xCount;
+                if (leftSelectIndex >= 0 && cards.Count > nowIndex)
+                {
+                    deck.Replace(leftSelectIndex, cards[nowIndex]);
+                    panel1.Invalidate();
+                    return;
+                }
+            }
         }
+
+
+        private void comboBoxCatalog_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comboBoxValue.Items.Clear();
+            var type = comboBoxCatalog.SelectedItem.ToString();
+            switch (type)
+            {
+                case "分类":
+                    comboBoxValue.Items.AddRange(new object[] { "全部", "Yellow|生物", "Red|武器", "DodgerBlue|法术" }); break;
+                case "-细分":
+                    comboBoxValue.Items.AddRange(new object[] { "全部", "恶魔","机械","精灵","昆虫","龙","鸟",
+                        "爬行","人类","兽人","亡灵","野兽","鱼","元素","植物","地精","石像",
+                        "Red|武器","Red|卷轴","Red|防具", "Red|饰品",
+                        "DodgerBlue|单体法术","DodgerBlue|群体法术","DodgerBlue|基本法术","DodgerBlue|地形变化" }); break;
+                case "品质":
+                    comboBoxValue.Items.AddRange(new object[] { "全部", "普通", "Green|良好", "DodgerBlue|优秀", "Violet|史诗", "Orange|传说" }); break;
+                case "星级":
+                    comboBoxValue.Items.AddRange(new object[] { "全部", "★", "★★", "★★★", "★★★★", "★★★★★", "★★★★★★", "Gold|★x7" }); break;
+                case "职业":
+                    comboBoxValue.Items.Add("全部");
+                    foreach (var configData in ConfigData.JobDict.Values)
+                    {
+                        if (!configData.IsSpecial)
+                            comboBoxValue.Items.Add(configData.Color + "|" + configData.Name);
+                    }
+                    break;
+                case "元素":
+                    comboBoxValue.Items.AddRange(new object[] { "全部", "无", "Aqua|水", "Green|风", "Red|火", "Peru|地", "Gold|光", "DimGray|暗" }); break;
+                case "标签":
+                    comboBoxValue.Items.AddRange(new object[] { "全部", "基本", "Red|直伤", "范围", "状态", "Gold|治疗", "手牌", "Aqua|魔法", "属性", "召唤", "陷阱" }); break;
+            }
+            comboBoxValue.SelectedIndex = 0;
+        }
+
+        private int filterLevel = 0;
+        private int filterQual = -1;
+        private int filterType = -1;
+        private string filterTypeSub = "全部";
+        private int filterJob = -1;
+        private int filterEle = -1;
+        private string filterRemark = "全部";
+        private void buttonOk_Click(object sender, EventArgs e)
+        {
+            filterLevel = 0;
+            filterQual = -1;
+            filterType = -1;
+            filterTypeSub = "全部";
+            filterJob = -1;
+            filterEle = -1;
+            filterRemark = "全部";
+
+            var type = comboBoxCatalog.SelectedItem.ToString();
+            switch (type)
+            {
+                case "分类":
+                    filterType = comboBoxValue.SelectedIndex - 1; break;
+                case "-细分":
+                    filterTypeSub = comboBoxValue.TargetText; break;
+                case "星级":
+                    filterLevel = comboBoxValue.SelectedIndex; break;
+                case "职业":
+                    foreach (var configData in ConfigData.JobDict.Values)
+                    {
+                        if (configData.Name == comboBoxValue.TargetText)
+                            filterJob = configData.Id;
+                    }
+                    break;
+                case "标签":
+                    filterRemark = comboBoxValue.TargetText; break;
+                case "品质":
+                    filterQual = comboBoxValue.SelectedIndex - 1; break;
+                case "元素":
+                    filterEle = comboBoxValue.SelectedIndex - 1; break;
+            }
+            ChangeCards();
+        }
+
+        private void ChangeCards()
+        {
+            cards.Clear();
+
+            List<CardConfigData> configData = new List<CardConfigData>();
+            #region 数据装载
+
+            if (filterType == -1 || filterType == 0)
+            {
+                foreach (var monsterConfig in ConfigData.MonsterDict.Values)
+                {
+                    if (monsterConfig.IsSpecial > 0)
+                        continue;
+                    if (filterJob != -1 && monsterConfig.JobId != filterJob)
+                        continue;
+                    if (filterLevel != 0 && monsterConfig.Star != filterLevel)
+                        continue;
+                    if (filterQual != -1 && monsterConfig.Quality != filterQual)
+                        continue;
+                    if (filterEle != -1 && monsterConfig.Attr != filterEle)
+                        continue;
+                    if (filterRemark != "全部" && (string.IsNullOrEmpty(monsterConfig.Remark) || !monsterConfig.Remark.Contains(filterRemark)))
+                        continue;
+                    if (filterTypeSub != "全部" && HSTypes.I2CardTypeSub(monsterConfig.Type) != filterTypeSub)
+                        continue;
+                    var cardData = CardConfigManager.GetCardConfig(monsterConfig.Id);
+                    configData.Add(cardData);
+                }
+            }
+            if (filterType == -1 || filterType == 1)
+            {
+                foreach (var weaponConfig in ConfigData.WeaponDict.Values)
+                {
+                    if (weaponConfig.IsSpecial > 0)
+                        continue;
+                    if (filterJob != -1 && weaponConfig.JobId != filterJob)
+                        continue;
+                    if (filterLevel != 0 && weaponConfig.Star != filterLevel)
+                        continue;
+                    if (filterQual != -1 && weaponConfig.Quality != filterQual)
+                        continue;
+                    if (filterEle != -1 && weaponConfig.Attr != filterEle)
+                        continue;
+                    if (filterRemark != "全部" && (string.IsNullOrEmpty(weaponConfig.Remark) || !weaponConfig.Remark.Contains(filterRemark)))
+                        continue;
+                    if (filterTypeSub != "全部" && HSTypes.I2CardTypeSub(weaponConfig.Type) != filterTypeSub)
+                        continue;
+                    var cardData = CardConfigManager.GetCardConfig(weaponConfig.Id);
+                    configData.Add(cardData);
+                }
+            }
+            if (filterType == -1 || filterType == 2)
+            {
+                foreach (var spellConfig in ConfigData.SpellDict.Values)
+                {
+                    if (spellConfig.IsSpecial > 0)
+                        continue;
+                    if (filterJob != -1 && spellConfig.JobId != filterJob)
+                        continue;
+                    if (filterLevel != 0 && spellConfig.Star != filterLevel)
+                        continue;
+                    if (filterQual != -1 && spellConfig.Quality != filterQual)
+                        continue;
+                    if (filterEle != -1 && spellConfig.Attr != filterEle)
+                        continue;
+                    if (filterRemark != "全部" && (string.IsNullOrEmpty(spellConfig.Remark) || !spellConfig.Remark.Contains(filterRemark)))
+                        continue;
+                    if (filterTypeSub != "全部" && HSTypes.I2CardTypeSub(spellConfig.Type) != filterTypeSub)
+                        continue;
+                    var cardData = CardConfigManager.GetCardConfig(spellConfig.Id);
+                    configData.Add(cardData);
+                }
+            }
+
+            #endregion
+
+            configData.Sort(new CompareByCard());
+            cards = configData.ConvertAll(card => card.Id);
+
+            isDirty = true;
+            panel2.Invalidate();
+        }
+
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            if (deck != null)
+            {
+                deck.Save();
+                panel1.Invalidate();
+            }
+        }
+    }
+
+    class CompareByCard : IComparer<CardConfigData>
+    {
+        #region IComparer<int> 成员
+
+        public int Compare(CardConfigData x, CardConfigData y)
+        {
+            if (x.Star != y.Star)
+            {
+                return x.Star.CompareTo(y.Star);
+            }
+
+            if (x.Quality != y.Quality)
+            {
+                return x.Quality.CompareTo(y.Quality);
+            }
+            if (x.Attr != y.Attr)
+            {
+                return x.Attr.CompareTo(y.Attr);
+            }
+
+            return x.Id.CompareTo(y.Id);
+        }
+
+        #endregion
     }
 }
