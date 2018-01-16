@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 
 namespace DeckManager
@@ -15,6 +16,42 @@ namespace DeckManager
             {
                 Id = id;
                 Type = tp;
+            }
+
+            public void Draw(Graphics g, Font ft, int x, int y, int wid, int het)
+            {
+                if (Id > 0)
+                {
+                    var img = ImageCache.GetImage(Id);
+                    g.DrawImage(img, x, y, wid, het);
+                    var cardConfig = CardConfigManager.GetCardConfig(Id);
+                    var brush = new SolidBrush(Color.FromName(HSTypes.I2QualityColor((int)cardConfig.Quality)));
+                    g.DrawString(cardConfig.Name, ft, Brushes.LightBlue, x + 4, y + het - 16);
+                    g.DrawString(cardConfig.Name, ft, brush, x + 3, y + het - 17);
+                    brush.Dispose();
+
+                    Font ft2 = new Font("ËÎÌå", 6);
+                    g.DrawString(("¡ï¡ï¡ï¡ï¡ï¡ï¡ï¡ï¡ï¡ï").Substring(10 - cardConfig.Star), ft2, Brushes.Yellow, x + 1, y + 3);
+                    ft2.Dispose();
+                }
+                else
+                {
+
+                    var dts = Type.Split('|');
+                    var des = "";
+                    if (dts[0] == "race")
+                    {
+                        des = "Ëæ»ú" + HSTypes.I2CardTypeSub(int.Parse(dts[1]));
+                        g.DrawRectangle(Pens.DarkCyan, x, y, wid, het);
+                    }
+                    else if (dts[0] == "attr")
+                    {
+                        des = "Ëæ»ú" + HSTypes.I2Attr(int.Parse(dts[1]));
+                        g.DrawRectangle(Pens.DarkRed, x, y, wid, het);
+                    }
+                    des += dts[2];
+                    g.DrawString(des, ft, Brushes.LightBlue, x + 4, y + het - 16);
+                }
             }
         }
 
@@ -89,10 +126,10 @@ namespace DeckManager
             return cards[id];
         }
 
-        public void Replace(int index, int id)
+        public void Replace(int index, CardDescript cd)
         {
-            cards[index].Id = id;
-            cards[index].Type = "";
+            cards[index].Id= cd.Id;
+            cards[index].Type = cd.Type;
         }
     }
 

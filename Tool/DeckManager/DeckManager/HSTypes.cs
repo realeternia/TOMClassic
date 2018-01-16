@@ -2,11 +2,58 @@
 {
     public class HSTypes
     {
+        internal enum CardTypeSub
+        {
+            Devil = 1,
+            Machine = 2,
+            Spirit = 3,
+            Insect = 4,
+            Dragon = 5,
+            Bird = 6,
+            Crawling = 7,
+            Human = 8,
+            Orc = 9,
+            Undead = 10,
+            Beast = 11,
+            Fish = 12,
+            Element = 13,
+            Plant = 14,
+            Goblin = 15,
+            Totem = 16,
+            NormalTower = 34,
+            KingTower = 35,
+
+            Weapon = 100,
+            Scroll = 101,
+            Armor = 102,
+            Ring = 103,
+
+            Single = 200,
+            Multi = 201,
+            Aid = 202,
+            Terrain = 203,
+        }
+
+        internal enum CardElements
+        {
+            None = 0,
+            Water = 1,
+            Wind = 2,
+            Fire = 3,
+            Earth = 4,
+            Light = 5,
+            Dark = 6,
+        }
 
         public static string I2QualityColor(int id)
         {
             string[] rt = { "White", "Green", "DodgerBlue", "Violet", "Orange", "Gray", "Gray", "", "", "Yellow" };
             return rt[id];
+        }
+        public static string I2Attr(int aid)
+        {
+            string[] rt = { "无", "水", "风", "火", "地", "光", "暗" };
+            return rt[aid];
         }
 
         public static string I2CardTypeSub(int rid)

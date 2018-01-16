@@ -30,12 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.buttonSave = new System.Windows.Forms.Button();
-            this.buttonOk = new System.Windows.Forms.Button();
             this.panel1 = new DeckManager.DoubleBuffedPanel();
+            this.buttonSave = new System.Windows.Forms.Button();
             this.comboBoxValue = new DeckManager.NLComboBox();
             this.comboBoxCatalog = new DeckManager.NLComboBox();
+            this.buttonOk = new System.Windows.Forms.Button();
             this.panel2 = new DeckManager.DoubleBuffedPanel();
+            this.nlComboBoxRand = new DeckManager.NLComboBox();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -56,6 +57,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.AutoScroll = true;
+            this.splitContainer1.Panel2.Controls.Add(this.nlComboBoxRand);
             this.splitContainer1.Panel2.Controls.Add(this.buttonSave);
             this.splitContainer1.Panel2.Controls.Add(this.comboBoxValue);
             this.splitContainer1.Panel2.Controls.Add(this.comboBoxCatalog);
@@ -64,6 +66,17 @@
             this.splitContainer1.Size = new System.Drawing.Size(1105, 774);
             this.splitContainer1.SplitterDistance = 264;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(264, 774);
+            this.panel1.TabIndex = 0;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
             // 
             // buttonSave
             // 
@@ -79,32 +92,6 @@
             this.buttonSave.Text = "保存";
             this.buttonSave.UseVisualStyleBackColor = false;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
-            // 
-            // buttonOk
-            // 
-            this.buttonOk.BackColor = System.Drawing.Color.DarkBlue;
-            this.buttonOk.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonOk.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonOk.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold);
-            this.buttonOk.ForeColor = System.Drawing.Color.White;
-            this.buttonOk.Location = new System.Drawing.Point(312, 31);
-            this.buttonOk.Name = "buttonOk";
-            this.buttonOk.Size = new System.Drawing.Size(55, 24);
-            this.buttonOk.TabIndex = 49;
-            this.buttonOk.Text = "查询";
-            this.buttonOk.UseVisualStyleBackColor = false;
-            this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.Black;
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(264, 774);
-            this.panel1.TabIndex = 0;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
-            this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
             // 
             // comboBoxValue
             // 
@@ -139,6 +126,21 @@
             this.comboBoxCatalog.TabIndex = 50;
             this.comboBoxCatalog.SelectedIndexChanged += new System.EventHandler(this.comboBoxCatalog_SelectedIndexChanged);
             // 
+            // buttonOk
+            // 
+            this.buttonOk.BackColor = System.Drawing.Color.DarkBlue;
+            this.buttonOk.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonOk.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonOk.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonOk.ForeColor = System.Drawing.Color.White;
+            this.buttonOk.Location = new System.Drawing.Point(312, 31);
+            this.buttonOk.Name = "buttonOk";
+            this.buttonOk.Size = new System.Drawing.Size(55, 24);
+            this.buttonOk.TabIndex = 49;
+            this.buttonOk.Text = "查询";
+            this.buttonOk.UseVisualStyleBackColor = false;
+            this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
+            // 
             // panel2
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -151,6 +153,23 @@
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             this.panel2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseClick);
             this.panel2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseDoubleClick);
+            // 
+            // nlComboBoxRand
+            // 
+            this.nlComboBoxRand.BackColor = System.Drawing.Color.Black;
+            this.nlComboBoxRand.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.nlComboBoxRand.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.nlComboBoxRand.ForeColor = System.Drawing.Color.White;
+            this.nlComboBoxRand.FormattingEnabled = true;
+            this.nlComboBoxRand.Items.AddRange(new object[] {
+            "小型",
+            "大型",
+            "优化小型",
+            "优化大型"});
+            this.nlComboBoxRand.Location = new System.Drawing.Point(646, 27);
+            this.nlComboBoxRand.Name = "nlComboBoxRand";
+            this.nlComboBoxRand.Size = new System.Drawing.Size(92, 22);
+            this.nlComboBoxRand.TabIndex = 53;
             // 
             // Form1
             // 
@@ -181,6 +200,7 @@
         private NLComboBox comboBoxValue;
         private NLComboBox comboBoxCatalog;
         private System.Windows.Forms.Button buttonOk;
+        private NLComboBox nlComboBoxRand;
     }
 }
 

@@ -12,7 +12,7 @@ namespace DeckManager
         private CardDeck deck;
         private string path;
 
-        private List<int> cards = new List<int>();
+        private List<CardDeck.CardDescript> cards = new List<CardDeck.CardDescript>();
         private bool isDirty = true;
         private Bitmap cacheImage;
 
@@ -35,6 +35,7 @@ namespace DeckManager
 
             ConfigDatas.ConfigData.LoadData();
             comboBoxCatalog.SelectedIndex = 0;
+            nlComboBoxRand.SelectedIndex = 0;
             ChangeCards();
         }
 
@@ -64,14 +65,7 @@ namespace DeckManager
                     if (deck != null)
                     {
                         var cardData = deck.GetCardId(j * 3 + i);
-                        if (cardData.Id > 0)
-                        {
-                            DrawCardImg(e.Graphics, cardData.Id, ft, i * wid, j * het, wid, het);
-                        }
-                        else
-                        {
-                            e.Graphics.DrawString(cardData.Type, ft, Brushes.White, i * wid, j * het);
-                        }
+                        cardData.Draw(e.Graphics, ft, i * wid, j * het, wid, het);
                     }
                 }
             }
@@ -84,21 +78,6 @@ namespace DeckManager
                 p.Dispose();
             }
             ft.Dispose();
-        }
-
-        private static void DrawCardImg(Graphics g, int cardId, Font ft, int x, int y, int wid, int het)
-        {
-            var img = ImageCache.GetImage(cardId);
-            g.DrawImage(img, x, y, wid, het);
-            var cardConfig = CardConfigManager.GetCardConfig(cardId);
-            var brush = new SolidBrush(Color.FromName(HSTypes.I2QualityColor((int) cardConfig.Quality)));
-            g.DrawString(cardConfig.Name, ft, Brushes.LightBlue, x + 4, y + het - 16);
-            g.DrawString(cardConfig.Name, ft, brush, x+3, y + het - 17);
-            brush.Dispose();
-
-            Font ft2 = new Font("宋体", 6);
-            g.DrawString(("★★★★★★★★★★").Substring(10 - cardConfig.Star), ft2, Brushes.Yellow, x + 1, y + 3);
-            ft2.Dispose();
         }
 
         private void panel2_Paint(object sender, PaintEventArgs e)
@@ -116,7 +95,7 @@ namespace DeckManager
                 Font ft = new Font("宋体", 9);
                 foreach (var cardId in cards)
                 {
-                    DrawCardImg(g, cardId, ft, (index % xCount) * wid, (index / xCount) * heg, wid, heg);
+                    cardId.Draw(g, ft, (index % xCount) * wid, (index / xCount) * heg, wid, heg);
                     index++;
                 }
                 ft.Dispose();
@@ -188,7 +167,20 @@ namespace DeckManager
                 var nowIndex = e.X/wid + e.Y/het*xCount;
                 if (leftSelectIndex >= 0 && cards.Count > nowIndex)
                 {
-                    deck.Replace(leftSelectIndex, cards[nowIndex]);
+                    var newCardData = new CardDeck.CardDescript();
+                    newCardData.Id = cards[nowIndex].Id;
+                    newCardData.Type = cards[nowIndex].Type;
+                    if (newCardData.Id == 0)
+                    {
+                        switch (nlComboBoxRand.SelectedIndex)
+                        {
+                            case 0:    newCardData.Type += "small"; break;
+                            case 1: newCardData.Type += "big"; break;
+                            case 2: newCardData.Type += "fits"; break;
+                            case 3: newCardData.Type += "fitb"; break;
+                        }
+                    }
+                    deck.Replace(leftSelectIndex, newCardData);
                     panel1.Invalidate();
                     return;
                 }
@@ -348,8 +340,12 @@ namespace DeckManager
 
             #endregion
 
-            configData.Sort(new CompareByCard());
-            cards = configData.ConvertAll(card => card.Id);
+            cards = configData.ConvertAll(card => new CardDeck.CardDescript {Id = card.Id, Type = ""});
+            for (int i = (int)HSTypes.CardTypeSub.Devil; i <= (int)HSTypes.CardTypeSub.Totem; i++)
+                cards.Add(new CardDeck.CardDescript { Type = "race|"+ i +"|" });
+            for (int i = (int)HSTypes.CardElements.None; i <= (int)HSTypes.CardElements.Dark; i++)
+                cards.Add(new CardDeck.CardDescript { Type = "attr|" + i + "|" });
+            cards.Sort(new CompareByStarCard());
 
             isDirty = true;
             panel2.Invalidate();
@@ -363,31 +359,5 @@ namespace DeckManager
                 panel1.Invalidate();
             }
         }
-    }
-
-    class CompareByCard : IComparer<CardConfigData>
-    {
-        #region IComparer<int> 成员
-
-        public int Compare(CardConfigData x, CardConfigData y)
-        {
-            if (x.Star != y.Star)
-            {
-                return x.Star.CompareTo(y.Star);
-            }
-
-            if (x.Quality != y.Quality)
-            {
-                return x.Quality.CompareTo(y.Quality);
-            }
-            if (x.Attr != y.Attr)
-            {
-                return x.Attr.CompareTo(y.Attr);
-            }
-
-            return x.Id.CompareTo(y.Id);
-        }
-
-        #endregion
     }
 }
