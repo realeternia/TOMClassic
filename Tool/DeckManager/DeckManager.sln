@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeckManager", "DeckManager.csproj", "{1FB1992F-6CCC-47C8-8180-81421264AE32}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeckManager", "DeckManager/DeckManager.csproj", "{1FB1992F-6CCC-47C8-8180-81421264AE32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

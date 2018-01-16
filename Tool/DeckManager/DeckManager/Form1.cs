@@ -1,25 +1,33 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using System.IO;
 using System.Diagnostics;
+using ConfigDatas;
 
 namespace DeckManager
 {
     public partial class Form1 : Form
     {
-        CardDescript[] cd = new CardDescript[30];
-        Image[] images = new Image[30];
+        private CardDescript[] cd = new CardDescript[30];
+        private Image[] images = new Image[30];
         private string path;
 
         public Form1(string path)
         {
             AllowDrop = true;
             InitializeComponent();
+            this.path = path;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            string version = FileVersionInfo.GetVersionInfo(System.Windows.Forms.Application.ExecutablePath).FileVersion;
+            Text = string.Format("卡片组织器 v{0}", version);
 
             if (path != "null")
                 LoadFromFile(path);
+
+            ConfigDatas.ConfigData.LoadData();
         }
 
         private void LoadFromFile(String txt)
@@ -48,11 +56,20 @@ namespace DeckManager
                 }
                 string pathParent = "../../PicResource/";
                 if (cardId < 52000000)
-                    images[i] = Image.FromFile(String.Format("{0}Monsters/{1}.JPG", pathParent, cd[i].Id%1000000));
+                {
+                    var config = ConfigData.GetMonsterConfig(cd[i].Id);
+                    images[i] = Image.FromFile(string.Format("{0}Monsters/{1}.JPG", pathParent, config.Icon));
+                }
                 else if (cardId < 53000000)
-                    images[i] = Image.FromFile(String.Format("{0}Weapon/{1}.JPG", pathParent, cd[i].Id % 1000000));
+                {
+                    var config = ConfigData.GetWeaponConfig(cd[i].Id);
+                    images[i] = Image.FromFile(string.Format("{0}Weapon/{1}.JPG", pathParent, config.Icon));
+                }
                 else
-                    images[i] = Image.FromFile(String.Format("{0}Spell/{1}.JPG", pathParent, cd[i].Id % 1000000));
+                {
+                    var config = ConfigData.GetSpellConfig(cd[i].Id);
+                    images[i] = Image.FromFile(string.Format("{0}Spell/{1}.JPG", pathParent, config.Icon));
+                }
             }
             panel1.Invalidate();
         }
@@ -76,11 +93,6 @@ namespace DeckManager
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            String version = FileVersionInfo.GetVersionInfo(System.Windows.Forms.Application.ExecutablePath).FileVersion;
-            Text = String.Format("卡片组织器 v{0}", version);
-        }
 
         private void panel1_Click(object sender, EventArgs e)
         {
