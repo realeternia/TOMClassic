@@ -65,7 +65,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CardConfigManager.cs" />
-    <Compile Include="CardDescript.cs" />
+    <Compile Include="CardDeck.cs" />
+    <Compile Include="DoubleBufferedPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

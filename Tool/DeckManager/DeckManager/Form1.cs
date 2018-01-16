@@ -9,13 +9,15 @@ namespace DeckManager
 {
     public partial class Form1 : Form
     {
-        private CardDescript[] cd = new CardDescript[30];
+        private CardDeck deck;
         private Image[] images = new Image[30];
         private string path;
         private const string pathParent = "../../PicResource/";
 
         private bool isDirty = true;
         private Bitmap cacheImage;
+
+        private int leftSelectIndex = -1;
 
         public Form1(string path)
         {
@@ -40,7 +42,8 @@ namespace DeckManager
             path = txt;
             try
             {
-                cd = CardDescript.MakeLoad(txt, 1);
+                deck = new CardDeck();
+                deck.MakeLoad(txt, 1);
                 UpdateImages();
             }
             catch (Exception e)
@@ -53,7 +56,7 @@ namespace DeckManager
         {
             for (int i = 0; i < 30; i++)
             {
-                int cardId = cd[i].Id;
+                int cardId = deck.GetCardId(i).Id;
                 if (cardId == 0)
                 {
                     images[i] = null;
@@ -62,27 +65,27 @@ namespace DeckManager
 
                 if (cardId < 52000000)
                 {
-                    var config = ConfigData.GetMonsterConfig(cd[i].Id);
+                    var config = ConfigData.GetMonsterConfig(cardId);
                     images[i] = Image.FromFile(string.Format("{0}Monsters/{1}.JPG", pathParent, config.Icon));
                 }
                 else if (cardId < 53000000)
                 {
-                    var config = ConfigData.GetWeaponConfig(cd[i].Id);
+                    var config = ConfigData.GetWeaponConfig(cardId);
                     images[i] = Image.FromFile(string.Format("{0}Weapon/{1}.JPG", pathParent, config.Icon));
                 }
                 else
                 {
-                    var config = ConfigData.GetSpellConfig(cd[i].Id);
+                    var config = ConfigData.GetSpellConfig(cardId);
                     images[i] = Image.FromFile(string.Format("{0}Spell/{1}.JPG", pathParent, config.Icon));
                 }
             }
-            splitContainer1.Panel1.Invalidate();
+            panel1.Invalidate();
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-            var wid = splitContainer1.Panel1.Width/3;
-            var het = splitContainer1.Panel1.Height / 10;
+            var wid = panel1.Width/3;
+            var het = panel1.Height / 10;
             Font ft = new Font("ËÎÌו", 9);
             for (int i = 0; i < 3; i++)
             {
@@ -90,19 +93,30 @@ namespace DeckManager
                 {
                     if (images[j * 3 + i] != null)
                         e.Graphics.DrawImage(images[j * 3 + i], i * wid, j * het, wid, het);
-                    var cardData = cd[j*3 + i];
-                    if (cardData.Id > 0)
+                    if (deck != null)
                     {
-                        var cardConfig = CardConfigManager.GetCardConfig(cardData.Id);
-                        var brush = new SolidBrush(Color.FromName(HSTypes.I2QualityColor((int)cardConfig.Quality)));
-                        e.Graphics.DrawString(cardConfig.Name, ft, brush, i * wid, j * het);
-                        brush.Dispose();
-                    }
-                    else
-                    {
-                        e.Graphics.DrawString(cardData.Type, ft, Brushes.White, i * wid, j * het);
+                        var cardData = deck.GetCardId(j * 3 + i);
+                        if (cardData.Id > 0)
+                        {
+                            var cardConfig = CardConfigManager.GetCardConfig(cardData.Id);
+                            var brush = new SolidBrush(Color.FromName(HSTypes.I2QualityColor((int)cardConfig.Quality)));
+                            e.Graphics.DrawString(cardConfig.Name, ft, brush, i * wid, j * het);
+                            brush.Dispose();
+                        }
+                        else
+                        {
+                            e.Graphics.DrawString(cardData.Type, ft, Brushes.White, i * wid, j * het);
+                        }
                     }
                 }
+            }
+            if (leftSelectIndex >= 0)
+            {
+                int nx = leftSelectIndex%3;
+                int ny = leftSelectIndex/3;
+                Pen p = new Pen(Color.LightGreen, 5);
+                e.Graphics.DrawRectangle(p, nx*wid, ny*het, wid, het);
+                p.Dispose();
             }
             ft.Dispose();
         }
@@ -174,6 +188,33 @@ namespace DeckManager
         {
             isDirty = true;
             panel2.Invalidate();
+        }
+
+        private void panel1_MouseClick(object sender, MouseEventArgs e)
+        {
+            leftSelectIndex = -1;
+            var wid = panel1.Width / 3;
+            var het = panel1.Height / 10;
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    if (e.X >= i*wid && e.X <= (i + 1)*wid && e.Y >= het*j && e.Y <= het*(j + 1))
+                    {
+                        leftSelectIndex = 3*j + i;
+                        panel1.Invalidate();
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void panel2_MouseClick(object sender, MouseEventArgs e)
+        {
+        }
+
+        private void panel2_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
         }
     }
 }

@@ -1,23 +1,26 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace DeckManager
 {
-    [Serializable]
-    public struct CardDescript
+    public class CardDeck
     {
-        public string Type;
-        public int Id;
-
-        public CardDescript(int id, string tp)
+        public struct CardDescript
         {
-            Id = id;
-            Type = tp;
+            public string Type;
+            public int Id;
+
+            public CardDescript(int id, string tp)
+            {
+                Id = id;
+                Type = tp;
+            }
         }
-        
-        public static CardDescript[] MakeLoad(string name, int level)
+
+        private CardDescript[] cards;
+
+        public void MakeLoad(string name, int level)
         {
             var deck = new List<CardDescript>();
             StreamReader sr = new StreamReader(name);
@@ -57,7 +60,12 @@ namespace DeckManager
             }
             sr.Close();
 
-            return deck.ToArray();
+            cards = deck.ToArray();
+        }
+
+        public CardDescript GetCardId(int id)
+        {
+            return cards[id];
         }
     }
 }
