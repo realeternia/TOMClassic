@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -11,6 +12,10 @@ namespace DeckManager
         private CardDescript[] cd = new CardDescript[30];
         private Image[] images = new Image[30];
         private string path;
+        private const string pathParent = "../../PicResource/";
+
+        private bool isDirty = true;
+        private Bitmap cacheImage;
 
         public Form1(string path)
         {
@@ -30,7 +35,7 @@ namespace DeckManager
             ConfigDatas.ConfigData.LoadData();
         }
 
-        private void LoadFromFile(String txt)
+        private void LoadFromFile(string txt)
         {
             path = txt;
             try
@@ -54,7 +59,7 @@ namespace DeckManager
                     images[i] = null;
                     continue;
                 }
-                string pathParent = "../../PicResource/";
+
                 if (cardId < 52000000)
                 {
                     var config = ConfigData.GetMonsterConfig(cd[i].Id);
@@ -71,25 +76,78 @@ namespace DeckManager
                     images[i] = Image.FromFile(string.Format("{0}Spell/{1}.JPG", pathParent, config.Icon));
                 }
             }
-            panel1.Invalidate();
+            splitContainer1.Panel1.Invalidate();
         }
+
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-            for (int i = 0; i < 6; i++)
+            var wid = splitContainer1.Panel1.Width/3;
+            var het = splitContainer1.Panel1.Height / 10;
+            Font ft = new Font("ËÎÌו", 9);
+            for (int i = 0; i < 3; i++)
             {
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < 10; j++)
                 {
-                    if (images[j * 6 + i] != null)
+                    if (images[j * 3 + i] != null)
+                        e.Graphics.DrawImage(images[j * 3 + i], i * wid, j * het, wid, het);
+                    var cardData = cd[j*3 + i];
+                    if (cardData.Id > 0)
                     {
-                        e.Graphics.DrawImage(images[j * 6 + i], i * 100, j * 100, 100, 100);
+                        var cardConfig = CardConfigManager.GetCardConfig(cardData.Id);
+                        var brush = new SolidBrush(Color.FromName(HSTypes.I2QualityColor((int)cardConfig.Quality)));
+                        e.Graphics.DrawString(cardConfig.Name, ft, brush, i * wid, j * het);
+                        brush.Dispose();
                     }
-                    if (cd != null && !string.IsNullOrEmpty(cd[j * 6 + i].Tip))
+                    else
                     {
-                        Font ft = new Font("ËÎÌו", 9);
-                        e.Graphics.DrawString(cd[j * 6 + i].Tip, ft, Brushes.White, i * 100, j * 100);
-                        ft.Dispose();
+                        e.Graphics.DrawString(cardData.Type, ft, Brushes.White, i * wid, j * het);
                     }
                 }
+            }
+            ft.Dispose();
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+            int index = 0;
+            int wid = 50;
+            int heg = 50;
+            int xCount = panel2.Width / wid;
+            if (isDirty)
+            {
+               var cardIdList = new List<int>();
+                foreach (var monsterConfig in ConfigData.MonsterDict.Values)
+                    if (monsterConfig.IsSpecial == 0)
+                        cardIdList.Add(monsterConfig.Id);
+                foreach (var weaponConfig in ConfigData.WeaponDict.Values)
+                    if (weaponConfig.IsSpecial == 0)
+                        cardIdList.Add(weaponConfig.Id);
+                foreach (var spellConfig in ConfigData.SpellDict.Values)
+                    if (spellConfig.IsSpecial == 0)
+                        cardIdList.Add(spellConfig.Id);
+
+                panel2.Height = (cardIdList.Count / xCount + 1) * 50;
+                cacheImage = new Bitmap(panel2.Width, panel2.Height);
+
+                Graphics g = Graphics.FromImage(cacheImage);
+                Font ft = new Font("ËÎÌו", 9);
+                foreach (var cardId in cardIdList)
+                {
+                    var cardConfig = CardConfigManager.GetCardConfig(cardId);
+                    var img = Image.FromFile(string.Format("{0}{1}/{2}.JPG", pathParent, cardConfig.GetImageFolderName(), cardConfig.Icon));
+                    g.DrawImage(img, (index % xCount) * wid, (index / xCount) * heg, wid, heg);
+                    var brush = new SolidBrush(Color.FromName(HSTypes.I2QualityColor((int)cardConfig.Quality)));
+                    g.DrawString(cardConfig.Name, ft, brush, (index % xCount) * wid, (index / xCount) * heg);
+                    brush.Dispose();
+                    index++;
+                }
+                ft.Dispose();
+                isDirty = false;
+            }
+
+            if (cacheImage != null)
+            {
+                e.Graphics.DrawImage(cacheImage, 0, 0, cacheImage.Width, cacheImage.Height);
             }
         }
 
@@ -110,6 +168,12 @@ namespace DeckManager
         {
             string path = ((System.Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
             LoadFromFile(path);
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            isDirty = true;
+            panel2.Invalidate();
         }
     }
 }

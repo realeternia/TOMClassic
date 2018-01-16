@@ -8,13 +8,13 @@ namespace DeckManager
     [Serializable]
     public struct CardDescript
     {
+        public string Type;
         public int Id;
-        public string Tip;
 
-        public CardDescript(int id, string tip)
+        public CardDescript(int id, string tp)
         {
             Id = id;
-            Tip = tip;
+            Type = tp;
         }
         
         public static CardDescript[] MakeLoad(string name, int level)
