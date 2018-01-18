@@ -126,6 +126,8 @@ namespace DeckManager
             string path = ((System.Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
             LoadFromFile(path);
             panel1.Invalidate();
+            isDirty = true;
+            panel2.Invalidate();
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -182,6 +184,8 @@ namespace DeckManager
                     }
                     deck.Replace(leftSelectIndex, newCardData);
                     panel1.Invalidate();
+                    isDirty = true;
+                    panel2.Invalidate();
                     return;
                 }
             }
@@ -345,6 +349,8 @@ namespace DeckManager
                 cards.Add(new CardDeck.CardDescript { Type = "race|"+ i +"|" });
             for (int i = (int)HSTypes.CardElements.None; i <= (int)HSTypes.CardElements.Dark; i++)
                 cards.Add(new CardDeck.CardDescript { Type = "attr|" + i + "|" });
+            for (int i = 11000001; i <= 11000010; i++)
+                cards.Add(new CardDeck.CardDescript { Type = "job|" + i + "|" });
             cards.Sort(new CompareByStarCard());
 
             isDirty = true;

@@ -138,9 +138,7 @@ namespace TaleofMonsters.Config
                 {
                     MonsterTotal++;
                     if (monsterConfig.Remark != "未完成")
-                    {
                         MonsterAvail++;
-                    }
                 }
             }
             foreach (var weaponConfig in ConfigData.WeaponDict.Values)
@@ -164,9 +162,7 @@ namespace TaleofMonsters.Config
                 {
                     WeaponTotal++;
                     if (weaponConfig.Remark != "未完成")
-                    {
                         WeaponAvail++;
-                    }
                 }
             }
             foreach (var spellConfig in ConfigData.SpellDict.Values)
@@ -190,9 +186,7 @@ namespace TaleofMonsters.Config
                 {
                     SpellTotal++;
                     if (!spellConfig.Remark.Contains("未完成"))
-                    {
                         SpellAvail++;
-                    }
                 }
             }
 
@@ -430,6 +424,8 @@ namespace TaleofMonsters.Config
                 return GetRateCard(dropRate, GetRandomTypeCard, ruleInfo);
             if (type == "race")
                 return GetRateCard(dropRate, GetRandomRaceCard, ruleInfo);
+            if (type == "job")
+                return GetRateCard(dropRate, GetRandomJobCard, ruleInfo);
             return GetRateCard(dropRate, GetRandomCard, ruleInfo);
         }
     }

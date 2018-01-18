@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using ConfigDatas;
 
 namespace DeckManager
 {
     public class CardDeck
     {
+        private static int myJobId; //ws下
+
         public struct CardDescript
         {
             public string Type;
@@ -33,6 +36,19 @@ namespace DeckManager
                     Font ft2 = new Font("宋体", 6);
                     g.DrawString(("★★★★★★★★★★").Substring(10 - cardConfig.Star), ft2, Brushes.Yellow, x + 1, y + 3);
                     ft2.Dispose();
+
+                    var jobId = cardConfig.JobId;
+                    if (jobId > 0)
+                    {
+                        var jobConfig = ConfigData.GetJobConfig(jobId);
+                        g.DrawString(jobConfig.Name, ft, Brushes.Red, x + wid - 24, y + 4);
+                        if (myJobId > 0 && myJobId != jobId)
+                        {
+                            Brush cover = new SolidBrush(Color.FromArgb(180, Color.Black));
+                            g.FillRectangle(cover, x, y, wid, het);
+                            cover.Dispose();
+                        }
+                    }
                 }
                 else
                 {
@@ -49,6 +65,11 @@ namespace DeckManager
                         des = "随机" + HSTypes.I2Attr(int.Parse(dts[1]));
                         g.DrawRectangle(Pens.DarkRed, x, y, wid, het);
                     }
+                    else if (dts[0] == "job")
+                    {
+                        des = "随机" + ConfigData.GetJobConfig(int.Parse(dts[1])).Name;
+                        g.DrawRectangle(Pens.Yellow, x, y, wid, het);
+                    }
                     des += dts[2];
                     g.DrawString(des, ft, Brushes.LightBlue, x + 4, y + het - 16);
                 }
@@ -64,6 +85,7 @@ namespace DeckManager
             var deck = new List<CardDescript>();
             StreamReader sr = new StreamReader(name);
 
+            myJobId = 0;
             for (int i = 0; i < 30; i++)
             {
                 var line = sr.ReadLine();
@@ -100,6 +122,7 @@ namespace DeckManager
             sr.Close();
 
             cards = deck.ToArray();
+            UpdateMyCardJob();
         }
 
         public void Save()
@@ -130,6 +153,33 @@ namespace DeckManager
         {
             cards[index].Id= cd.Id;
             cards[index].Type = cd.Type;
+
+            UpdateMyCardJob();
+        }
+
+        private void UpdateMyCardJob()
+        {
+            myJobId = 0;
+            foreach (var cardDescript in cards)
+            {
+                if (cardDescript.Id > 0)
+                {
+                    var cardConfig = CardConfigManager.GetCardConfig(cardDescript.Id);
+                    if (cardConfig.JobId > 0)
+                    {
+                        myJobId = cardConfig.JobId;
+                        return;
+                    }
+                }
+                else
+                {
+                    if (cardDescript.Type.StartsWith("job"))
+                    {
+                        myJobId = int.Parse(cardDescript.Type.Split('|')[1]);
+                        return;
+                    }
+                }
+            }
         }
     }
 

@@ -158,6 +158,8 @@ namespace TaleofMonsters.DataType.Decks
                 randMethod = CardConfigManager.GetRandomAttrCard;
             else if (catalog == "type")
                 randMethod = CardConfigManager.GetRandomTypeCard;
+            else if (catalog == "job")
+                randMethod = CardConfigManager.GetRandomJobCard;
             else
                 randMethod = CardConfigManager.GetRandomCard;
 
