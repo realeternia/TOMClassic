@@ -97,11 +97,11 @@ namespace TaleofMonsters.Config
         }
 
         private static Dictionary<int, CardConfigData> cardConfigDataDict;
-        private static CardInfoList allCardData;
+        private static CardInfoList allCardData; //可以出职业卡
         private static Dictionary<int, CardInfoList> jobCardDict; //职业卡组列表
-        private static Dictionary<int, CardInfoList> attrCardDict; //属性卡组列表
-        private static Dictionary<int, CardInfoList> raceCardDict; //种族卡组列表
-        private static Dictionary<int, CardInfoList> typeCardDict; //生物/武器/法术 1/2/3
+        private static Dictionary<int, CardInfoList> attrCardDict; //属性卡组列表，不出职业卡
+        private static Dictionary<int, CardInfoList> raceCardDict; //种族卡组列表，不出职业卡
+        private static Dictionary<int, CardInfoList> typeCardDict; //生物/武器/法术 1/2/3，不出职业卡
 
         public static int MonsterTotal { get; set; }
         public static int MonsterAvail { get; set; }
@@ -204,9 +204,7 @@ namespace TaleofMonsters.Config
             foreach (var cardConfigData in cardConfigDataDict.Values)
             {
                 if (!cardConfigData.IsSpecial)
-                {
                     allCardData.Add(cardConfigData.Id, cardConfigData.Quality);
-                }
             }
             allCardData.EndInit();
         }
@@ -215,44 +213,32 @@ namespace TaleofMonsters.Config
         {
             attrCardDict = new Dictionary<int, CardInfoList>();
             for (int i = 0; i < 10; i++)
-            {
                 attrCardDict.Add(i, new CardInfoList());
-            }
 
             foreach (var cardConfigData in cardConfigDataDict.Values)
             {
-                if (!cardConfigData.IsSpecial)
-                {
+                if (!cardConfigData.IsSpecial && cardConfigData.JobId == 0)
                     attrCardDict[cardConfigData.Attr].Add(cardConfigData.Id, cardConfigData.Quality);
-                }
             }
 
             for (int i = 0; i < 10; i++)
-            {
                 attrCardDict[i].EndInit();
-            }
         }
 
         private static void InitJobCard()
         {
             jobCardDict = new Dictionary<int, CardInfoList>();
             foreach (var jobId in ConfigData.JobDict.Keys)
-            {
                 jobCardDict.Add(jobId, new CardInfoList());
-            }
 
             foreach (var cardConfigData in cardConfigDataDict.Values)
             {
-                if (cardConfigData.JobId > 0 && !cardConfigData.IsSpecial)
-                {
+                if (!cardConfigData.IsSpecial && cardConfigData.JobId > 0)
                     jobCardDict[cardConfigData.JobId].Add(cardConfigData.Id, cardConfigData.Quality);
-                }
             }
 
             foreach (var jobId in ConfigData.JobDict.Keys)
-            {
                 jobCardDict[jobId].EndInit();
-            }
         }
 
         private static void InitRaceCard()
@@ -265,10 +251,8 @@ namespace TaleofMonsters.Config
 
             foreach (var monsterConfig in ConfigData.MonsterDict.Values)
             {
-                if (monsterConfig.IsSpecial == 0)
-                {
+                if (monsterConfig.IsSpecial == 0 && monsterConfig.JobId == 0)
                     raceCardDict[monsterConfig.Type].Add(monsterConfig.Id, (CardQualityTypes)monsterConfig.Quality);
-                }
             }
 
             for (int i = 0; i < 17; i++)
@@ -281,23 +265,17 @@ namespace TaleofMonsters.Config
         {
             typeCardDict = new Dictionary<int, CardInfoList>();
             for (int i = 0; i < 4; i++)
-            {
                 typeCardDict[i] = new CardInfoList();
-            }
 
             foreach (var cardConfigData in cardConfigDataDict.Values)
             {
                 var cardType = (int)ConfigIdManager.GetCardType(cardConfigData.Id);
-                if (!cardConfigData.IsSpecial)
-                {
+                if (!cardConfigData.IsSpecial && cardConfigData.JobId == 0)
                     typeCardDict[cardType].Add(cardConfigData.Id, cardConfigData.Quality);
-                }
             }
 
             for (int i = 0; i < 4; i++)
-            {
                 typeCardDict[i].EndInit();
-            }
         }
         #endregion
 
@@ -305,9 +283,7 @@ namespace TaleofMonsters.Config
         {
             CardConfigData outData;
             if (cardConfigDataDict.TryGetValue(id, out outData))
-            {
                 return outData;
-            }
             return new CardConfigData();
         }
 
@@ -335,9 +311,7 @@ namespace TaleofMonsters.Config
         {
             CardInfoList rtData;
             if (attrCardDict.TryGetValue(attrId, out rtData))
-            {
                 return rtData.GetRandom(quality);
-            }
             return 0;
         }
 
@@ -345,9 +319,7 @@ namespace TaleofMonsters.Config
         {
             CardInfoList rtData;
             if (raceCardDict.TryGetValue(raceId, out rtData))
-            {
                 return rtData.GetRandom(quality);
-            }
             return 0;
         }
 
@@ -355,9 +327,7 @@ namespace TaleofMonsters.Config
         {
             CardInfoList rtData;
             if (typeCardDict.TryGetValue(typeId, out rtData))
-            {
                 return rtData.GetRandom(quality);
-            }
             return 0;
         }
 
@@ -369,9 +339,7 @@ namespace TaleofMonsters.Config
             {
                 int sum = 0;
                 foreach (var r in rate)
-                {
                     sum += r;
-                }
                 int roll = MathTool.GetRandom(sum);
                 int quality = 0;
                 sum = 0;

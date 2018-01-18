@@ -161,7 +161,7 @@ namespace TaleofMonsters.DataType.Decks
             else if (catalog == "job")
                 randMethod = CardConfigManager.GetRandomJobCard;
             else
-                randMethod = CardConfigManager.GetRandomCard;
+                throw new ApplicationException("error types " + catalog);
 
             var toPick = new List<CardConfigData>();
             for (int i = 0; i < 3; i++)//每次从3张牌选

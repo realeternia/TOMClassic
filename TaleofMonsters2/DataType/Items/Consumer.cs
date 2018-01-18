@@ -85,8 +85,7 @@ namespace TaleofMonsters.DataType.Items
             if (itemConfig.FightRandomCardType > 0)
             {
                 int cardId = CardConfigManager.GetRandomTypeCard(itemConfig.FightRandomCardType);
-                var card = new ActiveCard(new DeckCard(cardId, 1, 0));
-                player.CardManager.AddCard(card);
+                player.CardManager.AddCard(new ActiveCard(new DeckCard(cardId, 1, 0)));
             }
             if (!string.IsNullOrEmpty(itemConfig.HolyWord))
                 player.AddHolyWord(itemConfig.HolyWord);
