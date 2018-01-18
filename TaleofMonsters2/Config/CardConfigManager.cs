@@ -244,21 +244,21 @@ namespace TaleofMonsters.Config
         private static void InitRaceCard()
         {
             raceCardDict = new Dictionary<int, CardInfoList>();
-            for (int i = 0; i < 17; i++)
-            {
+            for (int i = 0; i <= 16; i++)
                 raceCardDict[i] = new CardInfoList();
-            }
+            for (int i = 100; i <= 103; i++) //weapon
+                raceCardDict[i] = new CardInfoList();
+            for (int i = 200; i <= 203; i++)//spell
+                raceCardDict[i] = new CardInfoList();
 
-            foreach (var monsterConfig in ConfigData.MonsterDict.Values)
+            foreach (var cardConfigData in cardConfigDataDict.Values)
             {
-                if (monsterConfig.IsSpecial == 0 && monsterConfig.JobId == 0)
-                    raceCardDict[monsterConfig.Type].Add(monsterConfig.Id, (CardQualityTypes)monsterConfig.Quality);
+                if (!cardConfigData.IsSpecial && cardConfigData.JobId == 0)
+                    raceCardDict[cardConfigData.TypeSub].Add(cardConfigData.Id, cardConfigData.Quality);
             }
 
             for (int i = 0; i < 17; i++)
-            {
                 raceCardDict[i].EndInit();
-            }
         }
 
         private static void InitTypeCard()
