@@ -345,18 +345,17 @@ namespace DeckManager
             #endregion
 
             cards = configData.ConvertAll(card => new CardDeck.CardDescript {Id = card.Id, Type = ""});
+            cards.Sort(new CompareByStarCard());
+            for (int i = (int)HSTypes.CardElements.None; i <= (int)HSTypes.CardElements.Dark; i++)
+                cards.Add(new CardDeck.CardDescript { Type = "attr|" + i + "|" });
+            for (int i = 11000001; i <= 11000010; i++)
+                cards.Add(new CardDeck.CardDescript { Type = "job|" + i + "|" });
             for (int i = (int)HSTypes.CardTypeSub.Devil; i <= (int)HSTypes.CardTypeSub.Totem; i++)
                 cards.Add(new CardDeck.CardDescript { Type = "race|"+ i +"|" });
             for (int i = (int)HSTypes.CardTypeSub.Weapon; i <= (int)HSTypes.CardTypeSub.Ring; i++)
                 cards.Add(new CardDeck.CardDescript { Type = "race|" + i + "|" });
             for (int i = (int)HSTypes.CardTypeSub.Single; i <= (int)HSTypes.CardTypeSub.Terrain; i++)
                 cards.Add(new CardDeck.CardDescript { Type = "race|" + i + "|" });
-            for (int i = (int)HSTypes.CardElements.None; i <= (int)HSTypes.CardElements.Dark; i++)
-                cards.Add(new CardDeck.CardDescript { Type = "attr|" + i + "|" });
-            for (int i = 11000001; i <= 11000010; i++)
-                cards.Add(new CardDeck.CardDescript { Type = "job|" + i + "|" });
-            cards.Sort(new CompareByStarCard());
-
             isDirty = true;
             panel2.Invalidate();
         }
