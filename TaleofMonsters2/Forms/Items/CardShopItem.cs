@@ -140,8 +140,7 @@ namespace TaleofMonsters.Forms.Items
                 }
             }
         }
-
-
+        
         public GameResource GetPrice()
         {
             var cardData = CardConfigManager.GetCardConfig(product.Cid);
@@ -159,11 +158,11 @@ namespace TaleofMonsters.Forms.Items
                 res.Gold = 300;
 
             if (cardData.Type == CardTypes.Monster)
-                res.Add(GameResourceType.Carbuncle, GameResourceBook.OutCarbuncleCardBuy((int)cardData.Quality + 1));
+                res.Add(GameResourceType.Carbuncle, GameResourceBook.OutCarbuncleCardBuy((int)cardData.Quality));
             else if (cardData.Type == CardTypes.Weapon)
-                res.Add(GameResourceType.Gem, GameResourceBook.OutGemCardBuy((int)cardData.Quality + 1));
+                res.Add(GameResourceType.Gem, GameResourceBook.OutGemCardBuy((int)cardData.Quality));
             else if (cardData.Type == CardTypes.Spell)
-                res.Add(GameResourceType.Mercury, GameResourceBook.OutMercuryCardBuy((int)cardData.Quality + 1));
+                res.Add(GameResourceType.Mercury, GameResourceBook.OutMercuryCardBuy((int)cardData.Quality));
             return res;
         }
 

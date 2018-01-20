@@ -1,8 +1,11 @@
 ﻿using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus;
+using TaleofMonsters.Config;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Decks;
+using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms;
 
@@ -39,10 +42,35 @@ namespace TaleofMonsters.MainItem
                 {
                     Form.AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.CardExpNotEnough2), "Red");
                 }
-                else if (MessageBoxEx2.Show("确定消耗所有碎片提升等级？") == DialogResult.OK)
+                else
                 {
                     var cardResult = UserProfile.InfoCard.CardLevelUp(TargetCard.BaseId);
-                    Form.UpdateCard(TargetCard.BaseId, cardResult.Level, cardResult.Exp);
+                    Form.OnCardLevelUp(TargetCard.BaseId, cardResult.Level, cardResult.Exp);
+                }
+            }
+            else if (target.Type == "levelup2")
+            {
+                var levelExpConfig = ConfigData.GetLevelExpConfig(TargetCard.Level);
+                var cardConfig = CardConfigManager.GetCardConfig(TargetCard.BaseId);
+                var itemPrice = GameResourceBook.OutGemCardBuy((int)cardConfig.Quality) * 2;//溢出价格
+                itemPrice *= (uint) levelExpConfig.CardExp;
+                GameResourceType resType = GameResourceType.Gold;
+                if (cardConfig.Type == CardTypes.Monster)
+                    resType = GameResourceType.Carbuncle;
+                else if (cardConfig.Type == CardTypes.Weapon)
+                    resType = GameResourceType.Gem;
+                else if (cardConfig.Type == CardTypes.Spell)
+                    resType = GameResourceType.Mercury;
+
+                if (!UserProfile.InfoBag.HasResource(resType, itemPrice))
+                {
+                    Form.AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughResource), "Red");
+                }
+                else
+                {
+                    UserProfile.InfoBag.SubResource(resType, itemPrice);
+                    var cardResult = UserProfile.InfoCard.CardLevelUpRes(TargetCard.BaseId);
+                    Form.OnCardLevelUp(TargetCard.BaseId, cardResult.Level, cardResult.Exp);
                 }
             }
             else

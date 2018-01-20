@@ -147,9 +147,7 @@ namespace TaleofMonsters.DataType.Others
             rate = (int)(rate * (noRandom ? 1 : factor[MathTool.GetRandom(factor.Length)]));
             var count = (uint) (ExpTree.GetResFactor(level)*rate/100);
             if (resId == (int)GameResourceType.Lumber || resId == (int)GameResourceType.Stone)
-            {
-                count *= 3;
-            }
+                count *= 2;
             return Math.Max(1, count);
         }
         /// <summary>
@@ -186,14 +184,18 @@ namespace TaleofMonsters.DataType.Others
         /// </summary>
         public static uint OutGemCardBuy(int qual)
         {
-            return (uint)(qual * (qual + 1) * Math.Sqrt(qual)) * 2; //2-8-20-40
+            if (qual == 0)
+                return 1;
+            return (uint)(qual * (qual + 1) * Math.Sqrt(qual)); //2-8-20-40
         }
         /// <summary>
         /// 购买怪物卡牌消耗Carbuncle
         /// </summary>
         public static uint OutCarbuncleCardBuy(int qual)
         {
-            return (uint)(qual * (qual + 1) * Math.Sqrt(qual)) * 2; //2-8-20-40
+            if (qual == 0)
+                return 1;
+            return (uint)(qual * (qual + 1) * Math.Sqrt(qual)); //2-8-20-40
         }
         /// <summary>
         /// 战斗中贿赂怪物消耗Carbuncle
@@ -219,7 +221,9 @@ namespace TaleofMonsters.DataType.Others
         /// </summary>
         public static uint OutMercuryCardBuy(int qual)
         {
-            return (uint)(qual * (qual + 1) * Math.Sqrt(qual)) * 2; //2-8-20-40
+            if (qual == 0)
+                return 1;
+            return (uint)(qual * (qual + 1) * Math.Sqrt(qual)); //2-8-20-40
         }
         /// <summary>
         /// 刷新一些属性时效果

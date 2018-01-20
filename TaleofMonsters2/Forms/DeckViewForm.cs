@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using ConfigDatas;
 using ControlPlus;
 using NarlonLib.Control;
 using NarlonLib.Log;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Decks;
+using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.Forms.Items;
@@ -253,8 +256,17 @@ namespace TaleofMonsters.Forms
 
                 if (cardFromRegion)
                 {
+                    var levelExpConfig = ConfigData.GetLevelExpConfig(targetCard.Level);
+                    var cardConfig = CardConfigManager.GetCardConfig(targetCard.BaseId);
+                    var itemPrice = GameResourceBook.OutGemCardBuy((int)cardConfig.Quality)*2;//溢出价格
                     popMenuDeck.AddItem("activate", "添加到卡组");
-                    popMenuDeck.AddItem("levelup", "升级");
+                    popMenuDeck.AddItem("levelup", string.Format("升级({0})", levelExpConfig.CardExp), targetCard.Exp >= levelExpConfig.CardExp ? "white" : "gray", "oth10");
+                    if (cardConfig.Type == CardTypes.Monster)
+                        popMenuDeck.AddItem("levelup2", string.Format("升级({0})", (uint)levelExpConfig.CardExp * itemPrice), UserProfile.InfoBag.HasResource(GameResourceType.Carbuncle, (uint)levelExpConfig.CardExp* itemPrice) ? "white" : "gray", "res5");
+                    else if (cardConfig.Type == CardTypes.Weapon)
+                        popMenuDeck.AddItem("levelup2", string.Format("升级({0})", (uint)levelExpConfig.CardExp * itemPrice), UserProfile.InfoBag.HasResource(GameResourceType.Gem, (uint)levelExpConfig.CardExp * itemPrice) ? "white" : "gray", "res7");
+                    else if (cardConfig.Type == CardTypes.Spell)
+                        popMenuDeck.AddItem("levelup2", string.Format("升级({0})", (uint)levelExpConfig.CardExp * itemPrice), UserProfile.InfoBag.HasResource(GameResourceType.Mercury, (uint)levelExpConfig.CardExp * itemPrice) ? "white" : "gray", "res4");
                 }
                 else
                 {
@@ -281,7 +293,7 @@ namespace TaleofMonsters.Forms
             selectRegion.Invalidate();
         }
 
-        public void UpdateCard(int cardId, byte lv, ushort exp)
+        public void OnCardLevelUp(int cardId, byte lv, ushort exp)
         {
             var card = cardRegion.GetCard(cardId);
             if (card != null)
@@ -300,6 +312,8 @@ namespace TaleofMonsters.Forms
             card = cardRegion.GetTargetCard();
             if (card != null)
                 SetTargetCard(card);
+
+            AddFlowCenter("升级卡牌成功", "Gold");
         }
 
         private void UpdateButtonState()

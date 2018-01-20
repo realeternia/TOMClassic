@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Control;
+using TaleofMonsters.Core;
 
 namespace TaleofMonsters.MainItem
 {
@@ -13,12 +14,14 @@ namespace TaleofMonsters.MainItem
             public string Type;
             public string Text;
             public string Color;
+            public string Icon;
 
-            public MenuItemData(string t, string tx, string cr)
+            public MenuItemData(string t, string tx, string cr, string icon)
             {
                 Type = t;
                 Text = tx;
                 Color = cr;
+                Icon = icon;
             }
         }
 
@@ -35,12 +38,17 @@ namespace TaleofMonsters.MainItem
         
         public void AddItem(string type, string text)
         {
-            datas.Add(new MenuItemData(type, text, "White"));
+            datas.Add(new MenuItemData(type, text, "white", ""));
         }
 
         public void AddItem(string type, string text, string color)
         {
-            datas.Add(new MenuItemData(type, text, color));
+            datas.Add(new MenuItemData(type, text, color, ""));
+        }
+
+        public void AddItem(string type, string text, string color, string icon)
+        {
+            datas.Add(new MenuItemData(type, text, color, icon));
         }
 
         public void Clear()
@@ -57,8 +65,11 @@ namespace TaleofMonsters.MainItem
             Graphics g = Graphics.FromImage(tempImg);
             foreach (var menuItemData in datas)
             {
+                var imgOff = 0;
+                if (menuItemData.Icon != "")
+                    imgOff += 16;
                 var size = TextRenderer.MeasureText(g, menuItemData.Text, fontsong, new Size(0, 0), TextFormatFlags.NoPadding);
-                width = Math.Max(width, size.Width);
+                width = Math.Max(width, size.Width + imgOff);
                 height += yOff;
             }
             Width = (int)width+6+5;
@@ -77,9 +88,7 @@ namespace TaleofMonsters.MainItem
         {
             PoperContainer.Close();
             if (selectIndex == -1)
-            {
                 return;
-            }
             OnClick(datas[selectIndex]);
         }
 
@@ -87,14 +96,19 @@ namespace TaleofMonsters.MainItem
         {
             Font fontsong = new Font("ËÎÌו", 9*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             int index = 0;
-            if (selectIndex>-1)
-            {
-                e.Graphics.FillRectangle(Brushes.DeepSkyBlue, 0, selectIndex * yOff, Width, yOff);
-            }
+            if (selectIndex > -1)
+                e.Graphics.FillRectangle(Brushes.DeepSkyBlue, 0, selectIndex*yOff, Width, yOff);
             foreach (var menuItemData in datas)
             {
+                var imgOff = 0;
+                if (menuItemData.Icon != "")
+                {
+                    var iconImg = HSIcons.GetIconsByEName(menuItemData.Icon);
+                    e.Graphics.DrawImage(iconImg, 4, yOff*index+2, 14, 14);
+                    imgOff += 16;
+                }
                 Brush b = new SolidBrush(Color.FromName(menuItemData.Color));
-                e.Graphics.DrawString(menuItemData.Text, fontsong, b, 3, yOff*index + 3);
+                e.Graphics.DrawString(menuItemData.Text, fontsong, b, imgOff + 3, yOff*index + 3);
                 b.Dispose();
                 index++;
             }

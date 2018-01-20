@@ -134,6 +134,16 @@ namespace TaleofMonsters.DataType.User
             return card;
         }
 
+        public DbDeckCard CardLevelUpRes(int cardId)
+        {
+            var card = GetDeckCardById(cardId);
+            if (card.BaseId > 0)
+            {
+                card.Level++;
+            }
+            return card;
+        }
+
         public void SelectDungeonDeck(int deckId)
         {
             DungeonDeck = new List<DbDeckCard>();
