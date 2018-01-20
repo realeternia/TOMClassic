@@ -95,6 +95,16 @@ namespace TaleofMonsters.Forms.Items
             return null;
         }
 
+        public DeckCard GetCard(int cardId)
+        {
+            foreach (var deckCard in dcards)
+            {
+                if (deckCard.BaseId == cardId)
+                    return deckCard;
+            }
+            return null;
+        }
+
         public void ClearCard()
         {
             dcards[tar] = new DeckCard(0, 0, 0);

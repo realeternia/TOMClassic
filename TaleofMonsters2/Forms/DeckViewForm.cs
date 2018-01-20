@@ -201,18 +201,14 @@ namespace TaleofMonsters.Forms
                 dcards = new DeckCard[UserProfile.InfoCard.Cards.Count];
                 int i = 0;
                 foreach (var card in UserProfile.InfoCard.Cards.Values)
-                {
                     dcards[i++] = new DeckCard(card);
-                }
                 Array.Sort(dcards, new CompareDeckCardByType());
             }
             else if (floor == 2)
             {
                 dcards = new DeckCard[UserProfile.InfoCard.Newcards.Count];
                 for (int i = 0; i < dcards.Length; i++)
-                {
                     dcards[i] = new DeckCard(UserProfile.InfoCard.GetDeckCardById(UserProfile.InfoCard.Newcards[i]));
-                }
             }
 
             cardRegion.ChangeDeck(dcards);
@@ -221,9 +217,7 @@ namespace TaleofMonsters.Forms
             UpdateButtonState();
             UpdateDeckButtonState();
             for (int i = 0; i < 3; i++)
-            {
                 vRegion.SetRegionState(i + 1, RegionState.Free);
-            }
             vRegion.SetRegionState(type, RegionState.Blacken);
             Invalidate();
         }
@@ -237,7 +231,6 @@ namespace TaleofMonsters.Forms
         private void DeckViewForm_MouseMove(object sender, MouseEventArgs e)
         {
             cardRegion.CheckMouseMove(e.X, e.Y);
-
             selectRegion.CheckMouseMove(e.X, e.Y);
         }
 
@@ -249,9 +242,7 @@ namespace TaleofMonsters.Forms
             {
                 tCard = selectRegion.GetTargetCard();
                 if (tCard == null)
-                {
                     return;
-                }
                 cardFromRegion = false;
             }
 
@@ -277,14 +268,9 @@ namespace TaleofMonsters.Forms
             }
         }
 
-        public void MenuRefresh(bool needUpdate)
+        public void MenuRefresh()
         {
             cardRegion.MenuRefresh();
-            if (needUpdate)
-            {
-                var card = cardRegion.GetTargetCard();
-                SetTargetCard(card);
-            }
             Invalidate();
         }
 
@@ -293,6 +279,27 @@ namespace TaleofMonsters.Forms
             InstallDeckCard();
             cardRegion.Invalidate();
             selectRegion.Invalidate();
+        }
+
+        public void UpdateCard(int cardId, byte lv, ushort exp)
+        {
+            var card = cardRegion.GetCard(cardId);
+            if (card != null)
+            {
+                card.Level = lv;
+                card.Exp = exp;
+            }
+
+            card = selectRegion.GetCard(cardId);
+            if (card != null)
+            {
+                card.Level = lv;
+                card.Exp = exp;
+            }
+
+            card = cardRegion.GetTargetCard();
+            if (card != null)
+                SetTargetCard(card);
         }
 
         private void UpdateButtonState()

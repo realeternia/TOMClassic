@@ -120,17 +120,18 @@ namespace TaleofMonsters.DataType.User
             return false;
         }
 
-        public void CardLevelUp(int cardId)
+        public DbDeckCard CardLevelUp(int cardId)
         {       
             var card = GetDeckCardById(cardId);
             if (card.BaseId > 0)
             {
                 int expNeed = ExpTree.GetNextRequiredCard(card.Level);
                 if (card.Exp < expNeed)
-                    return;
+                    return card; 
                 card.Exp = (ushort)(card.Exp - expNeed);
                 card.Level++;
             }
+            return card;
         }
 
         public void SelectDungeonDeck(int deckId)

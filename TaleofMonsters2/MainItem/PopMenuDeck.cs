@@ -24,13 +24,9 @@ namespace TaleofMonsters.MainItem
             {
                 int result = UserProfile.InfoCard.SelectedDeck.AddCard(TargetCard);
                 if (result != ErrorConfig.Indexer.OK)
-                {
                     Form.AddFlowCenter(HSErrors.GetDescript(result), "Red");
-                }
                 else
-                {
                     Form.ActivateCard();
-                }
             }
             else if (target.Type == "remove")
             {
@@ -45,14 +41,15 @@ namespace TaleofMonsters.MainItem
                 }
                 else if (MessageBoxEx2.Show("确定消耗所有碎片提升等级？") == DialogResult.OK)
                 {
-                    UserProfile.InfoCard.CardLevelUp(TargetCard.BaseId);
+                    var cardResult = UserProfile.InfoCard.CardLevelUp(TargetCard.BaseId);
+                    Form.UpdateCard(TargetCard.BaseId, cardResult.Level, cardResult.Exp);
                 }
             }
             else
             {
                 return;
             }
-            Form.MenuRefresh(false);
+            Form.MenuRefresh();
         }
     }
 }
