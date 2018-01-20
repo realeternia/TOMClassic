@@ -107,52 +107,53 @@ namespace TaleofMonsters.DataType.Cards.Monsters
             g.DrawString(string.Format("Lv{0:00}", card.Level), fontsong, Brushes.Indigo, 13 + offX, basel + 22);
             g.DrawImage(HSIcons.GetIconsByEName("oth10"), 56 + offX, basel + 22, 14, 14);
             g.DrawString(string.Format("({0}/{1})", card.Exp, ExpTree.GetNextRequiredCard(card.Level)), fontsong, Brushes.RoyalBlue, 70 + offX, basel + 22);
-            g.DrawString("数据", fontblack, Brushes.White, 10 + offX, basel + 42);
+            var strPoint = string.Format("强度 {0}", CardAssistant.GetCardModify(Star, monster.Level, (CardQualityTypes)monster.MonsterConfig.Quality, monster.MonsterConfig.Modify));
+            g.DrawString(strPoint, fontblack, Brushes.White, 10 + offX, basel + 42);
             Adder add = new Adder(basel + 61, 15);
             SolidBrush sb = new SolidBrush(Color.FromArgb(100, 50, 0));
-            g.DrawString(string.Format("攻击 {0,3:D}", monster.Atk), fontsong, sb, 10 + offX, add.Next);
+            g.DrawString(string.Format("攻击{0,4:D}", monster.Atk), fontsong, sb, 10 + offX, add.Next);
             PaintTool.DrawValueLine(g, monster.Atk / 2, 70 + offX, add.Now+1, 115, 10);
-            g.DrawString(string.Format("生命 {0,3:D}", monster.Hp), fontsong, sb, 10 + offX, add.Next);
+            g.DrawString(string.Format("生命{0,4:D}", monster.Hp), fontsong, sb, 10 + offX, add.Next);
             PaintTool.DrawValueLine(g, monster.Hp / 10, 70 + offX, add.Now + 1, 115, 10);
-            g.DrawString(string.Format("射程 {0,3:D}", monster.Range), fontsong, sb, 10 + offX, add.Next);
+            g.DrawString(string.Format("射程{0,4:D}", monster.Range), fontsong, sb, 10 + offX, add.Next);
             PaintTool.DrawValueLine(g, monster.Range * 2, 70 + offX, add.Now + 1, 115, 10);
-            g.DrawString(string.Format("移动 {0,3:D}", monster.Mov), fontsong, sb, 10 + offX, add.Next);
+            g.DrawString(string.Format("移动{0,4:D}", monster.Mov), fontsong, sb, 10 + offX, add.Next);
             PaintTool.DrawValueLine(g, monster.Mov * 2, 70 + offX, add.Now + 1, 115, 10);
             sb.Dispose();
             sb = new SolidBrush(Color.FromArgb(50, 0, 100));
             if (monster.Def != 0)
             {
-                g.DrawString(string.Format("防御 {0}", GetValueStr(monster.Def)), fontsong, sb, 10 + offX, add.Next);
+                g.DrawString(string.Format("防御{0}", GetValueStr(monster.Def)), fontsong, sb, 10 + offX, add.Next);
                 PaintTool.DrawValueLine(g, monster.Def *20, 70 + offX, add.Now + 1, 115, 10);
             }
             if (monster.Mag != 0)
             {
-                g.DrawString(string.Format("魔力 {0}", GetValueStr(monster.Mag)), fontsong, sb, 10 + offX, add.Next);
+                g.DrawString(string.Format("魔力{0}", GetValueStr(monster.Mag)), fontsong, sb, 10 + offX, add.Next);
                 PaintTool.DrawValueLine(g, monster.Mag * 20, 70 + offX, add.Now + 1, 115, 10);
             }
             if (monster.Spd != 0)
             {
-                g.DrawString(string.Format("攻速 {0}", GetValueStr(monster.Spd)), fontsong, sb, 10 + offX, add.Next);
+                g.DrawString(string.Format("攻速{0}", GetValueStr(monster.Spd)), fontsong, sb, 10 + offX, add.Next);
                 PaintTool.DrawValueLine(g, monster.Spd * 20, 70 + offX, add.Now + 1, 115, 10);
             }
             if (monster.Hit != 0)
             {
-                g.DrawString(string.Format("命中 {0}", GetValueStr( monster.Hit)), fontsong, sb, 10 + offX, add.Next);
+                g.DrawString(string.Format("命中{0}", GetValueStr( monster.Hit)), fontsong, sb, 10 + offX, add.Next);
                 PaintTool.DrawValueLine(g, monster.Hit * 20, 70 + offX, add.Now + 1, 115, 10);
             }
             if (monster.Dhit != 0)
             {
-                g.DrawString(string.Format("回避 {0}", GetValueStr( monster.Dhit)), fontsong, sb, 10 + offX, add.Next);
+                g.DrawString(string.Format("回避{0}", GetValueStr( monster.Dhit)), fontsong, sb, 10 + offX, add.Next);
                 PaintTool.DrawValueLine(g, monster.Dhit * 20, 70 + offX, add.Now + 1, 115, 10);
             }
             if (monster.Crt != 0)
             {
-                g.DrawString(string.Format("暴击 {0}", GetValueStr( monster.Crt)), fontsong, sb, 10 + offX, add.Next);
+                g.DrawString(string.Format("暴击{0}", GetValueStr( monster.Crt)), fontsong, sb, 10 + offX, add.Next);
                 PaintTool.DrawValueLine(g, monster.Crt * 20, 70 + offX, add.Now + 1, 115, 10);
             }
             if (monster.Luk != 0)
             {
-                g.DrawString(string.Format("幸运 {0}", GetValueStr(monster.Luk)), fontsong, sb, 10 + offX, add.Next);
+                g.DrawString(string.Format("幸运{0}", GetValueStr(monster.Luk)), fontsong, sb, 10 + offX, add.Next);
                 PaintTool.DrawValueLine(g, monster.Luk * 20, 70 + offX, add.Now + 1, 115, 10);
             }
 
@@ -181,7 +182,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
 
         private string GetValueStr(int val)
         {
-            return val > 0 ? string.Format("+{0,2:D}", val) : string.Format("-{0,2:D}", Math.Abs(val));
+            return val > 0 ? string.Format("+{0,3:D}", val) : string.Format("-{0,3:D}", Math.Abs(val));
         }
 
         public override Image GetPreview(CardPreviewType type, uint[] parms)

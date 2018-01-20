@@ -83,11 +83,9 @@ namespace TaleofMonsters.DataType.Cards.Monsters
 
         public void UpgradeToLevel(int level)
         {
-            var modify = CardAssistant.GetCardModify((CardQualityTypes)MonsterConfig.Quality, MonsterConfig.Modify);
-
             Level = level;
 
-            int standardValue = (int) (30*(1 + (Star-1)* GameConstants.CardStrengthStar) *(1 + (level-1)* GameConstants.CardStrengthLevel) *(1 + modify));
+            var standardValue = CardAssistant.GetCardModify(Star, level, (CardQualityTypes)MonsterConfig.Quality, MonsterConfig.Modify);
             Atk = standardValue * (100 + AtkP) / 100; //200
             Hp = standardValue * (100 + VitP) / 100 * 5; //200
             Cure = standardValue;

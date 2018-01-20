@@ -74,36 +74,26 @@ namespace TaleofMonsters.Forms.MagicBook
                 {
                     MonsterCard monsterCard = card as MonsterCard;
                     if (monsterCard != null)
-                    {
                         CheckMonster(monsterCard, ref effectName);
-                    }
                 }
             }
 
             string nowEffectName = "";
             if (coverEffect != null)
-            {
                 nowEffectName = coverEffect.Name;
-            }
 
             if (effectName != nowEffectName)
             {
                 if (effectName == "")
-                {
                     coverEffect = null;
-                }
                 else
-                {
                     coverEffect = new CoverEffect(EffectBook.GetEffect(effectName), new Point(X + 20, Y + 20), new Size(160, 180));
-                }
             }
 
             tooltip.Hide(parent);
 
             if (Invalidate != null)
-            {
                 Invalidate();
-            }
         }
 
         private void CheckMonster(MonsterCard monsterCard, ref string effectPath)
@@ -116,14 +106,10 @@ namespace TaleofMonsters.Forms.MagicBook
                 skills.Add(monsterSkill);
                 SkillConfig skillConfig = ConfigData.GetSkillConfig(skillId);
                 if (!string.IsNullOrEmpty(skillConfig.Cover))
-                {
                     effectPath = skillConfig.Cover;
-                }
             }
             if (monsterConfig.Cover != "")
-            {
                 effectPath = monsterConfig.Cover;
-            }
         }
 
         public void SetInfo(int id)            
@@ -139,9 +125,7 @@ namespace TaleofMonsters.Forms.MagicBook
             {
                 card.DrawOnCardDetail(g, X, Y);
                 if (coverEffect != null)
-                {
                     coverEffect.Draw(g);
-                }
                 vRegion.Draw(g);
             }
         }

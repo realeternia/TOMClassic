@@ -10,6 +10,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
         public WeaponConfig WeaponConfig;
 
         public int Id { get { return WeaponConfig.Id; } }
+        public int Level { get; set; }
 
         public int Atk { get; set; }
         public int PArmor { get; set; }
@@ -83,9 +84,9 @@ namespace TaleofMonsters.DataType.Cards.Weapons
 
         public void UpgradeToLevel(int level)
         {
-            var modify = CardAssistant.GetCardModify((CardQualityTypes)WeaponConfig.Quality, WeaponConfig.Modify);
+            Level = level;
 
-            int standardValue = (int)(30 * (1 + (WeaponConfig.Star-1) * GameConstants.CardStrengthStar) * (1 + (level-1) * GameConstants.CardStrengthLevel) * (1 + modify));
+            var standardValue = CardAssistant.GetCardModify(WeaponConfig.Star, level, (CardQualityTypes)WeaponConfig.Quality, WeaponConfig.Modify);
             standardValue = (int)((float)standardValue * 4 / WeaponConfig.Dura * (1 + (WeaponConfig.Dura - 4) * 0.1));//耐久低的武器总值削减
             Atk = standardValue * (WeaponConfig.AtkP) / 100;
             PArmor = standardValue * (WeaponConfig.PArmor) / 100*5;
