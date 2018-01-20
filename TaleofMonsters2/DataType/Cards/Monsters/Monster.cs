@@ -1,6 +1,7 @@
 ﻿using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Config;
+using TaleofMonsters.Core;
 
 namespace TaleofMonsters.DataType.Cards.Monsters
 {
@@ -86,7 +87,7 @@ namespace TaleofMonsters.DataType.Cards.Monsters
 
             Level = level;
 
-            int standardValue = (18 + Star * 12) * (level*8 + 92) / 100 * (200 + modify) / 200;
+            int standardValue = (int) (30*(1 + (Star-1)* GameConstants.CardStrengthStar) *(1 + (level-1)* GameConstants.CardStrengthLevel) *(1 + modify));
             Atk = standardValue * (100 + AtkP) / 100; //200
             Hp = standardValue * (100 + VitP) / 100 * 5; //200
             Cure = standardValue;

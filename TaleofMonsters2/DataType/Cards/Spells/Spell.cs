@@ -2,6 +2,7 @@ using System;
 using NarlonLib.Math;
 using TaleofMonsters.Config;
 using ConfigDatas;
+using TaleofMonsters.Core;
 
 namespace TaleofMonsters.DataType.Cards.Spells
 {
@@ -88,7 +89,7 @@ namespace TaleofMonsters.DataType.Cards.Spells
             
             Level = level;
 
-            int standardValue = (18 + SpellConfig.Star*12)*(level*8 + 92)/100*(200 + modify) /200;
+            int standardValue = (int)(30 * (1 + (SpellConfig.Star-1) * GameConstants.CardStrengthStar) * (1 + (level-1) * GameConstants.CardStrengthLevel) * (1 + modify));
             Damage = standardValue * (SpellConfig.Damage) / 100 * 5;
             Cure = standardValue * (SpellConfig.Cure) / 100 * 5;
             Atk = standardValue * (SpellConfig.Atk) / 100;//和monster的攻击一样

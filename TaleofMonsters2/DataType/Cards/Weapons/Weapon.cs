@@ -1,6 +1,7 @@
 ﻿using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Config;
+using TaleofMonsters.Core;
 
 namespace TaleofMonsters.DataType.Cards.Weapons
 {
@@ -84,7 +85,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
         {
             var modify = CardAssistant.GetCardModify((CardQualityTypes)WeaponConfig.Quality, WeaponConfig.Modify);
 
-            int standardValue = (18 + WeaponConfig.Star * 12) * (level*8 + 92) / 100 * (200 + modify) / 200;
+            int standardValue = (int)(30 * (1 + (WeaponConfig.Star-1) * GameConstants.CardStrengthStar) * (1 + (level-1) * GameConstants.CardStrengthLevel) * (1 + modify));
             standardValue = (int)((float)standardValue * 4 / WeaponConfig.Dura * (1 + (WeaponConfig.Dura - 4) * 0.1));//耐久低的武器总值削减
             Atk = standardValue * (WeaponConfig.AtkP) / 100;
             PArmor = standardValue * (WeaponConfig.PArmor) / 100*5;
