@@ -52,7 +52,7 @@ namespace TaleofMonsters.MainItem
             {
                 var levelExpConfig = ConfigData.GetLevelExpConfig(TargetCard.Level);
                 var cardConfig = CardConfigManager.GetCardConfig(TargetCard.BaseId);
-                var itemPrice = GameResourceBook.OutGemCardBuy((int)cardConfig.Quality) * 2;//溢出价格
+                var itemPrice = GameResourceBook.OutGemCardBuy((int)cardConfig.Quality) * 5;//溢出价格
                 itemPrice *= (uint) levelExpConfig.CardExp;
                 GameResourceType resType = GameResourceType.Gold;
                 if (cardConfig.Type == CardTypes.Monster)

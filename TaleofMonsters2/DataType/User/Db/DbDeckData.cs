@@ -75,9 +75,7 @@ namespace TaleofMonsters.DataType.User.Db
                 }
             }
 
-            if (cardConfig.Quality == CardQualityTypes.Legend && count >= GameConstants.CardLimitLegend)
-                return ErrorConfig.Indexer.DeckCardTypeLimitLegend;
-            if (cardConfig.Quality != CardQualityTypes.Legend && count >= GameConstants.CardLimit)
+            if (count >= GameConstants.CardLimit)
                 return ErrorConfig.Indexer.DeckCardTypeLimit;
             if (firstBlank == -1)
                 return ErrorConfig.Indexer.DeckIsFull;
@@ -115,14 +113,12 @@ namespace TaleofMonsters.DataType.User.Db
             Wcount = 0;
             for (int i = 0; i < GameConstants.DeckCardCount; i++)
             {
-                if (CardIds[i] != -1)
-                {
-                    var cardType = ConfigIdManager.GetCardType(CardIds[i]);
-                    if (cardType == CardTypes.Monster)
-                        Mcount = Mcount + 1;
-                    else
-                        Wcount = Wcount + 1;
-                }
+                if (CardIds[i] == -1) continue;
+                var cardType = ConfigIdManager.GetCardType(CardIds[i]);
+                if (cardType == CardTypes.Monster)
+                    Mcount = Mcount + 1;
+                else
+                    Wcount = Wcount + 1;
             }
         }
     }

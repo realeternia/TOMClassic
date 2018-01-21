@@ -131,25 +131,19 @@ namespace TaleofMonsters.Forms
         private void DeckInvalidate()
         {
             if (cardRegion != null)
-            {
                 Invalidate(new Rectangle(cardRegion.X, cardRegion.Y, cardRegion.Width, cardRegion.Height));
-            }
         }
 
         private void SelectDeckInvalidate()
         {
             if (selectRegion != null)
-            {
                 Invalidate(new Rectangle(selectRegion.X, selectRegion.Y, selectRegion.Width, selectRegion.Height));
-            }
         }
 
         private void DetailInvalidate()
         {
             if (cardDetail != null)
-            {
                 Invalidate(new Rectangle(cardDetail.X, cardDetail.Y, cardDetail.Width, cardDetail.Height));
-            }
         }
 
         public override void Init(int width, int height)
@@ -258,7 +252,7 @@ namespace TaleofMonsters.Forms
                 {
                     var levelExpConfig = ConfigData.GetLevelExpConfig(targetCard.Level);
                     var cardConfig = CardConfigManager.GetCardConfig(targetCard.BaseId);
-                    var itemPrice = GameResourceBook.OutGemCardBuy((int)cardConfig.Quality)*2;//溢出价格
+                    var itemPrice = GameResourceBook.OutGemCardBuy((int)cardConfig.Quality)*5;//溢出价格
                     popMenuDeck.AddItem("activate", "添加到卡组");
                     popMenuDeck.AddItem("levelup", string.Format("升级({0})", levelExpConfig.CardExp), targetCard.Exp >= levelExpConfig.CardExp ? "white" : "gray", "oth10");
                     if (cardConfig.Type == CardTypes.Monster)
