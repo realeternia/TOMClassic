@@ -9,14 +9,11 @@ namespace TaleofMonsters.DataType.Effects
 {
     internal static class EffectBook
     {
-        static Dictionary<string, Effect> effectType = new Dictionary<string, Effect>();
+        private static Dictionary<string, Effect> effectType = new Dictionary<string, Effect>();
 
         public static int Count
         {
-            get
-            {
-                return effectType.Count;
-            }
+            get { return effectType.Count; }
         }
 
         public static Effect GetEffect(string name)

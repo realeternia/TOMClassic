@@ -34,18 +34,14 @@ namespace NarlonLib.Math
         public static int GetRandom(int min, int max)
         {
             if (min == max)
-            {
                 return min;
-            }
             return r.Next(min, max);
         }
 
         public static double GetRandom(double min, double max)
         {
             if (System.Math.Abs(max - min) < 0.001)
-            {
                 return min;
-            }
             return r.NextDouble()*(max - min) + min;
         }
 
@@ -53,22 +49,16 @@ namespace NarlonLib.Math
         {
 	        int[] datas = {0, 10, 14, 17, 20, 22, 24, 26, 28, 30};
 	        if(value < 0)
-	        {
 		        return 0;
-	        }
 	        if(value > 9)
-	        {
 		        return datas[9];
-	        }
 	        return datas[value];
         }
 
         public static int GetRound(int value, int checker)
         {
             if (value <= checker)
-            {
                 return value;
-            }
            
             int small = value%checker;
             int rt = value - small;
@@ -89,9 +79,7 @@ namespace NarlonLib.Math
         {
             string realexp = exp;
             foreach (string key in datas.Keys)
-            {
                 realexp = realexp.Replace(key, datas[key]);
-            }
             return GetFormulaResult(realexp);
         }
 
@@ -106,11 +94,20 @@ namespace NarlonLib.Math
 	         if(value > max) return max;
 	         return value;
 	    }
+
         public static double Clamp(double value, double min, double max)
         {
             if (value < min) return min;
             if (value > max) return max;
             return value;
+        }
+
+        public static int RandomBetween(double value)
+        {
+            var floor = System.Math.Floor(value);
+            if (GetRandom(1) >= value - floor)
+                return (int) System.Math.Ceiling(value);
+            return (int)floor;
         }
     }
 

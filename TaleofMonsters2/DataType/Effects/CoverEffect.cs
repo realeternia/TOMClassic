@@ -33,21 +33,15 @@ namespace TaleofMonsters.DataType.Effects
         {
             speedRunIndex++;
             if ((speedRunIndex % speedDownFactor) != 0)
-            {
                 return false;
-            }
 
             frameId++;
             if (frameId >= effect.Frames.Length)
             {
                 if (PlayOnce)
-                {
                     isDie = true;
-                }
                 else
-                {
                     frameId = 0;    
-                }
             }
             return true;
         }
@@ -55,9 +49,7 @@ namespace TaleofMonsters.DataType.Effects
         public void Draw(Graphics g)
         {
             if (isDie)
-            {
                 return;
-            }
 
             if (frameId >= 0 && frameId < effect.Frames.Length)
             {

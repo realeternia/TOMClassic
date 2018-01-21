@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using ConfigDatas;
 using NarlonLib.Core;
+using NarlonLib.Math;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
@@ -98,7 +99,7 @@ namespace TaleofMonsters.DataType.Decks
 
         private static void MakeLoad(string name, int level)
         {
-            int cardLevel = ConfigData.GetLevelExpConfig(level).TowerLevel;
+            var cardLevel = ConfigData.GetLevelExpConfig(level).CardLevel;
 
             var deck = new List<DeckCard>();
             StreamReader sr = new StreamReader(DataLoader.Read("Deck", string.Format("{0}.txt", name)));
@@ -142,7 +143,7 @@ namespace TaleofMonsters.DataType.Decks
                 }
 
                 starCount[CardConfigManager.GetCardConfig(cardId).Star]++;
-                var card = new DeckCard(cardId, (byte) cardLevel, 0);
+                var card = new DeckCard(cardId, (byte)MathTool.RandomBetween(cardLevel), 0);
                 deck.Add(card);
             }
             sr.Close();

@@ -25,9 +25,7 @@ namespace TaleofMonsters.DataType.Effects
                 int eheg = efu.Height*hp/100;
                 var img = EffectBook.GetEffectImage(efu.Frameid.ToString(), efu.Effect, false);
                 if (img != null)
-                {
                     g.DrawImage(img, x + efu.X * wp / 100, y + efu.Y * hp / 100, ewid, eheg);
-                }
             }
         }
     }

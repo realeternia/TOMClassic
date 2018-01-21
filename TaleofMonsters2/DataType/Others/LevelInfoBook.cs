@@ -11,7 +11,7 @@ namespace TaleofMonsters.DataType.Others
         public static int[] GetLevelInfosByLevel(int oldLevel, int level)
         {
             List<int> ids = new List<int>();
-            foreach (LevelInfoConfig levelInfoConfig in ConfigData.LevelInfoDict.Values)
+            foreach (var levelInfoConfig in ConfigData.LevelInfoDict.Values)
             {
                 if (levelInfoConfig.Level > oldLevel && levelInfoConfig.Level <= level)
                     ids.Add(levelInfoConfig.Id);

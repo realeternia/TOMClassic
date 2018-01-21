@@ -36,17 +36,11 @@ namespace TaleofMonsters.DataType.HeroSkills
             var cost = CardConfigManager.GetCardConfig(powerConfig.CardId).Cost;
             tipData.AddTextNewLine("消耗：", "White");
             if (powerConfig.Type == (int)CardTypes.Monster)
-            {
                 tipData.AddText(cost + "LP", "Yellow");
-            }
             else if (powerConfig.Type == (int)CardTypes.Weapon)
-            {
                 tipData.AddText(cost + "PP", "Red");
-            }
             else
-            {
                 tipData.AddText(cost + "MP", "Blue"); 
-            }
 
             return tipData.Image;
         }
