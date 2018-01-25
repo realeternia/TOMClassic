@@ -256,7 +256,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             AuroManager.Reload();
             SkillManager.Reload();
             
-            antiMagic = new int[6];//6个属性
+            antiMagic = new int[7];//7个属性
 
             Atk = new AttrModifyData(Avatar.Atk);
             MaxHp = new AttrModifyData(Avatar.Hp);
@@ -393,8 +393,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void CheckMagicDamage(HitDamage damage)
         {
-            if (damage.Element > 0 && antiMagic[damage.Element - 1] > 0)
-                damage.SetDamage(DamageTypes.Magic, Math.Max(damage.Value*(100 - antiMagic[damage.Element - 1])/100, 0));
+            if (antiMagic[damage.Element] > 0)
+                damage.SetDamage(DamageTypes.Magic, Math.Max(damage.Value*(100 - antiMagic[damage.Element])/100, 0));
         }
 
         public bool CanAddWeapon()
@@ -598,7 +598,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
             else
             {
-                antiMagic[(int)Enum.Parse(typeof(CardElements), type) - 1] += value;
+                antiMagic[(int)Enum.Parse(typeof(CardElements), type)] += value;
             }
         }
 
