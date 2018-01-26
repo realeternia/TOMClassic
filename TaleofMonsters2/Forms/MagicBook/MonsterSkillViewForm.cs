@@ -97,13 +97,9 @@ namespace TaleofMonsters.Forms.MagicBook
             foreach (var skill in ConfigData.SkillDict.Values)
             {
                 if (skill.Remark != "")
-                {
                     remarkDict[skill.Remark] = true;
-                }
                 if (skill.Type != "")
-                {
                     typeDict[skill.Type] = true;
-                }
             }
             strTypeList = new string[typeDict.Count];
             typeDict.Keys.CopyTo(strTypeList, 0);
@@ -222,11 +218,6 @@ namespace TaleofMonsters.Forms.MagicBook
             selectPanel.AddContent(datas);
         }
 
-        private void MonsterSkillViewForm_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void nlClickLabel1_SelectionChange(Object value)
         {
             cardDetail.SetInfo((int)value);
@@ -263,6 +254,7 @@ namespace TaleofMonsters.Forms.MagicBook
                         colorName = "DarkGray";
                     nlClickLabel1.AddLabel(cardConfig.Name, wid, Color.FromName(colorName));
                 }
+                Invalidate(new Rectangle(65 + 5, cardHeight * yCount + 37 + cardHeight + 21, cardWidth*xCount,25));
                 nlClickLabel1.Invalidate();
             }
         }
@@ -273,9 +265,7 @@ namespace TaleofMonsters.Forms.MagicBook
             {
                 var cardImg = SkillBook.GetSkillImage(info);
                 if (cardImg != null)
-                {
                     g.DrawImage(cardImg, xOff, yOff, cardWidth, cardHeight);
-                }
             }
         
             if (inMouseOn || isTarget)

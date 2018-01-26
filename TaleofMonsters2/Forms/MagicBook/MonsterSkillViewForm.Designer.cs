@@ -163,7 +163,6 @@ namespace TaleofMonsters.Forms.MagicBook
             this.DoubleBuffered = true;
             this.Name = "MonsterSkillViewForm";
             this.Size = new System.Drawing.Size(783, 585);
-            this.Click += new System.EventHandler(this.MonsterSkillViewForm_Click);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MonsterSkillViewForm_Paint);
             this.ResumeLayout(false);
 
