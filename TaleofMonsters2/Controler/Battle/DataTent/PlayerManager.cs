@@ -17,8 +17,8 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             {
                 switch (peopleConfig.Method)
                 {
-                    case "common": LeftPlayer = new HumanPlayer(true, leftCards); break;
-                    case "rand": LeftPlayer = new RandomPlayer(right, true, true); break;
+                    case "actcommon": LeftPlayer = new HumanPlayer(true, leftCards); break;
+                    case "actrand": LeftPlayer = new RandomPlayer(right, true, true); break;
                     default: LeftPlayer = new AIPlayer(right, peopleConfig.Method, true, rlevel, true); break;
                 }
             }
@@ -29,9 +29,9 @@ namespace TaleofMonsters.Controler.Battle.DataTent
 
             switch (peopleConfig.Emethod)
             {
-                case "common": RightPlayer = new HumanPlayer(false, leftCards); RightPlayer.PeopleId = right; break;
-                case "rand": RightPlayer = new RandomPlayer(right, false, false); break;
-                case "mirror": RightPlayer = new MirrorPlayer(right, LeftPlayer.DeckCards, false); break;
+                case "actcommon": RightPlayer = new HumanPlayer(false, leftCards); RightPlayer.PeopleId = right; break;
+                case "actrand": RightPlayer = new RandomPlayer(right, false, false); break;
+                case "actmirror": RightPlayer = new MirrorPlayer(right, LeftPlayer.DeckCards, false); break;
                 default: RightPlayer = new AIPlayer(right, peopleConfig.Emethod, false, rlevel, false); break;
             }
         }
