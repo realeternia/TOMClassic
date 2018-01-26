@@ -69,9 +69,9 @@ namespace TaleofMonsters.Forms.MagicBook
 
             base.Init(width, height);
 
-            cardDetail = new CardDetail(this, cardWidth * xCount + 65, 35, cardHeight * yCount + 93 + cardHeight);
+            cardDetail = new CardDetail(this, cardWidth * xCount + 65, 35, cardHeight * yCount + 101 + cardHeight);
             nlClickLabel1.Location = new Point(75, cardHeight * yCount + 100 + cardHeight);
-            nlClickLabel1.Size = new Size(cardWidth * xCount - 20, 63);
+            nlClickLabel1.Size = new Size(cardWidth * xCount - 20, 71);
 
             SetupType();
             ChangeCards();
@@ -151,9 +151,7 @@ namespace TaleofMonsters.Forms.MagicBook
 
             skills = new List<int>();
             foreach (var mt in things)
-            {
                 skills.Add(mt.Value);
-            }
             #endregion
             UpdateButtonState();
             InitItems();
@@ -248,7 +246,7 @@ namespace TaleofMonsters.Forms.MagicBook
                 }
                 foreach (int wid in WeaponBook.GetSkillWids(skill.Id))
                 {
-                    var cardConfig = ConfigData.GetMonsterConfig(wid);
+                    var cardConfig = ConfigData.GetWeaponConfig(wid);
                     var colorName = HSTypes.I2QualityColor(cardConfig.Quality);
                     if (colorName == "White")
                         colorName = "DarkGray";
@@ -301,14 +299,12 @@ namespace TaleofMonsters.Forms.MagicBook
 
             font = new Font("宋体", 10 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             Font fontblack = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(245, 244, 242)), 65, cardHeight * yCount + 35 + cardHeight, cardWidth * xCount, 93);
+            e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(245, 244, 242)), 65, cardHeight * yCount + 35 + cardHeight, cardWidth * xCount, 101);
             e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(190, 175, 160)), 65, cardHeight * yCount + 35 + cardHeight, cardWidth * xCount, 20);
             e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(190, 175, 160)), 65, cardHeight * yCount + 75 + cardHeight, cardWidth * xCount, 20);
             e.Graphics.DrawString("技能说明", fontblack, Brushes.White, 65, cardHeight * yCount + 37 + cardHeight);
             if (!string.IsNullOrEmpty(skillDesStr))
-            {
                 e.Graphics.DrawString(skillDesStr, font, Brushes.SaddleBrown, 65+5, cardHeight * yCount + 37 + cardHeight + 21);
-            }
             e.Graphics.DrawString("所有生物", fontblack, Brushes.White, 65, cardHeight * yCount + 77 + cardHeight);
             fontblack.Dispose();
             font.Dispose();
