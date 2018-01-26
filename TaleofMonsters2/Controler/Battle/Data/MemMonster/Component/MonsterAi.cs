@@ -75,25 +75,28 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             int dis = int.MaxValue;
             int rate = 0;
 
-            foreach (var mon in BattleManager.Instance.MonsterQueue.Enumerator)
+            foreach (var pickMon in BattleManager.Instance.MonsterQueue.Enumerator)
             {
-                if (mon.IsGhost)
+                if (pickMon.IsGhost)
                     continue;
 
-                if (isLeft != mon.Owner.IsLeft)
-                {
-                    var tpDis = MathTool.GetDistance(mon.Position, mouse);
-                    if (tpDis / BattleManager.Instance.MemMap.CardSize * 10 > mon.RealRange 
-                        && (isLeft && mon.Position.X < mouse.X || !isLeft && mon.Position.X > mouse.X)) //不管身后的敌人
-                        continue;
+                if (isLeft == pickMon.Owner.IsLeft)
+                    continue;
 
-                    var targetRate = GetMonsterRate(mon);
-                    if (tpDis < dis || tpDis == dis && targetRate > rate)
-                    {
-                        dis = tpDis;
-                        target = mon;
-                        rate = targetRate;
-                    }
+                var tpDis = MathTool.GetDistance(pickMon.Position, mouse);
+                if (tpDis / BattleManager.Instance.MemMap.CardSize * 10 > pickMon.RealRange 
+                    && (isLeft && pickMon.Position.X < mouse.X || !isLeft && pickMon.Position.X > mouse.X)) //不管身后的敌人
+                    continue;
+
+                var targetRate = GetMonsterRate(pickMon, tpDis / BattleManager.Instance.MemMap.CardSize * 10);
+                if (targetRate == 0)
+                    continue;
+
+                if (tpDis < dis || tpDis == dis && targetRate > rate)
+                {
+                    dis = tpDis;
+                    target = pickMon;
+                    rate = targetRate;
                 }
             }
             return target;
@@ -158,8 +161,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             return dis <= monster.RealRange * BattleManager.Instance.MemMap.CardSize/10;//射程也是十倍的
         }
 
-        private int GetMonsterRate(LiveMonster mon)
+        private int GetMonsterRate(LiveMonster mon, int dis)
         {
+            if (MonsterBook.HasTag(mon.CardId, "hide"))
+            {
+                if (dis > 10)
+                    return 0;
+            }
+
             int score = 10000-mon.Hp;
             score += mon.RealRange*10;//优先打远程单位
             if (MonsterBook.HasTag(mon.CardId, "taunt"))
