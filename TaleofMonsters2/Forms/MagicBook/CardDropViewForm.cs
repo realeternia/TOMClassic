@@ -82,7 +82,7 @@ namespace TaleofMonsters.Forms.MagicBook
             base.Init(width, height);
             cards = new List<int>();
             cardDetail = new CardDetail(this, cardWidth * xCount + 65, 35, cardHeight * yCount + 70);
-
+            cardDetail.Invalidate = DetailInvalidate;
             int baseY = cardHeight * yCount + 45;
             InitVirtualRegion(1, 65 + 10, baseY + 3);
             InitVirtualRegion(2, 65 + 70, baseY + 3);
@@ -178,11 +178,6 @@ namespace TaleofMonsters.Forms.MagicBook
             Close();
         }
 
-        private void CardViewForm_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void SelectCard(int cardId)
         {
             for (int i = 0; i < 10; i++)
@@ -197,8 +192,14 @@ namespace TaleofMonsters.Forms.MagicBook
                 vRegion.SetRegionKey(i + 1, dropList[i].ItemId);
                 vRegion.SetRegionDecorator(i+1,0,string.Format("{0:0.0}%", (float)(dropList[i].Rate)/100));
             }
-
+            cardDetail.Invalidate();
             Invalidate(new Rectangle(67, 37 + yCount * cardHeight, cardWidth * xCount - 4,71));
+        }
+
+        private void DetailInvalidate()
+        {
+            if (cardDetail != null)
+                Invalidate(new Rectangle(cardDetail.X, cardDetail.Y, cardDetail.Width, cardDetail.Height));
         }
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
@@ -258,7 +259,7 @@ namespace TaleofMonsters.Forms.MagicBook
          
         }
 
-        private void CardViewForm_Paint(object sender, PaintEventArgs e)
+        private void CardDropViewForm_Paint(object sender, PaintEventArgs e)
         {
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 

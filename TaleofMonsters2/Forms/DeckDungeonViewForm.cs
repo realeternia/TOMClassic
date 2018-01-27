@@ -47,9 +47,7 @@ namespace TaleofMonsters.Forms
         private void DetailInvalidate()
         {
             if (cardDetail != null)
-            {
                 Invalidate(new Rectangle(cardDetail.X, cardDetail.Y, cardDetail.Width, cardDetail.Height));
-            }
         }
 
         public override void Init(int width, int height)
