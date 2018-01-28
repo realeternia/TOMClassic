@@ -5,9 +5,9 @@ using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.Forms.Items.Regions;
-using TaleofMonsters.Forms.Pops;
 using ConfigDatas;
 using TaleofMonsters.Config;
+using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
 
@@ -108,8 +108,23 @@ namespace TaleofMonsters.Forms.Items
             var gameShopConfig = ConfigData.GetGameShopConfig(productId);
             var eid = HItemBook.GetItemId(gameShopConfig.Item);
             var itmConfig = ConfigData.GetHItemConfig(eid);
-            var itemPrice = GameResourceBook.OutGoldSellItem(itmConfig.Rare, itmConfig.ValueFactor);
-            PopBuyProduct.Show(eid, (int)Math.Max(1, itemPrice / GameConstants.DiamondToGold));
+            var goldPrice = GameResourceBook.OutGoldSellItem(itmConfig.Rare, itmConfig.ValueFactor)*2;
+            if (gameShopConfig.UseDiamond)
+            {
+                var diamondPrice = (int)Math.Max(1, goldPrice / GameConstants.DiamondToGold);
+                if (UserProfile.InfoBag.PayDiamond(diamondPrice))
+                    UserProfile.InfoBag.AddItem(eid, 1);
+            }
+            else
+            {
+                if (UserProfile.InfoBag.HasResource(GameResourceType.Gold, goldPrice))
+                {
+                    UserProfile.InfoBag.SubResource(GameResourceType.Gold, goldPrice);
+                    UserProfile.InfoBag.AddItem(eid, 1);
+                }
+            }
+            
+            //PopBuyProduct.Show(eid, (int)Math.Max(1, itemPrice / GameConstants.DiamondToGold));
         }
 
         public void Draw(Graphics g)
@@ -125,14 +140,19 @@ namespace TaleofMonsters.Forms.Items
                 HItemConfig itemConfig = ConfigData.GetHItemConfig(eid);
                 var name = itemConfig.Name;
                 var fontcolor = HSTypes.I2RareColor(itemConfig.Rare);
-                uint price = GameResourceBook.OutGoldSellItem(itemConfig.Rare, itemConfig.ValueFactor);
+                uint price = GameResourceBook.OutGoldSellItem(itemConfig.Rare, itemConfig.ValueFactor)*2;
+                if (gameShopConfig.UseDiamond)
+                    price = Math.Max(1, price/GameConstants.DiamondToGold);
                 Font fontsong = new Font("宋体", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
                 Brush brush = new SolidBrush(Color.FromName(fontcolor));
                 g.DrawString(name, fontsong, brush, x + 76, y + 9);
                 brush.Dispose();
-                g.DrawString(string.Format("{0,3:D}", Math.Max(1, price / GameConstants.DiamondToGold)), fontsong, Brushes.PaleTurquoise, x + 80, y + 37);
+                g.DrawString(string.Format("{0,3:D}", price), fontsong, Brushes.PaleTurquoise, x + 80, y + 37);
                 fontsong.Dispose();
-                g.DrawImage(HSIcons.GetIconsByEName("res8"), x + 110, y + 35, 16, 16);
+                if (gameShopConfig.UseDiamond)
+                    g.DrawImage(HSIcons.GetIconsByEName("res8"), x + 110, y + 35, 16, 16);
+                else
+                    g.DrawImage(HSIcons.GetIconsByEName("res1"), x + 110, y + 35, 16, 16);
 
                 vRegion.Draw(g);
             }
