@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
 using NarlonLib.Control;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Equips;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Pops;
@@ -80,16 +78,7 @@ namespace TaleofMonsters.Forms.Items
                 GameShopConfig gameShopConfig = ConfigData.GetGameShopConfig(productId);
                 Image image =null;
                 var eid = HItemBook.GetItemId(gameShopConfig.Item);
-                var isEquip = ConfigIdManager.IsEquip(eid);
-                if (!isEquip)
-                {
-                    image = HItemBook.GetPreview(eid);
-                }
-                else
-                {
-                    Equip equip = new Equip(eid);
-                    image = equip.GetPreview();
-                }
+                image = HItemBook.GetPreview(eid);
                 tooltip.Show(image, parent, mx, my, eid);
             }
         }
@@ -132,26 +121,12 @@ namespace TaleofMonsters.Forms.Items
             if (show)
             {
                 GameShopConfig gameShopConfig = ConfigData.GetGameShopConfig(productId);
-                string name;
-                string fontcolor;
-                uint price = 0;
                 var eid = HItemBook.GetItemId(gameShopConfig.Item);
-                var isEquip = ConfigIdManager.IsEquip(eid);
-                if (isEquip)
-                {
-                    EquipConfig equipConfig = ConfigData.GetEquipConfig(eid);
-                    name = equipConfig.Name;
-                    fontcolor = HSTypes.I2QualityColor(equipConfig.Quality);
-                    price = GameResourceBook.OutGoldSellItem(equipConfig.Quality, 100);
-                }
-                else
-                {
-                    HItemConfig itemConfig = ConfigData.GetHItemConfig(eid);
-                    name = itemConfig.Name;
-                    fontcolor = HSTypes.I2RareColor(itemConfig.Rare);
-                    price = GameResourceBook.OutGoldSellItem(itemConfig.Rare, itemConfig.ValueFactor);
-                }
-                Font fontsong = new Font("宋体", 9*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+                HItemConfig itemConfig = ConfigData.GetHItemConfig(eid);
+                var name = itemConfig.Name;
+                var fontcolor = HSTypes.I2RareColor(itemConfig.Rare);
+                uint price = GameResourceBook.OutGoldSellItem(itemConfig.Rare, itemConfig.ValueFactor);
+                Font fontsong = new Font("宋体", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
                 Brush brush = new SolidBrush(Color.FromName(fontcolor));
                 g.DrawString(name, fontsong, brush, x + 76, y + 9);
                 brush.Dispose();

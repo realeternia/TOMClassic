@@ -35,18 +35,7 @@ namespace TaleofMonsters.Forms.Pops
         {
             count = 1;
             textBoxTotal.Text = (count * itemprice).ToString();
-            var isEquip = ConfigIdManager.IsEquip(itemid);
-            if (!isEquip)
-            {
-                fontcolor = HSTypes.I2RareColor(ConfigDatas.ConfigData.GetHItemConfig(itemid).Rare);
-            }
-            else
-            {
-                fontcolor = HSTypes.I2QualityColor(ConfigDatas.ConfigData.GetEquipConfig(itemid).Quality);
-                buttonAdd.Enabled = false;
-                buttonMinus.Enabled = false;
-                textBoxCount.ReadOnly = true;
-            }
+            fontcolor = HSTypes.I2RareColor(ConfigDatas.ConfigData.GetHItemConfig(itemid).Rare);
         }
 
         void virtualRegion_RegionLeft()
@@ -57,16 +46,7 @@ namespace TaleofMonsters.Forms.Pops
         void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
             Image image = null;
-            var isEquip = ConfigIdManager.IsEquip(itemid);
-            if (!isEquip)
-            {
-                image = HItemBook.GetPreview(itemid);
-            }
-            else
-            {
-                Equip equip = new Equip(itemid);
-                image = equip.GetPreview();
-            }
+            image = HItemBook.GetPreview(itemid);
             toolTip.Show(image, this, 108, 44);
         }
 
@@ -74,16 +54,7 @@ namespace TaleofMonsters.Forms.Pops
         {
             vRegion.Draw(e.Graphics);
 
-            string itemname;
-            var isEquip = ConfigIdManager.IsEquip(itemid);
-            if (!isEquip)
-            {
-                itemname = ConfigDatas.ConfigData.GetHItemConfig(itemid).Name;
-            }
-            else
-            {
-                itemname = ConfigDatas.ConfigData.GetEquipConfig(itemid).Name;
-            }
+            var itemname = ConfigDatas.ConfigData.GetHItemConfig(itemid).Name;
             Font font = new Font("微软雅黑", 10*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             Brush brush = new SolidBrush(Color.FromName(fontcolor));
             e.Graphics.DrawString(itemname, font, brush, 134, 52);
@@ -96,12 +67,10 @@ namespace TaleofMonsters.Forms.Pops
 
         public static void Show(int id, int price)
         {
-            var isEquip = ConfigIdManager.IsEquip(id);
-
             PopBuyProduct mb = new PopBuyProduct();
             mb.itemid = id;
             mb.itemprice = price;
-            mb.vRegion.AddRegion(new PictureRegion(1, 68, 44, 40, 40, !isEquip ? PictureRegionCellType.Item : PictureRegionCellType.Equip, id));
+            mb.vRegion.AddRegion(new PictureRegion(1, 68, 44, 40, 40, PictureRegionCellType.Item, id));
             mb.ShowDialog();
         }
 
@@ -109,16 +78,7 @@ namespace TaleofMonsters.Forms.Pops
         {
             if (UserProfile.InfoBag.PayDiamond(itemprice * count))
             {
-                var isEquip = ConfigIdManager.IsEquip(itemid);
-                if (!isEquip)
-                {
-                    UserProfile.InfoBag.AddItem(itemid, count);
-                }
-                else
-                {
-                    UserProfile.InfoEquip.AddEquip(itemid, 0);
-                }
-
+                UserProfile.InfoBag.AddItem(itemid, count);
                 Close();
             }
         }
