@@ -139,15 +139,16 @@ namespace TaleofMonsters.Forms.MagicBook
             }
         }
 
-        private Image GetTerrainImage(int monType, double[] attrAtk, double[] attrDef)
+        private Image GetTerrainImage(int monType, double[] attrDef)
         {//todo
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
-            tipData.AddTextNewLine("属性："+HSTypes.I2Attr(monType), "White", 20);
+            tipData.AddTextNewLine("属性：" + HSTypes.I2Attr(monType), "White", 20);
             for (int i = 0; i <= 6; i++)
             {
+                if (attrDef[i] == 0)
+                    continue;
                 tipData.AddTextNewLine("Vs", "Yellow", 16);
-                tipData.AddImageXY(HSIcons.GetIconsByEName("atr" + i),0,0,32,32,23,20+i*16+1,14,14);
-              //  tipData.AddText(string.Format("    AT={0}%",100+attrAtk[i]*100), attrAtk[i]==0?"White": attrAtk[i]>0?"Lime": "Red");
+                tipData.AddImageXY(HSIcons.GetIconsByEName("atr" + i), 0, 0, 32, 32, 23, 20 + i*16 + 1, 14, 14);
                 tipData.AddTextOff(string.Format("DF={0}%", 100 + attrDef[i] * 100), attrDef[i] == 0 ? "White" : attrDef[i] > 0 ? "Lime" : "Red", 50);
             }
             return tipData.Image;
@@ -180,12 +181,12 @@ namespace TaleofMonsters.Forms.MagicBook
                 MonsterConfig monsterConfig = ConfigData.GetMonsterConfig(cid);
                 if (id == 1)
                 {
-                    Image image = DrawTool.GetImageByString("种族：" + HSTypes.I2CardTypeSub(monsterConfig.Type), 100);
+                    Image image = DrawTool.GetImageByString("种族：" + HSTypes.I2CardTypeSub(monsterConfig.Type) + "$" + HSTypes.I2CardTypeDesSub(monsterConfig.Type), 150);
                     tooltip.Show(image, parent, x, y);
                 }
                 else
                 {
-                    Image image = GetTerrainImage(monsterConfig.Attr, monsterConfig.BuffImmune, monsterConfig.AttrDef);
+                    Image image = GetTerrainImage(monsterConfig.Attr, monsterConfig.AttrDef);
                     tooltip.Show(image, parent, x, y);
                 }
             }
@@ -194,7 +195,7 @@ namespace TaleofMonsters.Forms.MagicBook
                 WeaponConfig weaponConfig = ConfigData.GetWeaponConfig(cid);
                 if (id == 1)
                 {
-                    Image image = DrawTool.GetImageByString("类型：" + HSTypes.I2CardTypeSub(weaponConfig.Type) + HSTypes.I2CardTypeDesSub(weaponConfig.Type), 150);
+                    Image image = DrawTool.GetImageByString("类型：" + HSTypes.I2CardTypeSub(weaponConfig.Type) + "$" + HSTypes.I2CardTypeDesSub(weaponConfig.Type), 150);
                     tooltip.Show(image, parent, x, y);
                 }
                 else

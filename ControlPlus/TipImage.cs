@@ -195,7 +195,7 @@ namespace ControlPlus
         {
             get
             {
-                int wid = 120, heg = 0;
+                int wid = 80, heg = 0;
                 Bitmap bmp = new Bitmap(300, 300);
                 Graphics g = Graphics.FromImage(bmp);
                 Font fontTitle = new Font("宋体", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
