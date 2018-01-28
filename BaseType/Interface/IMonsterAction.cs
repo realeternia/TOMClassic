@@ -22,7 +22,7 @@
         void AddSkill(int id, int rate);
         int GetMonsterCountByRace(int rid);
         int GetMonsterCountByType(int type);
-        void AddMissile(IMonster target, string arrow);
+        void AddMissile(IMonster target, int attr, double damage, string arrow);
        
         void ClearDebuff();
         void ExtendDebuff(double count);

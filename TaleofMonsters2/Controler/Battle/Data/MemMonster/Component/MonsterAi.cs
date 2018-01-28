@@ -112,7 +112,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             else
             {
                 BasicMissileControler controler = new TraceMissileControler(monster, nearestEnemy);
-                Missile selectMissile = new Missile(monster.Arrow, monster.Position.X, monster.Position.Y, controler);
+                Missile selectMissile = new Missile(monster.Arrow, monster.Position.X, monster.Position.Y, controler, 0, 0);
                 BattleManager.Instance.MissileQueue.Add(selectMissile);
             }
 

@@ -2,6 +2,7 @@
 using ConfigDatas;
 using NarlonLib.Core;
 using NarlonLib.Drawing;
+using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Tool;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMissile
@@ -15,18 +16,23 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
 
         private MissileConfig config;
         private NLPointF position;//missile的坐标
-        private int angle=-999;//missile的角度
+        private int angle = -999;//missile的角度
         private int frameOffset;//第几针，影响动画播放
 
         public bool IsFinished { get; set; }
         private BasicMissileControler controler;
 
-        public Missile(string effName, int x, int y, BasicMissileControler cont)
+        private int attr;
+        private float damage;
+
+        public Missile(string effName, int x, int y, BasicMissileControler cont, int attr, float damage)
         {
             position = new NLPointF(x, y);
             controler = cont;
             config = MissileBook.GetConfig(effName);
-            controler.SetConfig(config);
+            controler.SetConfig(this, config);
+            this.attr = attr;
+            this.damage = damage;
         }
 
         public void Next()
@@ -42,19 +48,27 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
             GenerateImg();
         }
 
+        public void CheckDamage(LiveMonster attacker, LiveMonster victim)
+        {
+            if (attr == 0)
+            {//物理攻击只支持一倍伤害，damage无效
+                attacker.HitTarget(victim, false);
+            }
+            else
+            {
+                victim.OnMagicDamage(attacker, damage, attr);
+            }
+        }
+
         private void GenerateImg()
         {
             angle = (angle + 360) % 360;
             var imgId = config.Image + (frameOffset/config.FrameTime)%config.FrameCount;
             Image img = null;
             if (angle > 90 && angle < 270)
-            {
                 img = MissileBook.GetImage(imgId, true);
-            }
             else
-            {
                 img = MissileBook.GetImage(imgId, false);
-            }
 
             effectImg = DrawTool.Rotate(img, angle);
         }

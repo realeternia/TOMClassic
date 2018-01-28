@@ -28,14 +28,17 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         {
             self = mon;
         }
+
         public bool IsNight
         {
             get { return BattleManager.Instance.IsNight; }
         }
+
         public bool IsTileMatching
         {
             get { return self.BuffManager.IsTileMatching; }
         }
+
         public bool IsElement(string ele)
         {
             return (int)Enum.Parse(typeof(CardElements), ele) == self.Avatar.MonsterConfig.Type;
@@ -78,9 +81,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             self.MonsterCoverBox.CheckCover();
             self.SkillManager.CheckInitialEffect();
             if (cardId > 0)
-            {
                 self.AddWeapon(savedWeapon);
-            }
             self.HpBar.SetHp(self.Avatar.Hp * lifp / 100);
         }
 
@@ -103,9 +104,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         public void AddWeapon(int weaponId, int lv)
         {
             if (!self.CanAddWeapon())
-            {
                 return;
-            }
 
             Weapon wpn = new Weapon(weaponId);
             wpn.UpgradeToLevel(lv);
@@ -167,9 +166,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             foreach (var monster in BattleManager.Instance.MonsterQueue.Enumerator)
             {
                 if (monster.Type == rid)
-                {
                     count++;
-                }
             }
             return count;
         }
@@ -177,29 +174,25 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         public int GetMonsterCountByType(int type)
         {
             int count = 0;
-            foreach (var monster in BattleManager.Instance.MonsterQueue.Enumerator)
+            foreach (var checkMon in BattleManager.Instance.MonsterQueue.Enumerator)
             {
-                if (monster.Attr == type)
-                {
+                if (checkMon.Attr == type)
                     count++;
-                }
             }
             return count;
         }
 
-        public void AddMissile(IMonster target, string arrow)
+        public void AddMissile(IMonster target, int attr, double damage, string arrow)
         {
             BasicMissileControler controler = new TraceMissileControler(self, target as LiveMonster);
-            Missile mi = new Missile(arrow, self.Position.X, self.Position.Y, controler);
+            Missile mi = new Missile(arrow, self.Position.X, self.Position.Y, controler, attr, (float)damage);
             BattleManager.Instance.MissileQueue.Add(mi);
         }
 
         public void Disappear()
         {
             if (self.IsGhost)
-            {
                 self.GhostTime = 1;//让坟场消失
-            }
         }
 
         public void AddBuff(int buffId, int blevel, double dura)
@@ -232,9 +225,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
             Point dest = MonsterPositionHelper.GetAvailPoint(self.Position, type, self.IsLeft, step);
             if (dest.X != self.Position.X || dest.Y != self.Position.Y)
-            {
                 BattleLocationManager.SetToPosition(self, dest);
-            }
         }
 
 
@@ -292,22 +283,18 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         public void MadDrug()
         {
             if (!self.Avatar.MonsterConfig.IsBuilding && self.RealRange > 0)
-            {
                 self.Atk.Source = self.MaxHp.Source / 5;
-            }
         }
 
         public void CureRandomAlien(double rate)
         {
             IMonster target = null;
-            foreach (IMonster o in self.Map.GetAllMonster(self.Position))
+            foreach (IMonster checkMon in self.Map.GetAllMonster(self.Position))
             {
-                if (o.IsLeft == self.IsLeft && o.HpRate < 100 && o.Id != self.Id)
+                if (checkMon.IsLeft == self.IsLeft && checkMon.HpRate < 100 && checkMon.Id != self.Id)
                 {
-                    if (target == null || target.HpRate > o.HpRate)
-                    {
-                        target = o;
-                    }
+                    if (target == null || target.HpRate > checkMon.HpRate)
+                        target = checkMon;
                 }
             }
             if (target != null)

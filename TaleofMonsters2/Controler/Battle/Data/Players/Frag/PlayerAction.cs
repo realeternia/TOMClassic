@@ -53,7 +53,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         public void AddSpellMissile(IMonster target, ISpell spell, Point mouse, string effect)
         {
             BasicMissileControler controler = new SpellTraceMissileControler((LiveMonster)target, spell);
-            Missile mi = new Missile(effect, mouse.X, mouse.Y, controler);
+            Missile mi = new Missile(effect, mouse.X, mouse.Y, controler, spell.Attr, spell.Damage);
             BattleManager.Instance.MissileQueue.Add(mi);
         }
 
@@ -67,7 +67,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                 int yoff = ybase + i * size;
                 int xend = self.IsLeft ? xstart + spell.Range / 10 * size : xstart - spell.Range / 10 * size;
                 BasicMissileControler controler = new SpellLandMissileControler(self, new Point(xend, yoff), spell);
-                Missile mi = new Missile(effect, xstart, yoff, controler);
+                Missile mi = new Missile(effect, xstart, yoff, controler, spell.Attr, spell.Damage);
                 BattleManager.Instance.MissileQueue.Add(mi);
             }
         }
