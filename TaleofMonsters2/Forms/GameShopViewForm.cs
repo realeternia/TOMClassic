@@ -29,7 +29,7 @@ namespace TaleofMonsters.Forms
             nlPageSelector1.PageChange += nlPageSelector1_PageChange;
             productIds = new List<int>();
             vRegion = new VirtualRegion(this);
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 3; i++)
             {
                 SubVirtualRegion subRegion = new ButtonRegion(i + 1, 16 + 45 * i, 39, 42, 23, "ShopTag.JPG", "");
                 subRegion.AddDecorator(new RegionTextDecorator(8,7,9,Color.White, false));
@@ -38,7 +38,6 @@ namespace TaleofMonsters.Forms
             vRegion.SetRegionDecorator(1, 0, "礼包");
             vRegion.SetRegionDecorator(2, 0, "战斗");
             vRegion.SetRegionDecorator(3, 0, "道具");
-            vRegion.SetRegionDecorator(4, 0, "神器");
 
             vRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClick);
         }
@@ -58,9 +57,7 @@ namespace TaleofMonsters.Forms
         private void RefreshInfo()
         {
             for (int i = 0; i < 9; i++)
-            {
                 itemControls[i].RefreshData((page * 9 + i < productIds.Count) ? productIds[page * 9 + i] : 0);
-            }
         }
 
         private void virtualRegion_RegionClick(int id, int x, int y, MouseButtons button)
@@ -68,18 +65,14 @@ namespace TaleofMonsters.Forms
             if (button == MouseButtons.Left)
             {
                 for (int i = 0; i < 4; i++)
-                {
                     vRegion.SetRegionState(i+1, RegionState.Free);
-                }
 
                 vRegion.SetRegionState(id, RegionState.Blacken);
                 productIds.Clear();
-                foreach (GameShopConfig gameShopConfig in ConfigData.GameShopDict.Values)
+                foreach (var gameShopConfig in ConfigData.GameShopDict.Values)
                 {
-                    if (gameShopConfig.Shelf== id)
-                    {
+                    if (gameShopConfig.Shelf == id)
                         productIds.Add(gameShopConfig.Id);
-                    }
                 }
                 nlPageSelector1.TotalPage = (productIds.Count - 1) / 9 + 1;
                 page = 0;
@@ -102,10 +95,8 @@ namespace TaleofMonsters.Forms
             font.Dispose();
 
             vRegion.Draw(e.Graphics);
-            foreach (GameShopItem ctl in itemControls)
-            {
-                ctl.Draw(e.Graphics);
-            }
+            foreach (var checkItem in itemControls)
+                checkItem.Draw(e.Graphics);
 
             font = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             string str = string.Format("我的钻石:  {0} ", UserProfile.InfoBag.Diamond);
