@@ -60,12 +60,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void Transform(int monId)
         {
-            if (self.Avatar.MonsterConfig.IsBuilding)
-            {
-                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15));
-                return;
-            }
-            if (self.ResistBuffType(BuffImmuneGroup.Mental))
+            if (self.ResistBuffType(BuffImmuneGroup.Mental))//建筑100%抵抗
             {
                 BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15));
                 return;
@@ -167,9 +162,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         public int GetMonsterCountByRace(int rid)
         {
             int count = 0;
-            foreach (var monster in BattleManager.Instance.MonsterQueue.Enumerator)
+            foreach (var checkMon in BattleManager.Instance.MonsterQueue.Enumerator)
             {
-                if (monster.Type == rid)
+                if (checkMon.Type == rid)
                     count++;
             }
             return count;
@@ -221,7 +216,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void SetToPosition(string type, int step)
         {
-            if (self.Avatar.MonsterConfig.IsBuilding)
+            if (self.ResistBuffType(BuffImmuneGroup.Physical)) //建筑100%抵抗
             {
                 BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15));
                 return;
@@ -235,12 +230,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void SuddenDeath()
         {
-            if (self.Avatar.MonsterConfig.IsBuilding)
-            {
-                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15));
-                return;
-            }
-            if (self.ResistBuffType(BuffImmuneGroup.Life))
+            if (self.ResistBuffType(BuffImmuneGroup.Life))//建筑100%抵抗
             {
                 BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15));
                 return;
@@ -251,12 +241,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void Rebel()
         {
-            if (self.Avatar.MonsterConfig.IsBuilding)
-            {
-                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15));
-                return;
-            }
-            if (self.ResistBuffType(BuffImmuneGroup.Mental))
+            if (self.ResistBuffType(BuffImmuneGroup.Mental))//建筑100%抵抗
             {
                 BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15));
                 return;
@@ -304,7 +289,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         public void CureRandomAlien(double rate)
         {
             IMonster target = null;
-            foreach (IMonster checkMon in self.Map.GetAllMonster(self.Position))
+            foreach (var checkMon in self.Map.GetAllMonster(self.Position))
             {
                 if (checkMon.IsLeft == self.IsLeft && checkMon.HpRate < 100 && checkMon.Id != self.Id)
                 {

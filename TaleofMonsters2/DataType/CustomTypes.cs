@@ -281,9 +281,8 @@
     {
         Life, // 1.生命
         Mental, //2.意志
-        Physical, //3.肉体
+        Physical, //3.物理
         Element, // 4.元素
-        Help // 5.联动
     }
 
     internal enum CardMouseState

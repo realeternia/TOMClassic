@@ -591,6 +591,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             else
                 AddHp(lifeRate * value);
         }
+
         public void AddAntiMagic(string type, int value)
         {
             if (type == "All")
