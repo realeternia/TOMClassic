@@ -32,6 +32,9 @@ namespace CardAttrStat
             int summonCount = 0;
             int magCount = 0;
             int cardCount = 0;
+            int deathSayCount = 0;
+            int healCount = 0;
+            int aidCount = 0;
 
             foreach (var monsterConfig in ConfigData.MonsterDict.Values)
             {
@@ -55,17 +58,23 @@ namespace CardAttrStat
                     rangeUnit++;
                 if (monsterConfig.Mov == 0)
                     defendUnit++;
-                if (HasSkillType(monsterConfig, "召唤") || HasSkill(monsterConfig, 55100006))
+                if (HasSkillType(monsterConfig, "召唤"))
                     summonCount++;
-                if (HasSkill(monsterConfig, 55100010)|| HasSkill(monsterConfig, 55100011)|| HasSkill(monsterConfig, 55100012))
+                if (HasSkillType(monsterConfig, "魔法"))
                     magCount++;
-                if (HasSkill(monsterConfig, 55100014) || HasSkill(monsterConfig, 55100015))
+                if (HasSkillType(monsterConfig, "过牌"))
                     cardCount++;
+                if (HasSkillType(monsterConfig, "亡语"))
+                    deathSayCount++;
+                if (HasSkillType(monsterConfig, "回复"))
+                    healCount++;
+                if (HasSkillType(monsterConfig, "支援"))
+                    aidCount++;
             }
             
-            sw.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}", 
+            sw.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}\t{14}", 
                 tauntCount, rushCount, hideCount, auroCount, aoeCount, buffCount, overcomeCount, rangeUnit,
-                defendUnit, summonCount, magCount, cardCount);
+                defendUnit, summonCount, magCount, cardCount, deathSayCount, healCount, aidCount);
         }
 
         private static bool HasSkill(MonsterConfig monsterConfig, int sid)
@@ -78,12 +87,14 @@ namespace CardAttrStat
         {
             if (monsterConfig.Skill1 > 0)
             {
-                if (ConfigData.GetSkillConfig(monsterConfig.Skill1).Type == type)
+                var skillConfig = ConfigData.GetSkillConfig(monsterConfig.Skill1);
+                if (skillConfig.Type == type || skillConfig.Remark.Contains(type))
                     return true;
             }
             if (monsterConfig.Skill2 > 0)
             {
-                if (ConfigData.GetSkillConfig(monsterConfig.Skill2).Type == type)
+                var skillConfig = ConfigData.GetSkillConfig(monsterConfig.Skill2);
+                if (skillConfig.Type == type || skillConfig.Remark.Contains(type))
                     return true;
             }
             return false;
