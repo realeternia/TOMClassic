@@ -316,6 +316,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public virtual void OnDie()
         {
+            SkillManager.DeathSkill(); // 亡语
+
             GhostTime = 0.01f;//开始死亡
             BattleManager.Instance.MemMap.GetMouseCell(Position.X,Position.Y).UpdateOwner(-Id);
             if (!IsLeft)

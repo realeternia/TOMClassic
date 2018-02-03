@@ -134,9 +134,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             BattleManager.Instance.PlayerManager.RightPlayer.SpecialAttr.DirectDamage = 0;
 
             foreach (var mid in removeMids)
-            {
                 Remove(mid);
-            }
             
             foreach (var roundMonster in monsters)
             {

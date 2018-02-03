@@ -42,18 +42,14 @@ namespace TaleofMonsters.Controler.Battle.Data
         public bool IsBurst(int key)
         {
             if (!burst.ContainsKey(key))
-            {
                 return false;
-            }
             return burst[key] != BurstStage.Fail;
         }
 
         public int GetPercent()
         {
             if (SkillConfig.SpecialCd > 0)
-            {
-                return (int)(castRoundAddon*100/SkillConfig.SpecialCd);
-            }
+                return (int) (castRoundAddon*100/SkillConfig.SpecialCd);
             return 0;
         }
 
@@ -73,19 +69,13 @@ namespace TaleofMonsters.Controler.Battle.Data
         {
             var isActive = src == Self;
             if (isActive && SkillInfo.SkillConfig.Active == SkillActiveType.Passive)
-            {
                 return;
-            }
             if (!isActive && SkillInfo.SkillConfig.Active == SkillActiveType.Active)
-            {
                 return;
-            }
 
             BurstStage isBurst = CheckRate() ? BurstStage.Pass : BurstStage.Fail;
             if (SkillInfo.SkillConfig.CanBurst != null && !SkillInfo.SkillConfig.CanBurst(src, dest, isMelee))
-            {
                 isBurst = BurstStage.Fail;
-            }
 
             int key = GetBurstKey(src.Id, dest.Id);
             burst[key] = isBurst;
@@ -101,13 +91,9 @@ namespace TaleofMonsters.Controler.Battle.Data
                     SkillInfo.SkillConfig.OnAdd(SkillInfo, Self, Level);
                     SendSkillIcon(0);
                     if (SkillInfo.SkillConfig.Effect != "")
-                    {
                         BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
-                    }
                     if (SkillInfo.SkillConfig.EffectArea != "")
-                    {
                         SendAreaEffect(Self.Position);
-                    }
                 }
             }
         }
@@ -115,14 +101,12 @@ namespace TaleofMonsters.Controler.Battle.Data
         public void CheckRemoveEffect()
         {
             if (onAddTriggered && SkillInfo.SkillConfig.OnRemove != null)
-            {
                 SkillInfo.SkillConfig.OnRemove(SkillInfo, Self, Level);
-            }
         }
 
         public void CheckHit(LiveMonster src, LiveMonster dest, ref int hit, int key)
         {
-            if (SkillInfo.SkillConfig.CheckHit!=null)
+            if (SkillInfo.SkillConfig.CheckHit != null)
             {
                 SkillInfo.SkillConfig.CheckHit(src, dest, ref hit, Level);
                 SendSkillIcon(key);
@@ -145,9 +129,7 @@ namespace TaleofMonsters.Controler.Battle.Data
                 SkillInfo.SkillConfig.AfterHit(SkillInfo, src, dest, damage, Level);
                 SendSkillIcon(key);
                 if (SkillInfo.SkillConfig.EffectArea != "")
-                {
                     SendAreaEffect(SkillInfo.SkillConfig.PointSelf ? Self.Position : dest.Position);
-                }
             }
 
             if (SkillInfo.SkillConfig.DeathHit != null && !dest.IsAlive)
@@ -155,9 +137,7 @@ namespace TaleofMonsters.Controler.Battle.Data
                 SkillInfo.SkillConfig.DeathHit(SkillInfo, src, dest, damage, Level);
                 SendSkillIcon(key);
                 if (SkillInfo.SkillConfig.EffectArea != "")
-                {
                     SendAreaEffect(SkillInfo.SkillConfig.PointSelf ? Self.Position : dest.Position);
-                }
             }
 
         }
@@ -168,27 +148,19 @@ namespace TaleofMonsters.Controler.Battle.Data
             {
                 castRoundAddon += pastRound;
                 if (!CheckRate())
-                {
                     return false;
-                }
 
                 if (castRoundAddon < SkillInfo.SkillConfig.SpecialCd)
-                {//in cd 
-                    return false;
-                }
+                    return false;//in cd 
 
                 castRoundAddon = (float)(castRoundAddon- SkillInfo.SkillConfig.SpecialCd);
 
                 SkillInfo.SkillConfig.CheckSpecial(SkillInfo, Self, Level);
                 SendSkillIcon(0);
                 if (SkillInfo.SkillConfig.Effect!="")
-                {
                     BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
-                }
                 if (SkillInfo.SkillConfig.EffectArea != "")
-                {
                     SendAreaEffect(Self.Position);
-                }
                 return true;
             }
             return false;
@@ -199,9 +171,7 @@ namespace TaleofMonsters.Controler.Battle.Data
             if (SkillInfo.SkillConfig.OnUseCard != null)
             {
                 if (!CheckRate())
-                {
                     return;
-                }
 
                 bool success = false;
                 SkillInfo.SkillConfig.OnUseCard(SkillInfo, Self, caster, cardType, lv, ref success);
@@ -209,9 +179,23 @@ namespace TaleofMonsters.Controler.Battle.Data
                 {
                     SendSkillIcon(0);
                     if (SkillInfo.SkillConfig.Effect != "")
-                    {
                         BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
-                    }
+                }
+            }
+        }
+
+        public void DeathSkill()
+        {
+            if (SkillInfo.SkillConfig.DeathSkill != null)
+            {
+                if (!CheckRate())
+                    return;
+
+                SkillInfo.SkillConfig.DeathSkill(SkillInfo, Self, Level);
+                {
+                    SendSkillIcon(0);
+                    if (SkillInfo.SkillConfig.Effect != "")
+                        BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
                 }
             }
         }
@@ -221,16 +205,12 @@ namespace TaleofMonsters.Controler.Battle.Data
             if (key != 0)
             {
                 if (burst[key] == BurstStage.Fin)
-                {
                     return;//保证一次触发只播放一次
-                }
                 burst[key] = BurstStage.Fin;
             }
 
             if (Self != null)
-            {
                 BattleManager.Instance.FlowWordQueue.Add(new FlowSkillInfo(SkillId, Self.Position, 0, "lime", 20, 50, ""));
-            }
         }
 
         private void SendAreaEffect(Point pos)

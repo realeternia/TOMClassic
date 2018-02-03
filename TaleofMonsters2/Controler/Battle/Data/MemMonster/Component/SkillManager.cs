@@ -161,6 +161,20 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             }
         }
 
+        public void DeathSkill()
+        {
+            if (self.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
+                return;
+
+            foreach (var skill in Skills.ToArray())
+            {
+                if (InForget && skill.Type != SkillSourceTypes.Weapon)
+                    continue;
+
+                skill.DeathSkill();
+            }
+        }
+
         /// <summary>
         /// 判定技能释放状态
         /// </summary>

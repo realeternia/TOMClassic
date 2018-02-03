@@ -96,10 +96,25 @@ namespace TaleofMonsters.Forms.MagicBook
             remarkDict["全部"] = true;
             foreach (var skill in ConfigData.SkillDict.Values)
             {
-                if (skill.Remark != "")
-                    remarkDict[skill.Remark] = true;
-                if (skill.Type != "")
+                if (!string.IsNullOrEmpty(skill.Remark))
+                {
+                    if (skill.Remark.Contains(","))
+                    {
+                        foreach (var checkRemark in skill.Remark.Split(','))
+                            remarkDict[checkRemark] = true;
+                    }
+                    else
+                    {
+                        remarkDict[skill.Remark] = true;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(skill.Type))
+                {
+                    if (skill.Type != "特殊" && skill.Type != "道具")
+                        remarkDict[skill.Type] = true; //type也算是remark
                     typeDict[skill.Type] = true;
+                }
             }
             strTypeList = new string[typeDict.Count];
             typeDict.Keys.CopyTo(strTypeList, 0);
@@ -133,25 +148,23 @@ namespace TaleofMonsters.Forms.MagicBook
             tar = -1;
             cardDetail.SetInfo(-1);
             #region 数据装载
-            List<IntPair> things = new List<IntPair>();
+            List<IntPair> skillList = new List<IntPair>();
             foreach (var skill in ConfigData.SkillDict.Values)
             {
-                if (filterType != "全部" && !skill.Type.Contains(filterType))
+                if (filterType != "全部" && skill.Type != filterType)
                     continue;
-                if (filterRemark != "全部" && !skill.Remark.Contains(filterRemark))
+                if (filterRemark != "全部" && skill.Type != filterRemark && !skill.Remark.Contains(filterRemark))
                     continue;
 
-                IntPair mt = new IntPair();
-                mt.Type = skill.Id;
-                mt.Value = skill.Id;
-                things.Add(mt);
+                IntPair checkItem = new IntPair();
+                checkItem.Type = skill.Id;
+                checkItem.Value = skill.Id;
+                skillList.Add(checkItem);
                 totalCount++;
             }
-            things.Sort(new CompareBySid());
+            skillList.Sort(new CompareBySid());
 
-            skills = new List<int>();
-            foreach (var mt in things)
-                skills.Add(mt.Value);
+            skills = skillList.ConvertAll(sd => sd.Value);
             #endregion
             UpdateButtonState();
             InitItems();
