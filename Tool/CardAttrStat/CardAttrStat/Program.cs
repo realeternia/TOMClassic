@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using ConfigDatas;
 
 namespace CardAttrStat
@@ -12,9 +10,13 @@ namespace CardAttrStat
         {
             ConfigDatas.ConfigData.LoadData();
 
-            StreamWriter sw = new StreamWriter("./a.txt");
+            StreamWriter sw = new StreamWriter("./race.txt");
             for (int i = (int) CardTypeSub.Devil; i <= (int) CardTypeSub.Totem; i++)
                 CheckRace(i, sw);
+            sw.Close();
+
+            sw = new StreamWriter("./monster.txt");
+            CheckMonster(sw);
             sw.Close();
         }
 
@@ -38,6 +40,9 @@ namespace CardAttrStat
 
             foreach (var monsterConfig in ConfigData.MonsterDict.Values)
             {
+                if (monsterConfig.IsSpecial == 1)
+                    continue;
+
                 if (monsterConfig.Type != rid)
                     continue;
                 if (HasSkill(monsterConfig, 55100008))
@@ -75,6 +80,62 @@ namespace CardAttrStat
             sw.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}\t{14}", 
                 tauntCount, rushCount, hideCount, auroCount, aoeCount, buffCount, overcomeCount, rangeUnit,
                 defendUnit, summonCount, magCount, cardCount, deathSayCount, healCount, aidCount);
+        }
+
+        static void CheckMonster(StreamWriter sw)
+        {
+            Dictionary<string, bool> attrs = new Dictionary<string, bool>();
+            foreach (var monsterConfig in ConfigData.MonsterDict.Values)
+            {
+                if (monsterConfig.IsSpecial == 1)
+                    continue;
+                attrs.Clear();
+                if (monsterConfig.Quality == 0)
+                    attrs["基本"] = true;
+
+                if (HasSkill(monsterConfig, 55100008))
+                    attrs["嘲讽"] = true;
+                if (HasSkill(monsterConfig, 55100005))
+                    attrs["冲锋"] = true;
+                if (HasSkill(monsterConfig, 55100009))
+                    attrs["隐藏"] = true;
+                if (HasSkillType(monsterConfig, "光环"))
+                    attrs["光环"] = true;
+                if (HasSkillType(monsterConfig, "范围"))
+                    attrs["范围"] = true;
+                if (HasSkillType(monsterConfig, "状态"))
+                    attrs["状态"] = true;
+                if (HasSkillType(monsterConfig, "克制"))
+                    attrs["克制"] = true;
+                if (monsterConfig.Range >= 20)
+                    attrs["范围"] = true;
+                if (monsterConfig.Mov == 0)
+                    attrs["防御"] = true;
+                if (HasSkillType(monsterConfig, "召唤"))
+                    attrs["召唤"] = true;
+                if (HasSkillType(monsterConfig, "魔法"))
+                    attrs["魔法"] = true;
+                if (HasSkillType(monsterConfig, "过牌"))
+                    attrs["过牌"] = true;
+                if (HasSkillType(monsterConfig, "亡语"))
+                    attrs["亡语"] = true;
+                if (HasSkillType(monsterConfig, "回复"))
+                    attrs["回复"] = true;
+                if (HasSkillType(monsterConfig, "支援"))
+                    attrs["支援"] = true;
+
+                if (attrs.Count > 0)
+                {
+                    List<string> dts = new List<string>();
+                    foreach (var key in attrs.Keys)
+                        dts.Add(key);
+                    sw.WriteLine(string.Join(",", dts.ToArray()));
+                }
+                else
+                {
+                    sw.WriteLine();
+                }
+            }
         }
 
         private static bool HasSkill(MonsterConfig monsterConfig, int sid)

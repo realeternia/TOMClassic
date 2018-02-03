@@ -73,39 +73,31 @@ namespace TaleofMonsters.Forms
 
         private void CreateCards()
         {
-            DeckCard[] cds = DeckBook.GetDeckByName("rookie", 1);
+            DeckCard[] rookieDeck = DeckBook.GetDeckByName("rookie", 1);
             int index = 0;
-            foreach (DeckCard cd in cds)
+            foreach (var checkCard in rookieDeck)
             {
-                if (CardConfigManager.GetCardConfig(cd.BaseId).Id == 0)
-                {
+                if (CardConfigManager.GetCardConfig(checkCard.BaseId).Id == 0)
                     continue;
-                }
-                var dcard = UserProfile.InfoCard.AddCard(cd.BaseId);
+                var dcard = UserProfile.InfoCard.AddCard(checkCard.BaseId);
                 UserProfile.InfoCard.SelectedDeck.SetCardAt(index++, dcard.BaseId);
             }
             #region 把所有基础卡牌都给玩家
             
-            foreach (var cd in ConfigData.MonsterDict.Values)
+            foreach (var config in ConfigData.MonsterDict.Values)
             {
-                if (cd.Remark.Contains("基本") && UserProfile.InfoCard.GetCardCount(cd.Id) == 0)
-                {
-                    UserProfile.InfoCard.AddCard(cd.Id);
-                }
+                if (config.Remark.Contains("基本") && UserProfile.InfoCard.GetCardCount(config.Id) == 0)
+                    UserProfile.InfoCard.AddCard(config.Id);
             }
-            foreach (var cd in ConfigData.WeaponDict.Values)
+            foreach (var config in ConfigData.WeaponDict.Values)
             {
-                if (cd.Remark.Contains("基本") && UserProfile.InfoCard.GetCardCount(cd.Id) == 0)
-                {
-                    UserProfile.InfoCard.AddCard(cd.Id);
-                }
+                if (config.Remark.Contains("基本") && UserProfile.InfoCard.GetCardCount(config.Id) == 0)
+                    UserProfile.InfoCard.AddCard(config.Id);
             }
-            foreach (var cd in ConfigData.SpellDict.Values)
+            foreach (var config in ConfigData.SpellDict.Values)
             {
-                if (cd.Remark.Contains("基本") && UserProfile.InfoCard.GetCardCount(cd.Id) == 0)
-                {
-                    UserProfile.InfoCard.AddCard(cd.Id);
-                }
+                if (config.Remark.Contains("基本") && UserProfile.InfoCard.GetCardCount(config.Id) == 0)
+                    UserProfile.InfoCard.AddCard(config.Id);
             }
 
             #endregion
@@ -114,7 +106,6 @@ namespace TaleofMonsters.Forms
         private void buttonType_Click(object sender, EventArgs e)
         {
             type = (type + 1)%7;
-
             Invalidate();
         }
 
@@ -150,22 +141,14 @@ namespace TaleofMonsters.Forms
         {
             Image image = null;
             if (id == 1)
-            {
                 image = DrawTool.GetImageByString("", HSTypes.I2ConstellationTip(constellation), 150, Color.LimeGreen);
-            }
             else if (id == 2)
-            {
                 image = DrawTool.GetImageByString("", HSTypes.I2InitialAttrTip(type), 140, Color.Gold);
-            }
             else if (id == 3)
-            {
                 image = DrawTool.GetImageByString("", HSTypes.I2BloodTypeTip(bldType), 150, Color.LimeGreen);
-            }
 
             if (image != null)
-            {
                 tooltip.Show(image, this, x + 2, y + 3);
-            }
 
         }
 
