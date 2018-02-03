@@ -34,9 +34,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         public double GetBuffImmuneRate(int group)
         {
             if (group > 0 && group < self.Avatar.MonsterConfig.BuffImmune.Length)
-            {
                 return self.Avatar.MonsterConfig.BuffImmune[group];
-            }
             return 0;
         }
 
@@ -45,13 +43,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             BuffConfig buffConfig = ConfigData.GetBuffConfig(buffId);
             var immuneRate = GetBuffImmuneRate(buffConfig.Group);
             if (immuneRate >= 1)//免疫了
-            {
                 return;
-            }
             if (immuneRate > 0)
-            {
                 dura *= (1 - immuneRate);
-            }
 
             MemBaseBuff buffdata;
             if (buffDict.TryGetValue(buffId, out buffdata))
@@ -94,9 +88,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             foreach (var buff in buffDict.Values)
             {
                 if (buff.Id == buffid)
-                {
                     return true;
-                }
             }
             return false;
         }
@@ -127,9 +119,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             foreach (var buff in buffDict.Values)
             {
                 if (BuffBook.HasEffect(buff.Id,type))
-                {
                     return true;
-                }
             }
             return false;
         }
@@ -178,13 +168,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                     var color = BuffBook.GetBuffColor(buff.Id);
                     var brush = new SolidBrush(color);
                     if (index == copybuffs.Length-1)//最后一个
-                    {
                         g.FillRectangle(brush, wid * index, 0,100- wid*(index-1), 100);
-                    }
                     else
-                    {
                         g.FillRectangle(brush, wid * index, 0, wid, 100);
-                    }
                     brush.Dispose();
 
                     g.DrawImage(BuffBook.GetBuffImage(buff.Id,(buff.RoundMark / 3) % 2), new Rectangle(wid * index + (wid-20)/2, 40, 20, 20), new Rectangle(0, 0, 20, 20), GraphicsUnit.Pixel);
@@ -199,9 +185,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             foreach (var buff in buffDict.Values)
             {
                 if (buff.BuffConfig.EndOnHit)
-                {
                     buff.TimeLeft = 0;
-                }
             }
         }
     }

@@ -641,5 +641,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             aiController.ClearTarget();
         }
 
+        public bool ResistBuffType(BuffImmuneGroup type)
+        {
+            var rate = BuffManager.GetBuffImmuneRate((int)type);
+            return MathTool.GetRandom(0.0, 1.0) < rate;
+        }
     }
 }

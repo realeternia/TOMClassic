@@ -36,7 +36,6 @@
         void SummonRandomAttr(string type, int attr);
         void MadDrug(); //交换攻击和血量
         void CureRandomAlien(double rate);
-        bool ResistBuffType(int type);
         void EatTomb(IMonster tomb);
         void Silent();
         IMonsterAuro AddAuro(int buff, int lv, string tar);

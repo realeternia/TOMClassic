@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
-using NarlonLib.Math;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Data.MemEffect;
@@ -62,6 +61,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         public void Transform(int monId)
         {
             if (self.Avatar.MonsterConfig.IsBuilding)
+            {
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15));
+                return;
+            }
+            if (self.ResistBuffType(BuffImmuneGroup.Mental))
             {
                 BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15));
                 return;
@@ -236,12 +240,23 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15));
                 return;
             }
+            if (self.ResistBuffType(BuffImmuneGroup.Life))
+            {
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15));
+                return;
+            }
+
             self.HpBar.SetHp(0);
         }
 
         public void Rebel()
         {
             if (self.Avatar.MonsterConfig.IsBuilding)
+            {
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15));
+                return;
+            }
+            if (self.ResistBuffType(BuffImmuneGroup.Mental))
             {
                 BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15));
                 return;
@@ -302,12 +317,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 target.AddHpRate(rate);
                 BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect("yellowstar"), (LiveMonster)target, false));
             }
-        }
-
-        public bool ResistBuffType(int type)
-        {
-            var rate = self.BuffManager.GetBuffImmuneRate(type);
-            return MathTool.GetRandom(0.0, 1.0) < rate;
         }
 
         public void EatTomb(IMonster tomb)
