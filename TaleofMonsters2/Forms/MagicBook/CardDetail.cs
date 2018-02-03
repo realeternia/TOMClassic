@@ -140,7 +140,7 @@ namespace TaleofMonsters.Forms.MagicBook
         }
 
         private Image GetTerrainImage(int monType, double[] attrDef, double[] buffDef)
-        {//todo
+        {
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine("属性：" + HSTypes.I2Attr(monType), "White", 20);
             for (int i = 0; i <= 6; i++)

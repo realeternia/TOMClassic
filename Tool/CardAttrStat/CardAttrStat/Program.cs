@@ -37,6 +37,7 @@ namespace CardAttrStat
             int deathSayCount = 0;
             int healCount = 0;
             int aidCount = 0;
+            int ruleCount = 0;
 
             foreach (var monsterConfig in ConfigData.MonsterDict.Values)
             {
@@ -75,11 +76,13 @@ namespace CardAttrStat
                     healCount++;
                 if (HasSkillType(monsterConfig, "支援"))
                     aidCount++;
+                if (HasSkillType(monsterConfig, "规则"))
+                    ruleCount++;
             }
             
-            sw.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}\t{14}", 
+            sw.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}\t{14}\t{15}", 
                 tauntCount, rushCount, hideCount, auroCount, aoeCount, buffCount, overcomeCount, rangeUnit,
-                defendUnit, summonCount, magCount, cardCount, deathSayCount, healCount, aidCount);
+                defendUnit, summonCount, magCount, cardCount, deathSayCount, healCount, aidCount, ruleCount);
         }
 
         static void CheckMonster(StreamWriter sw)
@@ -123,6 +126,8 @@ namespace CardAttrStat
                     attrs["回复"] = true;
                 if (HasSkillType(monsterConfig, "支援"))
                     attrs["支援"] = true;
+                if (HasSkillType(monsterConfig, "规则"))
+                    attrs["规则"] = true;
 
                 if (attrs.Count > 0)
                 {
