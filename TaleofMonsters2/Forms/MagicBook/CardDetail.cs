@@ -139,7 +139,7 @@ namespace TaleofMonsters.Forms.MagicBook
             }
         }
 
-        private Image GetTerrainImage(int monType, double[] attrDef)
+        private Image GetTerrainImage(int monType, double[] attrDef, double[] buffDef)
         {//todo
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine("属性：" + HSTypes.I2Attr(monType), "White", 20);
@@ -150,6 +150,14 @@ namespace TaleofMonsters.Forms.MagicBook
                 tipData.AddTextNewLine("Vs", "Yellow", 16);
                 tipData.AddImageXY(HSIcons.GetIconsByEName("atr" + i), 0, 0, 32, 32, 23, 20 + i*16 + 1, 14, 14);
                 tipData.AddTextOff(string.Format("DF={0}%", 100 + attrDef[i] * 100), attrDef[i] == 0 ? "White" : attrDef[i] > 0 ? "Lime" : "Red", 50);
+            }
+            for (int i = 0; i <= 3; i++)//buff 抵抗
+            {
+                if (buffDef[i] == 0)
+                    continue;
+                tipData.AddTextNewLine("Bf", "Yellow", 16);
+                tipData.AddImageXY(HSIcons.GetIconsByEName("buf" + i), 0, 0, 32, 32, 23, 20 + i * 16 + 1, 14, 14);
+                tipData.AddTextOff(string.Format("DF={0}%", buffDef[i] * 100), buffDef[i] == 0 ? "White" : buffDef[i] > 0 ? "Lime" : "Red", 50);
             }
             return tipData.Image;
         }
@@ -186,7 +194,7 @@ namespace TaleofMonsters.Forms.MagicBook
                 }
                 else
                 {
-                    Image image = GetTerrainImage(monsterConfig.Attr, monsterConfig.AttrDef);
+                    Image image = GetTerrainImage(monsterConfig.Attr, monsterConfig.AttrDef, monsterConfig.BuffImmune);
                     tooltip.Show(image, parent, x, y);
                 }
             }
