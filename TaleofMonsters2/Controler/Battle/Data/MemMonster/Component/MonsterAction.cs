@@ -10,6 +10,7 @@ using TaleofMonsters.Controler.Battle.Data.MemMissile;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Cards.Weapons;
@@ -88,7 +89,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         {
             self.SetAIMode((MonsterAi.AiModes)Enum.Parse(typeof(MonsterAi.AiModes), type));
         }
-        
+
+        public void SetPrepareTime(float rate)
+        {
+            self.PrepareAtsNeed = (int)(GameConstants.PrepareAts*rate);
+        }
+
         public void Return(int costChange)
         {
             if (self.Avatar.MonsterConfig.IsBuilding)

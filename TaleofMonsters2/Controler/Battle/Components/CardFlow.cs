@@ -250,7 +250,7 @@ namespace TaleofMonsters.Controler.Battle.Components
 
         private void CardFlow_Paint(object sender, PaintEventArgs e)
         {
-            foreach (var cardInfo in cardList)
+            foreach (var cardInfo in cardList.ToArray())
                 cardInfo.Draw(e.Graphics);
         }
 

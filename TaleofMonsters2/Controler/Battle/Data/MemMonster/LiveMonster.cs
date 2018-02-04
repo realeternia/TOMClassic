@@ -26,15 +26,16 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public LiveMonsterToolTip LiveMonsterToolTip { get; private set; }
         public MonsterCoverBox MonsterCoverBox { get; private set; }
         public AuroManager AuroManager { get; private set; }
+        
+        #region 属性
         private int lastDamagerId; //最后一击的怪物id
         private int peakDamagerLuk; //最高攻击者的幸运值
-
-    
+        
         private int[] antiMagic;//魔法抗性
         private int roundPast; //经过的调用数，每次调用大约200ms
         private float pastRoundTotal; //消耗的时间片，累计到1清理一次
 
-        #region 属性
+        public int PrepareAtsNeed { get; set; }
 
         public int Id { get; private set; }
         public int Level { get; private set; }
@@ -75,7 +76,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public double CrtDamAddRate { get; set; }
         public int MovRound { get; set; }
 
-        private bool isPrepare; //是否在准备状态
+        public bool IsPrepare { get; set; } //是否在准备状态
         public bool IsSummoned { get; set; } //是否召唤单位
 
         public int Hp { get { return HpBar.Life; } }
@@ -247,7 +248,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             HpBar.SetHp(Avatar.Hp);
             MonsterCoverBox = new MonsterCoverBox(this);
             Action = new MonsterAction(this);
-            isPrepare = true;
+            IsPrepare = true;
+            PrepareAtsNeed = GameConstants.PrepareAts;
         }
 
         public void SetBasicData()
@@ -357,12 +359,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             if (BuffManager.HasBuff(BuffEffectTypes.NoAction))
                 return false;
             actPoint += GameConstants.RoundAts;//200ms + 30
-            var checkVal = isPrepare ? GameConstants.PrepareAts : GameConstants.LimitAts;
+            var checkVal = IsPrepare ? PrepareAtsNeed : GameConstants.LimitAts;
             if (actPoint >= checkVal)
             {
                 actPoint = actPoint - checkVal;
-                if (isPrepare)
-                    isPrepare = false;
                 return true;
             }
             return false;
@@ -463,10 +463,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             {
                 DrawImg(g);
 
-                if (isPrepare)
+                if (IsPrepare)
                 {//绘制召唤遮罩
-                    var prepareRate = Math.Min(1, 0.2 + 0.3*actPoint/GameConstants.PrepareAts);
-                    SolidBrush brush = new SolidBrush(Color.FromArgb((int)(255 - 255* prepareRate), Color.Black));
+                    var prepareRate = Math.Min(1, 0.2 + 0.3*actPoint/PrepareAtsNeed);
+                    SolidBrush brush = new SolidBrush(Color.FromArgb(Math.Max(0,(int)(255 - 255* prepareRate)), Color.Black));
                     g.FillRectangle(brush, 0, 0, 100, 100);
                     brush.Dispose();
                 }
@@ -483,7 +483,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 pen.Dispose();
 
                 HpBar.Draw(g);
-                if (!isPrepare)
+                if (!IsPrepare)
                 {
                     g.FillPie(Brushes.Gray, 65, 65, 30, 30, 0, 360);
                     var skillPercent = SkillManager.GetRoundSkillPercent();
@@ -512,7 +512,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 }
                 else
                 {
-                    var prepareRate = Math.Min(1, (float)actPoint / GameConstants.PrepareAts);
+                    var prepareRate = Math.Min(1, (float)actPoint / PrepareAtsNeed);
                     g.FillPie(Brushes.DodgerBlue, 30, 30, 40, 40, 0, prepareRate * 360);
                 }
 

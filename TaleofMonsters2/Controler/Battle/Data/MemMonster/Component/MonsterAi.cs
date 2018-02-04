@@ -16,14 +16,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             Common,
             Tank,
         }
-        private readonly LiveMonster monster;
+        private readonly LiveMonster self;
 
         private int lastTarget; //上一个攻击目标
         public AiModes AIMode { get; set; }
 
         public MonsterAi(LiveMonster mon)
         {
-            monster = mon;
+            self = mon;
             AIMode = AiModes.Common;
         }
 
@@ -37,6 +37,13 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         /// </summary>
         public void CheckAction()
         {
+            if (self.IsPrepare)
+            {
+                if (self.AddAts())
+                    self.IsPrepare = false;
+                return;
+            }
+
             LiveMonster targetEnemy = null;
             if (lastTarget > 0)
             {//先找上次攻击的目标
@@ -45,7 +52,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 {
                     if (targetEnemy.IsAlive && CanAttack(targetEnemy))
                     {
-                        if (monster.AddAts())
+                        if (self.AddAts())
                             CheckFight(targetEnemy);
                         return;
                     }
@@ -53,26 +60,26 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             }
 
             if (AIMode == AiModes.Tank)
-                targetEnemy = GetNearestEnemy(monster.IsLeft, monster.Position, true); 
+                targetEnemy = GetNearestEnemy(self.IsLeft, self.Position, true); 
             else
-                targetEnemy = GetNearestEnemy(monster.IsLeft, monster.Position, false);//没有就找最近的目标
+                targetEnemy = GetNearestEnemy(self.IsLeft, self.Position, false);//没有就找最近的目标
             if (targetEnemy != null)
             {
-                if (monster.RealAtk > 0 && monster.CanAttack && CanAttack(targetEnemy))
+                if (self.RealAtk > 0 && self.CanAttack && CanAttack(targetEnemy))
                 {
-                    if (monster.AddAts())
+                    if (self.AddAts())
                     {
                         CheckFight(targetEnemy);
                         lastTarget = targetEnemy.Id;
                     }
                 }
-                else if (monster.ReadMov > 0 && monster.CanMove) //判定是否需要移动
+                else if (self.ReadMov > 0 && self.CanMove) //判定是否需要移动
                 {
-                    if (monster.AddAts())
+                    if (self.AddAts())
                     {
                         var moveTarget = targetEnemy;
-                        if (monster.RealAtk <= 0)
-                            moveTarget = BattleManager.Instance.MonsterQueue.GetKingTower(!monster.IsLeft);
+                        if (self.RealAtk <= 0)
+                            moveTarget = BattleManager.Instance.MonsterQueue.GetKingTower(!self.IsLeft);
                         CheckMove(moveTarget);
                     }
                 }
@@ -117,21 +124,21 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         private void CheckFight(LiveMonster nearestEnemy)
         {
-            if (monster.RealRange <= GameConstants.MaxMeleeAtkRange)
+            if (self.RealRange <= GameConstants.MaxMeleeAtkRange)
             {
-                monster.HitTarget(nearestEnemy, true); //近战
-                BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(monster.Arrow), nearestEnemy, false));
+                self.HitTarget(nearestEnemy, true); //近战
+                BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(self.Arrow), nearestEnemy, false));
             }
             else
             {
-                BasicMissileControler controler = new TraceMissileControler(monster, nearestEnemy);
-                Missile selectMissile = new Missile(monster.Arrow, monster.Position.X, monster.Position.Y, controler, 0, 0);
+                BasicMissileControler controler = new TraceMissileControler(self, nearestEnemy);
+                Missile selectMissile = new Missile(self.Arrow, self.Position.X, self.Position.Y, controler, 0, 0);
                 BattleManager.Instance.MissileQueue.Add(selectMissile);
             }
 
-            if (monster.RealSpd != 0) //会返回一些ats
-                monster.AddActionRate((monster.RealSpd)*GameConstants.SpdToRate/100);
-            monster.MovRound = 0;
+            if (self.RealSpd != 0) //会返回一些ats
+                self.AddActionRate((self.RealSpd)*GameConstants.SpdToRate/100);
+            self.MovRound = 0;
         }
 
         private void CheckMove(LiveMonster nearestEnemy)
@@ -139,39 +146,39 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             var moveDis = BattleManager.Instance.MemMap.CardSize;
             Point aimPos; //决定想去的目标点
             bool goX;
-            if (nearestEnemy.Position.X != monster.Position.X)
+            if (nearestEnemy.Position.X != self.Position.X)
             {
-                var x = monster.Position.X + (nearestEnemy.Position.X > monster.Position.X ? moveDis : -moveDis);
-                aimPos = new Point(x, monster.Position.Y);
+                var x = self.Position.X + (nearestEnemy.Position.X > self.Position.X ? moveDis : -moveDis);
+                aimPos = new Point(x, self.Position.Y);
                 goX = true;
             }
             else
             {
-                var y = monster.Position.Y + (nearestEnemy.Position.Y > monster.Position.Y ? moveDis : -moveDis);
-                aimPos = new Point(monster.Position.X, y);
+                var y = self.Position.Y + (nearestEnemy.Position.Y > self.Position.Y ? moveDis : -moveDis);
+                aimPos = new Point(self.Position.X, y);
                 goX = false;
             }
 
             if (!BattleManager.Instance.MemMap.IsPlaceCanMove(aimPos.X, aimPos.Y))
             {
                 if (goX)//绕过不可行走区域
-                    aimPos = MonsterPositionHelper.GetAvailPoint(monster.Position, "side", monster.IsLeft,1);
+                    aimPos = MonsterPositionHelper.GetAvailPoint(self.Position, "side", self.IsLeft,1);
                 else//往前走
-                    aimPos= MonsterPositionHelper.GetAvailPoint(monster.Position, "come", monster.IsLeft,1);
+                    aimPos= MonsterPositionHelper.GetAvailPoint(self.Position, "come", self.IsLeft,1);
             }
 
-            if (aimPos.X != monster.Position.X || aimPos.Y != monster.Position.Y)
-                BattleLocationManager.SetToPosition(monster, aimPos);
+            if (aimPos.X != self.Position.X || aimPos.Y != self.Position.Y)
+                BattleLocationManager.SetToPosition(self, aimPos);
 
-            if (monster.ReadMov > 10) //会返回一些ats
-                monster.AddActionRate((float) (monster.ReadMov - 10)/monster.ReadMov);
-            monster.MovRound++;
+            if (self.ReadMov > 10) //会返回一些ats
+                self.AddActionRate((float) (self.ReadMov - 10)/self.ReadMov);
+            self.MovRound++;
         }
 
         private bool CanAttack(LiveMonster target)
         {
-            var dis = MathTool.GetDistance(target.Position, monster.Position);
-            return dis <= monster.RealRange * BattleManager.Instance.MemMap.CardSize/10;//射程也是十倍的
+            var dis = MathTool.GetDistance(target.Position, self.Position);
+            return dis <= self.RealRange * BattleManager.Instance.MemMap.CardSize/10;//射程也是十倍的
         }
 
         private int GetMonsterRate(LiveMonster mon, int dis)
