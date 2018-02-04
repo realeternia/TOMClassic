@@ -10,15 +10,10 @@ namespace TaleofMonsters.Core
             return rt[aid];
         }
 
-        public static int Attr2I(string name)
+        public static string I2BuffImmune(int aid)
         {
-            string[] rt = { "无", "水", "风", "火", "地", "光", "暗" };
-            for (int i = 0; i < rt.Length; i++)
-            {
-                if (rt[i] == name)
-                    return i;
-            }
-            return -1;
+            string[] rt = { "生命", "意志", "物理", "元素" };
+            return rt[aid];
         }
 
         public static string I2CardTypeSub(int rid)

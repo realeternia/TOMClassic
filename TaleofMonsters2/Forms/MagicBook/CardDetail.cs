@@ -143,21 +143,24 @@ namespace TaleofMonsters.Forms.MagicBook
         {
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine("属性：" + HSTypes.I2Attr(monType), "White", 20);
+            int line = 0;
             for (int i = 0; i <= 6; i++)
             {
                 if (attrDef[i] == 0)
                     continue;
-                tipData.AddTextNewLine("Vs", "Yellow", 16);
-                tipData.AddImageXY(HSIcons.GetIconsByEName("atr" + i), 0, 0, 32, 32, 23, 20 + i*16 + 1, 14, 14);
-                tipData.AddTextOff(string.Format("DF={0}%", 100 + attrDef[i] * 100), attrDef[i] == 0 ? "White" : attrDef[i] > 0 ? "Lime" : "Red", 50);
+                tipData.AddTextNewLine("", "Yellow", 16);
+                tipData.AddImageXY(HSIcons.GetIconsByEName("atr" + i), 0, 0, 32, 32, 3, 20 + line ++* 16 + 1, 14, 14);
+                var str = string.Format("{0}系抵抗={1}%", HSTypes.I2Attr(i), attrDef[i]*100);
+                tipData.AddTextOff(str, attrDef[i] == 0 ? "White" : attrDef[i] > 0 ? "Lime" : "Red", 20);
             }
             for (int i = 0; i <= 3; i++)//buff 抵抗
             {
                 if (buffDef[i] == 0)
                     continue;
-                tipData.AddTextNewLine("Bf", "Yellow", 16);
-                tipData.AddImageXY(HSIcons.GetIconsByEName("buf" + i), 0, 0, 32, 32, 23, 20 + i * 16 + 1, 14, 14);
-                tipData.AddTextOff(string.Format("DF={0}%", buffDef[i] * 100), buffDef[i] == 0 ? "White" : buffDef[i] > 0 ? "Lime" : "Red", 50);
+                tipData.AddTextNewLine("", "Yellow", 16);
+                tipData.AddImageXY(HSIcons.GetIconsByEName("buf" + i), 0, 0, 32, 32, 3, 20 + line++ * 16 + 1, 14, 14);
+                var str = string.Format("{0}抵抗={1}%", HSTypes.I2BuffImmune(i), buffDef[i] * 100);
+                tipData.AddTextOff(str, buffDef[i] == 0 ? "White" : buffDef[i] > 0 ? "Lime" : "Red", 20);
             }
             return tipData.Image;
         }
