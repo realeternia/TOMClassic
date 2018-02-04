@@ -32,6 +32,7 @@ namespace TaleofMonsters.Core
         public const int RoundRecoverAllRound = 9999; //每多少回合回复一次所有能量点，todo 暂时去掉这个功能
         public const int RoundAts = 30;//这个高了，怪的hp也要调高，spell的伤害和武器的耐久调整
         public const int LimitAts = 600; //超过这个值就会进行攻击，LimitAts/RoundAts/5=攻击间隔时间
+        public const int PrepareAts = 1200; //准备时消耗的时间
 
         public const float CardStrengthStar = 0.3f;
         public const float CardStrengthLevel = 0.12f;

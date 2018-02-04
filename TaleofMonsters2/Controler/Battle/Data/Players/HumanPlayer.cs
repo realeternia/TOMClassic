@@ -1,8 +1,13 @@
-﻿using TaleofMonsters.Controler.Battle.Data.MemCard;
+﻿using System.Drawing;
+using ConfigDatas;
+using TaleofMonsters.Controler.Battle.Data.MemCard;
+using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.Controler.Battle.Tool;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
+using TaleofMonsters.DataType.CardPieces;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
 {
@@ -38,7 +43,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             base.InitialCards();
 
 #if DEBUG
-            int[] cardToGive = new[] { 51000317 };
+            int[] cardToGive = new[] { 51000255 };
             foreach (var cardId in cardToGive)
             {
                 CardManager.AddCard(new ActiveCard(cardId, 1, 0));
@@ -46,5 +51,24 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 #endif
         }
 
+        public override void OnKillMonster(int id, int dieLevel, int dieStar, Point position, int luck)
+        {
+            base.OnKillMonster(id, dieLevel, dieStar, position, luck);
+
+            if (IsLeft)
+            {
+                if (BattleManager.Instance.StatisticData.Items.Count < GameConstants.MaxDropItemGetOnBattle)
+                {
+                    int itemId = CardPieceBook.CheckPieceDrop(id, luck);
+                    if (itemId > 0)
+                    {
+                        BattleManager.Instance.StatisticData.AddItemGet(itemId);
+                        BattleManager.Instance.FlowWordQueue.Add(new FlowItemInfo(itemId, position, 20, 50));
+                    }
+                    var monConfig = ConfigData.GetMonsterConfig(id);
+                    UserProfile.Profile.OnKillMonster(monConfig.Star, monConfig.Type, monConfig.Type);
+                }
+            }
+        }
     }
 }

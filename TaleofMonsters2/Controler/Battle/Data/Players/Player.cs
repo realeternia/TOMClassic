@@ -303,8 +303,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         {
         }
 
-        public void OnKillMonster(int id, int dieLevel, int dieStar, Point position)
+        public virtual void OnKillMonster(int id, int dieLevel, int dieStar, Point position, int luck)
         {
+            BattleManager.Instance.StatisticData.GetPlayer(IsLeft).Kill++;
             if (OnKillEnemy != null)
                 OnKillEnemy(id, dieLevel, IsLeft);
         }

@@ -7,10 +7,8 @@ using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMonster.Component;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
-using TaleofMonsters.DataType.CardPieces;
 using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Skills;
-using TaleofMonsters.DataType.User;
 using TaleofMonsters.Core;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
 using TaleofMonsters.Controler.Loader;
@@ -77,6 +75,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public double CrtDamAddRate { get; set; }
         public int MovRound { get; set; }
 
+        private bool isPrepare; //是否在准备状态
         public bool IsSummoned { get; set; } //是否召唤单位
 
         public int Hp { get { return HpBar.Life; } }
@@ -248,6 +247,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             HpBar.SetHp(Avatar.Hp);
             MonsterCoverBox = new MonsterCoverBox(this);
             Action = new MonsterAction(this);
+            isPrepare = true;
         }
 
         public void SetBasicData()
@@ -320,27 +320,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
             GhostTime = 0.01f;//开始死亡
             BattleManager.Instance.MemMap.GetMouseCell(Position.X,Position.Y).UpdateOwner(-Id);
-            if (!IsLeft)
-            {
-                if (Rival is HumanPlayer)
-                {
-                    if (BattleManager.Instance.StatisticData.Items.Count < GameConstants.MaxDropItemGetOnBattle)
-                    {
-                        int itemId = CardPieceBook.CheckPieceDrop(Avatar.Id, peakDamagerLuk);
-                        if (itemId > 0)
-                        {
-                            BattleManager.Instance.StatisticData.AddItemGet(itemId);
-                            BattleManager.Instance.FlowWordQueue.Add(new FlowItemInfo(itemId, Position, 20, 50));
-                        }
-                        UserProfile.Profile.OnKillMonster(Avatar.Star, Avatar.MonsterConfig.Type, Avatar.MonsterConfig.Type);
-                    }
-                }
-            }
-            BattleManager.Instance.StatisticData.GetPlayer(!IsLeft).Kill++;
 
             SkillManager.CheckRemoveEffect();
             var rival = Rival as Player;
-            rival.OnKillMonster(Avatar.Id, Level, Avatar.Star, Position);
+            rival.OnKillMonster(Avatar.Id, Level, Avatar.Star, Position, peakDamagerLuk);
 
             MakeSound(false);
         }
@@ -374,9 +357,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             if (BuffManager.HasBuff(BuffEffectTypes.NoAction))
                 return false;
             actPoint += GameConstants.RoundAts;//200ms + 30
-            if (actPoint >= GameConstants.LimitAts)
+            var checkVal = isPrepare ? GameConstants.PrepareAts : GameConstants.LimitAts;
+            if (actPoint >= checkVal)
             {
-                actPoint = actPoint - GameConstants.LimitAts;
+                actPoint = actPoint - checkVal;
+                if (isPrepare)
+                    isPrepare = false;
                 return true;
             }
             return false;
@@ -476,6 +462,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             if (!IsGhost)
             {
                 DrawImg(g);
+
+                if (isPrepare)
+                {//绘制召唤遮罩
+                    var prepareRate = Math.Min(1, 0.2 + 0.3*actPoint/GameConstants.PrepareAts);
+                    SolidBrush brush = new SolidBrush(Color.FromArgb((int)(255 - 255* prepareRate), Color.Black));
+                    g.FillRectangle(brush, 0, 0, 100, 100);
+                    brush.Dispose();
+                }
               
                 if (uponColor != Color.White)
                 {
@@ -483,39 +477,44 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                     g.FillRectangle(brush, 0, 0, 100, 100);
                     brush.Dispose();
                 }
+
                 var pen = new Pen(!IsLeft ? Brushes.Blue : Brushes.Red, 3);
-                Font font2 = new Font("Arial", 14*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-                Font fontLevel = new Font("Arial", 20*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
                 g.DrawRectangle(pen, 1, 1, 98, 98);
                 pen.Dispose();
 
                 HpBar.Draw(g);
+                if (!isPrepare)
+                {
+                    g.FillPie(Brushes.Gray, 65, 65, 30, 30, 0, 360);
+                    var skillPercent = SkillManager.GetRoundSkillPercent();
+                    var atsRate = (float) actPoint / GameConstants.LimitAts;
+                    if (skillPercent > 0)
+                    {
+                        //画集气槽
+                        g.FillPie(Brushes.Purple, 65, 65, 30, 30, 0, skillPercent*360/100);
+                        //画行动槽
+                        g.FillPie(CanAttack ? Brushes.Yellow : Brushes.LightGray, 70, 70, 20, 20, 0, atsRate*360);
+                    }
+                    else
+                    {
+                        //画行动槽
+                        g.FillPie(CanAttack ? Brushes.Yellow : Brushes.LightGray, 65, 65, 30, 30, 0, atsRate*360);
+                    }
 
-                g.FillPie(Brushes.Gray, 65, 65, 30, 30, 0, 360);
-                var skillPercent = SkillManager.GetRoundSkillPercent();
-                if (skillPercent > 0)
-                {                
-                    //画集气槽
-                    g.FillPie(Brushes.Purple, 65, 65, 30, 30, 0, skillPercent * 360 / 100);
-                    //画行动槽
-                    g.FillPie(CanAttack ? Brushes.Yellow : Brushes.LightGray, 70, 70, 20, 20, 0, actPoint * 360 / GameConstants.LimitAts);
+                    var starIcon = HSIcons.GetIconsByEName("sysstar");
+                    for (int i = 0; i < Avatar.Star; i++)
+                        g.DrawImage(starIcon, i*12, 8, 16, 16);
+
+                    Font fontLevel = new Font("Arial", 20 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+                    g.DrawString(Level.ToString(), fontLevel, Brushes.Wheat, Level < 10 ? 71 : 67, 68);
+                    g.DrawString(Level.ToString(), fontLevel, Brushes.DarkBlue, Level < 10 ? 70 : 66, 67);
+                    fontLevel.Dispose();
                 }
                 else
                 {
-                    //画行动槽
-                    g.FillPie(CanAttack ? Brushes.Yellow : Brushes.LightGray, 65, 65, 30, 30, 0, actPoint * 360 / GameConstants.LimitAts);
+                    var prepareRate = Math.Min(1, (float)actPoint / GameConstants.PrepareAts);
+                    g.FillPie(Brushes.DodgerBlue, 30, 30, 40, 40, 0, prepareRate * 360);
                 }
-
-                var starIcon = HSIcons.GetIconsByEName("sysstar");
-                for (int i = 0; i < Avatar.Star; i++)
-                {
-                    g.DrawImage(starIcon, i*12, 8, 16, 16);
-                }
-
-                g.DrawString(Level.ToString(), fontLevel, Brushes.Wheat, Level < 10 ? 71 : 67, 68);
-                g.DrawString(Level.ToString(), fontLevel, Brushes.DarkBlue, Level < 10 ? 70 : 66, 67);
-                font2.Dispose();
-                fontLevel.Dispose();
 
                 if (Weapon != null)
                 {
@@ -546,15 +545,15 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void AddHp(double addon)
         {
-            if (Type == (int)CardTypeSub.Machine || Type == (int)CardTypeSub.KingTower || Type == (int)CardTypeSub.Machine)
-                addon=1;
+            if (Type == (int) CardTypeSub.Machine || Type == (int) CardTypeSub.KingTower || Type == (int) CardTypeSub.NormalTower)
+                addon = 1;
             HpBar.AddHp((int)addon);
         }
 
         public void AddHpRate(double value)
         {
             var healValue = (int) (RealMaxHp*value);
-            if (Type == (int)CardTypeSub.Machine || Type == (int)CardTypeSub.KingTower || Type == (int)CardTypeSub.Machine)
+            if (Type == (int)CardTypeSub.Machine || Type == (int)CardTypeSub.KingTower || Type == (int)CardTypeSub.NormalTower)
                 healValue = 1;
             HpBar.AddHp(healValue);
         }
@@ -566,7 +565,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public void RepairHp(double addon)
         {
-            if (Type != (int)CardTypeSub.Machine && Type != (int)CardTypeSub.KingTower && Type != (int)CardTypeSub.Machine)
+            if (Type != (int)CardTypeSub.Machine && Type != (int)CardTypeSub.KingTower && Type != (int)CardTypeSub.NormalTower)
                 addon = 1;
             HpBar.AddHp((int)addon);
         }
