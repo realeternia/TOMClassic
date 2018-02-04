@@ -84,7 +84,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             self.HpBar.SetHp(self.Avatar.Hp * lifp / 100);
         }
 
-
+        public void ChangeAI(string type)
+        {
+            self.SetAIMode((MonsterAi.AiModes)Enum.Parse(typeof(MonsterAi.AiModes), type));
+        }
+        
         public void Return(int costChange)
         {
             if (self.Avatar.MonsterConfig.IsBuilding)

@@ -11,13 +11,20 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 {
     internal class MonsterAi
     {
+        internal enum AiModes
+        {
+            Common,
+            Tank,
+        }
         private readonly LiveMonster monster;
 
         private int lastTarget; //上一个攻击目标
+        public AiModes AIMode { get; set; }
 
         public MonsterAi(LiveMonster mon)
         {
             monster = mon;
+            AIMode = AiModes.Common;
         }
 
         public void ClearTarget()
@@ -45,7 +52,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 }
             }
 
-            targetEnemy = GetNearestEnemy(monster.IsLeft, monster.Position);//没有就找最近的目标
+            if (AIMode == AiModes.Tank)
+                targetEnemy = GetNearestEnemy(monster.IsLeft, monster.Position, true); 
+            else
+                targetEnemy = GetNearestEnemy(monster.IsLeft, monster.Position, false);//没有就找最近的目标
             if (targetEnemy != null)
             {
                 if (monster.RealAtk > 0 && monster.CanAttack && CanAttack(targetEnemy))
@@ -69,7 +79,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             }
         }
 
-        private LiveMonster GetNearestEnemy(bool isLeft, Point mouse)
+        private LiveMonster GetNearestEnemy(bool isLeft, Point mouse, bool aimBuilding)
         {
             LiveMonster target = null;
             int dis = int.MaxValue;
@@ -81,6 +91,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                     continue;
 
                 if (isLeft == pickMon.Owner.IsLeft)
+                    continue;
+
+                if (aimBuilding && !pickMon.IsDefence)
                     continue;
 
                 var tpDis = MathTool.GetDistance(pickMon.Position, mouse);

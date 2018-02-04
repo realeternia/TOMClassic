@@ -11,6 +11,7 @@
         void AddBuff(int buffId, int blevel, double dura);
         void AddItem(int itemId);//战斗中
         void Transform(int monId);
+        void ChangeAI(string type); //修正ai模式
 
         void Return(int costChange);
         void AddWeapon(int weaponId, int lv);

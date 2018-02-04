@@ -43,7 +43,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public Monster Avatar { get; set; }
 
         public float GhostTime { get; set; } //0-1表示在墓地状态
-        public bool IsDefence { get { return ReadMov == 0 && !Avatar.MonsterConfig.IsBuilding; } }
+        public bool IsDefence { get { return ReadMov == 0 || Avatar.MonsterConfig.IsBuilding; } }
         public Point Position { get; set; }
         public IMap Map { get { return BattleManager.Instance.MemMap; } }
         public IMonsterAction Action { get; private set; }
@@ -646,6 +646,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             var rate = BuffManager.GetBuffImmuneRate((int)type);
             return MathTool.GetRandom(0.0, 1.0) < rate;
+        }
+
+        public void SetAIMode(MonsterAi.AiModes mode)
+        {
+            if (aiController != null)
+                aiController.AIMode = mode;
         }
     }
 }
