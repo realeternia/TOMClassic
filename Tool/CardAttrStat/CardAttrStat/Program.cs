@@ -38,6 +38,7 @@ namespace CardAttrStat
             int healCount = 0;
             int aidCount = 0;
             int ruleCount = 0;
+            int tankCount = 0;
 
             foreach (var monsterConfig in ConfigData.MonsterDict.Values)
             {
@@ -78,11 +79,13 @@ namespace CardAttrStat
                     aidCount++;
                 if (HasSkillType(monsterConfig, "规则"))
                     ruleCount++;
+                if (HasSkillType(monsterConfig, "攻城"))
+                    tankCount++;
             }
             
-            sw.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}\t{14}\t{15}", 
+            sw.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}\t{14}\t{15}\t{16}", 
                 tauntCount, rushCount, hideCount, auroCount, aoeCount, buffCount, overcomeCount, rangeUnit,
-                defendUnit, summonCount, magCount, cardCount, deathSayCount, healCount, aidCount, ruleCount);
+                defendUnit, summonCount, magCount, cardCount, deathSayCount, healCount, aidCount, ruleCount, tankCount);
         }
 
         static void CheckMonster(StreamWriter sw)
@@ -105,7 +108,7 @@ namespace CardAttrStat
                 if (HasSkillType(monsterConfig, "光环"))
                     attrs["光环"] = true;
                 if (HasSkillType(monsterConfig, "范围"))
-                    attrs["范围"] = true;
+                    attrs["AOE"] = true;
                 if (HasSkillType(monsterConfig, "状态"))
                     attrs["状态"] = true;
                 if (HasSkillType(monsterConfig, "克制"))
@@ -128,6 +131,8 @@ namespace CardAttrStat
                     attrs["支援"] = true;
                 if (HasSkillType(monsterConfig, "规则"))
                     attrs["规则"] = true;
+                if (HasSkillType(monsterConfig, "攻城"))
+                    attrs["攻城"] = true;
 
                 if (attrs.Count > 0)
                 {

@@ -9,6 +9,7 @@ if not "%ERRORLEVEL%" == "0" GOTO :ERROR
 
 cd ..
 copy "./ConfigData.dll" "../TaleofMonsters2/Lib/"
+copy "./ConfigData.dll" "../Tool/bin/"
 
 GOTO :END
 
