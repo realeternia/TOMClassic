@@ -39,6 +39,7 @@ namespace CardAttrStat
             int aidCount = 0;
             int ruleCount = 0;
             int tankCount = 0;
+            int rageCount = 0;
 
             foreach (var monsterConfig in ConfigData.MonsterDict.Values)
             {
@@ -81,11 +82,13 @@ namespace CardAttrStat
                     ruleCount++;
                 if (HasSkillType(monsterConfig, "攻城"))
                     tankCount++;
+                if (HasSkillType(monsterConfig, "怒火"))
+                    rageCount++;
             }
             
-            sw.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}\t{14}\t{15}\t{16}", 
+            sw.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}\t{14}\t{15}\t{16}\t{17}", 
                 tauntCount, rushCount, hideCount, auroCount, aoeCount, buffCount, overcomeCount, rangeUnit,
-                defendUnit, summonCount, magCount, cardCount, deathSayCount, healCount, aidCount, ruleCount, tankCount);
+                defendUnit, summonCount, magCount, cardCount, deathSayCount, healCount, aidCount, ruleCount, tankCount, rageCount);
         }
 
         static void CheckMonster(StreamWriter sw)
@@ -133,6 +136,8 @@ namespace CardAttrStat
                     attrs["规则"] = true;
                 if (HasSkillType(monsterConfig, "攻城"))
                     attrs["攻城"] = true;
+                if (HasSkillType(monsterConfig, "怒火"))
+                    attrs["怒火"] = true;
 
                 if (attrs.Count > 0)
                 {
