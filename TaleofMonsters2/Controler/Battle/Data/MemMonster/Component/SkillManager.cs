@@ -173,9 +173,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void DeathSkill()
         {
-            if (self.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
-                return;
-
             foreach (var skill in Skills.ToArray())
             {
                 if (IsSilent && skill.Type != SkillSourceTypes.Weapon)

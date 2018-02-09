@@ -110,7 +110,7 @@
     internal enum BuffEffectTypes
     {
         NoAction = 2,
-        NoSkill = 5,
+        NoSkill = 5, //一般是晕眩，冰冻等时候
         NoMove = 6,
 
         Tile = 101,
