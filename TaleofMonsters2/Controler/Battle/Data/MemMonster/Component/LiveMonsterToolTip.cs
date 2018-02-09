@@ -93,7 +93,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             {
                 tipData.AddImageNewLine(SkillBook.GetSkillImage(memBaseSkill.SkillId));
 
-                if (liveMonster.SkillManager.InForget && memBaseSkill.Type != SkillSourceTypes.Weapon)
+                if (liveMonster.SkillManager.IsSilent && memBaseSkill.Type != SkillSourceTypes.Weapon)
                 {
                     tipData.AddText(string.Format("{0} X", memBaseSkill.SkillInfo.Name), "Red");
                     continue;

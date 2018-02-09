@@ -320,11 +320,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             self.AddMaxHp(self.MaxHp.Source * 0.1);
             (tomb as LiveMonster).Action.Disappear();
         }
+
         //遗忘所有武器技能除外
         public void Silent()
         {
-            self.SkillManager.Forget();
-
+            self.SkillManager.Silent();
             self.BuffManager.ClearBuff(false);//清除所有buff
         }
 

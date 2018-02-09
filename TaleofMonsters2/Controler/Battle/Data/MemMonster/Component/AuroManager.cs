@@ -17,13 +17,13 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         {
             auroList.Clear();
         }
+
         public void CheckAuroEffect()
         {
             foreach (var auro in auroList)
-            {
                 auro.CheckAuroState();
-            }
         }
+
         public IMonsterAuro AddAuro(int buff, int lv, string tar)
         {
             var auro = new MonsterAuro(self, buff, lv, tar);

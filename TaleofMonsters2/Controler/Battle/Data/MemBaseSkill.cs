@@ -103,6 +103,11 @@ namespace TaleofMonsters.Controler.Battle.Data
             if (onAddTriggered && SkillInfo.SkillConfig.OnRemove != null)
                 SkillInfo.SkillConfig.OnRemove(SkillInfo, Self, Level);
         }
+        public void CheckSilentEffect()
+        {
+            if (onAddTriggered && SkillInfo.SkillConfig.OnSilent != null)
+                SkillInfo.SkillConfig.OnSilent(SkillInfo, Self, Level);
+        }
 
         public void CheckHit(LiveMonster src, LiveMonster dest, ref int hit, int key)
         {

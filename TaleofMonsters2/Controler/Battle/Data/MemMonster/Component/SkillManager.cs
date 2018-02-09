@@ -13,7 +13,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
     {
         public List<MemBaseSkill> Skills { get; private set; }
         private LiveMonster self;
-        public bool InForget { get; set; }//处于遗忘状态，遗忘除了武器外的技能
+        private Skill skill1Data;
+        public bool IsSilent { get; set; }//处于遗忘状态，遗忘除了武器外的技能
 
         public SkillManager(LiveMonster lm)
         {
@@ -23,9 +24,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public bool HasSkill(int sid)
         {
-            foreach (var sk in Skills)
+            foreach (var skill in Skills)
             {
-                if (sk.SkillId == sid)
+                if (skill.SkillId == sid)
                     return true;
             }
             return false;
@@ -69,18 +70,18 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void AddSkill(int sid, int slevel, int rate, SkillSourceTypes type)
         {
-            foreach (var memSkill in Skills)
+            foreach (var skill in Skills)
             {
-                if (memSkill.SkillId == sid)
+                if (skill.SkillId == sid)
                 {
-                    Skills.Remove(memSkill);
+                    Skills.Remove(skill);
                     break;
                 }
             }
 
-            Skill skill = new Skill(sid);
-            skill.UpgradeToLevel(slevel);
-            MemBaseSkill skillbase = new MemBaseSkill(skill, rate);
+            skill1Data = new Skill(sid);
+            skill1Data.UpgradeToLevel(slevel);
+            MemBaseSkill skillbase = new MemBaseSkill(skill1Data, rate);
             skillbase.Type = type;
             skillbase.Level = slevel;
             skillbase.Self = self;
@@ -90,28 +91,29 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void RemoveSkill(int sid)
         {
-            foreach (var memSkill in Skills)
+            foreach (var skill in Skills)
             {
-                if (memSkill.SkillId == sid)
+                if (skill.SkillId == sid)
                 {
-                    Skills.Remove(memSkill);
+                    Skills.Remove(skill);
                     break;
                 }
             }
         }
 
-        public void Forget()
+        public void Silent()
         {
-            InForget = true;
+            IsSilent = true;
+            CheckSilentEffect();
         }
 
         public void CheckCover(List<ActiveEffect> coverEffectList)
         {
-            foreach (var memBaseSkill in Skills)//技能造成的特效
+            foreach (var skill in Skills)//技能造成的特效
             {
-                if (memBaseSkill.SkillConfig.Cover != "")
+                if (skill.SkillConfig.Cover != "")
                 {
-                    ActiveEffect ef = new ActiveEffect(EffectBook.GetEffect(memBaseSkill.SkillConfig.Cover), self, true);
+                    ActiveEffect ef = new ActiveEffect(EffectBook.GetEffect(skill.SkillConfig.Cover), self, true);
                     ef.Repeat = true;
                     BattleManager.Instance.EffectQueue.Add(ef);
                     coverEffectList.Add(ef);
@@ -127,8 +129,16 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void CheckRemoveEffect()
         {
+            if(IsSilent)
+                return;
             foreach (var skill in Skills.ToArray())
                 skill.CheckRemoveEffect();
+        }
+
+        public void CheckSilentEffect()
+        {
+            foreach (var skill in Skills.ToArray())
+                skill.CheckSilentEffect();
         }
 
         public bool CheckSpecial(float pastRound)
@@ -138,7 +148,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
             foreach (var skill in Skills.ToArray())
             {
-                if (InForget && skill.Type != SkillSourceTypes.Weapon)
+                if (IsSilent && skill.Type != SkillSourceTypes.Weapon)
                     continue;
 
                 if (skill.CheckSpecial(pastRound))
@@ -154,7 +164,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
             foreach (var skill in Skills.ToArray())
             {
-                if (InForget && skill.Type != SkillSourceTypes.Weapon)
+                if (IsSilent && skill.Type != SkillSourceTypes.Weapon)
                     continue;
 
                 skill.OnUseCard(caster, cardType, lv);
@@ -168,7 +178,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
             foreach (var skill in Skills.ToArray())
             {
-                if (InForget && skill.Type != SkillSourceTypes.Weapon)
+                if (IsSilent && skill.Type != SkillSourceTypes.Weapon)
                     continue;
 
                 skill.DeathSkill();
@@ -185,7 +195,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         {
             foreach (var skill in Skills.ToArray())
             {
-                if (InForget && skill.Type != SkillSourceTypes.Weapon)
+                if (IsSilent && skill.Type != SkillSourceTypes.Weapon)
                     continue;
 
                 skill.CheckBurst(src, dest, isMelee);
