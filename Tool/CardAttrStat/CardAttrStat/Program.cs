@@ -40,6 +40,7 @@ namespace CardAttrStat
             int ruleCount = 0;
             int tankCount = 0;
             int rageCount = 0;
+            int comboCount = 0;
 
             foreach (var monsterConfig in ConfigData.MonsterDict.Values)
             {
@@ -138,6 +139,10 @@ namespace CardAttrStat
                     attrs["攻城"] = true;
                 if (HasSkillType(monsterConfig, "怒火"))
                     attrs["怒火"] = true;
+                if (HasSkillType(monsterConfig, "连击"))
+                    attrs["连击"] = true;
+                if (HasSkillType(monsterConfig, "元素"))
+                    attrs["元素"] = true;
 
                 if (attrs.Count > 0)
                 {

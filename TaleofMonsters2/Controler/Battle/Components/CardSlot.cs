@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
+using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
@@ -76,9 +77,17 @@ namespace TaleofMonsters.Controler.Battle.Components
                 g.FillRectangle(sbrush, x, y, Size.Width, 120);
                 sbrush.Dispose();
             }
-            if (ACard.Combo && CardConfigManager.GetCardConfig(ACard.CardId).Remark.Contains("连击"))
+
+            var cardData = CardConfigManager.GetCardConfig(Card.CardId);
+            if (BattleManager.Instance.PlayerManager.LeftPlayer.Combo && cardData.Remark.Contains("连击"))
             {
                 Image img = PicLoader.Read("System", "CardEff1.PNG");
+                g.DrawImage(img, x + 2, y + 2, Size.Width - 4, 120 - 4);
+                img.Dispose();
+            }
+            if (BattleManager.Instance.PlayerManager.LeftPlayer.IsLastSpellAttr(cardData.Attr) && cardData.Remark.Contains("元素"))
+            {
+                Image img = PicLoader.Read("System", "CardEff1.PNG"); //todo 先用这个
                 g.DrawImage(img, x + 2, y + 2, Size.Width - 4, 120 - 4);
                 img.Dispose();
             }
@@ -91,7 +100,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             }
             font.Dispose();
 
-            var cardData = CardConfigManager.GetCardConfig(Card.CardId);
+
             if (Card.GetCardType() == CardTypes.Monster)
                 g.DrawImage(HSIcons.GetIconsByEName("rac" + cardData.TypeSub), x+ Size.Width/2-18, y+90, 16, 16);
             else if (Card.GetCardType() == CardTypes.Weapon)

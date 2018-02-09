@@ -125,7 +125,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             Invalidate();
         }
 
-        public void HideBackGroud()
+        public void HideBackgroud()
         {
             bitmapButton1.Hide();
         }
@@ -133,22 +133,16 @@ namespace TaleofMonsters.Controler.Battle.Components
         private void CardSelector_Paint(object sender, PaintEventArgs e)
         {
             if (cards == null)
-            {
                 return;
-            }
 
             foreach (var cardSlot in cards)
             {
                 if (cardSlot != null)
-                {
                     cardSlot.CardSlot_Paint(e);
-                }
             }
 
             if (region != null)
-            {
                 region.Draw(e.Graphics);
-            }
         }
     }
 }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Decks;
 using ConfigDatas;
 using TaleofMonsters.Config;
@@ -12,25 +11,23 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
     {
         public DeckCard Card { get; private set; }
 
-        public int Mp {
+        public int Mp
+        {
             get
             {
                 var lpCost = Card.Lp == 0 ? 0 : Math.Max(0, Card.Lp + LpCostChange + CostModify);
                 if (Lp2Mp && lpCost > 0)
-                {
                     return lpCost;
-                }
                 return Card.Mp==0?0: Math.Max(0, Card.Mp + MpCostChange+ CostModify);
             }
         }
         public int Lp
         {
-            get {
-                if (Lp2Mp)
-                {
-                    return 0;
-                }
-                return Card.Lp == 0 ? 0 : Math.Max(0,Card.Lp + LpCostChange+ CostModify); }
+            get
+            {
+                if (Lp2Mp) return 0;
+                return Card.Lp == 0 ? 0 : Math.Max(0,Card.Lp + LpCostChange+ CostModify);
+            }
         }
         public int Pp
         {
@@ -43,17 +40,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
             {
                 List<PlayerManaTypes> l = new List<PlayerManaTypes>();
                 for (int i = 0; i < Lp; i++)
-                {
                     l.Add(PlayerManaTypes.Lp);
-                }
                 for (int i = 0; i < Mp; i++)
-                {
                     l.Add(PlayerManaTypes.Mp);
-                }
                 for (int i = 0; i < Pp; i++)
-                {
                     l.Add(PlayerManaTypes.Pp);
-                }
                 return l;
             }
         }
@@ -64,7 +55,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         public byte Level { get; set; }
 
         public int CostModify { get; set; }
-        public bool Combo { get; set; }//可以被修改
         public bool IsHeroSkill { get; set; }
 
         public ActiveCard()
@@ -92,17 +82,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
 
         public CardTypes CardType
         {
-            get
-            {
-                return ConfigIdManager.GetCardType(Card.BaseId);
-            }
+            get { return ConfigIdManager.GetCardType(Card.BaseId); }
         }
         
-
         public ActiveCard GetCopy()
         {
-            DeckCard dc = new DeckCard(Card.BaseId, Card.Level, Card.Exp);
-            var ac = new ActiveCard(dc);
+            var ac = new ActiveCard(new DeckCard(Card.BaseId, Card.Level, Card.Exp));
             ac.MpCostChange = MpCostChange;
             ac.LpCostChange = LpCostChange;
             ac.PpCostChange = PpCostChange;

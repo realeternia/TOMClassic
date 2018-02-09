@@ -58,6 +58,13 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         private float comboTime;//>0表示在combo状态
         public bool Combo { get { return comboTime > 0; } }
+        private int lastSpellId;
+        public bool IsLastSpellAttr(int monAttr)
+        {
+            if (lastSpellId > 0)
+                return ConfigData.GetSpellConfig(lastSpellId).Attr == monAttr;
+            return false;
+        }
 
         #region 属性
 
@@ -168,10 +175,10 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 ManaChanged();
             SpikeManager.OnRound(pastRound);
             comboTime -= pastRound;
-            if (comboTime<=0)
+            if (comboTime <= 0)
             {
                 comboTime = 0;
-                CardManager.UpdateCardCombo();
+                CardManager.UpdateCardView();
             }
             if (CardManager.HeroSkillCd > 0)
             {
@@ -289,7 +296,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             var oldComboTime = comboTime;
             comboTime = 1;
             if (oldComboTime <= 0)
-                CardManager.UpdateCardCombo();
+                CardManager.UpdateCardView();
 
             if (selectCard.IsHeroSkill) //成功使用英雄技能
             {
@@ -412,6 +419,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 BattleManager.Instance.FlowWordQueue.Add(new FlowWord("未知错误", location, 0, "Red", 26, 0, 0, 2, 15));
                 return;
             }
+            lastSpellId = card.CardId;
+            CardManager.UpdateCardView();
             AfterUseCard(card);
             CardManager.DeleteCardAt(SelectId);
         }

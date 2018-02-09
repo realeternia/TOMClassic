@@ -12,6 +12,7 @@ namespace ConfigDatas
         float Lp { get; }
         float Pp { get; }
         bool Combo { get; }
+        bool IsLastSpellAttr(int monAttr);
 
         void AddMp(double addon);//spell π”√
         void AddLp(double addon);

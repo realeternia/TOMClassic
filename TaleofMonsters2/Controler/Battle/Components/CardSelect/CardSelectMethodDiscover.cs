@@ -28,7 +28,7 @@ namespace TaleofMonsters.Controler.Battle.Components.CardSelect
         {
             player = p;
             
-            Selector.HideBackGroud();
+            Selector.HideBackgroud();
             Selector.Show(); 
         }
 
