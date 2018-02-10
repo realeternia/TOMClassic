@@ -195,7 +195,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 if (IsSilent && skill.Type != SkillSourceTypes.Weapon)
                     continue;
 
-                skill.CheckBurst(src, dest, isMelee);
+                skill.CheckBurst(src, dest, isMelee, true);
             }
         }
 

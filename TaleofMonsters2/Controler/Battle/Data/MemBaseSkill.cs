@@ -65,66 +65,73 @@ namespace TaleofMonsters.Controler.Battle.Data
             return MathTool.GetRandom(10000 + Self.RealLuk * GameConstants.LukToRoll) > (100 - Percent) * 100;
         }
 
-        public void CheckBurst(LiveMonster src, LiveMonster dest, bool isMelee)
+        public bool CheckBurst(LiveMonster src, LiveMonster dest, bool isMelee, bool needSave)
         {
             var isActive = src == Self;
             if (isActive && SkillInfo.SkillConfig.Active == SkillActiveType.Passive)
-                return;
+                return false;
             if (!isActive && SkillInfo.SkillConfig.Active == SkillActiveType.Active)
-                return;
+                return false;
 
             BurstStage isBurst = CheckRate() ? BurstStage.Pass : BurstStage.Fail;
             if (SkillInfo.SkillConfig.CanBurst != null && !SkillInfo.SkillConfig.CanBurst(src, dest, isMelee))
                 isBurst = BurstStage.Fail;
 
-            int key = GetBurstKey(src.Id, dest.Id);
-            burst[key] = isBurst;
+            if (needSave)
+            {
+                int key = GetBurstKey(src.Id, dest.Id);
+                burst[key] = isBurst;
+            }
+
+            return isBurst == BurstStage.Pass;
         }
 
         public void CheckInitialEffect()
         {
-            if (SkillInfo.SkillConfig.OnAdd != null)
+            if (SkillInfo.SkillConfig.OnAdd == null)
+                return;
+            if (CheckBurst(Self, null, true, false))
             {
-                if (CheckRate())
-                {
-                    onAddTriggered = true;
-                    SkillInfo.SkillConfig.OnAdd(SkillInfo, Self, Level);
-                    SendSkillIcon(0);
-                    if (SkillInfo.SkillConfig.Effect != "")
-                        BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
-                    if (SkillInfo.SkillConfig.EffectArea != "")
-                        SendAreaEffect(Self.Position);
-                }
+                onAddTriggered = true;
+                SkillInfo.SkillConfig.OnAdd(SkillInfo, Self, Level);
+                SendSkillIcon(0);
+                if (SkillInfo.SkillConfig.Effect != "")
+                    BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
+                if (SkillInfo.SkillConfig.EffectArea != "")
+                    SendAreaEffect(Self.Position);
             }
         }
 
         public void CheckRemoveEffect()
         {
-            if (onAddTriggered && SkillInfo.SkillConfig.OnRemove != null)
+            if (!onAddTriggered || SkillInfo.SkillConfig.OnRemove == null)
+                return;
+            if (CheckBurst(Self, null, true, false))
                 SkillInfo.SkillConfig.OnRemove(SkillInfo, Self, Level);
         }
+
         public void CheckSilentEffect()
         {
-            if (onAddTriggered && SkillInfo.SkillConfig.OnSilent != null)
+            if (!onAddTriggered || SkillInfo.SkillConfig.OnSilent == null)
+                return;
+            if (CheckBurst(Self, null, true, false))
                 SkillInfo.SkillConfig.OnSilent(SkillInfo, Self, Level);
         }
 
         public void CheckHit(LiveMonster src, LiveMonster dest, ref int hit, int key)
         {
-            if (SkillInfo.SkillConfig.CheckHit != null)
-            {
-                SkillInfo.SkillConfig.CheckHit(src, dest, ref hit, Level);
-                SendSkillIcon(key);
-            }
+            if (SkillInfo.SkillConfig.CheckHit == null)
+                return;
+            SkillInfo.SkillConfig.CheckHit(src, dest, ref hit, Level);
+            SendSkillIcon(key);
         }
 
         public void CheckDamage(LiveMonster src, LiveMonster dest, bool isActive, HitDamage damage, ref bool nodef, int key)
         {
-            if (SkillInfo.SkillConfig.CheckDamage != null)
-            {
-                SkillInfo.SkillConfig.CheckDamage(src, dest, isActive, damage, ref nodef, Level);
-                SendSkillIcon(key);
-            }
+            if (SkillInfo.SkillConfig.CheckDamage == null)
+                return;
+            SkillInfo.SkillConfig.CheckDamage(src, dest, isActive, damage, ref nodef, Level);
+            SendSkillIcon(key);
         }
 
         public void CheckHitEffectAfter(LiveMonster src, LiveMonster dest, HitDamage damage, int key)
@@ -149,59 +156,58 @@ namespace TaleofMonsters.Controler.Battle.Data
 
         public bool CheckSpecial(float pastRound)
         {
-            if (SkillInfo.SkillConfig.CheckSpecial != null)
-            {
-                castRoundAddon += pastRound;
-                if (!CheckRate())
-                    return false;
+            if (SkillInfo.SkillConfig.CheckSpecial == null)
+                return false;
 
-                if (castRoundAddon < SkillInfo.SkillConfig.SpecialCd)
-                    return false;//in cd 
+            if (!CheckBurst(Self, null, true, false))
+                return false;
 
-                castRoundAddon = (float)(castRoundAddon- SkillInfo.SkillConfig.SpecialCd);
+            castRoundAddon += pastRound;
+            if (castRoundAddon < SkillInfo.SkillConfig.SpecialCd)
+                return false;//in cd 
 
-                SkillInfo.SkillConfig.CheckSpecial(SkillInfo, Self, Level);
-                SendSkillIcon(0);
-                if (SkillInfo.SkillConfig.Effect!="")
-                    BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
-                if (SkillInfo.SkillConfig.EffectArea != "")
-                    SendAreaEffect(Self.Position);
-                return true;
-            }
-            return false;
+            castRoundAddon = (float)(castRoundAddon- SkillInfo.SkillConfig.SpecialCd);
+
+            SkillInfo.SkillConfig.CheckSpecial(SkillInfo, Self, Level);
+            SendSkillIcon(0);
+            if (SkillInfo.SkillConfig.Effect!="")
+                BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
+            if (SkillInfo.SkillConfig.EffectArea != "")
+                SendAreaEffect(Self.Position);
+            return true;
         }
 
         public void OnUseCard(IPlayer caster, int cardType, int lv)
         {
-            if (SkillInfo.SkillConfig.OnUseCard != null)
-            {
-                if (!CheckRate())
-                    return;
+            if (SkillInfo.SkillConfig.OnUseCard == null)
+                return;
 
-                bool success = false;
-                SkillInfo.SkillConfig.OnUseCard(SkillInfo, Self, caster, cardType, lv, ref success);
-                if (success)
-                {
-                    SendSkillIcon(0);
-                    if (SkillInfo.SkillConfig.Effect != "")
-                        BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
-                }
+            if (!CheckBurst(Self, null, true, false))
+                return;
+
+            bool success = false;
+            SkillInfo.SkillConfig.OnUseCard(SkillInfo, Self, caster, cardType, lv, ref success);
+            if (success)
+            {
+                SendSkillIcon(0);
+                if (SkillInfo.SkillConfig.Effect != "")
+                    BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
             }
         }
 
         public void DeathSkill()
         {
-            if (SkillInfo.SkillConfig.DeathSkill != null)
-            {
-                if (!CheckRate())
-                    return;
+            if (SkillInfo.SkillConfig.DeathSkill == null)
+                return;
 
-                SkillInfo.SkillConfig.DeathSkill(SkillInfo, Self, Level);
-                {
-                    SendSkillIcon(0);
-                    if (SkillInfo.SkillConfig.Effect != "")
-                        BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
-                }
+            if (!CheckBurst(Self, null, true, false))
+                return;
+
+            SkillInfo.SkillConfig.DeathSkill(SkillInfo, Self, Level);
+            {
+                SendSkillIcon(0);
+                if (SkillInfo.SkillConfig.Effect != "")
+                    BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
             }
         }
 

@@ -336,9 +336,7 @@ namespace ControlPlus
             Font fontInfo = new Font("宋体", id == 0 ? 10*1.33f : 9*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             Brush brush = new SolidBrush(color);
             if (Off > 0)
-            {
                 x = Off;
-            }
             g.DrawString(text, fontInfo, brush, x, y + (height - 14) / 2, StringFormat.GenericTypographic);
             fontInfo.Dispose();
             brush.Dispose();
@@ -365,22 +363,17 @@ namespace ControlPlus
 
         public int Width
         {
-            get
-            {
-                return wid;
-            }
+            get { return wid; }
         }
 
         public void Draw(Graphics g, int id, ref int x, int y, int twid, int height)
         {
+            if(img == null)
+                return;
             if (Height > 0)
-            {
                 g.DrawImage(img, x, y - 1+(height-Height)/2, wid, Height);
-            }
             else
-            {
                 g.DrawImage(img, x, y - 1, wid, height);    
-            }
         }
 
         #endregion
@@ -444,10 +437,7 @@ namespace ControlPlus
 
         public int Width
         {
-            get
-            {
-                return wid;
-            }
+            get { return wid; }
         }
 
         public void Draw(Graphics g, int id, ref int x, int y, int twid, int height)
@@ -485,10 +475,7 @@ namespace ControlPlus
 
         public int Width
         {
-            get
-            {
-                return 0;
-            }
+            get { return 0; }
         }
 
         public void Draw(Graphics g, int id, ref int x, int y, int twid, int height)
