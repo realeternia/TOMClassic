@@ -51,7 +51,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 else
                 {
                     if (Parm.RuleAddon == PeopleFightRuleAddon.TowerHp)
-                        lm.AddMaxHp(lm.MaxHp.Source*(Parm.RuleLevel*40)/100);
+                        lm.AddMaxHp(lm.MaxHp*(Parm.RuleLevel*40)/100);
                 }
             }
         }

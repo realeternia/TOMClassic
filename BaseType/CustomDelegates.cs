@@ -1,17 +1,17 @@
 namespace ConfigDatas
 {
-    public delegate void BuffEffectDelegate(IMonster owner);
+    public delegate void BuffEffectDelegate(IBuff buf, IMonster owner);
 
-    public delegate void SkillInitialEffectDelegate(ITargetMeasurable sp, IMonster src, int level);
+    public delegate void SkillInitialEffectDelegate(ISkill skl, IMonster src);
 
     public delegate bool SkillBurstCheckDelegate(IMonster src, IMonster dest, bool isMelee);
-    public delegate void SkillHitEffectDelegate(IMonster src, IMonster dest, ref int hit, int level);
-    public delegate void SkillDamageEffectDelegate(IMonster src, IMonster dest, bool isActive, HitDamage damage, ref bool noDef, int level);
-    public delegate void SkillAfterHitEffectDelegate(ITargetMeasurable sp, IMonster src, IMonster dest, HitDamage damage, int level);
-    public delegate void SkillTimelyEffectDelegate(ITargetMeasurable sp, IMonster src, int level);
-    public delegate void SkillUseCardHandleDelegate(ITargetMeasurable sp, IMonster src, IPlayer p, int cardType, int cardLevel, ref bool success);
+    public delegate void SkillHitEffectDelegate(ISkill skl, IMonster src, IMonster dest, ref int hit);
+    public delegate void SkillDamageEffectDelegate(ISkill skl, IMonster src, IMonster dest, bool isActive, HitDamage damage, ref bool noDef);
+    public delegate void SkillAfterHitEffectDelegate(ISkill skl, IMonster src, IMonster dest, HitDamage damage);
+    public delegate void SkillTimelyEffectDelegate(ISkill skl, IMonster src);
+    public delegate void SkillUseCardHandleDelegate(ISkill skl, IMonster src, IPlayer p, int cardType, int cardLevel, ref bool success);
 
-    public delegate void SpellEffectDelegate(ISpell spell,IMap map, IPlayer player, IPlayer rival, IMonster target, System.Drawing.Point mouse, int level);
+    public delegate void SpellEffectDelegate(ISpell spell,IMap map, IPlayer player, IPlayer rival, IMonster target, System.Drawing.Point mouse);
 
     public delegate bool SpellTrapAddCardDelegate(IPlayer player, IPlayer rival, ITrap trap, int cardId, int cardType);
     public delegate bool SpellTrapSummonDelegate(IPlayer player, IPlayer rival, ITrap trap, IMonster mon, int level);

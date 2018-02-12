@@ -56,18 +56,25 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
 
         public void CheckWeaponEffect(LiveMonster src, int symbol)
         {
-            src.Atk += avatar.Atk * GameConstants.SideKickFactor * symbol;
-            src.MaxHp += avatar.Hp * GameConstants.SideKickFactor * symbol;
-            if (symbol > 0 && avatar.Hp > 0)//加buff时候
-                src.AddHp(avatar.Hp);//顺便把hp也加上
+            if (symbol > 0)
+            {
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Atk, (int)(avatar.Atk * GameConstants.SideKickFactor));
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.MaxHp, (int)(avatar.Hp * GameConstants.SideKickFactor));
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Def, avatar.Def);
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Mag, avatar.Mag);
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Hit, avatar.Hit);
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Dhit, avatar.Dhit);
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Spd, avatar.Spd);
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Crt, avatar.Crt);
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Luk, avatar.Luk);
 
-            src.Def += avatar.Def * symbol;
-            src.Mag += avatar.Mag * symbol;
-            src.Hit += avatar.Hit * symbol;
-            src.Dhit += avatar.Dhit * symbol;
-            src.Crt += avatar.Crt * symbol;
-            src.Spd += avatar.Spd * symbol;
-            src.Luk += avatar.Luk * symbol;
+                if (symbol > 0 && avatar.Hp > 0)//加buff时候
+                    src.AddHp(avatar.Hp);//顺便把hp也加上
+            }
+            else
+            {
+                src.RemoveAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId);
+            }
         }
 
         public string Des

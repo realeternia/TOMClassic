@@ -37,7 +37,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemSpell
                 Player p1 = isLeft ? BattleManager.Instance.PlayerManager.LeftPlayer : BattleManager.Instance.PlayerManager.RightPlayer;
                 Player p2 = !isLeft ? BattleManager.Instance.PlayerManager.LeftPlayer : BattleManager.Instance.PlayerManager.RightPlayer;
 
-                spellInfo.SpellConfig.Effect(spellInfo, BattleManager.Instance.MemMap, p1, p2, target, mouse, Level);
+                spellInfo.SpellConfig.Effect(spellInfo, BattleManager.Instance.MemMap, p1, p2, target, mouse);
 
                 if (!string.IsNullOrEmpty(spellInfo.SpellConfig.AreaEffect))
                 {

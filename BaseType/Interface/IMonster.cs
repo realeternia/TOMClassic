@@ -22,16 +22,16 @@ namespace ConfigDatas
         IMonsterAction Action { get; }
         bool IsLeft { get; }
 
-        AttrModifyData Atk { get; set; }
-        AttrModifyData MaxHp { get; set; }
+        int Atk { get; }
+        int MaxHp { get; }
 
-        AttrModifyData Def { get; set; }
-        AttrModifyData Mag { get; set; }
-        AttrModifyData Spd { get; set; }
-        AttrModifyData Hit { get; set; }
-        AttrModifyData Dhit { get; set; }
-        AttrModifyData Crt { get; set; }
-        AttrModifyData Luk { get; set; }
+        int Def { get; }
+        int Mag { get; }
+        int Spd { get; }
+        int Hit { get; }
+        int Dhit { get; }
+        int Crt { get; }
+        int Luk { get; }
         int Cure { get; }
 
         double CrtDamAddRate { get; set; } //暴击时伤害倍数增加

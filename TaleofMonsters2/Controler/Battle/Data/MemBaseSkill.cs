@@ -93,7 +93,7 @@ namespace TaleofMonsters.Controler.Battle.Data
             if (CheckBurst(Self, null, true, false))
             {
                 onAddTriggered = true;
-                SkillInfo.SkillConfig.OnAdd(SkillInfo, Self, Level);
+                SkillInfo.SkillConfig.OnAdd(SkillInfo, Self);
                 SendSkillIcon(0);
                 if (SkillInfo.SkillConfig.Effect != "")
                     BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
@@ -107,7 +107,7 @@ namespace TaleofMonsters.Controler.Battle.Data
             if (!onAddTriggered || SkillInfo.SkillConfig.OnRemove == null)
                 return;
             if (CheckBurst(Self, null, true, false))
-                SkillInfo.SkillConfig.OnRemove(SkillInfo, Self, Level);
+                SkillInfo.SkillConfig.OnRemove(SkillInfo, Self);
         }
 
         public void CheckSilentEffect()
@@ -115,14 +115,14 @@ namespace TaleofMonsters.Controler.Battle.Data
             if (!onAddTriggered || SkillInfo.SkillConfig.OnSilent == null)
                 return;
             if (CheckBurst(Self, null, true, false))
-                SkillInfo.SkillConfig.OnSilent(SkillInfo, Self, Level);
+                SkillInfo.SkillConfig.OnSilent(SkillInfo, Self);
         }
 
         public void CheckHit(LiveMonster src, LiveMonster dest, ref int hit, int key)
         {
             if (SkillInfo.SkillConfig.CheckHit == null)
                 return;
-            SkillInfo.SkillConfig.CheckHit(src, dest, ref hit, Level);
+            SkillInfo.SkillConfig.CheckHit(SkillInfo, src, dest, ref hit);
             SendSkillIcon(key);
         }
 
@@ -130,7 +130,7 @@ namespace TaleofMonsters.Controler.Battle.Data
         {
             if (SkillInfo.SkillConfig.CheckDamage == null)
                 return;
-            SkillInfo.SkillConfig.CheckDamage(src, dest, isActive, damage, ref nodef, Level);
+            SkillInfo.SkillConfig.CheckDamage(SkillInfo, src, dest, isActive, damage, ref nodef);
             SendSkillIcon(key);
         }
 
@@ -138,7 +138,7 @@ namespace TaleofMonsters.Controler.Battle.Data
         {
             if (SkillInfo.SkillConfig.AfterHit != null)
             {
-                SkillInfo.SkillConfig.AfterHit(SkillInfo, src, dest, damage, Level);
+                SkillInfo.SkillConfig.AfterHit(SkillInfo, src, dest, damage);
                 SendSkillIcon(key);
                 if (SkillInfo.SkillConfig.EffectArea != "")
                     SendAreaEffect(SkillInfo.SkillConfig.PointSelf ? Self.Position : dest.Position);
@@ -146,7 +146,7 @@ namespace TaleofMonsters.Controler.Battle.Data
 
             if (SkillInfo.SkillConfig.DeathHit != null && !dest.IsAlive)
             {
-                SkillInfo.SkillConfig.DeathHit(SkillInfo, src, dest, damage, Level);
+                SkillInfo.SkillConfig.DeathHit(SkillInfo, src, dest, damage);
                 SendSkillIcon(key);
                 if (SkillInfo.SkillConfig.EffectArea != "")
                     SendAreaEffect(SkillInfo.SkillConfig.PointSelf ? Self.Position : dest.Position);
@@ -168,7 +168,7 @@ namespace TaleofMonsters.Controler.Battle.Data
 
             castRoundAddon = (float)(castRoundAddon- SkillInfo.SkillConfig.SpecialCd);
 
-            SkillInfo.SkillConfig.CheckSpecial(SkillInfo, Self, Level);
+            SkillInfo.SkillConfig.CheckSpecial(SkillInfo, Self);
             SendSkillIcon(0);
             if (SkillInfo.SkillConfig.Effect!="")
                 BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
@@ -203,7 +203,7 @@ namespace TaleofMonsters.Controler.Battle.Data
             if (!CheckBurst(Self, null, true, false))
                 return;
 
-            SkillInfo.SkillConfig.DeathSkill(SkillInfo, Self, Level);
+            SkillInfo.SkillConfig.DeathSkill(SkillInfo, Self);
             {
                 SendSkillIcon(0);
                 if (SkillInfo.SkillConfig.Effect != "")

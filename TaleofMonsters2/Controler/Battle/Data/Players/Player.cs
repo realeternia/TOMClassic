@@ -511,7 +511,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 return;
 
             BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect("longly"), Tower as LiveMonster, true));
-            Tower.OnMagicDamage(null, Tower.MaxHp.Source / 10, (int)CardElements.None);
+            Tower.OnMagicDamage(null, Tower.MaxHp / 10, (int)CardElements.None);
             BattleManager.Instance.FlowWordQueue.Add(new FlowErrInfo(noCard ? ErrorConfig.Indexer.CardOutPunish :
                 ErrorConfig.Indexer.CardFullPunish, Tower.Position, 0, 3));
         }

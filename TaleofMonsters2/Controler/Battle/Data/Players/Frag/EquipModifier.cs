@@ -43,7 +43,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                     mon.Atk += equipAddon.Atk;    
                 if (equipAddon.Hp > 0)
                 {
-                    mon.MaxHp.Source += equipAddon.Hp;
+                    mon.MaxHp += equipAddon.Hp;
                     mon.AddHp(equipAddon.Hp);//顺便把hp也加上
                 }
                 if (equipAddon.Def > 0)
@@ -64,24 +64,14 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                     mon.Avatar.Range += equipAddon.Range;
                 if (equipAddon.CommonSkillList.Count > 0)
                     mon.SkillManager.AddSkillBeforeInit(equipAddon.CommonSkillList, SkillSourceTypes.Equip);
-
-                mon.Atk.Locked = true;
-                mon.MaxHp.Locked = true;
-                mon.Def.Locked = true;
-                mon.Mag.Locked = true;
-                mon.Spd.Locked = true;
-                mon.Hit.Locked = true;
-                mon.Dhit.Locked = true;
-                mon.Crt.Locked = true;
-                mon.Luk.Locked = true;
             }
             else if (mon.Type == (int) CardTypeSub.NormalTower)
             {
                 if (equipAddon.Atk > 0)
-                    mon.Atk += equipAddon.Atk * 0.5;
+                    mon.Atk += (int)(equipAddon.Atk * 0.5);
                 if (equipAddon.Hp > 0)
                 {
-                    mon.MaxHp += equipAddon.Hp * 0.5;
+                    mon.MaxHp += (int)(equipAddon.Hp * 0.5);
                     mon.AddHp(equipAddon.Hp * 0.5);//顺便把hp也加上
                 }
             }
@@ -95,11 +85,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                         if (equipConfig.PickMethod(mon))
                         {
                             if (equipConfig.MonsterAtk > 0)
-                                mon.Atk += mon.Atk.Source*equipConfig.MonsterAtk/100;
+                                mon.Atk += mon.Atk*equipConfig.MonsterAtk/100;
                             if (equipConfig.MonsterHp > 0)
                             {
-                                var addon = mon.MaxHp.Source*equipConfig.MonsterHp/100;
-                                mon.MaxHp.Source += addon;
+                                var addon = mon.MaxHp*equipConfig.MonsterHp/100;
+                                mon.MaxHp += addon;
                                 mon.AddHp(addon); //顺便把hp也加上
                             }
                         }

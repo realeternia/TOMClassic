@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
 using NarlonLib.Log;
@@ -19,6 +20,22 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 {
     internal class LiveMonster : IMonster
     {
+        public class AttrModifyInfo
+        {
+            internal enum AttrModifyTypes
+            {
+                Skill = 1, Buff, Weapon
+            }
+            internal enum AttrTypes
+            {
+                Atk = 1, Def, Mag, Spd, Hit, Dhit, Crt, Luk, MaxHp
+            }
+            public AttrModifyTypes Type { get; set; }
+            public int ItemId { get; set; }
+            public AttrTypes Attr { get; set; }
+            public int Val { get; set; }
+        }
+
         private readonly MonsterAi aiController;
         public HpBar HpBar { get; private set; }
         public SkillManager SkillManager { get; private set; }
@@ -61,17 +78,18 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public virtual bool CanMove { get { return !BuffManager.HasBuff(BuffEffectTypes.NoMove); } }
         public bool CanAttack { get; set; }
         public int AttackType { get; set; }//只有武器可以改变，技能不行
-        public AttrModifyData Atk { get; set; }
-        public AttrModifyData MaxHp { get; set; }
+        public int Atk { get; set; }
+        public int MaxHp { get; set; }
 
-        public AttrModifyData Def { get; set; }
-        public AttrModifyData Mag { get; set; }
-        public AttrModifyData Spd { get; set; }
-        public AttrModifyData Hit { get; set; }
-        public AttrModifyData Dhit { get; set; }
-        public AttrModifyData Crt { get; set; }
-        public AttrModifyData Luk { get; set; }
+        public int Def { get; set; }
+        public int Mag { get; set; }
+        public int Spd { get; set; }
+        public int Hit { get; set; }
+        public int Dhit { get; set; }
+        public int Crt { get; set; }
+        public int Luk { get; set; }
 
+        private List<AttrModifyInfo> modifyList;
         public int Cure { get { return Avatar.Cure; } }
         public double CrtDamAddRate { get; set; }
         public int MovRound { get; set; }
@@ -90,86 +108,23 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 Position.Y + BattleManager.Instance.MemMap.CardSize / 2); }
         }
 
-        public int RealAtk
-        {
-            get
-            {
-                double diff = (Atk.Source + Atk.Adder) * (1 + Atk.Multiter) - Atk.Source;
-                return Math.Max((int)(Atk.Source + diff), 0);
-            }
-        }
+        public int RealAtk { get; private set; }
 
-        public int RealMaxHp
-        {
-            get
-            {
-                double diff = (MaxHp.Source + MaxHp.Adder) * (1 + MaxHp.Multiter) - MaxHp.Source;
-                return Math.Max((int)(MaxHp.Source + diff), 0);
-            }
-        }
+        public int RealMaxHp { get; private set; }
 
-        public int RealDef
-        {
-            get
-            {
-                double diff = (Def.Source + Def.Adder) * (1 + Def.Multiter) - Def.Source;
-                return (int)(Def.Source + diff);
-            }
-        }
+        public int RealDef { get; private set; }
 
-        public int RealMag
-        {
-            get
-            {
-                double diff = (Mag.Source + Mag.Adder) * (1 + Mag.Multiter) - Mag.Source;
-                return (int)(Mag.Source + diff);
-            }
-        }
+        public int RealMag { get; private set; }
 
-        public int RealSpd
-        {
-            get
-            {
-                double diff = (Spd.Source + Spd.Adder) * (1 + Spd.Multiter) - Spd.Source;
-                return (int)(Spd.Source + diff);
-            }
-        }
+        public int RealSpd { get; private set; }
 
-        public int RealHit
-        {
-            get
-            {
-                double diff = (Hit.Source + Hit.Adder) * (1 + Hit.Multiter) - Hit.Source;
-                return (int)(Hit.Source + diff);
-            }
-        }
+        public int RealHit { get; private set; }
 
-        public int RealDHit
-        {
-            get
-            {
-                double diff = (Dhit.Source + Dhit.Adder) * (1 + Dhit.Multiter) - Dhit.Source;
-                return (int)(Dhit.Source + diff);
-            }
-        }
+        public int RealDHit { get; private set; }
 
-        public int RealCrt
-        {
-            get
-            {
-                double diff = (Crt.Source + Crt.Adder) * (1 + Crt.Multiter) - Crt.Source;
-                return (int)(Crt.Source + diff);
-            }
-        }
+        public int RealCrt { get; private set; }
 
-        public int RealLuk
-        {
-            get
-            {
-                double diff = (Luk.Source + Luk.Adder) * (1 + Luk.Multiter) - Luk.Source;
-                return (int)(Luk.Source + diff);
-            }
-        }
+        public int RealLuk { get; private set; }
 
         public virtual string Arrow
         {
@@ -250,6 +205,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             Action = new MonsterAction(this);
             IsPrepare = true;
             PrepareAtsNeed = GameConstants.PrepareAts;
+            modifyList = new List<AttrModifyInfo>();
         }
 
         public void SetBasicData()
@@ -260,29 +216,15 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             
             antiMagic = new int[7];//7个属性
 
-            Atk = new AttrModifyData(Avatar.Atk);
-            MaxHp = new AttrModifyData(Avatar.Hp);
-            Def = new AttrModifyData(Avatar.Def);
-            Mag = new AttrModifyData(Avatar.Mag);
-            Spd = new AttrModifyData(Avatar.Spd);
-            Hit = new AttrModifyData(Avatar.Hit);
-            Dhit = new AttrModifyData(Avatar.Dhit);
-            Crt = new AttrModifyData(Avatar.Crt);
-            Luk = new AttrModifyData(Avatar.Luk);
-        }
-
-        public void AddBasicData(int attrIndex, int addon)
-        {
-            switch (attrIndex)
-            {
-                case 1: Def += addon; return;
-                case 2: Mag += addon; return;
-                case 3: Spd += addon; return;
-                case 4: Hit += addon; return;
-                case 5: Dhit += addon; return;
-                case 6: Crt += addon; return;
-                case 7: Luk += addon; return;
-            }
+            Atk = Avatar.Atk;
+            MaxHp = Avatar.Hp;
+            Def = Avatar.Def;
+            Mag = Avatar.Mag;
+            Spd = Avatar.Spd;
+            Hit = Avatar.Hit;
+            Dhit = Avatar.Dhit;
+            Crt = Avatar.Crt;
+            Luk = Avatar.Luk;
         }
 
         public void OnInit()
@@ -584,7 +526,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
 
             var lifeRate = Hp / MaxHp;
-            MaxHp.Source += value;
+            MaxHp = (int)(MaxHp + value);
             if (value > 0)
                 AddHp(value);//顺便把hp也加上
             else
@@ -640,6 +582,70 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             aiController.ClearTarget();
         }
+
+        public void AddAttrModify(int tp, int itemId, int attr, int val)
+        {//看下是否需要合并
+            if (val == 0)
+                return;
+
+            modifyList.Add(new AttrModifyInfo {Type = (AttrModifyInfo.AttrModifyTypes)tp, ItemId = itemId, Attr = (AttrModifyInfo.AttrTypes)attr, Val = val});
+
+            RealAtk = Atk;
+            RealDef = Def;
+            RealMag = Mag;
+            RealSpd = Spd;
+            RealHit = Hit;
+            RealDHit = Dhit;
+            RealCrt = Crt;
+            RealLuk = Luk;
+            RealMaxHp = MaxHp;
+            foreach (var attrModifyInfo in modifyList)
+            {
+                switch (attrModifyInfo.Attr)
+                {
+                    case AttrModifyInfo.AttrTypes.Atk:RealAtk+=attrModifyInfo.Val; break;
+                    case AttrModifyInfo.AttrTypes.MaxHp: RealMaxHp += attrModifyInfo.Val; break;
+                    case AttrModifyInfo.AttrTypes.Def: RealDef += attrModifyInfo.Val; break;
+                    case AttrModifyInfo.AttrTypes.Mag: RealMag += attrModifyInfo.Val; break;
+                    case AttrModifyInfo.AttrTypes.Spd: RealSpd += attrModifyInfo.Val; break;
+                    case AttrModifyInfo.AttrTypes.Hit: RealHit += attrModifyInfo.Val; break;
+                    case AttrModifyInfo.AttrTypes.Dhit: RealDHit += attrModifyInfo.Val; break;
+                    case AttrModifyInfo.AttrTypes.Crt: RealCrt += attrModifyInfo.Val; break;
+                    case AttrModifyInfo.AttrTypes.Luk: RealLuk += attrModifyInfo.Val; break;
+                }
+            }
+        }
+
+        public void RemoveAttrModify(int tp, int itemId)
+        {//看下是否需要合并
+            modifyList.RemoveAll(item => (int) item.Type == tp && item.ItemId == itemId);
+
+            RealAtk = Atk;
+            RealDef = Def;
+            RealMag = Mag;
+            RealSpd = Spd;
+            RealHit = Hit;
+            RealDHit = Dhit;
+            RealCrt = Crt;
+            RealLuk = Luk;
+            RealMaxHp = MaxHp;
+            foreach (var attrModifyInfo in modifyList)
+            {
+                switch (attrModifyInfo.Attr)
+                {
+                    case AttrModifyInfo.AttrTypes.Atk: RealAtk += attrModifyInfo.Val; break;
+                    case AttrModifyInfo.AttrTypes.MaxHp: RealMaxHp += attrModifyInfo.Val; break;
+                    case AttrModifyInfo.AttrTypes.Def: RealDef += attrModifyInfo.Val; break;
+                    case AttrModifyInfo.AttrTypes.Mag: RealMag += attrModifyInfo.Val; break;
+                    case AttrModifyInfo.AttrTypes.Spd: RealSpd += attrModifyInfo.Val; break;
+                    case AttrModifyInfo.AttrTypes.Hit: RealHit += attrModifyInfo.Val; break;
+                    case AttrModifyInfo.AttrTypes.Dhit: RealDHit += attrModifyInfo.Val; break;
+                    case AttrModifyInfo.AttrTypes.Crt: RealCrt += attrModifyInfo.Val; break;
+                    case AttrModifyInfo.AttrTypes.Luk: RealLuk += attrModifyInfo.Val; break;
+                }
+            }
+        }
+
 
         public bool ResistBuffType(BuffImmuneGroup type)
         {

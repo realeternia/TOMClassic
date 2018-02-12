@@ -2,11 +2,11 @@ using ConfigDatas;
 
 namespace TaleofMonsters.DataType.Buffs
 {
-    internal class Buff
+    internal class Buff : IBuff
     {
         public BuffConfig BuffConfig { get; private set; }
 
-        private int lv = 1;
+        public int Level { get; set; }
 
         public int Id
         {
@@ -16,16 +16,17 @@ namespace TaleofMonsters.DataType.Buffs
         public Buff(int id)
         {
             BuffConfig = ConfigData.BuffDict[id];
+            Level = 1;
         }
 
         public void UpgradeToLevel(int newLevel)
         {
-            lv = newLevel;
+            Level = newLevel;
         }
 
         public string Descript
         {
-            get { return BuffConfig.GetDescript(lv); }
+            get { return BuffConfig.GetDescript(Level); }
         }
 
     }

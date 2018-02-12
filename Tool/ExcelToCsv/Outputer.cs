@@ -147,9 +147,7 @@ namespace ExcelToCsv
             {
                 var nameStr = names[i].ToString();
                 if (nameStr[0] == '~')
-                {
                     continue;
-                }
 
                 var typeStr = types[i].ToString();
                 string result;
@@ -161,31 +159,31 @@ namespace ExcelToCsv
                 {
                     result = datas[i].ToString() == ""
                                   ? "null"
-                                  : string.Format("delegate(IMonster o){{{0}}}", datas[i]);
+                                  : string.Format("delegate(IBuff buf, IMonster o){{{0}}}", datas[i]);
                 }
                 else if (typeStr == "SkillInitialEffectDelegate")
                 {
                     result = datas[i].ToString() == ""
                                   ? "null"
-                                  : string.Format("delegate(ITargetMeasurable sp,IMonster s,int lv){{{0}}}", datas[i]);
+                                  : string.Format("delegate(ISkill skl,IMonster s){{{0}}}", datas[i]);
                 }
                 else if (typeStr == "SkillHitEffectDelegate")
                 {
                     result = datas[i].ToString() == ""
                                   ? "null"
-                                  : string.Format("delegate(IMonster s,IMonster d,ref int hit,int lv){{{0}}}", datas[i]);
+                                  : string.Format("delegate(ISkill skl,IMonster s,IMonster d,ref int hit){{{0}}}", datas[i]);
                 }
                 else if (typeStr == "SkillDamageEffectDelegate")
                 {
                     result = datas[i].ToString() == ""
                                   ? "null"
-                                  : string.Format( "delegate(IMonster s,IMonster d,bool isActive,HitDamage damage, ref bool nodef,int lv){{{0}}}", datas[i]);
+                                  : string.Format("delegate(ISkill skl,IMonster s,IMonster d,bool isActive,HitDamage damage, ref bool nodef){{{0}}}", datas[i]);
                 }
                 else if (typeStr == "SkillAfterHitEffectDelegate")
                 {
                     result = datas[i].ToString() == ""
                                   ? "null"
-                                  : string.Format("delegate(ITargetMeasurable sp,IMonster s,IMonster d,HitDamage damage,int lv){{{0}}}", datas[i]);
+                                  : string.Format("delegate(ISkill skl,IMonster s,IMonster d,HitDamage damage){{{0}}}", datas[i]);
                 }
                 else if (typeStr == "SkillBurstCheckDelegate")
                 {
@@ -197,19 +195,19 @@ namespace ExcelToCsv
                 {
                     result = datas[i].ToString() == ""
                                   ? "null"
-                                  : string.Format("delegate(ITargetMeasurable sp,IMonster s,int lv){{{0}}}", datas[i]);
+                                  : string.Format("delegate(ISkill skl,IMonster s){{{0}}}", datas[i]);
                 }
                 else if (typeStr == "SkillUseCardHandleDelegate")
                 {
                     result = datas[i].ToString() == ""
                                   ? "null"
-                                  : string.Format("delegate(ITargetMeasurable sp,IMonster s, IPlayer p, int type, int lv, ref bool eff){{{0}}}", datas[i]);
+                                  : string.Format("delegate(ISkill skl,IMonster s, IPlayer p, int type, int lv, ref bool eff){{{0}}}", datas[i]);
                 }
                 else if (typeStr == "SpellEffectDelegate")
                 {
                     result = datas[i].ToString() == ""
                                   ? "null"
-                                  : string.Format("delegate(ISpell s, IMap m, IPlayer p, IPlayer r, IMonster t,System.Drawing.Point mouse,int lv){{{0}}}", datas[i]);
+                                  : string.Format("delegate(ISpell spl, IMap m, IPlayer p, IPlayer r, IMonster t,System.Drawing.Point mouse){{{0}}}", datas[i]);
                 }
                 else if (typeStr == "SpellTrapAddCardDelegate")
                 {

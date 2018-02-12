@@ -293,7 +293,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         public void MadDrug()
         {
             if (!self.Avatar.MonsterConfig.IsBuilding && self.RealRange > 0)
-                self.Atk.Source = self.MaxHp.Source / 5;
+                self.Atk = self.MaxHp / 5;
         }
 
         public void CureRandomAlien(double rate)
@@ -316,8 +316,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void EatTomb(IMonster tomb)
         {
-            self.Atk.Source *= 1.1;
-            self.AddMaxHp(self.MaxHp.Source * 0.1);
+            self.Atk = (int)(self.Attr * 1.1);
+            self.AddMaxHp(self.MaxHp * 0.1);
             (tomb as LiveMonster).Action.Disappear();
         }
 
@@ -346,6 +346,13 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         public int GetPArmor()
         {
             return self.HpBar.PArmor;
+        }
+
+        public void AddAttrModify(string tp, int itemId, string attr, double val)
+        {
+            int tpId = (int)Enum.Parse(typeof (LiveMonster.AttrModifyInfo.AttrModifyTypes), tp);
+            int attrId = (int)Enum.Parse(typeof(LiveMonster.AttrModifyInfo.AttrTypes), attr);
+            self.AddAttrModify(tpId, itemId, attrId, (int)val);
         }
     }
 }

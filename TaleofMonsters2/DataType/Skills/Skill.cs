@@ -2,16 +2,16 @@
 
 namespace TaleofMonsters.DataType.Skills
 {
-    internal class Skill : ITargetMeasurable
+    internal class Skill : ISkill
     {
         public SkillConfig SkillConfig { get; private set; }
-
-        private int lv = 1;
 
         public int Id
         {
             get { return SkillConfig.Id; }
         }
+
+        public int Level { get; set; }
 
         public string Name
         {
@@ -21,6 +21,7 @@ namespace TaleofMonsters.DataType.Skills
         public Skill(int id)
         {
             SkillConfig = ConfigData.GetSkillConfig(id);
+            Level = 1;
         }
 
         public string Target
@@ -43,14 +44,14 @@ namespace TaleofMonsters.DataType.Skills
             get
             {
                 if (SkillConfig.DescriptBuffId > 0)
-                    return SkillConfig.GetDescript(lv) + ConfigDatas.ConfigData.GetBuffConfig(SkillConfig.DescriptBuffId).GetDescript(lv);
-                return SkillConfig.GetDescript(lv);
+                    return SkillConfig.GetDescript(Level) + ConfigDatas.ConfigData.GetBuffConfig(SkillConfig.DescriptBuffId).GetDescript(Level);
+                return SkillConfig.GetDescript(Level);
             }
         }
 
         public Skill UpgradeToLevel(int newLevel)
         {
-            lv = newLevel;
+            Level = newLevel;
             return this;
         }
     }

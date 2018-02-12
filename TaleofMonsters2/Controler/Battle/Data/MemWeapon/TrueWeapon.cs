@@ -80,20 +80,26 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
         public void CheckWeaponEffect(LiveMonster src, int symbol)
         {
             WeaponConfig weaponConfig = ConfigData.GetWeaponConfig(CardId);
+            if (symbol > 0)
+            {
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Atk, avatar.Atk);
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Def, avatar.Def);
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Mag, avatar.Mag);
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Hit, avatar.Hit);
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Dhit, avatar.Dhit);
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Spd, avatar.Spd);
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Crt, avatar.Crt);
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Luk, avatar.Luk);
+            }
+            else
+            {
+                src.RemoveAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId);
+            }
 
-            src.Atk += avatar.Atk * symbol;
-            //src.MaxHp += avatar.Hp * symbol;
             if (avatar.PArmor > 0)
                 src.HpBar.AddPArmor(avatar.PArmor * symbol);
             if (avatar.MArmor > 0)
                 src.HpBar.AddMArmor(avatar.MArmor * symbol);
-            src.Def += avatar.Def * symbol;
-            src.Mag += avatar.Mag * symbol;
-            src.Hit += avatar.Hit * symbol;
-            src.Dhit += avatar.Dhit * symbol;
-            src.Crt += avatar.Crt * symbol;
-            src.Spd += avatar.Spd * symbol;
-            src.Luk += avatar.Luk * symbol;
 
             if (weaponConfig.Type == (int)CardTypeSub.Scroll)
             {

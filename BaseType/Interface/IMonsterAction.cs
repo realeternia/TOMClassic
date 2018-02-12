@@ -44,5 +44,7 @@
         void AddPArmor(double val);
         void AddMArmor(double val);
         int GetPArmor();
+
+        void AddAttrModify(string tp, int itemId, string attr, double val);
     }
 }

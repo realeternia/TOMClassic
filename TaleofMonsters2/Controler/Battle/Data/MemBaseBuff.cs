@@ -42,17 +42,13 @@ namespace TaleofMonsters.Controler.Battle.Data
         public void OnAddBuff(LiveMonster src)
         {
             if (BuffConfig.OnAdd!=null)
-            {
-                BuffConfig.OnAdd(src);
-            }
+                BuffConfig.OnAdd(BuffInfo, src);
         }
 
         public void OnRemoveBuff(LiveMonster src)
         {
             if (BuffConfig.OnRemove != null)
-            {
-                BuffConfig.OnRemove(src);
-            }
+                BuffConfig.OnRemove(BuffInfo, src);
         }
 
         public void OnRoundEffect(LiveMonster src)
@@ -60,12 +56,10 @@ namespace TaleofMonsters.Controler.Battle.Data
             TimeLeft -= 0.025;
             RoundMark++;
 
-            if (RoundMark%100==50)//每0.5回合触发
+            if (RoundMark%100 == 50) //每0.5回合触发
             {
                 if (BuffConfig.OnRound != null)
-                {
-                    BuffConfig.OnRound(src);
-                }
+                    BuffConfig.OnRound(BuffInfo, src);
             }
         }
     }
