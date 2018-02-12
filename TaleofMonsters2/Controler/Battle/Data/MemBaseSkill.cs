@@ -104,6 +104,7 @@ namespace TaleofMonsters.Controler.Battle.Data
 
         public void CheckRemoveEffect()
         {
+            Self.RemoveAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Skill, SkillId);
             if (!onAddTriggered || SkillInfo.SkillConfig.OnRemove == null)
                 return;
             if (CheckBurst(Self, null, true, false))

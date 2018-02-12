@@ -316,8 +316,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void EatTomb(IMonster tomb)
         {
-            self.Atk = (int)(self.Attr * 1.1);
-            self.AddMaxHp(self.MaxHp * 0.1);
             (tomb as LiveMonster).Action.Disappear();
         }
 
@@ -326,6 +324,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         {
             self.SkillManager.Silent();
             self.BuffManager.ClearBuff(false);//清除所有buff
+            self.RemoveAllAttrModify();
         }
 
         public IMonsterAuro AddAuro(int buff, int lv, string tar)
@@ -353,6 +352,23 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             int tpId = (int)Enum.Parse(typeof (LiveMonster.AttrModifyInfo.AttrModifyTypes), tp);
             int attrId = (int)Enum.Parse(typeof(LiveMonster.AttrModifyInfo.AttrTypes), attr);
             self.AddAttrModify(tpId, itemId, attrId, (int)val);
+        }
+
+        public void AddMaxHp(string tp, int itemId, double value)
+        {
+            if (self.Avatar.MonsterConfig.IsBuilding)
+            {
+                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", self.Position, 0, "Gold", 26, 0, 0, 1, 15));
+                return;
+            }
+
+            var lifeRate = self.Hp / self.RealMaxHp;
+            int tpId = (int)Enum.Parse(typeof(LiveMonster.AttrModifyInfo.AttrModifyTypes), tp);
+            self.AddAttrModify(tpId, itemId, (int)LiveMonster.AttrModifyInfo.AttrTypes.MaxHp, (int)value);
+            if (value > 0)
+                self.AddHp(value);//顺便把hp也加上
+            else
+                self.AddHp(lifeRate * value);
         }
     }
 }

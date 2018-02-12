@@ -57,7 +57,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 Buff buff = new Buff(buffId);
                 buff.UpgradeToLevel(blevel);
                 buffdata = new MemBaseBuff(buff, dura);
-                //buff.CheckBuffEffect(this, 1);
                 buffdata.OnAddBuff(self);
                 buffDict.Add(buffId, buffdata);
             }
@@ -107,6 +106,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             {
                 foreach (int buffId in toDelete)
                 {
+                    self.RemoveAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Buff, buffId);
                     buffDict[buffId].OnRemoveBuff(self);
                     buffDict.Remove(buffId);
                 }

@@ -55,7 +55,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AttrModifyData.cs" />
     <Compile Include="CustomTypes.cs" />
     <Compile Include="HitDamage.cs" />
     <Compile Include="Interface\IMonsterAction.cs" />

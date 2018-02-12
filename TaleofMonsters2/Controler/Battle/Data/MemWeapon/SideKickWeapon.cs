@@ -54,9 +54,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
             return new SideKickWeapon(self, Level, avatar);
         }
 
-        public void CheckWeaponEffect(LiveMonster src, int symbol)
+        public void CheckWeaponEffect(LiveMonster src, bool isAdd)
         {
-            if (symbol > 0)
+            if (isAdd)
             {
                 src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Atk, (int)(avatar.Atk * GameConstants.SideKickFactor));
                 src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.MaxHp, (int)(avatar.Hp * GameConstants.SideKickFactor));
@@ -68,7 +68,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
                 src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Crt, avatar.Crt);
                 src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Luk, avatar.Luk);
 
-                if (symbol > 0 && avatar.Hp > 0)//加buff时候
+                if (avatar.Hp > 0)//加buff时候
                     src.AddHp(avatar.Hp);//顺便把hp也加上
             }
             else

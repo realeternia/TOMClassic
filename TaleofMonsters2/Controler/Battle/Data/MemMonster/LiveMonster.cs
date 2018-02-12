@@ -341,16 +341,16 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
 
             if (Weapon != null)
-                Weapon.CheckWeaponEffect(this, -1);
+                Weapon.CheckWeaponEffect(this, false);
             Weapon = tw;
-            Weapon.CheckWeaponEffect(this, 1);
+            Weapon.CheckWeaponEffect(this, true);
         }
 
         public void DeleteWeapon()
         {
             if (Weapon != null)
             {
-                Weapon.CheckWeaponEffect(this, -1);
+                Weapon.CheckWeaponEffect(this, false);
                 Weapon = null;
             }
         }
@@ -516,22 +516,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             return SkillManager.HasSkill(sid);
         }
-        
-        public void AddMaxHp(double value)
-        {
-            if (Avatar.MonsterConfig.IsBuilding)
-            {
-                BattleManager.Instance.FlowWordQueue.Add(new FlowWord("抵抗", Position, 0, "Gold", 26, 0, 0, 1, 15));
-                return;
-            }
-
-            var lifeRate = Hp / MaxHp;
-            MaxHp = (int)(MaxHp + value);
-            if (value > 0)
-                AddHp(value);//顺便把hp也加上
-            else
-                AddHp(lifeRate * value);
-        }
 
         public void AddAntiMagic(string type, int value)
         {
@@ -590,36 +574,26 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
             modifyList.Add(new AttrModifyInfo {Type = (AttrModifyInfo.AttrModifyTypes)tp, ItemId = itemId, Attr = (AttrModifyInfo.AttrTypes)attr, Val = val});
 
-            RealAtk = Atk;
-            RealDef = Def;
-            RealMag = Mag;
-            RealSpd = Spd;
-            RealHit = Hit;
-            RealDHit = Dhit;
-            RealCrt = Crt;
-            RealLuk = Luk;
-            RealMaxHp = MaxHp;
-            foreach (var attrModifyInfo in modifyList)
-            {
-                switch (attrModifyInfo.Attr)
-                {
-                    case AttrModifyInfo.AttrTypes.Atk:RealAtk+=attrModifyInfo.Val; break;
-                    case AttrModifyInfo.AttrTypes.MaxHp: RealMaxHp += attrModifyInfo.Val; break;
-                    case AttrModifyInfo.AttrTypes.Def: RealDef += attrModifyInfo.Val; break;
-                    case AttrModifyInfo.AttrTypes.Mag: RealMag += attrModifyInfo.Val; break;
-                    case AttrModifyInfo.AttrTypes.Spd: RealSpd += attrModifyInfo.Val; break;
-                    case AttrModifyInfo.AttrTypes.Hit: RealHit += attrModifyInfo.Val; break;
-                    case AttrModifyInfo.AttrTypes.Dhit: RealDHit += attrModifyInfo.Val; break;
-                    case AttrModifyInfo.AttrTypes.Crt: RealCrt += attrModifyInfo.Val; break;
-                    case AttrModifyInfo.AttrTypes.Luk: RealLuk += attrModifyInfo.Val; break;
-                }
-            }
+            RefreshAttrs();
         }
 
         public void RemoveAttrModify(int tp, int itemId)
-        {//看下是否需要合并
+        {
+//看下是否需要合并
             modifyList.RemoveAll(item => (int) item.Type == tp && item.ItemId == itemId);
 
+            RefreshAttrs();
+        }
+
+        public void RemoveAllAttrModify()
+        {//看下是否需要合并
+            modifyList.RemoveAll(item => item.Type != AttrModifyInfo.AttrModifyTypes.Weapon);
+
+            RefreshAttrs();
+        }
+
+        private void RefreshAttrs()
+        {
             RealAtk = Atk;
             RealDef = Def;
             RealMag = Mag;
@@ -645,7 +619,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 }
             }
         }
-
 
         public bool ResistBuffType(BuffImmuneGroup type)
         {

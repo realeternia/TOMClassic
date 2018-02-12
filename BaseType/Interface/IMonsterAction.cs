@@ -46,5 +46,6 @@
         int GetPArmor();
 
         void AddAttrModify(string tp, int itemId, string attr, double val);
+        void AddMaxHp(string tp, int itemId, double val);
     }
 }

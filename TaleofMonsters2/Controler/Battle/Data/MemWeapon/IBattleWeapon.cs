@@ -17,7 +17,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
 
         Image GetImage(int width, int height);
 
-        void CheckWeaponEffect(LiveMonster src, int symbol);
+        void CheckWeaponEffect(LiveMonster src, bool isAdd);
 
         CardTypeSub Type { get; }
 

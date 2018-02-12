@@ -47,7 +47,7 @@ namespace ConfigDatas
 
         int MovRound { get; } //连续移动回合数，攻击后清除
         void AddActionRate(double value);
-        void AddMaxHp(double val);
+
         void AddAntiMagic(string type, int value);
         void OnMagicDamage(IMonster source, double damage, int element);
         void OnSpellDamage(double damage, int element);

@@ -77,10 +77,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
             return newWeapon;
         }
 
-        public void CheckWeaponEffect(LiveMonster src, int symbol)
+        public void CheckWeaponEffect(LiveMonster src, bool isAdd)
         {
             WeaponConfig weaponConfig = ConfigData.GetWeaponConfig(CardId);
-            if (symbol > 0)
+            if (isAdd)
             {
                 src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Atk, avatar.Atk);
                 src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Def, avatar.Def);
@@ -90,20 +90,20 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
                 src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Spd, avatar.Spd);
                 src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Crt, avatar.Crt);
                 src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Luk, avatar.Luk);
+
+                if (avatar.PArmor > 0)
+                    src.HpBar.AddPArmor(avatar.PArmor);
+                if (avatar.MArmor > 0)
+                    src.HpBar.AddMArmor(avatar.MArmor);
             }
             else
             {
                 src.RemoveAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId);
             }
 
-            if (avatar.PArmor > 0)
-                src.HpBar.AddPArmor(avatar.PArmor * symbol);
-            if (avatar.MArmor > 0)
-                src.HpBar.AddMArmor(avatar.MArmor * symbol);
-
             if (weaponConfig.Type == (int)CardTypeSub.Scroll)
             {
-                if (symbol == 1)
+                if (isAdd)
                     src.AttackType = weaponConfig.Attr;
                 else
                     src.AttackType = (int)CardElements.None;
@@ -111,7 +111,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
             }
             if (weaponConfig.SkillId != 0)
             {
-                if (symbol == 1)
+                if (isAdd)
                     src.SkillManager.AddSkill(weaponConfig.SkillId, Level, weaponConfig.Percent, SkillSourceTypes.Weapon);
                 else
                     src.SkillManager.RemoveSkill(weaponConfig.SkillId);
