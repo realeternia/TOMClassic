@@ -4,10 +4,8 @@ using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
-using TaleofMonsters.Core;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards;
 
 namespace TaleofMonsters.Controler.Battle
 {

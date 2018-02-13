@@ -55,7 +55,6 @@ namespace TaleofMonsters.Controler.Battle
         internal HsActionCallback BattleLose;
 
         private bool showGround;
-        private bool isGamePaused = true;
         private bool gameEnd;
         private bool isMouseIn;
         private int mouseX, mouseY;
@@ -80,6 +79,7 @@ namespace TaleofMonsters.Controler.Battle
 
         private List<DateTime> fpsList = new List<DateTime>();
 
+        private bool isGamePaused = true;
         public bool IsGamePaused
         {
             get { return isGamePaused; }

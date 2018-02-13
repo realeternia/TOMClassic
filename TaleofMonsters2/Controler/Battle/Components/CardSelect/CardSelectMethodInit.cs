@@ -35,20 +35,18 @@ namespace TaleofMonsters.Controler.Battle.Components.CardSelect
 
         public void OnStartButtonClick()
         {
-            if (isButtonFirstClick)
+            if (isButtonFirstClick)//换卡
             {
                 for (int i = GameConstants.BattleInitialCardCount - 1; i >= 0; i--)
                 {
                     if (!keepCard[i])
-                    {
                         player.CardManager.RedrawCardAt(i + 1);
-                    }
                 }
                 isButtonFirstClick = false;
 
                 Selector.OnStartReady();
             }
-            else
+            else//进入游戏
             {
                 if (Selector.StartClicked != null)
                 {
