@@ -136,16 +136,17 @@ namespace TaleofMonsters.Controler.Battle.Components
             DoubleBuffered = true;
         }
         
-        public void OnFrame()
+        public void OnFrame(bool isGamePaused)
         {
             if (counter.OnTick())
             {
-                foreach (var cardInfo in cardList)
+                if (!isGamePaused)
                 {
-                    cardInfo.X += 2;
+                    foreach (var cardInfo in cardList)
+                        cardInfo.X += 2;
+                    cardList.RemoveAll(card => card.X >= 900 - ItemWidth);
+                    Invalidate();
                 }
-                cardList.RemoveAll(card => card.X >= 900- ItemWidth);
-                Invalidate();
 
                 CheckSelect();
             }

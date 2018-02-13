@@ -86,9 +86,8 @@ namespace TaleofMonsters.Controler.Battle.Components
         private void LifeClock_Paint(object sender, PaintEventArgs e)
         {
             if (back == null)//在editor模式下就不绘制了
-            {
                 return;
-            }
+
             e.Graphics.DrawImage(back, 0, 0, Width, Height);
             if (head != null)
             {
@@ -128,25 +127,19 @@ namespace TaleofMonsters.Controler.Battle.Components
                     for (int i = 0; i < player.EnergyGenerator.LimitMp; i++)
                     {
                         if (i < player.Mp)
-                        {
                             e.Graphics.FillRectangle(PaintTool.GetBrushByManaType((int)PlayerManaTypes.Mp), 112 + 24*i, 10, 22, 8);
-                        }
                         e.Graphics.DrawRectangle(Pens.Gray, 112 + 24 * i, 10, 22, 8);
                     }
                     for (int i = 0; i < player.EnergyGenerator.LimitPp; i++)
                     {
                         if (i < player.Pp)
-                        {
                             e.Graphics.FillRectangle(PaintTool.GetBrushByManaType((int)PlayerManaTypes.Pp), 112 + 24*i, 20, 22, 8);
-                        }
                         e.Graphics.DrawRectangle(Pens.Gray, 112 + 24 * i, 20, 22, 8);
                     }
                     for (int i = 0; i < player.EnergyGenerator.LimitLp; i++)
                     {
                         if (i < player.Lp)
-                        {
                             e.Graphics.FillRectangle(PaintTool.GetBrushByManaType((int)PlayerManaTypes.Lp), 112 + 24*i, 30, 22, 8);
-                        }
                         e.Graphics.DrawRectangle(Pens.Gray, 112 + 24 * i, 30, 22, 8);
                     } 
                 }
@@ -170,25 +163,19 @@ namespace TaleofMonsters.Controler.Battle.Components
                     for (int i = 0; i < player.EnergyGenerator.LimitMp; i++)
                     {
                         if (i < player.Mp)
-                        {
                             e.Graphics.FillRectangle(PaintTool.GetBrushByManaType((int)PlayerManaTypes.Mp), Width - 134 - 24 * i, 10, 22, 8);    
-                        }
                         e.Graphics.DrawRectangle(Pens.Gray, Width - 134 - 24 * i, 10, 22, 8);
                     }
                     for (int i = 0; i < player.EnergyGenerator.LimitPp; i++)
                     {
                         if (i < player.Pp)
-                        {
                             e.Graphics.FillRectangle(PaintTool.GetBrushByManaType((int)PlayerManaTypes.Pp), Width - 134 - 24*i, 20, 22, 8);
-                        }
                         e.Graphics.DrawRectangle(Pens.Gray, Width - 134 - 24 * i, 20, 22, 8);
                     }
                     for (int i = 0; i < player.EnergyGenerator.LimitLp; i++)
                     {
                         if (i < player.Lp)
-                        {
                             e.Graphics.FillRectangle(PaintTool.GetBrushByManaType((int)PlayerManaTypes.Lp), Width - 134 - 24*i, 30, 22, 8);
-                        }
                         e.Graphics.DrawRectangle(Pens.Gray, Width - 134 - 24 * i, 30, 22, 8);
                     }
                 }

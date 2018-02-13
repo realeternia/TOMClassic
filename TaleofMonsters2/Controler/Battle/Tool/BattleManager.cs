@@ -78,9 +78,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
             }
             StatisticData.Round = RoundMark * 50 / GameConstants.RoundTime + 1;//50ms
             if (RoundMark % 10 == 0)
-            {
                 AIStrategy.AIProc(PlayerManager.RightPlayer);
-            }
         }
 
         public void Draw(Graphics g, MagicRegion magicRegion, CardVisualRegion visualRegion, int mouseX, int mouseY, bool isMouseIn)

@@ -203,9 +203,6 @@ namespace TaleofMonsters.Controler.Battle
 
                 if (BattleManager.Instance.PlayerManager.LeftPlayer == null || BattleManager.Instance.PlayerManager.RightPlayer == null)
                     return;
-                
-                if (IsGamePaused)
-                    return;
 
                 if (!BattleManager.Instance.PlayerManager.LeftPlayer.IsAlive || !BattleManager.Instance.PlayerManager.RightPlayer.IsAlive)
                 {
@@ -213,12 +210,16 @@ namespace TaleofMonsters.Controler.Battle
                     return;
                 }
 
-                CheckCursor();
-                miniItemView1.OnFrame();
-                timeViewer1.OnFrame(BattleManager.Instance.Round);
-                cardFlow1.OnFrame();
+                if (!IsGamePaused)
+                {
+                    CheckCursor();
+                    miniItemView1.OnFrame();
+                    timeViewer1.OnFrame(BattleManager.Instance.Round);
 
-                BattleManager.Instance.Next();
+                    BattleManager.Instance.Next();
+                }
+
+                cardFlow1.OnFrame(IsGamePaused);
             }
             catch(Exception e)
             {
@@ -259,12 +260,12 @@ namespace TaleofMonsters.Controler.Battle
                     if (target != null && isMouseIn && !magicRegion.Active)
                         target.LiveMonsterToolTip.DrawCardToolTips(g);
 #if !DEBUG
-                if (IsGamePaused)
-                {
-                    Font font = new Font("微软雅黑", 30*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-                    g.DrawString("游戏暂停", font, Brushes.OrangeRed, 370, 170);
-                    font.Dispose();
-                }
+                    if (IsGamePaused)
+                    {
+                        Font font = new Font("微软雅黑", 30*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+                        g.DrawString("游戏暂停", font, Brushes.OrangeRed, 370, 170);
+                        font.Dispose();
+                    }
 #endif
                 }
             }
@@ -341,9 +342,7 @@ namespace TaleofMonsters.Controler.Battle
         private void panelBattle_MouseMove(object sender, MouseEventArgs e)
         {
             if (lastMouseMoveTime + 50 > TimeTool.GetNowMiliSecond())
-            {
                 return;
-            }
             lastMouseMoveTime = TimeTool.GetNowMiliSecond();
 
             mouseX = e.X;
@@ -382,9 +381,7 @@ namespace TaleofMonsters.Controler.Battle
                             if (MonsterBook.HasTag(leftSelectCard.CardId, "sidekicker") ||
                                 MonsterBook.HasTag(placeMon.CardId, "sidekickee") || 
                                     BattleManager.Instance.PlayerManager.LeftPlayer.SpikeManager.HasSpike("sidekickall"))
-                            {
                                 cursorname = "sidekick";
-                            }
                         }
                     }
                 }
@@ -392,9 +389,7 @@ namespace TaleofMonsters.Controler.Battle
                 {
                     LiveMonster lm = BattleLocationManager.GetPlaceMonster(mouseX, mouseY);
                     if (lm != null && lm.CanAddWeapon() && lm.IsLeft)
-                    {
                         cursorname = "equip";
-                    }
                 }
                 else if (leftSelectCard.CardType == CardTypes.Spell)
                 {

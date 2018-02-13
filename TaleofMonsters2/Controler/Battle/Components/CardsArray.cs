@@ -12,16 +12,17 @@ namespace TaleofMonsters.Controler.Battle.Components
 {
     internal partial class CardsArray : UserControl, ICardList
     {
-        public delegate void CardArrayEventHandler(Object sender, EventArgs e);
+        public delegate void CardArrayEventHandler(object sender, EventArgs e);
         public event CardArrayEventHandler SelectionChange;
 
-        private CardSlot[] cards = new CardSlot[10];
+        private readonly CardSlot[] cards = new CardSlot[10];
         private int mouseIndex = -1;//从1开始
         private int clickIndex = -1;//从1开始
         private int realCardNum = 0;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
 
-        private Point savedMousePos = new Point(0);
+        private Point lastMousePos = new Point(0);
+        private bool myEnabled = true;
 
         public CardsArray()
         {
@@ -45,7 +46,7 @@ namespace TaleofMonsters.Controler.Battle.Components
 
         public void SetEnable(bool enable)
         {
-            Enabled = enable;
+            myEnabled = enable;
             foreach (var cardSlot in cards)
                 cardSlot.Enabled = enable;
             Invalidate();
@@ -121,10 +122,7 @@ namespace TaleofMonsters.Controler.Battle.Components
 
         private void CardsArray_MouseMove(object sender, MouseEventArgs e)
         {
-            if (!Enabled)
-                return;
-
-            savedMousePos = e.Location;
+            lastMousePos = e.Location;
             ResizeElements();
             
             int newIndex = -1;
@@ -132,7 +130,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             {
                 var targetCard = cards[i];
                 targetCard.MouseOn = false;
-                if (savedMousePos.X > targetCard.Location.X && savedMousePos.X < targetCard.Location.X + targetCard.Size.Width)
+                if (lastMousePos.X > targetCard.Location.X && lastMousePos.X < targetCard.Location.X + targetCard.Size.Width)
                 {
                     newIndex = i + 1;
                     targetCard.MouseOn = true;
@@ -163,24 +161,17 @@ namespace TaleofMonsters.Controler.Battle.Components
             {
                 var targetCard = cards[i];
                 if (realCardNum > 6)
-                {
                     targetCard.Size.Width = (754 - (realCardNum + 1)*4 - 120)/(realCardNum - 1);
-                    xOff += 4;
-                }
                 else
-                {
                     targetCard.Size.Width = 120;
-                    xOff += 4;
-                }
+                xOff += 4;
                 targetCard.Location.X = xOff;
                 xOff += targetCard.Size.Width;
 
-                if (mouseIndex == i+1)
+                if (mouseIndex == i + 1)
                 {
                     if (realCardNum > 6)
-                    {
                         xOff += 120 - targetCard.Size.Width;
-                    }
                     targetCard.Size.Width = 120;
                 }
             }
@@ -200,7 +191,7 @@ namespace TaleofMonsters.Controler.Battle.Components
 
         private void CardsArray_MouseClick(object sender, MouseEventArgs e)
         {
-            if (!Enabled)
+            if (!myEnabled)
                 return;
 
             if (clickIndex != mouseIndex)
@@ -216,7 +207,5 @@ namespace TaleofMonsters.Controler.Battle.Components
                 }
             }
         }
-
-
     }
 }
