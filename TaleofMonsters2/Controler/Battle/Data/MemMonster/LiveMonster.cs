@@ -24,7 +24,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             internal enum AttrModifyTypes
             {
-                Skill = 1, Buff, Weapon
+                Skill = 1, Buff, Weapon, WeaponSide, Spell
             }
             internal enum AttrTypes
             {
@@ -89,7 +89,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public int Crt { get; set; }
         public int Luk { get; set; }
 
-        private List<AttrModifyInfo> modifyList;
+        public List<AttrModifyInfo> ModifyList { get; private set; }
         public int Cure { get { return Avatar.Cure; } }
         public double CrtDamAddRate { get; set; }
         public int MovRound { get; set; }
@@ -205,7 +205,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             Action = new MonsterAction(this);
             IsPrepare = true;
             PrepareAtsNeed = GameConstants.PrepareAts;
-            modifyList = new List<AttrModifyInfo>();
+            ModifyList = new List<AttrModifyInfo>();
         }
 
         public void SetBasicData()
@@ -216,15 +216,15 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             
             antiMagic = new int[7];//7个属性
 
-            Atk = Avatar.Atk;
-            MaxHp = Avatar.Hp;
-            Def = Avatar.Def;
-            Mag = Avatar.Mag;
-            Spd = Avatar.Spd;
-            Hit = Avatar.Hit;
-            Dhit = Avatar.Dhit;
-            Crt = Avatar.Crt;
-            Luk = Avatar.Luk;
+            RealAtk = Atk = Avatar.Atk;
+            RealMaxHp = MaxHp = Avatar.Hp;
+            RealDef = Def = Avatar.Def;
+            RealMag = Mag = Avatar.Mag;
+            RealSpd = Spd = Avatar.Spd;
+            RealHit = Hit = Avatar.Hit;
+            RealDHit = Dhit = Avatar.Dhit;
+            RealCrt = Crt = Avatar.Crt;
+            RealLuk = Luk = Avatar.Luk;
         }
 
         public void OnInit()
@@ -572,22 +572,26 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             if (val == 0)
                 return;
 
-            modifyList.Add(new AttrModifyInfo {Type = (AttrModifyInfo.AttrModifyTypes)tp, ItemId = itemId, Attr = (AttrModifyInfo.AttrTypes)attr, Val = val});
+            var findItem = ModifyList.Find(data => data.Type == (AttrModifyInfo.AttrModifyTypes) tp && data.ItemId == itemId &&
+                        data.Attr == (AttrModifyInfo.AttrTypes) attr);
+            if (findItem != null)
+                findItem.Val += val;
+            else
+                ModifyList.Add(new AttrModifyInfo {Type = (AttrModifyInfo.AttrModifyTypes)tp, ItemId = itemId, Attr = (AttrModifyInfo.AttrTypes)attr, Val = val});
 
             RefreshAttrs();
         }
 
         public void RemoveAttrModify(int tp, int itemId)
         {
-//看下是否需要合并
-            modifyList.RemoveAll(item => (int) item.Type == tp && item.ItemId == itemId);
+            ModifyList.RemoveAll(item => (int) item.Type == tp && item.ItemId == itemId);
 
             RefreshAttrs();
         }
 
         public void RemoveAllAttrModify()
         {//看下是否需要合并
-            modifyList.RemoveAll(item => item.Type != AttrModifyInfo.AttrModifyTypes.Weapon);
+            ModifyList.RemoveAll(item => item.Type != AttrModifyInfo.AttrModifyTypes.Weapon);
 
             RefreshAttrs();
         }
@@ -603,7 +607,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             RealCrt = Crt;
             RealLuk = Luk;
             RealMaxHp = MaxHp;
-            foreach (var attrModifyInfo in modifyList)
+            foreach (var attrModifyInfo in ModifyList)
             {
                 switch (attrModifyInfo.Attr)
                 {

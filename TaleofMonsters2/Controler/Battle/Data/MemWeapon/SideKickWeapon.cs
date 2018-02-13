@@ -58,22 +58,22 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
         {
             if (isAdd)
             {
-                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Atk, (int)(avatar.Atk * GameConstants.SideKickFactor));
-                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.MaxHp, (int)(avatar.Hp * GameConstants.SideKickFactor));
-                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Def, avatar.Def);
-                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Mag, avatar.Mag);
-                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Hit, avatar.Hit);
-                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Dhit, avatar.Dhit);
-                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Spd, avatar.Spd);
-                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Crt, avatar.Crt);
-                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Luk, avatar.Luk);
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.WeaponSide, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Atk, (int)(avatar.Atk * GameConstants.SideKickFactor));
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.WeaponSide, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.MaxHp, (int)(avatar.Hp * GameConstants.SideKickFactor));
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.WeaponSide, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Def, avatar.Def);
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.WeaponSide, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Mag, avatar.Mag);
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.WeaponSide, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Hit, avatar.Hit);
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.WeaponSide, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Dhit, avatar.Dhit);
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.WeaponSide, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Spd, avatar.Spd);
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.WeaponSide, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Crt, avatar.Crt);
+                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.WeaponSide, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Luk, avatar.Luk);
 
                 if (avatar.Hp > 0)//加buff时候
                     src.AddHp(avatar.Hp);//顺便把hp也加上
             }
             else
             {
-                src.RemoveAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId);
+                src.RemoveAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.WeaponSide, CardId);
             }
         }
 

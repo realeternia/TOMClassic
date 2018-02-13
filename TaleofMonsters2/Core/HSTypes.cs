@@ -146,6 +146,11 @@ namespace TaleofMonsters.Core
             string[] rt = { "", "新功能", "新活动" };
             return rt[id];
         }
+        public static string I2AttrName(int id)
+        {
+            string[] rt = { "攻击", "防御", "魔力", "攻速", "命中", "回避", "暴击", "幸运", "生命"};
+            return rt[id];
+        }
 
         public static string I2HeroAttrTip(int id)
         {

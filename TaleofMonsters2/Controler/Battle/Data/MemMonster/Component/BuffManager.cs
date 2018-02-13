@@ -138,9 +138,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void DrawBuffToolTip(TipImage tipData)
         {
-            MemBaseBuff[] memBasebuffInfos = new MemBaseBuff[buffDict.Count];
-            buffDict.Values.CopyTo(memBasebuffInfos, 0);
-            foreach (MemBaseBuff buffdata in memBasebuffInfos)
+            MemBaseBuff[] buffdatas = new MemBaseBuff[buffDict.Count];
+            buffDict.Values.CopyTo(buffdatas, 0);
+            foreach (var buffdata in buffdatas)
             {
                 Buff buff = buffdata.BuffInfo;
                 string tp = "";
