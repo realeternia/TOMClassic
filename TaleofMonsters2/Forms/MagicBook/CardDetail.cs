@@ -139,7 +139,7 @@ namespace TaleofMonsters.Forms.MagicBook
             }
         }
 
-        private Image GetTerrainImage(int monType, double[] attrDef, double[] buffDef)
+        private Image GetAttrImage(int monType, double[] attrDef, double[] buffDef)
         {
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine("属性：" + HSTypes.I2Attr(monType), "White", 20);
@@ -162,6 +162,20 @@ namespace TaleofMonsters.Forms.MagicBook
                 var str = string.Format("{0}抵抗={1}%", HSTypes.I2BuffImmune(i), buffDef[i] * 100);
                 tipData.AddTextOff(str, buffDef[i] == 0 ? "White" : buffDef[i] > 0 ? "Lime" : "Red", 20);
             }
+            return tipData.Image;
+        }
+        private Image GetRaceImage(int raceId)
+        {
+            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+            tipData.AddTextNewLine("种族：" + HSTypes.I2CardTypeSub(raceId), "White", 20);
+            int line = 0;
+            foreach (var item in HSTypes.I2CardTypeDesSub(raceId).Split('$'))
+            {
+                tipData.AddTextNewLine("", "Yellow", 16);
+                tipData.AddImageXY(HSIcons.GetIconsByEName("right"), 0, 0, 32, 32, 3, 20 + line++ * 16 + 1, 14, 14);
+                tipData.AddTextOff(item, "lime", 20);
+            }
+
             return tipData.Image;
         }
 
@@ -192,12 +206,12 @@ namespace TaleofMonsters.Forms.MagicBook
                 MonsterConfig monsterConfig = ConfigData.GetMonsterConfig(cid);
                 if (id == 1)
                 {
-                    Image image = DrawTool.GetImageByString("种族：" + HSTypes.I2CardTypeSub(monsterConfig.Type) + "$" + HSTypes.I2CardTypeDesSub(monsterConfig.Type), 150);
+                    Image image = GetRaceImage(monsterConfig.Type);
                     tooltip.Show(image, parent, x, y);
                 }
                 else
                 {
-                    Image image = GetTerrainImage(monsterConfig.Attr, monsterConfig.AttrDef, monsterConfig.BuffImmune);
+                    Image image = GetAttrImage(monsterConfig.Attr, monsterConfig.AttrDef, monsterConfig.BuffImmune);
                     tooltip.Show(image, parent, x, y);
                 }
             }
