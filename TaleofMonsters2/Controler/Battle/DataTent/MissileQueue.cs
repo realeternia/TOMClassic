@@ -5,7 +5,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
 {
     internal class MissileQueue
     {
-        List<Missile> queue = new List<Missile>();
+        private List<Missile> queue = new List<Missile>();
         private bool isFast;
 
         public List<Missile> Enumerator
@@ -28,10 +28,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
         public void Add(Missile effect)
         {
             if (isFast)
-            {
                 return;
-            }
-
             queue.Add(effect);
         }
 
@@ -67,9 +64,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                         var effect = queue[i];
                         effect.Next();
                         if (effect.IsFinished)
-                        {
                             queue.RemoveAt(i);
-                        }
                     }
                 }
             }

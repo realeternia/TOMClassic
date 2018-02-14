@@ -278,12 +278,24 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             }
         }
 
-        public void SummonRandomAttr(string type, int attr)
+        public void SummonRandomAttr(string type, int attr, int star)
         {
             int cardId;
             while (true)
             {
-                cardId = CardConfigManager.GetRandomAttrCard(attr);
+                cardId = CardConfigManager.GetRandomAttrStarCard(attr, star);
+                if (CardConfigManager.GetCardConfig(cardId).Type == CardTypes.Monster)
+                    break;
+            }
+            Summon(type, cardId, 1);
+        }
+
+        public void SummonRandomRace(string type, int race, int star)
+        {
+            int cardId;
+            while (true)
+            {
+                cardId = CardConfigManager.GetRandomRaceStarCard(race, star);
                 if (CardConfigManager.GetCardConfig(cardId).Type == CardTypes.Monster)
                     break;
             }

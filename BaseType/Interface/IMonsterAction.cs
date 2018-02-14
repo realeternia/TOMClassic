@@ -35,7 +35,8 @@
         void Rebel();//造反
 
         void Summon(string type, int id, int count);
-        void SummonRandomAttr(string type, int attr);
+        void SummonRandomAttr(string type, int attr, int star);
+        void SummonRandomRace(string type, int race, int star);
         void MadDrug(); //交换攻击和血量
         void CureRandomAlien(double rate);
         void EatTomb(IMonster tomb);

@@ -65,7 +65,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
 
         public override bool CheckFly(ref NLPointF position, ref int angle)
         {
-            if (target == null || !target.IsAlive || parent == null || !parent.IsAlive)
+            if (target == null || !target.IsAlive || parent == null)
                 return false;
 
             if (FlyProc(target.Position,ref position, ref angle) == FlyCheckType.EndPoint)
@@ -91,7 +91,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
 
         public override bool CheckFly(ref NLPointF position, ref int angle)
         {
-            if (parent == null || !parent.IsAlive)
+            if (parent == null)
                 return false;
 
             if (FlyProc(targetPos, ref position, ref angle) == FlyCheckType.EndPoint)

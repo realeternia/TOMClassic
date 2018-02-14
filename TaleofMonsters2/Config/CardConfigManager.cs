@@ -41,9 +41,11 @@ namespace TaleofMonsters.Config
 
             public void Add(int cardId, CardQualityTypes quality)
             {
-                IntPair data = new IntPair();
-                data.Type = cardId;
-                data.Value = (int)quality;
+                IntPair data = new IntPair
+                {
+                    Type = cardId,
+                    Value = (int) quality
+                };
                 dataList.Add(data);
             }
 
@@ -69,16 +71,21 @@ namespace TaleofMonsters.Config
             public int GetRandom(int quality)
             {
                 if (quality ==-1)
-                {
                     return dataList[MathTool.GetRandom(dataList.Count)].Type;
-                }
-                if (quality<4)
-                {
+                if (quality < 4)
                     return dataList[MathTool.GetRandom(qualityIndex[quality], qualityIndex[quality + 1])].Type;
-                }
                 return dataList[MathTool.GetRandom(qualityIndex[quality], dataList.Count)].Type;
             }
 
+            public int GetRandomByStar(int star)
+            {
+                if (star <= 0)
+                    return dataList[MathTool.GetRandom(dataList.Count)].Type;
+                var itemList = new List<int>();
+                foreach (var itemId in dataList)
+                    itemList.Add(itemId.Type);
+                return itemList[MathTool.GetRandom(0, itemList.Count)];
+            }
 
             private class CompareByQuality : IComparer<IntPair>
             {
@@ -315,11 +322,27 @@ namespace TaleofMonsters.Config
             return 0;
         }
 
+        internal static int GetRandomAttrStarCard(int attrId, int star = -1)
+        {
+            CardInfoList rtData;
+            if (attrCardDict.TryGetValue(attrId, out rtData))
+                return rtData.GetRandomByStar(star);
+            return 0;
+        }
+
         internal static int GetRandomRaceCard(int raceId, int quality = -1)
         {
             CardInfoList rtData;
             if (raceCardDict.TryGetValue(raceId, out rtData))
                 return rtData.GetRandom(quality);
+            return 0;
+        }
+
+        internal static int GetRandomRaceStarCard(int raceId, int star = -1)
+        {
+            CardInfoList rtData;
+            if (raceCardDict.TryGetValue(raceId, out rtData))
+                return rtData.GetRandomByStar(star);
             return 0;
         }
 
