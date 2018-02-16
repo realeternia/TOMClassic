@@ -394,9 +394,9 @@ namespace TaleofMonsters.Forms
                 case 1: return vEquip.Hp;
                 case 2: return vEquip.Spd;
                 case 3: return vEquip.Range;
-                case 4: return vEquip.MpRate;
+                case 4: return vEquip.LpRate;
                 case 5: return vEquip.PpRate;
-                case 6: return vEquip.LpRate;
+                case 6: return vEquip.MpRate;
             }
             return 0;
         }
@@ -405,9 +405,9 @@ namespace TaleofMonsters.Forms
         {
             switch (attr)
             {
-                case 4: return jobInfo.Mp;
+                case 4: return jobInfo.Lp;
                 case 5: return jobInfo.Pp;
-                case 6: return jobInfo.Lp;
+                case 6: return jobInfo.Mp;
             }
             return 0;
         }
