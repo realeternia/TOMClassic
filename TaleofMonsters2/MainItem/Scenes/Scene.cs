@@ -96,6 +96,7 @@ namespace TaleofMonsters.MainItem.Scenes
             
             vRegion.AddRegion(new SubVirtualRegion(10, 0, 0, 150, 50));//人物头像
             vRegion.AddRegion(new SubVirtualRegion(11, width - 145, 3, 115, 32));//场景信息
+            vRegion.AddRegion(new SubVirtualRegion(12, (width - 688) / 2 + 30, 41, 630, 8));//exp bar
 
             for (int i = 0; i < 10; i++)
             {//bless
@@ -180,14 +181,10 @@ namespace TaleofMonsters.MainItem.Scenes
         private void OnBlessChange()
         {
             for (int i = 0; i < 10; i++)
-            {//bless
-                vRegion.SetRegionKey(20 + i, 0);
-            }
+                vRegion.SetRegionKey(20 + i, 0);//bless
             int index = 0;
             foreach (var key in UserProfile.InfoWorld.Blesses.Keys)
-            {
                 vRegion.SetRegionKey(20 + index++, key);
-            }
             parent.Invalidate(new Rectangle(10, 55, 600, 50));
         }
 
@@ -281,13 +278,9 @@ namespace TaleofMonsters.MainItem.Scenes
             {
                 var config = ConfigData.GetSceneQuestConfig(evtId);
                 if (!config.TriggerMulti)
-                {
                     scenePos.SetEnable(false);
-                }
                 else
-                {//多次触发都变成预设
-                    scenePos.SetMapSetting(true);
-                }
+                    scenePos.SetMapSetting(true);//多次触发都变成预设
             }
             UserProfile.InfoDungeon.OnEventEnd(evtId, type);
         }
@@ -360,15 +353,7 @@ namespace TaleofMonsters.MainItem.Scenes
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
-            if (id >= 20)
-            {
-                if (key > 0)
-                {
-                    Image image = BlessBook.GetPreview(key);
-                    tooltip.Show(image, parent, x, y);
-                }
-            }
-            else if (id == 10)
+            if (id == 10)
             {
                 Image image = GetPlayerImage();
                 tooltip.Show(image, parent, 0,50);
@@ -378,12 +363,26 @@ namespace TaleofMonsters.MainItem.Scenes
                 Image image = SceneBook.GetScenePreview(this);
                 tooltip.Show(image, parent, width - image.Width, 35);
             }
+            else if (id == 12)
+            {
+                var expStr = string.Format("{0}/{1}", UserProfile.InfoBasic.Exp, ExpTree.GetNextRequired(UserProfile.InfoBasic.Level));
+                Image image = DrawTool.GetImageByString("升级所需经验", expStr, 120, Color.White);
+                tooltip.Show(image, parent, x-600, y+8);
+            }
             else if (id < 10)
             {
                 var resName = HSTypes.I2Resource(id - 1);
                 string resStr = string.Format("{0}:{1}", resName, UserProfile.Profile.InfoBag.Resource.Get((GameResourceType)(id-1)));
                 Image image = DrawTool.GetImageByString(resStr, HSTypes.I2ResourceTip(id-1), 120, Color.White);
                 tooltip.Show(image, parent, x, y);
+            }
+            else if (id >= 20)
+            {
+                if (key > 0)
+                {
+                    Image image = BlessBook.GetPreview(key);
+                    tooltip.Show(image, parent, x, y);
+                }
             }
         }
 
@@ -535,25 +534,16 @@ namespace TaleofMonsters.MainItem.Scenes
             foreach (var sceneObject in SceneInfo.Items)
             {
                 if (sceneObject.Id == cellTar)
-                {
                     selectTarget = sceneObject;
-                }
                 else
-                {//先绘制非目标
-                    sceneObject.Draw(g, false);
-                }
+                    sceneObject.Draw(g, false);//先绘制非目标
                 
                 if (sceneObject.Id == UserProfile.Profile.InfoBasic.Position)
-                {
                     possessCell = sceneObject;
-                }
             }
 
             if (selectTarget != null)
-            {
                 selectTarget.Draw(g, true);
-            }
-
 
             if (possessCell != null)
             {
