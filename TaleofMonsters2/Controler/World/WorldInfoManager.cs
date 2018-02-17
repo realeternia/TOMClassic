@@ -41,7 +41,6 @@ namespace TaleofMonsters.Controler.World
                 sw.WriteLine("CardId={0}", cardId);
                 sw.WriteLine("LastAccountName={0}", LastAccountName);
                 sw.WriteLine("Resolution={0}x{1}", FormWidth, FormHeight);
-                sw.WriteLine("LastAccountName={0}", LastAccountName);
                 sw.WriteLine("Full={0}", Full);
                 sw.WriteLine("BGEnable={0}", BGEnable);
                 sw.WriteLine("BGVolumn={0}", BGVolumn);
