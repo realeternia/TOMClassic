@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using FMOD;
 using NarlonLib.Log;
+using TaleofMonsters.Controler.World;
 
 namespace TaleofMonsters.Core
 {
@@ -45,10 +46,8 @@ namespace TaleofMonsters.Core
         public static void Play(string dir, string path)
         {
             string filePath = string.Format("Sound.{0}.{1}", dir, path);
-            if (!Config.Config.PlayerSound)
-            {
+            if (!WorldInfoManager.SoundEnable)
                 return;
-            }
 
             Play(filePath, false);
         }
@@ -56,10 +55,8 @@ namespace TaleofMonsters.Core
         public static void PlayBGM(string path)
         {
             string filePath = string.Format("Bgm.{0}", path);
-            if (!Config.Config.PlayerSound)
-            {
+            if (!WorldInfoManager.BGEnable)
                 return;
-            }
 
             Play(filePath, true);
             bgmHistory.Push(filePath);
@@ -68,9 +65,7 @@ namespace TaleofMonsters.Core
         public static void PlayLastBGM()
         {
             if (bgmHistory == null || bgmHistory.Count == 0)
-            {
                 return;
-            }
 
             bgmHistory.Pop();
 
@@ -151,12 +146,12 @@ namespace TaleofMonsters.Core
 
             if (isBGM)
             {
-                channel.setVolume(BGMVolume);
+                channel.setVolume(BGMVolume * WorldInfoManager.BGVolumn/30);
                 _channelBGM = channel;
             }
             else
             {
-                channel.setVolume(EffectVolume);
+                channel.setVolume(EffectVolume * WorldInfoManager.SoundVolumn / 30);
             }
         }
     }

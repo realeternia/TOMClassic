@@ -38,10 +38,11 @@ namespace TaleofMonsters
             InitializeComponent();
             bitmapButtonLogin.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack1.PNG");
             bitmapButtonExit.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack1.PNG");
-
             myCursor = new HSCursor(this);
             flowController = new MainFlowController(tabPageGame);
+
             Instance = this;
+            WorldInfoManager.Load();
         }
         
         private void MainForm_Load(object sender, EventArgs e)
@@ -58,7 +59,6 @@ namespace TaleofMonsters
                 PanelManager.Init(tabPageGame.Width, tabPageGame.Height);
                 CardConfigManager.Init();
                 DbSerializer.Init();
-                WorldInfoManager.Load();
             }
             catch (Exception ex)
             {

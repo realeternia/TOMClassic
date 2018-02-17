@@ -29,7 +29,12 @@ namespace TaleofMonsters.MainItem
 
         private void buttonExit_Click(object sender, EventArgs e)
         {
-            MainForm.Instance.Close();            
+            MainForm.Instance.Close();
+        }
+
+        private void buttonSet_Click(object sender, EventArgs e)
+        {
+            PanelManager.DealPanel(new SystemSetup());
         }
 
         private void SystemMenu_Paint(object sender, PaintEventArgs e)
@@ -37,7 +42,7 @@ namespace TaleofMonsters.MainItem
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
             Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString("菜单", font, Brushes.White, Width / 2 - 30, 8);
+            e.Graphics.DrawString("菜单", font, Brushes.White, Width / 2 - 20, 8);
             font.Dispose();
         }
 

@@ -320,6 +320,12 @@
     <Compile Include="MainItem\Scenes\SceneRules\SceneRuleTown.cs" />
     <Compile Include="MainItem\Scenes\SceneRules\SceneRuleDungeon.cs" />
     <Compile Include="MainItem\Scenes\SceneRules\SceneRuleCommon.cs" />
+    <Compile Include="MainItem\SystemSetup.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainItem\SystemSetup.Designer.cs">
+      <DependentUpon>SystemSetup.cs</DependentUpon>
+    </Compile>
     <Compile Include="ThirdParty\fmod.cs" />
     <Compile Include="DataType\CustomTypes.cs" />
     <Compile Include="DataType\Equips\Equip.cs" />
@@ -1005,6 +1011,10 @@
     <EmbeddedResource Include="MainItem\PopMenuDeck.resx">
       <SubType>Designer</SubType>
       <DependentUpon>PopMenuDeck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainItem\SystemSetup.resx">
+      <DependentUpon>SystemSetup.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainItem\SystemMenu.resx">
       <SubType>Designer</SubType>
