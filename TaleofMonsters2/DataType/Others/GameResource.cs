@@ -1,3 +1,4 @@
+using System;
 using TaleofMonsters.Core;
 
 namespace TaleofMonsters.DataType.Others
@@ -53,13 +54,13 @@ namespace TaleofMonsters.DataType.Others
         {
             switch ((int)type)
             {
-                case 0: Gold -= value; break;
-                case 1: Lumber -= value; break;
-                case 2: Stone -= value; break;
-                case 3: Mercury -= value; break;
-                case 4: Carbuncle -= value; break;
-                case 5: Sulfur -= value; break;
-                case 6: Gem -= value; break;
+                case 0: Gold = Math.Max(0, Gold - value); break;
+                case 1: Lumber = Math.Max(0, Lumber - value); break;
+                case 2: Stone = Math.Max(0, Stone - value); break;
+                case 3: Mercury = Math.Max(0, Mercury - value); break;
+                case 4: Carbuncle = Math.Max(0, Carbuncle - value); break;
+                case 5: Sulfur = Math.Max(0, Sulfur - value); break;
+                case 6: Gem = Math.Max(0, Gem - value); break;
             }
         }
 

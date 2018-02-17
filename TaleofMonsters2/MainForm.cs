@@ -39,16 +39,6 @@ namespace TaleofMonsters
             bitmapButtonLogin.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack1.PNG");
             bitmapButtonExit.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack1.PNG");
 
-            if (Config.Config.ResolutionBigger)
-            {
-                Width = 1440;
-                Height = 900;
-            }
-            else
-            {
-                Width = 1152;
-                Height = 720;
-            }
             myCursor = new HSCursor(this);
             flowController = new MainFlowController(tabPageGame);
             Instance = this;
