@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using NarlonLib.Core;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.DataType.Cards.Monsters;
@@ -15,17 +14,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
 {
     internal class MemRowColumnMap : IMap
     {
-        private const int stageWidth = 880;
-        private const int stageHeight = 396;
-        private AutoDictionary<int, int> tiles;
-
+        public readonly int StageWidth = 880;
+        public readonly int StageHeight = 396;
         public int CardSize { get; private set; }
         public int ColumnCount { get; private set; }
         public int RowCount { get; private set; }
-
-        public int StageWidth { get { return stageWidth; } }
-        public int StageHeight { get { return stageHeight; } }
-
+        
         public MemMapPoint[,] Cells { get; set; }
 
         private bool isDirty;
@@ -35,7 +29,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         public MemRowColumnMap(string map, int tile)
         {
             bMapInfo = BattleMapBook.GetMap(map);
-            CardSize = stageWidth/bMapInfo.XCount;
+            CardSize = StageWidth/bMapInfo.XCount;
             RowCount = bMapInfo.YCount;
             ColumnCount = bMapInfo.XCount;
             
@@ -47,7 +41,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         private void InitCells(int tile)
         {
             Cells = new MemMapPoint[ColumnCount,RowCount];
-            tiles = new AutoDictionary<int, int>();
             for (int i = 0; i < ColumnCount; i++)
             {
                 for (int j = 0; j < RowCount; j++)
@@ -56,7 +49,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                     if (tarTile == 0)
                         tarTile = tile == 0 ? TileConfig.Indexer.DefaultTile : tile;
                     Cells[i, j] = new MemMapPoint(i, i*CardSize, j*CardSize, ColumnCount, tarTile);
-                    tiles[tarTile == TileConfig.Indexer.DefaultTile ? 0 : tarTile]++;
                 }
             }
         }
@@ -158,9 +150,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                 if (BattleLocationManager.IsPointInRegionType(RegionTypes.Circle, point.X, point.Y, memMapPoint.ToPoint(), dis, true))//地形和方向无关，随便填一个
                     memMapPoint.Tile = tile;
             }
-            tiles.Clear();
-            foreach (var memMapPoint in Cells)
-                tiles[memMapPoint.Tile == 9 ? 0 : memMapPoint.Tile]++;
             isDirty = true;
         }
 
@@ -296,7 +285,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                 isDirty = false;
                 if (cachImage!=null)
                     cachImage.Dispose();
-                cachImage = new Bitmap(stageWidth, stageHeight);
+                cachImage = new Bitmap(StageWidth, StageHeight);
                 Graphics cg = Graphics.FromImage(cachImage);
 
                 foreach (var memMapPoint in Cells)
@@ -320,7 +309,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                 }
                 cg.Dispose();
             }
-            g.DrawImageUnscaled(cachImage, 0, 0, stageWidth ,stageHeight);
+            g.DrawImageUnscaled(cachImage, 0, 0, StageWidth, StageHeight);
         }
 
     }

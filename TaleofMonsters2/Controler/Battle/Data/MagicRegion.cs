@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Drawing;
-using TaleofMonsters.Controler.Battle.Data.MemMap;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.DataType;
@@ -51,9 +50,7 @@ namespace TaleofMonsters.Controler.Battle.Data
         public Color GetMonsterColor(LiveMonster lm, int mouseX, int mouseY)
         {
             if (!Active)
-            {
                 return Color.White;
-            }
 
             foreach (var regionData in dataList)
             {
@@ -76,9 +73,7 @@ namespace TaleofMonsters.Controler.Battle.Data
         public void Draw(Graphics g, int round, int mouseX, int mouseY)
         {
             if (!Active)
-            {
                 return;
-            }
 
             int size = BattleManager.Instance.MemMap.CardSize;
 
@@ -92,14 +87,9 @@ namespace TaleofMonsters.Controler.Battle.Data
                         regionData.Range, true)) //magicregionÓÀÔ¶Îªleftplayer·þÎñ
                     {
                         if (c == Color.Black)
-                        {
                             c = regionData.Color;
-                        }
                         else
-                        {
-                            c = Color.FromArgb(c.R/2 + regionData.Color.R/2, c.G/2 + regionData.Color.G/2,
-                                c.B/2 + regionData.Color.B/2);
-                        }
+                            c = Color.FromArgb(c.R/2 + regionData.Color.R/2, c.G/2 + regionData.Color.G/2, c.B/2 + regionData.Color.B/2);
                     }
 
                     if (c != Color.Black)

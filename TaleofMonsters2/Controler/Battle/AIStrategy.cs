@@ -17,10 +17,8 @@ namespace TaleofMonsters.Controler.Battle
             for (int i = 0; i < cds.Length; i++)
             {
                 var card = cds[i];
-                if (card.Card.Star>3)//把3费以上卡都换掉
-                {
+                if (card.Card.Star > 3) //把3费以上卡都换掉
                     player.CardManager.RedrawCardAt(i + 1);
-                }
             }
 
 #if DEBUG
@@ -51,9 +49,7 @@ namespace TaleofMonsters.Controler.Battle
             {
                 ActiveCard card = player.CardsDesk.GetSelectCard();
                 if (player.CheckUseCard(card, player, rival) != ErrorConfig.Indexer.OK)
-                {
                     return;
-                }
 
                 int tar = -1;
                 if (card.CardType == CardTypes.Weapon)
@@ -141,9 +137,7 @@ namespace TaleofMonsters.Controler.Battle
                 x *= size;
                 y *= size;
                 if (BattleLocationManager.IsPlaceCanSummon(mid,x, y,false))
-                {
                     return new Point(x, y);
-                }
             }
         }
 

@@ -25,17 +25,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             X = x;
             Y = y;
             if (xid <= total/2)
-            {
                 SideIndex = xid;
-            }
-            else if (xid > total - total/2-1)
-            {
+            else if (xid > total - total/2 - 1)
                 SideIndex = total - xid - 1;
-            }
             else
-            {
                 SideIndex = 99;
-            }
             Tile = tile;
             Owner = 0;
         }
