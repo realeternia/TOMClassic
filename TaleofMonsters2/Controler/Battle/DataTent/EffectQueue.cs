@@ -5,7 +5,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
 {
     internal class EffectQueue
     {
-        List<BaseEffect> queue = new List<BaseEffect>();
+        private List<BaseEffect> queue = new List<BaseEffect>();
         private bool isFast;
 
         public List<BaseEffect> Enumerator
@@ -67,9 +67,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                         var effect = queue[i];
                         effect.Next();
                         if (effect.IsFinished == RunState.Finished)
-                        {
                             queue.RemoveAt(i);
-                        }
                     }
                 }
             }

@@ -163,7 +163,6 @@
     <Compile Include="Controler\Battle\FastBattle.cs" />
     <Compile Include="Controler\GM\GMCommand.cs" />
     <Compile Include="Controler\GM\GmScript.cs" />
-    <Compile Include="Controler\Resource\ImageItem.cs" />
     <Compile Include="Controler\Resource\ImageManager.cs" />
     <Compile Include="Controler\World\TimeManager.cs" />
     <Compile Include="Controler\World\WorldInfoManager.cs" />
@@ -329,7 +328,7 @@
     <Compile Include="ThirdParty\fmod.cs" />
     <Compile Include="DataType\CustomTypes.cs" />
     <Compile Include="DataType\Equips\Equip.cs" />
-    <Compile Include="DataType\HeroSkills\HeroPowerBook.cs" />
+    <Compile Include="DataType\HeroPowers\HeroPowerBook.cs" />
     <Compile Include="Config\CardConfigManager.cs" />
     <Compile Include="Core\DbSerializer.cs" />
     <Compile Include="Core\HSImageAttributes.cs" />

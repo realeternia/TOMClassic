@@ -104,7 +104,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
             if (toDelete.Count > 0)
             {
-                foreach (int buffId in toDelete)
+                foreach (var buffId in toDelete)
                 {
                     self.RemoveAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Buff, buffId);
                     buffDict[buffId].OnRemoveBuff(self);

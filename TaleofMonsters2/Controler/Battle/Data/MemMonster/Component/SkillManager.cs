@@ -14,6 +14,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         public List<MemBaseSkill> SkillList { get; private set; }
         private LiveMonster self;
         private Skill skill1Data;
+
         public bool IsSilent { get; set; }//处于遗忘状态，遗忘除了武器外的技能
 
         public SkillManager(LiveMonster lm)

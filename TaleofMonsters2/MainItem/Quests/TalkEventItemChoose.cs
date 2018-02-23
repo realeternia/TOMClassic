@@ -89,9 +89,7 @@ namespace TaleofMonsters.MainItem.Quests
                 {
                     rollItemSpeedX = rollItemSpeedX - MathTool.GetRandom(1, 3);
                     if (Math.Abs(rollItemSpeedX) <= 1)
-                    {
                         OnStop();
-                    }
                 }
             }
         }
@@ -113,9 +111,7 @@ namespace TaleofMonsters.MainItem.Quests
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
             if (!vRegion.Visible)
-            {
                 return;
-            }
 
             var region = vRegion.GetRegion(id);
             if (region != null && region.Parm != null)
@@ -151,9 +147,7 @@ namespace TaleofMonsters.MainItem.Quests
         private void virtualRegion_RegionClicked(int id, int x, int y, MouseButtons button)
         {
             if (!vRegion.Visible)
-            {
                 return;
-            }
 
             tooltip.Hide(parent);
 
@@ -165,9 +159,7 @@ namespace TaleofMonsters.MainItem.Quests
                 {
                     uint goldCost = GameResourceBook.OutGoldSceneQuest(level, config.ChooseGold, true);
                     if (!UserProfile.InfoBag.HasResource(GameResourceType.Gold, goldCost))
-                    {
                         return;
-                    }
                     UserProfile.InfoBag.SubResource(GameResourceType.Gold, goldCost);
                     winRate += config.ChooseGoldAddon;
                 }
@@ -175,9 +167,7 @@ namespace TaleofMonsters.MainItem.Quests
                 {
                     uint foodCost = GameResourceBook.OutFoodSceneQuest(config.ChooseFood, true);
                     if (UserProfile.InfoBasic.FoodPoint < foodCost)
-                    {
                         return;
-                    }
                     UserProfile.InfoBasic.SubFood(foodCost);
                     winRate += config.ChooseFoodAddon;
                 }

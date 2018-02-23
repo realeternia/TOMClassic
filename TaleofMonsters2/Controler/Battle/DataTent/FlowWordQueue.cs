@@ -74,9 +74,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 for (int i = queue.Count - 1; i >= 0; i--)
                 {
                     if (queue[i].IsFinished)
-                    {
                         queue.RemoveAt(i);
-                    }
                 }
             }
         }

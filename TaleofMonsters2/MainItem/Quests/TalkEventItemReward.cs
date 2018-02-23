@@ -347,9 +347,7 @@ namespace TaleofMonsters.MainItem.Quests
         {
             var region = vRegion.GetRegion(id);
             if (region != null)
-            {
                 region.ShowTip(tooltip, parent, x, y);
-            }
         }
 
         private void virtualRegion_RegionLeft()

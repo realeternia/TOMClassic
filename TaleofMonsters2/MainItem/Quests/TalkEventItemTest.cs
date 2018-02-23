@@ -128,9 +128,7 @@ namespace TaleofMonsters.MainItem.Quests
             int markGet = 0;
             int frameSize = (pos.Width - FrameOff*2)/markArray.Length;
             for (int i = 0; i < rollItemX.Count; i++)
-            {
                 markGet += markArray[Math.Min(markArray.Length-1, rollItemX[i]/frameSize)];
-            }
             return markGet;
         }
 

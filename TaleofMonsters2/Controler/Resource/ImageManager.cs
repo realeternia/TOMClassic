@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using NarlonLib.Core;
 using System;
 using NarlonLib.Tools;
 using TaleofMonsters.Controler.Loader;
@@ -9,6 +8,17 @@ namespace TaleofMonsters.Controler.Resource
 {
     internal static class ImageManager
     {
+        internal class ImageItem
+        {
+            public Image Image;
+            public int Time;
+
+            public override string ToString()
+            {
+                return string.Format("{0}x{1} {2}", Image != null ? Image.Width : 0, Image != null ? Image.Height : 0, Time);
+            }
+        }
+
         private static Image nullImage;
         private static Dictionary<string, ImageItem> images = new Dictionary<string, ImageItem>();
         private static int lastCompressTime;

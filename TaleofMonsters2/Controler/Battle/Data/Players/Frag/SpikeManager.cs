@@ -50,9 +50,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             {
                 SpikeConfig spikeConfig = ConfigData.GetSpikeConfig(spike.Id);
                 if (spikeConfig.Tag == name)
-                {
                     return true;
-                }
             }
             return false;
         }
@@ -115,9 +113,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             if (toRemove != null)
             {
                 foreach (var spike in toRemove)
-                {
                     RemoveSpike(spike.Id);
-                }
             }
         }
     }

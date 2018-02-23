@@ -5,6 +5,15 @@ namespace TaleofMonsters.Controler.Battle.DataTent
 {
     internal class BattleStatisticData
     {
+        internal class BattleStatisticDataPlayer
+        {
+            public int MonsterAdd { get; set; }
+            public int WeaponAdd { get; set; }
+            public int SpellAdd { get; set; }
+            public int Kill { get; set; }
+            public int DamageTotal { get; set; }
+        }
+
         public BattleStatisticData()
         {
             Left = new BattleStatisticDataPlayer();
@@ -61,12 +70,4 @@ namespace TaleofMonsters.Controler.Battle.DataTent
         }
     }
 
-    internal class BattleStatisticDataPlayer
-    {
-        public int MonsterAdd { get; set; }
-        public int WeaponAdd { get; set; }
-        public int SpellAdd { get; set; }
-        public int Kill { get; set; }
-        public int DamageTotal { get; set; }
-    }
 }

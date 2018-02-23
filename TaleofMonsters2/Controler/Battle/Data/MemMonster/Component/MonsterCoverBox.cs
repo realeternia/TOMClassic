@@ -5,29 +5,32 @@ using TaleofMonsters.DataType.Effects;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 {
+    /// <summary>
+    /// 特殊技能造成的遮罩盒子
+    /// </summary>
     internal class MonsterCoverBox
     {
-        private LiveMonster liveMonster;
+        private LiveMonster self;
         private List<ActiveEffect> coverEffectList = new List<ActiveEffect>();//变身时需要重算
 
-        public MonsterCoverBox(LiveMonster liveMonster)
+        public MonsterCoverBox(LiveMonster lm)
         {
-            this.liveMonster = liveMonster;
+            self = lm;
             CheckCover();
         }
 
         public void CheckCover()
         {
-            string cover = liveMonster.Avatar.MonsterConfig.Cover;
+            string cover = self.Avatar.MonsterConfig.Cover;
             if (!string.IsNullOrEmpty(cover))
             {
-                ActiveEffect ef = new ActiveEffect(EffectBook.GetEffect(cover), liveMonster, true);
+                ActiveEffect ef = new ActiveEffect(EffectBook.GetEffect(cover), self, true);
                 ef.Repeat = true;
                 BattleManager.Instance.EffectQueue.Add(ef);
                 coverEffectList.Add(ef);
             }
 
-            liveMonster.SkillManager.CheckCover(coverEffectList);
+            self.SkillManager.CheckCover(coverEffectList);
         }
 
         public void RemoveAllCover()

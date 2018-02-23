@@ -15,9 +15,9 @@ namespace TaleofMonsters.MainItem
 {
     internal static class SystemMenuManager
     {
-        private static List<ToolBarItemData> menuItems;
-        private static List<ToolBarItemData> activeItems;
-        private static List<RiverFlow> flows;
+        private static List<ToolBarItemData> menuItemList;
+        private static List<ToolBarItemData> activeItemList;
+        private static List<RiverFlow> flowList;
 
         public static bool IsHotkeyEnabled { get; set; }
 
@@ -33,27 +33,27 @@ namespace TaleofMonsters.MainItem
 
         public static void Load(int width, int height)
         {
-            flows = new List<RiverFlow>();
-            flows.Add(new RiverFlow(width-138, height-55, 50, 50, 4, IconDirections.RightToLeft));
-       //     flows.Add(new RiverFlow(10, 50, 50, 50, 5, IconDirections.LeftToRight)); bless system conflict
-            flows.Add(new RiverFlow(width-54, 200, 50, 50, 5, IconDirections.UpToDown));
+            flowList = new List<RiverFlow>();
+            flowList.Add(new RiverFlow(width-138, height-55, 50, 50, 4, IconDirections.RightToLeft));
+       //     flowList.Add(new RiverFlow(10, 50, 50, 50, 5, IconDirections.LeftToRight)); bless system conflict
+            flowList.Add(new RiverFlow(width-54, 200, 50, 50, 5, IconDirections.UpToDown));
 
-            menuItems = new List<ToolBarItemData>();
+            menuItemList = new List<ToolBarItemData>();
             foreach (var mainIconConfig in ConfigData.MainIconDict.Values)
             {
-                menuItems.Add(new ToolBarItemData(mainIconConfig.Id, width, height));
+                menuItemList.Add(new ToolBarItemData(mainIconConfig.Id, width, height));
             }
         }
 
         private static void Reload()
         {
-            foreach (var riverFlow in flows)
+            foreach (var riverFlow in flowList)
             {
                 riverFlow.Reset();
             }
 
-            activeItems = new List<ToolBarItemData>();
-            foreach (var toolBarItemData in menuItems)
+            activeItemList = new List<ToolBarItemData>();
+            foreach (var toolBarItemData in menuItemList)
             {
                 int itemFlow = toolBarItemData.MainIconConfig.Flow;
                 if (!toolBarItemData.Enable || itemFlow == -1)
@@ -68,17 +68,17 @@ namespace TaleofMonsters.MainItem
 
                 if (itemFlow > 0)
                 {
-                    System.Drawing.Point newPoint = flows[itemFlow - 1].GetNextPosition();
-                    toolBarItemData.SetSize(newPoint.X, newPoint.Y, flows[itemFlow - 1].Width, flows[itemFlow - 1].Height);
+                    System.Drawing.Point newPoint = flowList[itemFlow - 1].GetNextPosition();
+                    toolBarItemData.SetSize(newPoint.X, newPoint.Y, flowList[itemFlow - 1].Width, flowList[itemFlow - 1].Height);
                 }
                
-                activeItems.Add(toolBarItemData);
+                activeItemList.Add(toolBarItemData);
             }
         }
 
         public static bool UpdateToolbar(int mouseX, int mouseY)
         {
-            foreach (var item in activeItems)
+            foreach (var item in activeItemList)
             {
                 if (item.InRegion(mouseX, mouseY))
                 {
@@ -100,7 +100,7 @@ namespace TaleofMonsters.MainItem
 
         public static void ResetIconState()
         {
-            foreach (var toolBarItemData in menuItems)
+            foreach (var toolBarItemData in menuItemList)
             {
                 if (toolBarItemData.Id >= 1000)
                     toolBarItemData.Enable = false;
@@ -111,7 +111,7 @@ namespace TaleofMonsters.MainItem
 
         public static void UpdateAll(Control parent)
          {
-             foreach (var item in activeItems)
+             foreach (var item in activeItemList)
              {
                  item.Update(parent);
              }
@@ -119,7 +119,7 @@ namespace TaleofMonsters.MainItem
 
         public static void DrawAll(System.Drawing.Graphics g)
         {
-            foreach (var item in activeItems)
+            foreach (var item in activeItemList)
             {
                 item.Draw(g, MenuTar);
             }
@@ -127,7 +127,7 @@ namespace TaleofMonsters.MainItem
 
         public static void CheckItemClick(SystemMenuIds id)
         {
-            foreach (var toolBarItemData in activeItems)
+            foreach (var toolBarItemData in activeItemList)
             {
                 if ((SystemMenuIds)toolBarItemData.Id == id && toolBarItemData.InCD)
                     return;

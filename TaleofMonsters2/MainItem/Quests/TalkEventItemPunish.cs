@@ -37,9 +37,7 @@ namespace TaleofMonsters.MainItem.Quests
             DoPunish(ref index, "bless", 1, PunishBless);
 
             if (evt.Children.Count > 0)
-            {
                 result = evt.Children[0];//应该是一个say
-            }
 
             inited = true;
         }
@@ -49,9 +47,7 @@ namespace TaleofMonsters.MainItem.Quests
             if (IsBonusAvail(type))
             {
                 for (int i = 0; i < times; i++)
-                {
                     action(ref index);    
-                }
             }
         }
 
@@ -60,13 +56,9 @@ namespace TaleofMonsters.MainItem.Quests
             foreach (var item in evt.ParamList)
             {
                 if (item == tp)
-                {
                     return true;
-                }
                 if (item != "x2" && item != "x3")
-                {
                     return false;
-                }
             }
             return true;
         }
@@ -76,13 +68,9 @@ namespace TaleofMonsters.MainItem.Quests
             foreach (var item in evt.ParamList)
             {
                 if (item == "x2")
-                {
                     return 2;
-                }
                 if (item == "x3")
-                {
                     return 3;
-                }
             }
             return 1;
         }
@@ -155,9 +143,7 @@ namespace TaleofMonsters.MainItem.Quests
         {
             var region = vRegion.GetRegion(id);
             if (region != null)
-            {
                 region.ShowTip(tooltip, parent, x, y);
-            }
         }
 
         private void virtualRegion_RegionLeft()

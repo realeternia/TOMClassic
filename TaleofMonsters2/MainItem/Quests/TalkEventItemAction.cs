@@ -56,9 +56,7 @@ namespace TaleofMonsters.MainItem.Quests
             }
 
             if (evt.Children.Count > 0)
-            {
                 result = evt.Children[0];//应该是一个say
-            }
         }
 
         public override bool AutoClose()

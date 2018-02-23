@@ -58,7 +58,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
 
         private void Remove(int monid)
         {
-            foreach (LiveMonster monster in monsters)
+            foreach (var monster in monsters)
             {
                 if (monster.Id == monid)
                 {
@@ -117,10 +117,10 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                     else
                     {
                         if (mon.OwnerPlayer.SpikeManager.HasSpike("grave") || (mon.Rival as Player).SpikeManager.HasSpike("grave"))
-                            mon.GhostTime+=0.005f;
+                            mon.GhostTime += 0.005f;
                         else
-                            mon.GhostTime+=0.01f;
-                        if (mon.GhostTime>=1)
+                            mon.GhostTime += 0.01f;
+                        if (mon.GhostTime >= 1)
                             removeMids.Add(mon.Id);
                     }
                 }

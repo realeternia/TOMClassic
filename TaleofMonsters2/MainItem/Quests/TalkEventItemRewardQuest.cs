@@ -51,9 +51,7 @@ namespace TaleofMonsters.MainItem.Quests
             DoReward(ref index, "item", 1, RewardItem);
 
             if (evt.Children.Count > 0)
-            {
                 result = evt.Children[0];//应该是一个say
-            }
 
             UserProfile.InfoQuest.SetQuestState(int.Parse(evt.ParamList[0]), QuestStates.Finish);
             inited = true;
@@ -62,9 +60,7 @@ namespace TaleofMonsters.MainItem.Quests
         private void DoReward(ref int index, string type, int times, RewardAction action)
         {
             for (int i = 0; i < times; i++)
-            {
                 action(ref index);
-            }
         }
 
         #region 各种奖励
