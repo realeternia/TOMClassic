@@ -2,10 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
-using System.Security.Cryptography.X509Certificates;
 using ConfigDatas;
 using NarlonLib.Control;
-using NarlonLib.Core;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Loader;
@@ -21,7 +19,7 @@ namespace TaleofMonsters.Controler.Battle.Components
 
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
 
-        private Player player;
+        private Player self;
         private Image back;
         private Image head;
         private string nameStr;
@@ -46,10 +44,10 @@ namespace TaleofMonsters.Controler.Battle.Components
 			if(head != null)
 				head.Dispose();
             head = PicLoader.Read("Player", string.Format("{0}.PNG", headid));
-            player = p;
-            player.ManaChanged += new Player.PlayerPointEventHandler(player_ManaChanged);
-            player.CardLeftChanged += new Player.PlayerPointEventHandler(player_CardLeftChanged);
-            player.TrapStateChanged += new Player.PlayerPointEventHandler(player_TrapChanged);
+            self = p;
+            self.ManaChanged += new Player.PlayerPointEventHandler(player_ManaChanged);
+            self.CardLeftChanged += new Player.PlayerPointEventHandler(player_CardLeftChanged);
+            self.TrapStateChanged += new Player.PlayerPointEventHandler(player_TrapChanged);
             Invalidate();
         }
 
@@ -63,10 +61,10 @@ namespace TaleofMonsters.Controler.Battle.Components
 			if(head != null)
 				head.Dispose();
 			head = PicLoader.Read("People", string.Format("{0}.PNG", peopleConfig.Figue));
-            player = p;
-            player.ManaChanged += new Player.PlayerPointEventHandler(player_ManaChanged);
-            player.CardLeftChanged += new Player.PlayerPointEventHandler(player_CardLeftChanged);
-            player.TrapStateChanged += new Player.PlayerPointEventHandler(player_TrapChanged);
+            self = p;
+            self.ManaChanged += new Player.PlayerPointEventHandler(player_ManaChanged);
+            self.CardLeftChanged += new Player.PlayerPointEventHandler(player_CardLeftChanged);
+            self.TrapStateChanged += new Player.PlayerPointEventHandler(player_TrapChanged);
             Invalidate();
         }
 
@@ -99,11 +97,11 @@ namespace TaleofMonsters.Controler.Battle.Components
             PlayerManaTypes nextAimMana = PlayerManaTypes.None;
             List<PlayerManaTypes> manaQueue = null;
             float roundRate = 0;
-            if (player != null)
+            if (self != null)
             {
-                nextAimMana = player.EnergyGenerator.NextAimMana;
-                manaQueue = player.EnergyGenerator.QueuedMana;
-                roundRate = player.GetRoundRate();
+                nextAimMana = self.EnergyGenerator.NextAimMana;
+                manaQueue = self.EnergyGenerator.QueuedMana;
+                roundRate = self.GetRoundRate();
             }
 
             Brush b1 = new LinearGradientBrush(new Rectangle(0, 18, 500, 10), Color.FromArgb(255, 120, 120), Color.FromArgb(255, 0, 0), LinearGradientMode.Vertical);
@@ -122,23 +120,23 @@ namespace TaleofMonsters.Controler.Battle.Components
                 }
                 var destRegion = new Rectangle(78, 10, 30, (int)(30*(1-roundRate)));
                 e.Graphics.DrawImage(HSIcons.GetIconsByEName("mix0"), destRegion, 0, 0, 32, 32 * (1-roundRate), GraphicsUnit.Pixel);
-                if (player != null)
+                if (self != null)
                 {
-                    for (int i = 0; i < player.EnergyGenerator.LimitMp; i++)
+                    for (int i = 0; i < self.EnergyGenerator.LimitMp; i++)
                     {
-                        if (i < player.Mp)
+                        if (i < self.Mp)
                             e.Graphics.FillRectangle(PaintTool.GetBrushByManaType((int)PlayerManaTypes.Mp), 112 + 24*i, 10, 22, 8);
                         e.Graphics.DrawRectangle(Pens.Gray, 112 + 24 * i, 10, 22, 8);
                     }
-                    for (int i = 0; i < player.EnergyGenerator.LimitPp; i++)
+                    for (int i = 0; i < self.EnergyGenerator.LimitPp; i++)
                     {
-                        if (i < player.Pp)
+                        if (i < self.Pp)
                             e.Graphics.FillRectangle(PaintTool.GetBrushByManaType((int)PlayerManaTypes.Pp), 112 + 24*i, 20, 22, 8);
                         e.Graphics.DrawRectangle(Pens.Gray, 112 + 24 * i, 20, 22, 8);
                     }
-                    for (int i = 0; i < player.EnergyGenerator.LimitLp; i++)
+                    for (int i = 0; i < self.EnergyGenerator.LimitLp; i++)
                     {
-                        if (i < player.Lp)
+                        if (i < self.Lp)
                             e.Graphics.FillRectangle(PaintTool.GetBrushByManaType((int)PlayerManaTypes.Lp), 112 + 24*i, 30, 22, 8);
                         e.Graphics.DrawRectangle(Pens.Gray, 112 + 24 * i, 30, 22, 8);
                     } 
@@ -158,23 +156,23 @@ namespace TaleofMonsters.Controler.Battle.Components
                 var destRegion = new Rectangle(Width - 108, 10, 30, (int)(30 * (1 - roundRate)));
                 e.Graphics.DrawImage(HSIcons.GetIconsByEName("mix0"), destRegion, 0, 0, 32, 32 * (1 - roundRate), GraphicsUnit.Pixel);
 
-                if (player != null)
+                if (self != null)
                 {
-                    for (int i = 0; i < player.EnergyGenerator.LimitMp; i++)
+                    for (int i = 0; i < self.EnergyGenerator.LimitMp; i++)
                     {
-                        if (i < player.Mp)
+                        if (i < self.Mp)
                             e.Graphics.FillRectangle(PaintTool.GetBrushByManaType((int)PlayerManaTypes.Mp), Width - 134 - 24 * i, 10, 22, 8);    
                         e.Graphics.DrawRectangle(Pens.Gray, Width - 134 - 24 * i, 10, 22, 8);
                     }
-                    for (int i = 0; i < player.EnergyGenerator.LimitPp; i++)
+                    for (int i = 0; i < self.EnergyGenerator.LimitPp; i++)
                     {
-                        if (i < player.Pp)
+                        if (i < self.Pp)
                             e.Graphics.FillRectangle(PaintTool.GetBrushByManaType((int)PlayerManaTypes.Pp), Width - 134 - 24*i, 20, 22, 8);
                         e.Graphics.DrawRectangle(Pens.Gray, Width - 134 - 24 * i, 20, 22, 8);
                     }
-                    for (int i = 0; i < player.EnergyGenerator.LimitLp; i++)
+                    for (int i = 0; i < self.EnergyGenerator.LimitLp; i++)
                     {
-                        if (i < player.Lp)
+                        if (i < self.Lp)
                             e.Graphics.FillRectangle(PaintTool.GetBrushByManaType((int)PlayerManaTypes.Lp), Width - 134 - 24*i, 30, 22, 8);
                         e.Graphics.DrawRectangle(Pens.Gray, Width - 134 - 24 * i, 30, 22, 8);
                     }
@@ -187,13 +185,13 @@ namespace TaleofMonsters.Controler.Battle.Components
             float lenth = TextRenderer.MeasureText(e.Graphics, nameStr, font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
             e.Graphics.DrawString(nameStr, font, Brushes.White, IsLeft ? 72 : Width - 72 - lenth, 44);
             e.Graphics.DrawImage(HSIcons.GetIconsByEName("tsk7"), IsLeft ? Width - 75 : 30,44,18,18);//画剩余卡牌数
-            if (player != null)
+            if (self != null)
             { 
-                e.Graphics.DrawString(player.DeckCards.LeftCount.ToString(), font, Brushes.White, IsLeft ? Width-52 : 53, 44);
-                if (player.TrapHolder.Count > 0)
+                e.Graphics.DrawString(self.DeckCards.LeftCount.ToString(), font, Brushes.White, IsLeft ? Width-52 : 53, 44);
+                if (self.TrapHolder.Count > 0)
                 {
                     var icon = HSIcons.GetIconsByEName("tsk6");
-                    for (int i = 0; i < player.TrapHolder.Count; i++)
+                    for (int i = 0; i < self.TrapHolder.Count; i++)
                         e.Graphics.DrawImage(icon, (IsLeft ? Width - 120 : 80)+i*8, 44, 18, 18);
                 }
             }
@@ -279,25 +277,25 @@ namespace TaleofMonsters.Controler.Battle.Components
         private Image GetPlayerImage()
         {
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
-            tipData.AddTextNewLine(string.Format("Lv{0}", player.Level), "LightBlue", 20);
+            tipData.AddTextNewLine(string.Format("Lv{0}", self.Level), "LightBlue", 20);
             tipData.AddTextNewLine("能量回复比率", "White");
-            tipData.AddTextNewLine(string.Format("LP {0}", player.EnergyGenerator.RateLp.ToString().PadLeft(3, ' ')), "Gold");
-            tipData.AddBar(100, player.EnergyGenerator.RateLp, Color.Yellow, Color.Gold);
-            tipData.AddTextNewLine(string.Format("PP {0}", player.EnergyGenerator.RatePp.ToString().PadLeft(3, ' ')), "Red");
-            tipData.AddBar(100, player.EnergyGenerator.RatePp, Color.Pink, Color.Red);
-            tipData.AddTextNewLine(string.Format("MP {0}", player.EnergyGenerator.RateMp.ToString().PadLeft(3, ' ')), "Blue");
-            tipData.AddBar(100, player.EnergyGenerator.RateMp, Color.Cyan, Color.Blue);
+            tipData.AddTextNewLine(string.Format("LP {0}", self.EnergyGenerator.RateLp.ToString().PadLeft(3, ' ')), "Gold");
+            tipData.AddBar(100, self.EnergyGenerator.RateLp, Color.Yellow, Color.Gold);
+            tipData.AddTextNewLine(string.Format("PP {0}", self.EnergyGenerator.RatePp.ToString().PadLeft(3, ' ')), "Red");
+            tipData.AddBar(100, self.EnergyGenerator.RatePp, Color.Pink, Color.Red);
+            tipData.AddTextNewLine(string.Format("MP {0}", self.EnergyGenerator.RateMp.ToString().PadLeft(3, ' ')), "Blue");
+            tipData.AddBar(100, self.EnergyGenerator.RateMp, Color.Cyan, Color.Blue);
 
-            player.TrapHolder.GenerateImage(tipData, player is HumanPlayer);
+            self.TrapHolder.GenerateImage(tipData, self is HumanPlayer);
 
-            var rival = player.Rival as Player;
-            if (rival.HasHolyWord("witcheye"))
+            var rival = self.Rival as Player;
+            if (rival.HolyBook.HasWord("witcheye"))
             {
                 tipData.AddLine();
                 tipData.AddTextNewLine("手牌", "White");
                 for (int i = 0; i < 10; i++)
                 {
-                    var card = player.CardManager.GetDeckCardAt(i);
+                    var card = self.CardManager.GetDeckCardAt(i);
                     if (card.CardId > 0)
                     {
                         var cardConfig = CardConfigManager.GetCardConfig(card.CardId);

@@ -88,7 +88,7 @@ namespace TaleofMonsters.DataType.Items
                 player.CardManager.AddCard(new ActiveCard(new DeckCard(cardId, 1, 0)));
             }
             if (!string.IsNullOrEmpty(itemConfig.HolyWord))
-                player.AddHolyWord(itemConfig.HolyWord);
+                player.HolyBook.AddWord(itemConfig.HolyWord);
             if (itemConfig.AddTowerHp > 0)
                 player.AddTowerHp(itemConfig.AddTowerHp);
             return true;

@@ -15,7 +15,7 @@ namespace TaleofMonsters.DataType.Skills
 
         public static int GetRandSkillId()
         {
-            if (randomSkillIds==null)
+            if (randomSkillIds == null)
             {
                 randomSkillIds = new List<int>();
                 foreach (SkillConfig skillConfig in ConfigData.SkillDict.Values)

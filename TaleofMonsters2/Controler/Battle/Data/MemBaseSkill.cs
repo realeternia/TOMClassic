@@ -20,18 +20,27 @@ namespace TaleofMonsters.Controler.Battle.Data
 
         private float castRoundAddon; //累积special技能的时间
 
-        public SkillSourceTypes Type { get; set; } //技能来源，天生/武器
+        public SkillSourceTypes Type { get; private set; } //技能来源，天生/武器
         public int SkillId { get; private set; }
         public int Percent { get; private set; }
-        public int Level { private get; set; }
-        public LiveMonster Self { get; set; }
+        private int level;
+        public LiveMonster Self { get; private set; }
+        public Skill SkillInfo { get; private set; }
 
-        public MemBaseSkill(Skill skill, int per)
+        public SkillConfig SkillConfig
         {
+            get { return SkillInfo.SkillConfig; }
+        }
+
+        public MemBaseSkill(LiveMonster lm, Skill skill, int per, int lv, SkillSourceTypes type)
+        {
+            Self = lm;
             SkillInfo = skill;
             SkillId = skill.Id;
             Percent = per;
-            burst= new Dictionary<int, BurstStage>();
+            level = lv;
+            Type = type;
+            burst = new Dictionary<int, BurstStage>();
         }
         
         public static int GetBurstKey(int srcId, int destId)
@@ -52,14 +61,7 @@ namespace TaleofMonsters.Controler.Battle.Data
                 return (int) (castRoundAddon*100/SkillConfig.SpecialCd);
             return 0;
         }
-
-        public Skill SkillInfo { get; private set; }
-
-        public SkillConfig SkillConfig
-        {
-            get { return SkillInfo.SkillConfig; }
-        }
-
+        
         private bool CheckRate()
         {
             return MathTool.GetRandom(10000 + Self.RealLuk * GameConstants.LukToRoll) > (100 - Percent) * 100;
@@ -240,8 +242,5 @@ namespace TaleofMonsters.Controler.Battle.Data
                 }
             }
         }
-
-
     }
-
 }

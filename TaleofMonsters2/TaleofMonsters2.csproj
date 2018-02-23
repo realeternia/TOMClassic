@@ -124,9 +124,9 @@
     <Compile Include="Controler\Battle\Data\MemMonster\TowerMonster.cs" />
     <Compile Include="Controler\Battle\Data\MemWeapon\IBattleWeapon.cs" />
     <Compile Include="Controler\Battle\Data\MemWeapon\SideKickWeapon.cs" />
+    <Compile Include="Controler\Battle\Data\Players\Frag\HolyBook.cs" />
     <Compile Include="Controler\Battle\Data\Players\Frag\PlayerAction.cs" />
     <Compile Include="Controler\Battle\Data\Players\Frag\PlayerSpecialAttr.cs" />
-    <Compile Include="Controler\Battle\Data\Players\Frag\Spike.cs" />
     <Compile Include="Controler\Battle\Data\Players\Frag\SpikeManager.cs" />
     <Compile Include="Controler\Battle\Data\Players\Frag\TrapHolder.cs" />
     <Compile Include="Controler\Battle\Tool\BattleManager.cs" />

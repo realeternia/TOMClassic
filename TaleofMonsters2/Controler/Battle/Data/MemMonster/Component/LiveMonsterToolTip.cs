@@ -94,7 +94,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 isLeft = !isLeft;
             }
 
-            foreach (var memBaseSkill in self.SkillManager.Skills)
+            foreach (var memBaseSkill in self.SkillManager.SkillList)
             {
                 tipData.AddImageNewLine(SkillBook.GetSkillImage(memBaseSkill.SkillId));
 

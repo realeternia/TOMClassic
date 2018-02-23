@@ -93,7 +93,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public int CardNumber { get { return CardManager.GetCardNumber(); } } //手牌数量
 
-        private List<string> holyWordList = new List<string>(); //圣言，一些特殊效果的指令
+        public HolyBook HolyBook { get; private set; }
 
         protected bool noCardOutPunish; //没有卡牌消耗完的惩罚
 
@@ -111,6 +111,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             Modifier = new EquipModifier();
             Action = new PlayerAction(this);
             SpecialAttr = new PlayerSpecialAttr();
+            HolyBook = new HolyBook();
             Lp = 3;
             Mp = 3;
             Pp = 3;
@@ -485,24 +486,13 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 case DiscoverCardActionType.AddCard: CardManager.AddCard(cardId, level, 0); break;
                 case DiscoverCardActionType.Add2Cards: CardManager.AddCard(cardId, level, 0); CardManager.AddCard(cardId, level, 0); break;
             }
-            AddCardReason(mon, DataType.AddCardReasons.Discover);
-        }
-
-        public void AddHolyWord(string word)
-        {
-            if (!holyWordList.Contains(word))
-                holyWordList.Add(word);
-        }
-
-        public bool HasHolyWord(string word)
-        {
-            return holyWordList.Contains(word);
+            AddCardReason(mon, AddCardReasons.Discover);
         }
 
         public void AddTowerHp(int hp)
         {
-            var unit = BattleManager.Instance.MonsterQueue.GetKingTower(IsLeft);
-            unit.AddHp(hp);
+            var towerUnit = BattleManager.Instance.MonsterQueue.GetKingTower(IsLeft);
+            towerUnit.AddHp(hp);
         }
 
         public void OnGetCardFail(bool noCard)

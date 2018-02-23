@@ -6,6 +6,15 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 {
     internal class SpikeManager
     {
+        internal class Spike
+        {
+            public int Id { get; set; }//配置表id
+            public bool RemoveOnUseMonster { get; set; }
+            public bool RemoveOnUseWeapon { get; set; }
+            public bool RemoveOnUseSpell { get; set; }
+            public bool CanTimeOut { get; set; }
+            public float RoundLeft { get; set; }
+        }
         private List<Spike> spikeList = new List<Spike>();
 
         public int LpCost { get; private set; }
