@@ -391,7 +391,9 @@ namespace TaleofMonsters.MainItem.Scenes
             tooltip.Hide(parent);
         }
 
-
+        /// <summary>
+        /// 主界面的元素绘制
+        /// </summary>
         public void Paint(Graphics g)
         {
             g.DrawImage(backPicture, 0, 50, width, height-35);
@@ -403,30 +405,46 @@ namespace TaleofMonsters.MainItem.Scenes
             if (UserProfile.Profile == null || UserProfile.InfoBasic.MapId == 0)
                 return;
 
-            Font font = new Font("微软雅黑", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            Font font2 = new Font("宋体", 9*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-
             Image head = PicLoader.Read("Player", string.Format("{0}.PNG", UserProfile.InfoBasic.Face));
             g.DrawImage(head, 0, 0, 50, 50);
             head.Dispose();
+            Font font2 = new Font("宋体", 9 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             g.DrawString(UserProfile.InfoBasic.Level.ToString(), font2, Brushes.Black, 3, 3);
             g.DrawString(UserProfile.InfoBasic.Level.ToString(), font2, Brushes.White, 2, 2);
-           // g.DrawString(UserProfile.ProfileName, font, Brushes.White, 50, 10);
+            font2.Dispose();
 
-            LinearGradientBrush b1 = new LinearGradientBrush(new Rectangle(55, 5, 100, 5), Color.LightCoral, Color.Red, LinearGradientMode.Horizontal);
-            g.FillRectangle(b1, 55, 5, Math.Min(UserProfile.InfoBasic.HealthPoint, 100), 5);
-            g.DrawRectangle(Pens.DarkGray, 55, 5, 100, 5);
-            b1.Dispose();
+            { //属性条
+                Font font3 = new Font("Arial", 10 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+                g.DrawImage(HSIcons.GetIconsByEName("buf0"), 58, 3, 14, 14);
+                LinearGradientBrush b1 = new LinearGradientBrush(new Rectangle(78, 5, 100, 10), Color.LightCoral, Color.Red, LinearGradientMode.Horizontal);
+                g.FillRectangle(b1, 78, 5, Math.Min(UserProfile.InfoBasic.HealthPoint, 100), 10);
+                g.DrawRectangle(Pens.DarkGray, 78, 5, 100, 10);
+                b1.Dispose();
+                g.DrawString(string.Format("{0,3}/100", UserProfile.InfoBasic.HealthPoint), font3, Brushes.White, 78+25, 2);
 
-            b1 = new LinearGradientBrush(new Rectangle(55, 12, 100, 5), Color.LightBlue, Color.Blue, LinearGradientMode.Horizontal);
-            g.FillRectangle(b1, 55, 12, Math.Min(UserProfile.InfoBasic.MentalPoint, 100), 5);
-            g.DrawRectangle(Pens.DarkGray, 55, 12, 100, 5);
-            b1.Dispose();
+                g.DrawImage(HSIcons.GetIconsByEName("buf1"), 58, 17, 14, 14);
+                b1 = new LinearGradientBrush(new Rectangle(78, 19, 100, 10), Color.LightBlue, Color.Blue, LinearGradientMode.Horizontal);
+                g.FillRectangle(b1, 78, 19, Math.Min(UserProfile.InfoBasic.MentalPoint, 100), 10);
+                g.DrawRectangle(Pens.DarkGray, 78, 19, 100, 10);
+                b1.Dispose();
+                g.DrawString(string.Format("{0,3}/100", UserProfile.InfoBasic.MentalPoint), font3, Brushes.White, 78 + 25, 16);
 
-            b1 = new LinearGradientBrush(new Rectangle(55, 19, 100, 5), Color.LightGreen, Color.Green, LinearGradientMode.Horizontal);
-            g.FillRectangle(b1, 55, 19, Math.Min(UserProfile.InfoBasic.FoodPoint, 100), 5);
-            g.DrawRectangle(Pens.DarkGray, 55, 19, 100, 5);
-            b1.Dispose();
+                g.DrawImage(HSIcons.GetIconsByEName("oth7"), 58, 31, 14, 14);
+                b1 = new LinearGradientBrush(new Rectangle(78, 33, 100, 10), Color.LightGreen, Color.Green, LinearGradientMode.Horizontal);
+                g.FillRectangle(b1, 78, 33, Math.Min(UserProfile.InfoBasic.FoodPoint, 100), 10);
+                g.DrawRectangle(Pens.DarkGray, 78, 33, 100, 10);
+                b1.Dispose();
+                g.DrawString(string.Format("{0,3}/100", UserProfile.InfoBasic.FoodPoint), font3, Brushes.White, 78 + 25, 30);
+
+                font3.Dispose();
+
+                int xOff = (width - 688) / 2 + 30;
+                g.FillRectangle(Brushes.DimGray, xOff, 41, 630, 8);
+                b1 = new LinearGradientBrush(new Rectangle(xOff, 41, 630, 8), Color.White, Color.Gray, LinearGradientMode.Vertical);
+                g.FillRectangle(b1, xOff, 41, Math.Min(UserProfile.InfoBasic.Exp * 630 / ExpTree.GetNextRequired(UserProfile.InfoBasic.Level), 630), 8);
+                g.DrawRectangle(new Pen(Brushes.Black, 2), xOff, 41, 630, 8);
+                b1.Dispose();
+            }
 
             if (TimeMinutes >= 960 && TimeMinutes < 1080)
             {
@@ -441,29 +459,23 @@ namespace TaleofMonsters.MainItem.Scenes
                 blue.Dispose();
             }
 
+            Font font = new Font("微软雅黑", 12 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             var len = TextRenderer.MeasureText(g, sceneName, font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
             g.DrawString(sceneName, font, Brushes.White, new PointF(width - 85 - len / 2, 8));
-
-            Font font3 = new Font("Arial", 11 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            var resBackX = (width - 688)/2;
-            DrawRes(UserProfile.InfoBag.Resource.Lumber, g, font3, resBackX+82, resBackX+82+48, 15);
-            DrawRes(UserProfile.InfoBag.Resource.Stone, g, font3, resBackX + 82*2, resBackX + 82 * 2 + 48, 15);
-            DrawRes(UserProfile.InfoBag.Resource.Mercury, g, font3, resBackX + 82 * 3, resBackX + 82 * 3 + 48, 15);
-            DrawRes(UserProfile.InfoBag.Resource.Carbuncle, g, font3, resBackX + 82 * 4, resBackX + 82 * 4 + 48, 15);
-            DrawRes(UserProfile.InfoBag.Resource.Sulfur, g, font3, resBackX + 82 * 5, resBackX + 82 * 5 + 48, 15);
-            DrawRes(UserProfile.InfoBag.Resource.Gem, g, font3, resBackX + 82 * 6, resBackX + 82 * 6 + 48, 15);
-            DrawRes(UserProfile.InfoBag.Resource.Gold, g, font3, resBackX +570, resBackX + 570+80, 15);
-            font3.Dispose();
-
-            int xOff = (width - 688) / 2 + 30;
-            g.FillRectangle(Brushes.DimGray, xOff, 41, 630, 8);
-            b1 = new LinearGradientBrush(new Rectangle(xOff, 41, 630, 8), Color.White, Color.Gray, LinearGradientMode.Vertical);
-            g.FillRectangle(b1, xOff, 41, Math.Min(UserProfile.InfoBasic.Exp*630/ExpTree.GetNextRequired(UserProfile.InfoBasic.Level), 630), 8);
-            g.DrawRectangle(new Pen(Brushes.Black, 2), xOff, 41, 630, 8);
-            b1.Dispose();
-
             font.Dispose();
-            font2.Dispose();
+
+            { //资源
+                Font font3 = new Font("Arial", 11*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+                var resBackX = (width - 688)/2;
+                DrawRes(UserProfile.InfoBag.Resource.Lumber, g, font3, resBackX + 82, resBackX + 82 + 48, 15);
+                DrawRes(UserProfile.InfoBag.Resource.Stone, g, font3, resBackX + 82*2, resBackX + 82*2 + 48, 15);
+                DrawRes(UserProfile.InfoBag.Resource.Mercury, g, font3, resBackX + 82*3, resBackX + 82*3 + 48, 15);
+                DrawRes(UserProfile.InfoBag.Resource.Carbuncle, g, font3, resBackX + 82*4, resBackX + 82*4 + 48, 15);
+                DrawRes(UserProfile.InfoBag.Resource.Sulfur, g, font3, resBackX + 82*5, resBackX + 82*5 + 48, 15);
+                DrawRes(UserProfile.InfoBag.Resource.Gem, g, font3, resBackX + 82*6, resBackX + 82*6 + 48, 15);
+                DrawRes(UserProfile.InfoBag.Resource.Gold, g, font3, resBackX + 570, resBackX + 570 + 80, 15);
+                font3.Dispose();
+            }
 
             if (UserProfile.InfoDungeon.DungeonId <= 0)
             {
@@ -488,9 +500,8 @@ namespace TaleofMonsters.MainItem.Scenes
 
         private static void DrawDungeonAttr(Graphics g)
         {
-            Font font2;
             Image tipBack = PicLoader.Read("System", "TipBack.PNG");
-            font2 = new Font("宋体", 10 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            Font font2 = new Font("宋体", 10 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             int index = 0;
             if (UserProfile.InfoDungeon.Str >= 0)
             {

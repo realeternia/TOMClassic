@@ -94,7 +94,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             if (healthSub > 0)
             {
                 UserProfile.InfoBasic.SubHealth(healthSub);
-                MainForm.Instance.AddFlow((-healthSub).ToString(), "oth5", Color.Red, new Point(X, Y - 30));
+                MainForm.Instance.AddFlow((-healthSub).ToString(), "buf0", Color.Red, new Point(X, Y - 30));
             }
             if (foodSub > 0)
             {
