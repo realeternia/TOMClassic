@@ -40,9 +40,7 @@ namespace TaleofMonsters.MainItem
 
             menuItemList = new List<ToolBarItemData>();
             foreach (var mainIconConfig in ConfigData.MainIconDict.Values)
-            {
                 menuItemList.Add(new ToolBarItemData(mainIconConfig.Id, width, height));
-            }
         }
 
         private static void Reload()
@@ -112,17 +110,13 @@ namespace TaleofMonsters.MainItem
         public static void UpdateAll(Control parent)
          {
              foreach (var item in activeItemList)
-             {
                  item.Update(parent);
-             }
          }
 
         public static void DrawAll(System.Drawing.Graphics g)
         {
             foreach (var item in activeItemList)
-            {
                 item.Draw(g, MenuTar);
-            }
         }
 
         public static void CheckItemClick(SystemMenuIds id)
@@ -137,6 +131,9 @@ namespace TaleofMonsters.MainItem
             {
                 case SystemMenuIds.SystemMenu:
                     PanelManager.DealPanel(new SystemMenu());
+                    break;
+                case SystemMenuIds.UserForm:
+                    PanelManager.DealPanel(new UserForm());
                     break;
                 case SystemMenuIds.LeaveDungeon:
                     if (MessageBoxEx2.Show("确定离开副本?") == DialogResult.OK)
@@ -202,9 +199,7 @@ namespace TaleofMonsters.MainItem
         public static void CheckHotKey(KeyEventArgs e)
         {
             if (!IsHotkeyEnabled)
-            {
                 return;
-            }
 
             if (GMMode && e.KeyCode != Keys.Oemtilde)
             {
@@ -216,9 +211,7 @@ namespace TaleofMonsters.MainItem
             {
                 case Keys.Escape:
                     if (!PanelManager.CloseLastPanel())//如果已经没有面板了，才出
-                    {
                         CheckItemClick(SystemMenuIds.SystemMenu);
-                    }
                     break;
                 case Keys.C:
                     CheckItemClick(SystemMenuIds.EquipmentForm);
@@ -253,6 +246,7 @@ namespace TaleofMonsters.MainItem
     {
         SystemMenu = 1,
         GameShopViewForm = 2,
+        UserForm = 3,
         TaskForm = 6,
         PeopleViewForm = 7,
         DeckViewForm = 8,

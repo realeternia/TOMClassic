@@ -94,8 +94,6 @@ namespace TaleofMonsters.DataType.User
 
         public void OnLogout()
         {
-            int inter = TimeTool.DateTimeToUnixTime(DateTime.Now) - InfoBasic.LastLoginTime;
-            InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalOnline, inter / 60);
             InfoBasic.LastLoginTime = TimeTool.DateTimeToUnixTime(DateTime.Now);
             InfoQuest.OnLogout();
         }
@@ -110,8 +108,6 @@ namespace TaleofMonsters.DataType.User
 
         public void OnNewDay()
         {
-            int inter = TimeTool.DateTimeToUnixTime(DateTime.Now) - InfoBasic.LastLoginTime;
-            InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalOnline, inter / 60);
             InfoBasic.LastLoginTime = TimeTool.DateTimeToUnixTime(DateTime.Now);
         }
 

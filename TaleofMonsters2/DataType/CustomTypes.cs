@@ -313,16 +313,15 @@
         TotalSummon = 6,
         TotalWeapon = 7,
         TotalSpell = 8,
-        TotalOnline = 9,
-        ContinueWin = 10,
+        ContinueWin = 9,
+        
+        TotalUseAttr = 100, //6
+        TotalUseRace = 200, //16
+        TotalUseLevel = 300, //9
 
-        TotalKillAttr = 100, // size 9
-        TotalKillRace = 200, //16
-        TotalKillLevel = 300, //9
-
-        TotalUseAttr = 400, //17
-        TotalUseRace = 500, //16
-        TotalUseLevel = 600, //9
+        TotalKillAttr = 400, // size 6
+        TotalKillRace = 500, //16
+        TotalKillLevel = 600, //9
 
         LastCardShopTime = 1000,
         LastMergeTime = 1001,
