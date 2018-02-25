@@ -58,31 +58,31 @@ namespace TaleofMonsters.DataType.User
             InfoWorld.Blesses[BlessBook.GetBlessByName("newbie")] = 50;
         }
 
-        public void OnKillMonster(int tlevel, int trace, int ttype)
+        public void OnKillMonster(int tlevel, int trace, int tattr)
         {
-            InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalKillByType + ttype, 1);
-            InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalKillByRace + trace, 1);
-            InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalKillByLevel + tlevel, 1);
+            InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalKillAttr + tattr, 1);
+            InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalKillRace + trace, 1);
+            InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalKillLevel + tlevel, 1);
             InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalKill, 1);
         }
 
-        public void OnUseCard(int tlevel, int trace, int ttype)
+        internal void OnUseCard(CardTypes type, int tlevel, int trace, int tattr)
         {
-            //InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalSummonByType + ttype, 1);
-            //if (ttype <= 8)
-            //{
-            //    InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalSummonByRace + trace, 1);
-            //    InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalSummonByLevel + tlevel, 1);
-            //    InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalSummon, 1);
-            //}
-            //else if (ttype <= 12)
-            //{
-            //    InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalWeapon, 1);
-            //}
-            //else
-            //{
-            //    InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalSpell, 1);
-            //}
+            InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalUseAttr + tattr, 1);
+            InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalUseLevel + tlevel, 1);
+            if (type == CardTypes.Monster)
+            {
+                InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalUseRace + trace, 1);
+                InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalSummon, 1);
+            }
+            if (type == CardTypes.Weapon)
+            {
+                InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalWeapon, 1);
+            }
+            else
+            {
+                InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalSpell, 1);
+            }
         }
 
         public void OnLogin()

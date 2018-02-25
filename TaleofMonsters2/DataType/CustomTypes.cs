@@ -315,13 +315,14 @@
         TotalSpell = 8,
         TotalOnline = 9,
         ContinueWin = 10,
-        TotalKillByType = 100, // size 9
-        TotalKillByRace = 200, //16
-        TotalKillByLevel = 300, //9
 
-        TotalSummonByType = 400, //17
-        TotalSummonByRace = 500, //16
-        TotalSummonByLevel = 600, //9
+        TotalKillAttr = 100, // size 9
+        TotalKillRace = 200, //16
+        TotalKillLevel = 300, //9
+
+        TotalUseAttr = 400, //17
+        TotalUseRace = 500, //16
+        TotalUseLevel = 600, //9
 
         LastCardShopTime = 1000,
         LastMergeTime = 1001,
