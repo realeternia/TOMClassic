@@ -3,6 +3,7 @@ using TaleofMonsters.Controler.World;
 using TaleofMonsters.Core;
 using ConfigDatas;
 using NarlonLib.Tools;
+using TaleofMonsters.DataType.Blesses;
 
 namespace TaleofMonsters.DataType.User
 {
@@ -54,6 +55,7 @@ namespace TaleofMonsters.DataType.User
             InfoBag.BagCount = 50;
             InfoEquip.AddEquipCompose(21100001);
             InfoEquip.AddEquipCompose(21300001);
+            InfoWorld.Blesses[BlessBook.GetBlessByName("newbie")] = 50;
         }
 
         public void OnKillMonster(int tlevel, int trace, int ttype)
@@ -86,9 +88,7 @@ namespace TaleofMonsters.DataType.User
         public void OnLogin()
         {
             if (TimeManager.IsDifferDay(InfoBasic.LastLoginTime, TimeTool.DateTimeToUnixTime(DateTime.Now)))
-            {
                 OnNewDay();                
-            }
             InfoBasic.LastLoginTime = TimeTool.DateTimeToUnixTime(DateTime.Now);
         }
 

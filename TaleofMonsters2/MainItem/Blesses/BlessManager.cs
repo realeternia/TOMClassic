@@ -37,9 +37,7 @@ namespace TaleofMonsters.MainItem.Blesses
         {
             UserProfile.InfoWorld.Blesses.Remove(id);
             if (Update != null)
-            {
                 Update();
-            }
             RebuildCache();
         }
 
@@ -50,9 +48,7 @@ namespace TaleofMonsters.MainItem.Blesses
             {
                 var blessConfig = ConfigData.GetBlessConfig(bless.Key);
                 if (blessConfig.Type == (int)BlessTypes.Negative)
-                {
                     datas.Add(blessConfig.Id);
-                }
             }
             return datas;
         }

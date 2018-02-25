@@ -40,6 +40,8 @@ namespace TaleofMonsters.DataType.Blesses
             }
             foreach (var blessConfig in ConfigData.BlessDict.Values)
             {
+                if (!blessConfig.IsRandom)
+                    continue;
                 if (blessConfig.Type == (int)BlessTypes.Active)
                     activeBlessDict[blessConfig.Level].Add(blessConfig.Id);
                 else if (blessConfig.Type == (int)BlessTypes.Negative)
@@ -65,7 +67,7 @@ namespace TaleofMonsters.DataType.Blesses
             if (UserProfile.InfoWorld.Blesses.ContainsKey(key))
                 lastTime = UserProfile.InfoWorld.Blesses[key];
             TipImage tipData = new TipImage();
-            var color = "White";
+            var color = "Gold";
             if (config.Type == (int) BlessTypes.Active)
                 color = "Green";
             else if (config.Type == (int)BlessTypes.Negative)
@@ -73,7 +75,7 @@ namespace TaleofMonsters.DataType.Blesses
             tipData.AddTextNewLine(config.Name, color, 20);
             tipData.AddLine(2);
             tipData.AddTextLines(config.Descript, "White", 15, true);
-            tipData.AddTextNewLine(string.Format("剩余步数{0}", lastTime), "Wheat");
+            tipData.AddTextNewLine(string.Format("剩余步数{0}", lastTime), "Lime");
             return tipData.Image;
         }
         
