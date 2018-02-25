@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using ConfigDatas;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
@@ -26,13 +27,6 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                 return;
             }
 
-            //int sceneLevel = ConfigData.GetSceneConfig(TargetMap).Level;
-            //if (sceneLevel > UserProfile.InfoBasic.Level)
-            //{
-            //    MainTipManager.AddTip(string.Format(HSErrors.GetDescript(ErrorConfig.Indexer.SceneLevelNeed), sceneLevel), "Red");
-            //    return;
-            //}
-
             int lastMapId = UserProfile.InfoBasic.MapId;
             Scene.Instance.ChangeMap(TargetMap, true);
             Scene.Instance.MoveTo(Scene.Instance.GetWarpPosByMapId(lastMapId));
@@ -45,6 +39,20 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             return false;
         }
 
+        public override void OnTick()
+        {
+            base.OnTick();
+
+            if (Disabled)
+                return;
+
+            int drawWidth = 85 * Width / GameConstants.SceneTileStandardWidth;
+            int drawHeight = 61 * Height / GameConstants.SceneTileStandardHeight;
+            var destRect = new Rectangle(X - drawWidth / 2 + Width / 8, Y - drawHeight / 2, drawWidth, drawHeight);
+
+            MainForm.Instance.RefreshView(destRect);
+        }
+
         public override void Draw(Graphics g, bool isTarget)
         {
             base.Draw(g, isTarget);
@@ -54,21 +62,20 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             int drawHeight = markQuest.Height * Height / GameConstants.SceneTileStandardHeight;
             var destRect = new Rectangle(X - drawWidth / 2 + Width / 8, Y - drawHeight / 2, drawWidth, drawHeight);
             if (Disabled)
+            {
                 g.DrawImage(markQuest, destRect, 0, 0, markQuest.Width, markQuest.Height, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
+            }
             else
+            {
+                var size = Math.Sin((float)tickCount/4) + 4;
+                destRect = new Rectangle(destRect.X+(int)(destRect.Width * (0.5 - size / 5 / 2)), destRect.Y+(int)(destRect.Height * (0.5 - size / 5 / 2)), (int)(destRect.Width * size / 5), (int)(destRect.Height * size / 5));
                 g.DrawImage(markQuest, destRect, 0, 0, markQuest.Width, markQuest.Height, GraphicsUnit.Pixel);
+            }
 
             var targetName = ConfigData.GetSceneConfig(TargetMap).Name;
-            //int sceneLevel = ConfigData.GetSceneConfig(TargetMap).Level;
-            Brush brush = Brushes.Wheat;
-            //if (sceneLevel > UserProfile.InfoBasic.Level)
-            //{
-            //    targetName = "等级" + sceneLevel;
-            //    brush = Brushes.Red;
-            //}
             Font fontName = new Font("宋体", 11*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             g.DrawString(targetName, fontName, Brushes.Black, X - drawWidth / 2 + Width / 8 + 1, Y - drawHeight / 2 + 1);
-            g.DrawString(targetName, fontName, Disabled ? Brushes.Gray : brush, X - drawWidth / 2 + Width / 8, Y - drawHeight / 2);
+            g.DrawString(targetName, fontName, Disabled ? Brushes.Gray : Brushes.Wheat, X - drawWidth / 2 + Width / 8, Y - drawHeight / 2);
             fontName.Dispose();
             markQuest.Dispose();
         }

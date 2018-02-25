@@ -218,6 +218,9 @@ namespace TaleofMonsters.MainItem.Scenes
 
         public void TimeGo(float timePast)
         {
+            foreach (var sceneObject in SceneInfo.Items)
+                sceneObject.OnTick();
+
             if (movingData.Time > 0)
             {
                 movingData.Time = Math.Max(0, movingData.Time - timePast);

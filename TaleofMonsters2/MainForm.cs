@@ -87,17 +87,19 @@ namespace TaleofMonsters
             else if (pg == 1)
             {
                 UserProfile.ProfileName = textBoxName.Text;
+                var isNewUser = false;
                 if (!UserProfile.LoadFromDB(textBoxName.Text))
                 {
                     UserProfile.Profile = new Profile();
                     CreatePlayerForm cpf = new CreatePlayerForm();
                     cpf.ShowDialog();
+                    isNewUser = true;
                     if (cpf.Result == DialogResult.Cancel)
                         return;
                 }
                 MainTipManager.Refresh();
                 SoundManager.PlayBGM("TOM001.mp3");
-                Scene.Instance.ChangeMap(UserProfile.InfoBasic.MapId, false);
+                Scene.Instance.ChangeMap(UserProfile.InfoBasic.MapId, isNewUser);
                 UserProfile.Profile.OnLogin();
             }
             page = pg;
@@ -144,15 +146,11 @@ namespace TaleofMonsters
         private void MainForm_MouseMove(object sender, MouseEventArgs e)
         {
             if (lastMouseMoveTime + 50 > TimeTool.GetNowMiliSecond())
-            {
                 return;
-            }
             lastMouseMoveTime = TimeTool.GetNowMiliSecond();
 
             if (SystemMenuManager.UpdateToolbar(e.X, e.Y))
-            {
                 tabPageGame.Invalidate();
-            }
 
             Scene.Instance.CheckMouseMove(e.X, e.Y);
         }
@@ -186,6 +184,10 @@ namespace TaleofMonsters
         public void RefreshView()
         {//有的时候需要整天刷新一次
             tabPageGame.Invalidate();
+        }
+        public void RefreshView(Rectangle rect)
+        {
+            tabPageGame.Invalidate(rect);
         }
 
         public BasePanel FindPanelAct(Type type)

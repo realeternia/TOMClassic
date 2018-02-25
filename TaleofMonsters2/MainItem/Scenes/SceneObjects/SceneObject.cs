@@ -24,6 +24,8 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
         public bool MapSetting { get; set; }
         public uint Flag { get; set; }
 
+        protected int tickCount;
+
         public SceneObject(int wid, int wx, int wy, int wwidth, int wheight)
         {
             Id = wid;
@@ -112,6 +114,11 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
         public virtual bool CanBeReplaced()
         {
             return true;
+        }
+
+        public virtual void OnTick()
+        {
+            tickCount++;
         }
 
         public virtual void Draw(Graphics g, bool isTarget)
