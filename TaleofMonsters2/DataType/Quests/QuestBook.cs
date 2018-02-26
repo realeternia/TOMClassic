@@ -78,7 +78,7 @@ namespace TaleofMonsters.DataType.Quests
         {
             QuestConfig questConfig = ConfigData.GetQuestConfig(id);
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
-            string nameStr = questConfig.Name;
+            string nameStr = string.Format("【{0}】{1}", questConfig.TypeR == 0 ? "主线": "支线", questConfig.Name);
             bool isFinish = UserProfile.InfoQuest.IsQuestFinish(id);
             bool isRecv = UserProfile.InfoQuest.IsQuestCanReceive(id);
             bool isReward = UserProfile.InfoQuest.IsQuestCanReward(id);
@@ -103,9 +103,9 @@ namespace TaleofMonsters.DataType.Quests
                 tipData.AddTextNewLine(string.Format(" 进度{0}%", UserProfile.InfoQuest.GetQuestProgress(id)*10), "White", 20);
             tipData.AddLine();
             tipData.AddTextNewLine("难度:" + GetTaskHardness(questConfig.Y), "White");
-            if (questConfig.NpcId > 0)
+            if (questConfig.StartNpcId > 0)
             {
-                SceneQuestConfig npcConfig = ConfigData.GetSceneQuestConfig(questConfig.NpcId);
+                SceneQuestConfig npcConfig = ConfigData.GetSceneQuestConfig(questConfig.StartNpcId);
                 tipData.AddTextNewLine("委托人:" + npcConfig.Name, "White");
             }
             tipData.AddLine();

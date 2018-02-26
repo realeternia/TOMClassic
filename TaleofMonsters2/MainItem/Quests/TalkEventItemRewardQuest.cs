@@ -67,9 +67,9 @@ namespace TaleofMonsters.MainItem.Quests
         
         private void RewardItem(ref int index)
         {
-            if (!string.IsNullOrEmpty(config.RewardItem))
+            if (!string.IsNullOrEmpty(questConfig.RewardItem))
             {
-                var itemId = HItemBook.GetItemId(config.RewardItem);
+                var itemId = HItemBook.GetItemId(questConfig.RewardItem);
                 var isEquip = ConfigIdManager.IsEquip(itemId);
                 if (isEquip)
                 {

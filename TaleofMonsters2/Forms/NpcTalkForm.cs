@@ -161,17 +161,20 @@ namespace TaleofMonsters.Forms
             {//额外的任务目标
                 foreach (var questConfig in ConfigData.QuestDict.Values)
                 {
-                    if (questConfig.NpcId == EventId)
+                    if (questConfig.StartNpcId == EventId)
                     {
                         if (UserProfile.InfoQuest.IsQuestCanReceive(questConfig.Id))
                         {
                             var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockquest");
-                            questBlock.Script = questConfig.Name;
+                            questBlock.Script = string.Format("【{0}】{1}", questConfig.TypeR == 0 ? "主线" : "支线", questConfig.Name);
                             questBlock.Prefix = "quest";
                             questBlock.Children[0].Script = questConfig.Descript + "$$报酬:" + QuestBook.GetRewardStr(questConfig.Id);
                             (questBlock.Children[0].Children[0].Children[0] as SceneQuestEvent).ParamList[0] = questConfig.Id.ToString();
                             answerList.Add(questBlock);
                         }
+                    }
+                    if (questConfig.EndNpcId == EventId || questConfig.EndNpcId == 0 && questConfig.StartNpcId == EventId) //如果end=0，则使用startnpc作为奖励npc
+                    {
                         if (UserProfile.InfoQuest.IsQuestCanReward(questConfig.Id))
                         {
                             var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockquestfin");

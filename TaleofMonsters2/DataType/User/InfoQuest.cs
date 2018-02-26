@@ -71,6 +71,8 @@ namespace TaleofMonsters.DataType.User
                 var questConfig = ConfigData.GetQuestConfig(qid);
                 if (!string.IsNullOrEmpty(questConfig.RequireItem))
                     return UserProfile.InfoBag.GetItemCount(HItemBook.GetItemId(questConfig.RequireItem)) > 0;
+                if (questConfig.RequireSceneId > 0)
+                    return UserProfile.InfoBasic.MapId == questConfig.RequireSceneId;
                 return questData.State == (int)QuestStates.Accomplish;
             }
             return false;

@@ -52,25 +52,19 @@ namespace TaleofMonsters.Forms
             foreach (var questData in ConfigData.QuestDict.Values)
             {
                 if (questData.RegionId != regionId)
-                {
                     continue;
-                }
                 Image img = null;
-                Color borderColor = Color.Lime;
+                Color borderColor = Color.Black;
                 if (UserProfile.InfoQuest.IsQuestNotReceive(questData.Id))
-                {
                     img = HSIcons.GetIconsByEName("npc1");
-                    borderColor = Color.Black;
-                }
                 else if (UserProfile.InfoQuest.IsQuestFinish(questData.Id))
-                {
                     img = HSIcons.GetIconsByEName("npc4");
-                    borderColor = Color.Goldenrod;
-                }
                 else if (UserProfile.InfoQuest.IsQuestCanReward(questData.Id))
                     img = HSIcons.GetIconsByEName("npc3");
                 else
                     img = HSIcons.GetIconsByEName("npc2");
+                if(questData.TypeR == 0) //主线
+                    borderColor = Color.Gold;
                 var region = new ImageRegion(index++, 30 + questData.X * 24, 75 + questData.Y * 24, 20, 20, ImageRegionCellType.None, img);
                 region.SetKeyValue(questData.Id);
                 region.AddDecorator(new RegionBorderDecorator(borderColor));
@@ -87,9 +81,7 @@ namespace TaleofMonsters.Forms
         {
             var questConfig = ConfigData.GetQuestConfig(key);
             if (UserProfile.InfoQuest.IsQuestNotReceive(questConfig.Id))
-            {
                 return;
-            }
             Image image = QuestBook.GetPreview(questConfig.Id);
             tooltip.Show(image, this, x, y);
         }
