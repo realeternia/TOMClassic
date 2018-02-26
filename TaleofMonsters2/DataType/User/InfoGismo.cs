@@ -24,6 +24,7 @@ namespace TaleofMonsters.DataType.User
             {
                 Gismos.Add(id, true);
                 MainTipManager.AddTip(string.Format("|获得成就|Gold|{0}", ConfigData.GetDungeonGismoConfig(id).Name), "White");
+                UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.GismoGet, 1);
             }
         }
 

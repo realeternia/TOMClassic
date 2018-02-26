@@ -150,7 +150,10 @@ namespace TaleofMonsters.DataType.User
             }
          
             if (num > count)
+            { 
                 MainTipManager.AddTip(string.Format("|获得物品-|{0}|{1}||x{2}", HSTypes.I2RareColor(itemConfig.Rare), itemConfig.Name, num - count), "White");
+                UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.ItemGet, 1);
+            }
         }
 
         public void UseItemByPos(int pos, HItemUseTypes type)

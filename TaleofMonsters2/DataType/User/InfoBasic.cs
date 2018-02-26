@@ -23,7 +23,12 @@ namespace TaleofMonsters.DataType.User
         [FieldIndex(Index = 27)] public int LastPosition;
         [FieldIndex(Index = 24)] public uint HealthPoint; //健康度
         [FieldIndex(Index = 25)] public uint MentalPoint; //精神
-        [FieldIndex(Index = 26)] public List<int> AvailJobList = new List<int>(); //解锁职业列表
+        [FieldIndex(Index = 26)] public List<int> AvailJobList; //解锁职业列表
+
+        public InfoBasic()
+        {
+            List<int> AvailJobList = new List<int>();
+        }
 
         public void AddExp(int ex)
         {

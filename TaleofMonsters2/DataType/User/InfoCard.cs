@@ -10,14 +10,16 @@ namespace TaleofMonsters.DataType.User
 {
     public class InfoCard
     {
-        [FieldIndex(Index = 1)] public Dictionary<int, DbDeckCard> Cards = new Dictionary<int, DbDeckCard>();//模板id为key
-        [FieldIndex(Index = 2)] public List<int> Newcards = new List<int>();
+        [FieldIndex(Index = 1)] public Dictionary<int, DbDeckCard> Cards;//模板id为key
+        [FieldIndex(Index = 2)] public List<int> Newcards;
         [FieldIndex(Index = 3)] public DbDeckData[] Decks; 
         [FieldIndex(Index = 4)] public int DeckId; //上次出战的卡组
         [FieldIndex(Index = 5)] public List<DbDeckCard> DungeonDeck; //副本卡组
 
         public InfoCard()
         {
+            Cards = new Dictionary<int, DbDeckCard>();
+            Newcards = new List<int>();
             Decks = new DbDeckData[GameConstants.PlayDeckCount];
             for (int i = 0; i < Decks.Length; i++)
                 Decks[i] = new DbDeckData(i + 1);
@@ -61,6 +63,7 @@ namespace TaleofMonsters.DataType.User
             if (Newcards.Count > 10)
                 Newcards.RemoveAt(0);
 
+            UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.CardGet, 1);
             MainTipManager.AddTip(string.Format("|获得卡片-|{0}|{1}", HSTypes.I2QualityColor((int)cardData.Quality), cardData.Name), "White");
 
             return card;

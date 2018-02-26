@@ -20,14 +20,22 @@ namespace TaleofMonsters.MainItem.Blesses
 
         public static void AddBless(int id, int time = 0)
         {
-            if (time == 0)
-                time = ConfigData.GetBlessConfig(id).Round;
             if (UserProfile.InfoWorld.Blesses.Count >= 10) //最大10个bless
                 return;
+            var blessConfig = ConfigData.GetBlessConfig(id);
+            if (time == 0)
+                time = blessConfig.Round;
+
             if (UserProfile.InfoWorld.Blesses.ContainsKey(id))
                 UserProfile.InfoWorld.Blesses[id] += time;
             else
                 UserProfile.InfoWorld.Blesses[id] = time;
+
+            if (blessConfig.Type == (int)BlessTypes.Negative)
+                UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.AddCurse, 1);
+            else
+                UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.AddBless, 1);
+
             if (Update != null)
                 Update();
             RebuildCache();

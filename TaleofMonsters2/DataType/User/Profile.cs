@@ -116,6 +116,8 @@ namespace TaleofMonsters.DataType.User
             InfoBasic.HealthPoint = 50;
             InfoBasic.MentalPoint = 50;
             InfoBag.SubResource(GameResourceType.Gold, (uint)Math.Ceiling((double)InfoBag.Resource.Gold/5));
+
+            InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalDie, 1);
         }
     }
 }

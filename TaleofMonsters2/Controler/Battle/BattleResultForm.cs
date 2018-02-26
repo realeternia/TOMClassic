@@ -119,6 +119,7 @@ namespace TaleofMonsters.Controler.Battle
             if (leftId > 0)
                 return;
 
+            UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.FightAttend, 1);
             if (isWin)
             {
                 UserProfile.InfoRival.AddRivalState(rightId, true);

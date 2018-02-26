@@ -24,11 +24,19 @@ namespace TaleofMonsters.Forms
 
             listView1.OwnerDraw = true;
             listView1.DrawItem += ListView1_DrawItem;
-            AddText("总胜场次", MemPlayerRecordTypes.TotalWin, Color.White, "abl1");
-            AddText("连胜场次", MemPlayerRecordTypes.ContinueWin, Color.White, "abl1");
-            AddText("挖掘次数", MemPlayerRecordTypes.TotalDig, Color.White);
-            AddText("采集次数", MemPlayerRecordTypes.TotalPick, Color.White);
-            AddText("钓鱼次数", MemPlayerRecordTypes.TotalFish, Color.White);
+            AddText("获得卡牌", MemPlayerRecordTypes.CardGet, Color.White, "tsk7");
+            AddText("经历事件数", MemPlayerRecordTypes.TotalEvent, Color.White);
+            AddText("完成任务", MemPlayerRecordTypes.QuestFinish, Color.White);
+            AddText("副本成就", MemPlayerRecordTypes.GismoGet, Color.White);
+            AddText("道具取得", MemPlayerRecordTypes.ItemGet, Color.White, "tsk4");
+            AddText("装备取得", MemPlayerRecordTypes.EquipGet, Color.White);
+            AddText("死亡次数", MemPlayerRecordTypes.TotalDie, Color.Red, "oth11");
+            AddText("获得祝福", MemPlayerRecordTypes.AddBless, Color.White);
+            AddText("获得诅咒", MemPlayerRecordTypes.AddCurse, Color.Red);
+
+            AddText("参加战斗", MemPlayerRecordTypes.FightAttend, Color.White, "abl1");
+            AddText("总胜场次", MemPlayerRecordTypes.TotalWin, Color.White, "oth1");
+            AddText("连胜场次", MemPlayerRecordTypes.ContinueWin, Color.White, "oth1");
             AddText("击杀怪物", MemPlayerRecordTypes.TotalKill, Color.White);
             AddText("召唤怪物", MemPlayerRecordTypes.TotalSummon, Color.White);
             AddText("使用道具", MemPlayerRecordTypes.TotalWeapon, Color.White);

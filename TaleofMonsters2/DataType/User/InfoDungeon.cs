@@ -71,11 +71,12 @@ namespace TaleofMonsters.DataType.User
 
         public void OnEventEnd(int id, string type)
         {
+            UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalEvent, 1);
             if (DungeonId > 0)
             {
                 EventList.Add(new DbGismoState(id, type));
                 UserProfile.InfoGismo.CheckEventList();
-                NLog.Debug("OnEventEnd " +id.ToString() + " " + type);
+                NLog.Debug("OnEventEnd {0} {1}", id, type);
             }
         }
 

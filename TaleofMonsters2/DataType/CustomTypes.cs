@@ -306,15 +306,23 @@
     internal enum MemPlayerRecordTypes
     {
         TotalWin = 1,
-        TotalDig = 2,
-        TotalPick = 3,
-        TotalFish = 4,
+        TotalEvent = 2,
+
+        TotalDie = 4,
         TotalKill = 5,
         TotalSummon = 6,
         TotalWeapon = 7,
         TotalSpell = 8,
         ContinueWin = 9,
-        
+        FightAttend = 10, //参加战斗
+        AddBless = 11,
+        AddCurse = 12,
+        CardGet = 13,
+        ItemGet = 14,
+        EquipGet = 15,
+        GismoGet = 16,
+        QuestFinish = 17,
+
         TotalUseAttr = 100, //6
         TotalUseRace = 200, //16
         TotalUseLevel = 300, //9

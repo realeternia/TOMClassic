@@ -163,6 +163,7 @@ namespace TaleofMonsters.DataType.User
                 UserProfile.InfoBag.DeleteItem(HItemBook.GetItemId(questConfig.RequireItem), 1);
 
             MainTipManager.AddTip(string.Format("完成任务-{0}", questConfig.Name), "White");
+            UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.QuestFinish, 1);
             SoundManager.Play("System", "QuestCompleted.wav");
         }
 
