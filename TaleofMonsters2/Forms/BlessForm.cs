@@ -106,9 +106,7 @@ namespace TaleofMonsters.Forms
             font.Dispose();
 
             foreach (var ctl in blessControls)
-            {
                 ctl.Draw(e.Graphics);
-            }
 
             font = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             e.Graphics.DrawString(timeText, font, Brushes.YellowGreen, 445, 375);

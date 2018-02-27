@@ -102,9 +102,7 @@ namespace TaleofMonsters.Forms
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
             if (selectTar >= 0)//已经点起了一个装备，不显示tip了
-            {
                 return;
-            }
 
             Image image = null;
             if (id < 10)
@@ -288,11 +286,6 @@ namespace TaleofMonsters.Forms
             if (!show)
                 return;
 
-            if (vRegion != null)
-            {
-                vRegion.Draw(e.Graphics);
-            }
-
             for (int i = 0; i < GameConstants.EquipOnCount; i++)
             {
                 EquipSlotConfig slotConfig = ConfigData.GetEquipSlotConfig(i + 1);
@@ -300,10 +293,10 @@ namespace TaleofMonsters.Forms
                 e.Graphics.DrawImage(img, 373 + 51 * (i % 3), 60 + 51 * (i / 3), 40, 40);
                 img.Dispose();
             }
+
             if (vRegion != null)
-            {
                 vRegion.Draw(e.Graphics);
-            }
+
             for (int i = 0; i < GameConstants.EquipOnCount; i++)
             {
                 if (!UserProfile.InfoEquip.CanEquip(0, i + 1))

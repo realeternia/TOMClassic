@@ -47,9 +47,7 @@ namespace TaleofMonsters.Forms
         private void VRegion_RegionClicked(int id, int x, int y, MouseButtons button)
         {
             if (button == MouseButtons.Left && id > 0)
-            {
                 PanelManager.ShowGameWindow(id, null);
-            }
         }
 
         private void MinigameForm_Paint(object sender, PaintEventArgs e)
@@ -61,9 +59,7 @@ namespace TaleofMonsters.Forms
             font.Dispose();
 
             if (vRegion != null)
-            {
                 vRegion.Draw(e.Graphics);
-            }
         }
     }
 

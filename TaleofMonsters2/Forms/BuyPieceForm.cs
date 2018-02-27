@@ -68,9 +68,7 @@ namespace TaleofMonsters.Forms
         private void RefreshInfo()
         {
             for (int i = 0; i < 8; i++)
-            {
                 pieceControls[i].RefreshData();
-            }
             bitmapButtonRefresh.Visible = changes.Count < 8;
         }
 
@@ -142,44 +140,34 @@ namespace TaleofMonsters.Forms
             font.Dispose();
 
             colorWord.Draw(e.Graphics);
-            foreach (PieceItem ctl in pieceControls)
-            {
+            foreach (var ctl in pieceControls)
                 ctl.Draw(e.Graphics);
-            }
         }
 
         private void RemakePieceData()
         {
             changes = new List<NpcPieceData>();
             for (int i = 0; i < 5; i++)
-            {
                 changes.Add(CreatePieceMethod(i));
-            }
         }
 
         private void AddPieceData()
         {
             if (changes.Count < 8)
-            {
                 changes.Add(CreatePieceMethod(changes.Count));
-            }
         }
 
         public NpcPieceData GetPieceData(int index)
         {
             if (changes.Count > index)
-            {
                 return changes[index];
-            }
             return new NpcPieceData();
         }
 
         public void RemovePieceData(int index)
         {
             if (changes.Count > index)
-            {
                 changes[index].Used = true;
-            }
         }
 
         private void RefreshAllPieceData()
@@ -187,17 +175,13 @@ namespace TaleofMonsters.Forms
             int count = changes.Count;
             changes.Clear();
             for (int i = 0; i < count; i++)
-            {
                 changes.Add(CreatePieceMethod(i));
-            }
         }
 
         private void DoubleAllPieceData()
         {
             foreach (var memNpcPieceData in changes)
-            {
                 memNpcPieceData.Count *= 2;
-            }
         }
 
         private NpcPieceData CreatePieceMethod(int index)

@@ -141,9 +141,7 @@ namespace TaleofMonsters.DataType.User
         {
             var card = GetDeckCardById(cardId);
             if (card.BaseId > 0)
-            {
                 card.Level++;
-            }
             return card;
         }
 

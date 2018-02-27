@@ -354,9 +354,7 @@ namespace TaleofMonsters.Forms
         {
             int tmp = UserProfile.InfoCard.DeckId + 1;
             if (tmp >= GameConstants.PlayDeckCount)
-            {
                 return;
-            }
             UserProfile.InfoCard.DeckId = tmp;
             InstallDeckCard();
             cardRegion.MenuRefresh();
@@ -368,9 +366,7 @@ namespace TaleofMonsters.Forms
         {
             int tmp = UserProfile.InfoCard.DeckId - 1;
             if (tmp < 0)
-            {
                 return;
-            }
             UserProfile.InfoCard.DeckId = tmp;
             InstallDeckCard();
             cardRegion.MenuRefresh();
@@ -383,9 +379,7 @@ namespace TaleofMonsters.Forms
             if (MessageBoxEx2.Show("确定要清除卡组内所有卡片？") == DialogResult.OK)
             {
                 for (int i = 0; i < GameConstants.DeckCardCount; i++)
-                {
                     UserProfile.InfoCard.SelectedDeck.SetCardAt(i, -1);
-                }
             }
             InstallDeckCard();
             cardRegion.MenuRefresh();

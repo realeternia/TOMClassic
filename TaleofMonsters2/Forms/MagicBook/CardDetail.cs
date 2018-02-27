@@ -65,9 +65,7 @@ namespace TaleofMonsters.Forms.MagicBook
                 vRegion.SetRegionKey(3, (int)CardConfigManager.GetCardConfig(cid).Quality+1);
                 var jobId = CardConfigManager.GetCardConfig(cid).JobId;
                 if (jobId > 0)
-                {
                     jobId = ConfigData.GetJobConfig(jobId).JobIndex;
-                }
                 vRegion.SetRegionKey(4, jobId);
                 card.SetData(dcard);
                 if (card.GetCardType() == CardTypes.Monster)
@@ -164,6 +162,7 @@ namespace TaleofMonsters.Forms.MagicBook
             }
             return tipData.Image;
         }
+
         private Image GetRaceImage(int raceId)
         {
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();

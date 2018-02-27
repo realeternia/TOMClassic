@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus;
-using NarlonLib.Core;
 using NarlonLib.Math;
 using NarlonLib.Tools;
 using TaleofMonsters.Controler.Loader;
@@ -86,8 +85,7 @@ namespace TaleofMonsters.Forms
                 DbFarmState timeState = UserProfile.Profile.InfoFarm.GetFarmState(newsel);
                 if (timeState.Type == -1)
                 {
-                    var pricecount = GameResourceBook.OutWoodBuildFarm(
-                        (uint)UserProfile.Profile.InfoFarm.GetFarmAvailCount() * 20);
+                    var pricecount = GameResourceBook.OutWoodBuildFarm((uint)UserProfile.Profile.InfoFarm.GetFarmAvailCount() * 20);
                     if (MessageBoxEx2.Show(string.Format("是否花{0}木材开启额外农田?", pricecount)) == DialogResult.OK)
                     {
                         if (UserProfile.InfoBag.HasResource(GameResourceType.Lumber, pricecount))
@@ -128,9 +126,7 @@ namespace TaleofMonsters.Forms
         {
             base.OnFrame(tick, timePass);
             if (tick % 6 == 0)
-            {
                 Invalidate();
-            }
         }
 
         private void FarmForm_Paint(object sender, PaintEventArgs e)

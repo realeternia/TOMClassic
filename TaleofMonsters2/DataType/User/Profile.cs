@@ -76,13 +76,9 @@ namespace TaleofMonsters.DataType.User
                 InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalSummon, 1);
             }
             if (type == CardTypes.Weapon)
-            {
                 InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalWeapon, 1);
-            }
             else
-            {
                 InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalSpell, 1);
-            }
         }
 
         public void OnLogin()

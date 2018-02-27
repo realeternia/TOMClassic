@@ -111,9 +111,7 @@ namespace TaleofMonsters.Forms
         {
             var region = vRegion.GetRegion(id);
             if (region != null)
-            {
                 region.ShowTip(tooltip, Parent, x + Location.X, y + Location.Y);
-            }
         }
 
         private void virtualRegion_RegionLeft()

@@ -39,9 +39,7 @@ namespace TaleofMonsters.Forms
         private void DeckInvalidate()
         {
             if (cardRegion != null)
-            {
                 Invalidate(new Rectangle(cardRegion.X, cardRegion.Y, cardRegion.Width, cardRegion.Height));
-            }
         }
 
         private void DetailInvalidate()

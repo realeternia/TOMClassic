@@ -79,10 +79,7 @@ namespace TaleofMonsters.Forms
             font.Dispose();
 
             foreach (var ctl in equipControls)
-            {
                 ctl.Draw(e.Graphics);
-            }
-
         }
 
         private void nlPageSelector1_PageChange(int pg)

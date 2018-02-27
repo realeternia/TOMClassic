@@ -54,9 +54,7 @@ namespace TaleofMonsters.Forms
         private void RefreshInfo()
         {
             for (int i = 0; i < 8; i++)
-            {
                 changeControls[i].RefreshData();
-            }
             bitmapButtonRefresh.Visible = changes.Count < 8;
         }
 
@@ -125,44 +123,34 @@ namespace TaleofMonsters.Forms
 
             colorWord.Draw(e.Graphics);
             foreach (var ctl in changeControls)
-            {
                 ctl.Draw(e.Graphics);
-            }
         }
 
         public List<MemChangeResData> GetChangeResData()
         {
             changes = new List<MemChangeResData>();
             for (int i = 0; i < 5; i++)
-            {
                 changes.Add(CreateMethod(i));
-            }
             return changes;
         }
 
         private void AddChangeCardData()
         {
             if (changes.Count < 8)
-            {
                 changes.Add(CreateMethod(changes.Count));
-            }
         }
 
         public MemChangeResData GetChangeResData(int index)
         {
             if (changes.Count > index)
-            {
                 return changes[index];
-            }
             return new MemChangeResData();
         }
 
         public void RemoveChangeResData(int index)
         {
             if (changes.Count > index)
-            {
                 changes[index].Used = true;
-            }
         }
 
         private void RefreshAllChangeResData()
@@ -170,9 +158,7 @@ namespace TaleofMonsters.Forms
             int count = changes.Count;
             changes.Clear();
             for (int i = 0; i < count; i++)
-            {
                 changes.Add(CreateMethod(i));
-            }
         }
         
         private MemChangeResData CreateMethod(int index)

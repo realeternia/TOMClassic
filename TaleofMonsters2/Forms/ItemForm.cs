@@ -68,17 +68,17 @@ namespace TaleofMonsters.Forms
         {
             base.OnFrame(tick, timePass);
 
-            for(int i=0;i< CellCountPerPage; i++)
+            for (int i = 0; i < CellCountPerPage; i++)
             {
                 if (baseid + i >= UserProfile.InfoBag.BagCount)
                     continue;
 
                 IntPair thing = UserProfile.InfoBag.Items[baseid + i];
-                var rate = (int)(UserProfile.InfoBag.GetCdTimeRate(thing.Type) * 100); //type允许为0
+                var rate = (int) (UserProfile.InfoBag.GetCdTimeRate(thing.Type)*100); //type允许为0
                 if (rate != itemCdRate[i])
                 {
                     itemCdRate[i] = rate;
-                    Invalidate(new Rectangle((int)((i % 10) * 31.2f + 5 + 6), (int)((i / 10) * 31.8f + 3 + 36), 30, 30));
+                    Invalidate(new Rectangle((int) ((i%10)*31.2f + 5 + 6), (int) ((i/10)*31.8f + 3 + 36), 30, 30));
                 }
             }
         }
@@ -310,10 +310,9 @@ namespace TaleofMonsters.Forms
             for (int i = 0; i < itemCdRate.Length; i++)
             {
                 if (itemCdRate[i] > 0)
-                {
                     e.Graphics.FillRectangle(brush, (i % 10) * 31.2f + 5 + 6, (i/10) * 31.8f + 3 + 36, 30, 30 *(100- itemCdRate[i]) / 100);
-                }
             }
+
             brush.Dispose();
 
             int rect = tar;

@@ -63,7 +63,7 @@ namespace TaleofMonsters.Forms
             mergeInfos = UserProfile.InfoWorld.GetAllMergeData();
             Array.Sort(mergeInfos, new CompareByMethod());
             var datas = new List<int>();
-            foreach (DbMergeData merge in mergeInfos)
+            foreach (var merge in mergeInfos)
             {
                 EquipConfig equipConfig = ConfigData.GetEquipConfig(merge.Target);
                 datas.Add(equipConfig.Id);
@@ -82,13 +82,9 @@ namespace TaleofMonsters.Forms
         private void selectPanel_DrawCell(Graphics g, int info, int xOff, int yOff, bool inMouseOn, bool isTarget, bool onlyBorder)
         {
             if (isTarget)
-            {
                 g.FillRectangle(Brushes.DarkGreen, xOff, yOff, 154, 50);
-            }
             else if (inMouseOn)
-            {
                g.FillRectangle(Brushes.DarkCyan, xOff, yOff, 154, 50);
-            }
             g.DrawRectangle(Pens.Thistle, 1 + xOff, yOff, 154 - 2, 50 - 4);
 
             if (!onlyBorder)
@@ -119,10 +115,8 @@ namespace TaleofMonsters.Forms
             EquipConfig equipConfig = ConfigData.GetEquipConfig(currentInfo.Target);
 
             UserProfile.InfoBag.SubResource(GameResourceType.Gold, GameResourceBook.OutGoldMerge(equipConfig.Quality + 1));
-            foreach (IntPair pairValue in currentInfo.Methods)
-            {
+            foreach (var pairValue in currentInfo.Methods)
                 UserProfile.InfoBag.DeleteItem(pairValue.Type, pairValue.Value);
-            }
 
             UserProfile.InfoEquip.AddEquip(equipConfig.Id, 24*60*3);
             UserProfile.InfoEquip.AddEquipCompose(equipConfig.Id);
@@ -161,12 +155,10 @@ namespace TaleofMonsters.Forms
             if (targetid == 0)
                 return;
 
-            foreach (DbMergeData memMergeData in mergeInfos)
+            foreach (var memMergeData in mergeInfos)
             {
                 if (memMergeData.Target == targetid)
-                {
                     currentInfo = memMergeData;
-                }
             }
 
             EquipConfig equipConfig = ConfigData.GetEquipConfig(targetid);
@@ -174,16 +166,14 @@ namespace TaleofMonsters.Forms
             itemCounts[0] = UserProfile.InfoEquip.GetEquipCount(equipConfig.Id);
 
             int index = 1;
-            foreach (IntPair pair in currentInfo.Methods)
+            foreach (var pair in currentInfo.Methods)
             {
                 vRegion.SetRegionKey(index+1, pair.Type);
                 itemCounts[index] = UserProfile.InfoBag.GetItemCount(pair.Type);
                 index++;
             }
             for (int i = index; i < 6; i++)
-            {
                 vRegion.SetRegionKey(i+1, 0);
-            }
 
             Invalidate();
         }
@@ -191,9 +181,7 @@ namespace TaleofMonsters.Forms
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
             if (key == 0)
-            {
                 return;
-            }
 
             Image image = null;
             if (id >= 2)
@@ -251,9 +239,7 @@ namespace TaleofMonsters.Forms
             font.Dispose();
 
             if (currentInfo == null)
-            {
                 return;
-            }
 
             font = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             e.Graphics.DrawString(timeText, font, Brushes.YellowGreen, 165, 412);

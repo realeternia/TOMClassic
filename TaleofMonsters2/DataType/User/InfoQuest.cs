@@ -30,13 +30,9 @@ namespace TaleofMonsters.DataType.User
         public bool IsQuestCanReceive(int qid)
         {
             if (QuestFinish.Contains(qid))
-            {
                 return false;
-            }
             if (QuestRunning.Find(q => q.QuestId == qid) != null)
-            {
                 return false;
-            }
             var questConfig = ConfigData.GetQuestConfig(qid);
             if (questConfig.Former > 0 && !IsQuestFinish(questConfig.Former))
                 return false;
@@ -47,9 +43,7 @@ namespace TaleofMonsters.DataType.User
         {
             var questData = QuestRunning.Find(q => q.QuestId == qid);
             if (questData != null)
-            {
                 return questData.State == (int)QuestStates.Receive && questData.Progress < 10;
-            }
             return false;
         }
 
@@ -57,9 +51,7 @@ namespace TaleofMonsters.DataType.User
         {
             var questData = QuestRunning.Find(q => q.QuestId == qid);
             if (questData != null && questData.State == (int)QuestStates.Receive)
-            {
                 return questData.Progress;
-            }
             return 0;
         }
 
@@ -120,9 +112,7 @@ namespace TaleofMonsters.DataType.User
             else
             {
                 if (questRun != null && questRun.State < (byte)state)
-                {
                     questRun.State = (byte) state;
-                }
             }
         }
 
@@ -170,17 +160,13 @@ namespace TaleofMonsters.DataType.User
         public void OnSceneQuestSuccess(string questName, bool partial)
         {
             if (partial)
-            {
                 return;
-            }
 
             foreach (var runQuest in QuestRunning)
             {
                 var config = ConfigData.GetQuestConfig(runQuest.QuestId);
                 if (IsQuestCanProgress(runQuest.QuestId) && config.SuccessSceneQuest == questName)
-                {
                     AddQuestProgress(runQuest.QuestId, (byte) config.ProgressAdd);
-                }
             }
         }
 
@@ -202,14 +188,10 @@ namespace TaleofMonsters.DataType.User
             {
                 var questConfig = ConfigData.GetQuestConfig(dbQuestData.QuestId);
                 if (questConfig.ResetOnLeave)
-                {
                     resetList.Add(questConfig.Id);
-                }
             }
             foreach (var questId in resetList)
-            {
                 QuestRunning.RemoveAll(quest => questId == quest.QuestId);
-            }
         }
     }
 }

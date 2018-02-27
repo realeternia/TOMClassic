@@ -148,13 +148,9 @@ namespace TaleofMonsters.Forms
         private void selectPanel_DrawCell(Graphics g, int info, int xOff, int yOff, bool inMouseOn, bool isTarget, bool onlyBorder)
         {
             if (isTarget)
-            {
                 g.FillRectangle(Brushes.DarkGreen, xOff, yOff, 154, 35);
-            }
             else if (inMouseOn)
-            {
                 g.FillRectangle(Brushes.DarkCyan, xOff, yOff, 154, 35);
-            }
             g.DrawRectangle(Pens.Thistle, 1 + xOff, yOff, 154 - 2, 35 - 4);
 
             if (!onlyBorder)
@@ -290,24 +286,18 @@ namespace TaleofMonsters.Forms
                 foreach (var cardId in jobConfig.InitialCards)
                 {
                     if (cardId > 0)
-                    {
                         user.InfoCard.AddCard(cardId);
-                    }
                 }
             }
             if (jobConfig.InitialEquip != null && jobConfig.InitialEquip.Length > 0) //初始道具
             {
                 foreach (var ename in jobConfig.InitialEquip)
-                {
                     user.InfoEquip.AddEquip(HItemBook.GetItemId(ename), 24 * 60 * 7);
-                }
             }
             if (jobConfig.InitialItem != null && jobConfig.InitialItem.Length > 0) //初始道具
             {
                 foreach (var ename in jobConfig.InitialItem)
-                {
                     user.InfoBag.AddItem(HItemBook.GetItemId(ename), 1);
-                }
             }
         }
 

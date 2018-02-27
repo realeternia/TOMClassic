@@ -54,9 +54,7 @@ namespace TaleofMonsters.Forms
             cardCount = 1;
             var consumerConfig = ConfigData.GetItemConsumerConfig(itemId);
             if (consumerConfig.RandomCardCount > 0)
-            {
                 cardCount = consumerConfig.RandomCardCount;
-            }
 
             coverEffect = new CoverEffect[cardCount];
             cardOpenArray = new int[cardCount];
@@ -157,9 +155,7 @@ namespace TaleofMonsters.Forms
                 }
 
                 if (coverEffect[i] != null)
-                {
                     coverEffect[i].Draw(e.Graphics);
-                }
             }
 
             vRegion.Draw(e.Graphics);

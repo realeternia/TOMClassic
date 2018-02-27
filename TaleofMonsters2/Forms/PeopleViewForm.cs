@@ -183,9 +183,7 @@ namespace TaleofMonsters.Forms
                 {
                     int realtype = types[id - 30];
                     for (int i = 0; i < types.Count; i++)
-                    {
                         vRegion.SetRegionState(i + 30, RegionState.Free);    
-                    }                    
                     vRegion.SetRegionState(id, RegionState.Rectangled);
                     Bind(realtype);
                 }

@@ -32,9 +32,7 @@ namespace TaleofMonsters.Forms
             var shopConfig = ConfigData.GetNpcShopConfig(GetShopId());
             var itemList = new List<int>();
             for (int i = 0; i < shopConfig.SellTable.Length; i++)
-            {
                 itemList.Add(HItemBook.GetItemId(shopConfig.SellTable[i]));
-            }
 
             if (shopConfig.RandomChooseX > 0)
             {
@@ -57,9 +55,7 @@ namespace TaleofMonsters.Forms
             foreach (var npcShopConfig in ConfigData.NpcShopDict.Values)
             {
                 if (npcShopConfig.Ename == ShopName)
-                {
                     return npcShopConfig.Id;
-                }
             }
             return 0;
         }
@@ -69,13 +65,9 @@ namespace TaleofMonsters.Forms
             for (int i = 0; i < MaxCellCount; i++)
             {
                 if (i < items.Length)
-                {
                     itemControls[i].RefreshData(items[i]);
-                }
                 else
-                {
                     itemControls[i].RefreshData(0);
-                }
             }
         }
 
@@ -95,9 +87,7 @@ namespace TaleofMonsters.Forms
                 font2.Dispose();
 
                 foreach (ShopItem ctl in itemControls)
-                {
                     ctl.Draw(e.Graphics);
-                }
             }
         }
     }

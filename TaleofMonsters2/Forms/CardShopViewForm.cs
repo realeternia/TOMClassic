@@ -67,9 +67,7 @@ namespace TaleofMonsters.Forms
         private void RefreshInfo()
         {
             for (int i = 0; i < 18; i++)
-            {
                 itemControls[i].RefreshData((page * 18 + i < products.Length) ? products[page * 18 + i] : new DbCardProduct());
-            }
             Invalidate();
         }
 
@@ -111,9 +109,7 @@ namespace TaleofMonsters.Forms
             if (button == MouseButtons.Left)
             {
                 for (int i = 0; i < 3; i++)
-                {
                     vRegion.SetRegionState(i + 1, RegionState.Free);
-                }
 
                 vRegion.SetRegionState(id, RegionState.Blacken);
                 shelf = id;
@@ -126,10 +122,9 @@ namespace TaleofMonsters.Forms
         public override void OnFrame(int tick, float timePass)
         {
             base.OnFrame(tick, timePass);
-            foreach (CardShopItem cardShopItem in itemControls)
-            {
+            foreach (var cardShopItem in itemControls)
                 cardShopItem.OnFrame();
-            }
+
             if ((tick % 6) == 0)
             {
                 TimeSpan span = TimeTool.UnixTimeToDateTime(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastCardShopTime) + GameConstants.CardShopDura) - DateTime.Now;
@@ -154,10 +149,8 @@ namespace TaleofMonsters.Forms
             font.Dispose();
 
             vRegion.Draw(e.Graphics);
-            foreach (CardShopItem ctl in itemControls)
-            {
+            foreach (var ctl in itemControls)
                 ctl.Draw(e.Graphics);
-            }
             font = new Font("宋体", 9*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             e.Graphics.DrawString(timeText, font, Brushes.YellowGreen, 18, 447);
             font.Dispose();

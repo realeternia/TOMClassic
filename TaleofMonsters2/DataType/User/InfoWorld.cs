@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using ConfigDatas;
-using NarlonLib.Core;
 using NarlonLib.Math;
 using NarlonLib.Tools;
 using TaleofMonsters.Config;
@@ -56,7 +55,7 @@ namespace TaleofMonsters.DataType.User
             }
 
             List<DbCardProduct> pros = new List<DbCardProduct>();
-            foreach (DbCardProduct cardProduct in CardProducts)
+            foreach (var cardProduct in CardProducts)
             {
                 if (ConfigIdManager.GetCardType(cardProduct.Cid) == type)
                     pros.Add(cardProduct);
@@ -67,7 +66,7 @@ namespace TaleofMonsters.DataType.User
 
         public void RemoveCardProduct(int id)
         {
-            foreach (DbCardProduct cardProduct in CardProducts)
+            foreach (var cardProduct in CardProducts)
             {
                 if (cardProduct.Cid == id)
                 {
@@ -278,6 +277,7 @@ namespace TaleofMonsters.DataType.User
         {
             PosInfos.Add(pos);
         }
+
         public void UpdatePosEnable(int id, bool isEnable)
         {
             foreach (var posData in PosInfos)
@@ -289,6 +289,7 @@ namespace TaleofMonsters.DataType.User
                 }
             }
         }
+
         public void UpdatePosInfo(int id, int info)
         {
             foreach (var posData in PosInfos)
@@ -300,6 +301,7 @@ namespace TaleofMonsters.DataType.User
                 }
             }
         }
+
         public void UpdatePosMapSetting(int id, bool mapsetting)
         {
             foreach (var posData in PosInfos)
@@ -311,6 +313,7 @@ namespace TaleofMonsters.DataType.User
                 }
             }
         }
+
         public void UpdatePosFlag(int id, uint flag)
         {
             foreach (var posData in PosInfos)

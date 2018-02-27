@@ -62,13 +62,9 @@ namespace TaleofMonsters.Forms.MagicBook
             g.FillRectangle(Brushes.Thistle, X, Y, Width, Height);
 
             if (chartStar != null)
-            {
                 chartStar.Draw(g);
-            }
             if (chartType != null)
-            {
                 chartType.Draw(g);
-            }
         }
     }
 }

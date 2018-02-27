@@ -106,9 +106,7 @@ namespace TaleofMonsters.Forms
 
                     var iconSize = iconSizeDict[mapIconConfig.Id];
                     if (truex > mapIconConfig.IconX - baseX && truey > mapIconConfig.IconY - baseY && truex < mapIconConfig.IconX - baseX + iconSize.Width && truey < mapIconConfig.IconY - baseY + iconSize.Height)
-                    {
                         newSel = mapIconConfig.Icon;
-                    }
                 }
                 if (newSel != selectName)
                 {
