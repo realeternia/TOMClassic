@@ -41,8 +41,10 @@ namespace TaleofMonsters.Forms
             Graphics g = Graphics.FromImage(worldMap);
             foreach (var sceneConfig in ConfigData.SceneDict.Values)
             {
-                if (sceneConfig.Icon=="")
+                if (sceneConfig.Icon == "")
                     continue;
+
+                var regionConfig = ConfigData.GetSceneRegionConfig(sceneConfig.RegionId);
 
                 Image image = PicLoader.Read("Map.MapIcon", string.Format("{0}.PNG", sceneConfig.Icon));
                 iconSizeDict[sceneConfig.Id] = new Size(image.Width, image.Height);
@@ -50,14 +52,14 @@ namespace TaleofMonsters.Forms
                 Rectangle destRect = new Rectangle(sceneConfig.IconX-2, sceneConfig.IconY-2, image.Width+4, image.Height+4);
                 Rectangle destRect2 = new Rectangle(sceneConfig.IconX, sceneConfig.IconY, image.Width, image.Height);
 
-                g.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, HSImageAttributes.FromColor(Color.FromName(sceneConfig.IconColor)));
+                g.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, HSImageAttributes.FromColor(Color.FromName(regionConfig.IconColor)));
                 g.DrawImage(image, destRect2, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
                 image.Dispose();
 
                 if (sceneConfig.Id == UserProfile.InfoBasic.MapId)
                 {
-                    baseX = sceneConfig.IconX - 750/2+30;
-                    baseY = sceneConfig.IconY - 500 / 2+30;
+                    baseX = sceneConfig.IconX - 750/2 + 30;
+                    baseY = sceneConfig.IconY - 500/2 + 30;
                     baseX = MathTool.Clamp(baseX, 0, worldMap.Width - 750);
                     baseY = MathTool.Clamp(baseY, 0, worldMap.Height - 500);
                 }
@@ -202,9 +204,7 @@ namespace TaleofMonsters.Forms
                         image = GetPreview(mapIconConfig.Id);
                         int tx = x - baseX + width;
                         if (tx > 750 - image.Width)
-                        {
                             tx -= image.Width + width;
-                        }
                         e.Graphics.DrawImage(image, tx + 15, y - baseY + 35, image.Width, image.Height);
                         image.Dispose();
                     }
@@ -225,11 +225,13 @@ namespace TaleofMonsters.Forms
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine(sceneConfig.Name, "Lime", 20);
             tipData.AddTextNewLine(string.Format("地图等级: {0}", sceneConfig.Level), sceneConfig.Level>UserProfile.InfoBasic.Level?"Red": "White");
-            tipData.AddTextNewLine(string.Format("所属: {0}", sceneConfig.Sector), "White", 20);
+            tipData.AddTextNewLine(string.Format("区域: {0}", ConfigData.GetSceneRegionConfig(sceneConfig.RegionId).Name), "White", 20);
 
+#if DEBUG
             var sceneInfo = SceneBook.LoadSceneFile(id, 0, 0, new Random());
             var questCount = SceneQuestBook.GetQuestCount(id);
             tipData.AddTextNewLine(string.Format("饱和度：{0:0.0}/{1}", sceneInfo.SpecialCellCount + questCount, sceneInfo.CellCount), "Green");
+#endif
 
             return tipData.Image;
         }

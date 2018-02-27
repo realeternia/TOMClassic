@@ -17,38 +17,30 @@ namespace TaleofMonsters.Forms
     {
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
         private VirtualRegion vRegion;
-        private ColorWordRegion colorWord;
-        private int regionId;
 
         public QuestForm()
         {
             InitializeComponent();
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
-            regionId = 1;
-            InitTasks();
+            InitQuests();
         }
 
-        public void InitTasks()
+        public void InitQuests()
         {
             vRegion = new VirtualRegion(this);
             vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
             RefreshQuests();
-
-            colorWord = new ColorWordRegion(190, 84, 440, "微软雅黑", 11, Color.White);
-        }
-
-        public override void Init(int width, int height)
-        {
-            base.Init(width, height);
-
-            comboBoxType.SelectedIndex = 0;
         }
 
         private void RefreshQuests()
         {
             vRegion.ClearRegion();
             int index = 0;
+
+            var sceneConfig = ConfigData.GetSceneConfig(UserProfile.InfoBasic.MapId);
+            var regionId = sceneConfig.RegionId;
+
             foreach (var questData in ConfigData.QuestDict.Values)
             {
                 if (questData.RegionId != regionId)
@@ -91,7 +83,7 @@ namespace TaleofMonsters.Forms
             tooltip.Hide(this);
         }
 
-        private void TaskForm_Paint(object sender, PaintEventArgs e)
+        private void QuestForm_Paint(object sender, PaintEventArgs e)
         {
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
@@ -99,9 +91,10 @@ namespace TaleofMonsters.Forms
             e.Graphics.DrawString(" 任务 ", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
 
-            colorWord.Draw(e.Graphics);
-            
             font = new Font("黑体", 11 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            var sceneConfig = ConfigData.GetSceneConfig(UserProfile.InfoBasic.MapId);
+            e.Graphics.DrawString(string.Format("{0} ({1})", ConfigData.GetSceneRegionConfig(sceneConfig.RegionId).Name, sceneConfig.Name), font, Brushes.White, 33, 40);
+            
             Pen darkPen = new Pen(Color.FromArgb(30,30,30));
             for (int i = 1; i <= 16; i++)
             {
@@ -118,13 +111,5 @@ namespace TaleofMonsters.Forms
             e.Graphics.DrawRectangle(Pens.DimGray, 40, 85, 408, 284);
             vRegion.Draw(e.Graphics);
         }
-
-        private void comboBoxType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            regionId = comboBoxType.SelectedIndex + 1;
-            RefreshQuests();
-            Invalidate();
-        }
-
     }
 }

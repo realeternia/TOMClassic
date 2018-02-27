@@ -32,7 +32,6 @@ namespace TaleofMonsters.Forms
         private void InitializeComponent()
         {
             this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
-            this.comboBoxType = new ControlPlus.NLComboBox();
             this.SuspendLayout();
             // 
             // bitmapButtonClose
@@ -52,33 +51,15 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonClose.UseVisualStyleBackColor = true;
             this.bitmapButtonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
-            // comboBoxType
-            // 
-            this.comboBoxType.BackColor = System.Drawing.Color.Black;
-            this.comboBoxType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.comboBoxType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxType.Font = new System.Drawing.Font("SimSun", 9F);
-            this.comboBoxType.ForeColor = System.Drawing.SystemColors.Window;
-            this.comboBoxType.FormattingEnabled = true;
-            this.comboBoxType.Items.AddRange(new object[] {
-            "第一章",
-            "第二章"});
-            this.comboBoxType.Location = new System.Drawing.Point(23, 40);
-            this.comboBoxType.Name = "comboBoxType";
-            this.comboBoxType.Size = new System.Drawing.Size(91, 22);
-            this.comboBoxType.TabIndex = 48;
-            this.comboBoxType.SelectedIndexChanged += new System.EventHandler(this.comboBoxType_SelectedIndexChanged);
-            // 
             // QuestForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
-            this.Controls.Add(this.comboBoxType);
             this.Controls.Add(this.bitmapButtonClose);
             this.DoubleBuffered = true;
             this.Name = "QuestForm";
             this.Size = new System.Drawing.Size(476, 398);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.TaskForm_Paint);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.QuestForm_Paint);
             this.ResumeLayout(false);
 
         }
@@ -86,6 +67,5 @@ namespace TaleofMonsters.Forms
         #endregion
 
         private BitmapButton bitmapButtonClose;
-        private NLComboBox comboBoxType;
     }
 }
