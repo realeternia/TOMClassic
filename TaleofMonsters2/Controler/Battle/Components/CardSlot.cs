@@ -42,13 +42,6 @@ namespace TaleofMonsters.Controler.Battle.Components
             {
                 CardMouseState state = !Enabled ? CardMouseState.Disable : (MouseOn ? CardMouseState.MouseOn : CardMouseState.Normal);
                 Draw(e.Graphics, state);
-
-
-#if DEBUG
-          //      Font font = new Font("Arial", 7*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-           //     e.Graphics.DrawString(acard.Id.ToString(), font, Brushes.White, 0, 20);
-          //      font.Dispose();
-#endif
             }
         }
 

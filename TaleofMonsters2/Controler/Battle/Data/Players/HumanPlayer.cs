@@ -45,9 +45,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 #if DEBUG
             int[] cardToGive = new[] { 51000255 };
             foreach (var cardId in cardToGive)
-            {
                 CardManager.AddCard(new ActiveCard(cardId, 1, 0));
-            }
 #endif
         }
 
