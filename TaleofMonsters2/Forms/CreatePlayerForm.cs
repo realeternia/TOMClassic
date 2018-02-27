@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
-using NarlonLib.Drawing;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
@@ -19,9 +18,7 @@ namespace TaleofMonsters.Forms
     internal sealed partial class CreatePlayerForm : Form
     {
         private int headId = -1;
-        private int type;
-        private int bldType; //血型
-        private int constellation; //星座
+        private uint dna;
         private HSCursor myCursor;
         private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
         private VirtualRegion vRegion;
@@ -33,12 +30,14 @@ namespace TaleofMonsters.Forms
             FormBorderStyle = FormBorderStyle.None;
             myCursor = new HSCursor(this);
             vRegion = new VirtualRegion(this);
-            vRegion.AddRegion(new SubVirtualRegion(1, 141, 159, 24, 24));
-            vRegion.AddRegion(new SubVirtualRegion(2, 141, 192, 24, 24));
-            vRegion.AddRegion(new SubVirtualRegion(3, 141, 225, 24, 24));
+            for (int i = 1; i <= 24; i++)
+                vRegion.AddRegion(new PictureRegion(1, 25 + 30 * (i%5), 150 + 30 * (i/5), 24, 24, PictureRegionCellType.Dna, i));
+
             vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+            vRegion.RegionClicked += VRegionOnRegionClicked;
         }
+
 
         public DialogResult Result
         {
@@ -49,9 +48,7 @@ namespace TaleofMonsters.Forms
         {
             headId = 1;
             pictureBoxHead.Image = PicLoader.Read("Player", "1.PNG");
-            constellation = MathTool.GetRandom(12);
-            type = MathTool.GetRandom(7);
-            bldType = MathTool.GetRandom(4);
+            //todo 随机下
             myCursor.ChangeCursor("default");
         }
 
@@ -67,7 +64,7 @@ namespace TaleofMonsters.Forms
         private Profile CreateProfile()
         {
             Profile profile = new Profile();
-            profile.OnCreate(constellation, bldType, headId);
+            profile.OnCreate(dna, headId);
             return profile;
         }
 
@@ -103,30 +100,11 @@ namespace TaleofMonsters.Forms
             #endregion
         }
 
-        private void buttonType_Click(object sender, EventArgs e)
-        {
-            type = (type + 1)%7;
-            Invalidate();
-        }
-
-        private void buttonRes_Click(object sender, EventArgs e)
-        {
-            bldType = (bldType + 1) % 4;
-            Invalidate();
-        }
-
-        private void buttonJob_Click(object sender, EventArgs e)
-        {
-            constellation = (constellation + 1) % 12;
-            Invalidate();
-        }
-
         private void buttonOk_Click(object sender, EventArgs e)
         {
             UserProfile.Profile = CreateProfile();            
             CreateCards();
             UserProfile.InfoBag.AddItem(HItemBook.GetItemId("xinshoulibao"), 1);//新手礼包
-            UserProfile.InfoBag.AddItem(HItemBook.GetItemId("scwu1") + type*10, 10);//属性石
             result = DialogResult.OK;
             Close();
         }
@@ -139,22 +117,18 @@ namespace TaleofMonsters.Forms
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
-            Image image = null;
-            if (id == 1)
-                image = DrawTool.GetImageByString("", HSTypes.I2ConstellationTip(constellation), 150, Color.LimeGreen);
-            else if (id == 2)
-                image = DrawTool.GetImageByString("", HSTypes.I2InitialAttrTip(type), 140, Color.Gold);
-            else if (id == 3)
-                image = DrawTool.GetImageByString("", HSTypes.I2BloodTypeTip(bldType), 150, Color.LimeGreen);
-
-            if (image != null)
-                tooltip.Show(image, this, x + 2, y + 3);
-
+            var region = vRegion.GetRegion(id);
+            if (region != null)
+                region.ShowTip(tooltip, this, x, y);
         }
 
         private void virtualRegion_RegionLeft()
         {
             tooltip.Hide(this);
+        }
+
+        private void VRegionOnRegionClicked(int id, int i, int i1, MouseButtons button)
+        {
         }
 
         private void CreatePlayerForm_Paint(object sender, PaintEventArgs e)
@@ -165,9 +139,8 @@ namespace TaleofMonsters.Forms
             e.Graphics.DrawString("创建角色", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
 
-            e.Graphics.DrawImage(HSIcons.GetIconsByEName(string.Format("con{0}", constellation + 1)), 141, 159, 24, 24);
-            e.Graphics.DrawImage(HSIcons.GetIconsByEName(string.Format("atr{0}", type)), 141, 192, 24, 24);
-            e.Graphics.DrawImage(HSIcons.GetIconsByEName(string.Format("bld{0}", bldType+1)), 141, 225, 24, 24);
+            if(vRegion != null)
+                vRegion.Draw(e.Graphics);
         }
     }
 }

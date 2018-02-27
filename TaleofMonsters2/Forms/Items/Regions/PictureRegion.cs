@@ -11,6 +11,7 @@ using TaleofMonsters.Controler.Battle;
 using TaleofMonsters.DataType.Blesses;
 using TaleofMonsters.DataType.Equips;
 using TaleofMonsters.DataType.Items;
+using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.Scenes;
 
@@ -124,6 +125,10 @@ namespace TaleofMonsters.Forms.Items.Regions
                 {
                     img = DungeonBook.GetDungeonItemImage(nid);
                 }
+                else if (type == PictureRegionCellType.DungeonItem)
+                {
+                    img = DnaBook.GetDnaImage(nid);
+                }
 
                 if (preAction != null)
                     preAction();
@@ -134,8 +139,7 @@ namespace TaleofMonsters.Forms.Items.Regions
                         if (Enabled)
                             g.DrawImage(img, X, Y, Width, Height);
                         else
-                            g.DrawImage(img, new Rectangle(X, Y, Width, Height), 0,0,
-                                img.Width,img.Height,GraphicsUnit.Pixel, HSImageAttributes.ToGray);
+                            g.DrawImage(img, new Rectangle(X, Y, Width, Height), 0,0, img.Width,img.Height,GraphicsUnit.Pixel, HSImageAttributes.ToGray);
                     }
                     else
                     {
@@ -212,6 +216,12 @@ namespace TaleofMonsters.Forms.Items.Regions
                 Image image = DrawTool.GetImageByString(itemConfig.Name, 100);
                 tooltip.Show(image, form, x, y);
             }
+            else if (regionType == PictureRegionCellType.Dna)
+            {
+                var dnaConfig = ConfigData.GetPlayerDnaConfig(nid);
+                Image image = DrawTool.GetImageByString(dnaConfig.Name, 100);
+                tooltip.Show(image, form, x, y);
+            }
         }
     }
 
@@ -228,5 +238,6 @@ namespace TaleofMonsters.Forms.Items.Regions
         Bless,
         SceneQuest,
         DungeonItem,
+        Dna
     }
 }

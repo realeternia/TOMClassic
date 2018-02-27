@@ -408,7 +408,7 @@ namespace TaleofMonsters.MainItem.Scenes
             if (UserProfile.Profile == null || UserProfile.InfoBasic.MapId == 0)
                 return;
 
-            Image head = PicLoader.Read("Player", string.Format("{0}.PNG", UserProfile.InfoBasic.Face));
+            Image head = PicLoader.Read("Player", string.Format("{0}.PNG", UserProfile.InfoBasic.Head));
             g.DrawImage(head, 0, 0, 50, 50);
             head.Dispose();
             Font font2 = new Font("宋体", 9 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);

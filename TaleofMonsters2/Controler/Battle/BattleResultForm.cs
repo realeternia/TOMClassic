@@ -188,7 +188,7 @@ namespace TaleofMonsters.Controler.Battle
 
                 if (leftId == 0)
                 {
-                    Image head = PicLoader.Read("Player", string.Format("{0}.PNG", UserProfile.InfoBasic.Face));
+                    Image head = PicLoader.Read("Player", string.Format("{0}.PNG", UserProfile.InfoBasic.Head));
                     e.Graphics.DrawImage(head, 95, 40, 50, 50);
                     head.Dispose();
                     e.Graphics.DrawString(UserProfile.ProfileName, font, Brushes.White, 155, 45);

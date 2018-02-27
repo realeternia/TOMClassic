@@ -28,7 +28,7 @@ namespace TaleofMonsters.Forms.TourGame
             {
                 if (head == null)
                 {
-                    head = PicLoader.Read("Player", string.Format("{0}.PNG", UserProfile.InfoBasic.Face));
+                    head = PicLoader.Read("Player", string.Format("{0}.PNG", UserProfile.InfoBasic.Head));
                 }
                 return head;
             }

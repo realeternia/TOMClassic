@@ -38,14 +38,13 @@ namespace TaleofMonsters.DataType.User
             InfoWorld = new InfoWorld();
         }
 
-        public void OnCreate(int constellation, int bldType, int headId)
+        public void OnCreate(uint dna, int headId)
         {
             Pid = WorldInfoManager.GetPlayerPid();
             Name = UserProfile.ProfileName;
             InfoBasic.Job = JobConfig.Indexer.NewBie;
-            InfoBasic.Constellation = constellation + 1;
-            InfoBasic.BloodType = bldType + 1;
-            InfoBasic.Face = headId;
+            InfoBasic.Dna = dna;
+            InfoBasic.Head = headId;
             InfoBasic.Level = 1;
             InfoBasic.MapId = 13010001;
             InfoBasic.Position = 1001;

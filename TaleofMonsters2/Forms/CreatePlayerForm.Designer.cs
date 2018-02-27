@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.buttonJob = new System.Windows.Forms.Button();
-            this.buttonRes = new System.Windows.Forms.Button();
-            this.buttonType = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -55,51 +52,6 @@
             this.buttonCancel.Text = "取消";
             this.buttonCancel.UseVisualStyleBackColor = false;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
-            // 
-            // buttonJob
-            // 
-            this.buttonJob.BackColor = System.Drawing.Color.DarkBlue;
-            this.buttonJob.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonJob.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonJob.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold);
-            this.buttonJob.ForeColor = System.Drawing.Color.White;
-            this.buttonJob.Location = new System.Drawing.Point(198, 159);
-            this.buttonJob.Name = "buttonJob";
-            this.buttonJob.Size = new System.Drawing.Size(31, 24);
-            this.buttonJob.TabIndex = 25;
-            this.buttonJob.Text = "改";
-            this.buttonJob.UseVisualStyleBackColor = false;
-            this.buttonJob.Click += new System.EventHandler(this.buttonJob_Click);
-            // 
-            // buttonRes
-            // 
-            this.buttonRes.BackColor = System.Drawing.Color.DarkBlue;
-            this.buttonRes.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonRes.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonRes.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold);
-            this.buttonRes.ForeColor = System.Drawing.Color.White;
-            this.buttonRes.Location = new System.Drawing.Point(198, 225);
-            this.buttonRes.Name = "buttonRes";
-            this.buttonRes.Size = new System.Drawing.Size(31, 24);
-            this.buttonRes.TabIndex = 24;
-            this.buttonRes.Text = "改";
-            this.buttonRes.UseVisualStyleBackColor = false;
-            this.buttonRes.Click += new System.EventHandler(this.buttonRes_Click);
-            // 
-            // buttonType
-            // 
-            this.buttonType.BackColor = System.Drawing.Color.DarkBlue;
-            this.buttonType.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonType.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonType.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold);
-            this.buttonType.ForeColor = System.Drawing.Color.White;
-            this.buttonType.Location = new System.Drawing.Point(198, 192);
-            this.buttonType.Name = "buttonType";
-            this.buttonType.Size = new System.Drawing.Size(31, 24);
-            this.buttonType.TabIndex = 23;
-            this.buttonType.Text = "改";
-            this.buttonType.UseVisualStyleBackColor = false;
-            this.buttonType.Click += new System.EventHandler(this.buttonType_Click);
             // 
             // label3
             // 
@@ -179,10 +131,7 @@
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(272, 353);
             this.Controls.Add(this.buttonCancel);
-            this.Controls.Add(this.buttonJob);
-            this.Controls.Add(this.buttonRes);
             this.Controls.Add(this.buttonLeft);
-            this.Controls.Add(this.buttonType);
             this.Controls.Add(this.buttonOk);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -211,9 +160,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button buttonType;
-        private System.Windows.Forms.Button buttonRes;
-        private System.Windows.Forms.Button buttonJob;
         private System.Windows.Forms.Button buttonCancel;
 
     }

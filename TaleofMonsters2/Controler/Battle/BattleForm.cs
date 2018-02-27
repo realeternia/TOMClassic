@@ -142,7 +142,7 @@ namespace TaleofMonsters.Controler.Battle
             }
             else
             {
-                lifeClock1.SetPlayer(BattleManager.Instance.PlayerManager.LeftPlayer, UserProfile.ProfileName, UserProfile.InfoBasic.Face);
+                lifeClock1.SetPlayer(BattleManager.Instance.PlayerManager.LeftPlayer, UserProfile.ProfileName, UserProfile.InfoBasic.Head);
             }
             lifeClock2.SetPlayer(BattleManager.Instance.PlayerManager.RightPlayer, rightId);
             BattleManager.Instance.PlayerManager.LeftPlayer.CardsDesk = cardsArray1;

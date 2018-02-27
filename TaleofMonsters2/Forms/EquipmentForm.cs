@@ -312,7 +312,7 @@ namespace TaleofMonsters.Forms
             body.Dispose();
 
             e.Graphics.FillRectangle(Brushes.LightSlateGray, 92, 113, 42, 42);
-            Image head = PicLoader.Read("Player", string.Format("{0}.PNG", UserProfile.InfoBasic.Face));
+            Image head = PicLoader.Read("Player", string.Format("{0}.PNG", UserProfile.InfoBasic.Head));
             e.Graphics.DrawImage(head, 93, 114, 40, 40);
             head.Dispose();
 

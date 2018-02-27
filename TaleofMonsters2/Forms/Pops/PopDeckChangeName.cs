@@ -30,7 +30,7 @@ namespace TaleofMonsters.Forms.Pops
         {
             PopDeckChangeName mb = new PopDeckChangeName();
             mb.textBoxName.Text = deckName;
-            mb.head = PicLoader.Read("Player", string.Format("{0}.PNG", UserProfile.InfoBasic.Face));
+            mb.head = PicLoader.Read("Player", string.Format("{0}.PNG", UserProfile.InfoBasic.Head));
             mb.ShowDialog();
             deckName = mb.textBoxName.Text;
             return mb.confirm;

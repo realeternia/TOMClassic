@@ -8,9 +8,8 @@ namespace TaleofMonsters.DataType.User
 {
     public class InfoBasic
     {
-        [FieldIndex(Index = 3)] public int Face;
-        [FieldIndex(Index = 4)] public int BloodType; //血型
-        [FieldIndex(Index = 5)] public int Constellation; //星座
+        [FieldIndex(Index = 3)] public int Head;
+        [FieldIndex(Index = 5)] public uint Dna;
         [FieldIndex(Index = 6)] public int Job;
         [FieldIndex(Index = 7)] public byte Level;
         [FieldIndex(Index = 16)] public int Exp;
