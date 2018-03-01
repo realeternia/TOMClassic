@@ -144,26 +144,18 @@ namespace TaleofMonsters.DataType.Items
         {
             HItemConfig hItemConfig = ConfigData.GetHItemConfig(id);
             if (hItemConfig.Id <= 0)
-            {
                 return DrawTool.GetImageByString("unknown", 100);
-            }
 
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine(hItemConfig.Name, HSTypes.I2RareColor(hItemConfig.Rare), 20);
             if (hItemConfig.IsUsable)
             {
                 if (hItemConfig.SubType == (int)HItemTypes.Fight)
-                {
                     tipData.AddTextNewLine("       战斗中双击使用", "Red");
-                }
                 else if (hItemConfig.SubType == (int)HItemTypes.Seed)
-                {
                     tipData.AddTextNewLine("       农场中双击使用", "Red");
-                }
                 else
-                {
                     tipData.AddTextNewLine("       双击使用", "Green");
-                }
             }
             if (hItemConfig.Type == (int)HItemTypes.Task)
             {

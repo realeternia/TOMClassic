@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
+using NarlonLib.Drawing;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
@@ -10,8 +11,10 @@ using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.Decks;
 using NarlonLib.Math;
 using TaleofMonsters.DataType.Items;
+using TaleofMonsters.DataType.Others;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
+using TaleofMonsters.Forms.Items.Regions.Decorators;
 
 namespace TaleofMonsters.Forms
 {
@@ -24,6 +27,8 @@ namespace TaleofMonsters.Forms
         private VirtualRegion vRegion;
         private DialogResult result;
 
+        private const int CellSize = 32; 
+
         public CreatePlayerForm()
         {
             InitializeComponent();
@@ -31,13 +36,18 @@ namespace TaleofMonsters.Forms
             myCursor = new HSCursor(this);
             vRegion = new VirtualRegion(this);
             for (int i = 1; i <= 24; i++)
-                vRegion.AddRegion(new PictureRegion(1, 25 + 30 * (i%5), 150 + 30 * (i/5), 24, 24, PictureRegionCellType.Dna, i));
+            {
+                var dnaConfig = ConfigData.GetPlayerDnaConfig(i);
+                vRegion.AddRegion(new SubVirtualRegion(i, 30 + 36*(dnaConfig.X), 150 + 36*(dnaConfig.Y), CellSize, CellSize));
+            }
 
             vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
             vRegion.RegionClicked += VRegionOnRegionClicked;
-        }
+            vRegion.CellDraw += VRegion_CellDraw;
 
+            DoubleBuffered = true;
+        }
 
         public DialogResult Result
         {
@@ -48,7 +58,13 @@ namespace TaleofMonsters.Forms
         {
             headId = 1;
             pictureBoxHead.Image = PicLoader.Read("Player", "1.PNG");
-            //todo 随机下
+
+            for (int i = 0; i < 6; i++)
+                SetDnaState(MathTool.GetRandom(1 + i*2, 3 + i*2), true);
+            SetDnaState(MathTool.GetRandom(13, 16), true);
+            SetDnaState(MathTool.GetRandom(16, 19), true);
+            SetDnaState(MathTool.GetRandom(19, 23), true);
+
             myCursor.ChangeCursor("default");
         }
 
@@ -119,7 +135,22 @@ namespace TaleofMonsters.Forms
         {
             var region = vRegion.GetRegion(id);
             if (region != null)
-                region.ShowTip(tooltip, this, x, y);
+            {
+                tooltip.Show(GetPreview(id), this, x, y);
+            }
+        }
+
+        public static Image GetPreview(int id)
+        {
+            var dnaConfig = ConfigData.GetPlayerDnaConfig(id);
+            if (dnaConfig.Id <= 0)
+                return DrawTool.GetImageByString("unknown", 100);
+
+            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+            tipData.AddTextNewLine(dnaConfig.Name, "White");
+            tipData.AddTextNewLine(dnaConfig.Des, "Gray");
+
+            return tipData.Image;
         }
 
         private void virtualRegion_RegionLeft()
@@ -127,8 +158,48 @@ namespace TaleofMonsters.Forms
             tooltip.Hide(this);
         }
 
-        private void VRegionOnRegionClicked(int id, int i, int i1, MouseButtons button)
+        private void VRegionOnRegionClicked(int id, int x, int y, MouseButtons button)
         {
+            var old = dna & (uint)Math.Pow(2, id);
+            SetDnaState(id, old == 0);
+            var dnaConfig = ConfigData.GetPlayerDnaConfig(id);
+            if (dnaConfig.MutexId != null)
+            {
+                foreach (var mid in dnaConfig.MutexId)
+                    SetDnaState(mid, false);
+            }
+            Invalidate();
+        }
+
+        private void SetDnaState(int id, bool check)
+        {
+            if (check) //选中
+            {
+                dna |= (uint) Math.Pow(2, id);
+                vRegion.SetRegionDecorator(id, 0, new RegionImageDecorator(HSIcons.GetIconsByEName("round"), 32));
+            }
+            else //取消
+            {
+                dna &= ~(uint) Math.Pow(2, id);
+                vRegion.SetRegionDecorator(id, 0, null);
+            }
+        }
+
+        private void VRegion_CellDraw(int id, int x, int y, int key, Graphics g)
+        {
+            var dnaConfig = ConfigData.GetPlayerDnaConfig(id);
+            var pen = new Pen(Color.DodgerBlue, 4);
+            var halfSize = 36/2;
+            if (dnaConfig.LineType == 1)
+                g.DrawLine(pen, x + halfSize, y + halfSize, x, y + halfSize);
+            else if (dnaConfig.LineType == 2)
+                g.DrawLine(pen, x + halfSize, y + halfSize, x + halfSize*2, y + halfSize);
+            else if (dnaConfig.LineType == 3)
+                g.DrawLine(pen, x, y + halfSize, x + halfSize * 2, y + halfSize);
+            pen.Dispose();
+
+            var img = DnaBook.GetDnaImage(id);
+            g.DrawImage(img, x+2, y+2, CellSize-4, CellSize-4);
         }
 
         private void CreatePlayerForm_Paint(object sender, PaintEventArgs e)

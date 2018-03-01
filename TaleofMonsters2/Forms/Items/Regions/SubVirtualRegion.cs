@@ -51,10 +51,8 @@ namespace TaleofMonsters.Forms.Items.Regions
 
         public virtual void Draw(Graphics g)
         {
-            foreach (IRegionDecorator decorator in decorators)
-            {
+            foreach (var decorator in decorators)
                 decorator.Draw(g, X, Y, Width, Height);
-            }
         }
 
         public virtual void SetKeyValue(int value)
@@ -72,20 +70,14 @@ namespace TaleofMonsters.Forms.Items.Regions
             if (decorators.Count > idx)
             {
                 if (value != null)
-                {
                     decorators[idx].SetState(value);
-                }
                 else
-                {
                     decorators.RemoveAt(idx);
-                }
             }
             else
             {
                 if (value != null)
-                {
                     AddDecorator((IRegionDecorator)value);
-                }
             }
         }
 

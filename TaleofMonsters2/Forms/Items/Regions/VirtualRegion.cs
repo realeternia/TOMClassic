@@ -10,10 +10,13 @@ namespace TaleofMonsters.Forms.Items.Regions
         public delegate void VRegionLeftEventHandler();
         public delegate void VRegionClickEventHandler(int id, int x, int y, MouseButtons button);
         public delegate void VRegionEnteredEventHandler(int id, int x, int y, int key);
+        public delegate void VRegionDrawEventHandler(int id, int x, int y, int key, Graphics g);
 
         public event VRegionClickEventHandler RegionClicked;
         public event VRegionEnteredEventHandler RegionEntered;
         public event VRegionLeftEventHandler RegionLeft;
+
+        public event VRegionDrawEventHandler CellDraw;
 
         private SubVirtualRegion selectRegion;
         private readonly Dictionary<int, SubVirtualRegion> subRegions;
@@ -51,54 +54,42 @@ namespace TaleofMonsters.Forms.Items.Regions
         {
             SubVirtualRegion region;
             if (subRegions.TryGetValue(id, out region))
-            {
                 region.SetKeyValue(value);
-            }
         }
 
         public void SetRegionType(int id, PictureRegionCellType value)
         {
             SubVirtualRegion region;
             if (subRegions.TryGetValue(id, out region))
-            {
                 (region as PictureRegion).SetType(value);
-            }
         }
 
         public void SetRegionState(int id, RegionState value)
         {
             SubVirtualRegion region;
             if (subRegions.TryGetValue(id, out region))
-            {
                 region.SetState(value);
-            }
         }
 
         public void SetRegionDecorator(int id, int did, object value)
         {
             SubVirtualRegion region;
             if (subRegions.TryGetValue(id, out region))
-            {
                 region.SetDecorator(did, value);
-            }
         }
 
         public void SetRegionVisible(int id, bool visible)
         {
             SubVirtualRegion region;
             if (subRegions.TryGetValue(id, out region))
-            {
                 region.Visible = visible;
-            }
         }
 
         public Point GetRegionPosition(int id)
         {
             SubVirtualRegion region;
             if (subRegions.TryGetValue(id, out region))
-            {
                 return new Point(region.X + selectRegion.Width + 1, region.Y);
-            }
             return new Point(0,0);
         }
 
@@ -106,9 +97,7 @@ namespace TaleofMonsters.Forms.Items.Regions
         {
             SubVirtualRegion region;
             if (subRegions.TryGetValue(id, out region))
-            {
                 return region;
-            }
             return null;
         }
 
@@ -130,9 +119,7 @@ namespace TaleofMonsters.Forms.Items.Regions
                         selectRegion = subRegion;
                         selectRegion.Enter();
                         if (RegionEntered!=null)
-                        {
                             RegionEntered(selectRegion.Id, selectRegion.X + selectRegion.Width + 1, selectRegion.Y, selectRegion.GetKeyValue());
-                        }
                     }
                     return;
                 }
@@ -143,39 +130,36 @@ namespace TaleofMonsters.Forms.Items.Regions
                 selectRegion.MouseUp();
                 selectRegion = null;
                 if (RegionLeft!=null)
-                {
                     RegionLeft();
-                }
             }
         }
 
         private void CheckMouseClick(MouseButtons button)
         {
             if (RegionClicked != null && selectRegion != null && selectRegion.Id > 0)
-            {
                 RegionClicked(selectRegion.Id, lastMouseX, lastMouseY, button);
-            }
         }
 
         public void Draw(Graphics g)
         {
             if (!Visible)
-            {
                 return;
-            }
-            foreach (SubVirtualRegion subVirtualRegion in subRegions.Values)
+
+            foreach (var subVirtualRegion in subRegions.Values)
             {
                 if (subVirtualRegion.Visible)
+                {
+                    if (CellDraw != null)
+                        CellDraw(subVirtualRegion.Id, subVirtualRegion.X, subVirtualRegion.Y, subVirtualRegion.GetKeyValue(), g);
                     subVirtualRegion.Draw(g);
+                }
             }
         }
 
         public void Invalidate(Rectangle region)
         {
             if (parent != null)
-            {
                 parent.Invalidate(region);
-            }
         }
 
         private void parent_MouseMove(object sender, MouseEventArgs e)

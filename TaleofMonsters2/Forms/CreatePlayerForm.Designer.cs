@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.pictureBoxHead = new System.Windows.Forms.PictureBox();
             this.buttonOk = new System.Windows.Forms.Button();
             this.buttonLeft = new System.Windows.Forms.Button();
@@ -52,39 +49,6 @@
             this.buttonCancel.Text = "取消";
             this.buttonCancel.UseVisualStyleBackColor = false;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("SimSun", 9F);
-            this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label3.Location = new System.Drawing.Point(42, 232);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 12);
-            this.label3.TabIndex = 21;
-            this.label3.Text = "资源追加";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("SimSun", 9F);
-            this.label2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label2.Location = new System.Drawing.Point(42, 196);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 12);
-            this.label2.TabIndex = 20;
-            this.label2.Text = "卡组属性";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("SimSun", 9F);
-            this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label1.Location = new System.Drawing.Point(42, 160);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 12);
-            this.label1.TabIndex = 19;
-            this.label1.Text = "星座";
             // 
             // pictureBoxHead
             // 
@@ -133,10 +97,7 @@
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonLeft);
             this.Controls.Add(this.buttonOk);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.pictureBoxHead);
-            this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "CreatePlayerForm";
             this.Opacity = 0.9D;
@@ -148,7 +109,6 @@
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.CreatePlayerForm_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHead)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -157,9 +117,6 @@
         private System.Windows.Forms.PictureBox pictureBoxHead;
         private System.Windows.Forms.Button buttonOk;
         private System.Windows.Forms.Button buttonLeft;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button buttonCancel;
 
     }
