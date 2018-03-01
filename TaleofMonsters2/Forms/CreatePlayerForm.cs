@@ -136,22 +136,10 @@ namespace TaleofMonsters.Forms
             var region = vRegion.GetRegion(id);
             if (region != null)
             {
-                tooltip.Show(GetPreview(id), this, x, y);
+                tooltip.Show(DnaBook.GetPreview(id), this, x, y);
             }
         }
 
-        public static Image GetPreview(int id)
-        {
-            var dnaConfig = ConfigData.GetPlayerDnaConfig(id);
-            if (dnaConfig.Id <= 0)
-                return DrawTool.GetImageByString("unknown", 100);
-
-            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
-            tipData.AddTextNewLine(dnaConfig.Name, "White");
-            tipData.AddTextNewLine(dnaConfig.Des, "Gray");
-
-            return tipData.Image;
-        }
 
         private void virtualRegion_RegionLeft()
         {
