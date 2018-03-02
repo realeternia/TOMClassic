@@ -573,11 +573,13 @@ namespace TaleofMonsters.MainItem.Scenes
                 {
                     int realX = (int)(movingData.Source.X*(movingData.Time)/ChessMoveAnimTime +
                              movingData.Dest.X*(ChessMoveAnimTime - movingData.Time)/ChessMoveAnimTime);
-                    int yOff = (int) (Math.Pow(realX - (movingData.Source.X + movingData.Dest.X)/2, 2)*(4*80)/
-                                      Math.Pow(movingData.Source.X - movingData.Dest.X, 2) - 80);
-                    var pos = new Point(realX,yOff +(int)(movingData.Source.Y*(movingData.Time)/ChessMoveAnimTime +
-                                 movingData.Dest.Y*(ChessMoveAnimTime - movingData.Time)/ChessMoveAnimTime));
-                    g.DrawImage(token, pos.X, pos.Y, drawWidth, drawHeight);
+                    int yOff = 0;
+                    if(movingData.Source.X != movingData.Dest.X)
+                       yOff = (int) (Math.Pow(realX - (movingData.Source.X + movingData.Dest.X)/2, 2)*(4*80)/Math.Pow(movingData.Source.X - movingData.Dest.X, 2) - 80);
+                    else
+                        yOff = (int)(Math.Pow(movingData.Time - ChessMoveAnimTime / 2, 2) * (4 * 80) - 40);
+                    var realY = yOff +(int)(movingData.Source.Y*(movingData.Time)/ChessMoveAnimTime + movingData.Dest.Y*(ChessMoveAnimTime - movingData.Time)/ChessMoveAnimTime);
+                    g.DrawImage(token, realX, realY, drawWidth, drawHeight);
                 }
                 token.Dispose();
             }

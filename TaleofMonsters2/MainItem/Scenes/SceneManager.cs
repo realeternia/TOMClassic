@@ -113,7 +113,7 @@ namespace TaleofMonsters.MainItem.Scenes
         public static bool CanPlayerMove(int id1, int id2)
         {
             var dis = GetDistance(id1, id2);
-            return dis > 0 && dis <= 1 + BlessManager.MoveDistance;
+            return dis >= 0 && dis <= 1 + BlessManager.MoveDistance;
         }
 
         public static int GetDistance(int id1, int id2)
