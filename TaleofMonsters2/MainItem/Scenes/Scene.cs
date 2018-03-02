@@ -98,13 +98,14 @@ namespace TaleofMonsters.MainItem.Scenes
             vRegion.AddRegion(new SubVirtualRegion(11, width - 145, 3, 115, 32));//场景信息
             vRegion.AddRegion(new SubVirtualRegion(12, (width - 688) / 2 + 30, 41, 630, 8));//exp bar
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < GameConstants.BlessLimit; i++)
             {//bless
                 vRegion.AddRegion(new PictureRegion(20+i, i*60+10, 55, 50, 50, PictureRegionCellType.Bless, 0));
             }
 
             vRegion.RegionEntered += virtualRegion_RegionEntered;
             vRegion.RegionLeft += virtualRegion_RegionLeft;
+            vRegion.CellDraw += VRegion_CellDraw;
         }
 
         public void Init()
@@ -180,7 +181,7 @@ namespace TaleofMonsters.MainItem.Scenes
 
         private void OnBlessChange()
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < GameConstants.BlessLimit; i++)
                 vRegion.SetRegionKey(20 + i, 0);//bless
             int index = 0;
             foreach (var key in UserProfile.InfoWorld.Blesses.Keys)
@@ -394,6 +395,20 @@ namespace TaleofMonsters.MainItem.Scenes
             tooltip.Hide(parent);
         }
 
+        private void VRegion_CellDraw(int id, int x, int y, int key, Graphics g)
+        {
+            if (id >= 20)
+            {
+                if (key > 0)
+                {
+                    var bless = UserProfile.InfoWorld.Blesses[key];
+                    Font font2 = new Font("宋体", 11 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+                    g.DrawString(bless.ToString(), font2, Brushes.White, x+15, y+33);
+                    font2.Dispose();
+                }
+            }
+        }
+
         /// <summary>
         /// 主界面的元素绘制
         /// </summary>
@@ -581,6 +596,7 @@ namespace TaleofMonsters.MainItem.Scenes
                     else
                         yOff = (int)(Math.Pow(movingData.Time - ChessMoveAnimTime / 2, 2) * (4 * 80) - 40);
                     realY = yOff +(int)(movingData.Source.Y*(movingData.Time)/ChessMoveAnimTime + movingData.Dest.Y*(ChessMoveAnimTime - movingData.Time)/ChessMoveAnimTime);
+                    realX -= possessCell.Width/8;
                 }
 
                 Image head = PicLoader.Read("Player.Token", string.Format("{0}.PNG", UserProfile.InfoBasic.Head));

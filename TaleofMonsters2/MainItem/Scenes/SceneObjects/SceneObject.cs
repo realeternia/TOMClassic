@@ -77,6 +77,9 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             if (!SceneManager.CanPlayerMove(Id, UserProfile.Profile.InfoBasic.Position))
                 return false;
 
+            if (Id == UserProfile.Profile.InfoBasic.Position) //可以直接点击本格
+                return true;
+
             uint moveCost = (uint) Math.Max(0, GameConstants.SceneMoveCost + BlessManager.MoveFoodChange);
             uint healthSub = 0;
             uint foodSub = 0;
@@ -103,12 +106,13 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
                 UserProfile.InfoBasic.SubFood(foodSub);
                 MainForm.Instance.AddFlow((-foodSub).ToString(), "oth7", Color.Green, new Point(X, Y - 30));
             }
+            BlessManager.OnMove();
             return true;
         }
 
         public virtual void MoveEnd()
         {
-            BlessManager.OnMove();
+
         }
 
         public virtual bool CanBeReplaced()

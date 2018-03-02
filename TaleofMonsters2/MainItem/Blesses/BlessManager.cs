@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ConfigDatas;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.User;
 
@@ -20,7 +21,7 @@ namespace TaleofMonsters.MainItem.Blesses
 
         public static void AddBless(int id, int time = 0)
         {
-            if (UserProfile.InfoWorld.Blesses.Count >= 10) //最大10个bless
+            if (UserProfile.InfoWorld.Blesses.Count >= GameConstants.BlessLimit)
                 return;
             var blessConfig = ConfigData.GetBlessConfig(id);
             if (time == 0)

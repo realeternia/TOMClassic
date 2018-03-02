@@ -26,7 +26,7 @@ namespace TaleofMonsters.DataType.User
 
         public InfoBasic()
         {
-            List<int> AvailJobList = new List<int>();
+            AvailJobList = new List<int>();
         }
 
         public void AddExp(int ex)

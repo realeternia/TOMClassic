@@ -17,16 +17,6 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
             EventId = info;
         }
 
-        public override bool OnClick()
-        {
-            if (Id == UserProfile.Profile.InfoBasic.Position) //可以直接点击本格
-                return true;
-
-            if (!base.OnClick())
-                return false;
-            
-            return true;
-        }
 
         public override void MoveEnd()
         {

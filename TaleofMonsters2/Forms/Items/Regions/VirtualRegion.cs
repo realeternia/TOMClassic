@@ -149,9 +149,9 @@ namespace TaleofMonsters.Forms.Items.Regions
             {
                 if (subVirtualRegion.Visible)
                 {
+                    subVirtualRegion.Draw(g);
                     if (CellDraw != null)
                         CellDraw(subVirtualRegion.Id, subVirtualRegion.X, subVirtualRegion.Y, subVirtualRegion.GetKeyValue(), g);
-                    subVirtualRegion.Draw(g);
                 }
             }
         }
