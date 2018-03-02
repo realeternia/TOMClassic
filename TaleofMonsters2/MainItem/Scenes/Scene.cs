@@ -561,26 +561,33 @@ namespace TaleofMonsters.MainItem.Scenes
 
             if (possessCell != null)
             {
-                Image token = PicLoader.Read("Map", "Token.PNG");
+                Image token = PicLoader.Read("Player.Token", "ring.PNG");
                 int drawWidth = token.Width*possessCell.Width/GameConstants.SceneTileStandardWidth;
                 int drawHeight = token.Height*possessCell.Height/GameConstants.SceneTileStandardHeight;
+                int realX = 0;
+                int realY = 0;
                 if (movingData.Time <= 0)
                 {
-                    g.DrawImage(token, possessCell.X - drawWidth/2 + possessCell.Width/8,
-                        possessCell.Y - drawHeight + possessCell.Height/3, drawWidth, drawHeight);
+                    realX = possessCell.X - drawWidth/2 + possessCell.Width/8;
+                    realY = possessCell.Y - drawHeight + possessCell.Height/3;
                 }
                 else
                 {
-                    int realX = (int)(movingData.Source.X*(movingData.Time)/ChessMoveAnimTime +
+                    realX = (int)(movingData.Source.X*(movingData.Time)/ChessMoveAnimTime +
                              movingData.Dest.X*(ChessMoveAnimTime - movingData.Time)/ChessMoveAnimTime);
                     int yOff = 0;
                     if(movingData.Source.X != movingData.Dest.X)
                        yOff = (int) (Math.Pow(realX - (movingData.Source.X + movingData.Dest.X)/2, 2)*(4*80)/Math.Pow(movingData.Source.X - movingData.Dest.X, 2) - 80);
                     else
                         yOff = (int)(Math.Pow(movingData.Time - ChessMoveAnimTime / 2, 2) * (4 * 80) - 40);
-                    var realY = yOff +(int)(movingData.Source.Y*(movingData.Time)/ChessMoveAnimTime + movingData.Dest.Y*(ChessMoveAnimTime - movingData.Time)/ChessMoveAnimTime);
-                    g.DrawImage(token, realX, realY, drawWidth, drawHeight);
+                    realY = yOff +(int)(movingData.Source.Y*(movingData.Time)/ChessMoveAnimTime + movingData.Dest.Y*(ChessMoveAnimTime - movingData.Time)/ChessMoveAnimTime);
                 }
+
+                Image head = PicLoader.Read("Player.Token", string.Format("{0}.PNG", UserProfile.InfoBasic.Head));
+                var rect = new RectangleF(realX + drawWidth * 0.06f, realY + drawHeight * 0.1f, drawWidth * 0.8f, drawHeight * 0.8f);
+                g.DrawImage(head, rect);
+                head.Dispose();
+                g.DrawImage(token, realX, realY, drawWidth, drawHeight);
                 token.Dispose();
             }
         }
