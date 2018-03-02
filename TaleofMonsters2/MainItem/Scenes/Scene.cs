@@ -594,9 +594,11 @@ namespace TaleofMonsters.MainItem.Scenes
                     if(movingData.Source.X != movingData.Dest.X)
                        yOff = (int) (Math.Pow(realX - (movingData.Source.X + movingData.Dest.X)/2, 2)*(4*80)/Math.Pow(movingData.Source.X - movingData.Dest.X, 2) - 80);
                     else
-                        yOff = (int)(Math.Pow(movingData.Time - ChessMoveAnimTime / 2, 2) * (4 * 80) - 40);
+                        yOff = (int)(Math.Pow(movingData.Time/ ChessMoveAnimTime - 1f / 2, 2) * (4 * 80) - 40);
                     realY = yOff +(int)(movingData.Source.Y*(movingData.Time)/ChessMoveAnimTime + movingData.Dest.Y*(ChessMoveAnimTime - movingData.Time)/ChessMoveAnimTime);
-                    realX -= possessCell.Width/8;
+
+                    realX -= possessCell.Width/5;//todo 玄学调整
+                    realY -= possessCell.Height/3;
                 }
 
                 Image head = PicLoader.Read("Player.Token", string.Format("{0}.PNG", UserProfile.InfoBasic.Head));
