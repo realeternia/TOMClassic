@@ -105,7 +105,7 @@ namespace TaleofMonsters.MainItem.Scenes
 
             vRegion.RegionEntered += virtualRegion_RegionEntered;
             vRegion.RegionLeft += virtualRegion_RegionLeft;
-            vRegion.CellDraw += VRegion_CellDraw;
+            vRegion.CellDrawAfter += VRegion_CellDraw;
         }
 
         public void Init()
@@ -266,6 +266,7 @@ namespace TaleofMonsters.MainItem.Scenes
             try //因为这一步会被invoke，所以单独套一层try
             {
                 o.MoveEnd();
+                SoundManager.Play("System", "Move.wav");
             }
             catch (Exception e)
             {

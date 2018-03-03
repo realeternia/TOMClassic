@@ -16,7 +16,8 @@ namespace TaleofMonsters.Forms.Items.Regions
         public event VRegionEnteredEventHandler RegionEntered;
         public event VRegionLeftEventHandler RegionLeft;
 
-        public event VRegionDrawEventHandler CellDraw;
+        public event VRegionDrawEventHandler CellDrawBefore;
+        public event VRegionDrawEventHandler CellDrawAfter;
 
         private SubVirtualRegion selectRegion;
         private readonly Dictionary<int, SubVirtualRegion> subRegions;
@@ -149,9 +150,13 @@ namespace TaleofMonsters.Forms.Items.Regions
             {
                 if (subVirtualRegion.Visible)
                 {
+                    if (CellDrawBefore != null)
+                        CellDrawBefore(subVirtualRegion.Id, subVirtualRegion.X, subVirtualRegion.Y, subVirtualRegion.GetKeyValue(), g);
+
                     subVirtualRegion.Draw(g);
-                    if (CellDraw != null)
-                        CellDraw(subVirtualRegion.Id, subVirtualRegion.X, subVirtualRegion.Y, subVirtualRegion.GetKeyValue(), g);
+
+                    if (CellDrawAfter != null)
+                        CellDrawAfter(subVirtualRegion.Id, subVirtualRegion.X, subVirtualRegion.Y, subVirtualRegion.GetKeyValue(), g);
                 }
             }
         }

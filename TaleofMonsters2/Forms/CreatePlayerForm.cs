@@ -44,7 +44,7 @@ namespace TaleofMonsters.Forms
             vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
             vRegion.RegionClicked += VRegionOnRegionClicked;
-            vRegion.CellDraw += VRegion_CellDraw;
+            vRegion.CellDrawBefore += VRegion_CellDraw;
 
             DoubleBuffered = true;
         }
