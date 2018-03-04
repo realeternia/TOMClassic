@@ -158,20 +158,25 @@ namespace TaleofMonsters.DataType.Items
                     tipData.AddTextNewLine("       双击使用", "Green");
             }
             if (hItemConfig.Type == (int)HItemTypes.Task)
-            {
                 tipData.AddTextNewLine("       任务物品", "DarkBlue");
-            }
             else if (hItemConfig.Type == (int)HItemTypes.Material)
-            {
                 tipData.AddTextNewLine(string.Format("       材料(稀有度:{0})", hItemConfig.Rare), "White");
-            }
             if (hItemConfig.Attributes != null && hItemConfig.Attributes.Length > 0)
-            {
                 tipData.AddTextNewLine(string.Format("       特性:{0}", string.Join(",", hItemConfig.Attributes)), "Lime");
-            }
+
             tipData.AddTextNewLine(string.Format("       等级:{0}", hItemConfig.Level), "White");
-            tipData.AddTextNewLine("", "White");
-            tipData.AddTextLines(hItemConfig.Descript, "White",20,true);
+            tipData.AddTextNewLine("", "White", 8);
+            if (!string.IsNullOrEmpty(hItemConfig.Descript))
+                tipData.AddTextLines(hItemConfig.Descript, "White", 20, true);
+            if (hItemConfig.SubType == (int) HItemTypes.Gift)
+            {
+                var consumerConfig = ConfigData.GetItemConsumerConfig(hItemConfig.Id);
+                var itemStr = "包含";
+                for (int i = 0; i < consumerConfig.Items.Length; i++)
+                    itemStr += string.Format("{0}x{1} ", ConfigData.GetHItemConfig(GetItemId(consumerConfig.Items[i])).Name,
+                        consumerConfig.ItemCount[i]);
+                tipData.AddTextLines(itemStr, "Gray", 20, true);
+            }
             if (hItemConfig.SubType == (int)HItemTypes.RandomCard)
             {
                 var consumerConfig = ConfigData.GetItemConsumerConfig(hItemConfig.Id);
