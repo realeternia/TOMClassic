@@ -702,9 +702,7 @@ namespace TaleofMonsters.MainItem.Scenes
                     continue;
                 var questConfig = ConfigData.GetSceneQuestConfig(quest.EventId);
                 if (questConfig.Type != (int)SceneQuestTypes.MapSetting && questConfig.Danger == 0 && !sceneObject.Disabled)
-                {
                     sceneObject.SetEnable(false);
-                }
             }
             parent.Invalidate();
         }

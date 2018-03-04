@@ -67,9 +67,7 @@ namespace TaleofMonsters.Controler.Battle
                 {
                     var dropItemId = drop.GetDropItem();//获胜可以获得掉落物
                     if (dropItemId != 0)
-                    {
                         statisticData.Items.Insert(0, dropItemId);
-                    }
                 }
                 else
                 {
