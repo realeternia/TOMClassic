@@ -103,13 +103,12 @@ namespace TaleofMonsters.MainItem
 
         public static void ShowLevelInfo(int oldLevel, int level)
         {
-            if (DataType.Others.LevelInfoBook.GetLevelInfosByLevel(oldLevel, level).Length > 0)
+            LevelInfoForm levelInfoForm = new LevelInfoForm
             {
-                LevelInfoForm levelInfoForm = new LevelInfoForm();
-                levelInfoForm.OldLevel = oldLevel;
-                levelInfoForm.Level = level;
-                DealPanel(levelInfoForm);
-            }
+                OldLevel = oldLevel,
+                Level = level
+            };
+            DealPanel(levelInfoForm);
         }
 
         public static void ShowGameWindow(int id, MGBase.MinigameResultCallback winCallback)

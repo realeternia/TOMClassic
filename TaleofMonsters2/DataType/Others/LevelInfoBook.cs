@@ -8,12 +8,12 @@ namespace TaleofMonsters.DataType.Others
 {
     internal static class LevelInfoBook
     {
-        public static int[] GetLevelInfosByLevel(int oldLevel, int level)
+        public static int[] GetLevelInfosByLevel(int level)
         {
             List<int> ids = new List<int>();
             foreach (var levelInfoConfig in ConfigData.LevelInfoDict.Values)
             {
-                if (levelInfoConfig.Level > oldLevel && levelInfoConfig.Level <= level)
+                if (levelInfoConfig.Level == level)
                     ids.Add(levelInfoConfig.Id);
             }
             return ids.ToArray();

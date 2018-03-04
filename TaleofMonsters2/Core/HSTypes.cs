@@ -143,7 +143,7 @@ namespace TaleofMonsters.Core
 
         public static string I2LevelInfoType(int id)
         {
-            string[] rt = { "", "新功能", "新活动" };
+            string[] rt = { "", "新功能", "获得道具" };
             return rt[id];
         }
         public static string I2AttrName(int id)
