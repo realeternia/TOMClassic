@@ -126,7 +126,7 @@ namespace TaleofMonsters.MainItem.Scenes
             sceneName = sceneConfig.Name;
 
             GenerateMiniMap(mapid, MathTool.Clamp(sceneConfig.IconX - 110,0, 1688-300), MathTool.Clamp(sceneConfig.IconY - 110, 0, 1121 - 300));
-
+            SoundManager.PlayBGMScene(string.Format("{0}.mp3", sceneConfig.BGM));
             allEventFinished = false;
 
             UserProfile.Profile.OnSwitchScene(isWarp);
@@ -703,7 +703,6 @@ namespace TaleofMonsters.MainItem.Scenes
                 var questConfig = ConfigData.GetSceneQuestConfig(quest.EventId);
                 if (questConfig.Type != (int)SceneQuestTypes.MapSetting && questConfig.Danger == 0 && !sceneObject.Disabled)
                 {
-                    sceneObject.MapSetting = true;
                     sceneObject.SetEnable(false);
                 }
             }

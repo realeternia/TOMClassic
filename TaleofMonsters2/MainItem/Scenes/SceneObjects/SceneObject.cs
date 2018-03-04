@@ -26,7 +26,7 @@ namespace TaleofMonsters.MainItem.Scenes.SceneObjects
 
         protected int tickCount;
 
-        public SceneObject(int wid, int wx, int wy, int wwidth, int wheight)
+        protected SceneObject(int wid, int wx, int wy, int wwidth, int wheight)
         {
             Id = wid;
             X = wx;

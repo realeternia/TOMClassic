@@ -43,7 +43,6 @@ namespace TaleofMonsters.Forms
         {
             base.Init(width, height);
 
-            SoundManager.PlayBGM("TOM005.mp3");
             IsChangeBgm = true;
         }
 

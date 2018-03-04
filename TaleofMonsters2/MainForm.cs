@@ -82,7 +82,7 @@ namespace TaleofMonsters
             if (pg == 0)
             {
                 textBoxPasswd.Text = "";
-                SoundManager.PlayBGM("TOM000.mp3");
+                SoundManager.PlayBGMScene("SCN000.mp3");
             }
             else if (pg == 1)
             {
@@ -98,7 +98,6 @@ namespace TaleofMonsters
                         return;
                 }
                 MainTipManager.Refresh();
-                SoundManager.PlayBGM("TOM001.mp3");
                 Scene.Instance.ChangeMap(UserProfile.InfoBasic.MapId, isNewUser);
                 UserProfile.Profile.OnLogin();
             }

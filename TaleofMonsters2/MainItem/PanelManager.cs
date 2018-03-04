@@ -53,6 +53,10 @@ namespace TaleofMonsters.MainItem
 
         public static void RemovePanel(BasePanel panel)
         {
+            var type = FindPanel(panel.GetType());
+            if(type == null)
+                return;
+
             if (panel.IsChangeBgm)
             {
                 SoundManager.PlayLastBGM();

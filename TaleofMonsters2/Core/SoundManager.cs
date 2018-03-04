@@ -10,6 +10,7 @@ namespace TaleofMonsters.Core
     internal static class SoundManager
     {
         private static Stack<string> bgmHistory;
+        private static string sceneBGM;
 
         private static FMOD.System _fmod = null;
         private const float BGMVolume = 0.02f; //背景音乐音量
@@ -62,14 +63,29 @@ namespace TaleofMonsters.Core
             bgmHistory.Push(filePath);
         }
 
+        public static void PlayBGMScene(string path)
+        {
+            string filePath = string.Format("Bgm.{0}", path);
+            if (!WorldInfoManager.BGEnable)
+                return;
+
+            if(sceneBGM == filePath) //重复的歌曲不用切换
+                return;
+            sceneBGM = filePath;
+            Play(sceneBGM, true);
+        }
+
         public static void PlayLastBGM()
         {
             if (bgmHistory == null || bgmHistory.Count == 0)
                 return;
 
             bgmHistory.Pop();
-
-            string path = bgmHistory.Peek();
+            string path = null;
+            if (bgmHistory.Count > 0)
+                path = bgmHistory.Peek();
+            else
+                path = sceneBGM;
             Play(path, true);
         }
 
