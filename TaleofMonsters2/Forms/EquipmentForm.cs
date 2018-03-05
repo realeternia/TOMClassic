@@ -335,14 +335,23 @@ namespace TaleofMonsters.Forms
             e.Graphics.FillRectangle(Brushes.DimGray, 31, 178, 80, 2);
             e.Graphics.FillRectangle(Brushes.DodgerBlue, 31, 178, Math.Min(UserProfile.InfoBasic.Exp * 79 / ExpTree.GetNextRequired(UserProfile.InfoBasic.Level) + 1, 80), 2);
 
+            e.Graphics.DrawString("攻击", font3, Brushes.White, 157, 92);
+            e.Graphics.DrawString("生命", font3, Brushes.White, 157+52, 92);
+            e.Graphics.DrawString("攻速", font3, Brushes.White, 157 + 52*2, 92);
+            e.Graphics.DrawString("射程", font3, Brushes.White, 157 + 52*3, 92);
+
+            e.Graphics.DrawString("领导", font3, Brushes.White, 157, 155);
+            e.Graphics.DrawString("力量", font3, Brushes.White, 157 + 52, 155);
+            e.Graphics.DrawString("魔力", font3, Brushes.White, 157 + 52 * 2, 155);
+
             DrawAttr(e.Graphics, font, heroData.Atk + vEquip.Atk, 147, 136);
-            DrawAttr(e.Graphics, font, heroData.Hp + vEquip.Hp, 147 + 53, 136);
-            DrawAttr(e.Graphics, font, heroData.Spd + vEquip.Spd, 147 + 53*2, 136);
-            DrawAttr(e.Graphics, font, heroData.Range + vEquip.Range, 147 + 53 * 3, 136);
+            DrawAttr(e.Graphics, font, heroData.Hp + vEquip.Hp, 147 + 52, 136);
+            DrawAttr(e.Graphics, font, heroData.Spd + vEquip.Spd, 147 + 52*2, 136);
+            DrawAttr(e.Graphics, font, heroData.Range + vEquip.Range, 147 + 52 * 3, 136);
 
             DrawAttr(e.Graphics, font, vEquip.LpRate + jobInfo.Lp, 147, 199);
-            DrawAttr(e.Graphics, font, vEquip.PpRate + jobInfo.Pp, 147 + 53, 199);
-            DrawAttr(e.Graphics, font, vEquip.MpRate + jobInfo.Mp, 147 + 53 * 2, 199);
+            DrawAttr(e.Graphics, font, vEquip.PpRate + jobInfo.Pp, 147 + 52, 199);
+            DrawAttr(e.Graphics, font, vEquip.MpRate + jobInfo.Mp, 147 + 52 * 2, 199);
 
             font.Dispose();
             font2.Dispose();
