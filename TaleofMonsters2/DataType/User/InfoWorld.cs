@@ -326,6 +326,34 @@ namespace TaleofMonsters.DataType.User
             }
         }
 
+        public int GetBlessTime(int blessId)
+        {
+            if (Blesses.ContainsKey(blessId))
+            {
+                return Blesses[blessId];
+            }
+            return 0;
+        }
+
+        public void AddBless(int blessId, int time)
+        {
+            if (Blesses.ContainsKey(blessId))
+            {
+                Blesses[blessId] += time;
+            }
+            else
+            {
+                if (Blesses.Count >= GameConstants.BlessLimit)
+                    return;
+                Blesses[blessId] = time;
+            }
+        }
+
+        public void RemoveBless(int blessId)
+        {
+            Blesses.Remove(blessId);
+        }
+
         public List<int> GetBlessShopData()
         {
             int time = TimeTool.DateTimeToUnixTime(DateTime.Now);

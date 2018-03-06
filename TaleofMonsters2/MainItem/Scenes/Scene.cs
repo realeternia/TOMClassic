@@ -402,10 +402,10 @@ namespace TaleofMonsters.MainItem.Scenes
             {
                 if (key > 0)
                 {
-                    var bless = UserProfile.InfoWorld.Blesses[key];
-                    Font font2 = new Font("宋体", 11 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-                    g.DrawString(bless.ToString(), font2, Brushes.White, x+15, y+33);
-                    font2.Dispose();
+                    var blessTime = UserProfile.InfoWorld.GetBlessTime(key);
+                    Font font = new Font("宋体", 11 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+                    g.DrawString(blessTime.ToString(), font, Brushes.White, x+15, y+33);
+                    font.Dispose();
                 }
             }
         }

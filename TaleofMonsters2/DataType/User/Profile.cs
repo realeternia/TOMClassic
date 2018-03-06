@@ -54,7 +54,7 @@ namespace TaleofMonsters.DataType.User
             InfoBag.BagCount = 50;
             InfoEquip.AddEquipCompose(21100001);
             InfoEquip.AddEquipCompose(21300001);
-            InfoWorld.Blesses[BlessBook.GetBlessByName("newbie")] = 50;
+            InfoWorld.AddBless(BlessBook.GetBlessByName("newbie"), 50);
         }
 
         public void OnKillMonster(int tlevel, int trace, int tattr)

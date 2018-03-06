@@ -21,16 +21,11 @@ namespace TaleofMonsters.MainItem.Blesses
 
         public static void AddBless(int id, int time = 0)
         {
-            if (UserProfile.InfoWorld.Blesses.Count >= GameConstants.BlessLimit)
-                return;
             var blessConfig = ConfigData.GetBlessConfig(id);
             if (time == 0)
                 time = blessConfig.Round;
 
-            if (UserProfile.InfoWorld.Blesses.ContainsKey(id))
-                UserProfile.InfoWorld.Blesses[id] += time;
-            else
-                UserProfile.InfoWorld.Blesses[id] = time;
+            UserProfile.InfoWorld.AddBless(id, time);
 
             if (blessConfig.Type == (int)BlessTypes.Negative)
                 UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.AddCurse, 1);
@@ -44,7 +39,7 @@ namespace TaleofMonsters.MainItem.Blesses
 
         public static void RemoveBless(int id)
         {
-            UserProfile.InfoWorld.Blesses.Remove(id);
+            UserProfile.InfoWorld.RemoveBless(id);
             if (Update != null)
                 Update();
             RebuildCache();
@@ -65,9 +60,9 @@ namespace TaleofMonsters.MainItem.Blesses
         private static void RebuildCache()
         {
             cache = new BlessConfig();
-            foreach (var key in UserProfile.InfoWorld.Blesses.Keys)
+            foreach (var bless in UserProfile.InfoWorld.Blesses)
             {
-                var config = ConfigData.GetBlessConfig(key);
+                var config = ConfigData.GetBlessConfig(bless.Key);
                 cache.MoveFoodChange += config.MoveFoodChange;
                 cache.MoveDistance += config.MoveDistance;
                 cache.MoveCostHp |= config.MoveCostHp;

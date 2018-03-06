@@ -63,9 +63,7 @@ namespace TaleofMonsters.DataType.Blesses
         public static Image GetPreview(int key)
         {
             var config = ConfigData.GetBlessConfig(key);
-            var lastTime = 0;
-            if (UserProfile.InfoWorld.Blesses.ContainsKey(key))
-                lastTime = UserProfile.InfoWorld.Blesses[key];
+            var lastTime = UserProfile.InfoWorld.GetBlessTime(key);
             TipImage tipData = new TipImage();
             var color = "Gold";
             if (config.Type == (int) BlessTypes.Active)
