@@ -9,7 +9,7 @@ namespace TaleofMonsters.DataType.User
     public class InfoBasic
     {
         [FieldIndex(Index = 3)] public int Head;
-        [FieldIndex(Index = 5)] public uint Dna;
+        [FieldIndex(Index = 5)] public uint Dna; //可以影响sq的选项，影响sq的出现概率（未实现）
         [FieldIndex(Index = 6)] public int Job;
         [FieldIndex(Index = 7)] public byte Level;
         [FieldIndex(Index = 16)] public int Exp;
@@ -110,8 +110,11 @@ namespace TaleofMonsters.DataType.User
                 if (peopleConfig.AutoAddLevel == lv)
                     UserProfile.InfoRival.SetRivalAvail(peopleConfig.Id);
             }
-          
         }
 
+        public bool HasDna(uint dna)
+        {
+            return (Dna & dna) == dna;
+        }
     }
 }

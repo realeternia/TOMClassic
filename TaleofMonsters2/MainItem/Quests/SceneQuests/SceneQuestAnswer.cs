@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Drawing;
 using ConfigDatas;
 using NarlonLib.Math;
+using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Drops;
 using TaleofMonsters.DataType.Others;
@@ -144,6 +146,18 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
                 var itemId = DungeonBook.GetDungeonItemId(config.NeedDungeonItemId);
                 Disabled = !UserProfile.InfoDungeon.HasDungeonItem(itemId, config.NeedDungeonItemCount);
             }
+            else if (parms[0] == "hasdna")
+            {
+                if (config.DnaInfo > 0)
+                {
+                    var dnaList = DnaBook.GetDnas(config.DnaInfo);
+                    string dnaStr = "";
+                    foreach (var dnaId in dnaList)
+                        dnaStr += ConfigData.GetPlayerDnaConfig(dnaId).Name + " ";
+                    Script = string.Format("{0}(DNA限定{1})", Script, dnaStr);
+                    Disabled = !UserProfile.InfoBasic.HasDna(config.DnaInfo);
+                }
+            }
         }
 
         private float GetWinRate(float myData, float needData)
@@ -177,6 +191,44 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
                 case "endu": return "耐力";
             }
             return "未知";
+        }
+
+        public override void Draw(Graphics g, int yOff, int width, bool isTarget)
+        {
+            if (isTarget)
+                g.FillRectangle(Brushes.DarkBlue, 10, yOff, width - 20, 20);
+
+            int textOff = 20;
+            if (!string.IsNullOrEmpty(Prefix))
+            {
+                var icon = GetItemIcon(this);
+                if (icon != "")
+                {
+                    g.DrawImage(HSIcons.GetIconsByEName(icon), textOff, yOff + 2, 18, 18);
+                    textOff += 20;
+                }
+            }
+
+            Font font = new Font("宋体", 11 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            g.DrawString(Script, font, Brushes.Wheat, textOff, yOff + 2);
+            font.Dispose();
+        }
+
+        private static string GetItemIcon(SceneQuestBlock word)
+        {
+            string icon = "";
+            if (word.Prefix.StartsWith("questfin")) icon = "npc3";
+            else if (word.Prefix.StartsWith("quest")) icon = "npc1";
+            else if (word.Prefix.StartsWith("rival")) icon = "tsk1";
+            else if (word.Prefix.StartsWith("shop")) icon = "oth7";
+            else if (word.Prefix.StartsWith("addon")) icon = "tsk5";
+            else if (word.Prefix.StartsWith("cantrade")) icon = "tsk3";
+            else if (word.Prefix.StartsWith("cantest")) icon = "oth1";
+            else if (word.Prefix.StartsWith("bribe")) icon = "res5";
+            else if (word.Prefix.StartsWith("fight")) icon = "abl1";
+            else if (word.Prefix.StartsWith("hasditem")) icon = "rac2";
+            else if (word.Prefix.StartsWith("hasdna")) icon = "oth14";
+            return icon;
         }
     }
 }

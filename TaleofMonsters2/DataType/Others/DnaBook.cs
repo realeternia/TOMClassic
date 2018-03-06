@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
-using ControlPlus;
 using NarlonLib.Drawing;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
@@ -33,6 +33,17 @@ namespace TaleofMonsters.DataType.Others
             tipData.AddTextNewLine(dnaConfig.Des, "Gray");
 
             return tipData.Image;
+        }
+
+        public static List<int> GetDnas(uint dnaInfo)
+        {
+            List<int> dataList = new List<int>();
+            for (int i = 1; i <= 24; i++)
+            {
+                if ((dnaInfo & (uint)Math.Pow(2, i)) != 0)
+                    dataList.Add(i);
+            }
+            return dataList;
         }
     }
 }

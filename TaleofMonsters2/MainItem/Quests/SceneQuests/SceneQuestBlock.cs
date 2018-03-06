@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace TaleofMonsters.MainItem.Quests.SceneQuests
 {
@@ -32,6 +33,16 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
         public override string ToString()
         {
             return Script;
+        }
+
+        public virtual void Draw(Graphics g, int yOff, int width, bool isTarget)
+        {
+            if (isTarget)
+                g.FillRectangle(Brushes.DarkBlue, 10, yOff, width - 20, 20);
+
+            Font font = new Font("宋体", 11 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            g.DrawString(Script, font, Brushes.Wheat, 20, yOff + 2);
+            font.Dispose();
         }
     }
 }

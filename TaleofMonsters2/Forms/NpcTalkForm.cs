@@ -229,45 +229,14 @@ namespace TaleofMonsters.Forms
 
                 if (answerList != null && (evtItem == null || evtItem.RunningState != TalkEventItem.TalkEventState.Running))
                 {
-                    Font font = new Font("宋体", 11 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
                     int id = 0;
                     foreach (var word in answerList)
                     {
-                        if (id == tar)
-                            e.Graphics.FillRectangle(Brushes.DarkBlue, 10, id * 20 + Height - 10 - answerList.Count * 20, Width - 20, 20);
-
-                        int textOff = 20;
-                        if (!string.IsNullOrEmpty(word.Prefix))
-                        {
-                            var icon = GetItemIcon(word);
-                            if (icon != "")
-                            {
-                                e.Graphics.DrawImage(HSIcons.GetIconsByEName(icon), textOff, id * 20 + Height - 10 - answerList.Count * 20 + 2, 18, 18);
-                                textOff += 20;
-                            }
-                        }
-                        e.Graphics.DrawString(word.Script, font, Brushes.Wheat, textOff, id * 20 + Height - 10 - answerList.Count * 20 + 2);
-
+                        word.Draw(e.Graphics, id * 20 + Height - 10 - answerList.Count * 20, Width, id == tar);
                         id++;
                     }
-                    font.Dispose();
                 }
             }
-        }
-
-        private static string GetItemIcon(SceneQuestBlock word)
-        {
-            string icon = "";
-            if (word.Prefix.StartsWith("questfin")) icon = "npc3";
-            else if (word.Prefix.StartsWith("quest")) icon = "npc1";
-            else if (word.Prefix.StartsWith("rival")) icon = "tsk1";
-            else if (word.Prefix.StartsWith("shop")) icon = "oth7";
-            else if (word.Prefix.StartsWith("addon")) icon = "tsk5";
-            else if (word.Prefix.StartsWith("cantrade")) icon = "tsk3";
-            else if (word.Prefix.StartsWith("cantest")) icon = "oth1";
-            else if (word.Prefix.StartsWith("bribe")) icon = "res5";
-            else if (word.Prefix.StartsWith("fight")) icon = "abl1";
-            return icon;
         }
 
         private void NpcTalkForm_MouseMove(object sender, MouseEventArgs e)
