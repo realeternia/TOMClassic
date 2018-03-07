@@ -51,6 +51,11 @@ namespace NarlonLib.Drawing
             bmp = new Bitmap(wid, heg);
             g = Graphics.FromImage(bmp);
             g.FillRectangle(Brushes.Black, 0, 0, wid, heg);
+            if (head != "")
+            {
+                using (Brush b = new SolidBrush(Color.FromArgb(30, 30, 30)))
+                    g.FillRectangle(b, 0, 0, wid, 20);
+            }
             Pen pen = new Pen(Brushes.Gray, 2);
             g.DrawRectangle(pen, 1, 1, wid - 3, heg - 3);
             pen.Dispose();
@@ -68,11 +73,7 @@ namespace NarlonLib.Drawing
             {
                 string schr = text.Substring(i, 1);
                 float textwid = TextRenderer.MeasureText(g, schr, fontsong, new Size(0, 0), TextFormatFlags.NoPadding).Width;
-                bool ismark = false;
-                if ((text[i] >= '0' && text[i] <= '9') || text[i] == '.')
-                {
-                    ismark = true;
-                }
+                bool ismark = (text[i] >= '0' && text[i] <= '9') || text[i] == '.';
                 if (schr == "$")
                 {
                     row++;
@@ -86,7 +87,7 @@ namespace NarlonLib.Drawing
                     linewid = 0;
                 }
                 SolidBrush sb = new SolidBrush(ismark ? Color.Lime : tcolor);
-                g.DrawString(schr, fontsong, sb, linewid + 5, row*14 + 5 + yoff, StringFormat.GenericTypographic);
+                g.DrawString(schr, fontsong, sb, linewid + 5, row*14 + 5 + yoff);
                 sb.Dispose();
                 linewid += textwid;
             }

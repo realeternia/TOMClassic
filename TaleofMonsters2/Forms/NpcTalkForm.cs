@@ -43,7 +43,7 @@ namespace TaleofMonsters.Forms
         {
             InitializeComponent();
             NeedBlackForm = true;
-            colorWord = new ColorWordRegion(160, 38, Width-170, new Font("宋体", 14 * 1.33f), Color.White);
+            colorWord = new ColorWordRegion(160, 38, Width-170, new Font("宋体", 14 * 1.33f, GraphicsUnit.Pixel), Color.White);
             vRegion = new VirtualRegion(this);
             vRegion.RegionEntered += VRegion_RegionEntered;
             vRegion.RegionLeft += VRegion_RegionLeft;
@@ -67,8 +67,8 @@ namespace TaleofMonsters.Forms
                     var dnaId = DnaBook.GetDnaId(config.TriggerDNAHard[i]);
                     if (UserProfile.InfoBasic.HasDna(dnaId))
                     {
-                        vRegion.AddRegion(new ImageRegion(regionIndex,30,36* regionIndex, 30,30, ImageRegionCellType.None, DnaBook.GetDnaImage(dnaId)));
-                        dnaChangeDict[regionIndex] = "DNA效果：难度+" + int.Parse(config.TriggerDNAHard[i + 1]);
+                        vRegion.AddRegion(new ImageRegion(dnaId, 28*regionIndex,55, 24,24, ImageRegionCellType.None, DnaBook.GetDnaImage(dnaId)));
+                        dnaChangeDict[dnaId] = ("难度+" + config.TriggerDNAHard[i + 1]).Replace("+-", "-");
                         regionIndex++;
                     }
                 }
@@ -80,8 +80,16 @@ namespace TaleofMonsters.Forms
                     var dnaId = DnaBook.GetDnaId(config.TriggerDNARate[i]);
                     if (UserProfile.InfoBasic.HasDna(dnaId))
                     {
-                        vRegion.AddRegion(new ImageRegion(regionIndex, 30, 36 * regionIndex, 30, 30, ImageRegionCellType.None, DnaBook.GetDnaImage(dnaId)));
-                        dnaChangeDict[regionIndex] = "DNA效果：时间+" + int.Parse(config.TriggerDNARate[i + 1]);
+                        var dataStr = string.Format("出现几率+{0}0%", config.TriggerDNARate[i + 1]).Replace("+-", "-");
+                        if (dnaChangeDict.ContainsKey(dnaId))
+                        {
+                            dnaChangeDict[dnaId] += "$" + dataStr;
+                        }
+                        else
+                        {
+                            vRegion.AddRegion(new ImageRegion(dnaId, 28 * regionIndex, 55, 24, 24, ImageRegionCellType.None, DnaBook.GetDnaImage(dnaId)));
+                            dnaChangeDict[dnaId] = dataStr;
+                        }
                         regionIndex++;
                     }
                 }
@@ -267,7 +275,8 @@ namespace TaleofMonsters.Forms
 
         private void VRegion_RegionEntered(int id, int x, int y, int key)
         {
-            Image image = DrawTool.GetImageByString(dnaChangeDict[id], 100);
+            var dnaConfig = ConfigData.GetPlayerDnaConfig(id);
+            Image image = DrawTool.GetImageByString(string.Format("{0}[DNA效果]",dnaConfig.Name), dnaChangeDict[id], 120, Color.White);
             tooltip.Show(image, this, x, y);
         }
 

@@ -45,7 +45,7 @@ namespace TaleofMonsters.Forms
             bitmapButtonFresh.NoUseDrawNine = true;
             this.bitmapButtonDouble.ImageNormal = PicLoader.Read("Button.Panel", "MoneyButton.JPG");
             bitmapButtonDouble.NoUseDrawNine = true;
-            colorWord = new ColorWordRegion(12, 38, 384, new Font("微软雅黑", 11 * 1.33f, FontStyle.Bold), Color.White);
+            colorWord = new ColorWordRegion(12, 38, 384, new Font("微软雅黑", 11 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel), Color.White);
             colorWord.UpdateText("|所有素材随机出现，素材的|Lime|背景颜色||决定素材的最高品质。");
         }
 

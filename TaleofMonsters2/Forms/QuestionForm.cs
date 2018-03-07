@@ -21,7 +21,7 @@ namespace TaleofMonsters.Forms
         public QuestionForm()
         {
             InitializeComponent();
-            colorWord = new ColorWordRegion(21, 44, 274, new Font("微软雅黑", 11 * 1.33f, FontStyle.Bold), Color.White);
+            colorWord = new ColorWordRegion(21, 44, 274, new Font("微软雅黑", 11 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel), Color.White);
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
             this.bitmapButtonC1.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
             bitmapButtonC1.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);

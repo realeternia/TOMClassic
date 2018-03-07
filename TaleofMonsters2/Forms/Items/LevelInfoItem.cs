@@ -23,7 +23,7 @@ namespace TaleofMonsters.Forms.Items
             this.y = y;
             this.width = width;
             this.height = height;
-            colorWord = new ColorWordRegion(x + 135, y + 20, 260, new Font("宋体", 10*1.33f), Color.White);
+            colorWord = new ColorWordRegion(x + 135, y + 20, 260, new Font("宋体", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel), Color.White);
         }
 
         public void Init(int idx)

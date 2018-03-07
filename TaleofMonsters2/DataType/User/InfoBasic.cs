@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Others;
@@ -114,7 +115,8 @@ namespace TaleofMonsters.DataType.User
 
         public bool HasDna(int dna)
         {
-            return (Dna & dna) == dna;
+            int dnaData = (int)Math.Pow(2, dna);
+            return (Dna & dnaData) == dnaData;
         }
     }
 }
