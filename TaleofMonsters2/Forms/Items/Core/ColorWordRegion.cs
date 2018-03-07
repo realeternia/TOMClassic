@@ -1,7 +1,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using ControlPlus;
-using TaleofMonsters.Core;
 
 namespace TaleofMonsters.Forms.Items.Core
 {
@@ -10,26 +9,22 @@ namespace TaleofMonsters.Forms.Items.Core
         private int x;
         private int y;
         private int width;
-        private string fontname;
-        private int fontsize;
+        private Font font;
         private string[] lines;
         private Color fcolor;
 
         private float chapterOffset = 25;
 
-        public ColorWordRegion(int x, int y, int width, string fontname, int fontsize, Color fcolor)
+        public ColorWordRegion(int x, int y, int width, Font ft, Color fcolor)
         {
             this.x = x;
             this.y = y;
             this.width = width;
-            this.fontname = fontname;
-            this.fontsize = fontsize;
+            font = ft;
             this.fcolor = fcolor;
 
-            chapterOffset = fontsize*2+6;
+            chapterOffset = font.Size*2;
         }
-
-        public bool Bold { get; set; }
 
         public void UpdateText(string info)
         {
@@ -72,7 +67,6 @@ namespace TaleofMonsters.Forms.Items.Core
 
         private void DrawSub(Graphics g, string s, Color color, ref int line, ref float linewid)
         {
-            Font font = new Font(fontname, fontsize*1.33f, Bold ? FontStyle.Bold : FontStyle.Regular, GraphicsUnit.Pixel);
             for (int i = 0; i < s.Length; i++)
             {
                 string schr = s.Substring(i, 1);
@@ -87,8 +81,6 @@ namespace TaleofMonsters.Forms.Items.Core
                 sb.Dispose();
                 linewid += textwid;
             }
-            font.Dispose();
         }
-
     }
 }

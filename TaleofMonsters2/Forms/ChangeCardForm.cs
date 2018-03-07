@@ -68,8 +68,7 @@ namespace TaleofMonsters.Forms
             bitmapButtonRefresh.NoUseDrawNine = true;
             this.bitmapButtonFresh.ImageNormal = PicLoader.Read("Button.Panel", "FreshButton.JPG");
             bitmapButtonFresh.NoUseDrawNine = true;
-            colorWord = new ColorWordRegion(12, 38, 384, "微软雅黑", 11, Color.White);
-            colorWord.Bold = true;
+            colorWord = new ColorWordRegion(12, 38, 384, new Font("微软雅黑", 11 * 1.33f, FontStyle.Bold), Color.White);
             colorWord.UpdateText("|交换公式随机出现，交换公式的|Lime|背景颜色||决定交换公式的最高品质。");
         }
 

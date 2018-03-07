@@ -54,7 +54,7 @@ namespace TaleofMonsters.Forms
             this.nlPageSelector1 = new NLPageSelector(this, 10, 321, 150);
             nlPageSelector1.PageChange += nlPageSelector1_PageChange;
 
-            jobDes = new ColorWordRegion(180, 70, 320, "宋体", 10, Color.White);
+            jobDes = new ColorWordRegion(180, 70, 320, new Font("宋体", 10 * 1.33f), Color.White);
 
             vRegion = new VirtualRegion(this);
             PictureRegion region = new PictureRegion(1, 178, 266, 48, 48, PictureRegionCellType.HeroSkill, 0);

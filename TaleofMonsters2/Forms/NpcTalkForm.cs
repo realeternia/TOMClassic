@@ -43,7 +43,7 @@ namespace TaleofMonsters.Forms
         {
             InitializeComponent();
             NeedBlackForm = true;
-            colorWord = new ColorWordRegion(160, 38, Width-170, "宋体", 14, Color.White);
+            colorWord = new ColorWordRegion(160, 38, Width-170, new Font("宋体", 14 * 1.33f), Color.White);
             vRegion = new VirtualRegion(this);
             vRegion.RegionEntered += VRegion_RegionEntered;
             vRegion.RegionLeft += VRegion_RegionLeft;
