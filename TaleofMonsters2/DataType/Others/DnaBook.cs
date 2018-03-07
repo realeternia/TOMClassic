@@ -11,20 +11,20 @@ namespace TaleofMonsters.DataType.Others
 {
     public class DnaBook
     {
-        private static Dictionary<string, uint> dnaIdDict;
-        public static uint GetDnaId(string ename)
+        private static Dictionary<string, int> dnaIdDict;
+        public static int GetDnaId(string ename)
         {
             if (dnaIdDict == null)
             {
-                dnaIdDict = new Dictionary<string, uint>();
+                dnaIdDict = new Dictionary<string, int>();
                 foreach (var dnaConfig in ConfigData.PlayerDnaDict.Values)
                 {
                     if (dnaIdDict.ContainsKey(dnaConfig.Ename))
                     {
-                        NLog.Warn("GetItemId key={0} exsited", dnaConfig.Ename);
+                        NLog.Warn("GetDnaId key={0} exsited", dnaConfig.Ename);
                         continue;
                     }
-                    dnaIdDict[dnaConfig.Ename] = (uint)dnaConfig.Id;
+                    dnaIdDict[dnaConfig.Ename] = dnaConfig.Id;
                 }
             }
             return dnaIdDict[ename];

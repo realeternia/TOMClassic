@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
+using NarlonLib.Control;
+using NarlonLib.Drawing;
 using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.Core;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Core;
+using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.MainItem.Blesses;
 using TaleofMonsters.MainItem.Quests;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
@@ -25,19 +27,26 @@ namespace TaleofMonsters.Forms
         private SceneQuestBlock interactBlock;
 
         private ColorWordRegion colorWord;//问题区域
+        private VirtualRegion vRegion;
         private SceneQuestConfig config;
         private List<SceneQuestBlock> answerList; //回答区
         private TalkEventItem evtItem; //事件交互区
+        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
 
         public int EventId { get; set; }
         public int CellId { get; set; } //格子id
         private int eventLevel;
+
+        private Dictionary<int, string> dnaChangeDict = new Dictionary<int, string>();
 
         public NpcTalkForm()
         {
             InitializeComponent();
             NeedBlackForm = true;
             colorWord = new ColorWordRegion(160, 38, Width-170, "宋体", 14, Color.White);
+            vRegion = new VirtualRegion(this);
+            vRegion.RegionEntered += VRegion_RegionEntered;
+            vRegion.RegionLeft += VRegion_RegionLeft;
         }
 
         public override void Init(int width, int height)
@@ -49,6 +58,34 @@ namespace TaleofMonsters.Forms
                 eventLevel = config.Level;
             else
                 eventLevel = ConfigData.GetSceneConfig(UserProfile.InfoBasic.MapId).Level;
+
+            int regionIndex = 1;
+            if (config.TriggerDNAHard != null && config.TriggerDNAHard.Length > 0)
+            {
+                for (int i = 0; i < config.TriggerDNAHard.Length; i += 2)
+                {
+                    var dnaId = DnaBook.GetDnaId(config.TriggerDNAHard[i]);
+                    if (UserProfile.InfoBasic.HasDna(dnaId))
+                    {
+                        vRegion.AddRegion(new ImageRegion(regionIndex,30,36* regionIndex, 30,30, ImageRegionCellType.None, DnaBook.GetDnaImage(dnaId)));
+                        dnaChangeDict[regionIndex] = "DNA效果：难度+" + int.Parse(config.TriggerDNAHard[i + 1]);
+                        regionIndex++;
+                    }
+                }
+            }
+            if (config.TriggerDNARate != null && config.TriggerDNARate.Length > 0)
+            {
+                for (int i = 0; i < config.TriggerDNARate.Length; i += 2)
+                {
+                    var dnaId = DnaBook.GetDnaId(config.TriggerDNARate[i]);
+                    if (UserProfile.InfoBasic.HasDna(dnaId))
+                    {
+                        vRegion.AddRegion(new ImageRegion(regionIndex, 30, 36 * regionIndex, 30, 30, ImageRegionCellType.None, DnaBook.GetDnaImage(dnaId)));
+                        dnaChangeDict[regionIndex] = "DNA效果：时间+" + int.Parse(config.TriggerDNARate[i + 1]);
+                        regionIndex++;
+                    }
+                }
+            }
             interactBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, config.Script);
             answerList = new List<SceneQuestBlock>();
             SetupQuestItem();
@@ -207,38 +244,6 @@ namespace TaleofMonsters.Forms
                 ModifyQuestState(child, questConfig);
         }
 
-        private void NpcTalkForm_Paint(object sender, PaintEventArgs e)
-        {
-            BorderPainter.Draw(e.Graphics, "", Width, Height);
-
-            if (showImage)
-            {
-                Font font2 = new Font("黑体", 12 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-                e.Graphics.DrawString(string.Format("{0}(Lv{1})",config.Name, eventLevel), font2, Brushes.White, Width / 2 - 40, 8);
-                font2.Dispose();
-
-                e.Graphics.DrawImage(SceneQuestBook.GetSceneQuestImage(config.Id), 15, 40, 140, 140);
-                Image border = PicLoader.Read("Border", "questb1.PNG"); //边框
-                e.Graphics.DrawImage(border, 15, 40, 140, 140);
-                border.Dispose();
-
-                if (evtItem != null)
-                    evtItem.Draw(e.Graphics);
-
-                colorWord.Draw(e.Graphics);
-
-                if (answerList != null && (evtItem == null || evtItem.RunningState != TalkEventItem.TalkEventState.Running))
-                {
-                    int id = 0;
-                    foreach (var word in answerList)
-                    {
-                        word.Draw(e.Graphics, id * 20 + Height - 10 - answerList.Count * 20, Width, id == tar);
-                        id++;
-                    }
-                }
-            }
-        }
-
         private void NpcTalkForm_MouseMove(object sender, MouseEventArgs e)
         {
             if (evtItem == null || evtItem.RunningState != TalkEventItem.TalkEventState.Running) //evtItem运行期间无法选择
@@ -259,5 +264,51 @@ namespace TaleofMonsters.Forms
                 }
             }
         }
+
+        private void VRegion_RegionEntered(int id, int x, int y, int key)
+        {
+            Image image = DrawTool.GetImageByString(dnaChangeDict[id], 100);
+            tooltip.Show(image, this, x, y);
+        }
+
+        private void VRegion_RegionLeft()
+        {
+            tooltip.Hide(this);
+        }
+
+        private void NpcTalkForm_Paint(object sender, PaintEventArgs e)
+        {
+            BorderPainter.Draw(e.Graphics, "", Width, Height);
+
+            if (showImage)
+            {
+                Font font2 = new Font("黑体", 12 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+                e.Graphics.DrawString(string.Format("{0}(Lv{1})",config.Name, eventLevel), font2, Brushes.White, Width / 2 - 40, 8);
+                font2.Dispose();
+
+                e.Graphics.DrawImage(SceneQuestBook.GetSceneQuestImage(config.Id), 15, 40, 140, 140);
+                Image border = PicLoader.Read("Border", "questb1.PNG"); //边框
+                e.Graphics.DrawImage(border, 15, 40, 140, 140);
+                border.Dispose();
+
+                if (evtItem != null)
+                    evtItem.Draw(e.Graphics);
+
+                colorWord.Draw(e.Graphics);
+                if (vRegion != null)
+                    vRegion.Draw(e.Graphics);
+
+                if (answerList != null && (evtItem == null || evtItem.RunningState != TalkEventItem.TalkEventState.Running))
+                {
+                    int id = 0;
+                    foreach (var word in answerList)
+                    {
+                        word.Draw(e.Graphics, id * 20 + Height - 10 - answerList.Count * 20, Width, id == tar);
+                        id++;
+                    }
+                }
+            }
+        }
+
     }
 }

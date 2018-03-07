@@ -112,7 +112,7 @@ namespace TaleofMonsters.DataType.User
             }
         }
 
-        public bool HasDna(uint dna)
+        public bool HasDna(int dna)
         {
             return (Dna & dna) == dna;
         }

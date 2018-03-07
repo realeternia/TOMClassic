@@ -151,12 +151,12 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
                 if (config.DnaInfo != null && config.DnaInfo.Length > 0)
                 {
                     string dnaStr = "";
-                    uint dnaId = 0;
+                    int dnaId = 0;
                     foreach (var dnaName in config.DnaInfo)
                     {
                         var nowId = DnaBook.GetDnaId(dnaName);
-                        dnaId |= (uint)Math.Pow(2, nowId);
-                        dnaStr += ConfigData.GetPlayerDnaConfig((int)nowId).Name + " ";
+                        dnaId |= (int)Math.Pow(2, nowId);
+                        dnaStr += ConfigData.GetPlayerDnaConfig(nowId).Name + " ";
                     }
                     Script = string.Format("{0}(DNA限定{1})", Script, dnaStr);
                     Disabled = !UserProfile.InfoBasic.HasDna(dnaId);
