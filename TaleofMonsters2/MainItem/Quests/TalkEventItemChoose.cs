@@ -47,7 +47,7 @@ namespace TaleofMonsters.MainItem.Quests
         private void CalculateRequire()
         {
             int index = 1;
-            winRate = config.ChooseWinRate;
+            winRate = config.ChooseWinRate*(10 - hardness) / 10;
             rollItemSpeedX = MathTool.GetRandom(40, 70);
 
             if (config.ChooseFood > 0)

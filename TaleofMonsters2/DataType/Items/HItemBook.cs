@@ -63,7 +63,7 @@ namespace TaleofMonsters.DataType.Items
             while (high > low+1)//binary search
             {
                 int middle = (high+low)/2;
-                if (roll<rareList[middle].Counter)
+                if (roll < rareList[middle].Counter)
                     high = middle;
                 else
                     low = middle;
@@ -87,9 +87,7 @@ namespace TaleofMonsters.DataType.Items
                     {
                         var group1 = (HItemRandomGroups)hItemConfig.RandomGroup;
                         if (!rareMidDict[group1].ContainsKey(hItemConfig.Rare))
-                        {
                             rareMidDict[group1].Add(hItemConfig.Rare, new List<int>());
-                        }
                         rareMidDict[group1][hItemConfig.Rare].Add(hItemConfig.Id);
                     }
                 }

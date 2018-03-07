@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
+using TaleofMonsters.DataType.Others;
+using TaleofMonsters.DataType.User;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
 
 namespace TaleofMonsters.MainItem.Quests
@@ -39,6 +41,7 @@ namespace TaleofMonsters.MainItem.Quests
         protected SceneQuestBlock result;
 
         protected int level;
+        protected int hardness; //难度改变
 
         public TalkEventState RunningState { get; set; }
         public int Id { get { return config.Id; } }
@@ -51,6 +54,14 @@ namespace TaleofMonsters.MainItem.Quests
             pos = r;
             evt = e;
             config = ConfigData.GetSceneQuestConfig(evtId);
+            if (config.TriggerDNAHard != null && config.TriggerDNAHard.Length > 0)
+            {
+                for (int i = 0; i < config.TriggerDNAHard.Length; i+=2)
+                {
+                    if (UserProfile.InfoBasic.HasDna(DnaBook.GetDnaId(config.TriggerDNAHard[i])))
+                        hardness += int.Parse(config.TriggerDNAHard[i + 1]);
+                }
+            }
             RunningState = TalkEventState.Running;
         }
 

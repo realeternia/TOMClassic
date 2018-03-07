@@ -6,6 +6,7 @@ using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
+using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.MainItem.Quests.SceneQuests;
@@ -85,7 +86,16 @@ namespace TaleofMonsters.DataType.Scenes
         {
             if (questConfig.TriggerRate == 0)
                 return true;
-            return MathTool.GetRandom(100) < questConfig.TriggerRate;
+            int rateBase = questConfig.TriggerRate;
+            if (questConfig.TriggerDNARate != null && questConfig.TriggerDNARate.Length > 0)
+            {
+                for (int i = 0; i < questConfig.TriggerDNAHard.Length; i += 2)
+                {
+                    if (UserProfile.InfoBasic.HasDna(DnaBook.GetDnaId(questConfig.TriggerDNAHard[i])))
+                        rateBase *= (10 + int.Parse(questConfig.TriggerDNAHard[i + 1]))/10;
+                }
+            }
+            return MathTool.GetRandom(100) < rateBase;
         }
 
         /// <summary>

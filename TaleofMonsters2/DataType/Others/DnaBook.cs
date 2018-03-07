@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
 using NarlonLib.Drawing;
+using NarlonLib.Log;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.Resource;
 
@@ -10,13 +11,32 @@ namespace TaleofMonsters.DataType.Others
 {
     public class DnaBook
     {
+        private static Dictionary<string, uint> dnaIdDict;
+        public static uint GetDnaId(string ename)
+        {
+            if (dnaIdDict == null)
+            {
+                dnaIdDict = new Dictionary<string, uint>();
+                foreach (var dnaConfig in ConfigData.PlayerDnaDict.Values)
+                {
+                    if (dnaIdDict.ContainsKey(dnaConfig.Ename))
+                    {
+                        NLog.Warn("GetItemId key={0} exsited", dnaConfig.Ename);
+                        continue;
+                    }
+                    dnaIdDict[dnaConfig.Ename] = (uint)dnaConfig.Id;
+                }
+            }
+            return dnaIdDict[ename];
+        }
+
         public static Image GetDnaImage(int id)
         {
             var dnaConfig = ConfigData.GetPlayerDnaConfig(id);
-            string fname = String.Format("Player/Dna/{0}.PNG", dnaConfig.Url);
+            string fname = string.Format("Player/Dna/{0}.PNG", dnaConfig.Url);
             if (!ImageManager.HasImage(fname))
             {
-                Image image = PicLoader.Read("Player.Dna", String.Format("{0}.PNG", dnaConfig.Url));
+                Image image = PicLoader.Read("Player.Dna", string.Format("{0}.PNG", dnaConfig.Url));
                 ImageManager.AddImage(fname, image);
             }
             return ImageManager.GetImage(fname);

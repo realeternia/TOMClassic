@@ -16,7 +16,7 @@ namespace TaleofMonsters.MainItem.Quests
         public override void Init()
         {
             int gameId = config.MiniGameId;
-            PanelManager.ShowGameWindow(gameId, OnResult);
+            PanelManager.ShowGameWindow(gameId, hardness, OnResult);
         }
 
         private void OnResult(int value)

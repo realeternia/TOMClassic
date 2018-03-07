@@ -2,6 +2,7 @@
 using System.Drawing;
 using ConfigDatas;
 using ControlPlus;
+using NarlonLib.Math;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.MainItem;
@@ -38,6 +39,7 @@ namespace TaleofMonsters.Forms.MiniGame
         protected bool show;
         private Image backImage;
         private int type;
+        protected int hardness;
         protected int xoff = 11;
         protected int yoff = 129;
 
@@ -56,14 +58,15 @@ namespace TaleofMonsters.Forms.MiniGame
             this.bitmapButtonHelp.ImageNormal = PicLoader.Read("Button.Panel", "LearnButton.JPG");
             show = true;
         }
-        public void SetMinigameId(int id)
+
+        public void SetMinigameId(int id, int hard)
         {
             config = ConfigData.GetMinigameConfig(id);
+
             if (!string.IsNullOrEmpty(config.BgImage))
-            {
                 backImage = PicLoader.Read("MiniGame", config.BgImage + ".JPG");
-            }
             type = config.WindowId;
+            hardness = hard;
         }
 
         public void SetEvent(MinigameResultCallback winCallback)
@@ -80,16 +83,16 @@ namespace TaleofMonsters.Forms.MiniGame
         {
             string hint = "最终得分" + score;
             int rank = -1;
-            if (score >= config.LvS)
+            if (score >= GetFinalMark(config.LvS))
             {
                 hint += ",评级S!!!";
                 rank = MinigameRank.S;
             }
-            else if (score >= config.LvA)
+            else if (score >= GetFinalMark(config.LvA))
             {
                 hint += ",评级A!"; rank = MinigameRank.A;
             }
-            else if (score >= config.LvB)
+            else if (score >= GetFinalMark(config.LvB))
             {
                 hint += ",评级B"; rank = MinigameRank.B;
             }
@@ -163,20 +166,25 @@ namespace TaleofMonsters.Forms.MiniGame
             SystemToolTip.Instance.Hide(this);
         }
 
-        public static Image GetPreview(int id)
+        public Image GetPreview(int id)
         {
             var gameConfig = ConfigData.GetMinigameConfig(id);
 
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine("评分", "White");
             tipData.AddTextNewLine("S级达成要求: ", "White");
-            tipData.AddText(gameConfig.LvS.ToString(), "Gold");
+            tipData.AddText(GetFinalMark(gameConfig.LvS).ToString(), "Gold");
             tipData.AddTextNewLine("A级达成要求: ", "White");
-            tipData.AddText(gameConfig.LvA.ToString(), "Red");
+            tipData.AddText(GetFinalMark(gameConfig.LvA).ToString(), "Red");
             tipData.AddTextNewLine("B级达成要求: ", "White");
-            tipData.AddText(gameConfig.LvB.ToString(), "Lime");
+            tipData.AddText(GetFinalMark(gameConfig.LvB).ToString(), "Lime");
 
             return tipData.Image;
+        }
+
+        private int GetFinalMark(int mark)
+        {
+            return MathTool.Clamp(mark*(10 + hardness)/10, 1, 1000);
         }
     }
 }

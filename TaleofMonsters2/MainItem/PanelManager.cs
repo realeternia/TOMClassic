@@ -111,7 +111,7 @@ namespace TaleofMonsters.MainItem
             DealPanel(levelInfoForm);
         }
 
-        public static void ShowGameWindow(int id, MGBase.MinigameResultCallback winCallback)
+        public static void ShowGameWindow(int id, int hardness, MGBase.MinigameResultCallback winCallback)
         {
             var config = ConfigData.GetMinigameConfig(id);
             MGBase basePanel = null;
@@ -142,7 +142,7 @@ namespace TaleofMonsters.MainItem
             }
             if (basePanel != null)
             {
-                basePanel.SetMinigameId(id);
+                basePanel.SetMinigameId(id, hardness);
                 basePanel.SetEvent(winCallback);
                 DealPanel(basePanel);
             }

@@ -79,7 +79,7 @@ namespace TaleofMonsters.MainItem.Quests
         
         private void PunishMental(ref int index)
         {
-            var mentalLoss = GameResourceBook.OutMentalSceneQuest(config.PunishMental);
+            var mentalLoss = (uint) (GameResourceBook.OutMentalSceneQuest(config.PunishMental)*(10 + hardness)/10);
             if (mentalLoss > 0)
             {
                 UserProfile.Profile.InfoBasic.SubMental(mentalLoss);
@@ -91,7 +91,7 @@ namespace TaleofMonsters.MainItem.Quests
 
         private void PunishHealth(ref int index)
         {
-            var healthLoss = GameResourceBook.OutHealthSceneQuest(config.PunishHealth);
+            var healthLoss = (uint)(GameResourceBook.OutHealthSceneQuest(config.PunishHealth) * (10 + hardness) / 10);
             if (healthLoss > 0)
             {
                 UserProfile.Profile.InfoBasic.SubHealth(healthLoss);
@@ -103,7 +103,7 @@ namespace TaleofMonsters.MainItem.Quests
 
         private void PunishFood(ref int index)
         {
-            var foodLoss = GameResourceBook.OutFoodSceneQuest(config.PunishFood);
+            var foodLoss = (uint)(GameResourceBook.OutFoodSceneQuest(config.PunishFood) * (10 + hardness) / 10);
             if (foodLoss > 0)
             {
                 UserProfile.Profile.InfoBasic.SubFood(foodLoss);
@@ -116,7 +116,7 @@ namespace TaleofMonsters.MainItem.Quests
 
         private void PunishGold(ref int index)
         {
-            var goldLoss = GameResourceBook.OutGoldSceneQuest(level, config.PunishGold);
+            var goldLoss = (uint)(GameResourceBook.OutGoldSceneQuest(level, config.PunishGold) * (10 + hardness) / 10);
             if (goldLoss > 0)
             {
                 UserProfile.Profile.InfoBag.SubResource(GameResourceType.Gold, goldLoss);

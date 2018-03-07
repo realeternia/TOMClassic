@@ -211,7 +211,7 @@ namespace TaleofMonsters.MainItem.Quests
 
         private void RewardExp(ref int index)
         {
-            var expGet = GameResourceBook.InExpSceneQuest(level, config.RewardExp);
+            var expGet = (uint)(GameResourceBook.InExpSceneQuest(level, config.RewardExp) * (10 - hardness) / 10);
             if (expGet > 0)
             {
                 UserProfile.Profile.InfoBasic.AddExp((int) expGet);
@@ -224,7 +224,7 @@ namespace TaleofMonsters.MainItem.Quests
 
         private void RewardMental(ref int index)
         {
-            var mentalGet = GameResourceBook.InMentalSceneQuest(config.RewardMental);
+            var mentalGet = (uint)(GameResourceBook.InMentalSceneQuest(config.RewardMental) * (10 - hardness) / 10);
             if (mentalGet > 0)
             {
                 UserProfile.Profile.InfoBasic.AddMental(mentalGet);
@@ -237,7 +237,7 @@ namespace TaleofMonsters.MainItem.Quests
 
         private void RewardHealth(ref int index)
         {
-            var healthGet = GameResourceBook.InHealthSceneQuest(config.RewardHealth);
+            var healthGet = (uint)(GameResourceBook.InHealthSceneQuest(config.RewardHealth) * (10 - hardness) / 10);
             if (healthGet > 0)
             {
                 UserProfile.Profile.InfoBasic.AddHealth(healthGet);
@@ -250,7 +250,7 @@ namespace TaleofMonsters.MainItem.Quests
 
         private void RewardFood(ref int index)
         {
-            var foodGet = GameResourceBook.InFoodSceneQuest(config.RewardFood);
+            var foodGet = (uint)(GameResourceBook.InFoodSceneQuest(config.RewardFood) * (10 - hardness) / 10);
             if (foodGet > 0)
             {
                 UserProfile.Profile.InfoBasic.AddFood(foodGet);
@@ -263,7 +263,7 @@ namespace TaleofMonsters.MainItem.Quests
 
         private void RewardGold(ref int index)
         {
-            var goldGet = GameResourceBook.InGoldSceneQuest(level, config.RewardGold);
+            var goldGet = (uint)(GameResourceBook.InGoldSceneQuest(level, config.RewardGold) * (10 - hardness) / 10);
             if (goldGet > 0)
             {
                 UserProfile.Profile.InfoBag.AddResource(GameResourceType.Gold, goldGet);
@@ -277,7 +277,7 @@ namespace TaleofMonsters.MainItem.Quests
         private void RewardRes(ref int index)
         {
             var resId = config.RewardResId;
-            var resGet = GameResourceBook.InResSceneQuest(resId, level, config.RewardResAmount);
+            var resGet = (uint)(GameResourceBook.InResSceneQuest(resId, level, config.RewardResAmount) * (10 - hardness) / 10);
             if (resGet > 0)
             {
                 UserProfile.Profile.InfoBag.AddResource((GameResourceType) resId, resGet);

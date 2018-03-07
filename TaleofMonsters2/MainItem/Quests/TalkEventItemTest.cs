@@ -27,7 +27,7 @@ namespace TaleofMonsters.MainItem.Quests
             var type = int.Parse(evt.ParamList[0]);
             bool canConvert = type == 1; //是否允许转换成幸运检测
             var testType = type == 1 ? config.TestType1 : config.TestType2;
-            var biasData = type == 1 ? config.TestBias1 : config.TestBias2;
+            var biasData = (type == 1 ? config.TestBias1 : config.TestBias2) + hardness;
 
             if (UserProfile.InfoDungeon.DungeonId > 0)
             {
@@ -39,6 +39,8 @@ namespace TaleofMonsters.MainItem.Quests
                 attrVal = 3;
                 markNeed = 3 + biasData;
             }
+            if (markNeed < 1)
+                markNeed = 1;
         }
 
         public override void Init()

@@ -148,14 +148,18 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
             }
             else if (parms[0] == "hasdna")
             {
-                if (config.DnaInfo > 0)
+                if (config.DnaInfo != null && config.DnaInfo.Length > 0)
                 {
-                    var dnaList = DnaBook.GetDnas(config.DnaInfo);
                     string dnaStr = "";
-                    foreach (var dnaId in dnaList)
-                        dnaStr += ConfigData.GetPlayerDnaConfig(dnaId).Name + " ";
+                    uint dnaId = 0;
+                    foreach (var dnaName in config.DnaInfo)
+                    {
+                        var nowId = DnaBook.GetDnaId(dnaName);
+                        dnaId |= (uint)Math.Pow(2, nowId);
+                        dnaStr += ConfigData.GetPlayerDnaConfig((int)nowId).Name + " ";
+                    }
                     Script = string.Format("{0}(DNA限定{1})", Script, dnaStr);
-                    Disabled = !UserProfile.InfoBasic.HasDna(config.DnaInfo);
+                    Disabled = !UserProfile.InfoBasic.HasDna(dnaId);
                 }
             }
         }
@@ -165,7 +169,7 @@ namespace TaleofMonsters.MainItem.Quests.SceneQuests
             if (myData*2 < needData)
                 return 0;
             if (myData*2 == needData)
-                return (float)Math.Pow(1/3, myData) * 100;
+                return (float) Math.Pow((float) 1/3, myData)*100;
             return myData*115/(myData + needData);
         }
 

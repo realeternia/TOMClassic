@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
 using ConfigDatas;
-using ControlPlus;
 using TaleofMonsters.Controler.Battle;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;
@@ -37,7 +35,7 @@ namespace TaleofMonsters.MainItem.Quests
             }
             if (enemyId == 1)//特殊处理标记
                 enemyId = UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.SceneQuestRandPeopleId);
-            int fightLevel = Math.Max(1, level + BlessManager.FightLevelChange);
+            int fightLevel = Math.Max(1, level + hardness + BlessManager.FightLevelChange);
             var peopleConfig = ConfigData.GetPeopleConfig(enemyId);
 
             PeopleBook.Fight(enemyId, peopleConfig.BattleMap, fightLevel, parm, winCallback, failCallback, failCallback);
