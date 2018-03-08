@@ -68,7 +68,8 @@ namespace TaleofMonsters.Forms
                     if (UserProfile.InfoBasic.HasDna(dnaId))
                     {
                         vRegion.AddRegion(new ImageRegion(dnaId, 28*regionIndex,55, 24,24, ImageRegionCellType.None, DnaBook.GetDnaImage(dnaId)));
-                        dnaChangeDict[dnaId] = ("难度+" + config.TriggerDNAHard[i + 1]).Replace("+-", "-");
+                        dnaChangeDict[dnaId] = "事件难度 " + GetDnaStr(int.Parse(config.TriggerDNAHard[i + 1]));
+                        dnaChangeDict[dnaId] += "$经验资源 " + GetDnaStr(-int.Parse(config.TriggerDNAHard[i + 1]));
                         regionIndex++;
                     }
                 }
@@ -80,7 +81,7 @@ namespace TaleofMonsters.Forms
                     var dnaId = DnaBook.GetDnaId(config.TriggerDNARate[i]);
                     if (UserProfile.InfoBasic.HasDna(dnaId))
                     {
-                        var dataStr = string.Format("出现几率+{0}0%", config.TriggerDNARate[i + 1]).Replace("+-", "-");
+                        var dataStr = "出现几率 " + GetDnaStr(int.Parse(config.TriggerDNARate[i + 1]));
                         if (dnaChangeDict.ContainsKey(dnaId))
                         {
                             dnaChangeDict[dnaId] += "$" + dataStr;
@@ -97,6 +98,22 @@ namespace TaleofMonsters.Forms
             interactBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, config.Script);
             answerList = new List<SceneQuestBlock>();
             SetupQuestItem();
+        }
+
+        private string GetDnaStr(int rate)
+        {
+            string rt = "";
+            if (rate > 0)
+            {
+                for (int i = 0; i < rate; i++)
+                    rt += "+";
+            }
+            else if (rate < 0)
+            {
+                for (int i = 0; i < -rate; i++)
+                    rt += "-";
+            }
+            return rt;
         }
 
         public override void OnFrame(int tick, float timePass)

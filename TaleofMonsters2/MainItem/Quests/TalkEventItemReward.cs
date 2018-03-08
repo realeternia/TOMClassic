@@ -211,7 +211,7 @@ namespace TaleofMonsters.MainItem.Quests
 
         private void RewardExp(ref int index)
         {
-            var expGet = (uint)(GameResourceBook.InExpSceneQuest(level, config.RewardExp) * (10 - hardness) / 10);
+            var expGet = (uint)(GameResourceBook.InExpSceneQuest(level, config.RewardExp) * (10 + hardness) / 10); //难度越高经验越多
             if (expGet > 0)
             {
                 UserProfile.Profile.InfoBasic.AddExp((int) expGet);
@@ -263,7 +263,7 @@ namespace TaleofMonsters.MainItem.Quests
 
         private void RewardGold(ref int index)
         {
-            var goldGet = (uint)(GameResourceBook.InGoldSceneQuest(level, config.RewardGold) * (10 - hardness) / 10);
+            var goldGet = (uint)(GameResourceBook.InGoldSceneQuest(level, config.RewardGold) * (10 + hardness) / 10); //难度越高资源越多
             if (goldGet > 0)
             {
                 UserProfile.Profile.InfoBag.AddResource(GameResourceType.Gold, goldGet);
@@ -277,7 +277,7 @@ namespace TaleofMonsters.MainItem.Quests
         private void RewardRes(ref int index)
         {
             var resId = config.RewardResId;
-            var resGet = (uint)(GameResourceBook.InResSceneQuest(resId, level, config.RewardResAmount) * (10 - hardness) / 10);
+            var resGet = (uint)(GameResourceBook.InResSceneQuest(resId, level, config.RewardResAmount) * (10 + hardness) / 10); //难度越高资源越多
             if (resGet > 0)
             {
                 UserProfile.Profile.InfoBag.AddResource((GameResourceType) resId, resGet);
