@@ -139,8 +139,7 @@ namespace TaleofMonsters.DataType.Scenes
                 {
                     string[] questData = info.Split(';');
                     int qid = GetSceneQuestByName(questData[0]);
-                    if(IsQuestAvail(qid, true))
-                        datas.Add(new RLIdValue { Id = qid, Value = int.Parse(questData[1]) });
+                    datas.Add(new RLIdValue { Id = qid, Value = int.Parse(questData[1]) });
                 }
             }
             if (!string.IsNullOrEmpty(config.QuestRandom))
@@ -148,14 +147,8 @@ namespace TaleofMonsters.DataType.Scenes
                 string[] infos = config.QuestRandom.Split('|');
                 foreach (var info in infos)
                 {
-                    string[] questData = info.Split(';');
-                    int rate = int.Parse(questData[1]);
-                    if (MathTool.GetRandom(100)<rate)//概率事件
-                    {
-                        int qid = GetSceneQuestByName(questData[0]);
-                        if (IsQuestAvail(qid, true))
-                            datas.Add(new RLIdValue { Id = qid, Value = 1 });
-                    }
+                    int qid = GetSceneQuestByName(info);
+                    datas.Add(new RLIdValue { Id = qid, Value = 1 });
                 }
             }
 

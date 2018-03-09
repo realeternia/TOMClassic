@@ -23,7 +23,8 @@ namespace TaleofMonsters.MainItem.Scenes.SceneRules
             {
                 for (int j = 0; j < questData.Value; j++)
                 {
-                    randQuestList.Add(questData.Id);
+                    if (SceneQuestBook.IsQuestAvail(questData.Id, true))
+                        randQuestList.Add(questData.Id);
                 }
             }
 
