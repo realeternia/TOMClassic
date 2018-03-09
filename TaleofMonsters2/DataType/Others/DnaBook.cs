@@ -65,5 +65,18 @@ namespace TaleofMonsters.DataType.Others
             }
             return dataList;
         }
+
+        public static int GetDnaEffect(string effectStr)
+        {
+            int val = 0;
+            foreach (var chard in effectStr.Substring(3))
+            {
+                if (chard == '+')
+                    val++;
+                else
+                    val--;
+            }
+            return val;
+        }
     }
 }

@@ -89,10 +89,11 @@ namespace TaleofMonsters.DataType.Scenes
             int rateBase = questConfig.TriggerRate;
             if (questConfig.TriggerDNARate != null && questConfig.TriggerDNARate.Length > 0)
             {
-                for (int i = 0; i < questConfig.TriggerDNAHard.Length; i += 2)
+                for (int i = 0; i < questConfig.TriggerDNARate.Length; i ++)
                 {
-                    if (UserProfile.InfoBasic.HasDna(DnaBook.GetDnaId(questConfig.TriggerDNAHard[i])))
-                        rateBase *= (10 + int.Parse(questConfig.TriggerDNAHard[i + 1]))/10;
+                    var dnaName = questConfig.TriggerDNARate[i].Substring(0, 3);
+                    if (UserProfile.InfoBasic.HasDna(DnaBook.GetDnaId(dnaName)))
+                        rateBase *= (10 + DnaBook.GetDnaEffect(questConfig.TriggerDNARate[i]))/10;
                 }
             }
             return MathTool.GetRandom(100) < rateBase;

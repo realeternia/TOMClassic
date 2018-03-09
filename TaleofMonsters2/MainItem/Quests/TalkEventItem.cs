@@ -56,10 +56,10 @@ namespace TaleofMonsters.MainItem.Quests
             config = ConfigData.GetSceneQuestConfig(evtId);
             if (config.TriggerDNAHard != null && config.TriggerDNAHard.Length > 0)
             {
-                for (int i = 0; i < config.TriggerDNAHard.Length; i+=2)
+                for (int i = 0; i < config.TriggerDNAHard.Length; i++)
                 {
                     if (UserProfile.InfoBasic.HasDna(DnaBook.GetDnaId(config.TriggerDNAHard[i])))
-                        hardness += int.Parse(config.TriggerDNAHard[i + 1]);
+                        hardness += DnaBook.GetDnaEffect(config.TriggerDNAHard[i]);
                 }
             }
             RunningState = TalkEventState.Running;
