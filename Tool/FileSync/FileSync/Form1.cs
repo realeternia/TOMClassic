@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -8,6 +11,7 @@ namespace FileSync
     {
         public delegate void SetValCallback(int val);
 
+        private bool isStartUpdate;
         private void SetVal(int val)
         {
             dataGet += val;
@@ -27,10 +31,12 @@ namespace FileSync
             }
             else
             {
+                if(!isStartUpdate)
+                    return;
                 this.progressBar1.Value = (int)(dataGet*100/ dataTotal);
                 if (DateTime.Now.Subtract(beginTime).TotalSeconds > 5 && dataGet > 0)
                 {
-                    var secondsNeed = DateTime.Now.Subtract(beginTime).TotalSeconds*dataTotal/dataGet;
+                    var secondsNeed = DateTime.Now.Subtract(beginTime).TotalSeconds*(dataTotal- dataGet )/ dataGet;
                     label2.Text = "剩余时间:" + new DateTime().AddSeconds(secondsNeed).ToString("HH:mm:ss");
                 }
                 else
@@ -61,7 +67,7 @@ namespace FileSync
             {
                 this.progressBar1.Value = 100;
                 label2.Hide();
-                label1.Hide();
+                label1.Text = "更新完成!";
             }
         }
 
@@ -93,6 +99,7 @@ namespace FileSync
         private long dataGet;
         private long dataTotal;
         private DateTime beginTime;
+        private Dictionary<string,string> fileMd5Dict = new Dictionary<string, string>(); 
 
         public Form1()
         {
@@ -116,25 +123,47 @@ namespace FileSync
         private void Work()
         {
             FtpTool tool = new FtpTool("narlon.cn", "TOMClassic", "anonymous", "anonymous");
-            Download(tool, "AltSerialize.dll");
-            Download(tool, "BaseType.dll");
-            Download(tool, "ConfigData.dll");
-            Download(tool, "ControlPlus.dll");
-            Download(tool, "DataResource.vfs");
-            Download(tool, "fmod.dll");
-            Download(tool, "log4net.dll");
-            Download(tool, "NarlonLib.dll");
-            Download(tool, "NLVFS.dll");
-            Download(tool, "PicResource.vfs");
-            Download(tool, "SoundResource.vfs");
-            Download(tool, "TaleofMonsters2.exe");
+            foreach (var fileInfo in fileMd5Dict)
+            {
+                if (File.Exists("./" + fileInfo.Key) && Md5Helper.GetMD5WithFilePath("./" + fileInfo.Key) == fileInfo.Value)
+                    continue;
+                File.Delete(fileInfo.Key);
+                Download(tool, fileInfo.Key);
+            }
             DownloadFinish(1);
         }
 
         private void Download(FtpTool tool, string path)
         {
-            SetLabel1Text("开始下载" + path);
+            if (isStartUpdate)
+                SetLabel1Text("开始下载" + path);
             tool.Download(path, SetVal);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = "TaleofMonsters2.exe"; //启动的应用程序名称  
+            Process.Start(startInfo);
+            Close();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            button1.Enabled = false;
+            
+            FtpTool tool = new FtpTool("narlon.cn", "TOMClassic", "anonymous", "anonymous");
+            Download(tool, "check.txt");
+            StreamReader sr = new StreamReader("./check.txt");
+            string line;
+            while ((line = sr.ReadLine())!=null)
+            {
+                string[] datas = line.Split('\t');
+                fileMd5Dict[datas[0]] = datas[1];
+            }
+            sr.Close();
+           isStartUpdate = true;
+            button1.Enabled = true;
         }
     }
 }
