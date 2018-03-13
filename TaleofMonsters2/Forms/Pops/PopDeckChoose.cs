@@ -31,14 +31,14 @@ namespace TaleofMonsters.Forms.Pops
             pageSelector.PageChange +=new NLPageSelector.ChangePageEventHandler(pageSelector_PageChange);
         }
 
-        private void MessageBoxEx_Paint(object sender, PaintEventArgs e)
+        private void PopDeckChoose_Paint(object sender, PaintEventArgs e)
         {
             if (img != null)
             {
                 e.Graphics.DrawImage(img, 38, 32, 100, 100);
 
                 var deck = UserProfile.InfoCard.Decks[selectPage];
-                for (int i = 0; i < deck.CardIds.Length; i++)
+                for (int i = 0; i < deck.CardIds.Count; i++)
                 {
                     int x = i%6;
                     int y = i/6;

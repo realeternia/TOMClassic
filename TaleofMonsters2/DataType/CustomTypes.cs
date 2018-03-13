@@ -302,7 +302,10 @@
     {
         Normal, Time, Limit
     }
-
+    internal enum SceneCellTypes
+    {
+        None, Tile, Quest, Warp
+    }
     internal enum MemPlayerRecordTypes
     {
         TotalWin = 1,

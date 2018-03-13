@@ -13,7 +13,6 @@ using TaleofMonsters.Forms.Items.Regions;
 using ConfigDatas;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Quests;
-using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms
@@ -62,7 +61,7 @@ namespace TaleofMonsters.Forms
             vRegion.AddRegion(new SubVirtualRegion(15, 200, 170, 46, 44));
             vRegion.AddRegion(new SubVirtualRegion(16, 253, 170, 46, 44));
 
-            for (int i = 0; i < GameConstants.EquipOffCount; i++)
+            for (int i = 0; i < UserProfile.InfoEquip.Equipoff.Count; i++)
             {
                 var region = new PictureRegion(20 + i, 38 + (i % 15) * 32, 227 + (i / 15) * 32, 32, 32, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipoff[i].BaseId);
              //   region.AddDecorator(new RegionBorderDecorator(region, Color.Yellow));
@@ -130,12 +129,12 @@ namespace TaleofMonsters.Forms
             }
             else if (id >= 20)
             {
-                var itemId = UserProfile.InfoEquip.Equipoff[id - 20].BaseId;
-                if (itemId != 0)
+                var itemData = UserProfile.InfoEquip.GetEquipOff(id - 20);
+                if (itemData.BaseId != 0)
                 {
-                    Equip equip = new Equip(itemId);
-                    equip.Dura = UserProfile.InfoEquip.Equipoff[id - 20].Dura;
-                    equip.ExpireTime = UserProfile.InfoEquip.Equipoff[id - 20].ExpireTime;
+                    Equip equip = new Equip(itemData.BaseId);
+                    equip.Dura = itemData.Dura;
+                    equip.ExpireTime = itemData.ExpireTime;
                     image = equip.GetPreview();
                 }
             }
@@ -161,7 +160,7 @@ namespace TaleofMonsters.Forms
                 {
                     if (selectTar != -1)//穿上装备
                     {
-                        EquipConfig equipConfig = ConfigData.GetEquipConfig(UserProfile.InfoEquip.Equipoff[selectTar].BaseId);
+                        EquipConfig equipConfig = ConfigData.GetEquipConfig(UserProfile.InfoEquip.GetEquipOff(selectTar).BaseId);
                         if (UserProfile.InfoEquip.CanEquip(equipConfig.Id, id))
                         {
                             var oldItem = UserProfile.InfoEquip.Equipon[id - 1];
@@ -190,9 +189,10 @@ namespace TaleofMonsters.Forms
                     var tar = id - 20;
                     if (selectTar == -1)
                     {
-                        if (UserProfile.InfoEquip.Equipoff[tar].BaseId != 0)
+                        var targetEquip = UserProfile.InfoEquip.GetEquipOff(tar);
+                        if (targetEquip.BaseId != 0)
                         {
-                            var icon = ConfigData.GetEquipConfig(UserProfile.InfoEquip.Equipoff[tar].BaseId).Url;
+                            var icon = ConfigData.GetEquipConfig(targetEquip.BaseId).Url;
                             myCursor.ChangeCursor("Equip", string.Format("{0}.JPG", icon), 40, 40);
                             selectTar = tar;
                             tooltip.Hide(this);
@@ -201,13 +201,10 @@ namespace TaleofMonsters.Forms
                     else
                     {
                         myCursor.ChangeCursor("default");
-                        if (UserProfile.InfoEquip.Equipoff[tar].BaseId == 0)//移动
+                        var targetEquip = UserProfile.InfoEquip.GetEquipOff(tar);
+                        if (targetEquip.BaseId == 0)//移动
                         {
-                            UserProfile.InfoEquip.Equipoff[tar] = UserProfile.InfoEquip.Equipoff[selectTar];
-                            UserProfile.InfoEquip.Equipoff[selectTar] = new DbEquip();
-
-                            vRegion.SetRegionKey(tar + 20, UserProfile.InfoEquip.Equipoff[tar].BaseId);
-                            vRegion.SetRegionKey(selectTar + 20, 0);
+                            return;//不支持移动到空格子
                         }
                         else//交换
                         {
@@ -232,10 +229,9 @@ namespace TaleofMonsters.Forms
 
                     popMenuEquip.Clear();
                     #region 构建菜单
-                    if (UserProfile.InfoEquip.Equipoff[tar].BaseId != 0)
-                    {
+                    var targetEquip = UserProfile.InfoEquip.GetEquipOff(tar);
+                    if (targetEquip.BaseId != 0)
                         popMenuEquip.AddItem("decompose", "分解", "Red");
-                    }
                     popMenuEquip.AddItem("exit", "退出");
                     #endregion
                     popMenuEquip.AutoResize();
@@ -260,7 +256,7 @@ namespace TaleofMonsters.Forms
 
         private void RefreshEquip()
         {
-            equipDataList = UserProfile.InfoEquip.GetValidEquipsList().ConvertAll(equipId =>new Equip(equipId));
+            equipDataList = UserProfile.InfoEquip.GetValidEquipsList().ConvertAll(equipId => new Equip(equipId));
             vEquip = EquipBook.GetVirtualEquips(equipDataList);
             var jobConfig = ConfigData.GetJobConfig(UserProfile.InfoBasic.Job);
             jobInfo = new JobAddon();

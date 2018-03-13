@@ -2,7 +2,6 @@
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
-using TaleofMonsters.DataType.User.Db;
 using TaleofMonsters.Forms;
 
 namespace TaleofMonsters.MainItem
@@ -28,7 +27,7 @@ namespace TaleofMonsters.MainItem
                 MainTipManager.AddTip(string.Format("|分解装备-|{0}|{1}", HSTypes.I2QualityColor(equipConfig.Quality), equipConfig.Name), "White");
                 UserProfile.Profile.InfoBag.AddResource(GameResourceType.Gold, (uint)price);
 
-                UserProfile.InfoEquip.Equipoff[EquipIndex] = new DbEquip();
+                UserProfile.InfoEquip.Equipoff[EquipIndex].Reset();
             }
             else
             {

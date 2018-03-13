@@ -31,10 +31,10 @@ namespace TaleofMonsters.MainItem.Scenes
             {
                 switch (specialPosData.Type)
                 {
-                    case "Quest":
+                    case (byte)SceneCellTypes.Quest:
                         so = new SceneQuest(specialPosData.Id, cellConfigData.X, cellConfigData.Y, cellConfigData.Width, cellConfigData.Height, specialPosData.Info);
                         so.Disabled = specialPosData.Disabled; break;
-                    case "Warp":
+                    case (byte)SceneCellTypes.Warp:
                         so = new SceneWarp(specialPosData.Id, cellConfigData.X, cellConfigData.Y, cellConfigData.Width, cellConfigData.Height, specialPosData.Info);
                         so.Disabled = specialPosData.Disabled;
                         if (ConfigData.GetSceneConfig(id).Type == (int)SceneTypes.Common && reason == SceneFreshReason.Warp)
@@ -146,7 +146,7 @@ namespace TaleofMonsters.MainItem.Scenes
                     specialPos = new DbSceneSpecialPosData
                     {
                         Id = sceneScriptData.Id,
-                        Type = "Tile",
+                        Type = (byte)SceneCellTypes.Tile,
                         MapSetting = true,
                         Flag = (uint)SceneObject.ScenePosFlagType.Hidden
                     };
@@ -159,7 +159,7 @@ namespace TaleofMonsters.MainItem.Scenes
                     {
                         Id = sceneScriptData.Id,
                         Info = qId,
-                        Type = "Quest",
+                        Type = (byte)SceneCellTypes.Quest,
                         MapSetting = true,
                         Flag = (uint)SceneObject.ScenePosFlagType.Hidden
                     };

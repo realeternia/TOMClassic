@@ -109,7 +109,7 @@ namespace TaleofMonsters.DataType.Scenes
 
                 var posData = new SceneInfo.SceneScriptSpecialData();
                 posData.Id = int.Parse(data[0]);
-                posData.Type = data[1];
+                posData.Type = (SceneCellTypes)Enum.Parse(typeof(SceneCellTypes), data[1]);
                 if (data.Length > 2)
                     posData.Info = int.Parse(data[2]);
                 info.SpecialData.Add(posData);

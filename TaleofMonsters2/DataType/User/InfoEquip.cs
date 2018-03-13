@@ -12,7 +12,7 @@ namespace TaleofMonsters.DataType.User
     {
         [FieldIndex(Index = 1)] public DbEquip[] Equipon;
 
-        [FieldIndex(Index = 2)] public DbEquip[] Equipoff;
+        [FieldIndex(Index = 2)] public List<DbEquip> Equipoff;
 
         [FieldIndex(Index = 3)] public List<int> EquipComposeAvail;
 
@@ -21,12 +21,17 @@ namespace TaleofMonsters.DataType.User
         public InfoEquip()
         {
             Equipon = new DbEquip[GameConstants.EquipOnCount];
-            Equipoff = new DbEquip[GameConstants.EquipOffCount];
+            Equipoff = new List<DbEquip>();
             for (int i = 0; i < Equipon.Length; i++)
                 Equipon[i] = new DbEquip();
-            for (int i = 0; i < Equipoff.Length; i++)
-                Equipoff[i] = new DbEquip();
             EquipComposeAvail = new List<int>();
+        }
+
+        public DbEquip GetEquipOff(int index)
+        {
+            if (index >=0 && index < Equipoff.Count)
+                return Equipoff[index];
+            return new DbEquip();
         }
         
         public void AddEquip(int id, int minuteLast)
@@ -37,7 +42,7 @@ namespace TaleofMonsters.DataType.User
             MainTipManager.AddTip(string.Format("|获得装备-|{0}|{1}", HSTypes.I2QualityColor(equipConfig.Quality), equipConfig.Name), "White");
             UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.EquipGet, 1);
 
-            for (int i = 0; i < GameConstants.EquipOffCount; i++)
+            for (int i = 0; i < Equipoff.Count; i++)
             {
                 if (Equipoff[i].BaseId == 0)
                 {
@@ -47,25 +52,35 @@ namespace TaleofMonsters.DataType.User
                     return;
                 }
             }
+
+            if (Equipoff.Count < GameConstants.EquipOffCount)
+            {
+                Equipoff.Add(new DbEquip
+                {
+                    BaseId = id,
+                    Dura = equipConfig.Durable,
+                    ExpireTime = minuteLast <= 0 ? 0 : TimeTool.GetNowUnixTime() + minuteLast*60
+                });
+            }
         }
 
         public int GetBlankEquipPos()
         {
             int i;
-            for (i = 0; i < GameConstants.EquipOffCount; i++)
+            for (i = 0; i < Equipoff.Count; i++)
             {
                 if (Equipoff[i].BaseId == 0)
-                    break;
+                    return i;
             }
-            if (i == GameConstants.EquipOffCount)//没有空格了
-                return -1;
-            return i;
+            if (i < GameConstants.EquipOffCount)
+                return i;
+            return -1;
         }
 
         public int GetEquipCount(int id)
         {
             int count = 0;
-            for (int i = 0; i < GameConstants.EquipOffCount; i++)
+            for (int i = 0; i < Equipoff.Count; i++)
             {
                 if (Equipoff[i].BaseId == id)
                     count++;
@@ -136,7 +151,7 @@ namespace TaleofMonsters.DataType.User
         public void PutOff(int equipPos, int slotId)
         {
             UserProfile.InfoEquip.Equipoff[slotId] = UserProfile.InfoEquip.Equipon[equipPos];
-            UserProfile.InfoEquip.Equipon[equipPos] = new DbEquip();
+            UserProfile.InfoEquip.Equipon[equipPos].Reset();
             UserProfile.InfoDungeon.RecalculateAttr(); //会影响力量啥的属性
         }
 
@@ -150,13 +165,13 @@ namespace TaleofMonsters.DataType.User
         {
             List<int> equips = new List<int>();
 
-            for(int i=0;i< GameConstants.EquipOnCount;i++)
+            for (int i = 0; i < GameConstants.EquipOnCount; i++)
             {
                 var equip = Equipon[i];
                 if (equip.BaseId == 0)
                     continue;
 
-                if (CanEquip(equip.BaseId, i+1))
+                if (CanEquip(equip.BaseId, i + 1))
                     equips.Add(equip.BaseId);
             }
             return equips;

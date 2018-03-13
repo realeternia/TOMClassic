@@ -52,7 +52,7 @@ namespace TaleofMonsters.MainItem.Scenes
         {//把写死在场景上的事件判定一次
             foreach (var specialPosData in mapSpecialData)
             {
-                if (specialPosData.Type == "Quest")
+                if (specialPosData.Type == SceneCellTypes.Quest)
                 {
                     if (!SceneQuestBook.IsQuestAvail(specialPosData.Info, true))
                         continue;
@@ -61,7 +61,7 @@ namespace TaleofMonsters.MainItem.Scenes
                 {
                     Id = specialPosData.Id,
                     Info = specialPosData.Info,
-                    Type = specialPosData.Type,
+                    Type = (byte)specialPosData.Type,
                     MapSetting = true
                 };
             }
@@ -91,12 +91,12 @@ namespace TaleofMonsters.MainItem.Scenes
                     specialData.Id = scenePosData.Id;
                     if (randQuestList.Count > index) //隐藏房间不随机任务
                     {
-                        specialData.Type = "Quest";
+                        specialData.Type = (byte)SceneCellTypes.Quest;
                         specialData.Info = randQuestList[index++];    //随机一个出来
                     }
                     else
                     {
-                        specialData.Type = "Tile";
+                        specialData.Type = (byte)SceneCellTypes.Tile;
                     }
                 }
                 Scene.Instance.Rule.CheckReplace(specialData);//副本内可能需要做story替换

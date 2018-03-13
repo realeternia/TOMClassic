@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TaleofMonsters.DataType;
 
 namespace TaleofMonsters.MainItem.Scenes
 {
@@ -20,7 +21,7 @@ namespace TaleofMonsters.MainItem.Scenes
         internal struct SceneScriptSpecialData
         {
             public int Id;
-            public string Type;
+            public SceneCellTypes Type;
             public int Info;
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ConfigDatas;
 using TaleofMonsters.Config;
 using TaleofMonsters.Core;
@@ -9,7 +10,7 @@ namespace TaleofMonsters.DataType.User.Db
     public class DbDeckData
     {
         [FieldIndex(Index = 1)]
-        public int[] CardIds;
+        public List<int> CardIds; //GameConstants.DeckCardCount
         [FieldIndex(Index = 2)]
         public string Name;
         [FieldIndex(Index = 3)]
@@ -24,9 +25,7 @@ namespace TaleofMonsters.DataType.User.Db
 
         public DbDeckData(int index)
         {
-            CardIds = new int[GameConstants.DeckCardCount];
-            for (int i = 0; i < GameConstants.DeckCardCount; i++)
-                CardIds[i] = -1;
+            CardIds = new List<int>();
             Name = string.Format("卡组{0}", index);
         }
 
@@ -37,16 +36,24 @@ namespace TaleofMonsters.DataType.User.Db
 
         public int GetCardAt(int index)
         {
-            return CardIds[index];
+            if (index >= 0 && index < CardIds.Count)
+                return CardIds[index];
+            return -1;
         }
 
         public void SetCardAt(int index, int card)
         {
-            if (index >= 0 && index < GameConstants.DeckCardCount)
+            if (index >= 0 && index < CardIds.Count)
             {
                 CardIds[index] = card;
-                Recalculate();
             }
+            else if (index >= 0 && index < GameConstants.DeckCardCount)
+            {
+                for (int i = CardIds.Count; i < index; i++)
+                    CardIds.Add(-1);
+                CardIds.Add(card);
+            }
+            Recalculate();
         }
 
         public int AddCard(DeckCard card)
@@ -57,8 +64,7 @@ namespace TaleofMonsters.DataType.User.Db
             int newCardJob = cardConfig.JobId;
             for (int i = 0; i < GameConstants.DeckCardCount; i++)
             {
-                var dcard = CardIds[i];
-
+                var dcard = GetCardAt(i);
                 if (dcard == -1 && firstBlank == -1)
                 {
                     firstBlank = i;
@@ -86,7 +92,7 @@ namespace TaleofMonsters.DataType.User.Db
 
         public void RemoveCardById(int id)
         {
-            for (int i = 0; i < GameConstants.DeckCardCount; i++)
+            for (int i = 0; i < CardIds.Count; i++)
             {
                 if (CardIds[i] == id)
                 {
@@ -99,7 +105,7 @@ namespace TaleofMonsters.DataType.User.Db
 
         public bool HasCard(int id)
         {
-            for (int i = 0; i < GameConstants.DeckCardCount; i++)
+            for (int i = 0; i < CardIds.Count; i++)
             {
                 if (CardIds[i] == id)
                     return true;
@@ -111,7 +117,7 @@ namespace TaleofMonsters.DataType.User.Db
         {
             Mcount = 0;
             Wcount = 0;
-            for (int i = 0; i < GameConstants.DeckCardCount; i++)
+            for (int i = 0; i < CardIds.Count; i++)
             {
                 if (CardIds[i] == -1) continue;
                 var cardType = ConfigIdManager.GetCardType(CardIds[i]);

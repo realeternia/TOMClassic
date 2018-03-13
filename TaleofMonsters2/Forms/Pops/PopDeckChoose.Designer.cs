@@ -76,7 +76,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "提示";
             this.TransparencyKey = System.Drawing.SystemColors.Control;
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.MessageBoxEx_Paint);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.PopDeckChoose_Paint);
             this.ResumeLayout(false);
 
         }
