@@ -105,11 +105,14 @@ namespace FileSync
         {
             InitializeComponent();
 
-            dataTotal = 60*1024*1024;
+       
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if(!isStartUpdate)
+                return;
+
             if (workThread == null)
             {
                 button1.Enabled = false;
@@ -127,7 +130,6 @@ namespace FileSync
             {
                 if (File.Exists("./" + fileInfo.Key) && Md5Helper.GetMD5WithFilePath("./" + fileInfo.Key) == fileInfo.Value)
                     continue;
-                File.Delete(fileInfo.Key);
                 Download(tool, fileInfo.Key);
             }
             DownloadFinish(1);
@@ -156,14 +158,32 @@ namespace FileSync
             Download(tool, "check.txt");
             StreamReader sr = new StreamReader("./check.txt");
             string line;
+            dataTotal =long.Parse(sr.ReadLine()); //先读包大小
             while ((line = sr.ReadLine())!=null)
             {
                 string[] datas = line.Split('\t');
                 fileMd5Dict[datas[0]] = datas[1];
             }
             sr.Close();
-           isStartUpdate = true;
-            button1.Enabled = true;
+            label4.Text = dataTotal.ToString();
+
+            var needUpdate = false;
+            foreach (var fileInfo in fileMd5Dict)
+            {
+                if (File.Exists("./" + fileInfo.Key) && Md5Helper.GetMD5WithFilePath("./" + fileInfo.Key) == fileInfo.Value)
+                    continue;
+                needUpdate = true;
+            }
+
+            if (needUpdate)
+            {
+                isStartUpdate = true;
+                button1.Enabled = true;
+            }
+            else
+            {
+                button1.Text = "已经最新";
+            }
         }
     }
 }
