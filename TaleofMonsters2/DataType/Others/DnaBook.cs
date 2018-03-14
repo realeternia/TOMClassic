@@ -27,6 +27,8 @@ namespace TaleofMonsters.DataType.Others
                     dnaIdDict[dnaConfig.Ename] = dnaConfig.Id;
                 }
             }
+            if (ename.Length > 3)
+                ename = ename.Substring(0, 3);
             return dnaIdDict[ename];
         }
 

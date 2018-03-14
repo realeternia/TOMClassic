@@ -13,8 +13,8 @@ namespace TaleofMonsters.Core
         private static string sceneBGM;
 
         private static FMOD.System _fmod = null;
-        private const float BGMVolume = 0.02f; //背景音乐音量
-        private const float EffectVolume = 0.3f; //特效音乐音量
+        private const float BGMVolume = 0.005f; //背景音乐音量
+        private const float EffectVolume = 0.02f; //特效音乐音量
 
         private static Thread soundThread;
         private static Channel _channelBGM = null;//在子线程使用
@@ -162,12 +162,12 @@ namespace TaleofMonsters.Core
 
             if (isBGM)
             {
-                channel.setVolume(BGMVolume * WorldInfoManager.BGVolumn/30);
+                channel.setVolume(BGMVolume * WorldInfoManager.BGVolumn);
                 _channelBGM = channel;
             }
             else
             {
-                channel.setVolume(EffectVolume * WorldInfoManager.SoundVolumn / 30);
+                channel.setVolume(EffectVolume * WorldInfoManager.SoundVolumn);
             }
         }
     }

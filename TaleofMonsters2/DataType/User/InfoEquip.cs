@@ -33,7 +33,26 @@ namespace TaleofMonsters.DataType.User
                 return Equipoff[index];
             return new DbEquip();
         }
-        
+
+        public void SetEquipOff(int index, int id, int dura, int expire)
+        {
+            if (index >= 0 && index < Equipoff.Count)
+            {
+                Equipoff[index].BaseId = id;
+                Equipoff[index].Dura = dura;
+                Equipoff[index].ExpireTime = expire;
+            }
+            else if (index < GameConstants.EquipOffCount && index == Equipoff.Count)
+            {
+                Equipoff.Add(new DbEquip
+                {
+                    BaseId = id,
+                    Dura = dura,
+                    ExpireTime = expire
+                });
+            }
+        }
+
         public void AddEquip(int id, int minuteLast)
         {
             EquipConfig equipConfig = ConfigData.GetEquipConfig(id);
@@ -46,21 +65,14 @@ namespace TaleofMonsters.DataType.User
             {
                 if (Equipoff[i].BaseId == 0)
                 {
-                    Equipoff[i].BaseId = id;
-                    Equipoff[i].Dura = equipConfig.Durable;
-                    Equipoff[i].ExpireTime = minuteLast <= 0 ? 0 : TimeTool.GetNowUnixTime() + minuteLast*60;
+                    SetEquipOff(i, id, equipConfig.Durable, minuteLast <= 0 ? 0 : TimeTool.GetNowUnixTime() + minuteLast*60);
                     return;
                 }
             }
 
             if (Equipoff.Count < GameConstants.EquipOffCount)
             {
-                Equipoff.Add(new DbEquip
-                {
-                    BaseId = id,
-                    Dura = equipConfig.Durable,
-                    ExpireTime = minuteLast <= 0 ? 0 : TimeTool.GetNowUnixTime() + minuteLast*60
-                });
+                SetEquipOff(Equipoff.Count, id, equipConfig.Durable, minuteLast <= 0 ? 0 : TimeTool.GetNowUnixTime() + minuteLast * 60);
             }
         }
 
@@ -150,8 +162,9 @@ namespace TaleofMonsters.DataType.User
 
         public void PutOff(int equipPos, int slotId)
         {
-            UserProfile.InfoEquip.Equipoff[slotId] = UserProfile.InfoEquip.Equipon[equipPos];
-            UserProfile.InfoEquip.Equipon[equipPos].Reset();
+            var offEquip = UserProfile.InfoEquip.Equipon[equipPos];
+            SetEquipOff(slotId, offEquip.BaseId, offEquip.Dura, offEquip.ExpireTime);
+            offEquip.Reset();
             UserProfile.InfoDungeon.RecalculateAttr(); //会影响力量啥的属性
         }
 
