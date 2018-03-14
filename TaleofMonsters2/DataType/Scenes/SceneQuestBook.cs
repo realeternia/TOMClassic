@@ -204,9 +204,8 @@ namespace TaleofMonsters.DataType.Scenes
                 string[] infos = config.QuestRandom.Split('|');
                 foreach (var info in infos)
                 {
-                    string[] questData = info.Split(';');
-                    int rate = int.Parse(questData[1]);
-                    questCount += (float)rate/100;
+                    int qid = GetSceneQuestByName(info);
+                    questCount += (float)ConfigData.GetSceneQuestConfig(qid).TriggerRate/100;
                 }
             }
 
