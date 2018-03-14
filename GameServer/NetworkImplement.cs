@@ -17,7 +17,7 @@ namespace GameServer
         {
             Logger.Log("OnPacketLogin " + login.Name);
             var datas = DbManager.LoadFromDB(login.Name);
-            net.Send(new PacketLoginResult(datas,1).Data);
+            net.Send(new PacketLoginResult(datas.Length==0 ? WorldInfoManager.GetPlayerPid() : 0, datas).Data);
         }
 
         public void OnPacketSave(NetBase net, PacketSave save)

@@ -28,6 +28,7 @@ namespace GameServer
         public void Run()
         {
             Logger.Log("Server Start");
+            WorldInfoManager.Load();
             if (!Directory.Exists("log"))
                 Directory.CreateDirectory("log");
             this.server.Listen(5555);

@@ -40,7 +40,6 @@ namespace TaleofMonsters.DataType.User
 
         public void OnCreate(uint dna, int headId)
         {
-            Pid = WorldInfoManager.GetPlayerPid();
             Name = UserProfile.ProfileName;
             InfoBasic.Job = JobConfig.Indexer.NewBie;
             InfoBasic.Dna = dna;

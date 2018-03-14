@@ -19,6 +19,7 @@ namespace TaleofMonsters.Controler.Rpc
             if (login.SaveData.Length == 0)
             {
                 UserProfile.Profile = new Profile();
+                UserProfile.Profile.Pid = login.PlayerId;
             }
             else
             {

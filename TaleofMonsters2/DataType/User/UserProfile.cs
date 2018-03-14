@@ -1,6 +1,5 @@
 ﻿using System;
 using TaleofMonsters.Core;
-using System.IO;
 using JLM.NetSocket;
 using NarlonLib.Log;
 using TaleofMonsters.Controler.Rpc;
@@ -74,7 +73,7 @@ namespace TaleofMonsters.DataType.User
 
         public static void Connect()
         {
-            System.Net.IPEndPoint end = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("127.0.0.1"), 5555);
+            System.Net.IPEndPoint end = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("193.112.9.47"), 5555);
             client = new NetClient();
             Sender = new NetworkSender(client);
             client.Connected += new EventHandler<NetSocketConnectedEventArgs>(client_Connected);
@@ -86,6 +85,7 @@ namespace TaleofMonsters.DataType.User
         {
             var dts = DbSerializer.CustomTypeToBytes(Profile, typeof(Profile));
             Sender.Save(ProfileName, dts);
+            WorldInfoManager.Save();
         }
 
         private static void DataArrived(object sender, NetSockDataArrivalEventArgs arg)

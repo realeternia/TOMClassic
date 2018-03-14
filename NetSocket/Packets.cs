@@ -102,14 +102,17 @@ namespace JLM.NetSocket
     public class PacketLoginResult : PacketBase
     {
         public const int PackId = 200001;
+
+        public int PlayerId;
         public byte[] SaveData;
 
         public override int PackRealId { get { return PackId; } }
 
         private PacketLoginResult() { }
 
-        public PacketLoginResult(byte[] data, int data2) : this()
+        public PacketLoginResult(int playerId, byte[] data) : this()
         {
+            PlayerId = playerId;
             SaveData = data;
         }
 
@@ -117,6 +120,7 @@ namespace JLM.NetSocket
         {
             TBinaryReader sr = new TBinaryReader(bts);
             sr.ReadInt32(); //包id
+            PlayerId = sr.ReadInt32();
             SaveData = sr.ReadByteArray();
         }
 
@@ -126,6 +130,7 @@ namespace JLM.NetSocket
             {
                 TBinaryWriter sw = new TBinaryWriter();
                 sw.Write(PackId);
+                sw.Write(PlayerId);
                 sw.Write(SaveData);
                 return sw.GetBytes();
             }

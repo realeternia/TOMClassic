@@ -77,13 +77,6 @@ namespace TaleofMonsters.Forms
             Invalidate();
         }
 
-        private Profile CreateProfile()
-        {
-            Profile profile = new Profile();
-            profile.OnCreate(dna, headId);
-            return profile;
-        }
-
         private void CreateCards()
         {
             DeckCard[] rookieDeck = DeckBook.GetDeckByName("rookie", 1);
@@ -118,7 +111,7 @@ namespace TaleofMonsters.Forms
 
         private void buttonOk_Click(object sender, EventArgs e)
         {
-            UserProfile.Profile = CreateProfile();            
+            UserProfile.Profile.OnCreate(dna, headId);        
             CreateCards();
             UserProfile.InfoBag.AddItem(HItemBook.GetItemId("xinshoulibao"), 1);//新手礼包
             result = DialogResult.OK;

@@ -34,7 +34,7 @@ namespace TaleofMonsters
             else
             {
                 var isNewUser = false;
-                if (UserProfile.Profile.Pid == 0)
+                if (string.IsNullOrEmpty(UserProfile.Profile.Name))
                 {
                     CreatePlayerForm cpf = new CreatePlayerForm();
                     cpf.ShowDialog();

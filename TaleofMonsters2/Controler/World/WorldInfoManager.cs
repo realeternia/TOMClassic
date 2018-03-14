@@ -8,8 +8,6 @@ namespace TaleofMonsters.Controler.World
 {
     internal static class WorldInfoManager
     {
-        private static int playerId = 1;
-        private static int cardId = 10000;
         private static int cardFakeId = 100;
         public static string LastAccountName { get;  set; }
         public static int FormWidth { get; set; }
@@ -37,8 +35,6 @@ namespace TaleofMonsters.Controler.World
             using (var sw = new StreamWriter(filePath))
             {
                 sw.WriteLine("[Common]");
-                sw.WriteLine("PlayerId={0}", playerId);
-                sw.WriteLine("CardId={0}", cardId);
                 sw.WriteLine("LastAccountName={0}", LastAccountName);
                 sw.WriteLine("Resolution={0}x{1}", FormWidth, FormHeight);
                 sw.WriteLine("Full={0}", Full);
@@ -56,8 +52,6 @@ namespace TaleofMonsters.Controler.World
                 try
                 {
                     NLIniFile iniFile = new NLIniFile(filePath);
-                    playerId = iniFile.ReadInt("Common", "PlayerId");
-                    cardId = iniFile.ReadInt("Common", "CardId");
                     LastAccountName = iniFile.Read("Common", "LastAccountName");
                     var resolution = iniFile.Read("Common", "Resolution");
                     var resoDatas = resolution.Split('x');
@@ -107,11 +101,6 @@ namespace TaleofMonsters.Controler.World
                 return;
             FormWidth = 1152;
             FormHeight = 720;
-        }
-
-        public static int GetPlayerPid()
-        {
-            return playerId++;
         }
 
         public static int GetCardFakeId()
