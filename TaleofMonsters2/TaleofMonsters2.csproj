@@ -164,6 +164,8 @@
     <Compile Include="Controler\GM\GMCommand.cs" />
     <Compile Include="Controler\GM\GmScript.cs" />
     <Compile Include="Controler\Resource\ImageManager.cs" />
+    <Compile Include="Controler\Rpc\NetworkImplement.cs" />
+    <Compile Include="Controler\Rpc\NetworkSender.cs" />
     <Compile Include="Controler\World\TimeManager.cs" />
     <Compile Include="Controler\World\WorldInfoManager.cs" />
     <Compile Include="DataType\Blesses\BlessBook.cs" />
@@ -1159,6 +1161,10 @@
     <ProjectReference Include="..\NarlonLib\NarlonLib.csproj">
       <Project>{90968C56-07C1-4AB6-9C00-FDBB49031F25}</Project>
       <Name>NarlonLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NetSocket\NetSocket.csproj">
+      <Project>{0d0bc817-7947-411b-a45e-34c32f9b7c40}</Project>
+      <Name>NetSocket</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

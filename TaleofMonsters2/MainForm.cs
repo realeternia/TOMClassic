@@ -23,6 +23,34 @@ namespace TaleofMonsters
 {
     internal partial class MainForm : Form
     {
+        delegate void LoginResultCallback();
+        public void LoginResult()
+        {
+            if (InvokeRequired)
+            {
+                LoginResultCallback d = LoginResult;
+                Invoke(d, new object[] { });
+            }
+            else
+            {
+                var isNewUser = false;
+                if (UserProfile.Profile.Pid == 0)
+                {
+                    CreatePlayerForm cpf = new CreatePlayerForm();
+                    cpf.ShowDialog();
+                    isNewUser = true;
+                    if (cpf.Result == DialogResult.Cancel)
+                        return;
+                }
+                MainTipManager.Refresh();
+                Scene.Instance.ChangeMap(UserProfile.InfoBasic.MapId, isNewUser);
+                UserProfile.Profile.OnLogin();
+
+                page = 1;
+                viewStack1.SelectedIndex = page;
+            }
+        }
+
         public static MainForm Instance { get; private set; }
 
         private HSCursor myCursor;
@@ -83,26 +111,15 @@ namespace TaleofMonsters
             {
                 textBoxPasswd.Text = "";
                 SoundManager.PlayBGMScene("SCN000.mp3");
+                page = pg;
+                viewStack1.SelectedIndex = page;
             }
             else if (pg == 1)
             {
                 UserProfile.ProfileName = textBoxName.Text;
-                var isNewUser = false;
-                if (!UserProfile.LoadFromDB(textBoxName.Text))
-                {
-                    UserProfile.Profile = new Profile();
-                    CreatePlayerForm cpf = new CreatePlayerForm();
-                    cpf.ShowDialog();
-                    isNewUser = true;
-                    if (cpf.Result == DialogResult.Cancel)
-                        return;
-                }
-                MainTipManager.Refresh();
-                Scene.Instance.ChangeMap(UserProfile.InfoBasic.MapId, isNewUser);
-                UserProfile.Profile.OnLogin();
+                UserProfile.Connect();
             }
-            page = pg;
-            viewStack1.SelectedIndex = page;
+
         }
 
         public void AddFlow(string msg, string icon, Color color, Point pos)
@@ -138,7 +155,7 @@ namespace TaleofMonsters
             if (viewStack1.SelectedIndex == 1)
             {
                 UserProfile.Profile.OnLogout();
-                UserProfile.SaveToDB();
+                UserProfile.Save();
             }
         }
 
@@ -215,6 +232,8 @@ namespace TaleofMonsters
         {
             while (true)
             {
+                UserProfile.Oneloop();
+
                 if (page == 1)
                 {
                     try

@@ -1,5 +1,9 @@
-﻿using TaleofMonsters.Core;
+﻿using System;
+using TaleofMonsters.Core;
 using System.IO;
+using JLM.NetSocket;
+using NarlonLib.Log;
+using TaleofMonsters.Controler.Rpc;
 using TaleofMonsters.Controler.World;
 
 namespace TaleofMonsters.DataType.User
@@ -8,6 +12,9 @@ namespace TaleofMonsters.DataType.User
     {
         public static string ProfileName { get; set; }
         public static Profile Profile { get; set; }
+        private static NetClient client;
+        private static NetworkImplement netImpl = new NetworkImplement();
+        public static NetworkSender Sender;
 
         public static InfoBasic InfoBasic
         {
@@ -59,30 +66,37 @@ namespace TaleofMonsters.DataType.User
             get { return Profile.InfoWorld; }
         }
 
-        public static bool LoadFromDB(string passport)
+        public static void Oneloop()
         {
-            if (File.Exists(string.Format("./Save/{0}.db", passport)))
-            {
-                FileStream fs = new FileStream(string.Format("./Save/{0}.db", passport), FileMode.Open);
-                byte[] dts = new byte[fs.Length];
-                fs.Read(dts, 0, dts.Length);
-                object tmp;
-                DbSerializer.BytesToCustomType(dts, out  tmp, typeof(Profile));
-                Profile = (Profile)tmp;
-                fs.Close();
-                return true;
-            }
-            return false;
+            if (client != null)
+                client.Oneloop();
         }
 
-        public static void SaveToDB()
+        public static void Connect()
         {
-            WorldInfoManager.Save();
+            System.Net.IPEndPoint end = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("127.0.0.1"), 5555);
+            client = new NetClient();
+            Sender = new NetworkSender(client);
+            client.Connected += new EventHandler<NetSocketConnectedEventArgs>(client_Connected);
+            client.DataArrived += DataArrived;
+            client.Connect(end);
+        }
 
-            FileStream fs = new FileStream(string.Format("./Save/{0}.db", ProfileName), FileMode.OpenOrCreate);
-            var dts= DbSerializer.CustomTypeToBytes(Profile, typeof(Profile));
-            fs.Write(dts, 0, dts.Length);
-            fs.Close();
+        public static void Save()
+        {
+            var dts = DbSerializer.CustomTypeToBytes(Profile, typeof(Profile));
+            Sender.Save(ProfileName, dts);
+        }
+
+        private static void DataArrived(object sender, NetSockDataArrivalEventArgs arg)
+        {
+            netImpl.CheckPacket(arg.Data, arg.Net);
+        }
+
+        private static void client_Connected(object sender, NetSocketConnectedEventArgs e)
+        {
+            NLog.Debug("Connected: " + e.SourceIP);
+            Sender.Login(ProfileName);
         }
     }
 }

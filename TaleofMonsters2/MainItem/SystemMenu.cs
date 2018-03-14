@@ -22,7 +22,7 @@ namespace TaleofMonsters.MainItem
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            UserProfile.SaveToDB();
+            UserProfile.Save();
             MainForm.Instance.ChangePage(0);
             Close();
         }

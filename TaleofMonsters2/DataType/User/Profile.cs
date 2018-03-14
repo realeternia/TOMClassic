@@ -98,7 +98,7 @@ namespace TaleofMonsters.DataType.User
             InfoEquip.CheckExpireAndDura(true);
             InfoQuest.OnSwitchScene(isWarp);
             if(isWarp)
-                UserProfile.SaveToDB();//每次切场景存个档
+                UserProfile.Save();//每次切场景存个档
         }
 
         public void OnNewDay()
