@@ -4,6 +4,7 @@ using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Decks;
 using ConfigDatas;
 using TaleofMonsters.DataType.Others;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.DataType.Cards.Spells
 {

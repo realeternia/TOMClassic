@@ -5,6 +5,7 @@ using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Cards.Spells;
 using TaleofMonsters.DataType.Cards.Weapons;
 using TaleofMonsters.Core;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.DataType.Cards
 {

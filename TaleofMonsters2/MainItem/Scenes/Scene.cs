@@ -679,7 +679,7 @@ namespace TaleofMonsters.MainItem.Scenes
         private Image GetPlayerImage()
         {
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
-            tipData.AddTextNewLine(string.Format("{0}(Lv{1})", UserProfile.ProfileName, UserProfile.InfoBasic.Level), "LightBlue", 20);
+            tipData.AddTextNewLine(string.Format("{0}(Lv{1})", UserProfile.Profile.Name, UserProfile.InfoBasic.Level), "LightBlue", 20);
             tipData.AddLine(2);
             tipData.AddTextNewLine(string.Format("生命:{0}",UserProfile.InfoBasic.HealthPoint), "Red");
             tipData.AddTextNewLine(string.Format("精神:{0}", UserProfile.InfoBasic.MentalPoint), "LightBlue");

@@ -2,8 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
+using ControlPlus;
 using NarlonLib.Control;
-using NarlonLib.Drawing;
 using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
@@ -15,6 +15,7 @@ using TaleofMonsters.DataType.Others;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.Forms
 {
@@ -69,6 +70,12 @@ namespace TaleofMonsters.Forms
             SetDnaState(MathTool.GetRandom(16, 19), true);
             SetDnaState(MathTool.GetRandom(19, 23), true);
 
+            string[] nameHead = {"伟大的", "神秘的", "威猛的", "快乐的", "神奇的", "灵活的"};
+            string[] nameMiddle = { "火", "水", "蓝", "绿", "雷", "黑" };
+            string[] nameEnd = { "德", "斯", "卡", "隆", "里", "拉" };
+            textBoxName.Text = nameHead[MathTool.GetRandom(nameHead.Length)] +
+                               nameMiddle[MathTool.GetRandom(nameMiddle.Length)] +
+                               nameEnd[MathTool.GetRandom(nameEnd.Length)];
             myCursor.ChangeCursor("default");
         }
 
@@ -115,7 +122,17 @@ namespace TaleofMonsters.Forms
 
         private void buttonOk_Click(object sender, EventArgs e)
         {
-            UserProfile.Profile.OnCreate(dna, headId);        
+            var resultD = NameChecker.CheckName(textBoxName.Text, GameConstants.RoleNameLengthMin, GameConstants.RoleNameLengthMax);
+            if (resultD != NameChecker.NameCheckResult.Ok)
+            {
+                if (resultD == NameChecker.NameCheckResult.NameLengthError)
+                    MessageBoxEx.Show("角色名需要在2-6个字之内");
+                else if (resultD == NameChecker.NameCheckResult.PunctuationOnly)
+                    MessageBoxEx.Show("不能仅包含标点符号");
+                return;
+            }
+
+            UserProfile.Profile.OnCreate(textBoxName.Text, dna, headId);
             CreateCards();
             UserProfile.InfoBag.AddItem(HItemBook.GetItemId("xinshoulibao"), 1);//新手礼包
             result = DialogResult.OK;
@@ -132,9 +149,7 @@ namespace TaleofMonsters.Forms
         {
             var region = vRegion.GetRegion(id);
             if (region != null)
-            {
                 tooltip.Show(DnaBook.GetPreview(id), this, x, y);
-            }
         }
 
 

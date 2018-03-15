@@ -5,7 +5,12 @@ namespace NarlonLib.Math
 {
     public class MathTool
     {
-        private static readonly Random r = new Random();
+        private static readonly Random r;
+        static MathTool()
+        {
+            var seed = (int)DateTime.Now.Ticks;
+            r = new Random(seed);
+        }
 
         public static int GetDistance(System.Drawing.Point x, System.Drawing.Point y)
         {

@@ -9,7 +9,7 @@ namespace TaleofMonsters.DataType.User
 {
     internal static class UserProfile
     {
-        public static string ProfileName { get; set; }
+        public static string ProfileName { get; set; }  //账号名
         public static Profile Profile { get; set; }
         private static NetClient client;
         private static S2CImplement netImpl = new S2CImplement();

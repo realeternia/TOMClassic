@@ -16,6 +16,7 @@ using ControlPlus;
 using NarlonLib.Tools;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.User.Db;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.Forms
 {

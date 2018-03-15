@@ -2,6 +2,11 @@ namespace TaleofMonsters.Core
 {
     static class GameConstants
     {
+        public const int ProfileNameLengthMin = 3;
+        public const int ProfileNameLengthMax = 12;
+        public const int RoleNameLengthMin = 2;
+        public const int RoleNameLengthMax = 6;
+
         public const int CardMaxLevel = 99;
         public const int CardSlotMaxCount = 10;
         public const int DeckCardCount = 30;//一套牌有几张

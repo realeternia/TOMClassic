@@ -315,7 +315,7 @@ namespace TaleofMonsters.Forms
             font = new Font("宋体", 11*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             Font font2 = new Font("宋体", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             Font font3 = new Font("宋体", 9*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            string namestr = string.Format("{0}(Lv{1}{2})", UserProfile.ProfileName, UserProfile.InfoBasic.Level, ConfigData.GetJobConfig(UserProfile.InfoBasic.Job).Name);
+            string namestr = string.Format("{0}(Lv{1}{2})", UserProfile.Profile.Name, UserProfile.InfoBasic.Level, ConfigData.GetJobConfig(UserProfile.InfoBasic.Job).Name);
             e.Graphics.DrawString(namestr, font, Brushes.White, GetX(e.Graphics, namestr, font, 182, 130), 61);
 
             Brush brush = new SolidBrush(Color.FromArgb(180, Color.DimGray));

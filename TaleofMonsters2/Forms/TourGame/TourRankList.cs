@@ -39,7 +39,7 @@ namespace TaleofMonsters.Forms.TourGame
                     PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(ranks[i].Id);
                     e.Graphics.DrawImage(head, 85, 32*i, 24, 24);
                     e.Graphics.DrawString(string.Format("{0}", i + 1), font, Brushes.White, 35, 32*i + 5);
-                    e.Graphics.DrawString(string.Format("{0}", ranks[i].Id == -1 ? UserProfile.ProfileName : peopleConfig.Name), font, Brushes.White, 120, 32*i + 5);
+                    e.Graphics.DrawString(string.Format("{0}", ranks[i].Id == -1 ? UserProfile.Profile.Name : peopleConfig.Name), font, Brushes.White, 120, 32*i + 5);
                     e.Graphics.DrawString(string.Format("{0}", ranks[i].Id == -1 ? UserProfile.InfoBasic.Level : peopleConfig.Level), font, Brushes.White, 220, 32 * i + 5);
                     e.Graphics.DrawString(string.Format("{0}", ConfigData.GetJobConfig(ranks[i].Id == -1 ? UserProfile.InfoBasic.Job : peopleConfig.Job).Name), font, Brushes.White, 260, 32 * i + 5);
                     e.Graphics.DrawString(string.Format("{0}", ranks[i].Mark).PadLeft(5, ' '), font, Brushes.Gold, 360, 32*i + 5);

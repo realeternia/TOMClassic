@@ -191,7 +191,7 @@ namespace TaleofMonsters
             this.textBoxName.BackColor = System.Drawing.Color.PowderBlue;
             this.textBoxName.Font = new System.Drawing.Font("SimSun", 10F);
             this.textBoxName.Location = new System.Drawing.Point(416, 405);
-            this.textBoxName.MaxLength = 16;
+            this.textBoxName.MaxLength = 12;
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(161, 23);
             this.textBoxName.TabIndex = 7;

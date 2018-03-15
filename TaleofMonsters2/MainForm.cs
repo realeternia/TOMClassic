@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 using ConfigDatas;
@@ -18,6 +16,7 @@ using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms;
 using TaleofMonsters.MainItem;
 using TaleofMonsters.MainItem.Scenes;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters
 {
@@ -151,17 +150,17 @@ namespace TaleofMonsters
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            if (textBoxName.Text == "")
+            var resultD = NameChecker.CheckNameEng(textBoxName.Text, GameConstants.ProfileNameLengthMin, GameConstants.ProfileNameLengthMax);
+            if (resultD != NameChecker.NameCheckResult.Ok)
             {
-                MessageBoxEx.Show("游戏账号不能为空！");
-                return;
-            }
-
-            Regex regex = new Regex("[a-zA-Z0-9]+");
-            var match = regex.Match(textBoxName.Text);
-            if (!match.Success || match.Captures[0].Value != textBoxName.Text)
-            {
-                MessageBoxEx.Show("账户名只能包含字母和数字");
+                if (resultD == NameChecker.NameCheckResult.NameEmpty)
+                    MessageBoxEx.Show("账号名不能为空");
+                else if (resultD == NameChecker.NameCheckResult.NameLengthError)
+                    MessageBoxEx.Show("账号名需要在3-12个字之内");
+                else if (resultD == NameChecker.NameCheckResult.PunctuationOnly)
+                    MessageBoxEx.Show("不能仅包含标点符号");
+                else if (resultD == NameChecker.NameCheckResult.EngOnly)
+                    MessageBoxEx.Show("仅能使用英文和数字");
                 return;
             }
 

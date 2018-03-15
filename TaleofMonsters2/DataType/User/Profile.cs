@@ -10,7 +10,7 @@ namespace TaleofMonsters.DataType.User
     public class Profile
     {
         [FieldIndex(Index = 1)] public int Pid;
-        [FieldIndex(Index = 2)] public string Name;
+        [FieldIndex(Index = 2)] public string Name; //玩家角色名
         [FieldIndex(Index = 3)] public InfoBasic InfoBasic;
         [FieldIndex(Index = 4)] public InfoBag InfoBag;
         [FieldIndex(Index = 5)] public InfoCard InfoCard;
@@ -38,9 +38,9 @@ namespace TaleofMonsters.DataType.User
             InfoWorld = new InfoWorld();
         }
 
-        public void OnCreate(uint dna, int headId)
+        public void OnCreate(string name, uint dna, int headId)
         {
-            Name = UserProfile.ProfileName;
+            Name = name;
             InfoBasic.Job = JobConfig.Indexer.NewBie;
             InfoBasic.Dna = dna;
             InfoBasic.Head = headId;

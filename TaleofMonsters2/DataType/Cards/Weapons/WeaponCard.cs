@@ -6,6 +6,7 @@ using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.Skills;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Others;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.DataType.Cards.Weapons
 {

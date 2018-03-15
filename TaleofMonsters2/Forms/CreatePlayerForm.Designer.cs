@@ -32,6 +32,7 @@
             this.pictureBoxHead = new System.Windows.Forms.PictureBox();
             this.buttonOk = new System.Windows.Forms.Button();
             this.buttonLeft = new System.Windows.Forms.Button();
+            this.textBoxName = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHead)).BeginInit();
             this.SuspendLayout();
             // 
@@ -89,11 +90,23 @@
             this.buttonLeft.UseVisualStyleBackColor = false;
             this.buttonLeft.Click += new System.EventHandler(this.buttonLeft_Click);
             // 
+            // textBoxName
+            // 
+            this.textBoxName.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.textBoxName.BackColor = System.Drawing.Color.PowderBlue;
+            this.textBoxName.Font = new System.Drawing.Font("SimSun", 10F);
+            this.textBoxName.Location = new System.Drawing.Point(141, 70);
+            this.textBoxName.MaxLength = 8;
+            this.textBoxName.Name = "textBoxName";
+            this.textBoxName.Size = new System.Drawing.Size(92, 23);
+            this.textBoxName.TabIndex = 27;
+            // 
             // CreatePlayerForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(272, 353);
+            this.Controls.Add(this.textBoxName);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonLeft);
             this.Controls.Add(this.buttonOk);
@@ -109,6 +122,7 @@
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.CreatePlayerForm_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHead)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -118,6 +132,6 @@
         private System.Windows.Forms.Button buttonOk;
         private System.Windows.Forms.Button buttonLeft;
         private System.Windows.Forms.Button buttonCancel;
-
+        private System.Windows.Forms.TextBox textBoxName;
     }
 }
