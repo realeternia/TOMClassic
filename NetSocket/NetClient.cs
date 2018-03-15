@@ -49,7 +49,7 @@ namespace JLM.NetSocket
             }
             catch (Exception ex)
             {
-                this.OnErrorReceived("Connect", ex);
+                LogHandlerRegister.Log("Connect " + ex);
                 this.Close("Connect Exception");
             }
         }
@@ -85,7 +85,7 @@ namespace JLM.NetSocket
             catch (Exception ex)
             {
                 this.Close("Socket Connect Exception");
-                this.OnErrorReceived("Socket Connect", ex);
+                LogHandlerRegister.Log("Socket Connect " + ex);
             }
         }
         #endregion

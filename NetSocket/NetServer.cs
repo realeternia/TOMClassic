@@ -39,7 +39,7 @@ namespace JLM.NetSocket
             }
             catch (Exception ex)
             {
-                this.OnErrorReceived("Listen", ex);
+                LogHandlerRegister.Log("Listen " + ex);
             }
         }
 
@@ -74,11 +74,11 @@ namespace JLM.NetSocket
             catch (SocketException ex)
             {
                 this.Close("Listen Socket Exception");
-                this.OnErrorReceived("Listen Socket", ex);
+                LogHandlerRegister.Log("Listen Socket " + ex);
             }
             catch (Exception ex)
             {
-                this.OnErrorReceived("Listen Socket", ex);
+                LogHandlerRegister.Log("Listen Socket " + ex);
             }
         }
         #endregion
@@ -105,7 +105,6 @@ namespace JLM.NetSocket
 
                 clientSock.Disconnected = Disconnected;
                 clientSock.DataArrived = DataArrived; //客户端事件等于服务器事件
-                clientSock.ErrorReceived = ErrorReceived;
 
                 //   clientSock.OnChangeState(SocketState.Connected);
                 OnConnected(clientSock);
@@ -113,7 +112,7 @@ namespace JLM.NetSocket
             }
             catch (Exception ex)
             {
-                this.OnErrorReceived("Accept", ex);
+                LogHandlerRegister.Log("Accept " + ex);
             }
         }
         #endregion

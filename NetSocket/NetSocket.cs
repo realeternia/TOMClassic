@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-
 using System.Net;
 using System.Net.Sockets;
 
 using System.Threading;
 using System.Runtime.InteropServices;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 
 /*
  * @package   NetSocket
@@ -69,17 +66,6 @@ namespace JLM.NetSocket
 		{
 		    Net = net;
 			this.Data = data;
-		}
-	}
-
-	public class NetSockErrorReceivedEventArgs : EventArgs
-	{
-		public string Function;
-		public Exception Exception;
-		public NetSockErrorReceivedEventArgs(string function, Exception ex)
-		{
-			this.Function = function;
-			this.Exception = ex;
 		}
 	}
 
@@ -174,7 +160,6 @@ namespace JLM.NetSocket
 		/// <summary>Recived a new object</summary>
 		public EventHandler<NetSockDataArrivalEventArgs> DataArrived;
 		/// <summary>An error has occurred</summary>
-		public EventHandler<NetSockErrorReceivedEventArgs> ErrorReceived;
 		#endregion
 
 		#region Constructor
@@ -219,8 +204,8 @@ namespace JLM.NetSocket
 			}
 			catch (Exception ex)
 			{
-				this.OnErrorReceived("Send", ex);
-			}
+                LogHandlerRegister.Log("Send" + ex);
+            }
 		}
 
 		#endregion
@@ -244,8 +229,8 @@ namespace JLM.NetSocket
 				}
 			}
 			catch (Exception ex)
-			{
-				this.OnErrorReceived("Close", ex);
+            {
+                LogHandlerRegister.Log("Close" + ex);
 			}
 
 			try
@@ -255,8 +240,8 @@ namespace JLM.NetSocket
 					this.Disconnected(this, new NetSocketDisconnectedEventArgs(reason));
 			}
 			catch (Exception ex)
-			{
-				this.OnErrorReceived("Close Cleanup", ex);
+            {
+                LogHandlerRegister.Log("Close Cleanup" + ex);
 			}
 		}
 		#endregion
@@ -270,8 +255,8 @@ namespace JLM.NetSocket
 				this.socket.BeginReceive(this.byteBuffer, 0, this.byteBuffer.Length, SocketFlags.None, new AsyncCallback(this.ReceiveCallback), this.socket);
 			}
 			catch (Exception ex)
-			{
-				this.OnErrorReceived("Receive", ex);
+            {
+                LogHandlerRegister.Log("Receive" + ex);
 			}
 		}
 
@@ -309,13 +294,13 @@ namespace JLM.NetSocket
 			{
 				if (ex.SocketErrorCode == SocketError.ConnectionReset)
 					this.Close("Remote Socket Closed");
-				else
-					throw;
-			}
+
+                LogHandlerRegister.Log("ReceiveCallback " + ex.Message);
+            }
 			catch (Exception ex)
 			{
 				this.Close("Socket Receive Exception");
-				this.OnErrorReceived("Socket Receive", ex);
+                LogHandlerRegister.Log("Socket Receive" + ex);
 			}
 		}
 
@@ -369,11 +354,6 @@ namespace JLM.NetSocket
 		#endregion
 
 		#region OnEvents
-		protected void OnErrorReceived(string function, Exception ex)
-		{
-			if (this.ErrorReceived != null)
-				this.ErrorReceived(this, new NetSockErrorReceivedEventArgs(function, ex));
-		}
 
 		protected void OnConnected(NetClient sock)
 		{
@@ -437,8 +417,8 @@ namespace JLM.NetSocket
 				this.socket.IOControl(IOControlCode.KeepAliveValues, inBytes, outBytes);
 			}
 			catch (Exception ex)
-			{
-				this.OnErrorReceived("Keep Alive", ex);
+            {
+                LogHandlerRegister.Log("Keep Alive " + ex);
 			}
 		}
 		#endregion
@@ -453,8 +433,8 @@ namespace JLM.NetSocket
 					this.Close("Connect Timer");
 			}
 			catch (Exception ex)
-			{
-				this.OnErrorReceived("ConnectTimer", ex);
+            {
+                LogHandlerRegister.Log("ConnectTimer " + ex);
 				this.Close("Connect Timer Exception");
 			}
 		}

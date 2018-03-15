@@ -30,7 +30,6 @@ namespace GameServer
             this.server.ConnectionRequested += new EventHandler<NetSockConnectionRequestEventArgs>(server_ConnectionRequested);
             this.server.DataArrived += new EventHandler<NetSockDataArrivalEventArgs>(server_DataArrived);
             this.server.Disconnected += new EventHandler<NetSocketDisconnectedEventArgs>(server_Disconnected);
-            this.server.ErrorReceived += new EventHandler<NetSockErrorReceivedEventArgs>(server_ErrorReceived);
             this.server.StateChanged += new EventHandler<NetSockStateChangedEventArgs>(server_StateChanged);
 
             netImpl = new C2SImplement();
@@ -57,17 +56,6 @@ namespace GameServer
         private void server_StateChanged(object sender, NetSockStateChangedEventArgs e)
         {
             Logger.Log("State: " + e.PrevState.ToString() + " -> " + e.NewState.ToString());
-        }
-
-        private void server_ErrorReceived(object sender, NetSockErrorReceivedEventArgs e)
-        {
-            if (e.Exception.GetType() == typeof(System.Net.Sockets.SocketException))
-            {
-                System.Net.Sockets.SocketException s = (System.Net.Sockets.SocketException)e.Exception;
-                Logger.Log("Error: " + e.Function + " - " + s.SocketErrorCode.ToString() + "\r\n" + s.ToString());
-            }
-            else
-                Logger.Log("Error: " + e.Function + "\r\n" + e.Exception.ToString());
         }
 
         private void server_DataArrived(object sender, NetSockDataArrivalEventArgs e)
