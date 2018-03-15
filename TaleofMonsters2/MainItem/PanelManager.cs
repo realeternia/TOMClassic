@@ -31,7 +31,7 @@ namespace TaleofMonsters.MainItem
                 return;
             }
 
-            SoundManager.Play("System", "OpenForm.wav");
+            SoundManager.Play("System", "OpenForm.mp3");
             AddPanel(panel);
         }
 

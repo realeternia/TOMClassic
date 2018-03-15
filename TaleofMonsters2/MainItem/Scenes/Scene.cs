@@ -266,7 +266,7 @@ namespace TaleofMonsters.MainItem.Scenes
             try //因为这一步会被invoke，所以单独套一层try
             {
                 o.MoveEnd();
-                SoundManager.Play("System", "Move.wav");
+                SoundManager.Play("System", "Move.mp3");
             }
             catch (Exception e)
             {

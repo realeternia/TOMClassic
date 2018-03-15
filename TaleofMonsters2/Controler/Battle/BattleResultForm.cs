@@ -48,7 +48,7 @@ namespace TaleofMonsters.Controler.Battle
             base.Init(width, height);
 
             isWin = BattleManager.Instance.StatisticData.PlayerWin;
-            SoundManager.Play("System", isWin ? "QuestCompleted.wav" : "Failed.mp3");
+            SoundManager.Play("System", isWin ? "QuestCompleted.mp3" : "Failed.mp3");
 
             rightId = BattleManager.Instance.PlayerManager.RightPlayer.PeopleId;
             leftId = BattleManager.Instance.PlayerManager.LeftPlayer.PeopleId;

@@ -143,7 +143,7 @@ namespace TaleofMonsters.DataType.User
                 Scene.Instance.QuestNext(questConfig.TriggerSceneQuest);
 
             MainTipManager.AddTip(string.Format("接受任务-{0}", questConfig.Name), "White");
-            SoundManager.Play("System", "QuestActivateWhat1.wav");
+            SoundManager.Play("System", "QuestActivateWhat1.mp3");
         }
 
         private void OnFinishQuest(int qid)
@@ -154,7 +154,7 @@ namespace TaleofMonsters.DataType.User
 
             MainTipManager.AddTip(string.Format("完成任务-{0}", questConfig.Name), "White");
             UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.QuestFinish, 1);
-            SoundManager.Play("System", "QuestCompleted.wav");
+            SoundManager.Play("System", "QuestCompleted.mp3");
         }
 
         public void OnSceneQuestSuccess(string questName, bool partial)

@@ -37,11 +37,11 @@ namespace TaleofMonsters.Controler.Battle.Components
             daytime = BattleManager.Instance.IsNight ? 2 : 1;
             if (oldTime < 24 && time>=24)
             {
-                SoundManager.Play("Time", "DaybreakRooster.wav");
+                SoundManager.Play("Time", "DaybreakRooster.mp3");
             }
             else if (oldTime < 72 && time >= 72)
             {
-                SoundManager.Play("Time", "DuskWolf.wav");
+                SoundManager.Play("Time", "DuskWolf.mp3");
             }
             //if (time % 12 == 0)
             //{

@@ -27,7 +27,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemEffect
         {
             if (frameId == 0 && effect.SoundName != "null" && !isMute)
             {
-                SoundManager.Play("Effect", string.Format("{0}.wav", effect.SoundName));
+                SoundManager.Play("Effect", string.Format("{0}.mp3", effect.SoundName));
             }
 
             speedRunIndex++;
