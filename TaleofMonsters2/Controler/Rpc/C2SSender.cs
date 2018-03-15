@@ -2,10 +2,10 @@
 
 namespace TaleofMonsters.Controler.Rpc
 {
-    public class NetworkSender
+    public class C2SSender
     {
         private NetClient client;
-        public NetworkSender(NetClient client)
+        public C2SSender(NetClient client)
         {
             this.client = client;
         }

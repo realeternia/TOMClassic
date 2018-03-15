@@ -1,9 +1,10 @@
 ﻿using System;
 using System.IO;
+using GameServer.Tools;
 
-namespace GameServer
+namespace GameServer.Storage
 {
-    public class WorldInfoManager
+    public class ServerInfoManager
     {
         private static int playerId = 1000;
         private static string filePath = "./Sv/wd.db";

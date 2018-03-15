@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace GameServer
+namespace GameServer.Storage
 {
     public class DbManager
     {

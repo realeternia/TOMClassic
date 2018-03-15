@@ -12,8 +12,8 @@ namespace TaleofMonsters.DataType.User
         public static string ProfileName { get; set; }
         public static Profile Profile { get; set; }
         private static NetClient client;
-        private static NetworkImplement netImpl = new NetworkImplement();
-        public static NetworkSender Sender;
+        private static S2CImplement netImpl = new S2CImplement();
+        public static C2SSender C2S;
 
         public static InfoBasic InfoBasic
         {
@@ -75,7 +75,7 @@ namespace TaleofMonsters.DataType.User
         {
             System.Net.IPEndPoint end = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("193.112.9.47"), 5555);
             client = new NetClient();
-            Sender = new NetworkSender(client);
+            C2S = new C2SSender(client);
             client.Connected += new EventHandler<NetSocketConnectedEventArgs>(client_Connected);
             client.DataArrived += DataArrived;
             client.Connect(end);
@@ -84,7 +84,7 @@ namespace TaleofMonsters.DataType.User
         public static void Save()
         {
             var dts = DbSerializer.CustomTypeToBytes(Profile, typeof(Profile));
-            Sender.Save(ProfileName, dts);
+            C2S.Save(ProfileName, dts);
             WorldInfoManager.Save();
         }
 
@@ -96,7 +96,7 @@ namespace TaleofMonsters.DataType.User
         private static void client_Connected(object sender, NetSocketConnectedEventArgs e)
         {
             NLog.Debug("Connected: " + e.SourceIP);
-            Sender.Login(ProfileName);
+            C2S.Login(ProfileName);
         }
     }
 }

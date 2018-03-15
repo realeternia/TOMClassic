@@ -16,6 +16,8 @@ namespace JLM.NetSocket
 {
     public class MessagePump
     {
+        private const int MaxPacketSize = 10*1024;
+
         private NetBase client;
         private ByteQueue receiveData;
 
@@ -27,8 +29,14 @@ namespace JLM.NetSocket
 
         public void HandleReceive()
         {
-            if (receiveData == null || receiveData.GetPacketLength() <= 0)
+            var packetSize = receiveData.GetPacketLength();
+            if (receiveData == null || packetSize <= 0)
+                return;
+
+            if (packetSize > MaxPacketSize) //错误数据包
             {
+                client.Close("HandleReceive error data");
+                LogHandlerRegister.Log(string.Format("HandleReceive error size={0}", packetSize));
                 return;
             }
 

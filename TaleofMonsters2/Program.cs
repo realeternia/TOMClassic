@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using JLM.NetSocket;
 using NarlonLib.Log;
 using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
@@ -15,9 +16,12 @@ namespace TaleofMonsters
         static void Main()
         {
             NLog.Start(LogTargets.File);
+            LogHandlerRegister.Log = NLog.DebugDirect;
             DataLoader.Init();
             PicLoader.Init(); 
             SoundManager.Init();
+
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

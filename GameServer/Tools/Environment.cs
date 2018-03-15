@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GameServer
+namespace GameServer.Tools
 {
     public class Environment
     {

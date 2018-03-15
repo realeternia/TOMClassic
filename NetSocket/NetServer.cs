@@ -122,7 +122,15 @@ namespace JLM.NetSocket
         {
             foreach (var netBase in clientList)
             {
-                netBase.Oneloop();
+                try
+                {
+                    netBase.Oneloop();
+                }
+                catch (Exception e)
+                {
+                    LogHandlerRegister.Log(e.ToString());
+                    netBase.Close("general error");
+                }
             }
 
             clientList.RemoveAll(s => s.State == SocketState.Closed);

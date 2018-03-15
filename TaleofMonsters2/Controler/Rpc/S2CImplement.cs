@@ -4,7 +4,7 @@ using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.Controler.Rpc
 {
-    public class NetworkImplement
+    public class S2CImplement
     {
         public void CheckPacket(PacketBase packet, NetBase net)
         {

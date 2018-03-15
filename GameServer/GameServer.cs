@@ -1,6 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
+using GameServer.Rpc;
+using GameServer.Storage;
+using GameServer.Tools;
 using JLM.NetSocket;
 
 namespace GameServer
@@ -9,8 +12,7 @@ namespace GameServer
     {
         private NetServer server = new NetServer();
 
-        private Thread mainThread;
-        private NetworkImplement netImpl;
+        private C2SImplement netImpl;
 
         public GameServer()
         {
@@ -21,14 +23,14 @@ namespace GameServer
             this.server.ErrorReceived += new EventHandler<NetSockErrorReceivedEventArgs>(server_ErrorReceived);
             this.server.StateChanged += new EventHandler<NetSockStateChangedEventArgs>(server_StateChanged);
 
-            netImpl = new NetworkImplement();
+            netImpl = new C2SImplement();
         //    Disconnected = new EventHandler<NetSocketDisconnectedEventArgs>(local_Disconnected);
         }
 
         public void Run()
         {
             Logger.Log("Server Start");
-            WorldInfoManager.Load();
+            ServerInfoManager.Load();
             if (!Directory.Exists("log"))
                 Directory.CreateDirectory("log");
             this.server.Listen(5555);

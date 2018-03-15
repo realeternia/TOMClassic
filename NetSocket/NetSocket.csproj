@@ -60,6 +60,7 @@
     <Compile Include="BinaryWriter.cs" />
     <Compile Include="BuffPool.cs" />
     <Compile Include="ByteQueue.cs" />
+    <Compile Include="LogHandlerRegister.cs" />
     <Compile Include="MessageBump.cs" />
     <Compile Include="NetClient.cs" />
     <Compile Include="NetServer.cs" />

@@ -76,12 +76,6 @@ namespace NarlonLib.Log
             BasicConfigurator.Configure(appenders.ToArray());
         }
 
-        public static NLog4NetLogEventHandler CustomDebug;
-        public static NLog4NetLogEventHandler CustomError;
-        public static NLog4NetLogEventHandler CustomFatal;
-        public static NLog4NetLogEventHandler CustomInfo;
-        public static NLog4NetLogEventHandler CustomWarn;
-
         public static void Debug(object message, params object[] args)
         {
             var outputText = args == null ? message.ToString() : string.Format(message.ToString(), args);
@@ -91,10 +85,11 @@ namespace NarlonLib.Log
         private static void Debug(object message)
         {
             LogManager.GetLogger(name).Debug(message);
-            if (((type & LogTargets.Custom) != 0) && CustomDebug != null)
-            {
-                CustomDebug(name, message);
-            }
+        }
+
+        public static void DebugDirect(string message)
+        {
+            LogManager.GetLogger(name).Debug(message);
         }
 
         public static void Error(object message, params object[] args)
@@ -106,10 +101,6 @@ namespace NarlonLib.Log
         private static void Error(object message)
         {
             LogManager.GetLogger(name).Error(message);
-            if (((type & LogTargets.Custom) != 0) && CustomError != null)
-            {
-                CustomError(name, message);
-            }
         }
 
         public static void Warn(object message, params object[] args)
@@ -121,10 +112,6 @@ namespace NarlonLib.Log
         private static void Warn(object message)
         {
             LogManager.GetLogger(name).Warn(message);
-            if (((type & LogTargets.Custom) != 0) && CustomWarn != null)
-            {
-                CustomWarn(name, message);
-            }
         }
     }
 

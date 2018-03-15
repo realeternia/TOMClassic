@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace GameServer
+namespace GameServer.Tools
 {
     public class NLIniFile
     {
