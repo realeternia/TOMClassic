@@ -68,17 +68,34 @@ namespace TaleofMonsters.DataType.User
         public static void Oneloop()
         {
             if (client != null)
+            {
+                if (client.State == SocketState.Closed || client.State == SocketState.Closing)
+                {
+                    MainForm.Instance.ShowDisconnectSafe("已经与服务器断开连接");
+                    client = null;
+                    return;
+                }
+
                 client.Oneloop();
+            }
         }
 
         public static void Connect()
         {
-            System.Net.IPEndPoint end = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("193.112.9.47"), 5555);
+            Close();
+
+            System.Net.IPEndPoint end = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("127.0.0.1"), 5555);
             client = new NetClient();
             C2S = new C2SSender(client);
             client.Connected += new EventHandler<NetSocketConnectedEventArgs>(client_Connected);
             client.DataArrived += DataArrived;
             client.Connect(end);
+        }
+
+        public static void Close()
+        {
+            if (client != null && client.State == SocketState.Connected)
+                client.Close("Connect");
         }
 
         public static void Save()

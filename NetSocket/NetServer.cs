@@ -108,7 +108,7 @@ namespace JLM.NetSocket
                 clientSock.ErrorReceived = ErrorReceived;
 
                 //   clientSock.OnChangeState(SocketState.Connected);
-                OnConnected(client);
+                OnConnected(clientSock);
                 clientSock.Receive();
             }
             catch (Exception ex)

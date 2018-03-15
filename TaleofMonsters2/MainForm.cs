@@ -23,6 +23,24 @@ namespace TaleofMonsters
 {
     internal partial class MainForm : Form
     {
+        delegate void ShowDisconnectCallback(string text);
+        public void ShowDisconnectSafe(string text)
+        {
+            if (InvokeRequired)
+            {
+                ShowDisconnectCallback d = ShowDisconnectSafe;
+                Invoke(d, new object[] { text });
+            }
+            else
+            {
+                PanelManager.DealPanel(BlackWallForm.Instance);
+                BringToFront();
+                MessageBoxEx.Show(text);
+                PanelManager.DealPanel(BlackWallForm.Instance);
+                ChangePage(0);
+            }
+        }
+
         delegate void LoginResultCallback();
         public void LoginResult()
         {
@@ -37,6 +55,7 @@ namespace TaleofMonsters
                 if (string.IsNullOrEmpty(UserProfile.Profile.Name))
                 {
                     CreatePlayerForm cpf = new CreatePlayerForm();
+                    cpf.BringToFront();
                     cpf.ShowDialog();
                     isNewUser = true;
                     if (cpf.Result == DialogResult.Cancel)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
+using GameServer.Logic;
 using GameServer.Rpc;
 using GameServer.Storage;
 using GameServer.Tools;
@@ -10,12 +11,21 @@ namespace GameServer
 {
     public partial class GameServer
     {
-        private NetServer server = new NetServer();
+        private static GameServer instance;
+        public static GameServer Instance
+        {
+            get { return instance ?? (instance = new GameServer()); }
+        }
+
+        private NetServer server;
+        public PlayerManager PlayerManager { get; private set; }
+        private int clientIndex = 100;
 
         private C2SImplement netImpl;
 
         public GameServer()
         {
+            server = new NetServer();
             this.server.Connected += new EventHandler<NetSocketConnectedEventArgs>(server_Connected);
             this.server.ConnectionRequested += new EventHandler<NetSockConnectionRequestEventArgs>(server_ConnectionRequested);
             this.server.DataArrived += new EventHandler<NetSockDataArrivalEventArgs>(server_DataArrived);
@@ -24,6 +34,7 @@ namespace GameServer
             this.server.StateChanged += new EventHandler<NetSockStateChangedEventArgs>(server_StateChanged);
 
             netImpl = new C2SImplement();
+            PlayerManager = new PlayerManager();
         //    Disconnected = new EventHandler<NetSocketDisconnectedEventArgs>(local_Disconnected);
         }
 
@@ -59,14 +70,9 @@ namespace GameServer
                 Logger.Log("Error: " + e.Function + "\r\n" + e.Exception.ToString());
         }
 
-        private void server_Disconnected(object sender, NetSocketDisconnectedEventArgs e)
-        {
-            Logger.Log("Disconnected: " + e.Reason);
-        }
-
         private void server_DataArrived(object sender, NetSockDataArrivalEventArgs e)
         {
-            netImpl.CheckPacket(e.Data, e.Net);
+            netImpl.CheckPacket(e.Data, e.Net as NetClient);
         }
 
         private void server_ConnectionRequested(object sender, NetSockConnectionRequestEventArgs e)
@@ -77,7 +83,17 @@ namespace GameServer
 
         private void server_Connected(object sender, NetSocketConnectedEventArgs e)
         {
-            Logger.Log("Connected: " + e.SourceIP);
+            var clientSock = sender as NetClient;
+            clientSock.ClientId = clientIndex++;
+            PlayerManager.AddPlayer(clientSock.ClientId, clientSock);
+            Logger.Log("Connected: " + e.SourceIP + " id="+ clientSock.ClientId);
         }
+        private void server_Disconnected(object sender, NetSocketDisconnectedEventArgs e)
+        {
+            var clientSock = sender as NetClient;
+            PlayerManager.RemovePlayer(clientSock.ClientId);
+            Logger.Log("Disconnected: id=" + clientSock.ClientId + " r=" + e.Reason);
+        }
+
     }
 }

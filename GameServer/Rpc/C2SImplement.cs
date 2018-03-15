@@ -6,7 +6,7 @@ namespace GameServer.Rpc
 {
     public class C2SImplement
     {
-        public void CheckPacket(PacketBase packet, NetBase net)
+        public void CheckPacket(PacketBase packet, NetClient net)
         {
             switch (packet.PackRealId)
             {
@@ -18,9 +18,10 @@ namespace GameServer.Rpc
             }
         }
 
-        public void OnPacketLogin(NetBase net, PacketLogin login)
+        public void OnPacketLogin(NetClient net, PacketLogin login)
         {
             Logger.Log("OnPacketLogin " + login.Name);
+            GameServer.Instance.PlayerManager.SetName(net.ClientId, login.Name);
             var datas = DbManager.LoadFromDB(login.Name);
             net.Send(new PacketLoginResult(datas.Length==0 ? ServerInfoManager.GetPlayerPid() : 0, datas).Data);
         }

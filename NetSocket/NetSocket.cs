@@ -375,10 +375,10 @@ namespace JLM.NetSocket
 				this.ErrorReceived(this, new NetSockErrorReceivedEventArgs(function, ex));
 		}
 
-		protected void OnConnected(Socket sock)
+		protected void OnConnected(NetClient sock)
 		{
 			if (this.Connected != null)
-				this.Connected(this, new NetSocketConnectedEventArgs(((IPEndPoint)sock.RemoteEndPoint).Address));
+				this.Connected(sock, new NetSocketConnectedEventArgs(sock.Ip));
 		}
 
         public void OnChangeState(SocketState newState)

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using GameServer.Tools;
 using JLM.NetSocket;
 
@@ -10,10 +8,9 @@ namespace GameServer
     {
         static void Main(string[] args)
         {
-            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomainUnhandledException);
+         //   AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomainUnhandledException);
             LogHandlerRegister.Log = Logger.Log;
-            GameServer sv = new GameServer();
-            sv.Run();
+            GameServer.Instance.Run();
         }
 
         private static void CurrentDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)

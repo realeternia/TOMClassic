@@ -33,6 +33,10 @@ namespace TaleofMonsters.Forms
         {
             InitializeComponent();
             FormBorderStyle = FormBorderStyle.None;
+            StartPosition = FormStartPosition.Manual;
+            Location = new Point(MainForm.Instance.Location.X + MainForm.Instance.Size.Width / 2 - Size.Width / 2, MainForm.Instance.Location.Y
+                + MainForm.Instance.Size.Height / 2 - Size.Height / 2);
+
             myCursor = new HSCursor(this);
             vRegion = new VirtualRegion(this);
             for (int i = 1; i <= 24; i++)

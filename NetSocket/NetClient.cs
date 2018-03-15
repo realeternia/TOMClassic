@@ -21,6 +21,13 @@ namespace JLM.NetSocket
         public string Name;
         #endregion
 
+        public int ClientId { get; set; }
+
+        public IPAddress Ip
+        {
+            get { return ((IPEndPoint)socket.RemoteEndPoint).Address;}
+        }
+
         #region Connect
         /// <summary>Connect to the computer specified by Host and Port</summary>
         public void Connect(IPEndPoint endPoint)
@@ -71,7 +78,7 @@ namespace JLM.NetSocket
                 this.SetKeepAlive();
 
                 this.OnChangeState(SocketState.Connected);
-                this.OnConnected(this.socket);
+                this.OnConnected(this);
 
                 this.Receive();
             }
