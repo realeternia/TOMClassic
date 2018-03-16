@@ -76,7 +76,14 @@ namespace TaleofMonsters.DataType.User
                     return;
                 }
 
-                client.Oneloop();
+                try
+                {
+                    client.Oneloop();
+                }
+                catch (Exception e)
+                {
+                    NLog.Debug(e);
+                }
             }
         }
 
