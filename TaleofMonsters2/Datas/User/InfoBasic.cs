@@ -4,6 +4,7 @@ using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Forms.CMain;
+using TaleofMonsters.Rpc;
 
 namespace TaleofMonsters.Datas.User
 {
@@ -49,6 +50,8 @@ namespace TaleofMonsters.Datas.User
 
                 PanelManager.ShowLevelInfo(oldLevel, UserProfile.InfoBasic.Level);
             }
+
+            TalePlayer.C2SSender.UpdateLevelExp(Job, Level, Exp);
         }
 
         public void AddFood(uint val)

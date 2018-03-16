@@ -12,7 +12,7 @@ namespace TaleofMonsters.Rpc
         private static NetClient client;
 
         private static S2CImplement s2cImpl = new S2CImplement();
-        private static C2SSender c2SSender;
+        public static C2SSender C2SSender;
 
         public static void Oneloop()
         {
@@ -42,7 +42,7 @@ namespace TaleofMonsters.Rpc
 
             System.Net.IPEndPoint end = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("193.112.9.47"), 5555);
             client = new NetClient();
-            c2SSender = new C2SSender(client);
+            C2SSender = new C2SSender(client);
             client.Connected += new EventHandler<NetSocketConnectedEventArgs>(client_Connected);
             client.DataArrived += DataArrived;
             client.Connect(end);
@@ -57,7 +57,7 @@ namespace TaleofMonsters.Rpc
         public static void Save()
         {
             var dts = DbSerializer.CustomTypeToBytes(UserProfile.Profile, typeof(Profile));
-            c2SSender.Save(UserProfile.ProfileName, dts);
+            C2SSender.Save(UserProfile.ProfileName, dts);
             WorldInfoManager.Save();
         }
 
@@ -69,7 +69,7 @@ namespace TaleofMonsters.Rpc
         private static void client_Connected(object sender, NetSocketConnectedEventArgs e)
         {
             NLog.Debug("Connected: " + e.SourceIP);
-            c2SSender.Login(UserProfile.ProfileName);
+            C2SSender.Login(UserProfile.ProfileName);
         }
     }
 }

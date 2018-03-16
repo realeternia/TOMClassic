@@ -18,7 +18,6 @@ namespace JLM.NetSocket
             state = SocketState.Connected;
         }
 
-        public string Name;
         #endregion
 
         public int ClientId { get; set; }

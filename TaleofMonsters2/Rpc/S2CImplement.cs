@@ -10,21 +10,21 @@ namespace TaleofMonsters.Rpc
         {
             switch (packet.PackRealId)
             {
-                case PacketLoginResult.PackId: OnPacketLogin(packet as PacketLoginResult);break;
+                case PacketS2CLoginResult.PackId: OnPacketLogin(packet as PacketS2CLoginResult);break;
             }
         }
 
-        public void OnPacketLogin(PacketLoginResult login)
+        public void OnPacketLogin(PacketS2CLoginResult s2CLogin)
         {
-            if (login.SaveData.Length == 0)
+            if (s2CLogin.SaveData.Length == 0)
             {
                 UserProfile.Profile = new Profile();
-                UserProfile.Profile.Pid = login.PlayerId;
+                UserProfile.Profile.Pid = s2CLogin.PlayerId;
             }
             else
             {
                 object tmp;
-                DbSerializer.BytesToCustomType(login.SaveData, out tmp, typeof(Profile));
+                DbSerializer.BytesToCustomType(s2CLogin.SaveData, out tmp, typeof(Profile));
                 UserProfile.Profile = (Profile)tmp;
             }
             MainForm.Instance.LoginResult();

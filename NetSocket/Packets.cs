@@ -22,29 +22,30 @@ namespace JLM.NetSocket
 
             switch (packId)
             {
-                case PacketLogin.PackId: return new PacketLogin(newData);
-                case PacketSave.PackId: return new PacketSave(newData);
-                case PacketLoginResult.PackId: return new PacketLoginResult(newData);
+                case PacketC2SLogin.PackId: return new PacketC2SLogin(newData);
+                case PacketC2SSave.PackId: return new PacketC2SSave(newData);
+                case PacketC2SLevelExpChange.PackId: return new PacketC2SLevelExpChange(newData);
+                case PacketC2SGetRank.PackId: return new PacketC2SGetRank(newData);
+
+                case PacketS2CLoginResult.PackId: return new PacketS2CLoginResult(newData);
             }
             return new PacketBase();
         }
     }
 
-    public class PacketLogin : PacketBase
+    public class PacketC2SLogin : PacketBase
     {
         public const int PackId = 100001;
         public string Name;
 
         public override int PackRealId { get { return PackId; } }
 
-        private PacketLogin() { }
-
-        public PacketLogin(string name) : this()
+        public PacketC2SLogin(string name) 
         {
             Name = name;
         }
 
-        public PacketLogin(byte[] bts) : this()
+        public PacketC2SLogin(byte[] bts)
         {
             TBinaryReader sr = new TBinaryReader(bts);
             sr.ReadInt32(); //包id
@@ -62,7 +63,7 @@ namespace JLM.NetSocket
             }
         }
     }
-    public class PacketSave : PacketBase
+    public class PacketC2SSave : PacketBase
     {
         public const int PackId = 100002;
 
@@ -70,16 +71,14 @@ namespace JLM.NetSocket
         public byte[] SaveData;
 
         public override int PackRealId { get { return PackId; } }
-
-        private PacketSave() { }
-
-        public PacketSave(string passport, byte[] data) : this()
+        
+        public PacketC2SSave(string passport, byte[] data)
         {
             Passport = passport;
             SaveData = data;
         }
 
-        public PacketSave(byte[] bts) : this()
+        public PacketC2SSave(byte[] bts)
         {
             TBinaryReader sr = new TBinaryReader(bts);
             sr.ReadInt32(); //包id
@@ -99,7 +98,80 @@ namespace JLM.NetSocket
             }
         }
     }
-    public class PacketLoginResult : PacketBase
+    public class PacketC2SLevelExpChange : PacketBase
+    {
+        public const int PackId = 100003;
+        public int Job;
+        public int Level;
+        public int Exp;
+
+        public override int PackRealId { get { return PackId; } }
+
+        private PacketC2SLevelExpChange() { }
+
+        public PacketC2SLevelExpChange(int job, int lv, int exp)
+        {
+            Job = job;
+            Level = lv;
+            Exp = exp;
+        }
+
+        public PacketC2SLevelExpChange(byte[] bts) : this()
+        {
+            TBinaryReader sr = new TBinaryReader(bts);
+            sr.ReadInt32(); //包id
+            Job = sr.ReadInt32();
+            Level = sr.ReadInt32();
+            Exp = sr.ReadInt32();
+        }
+
+        public override byte[] Data
+        {
+            get
+            {
+                TBinaryWriter sw = new TBinaryWriter();
+                sw.Write(PackId);
+                sw.Write(Job);
+                sw.Write(Level);
+                sw.Write(Exp);
+                return sw.GetBytes();
+            }
+        }
+    }
+    public class PacketC2SGetRank : PacketBase
+    {
+        public const int PackId = 100004;
+        public int Type;
+
+        public override int PackRealId { get { return PackId; } }
+
+        private PacketC2SGetRank() { }
+
+        public PacketC2SGetRank(int lv)
+        {
+            Type = lv;
+        }
+
+        public PacketC2SGetRank(byte[] bts) : this()
+        {
+            TBinaryReader sr = new TBinaryReader(bts);
+            sr.ReadInt32(); //包id
+            Type = sr.ReadInt32();
+        }
+
+        public override byte[] Data
+        {
+            get
+            {
+                TBinaryWriter sw = new TBinaryWriter();
+                sw.Write(PackId);
+                sw.Write(Type);
+                return sw.GetBytes();
+            }
+        }
+    }
+
+    public class PacketS2CLoginResult : PacketBase
     {
         public const int PackId = 200001;
 
@@ -108,15 +180,15 @@ namespace JLM.NetSocket
 
         public override int PackRealId { get { return PackId; } }
 
-        private PacketLoginResult() { }
+        private PacketS2CLoginResult() { }
 
-        public PacketLoginResult(int playerId, byte[] data) : this()
+        public PacketS2CLoginResult(int playerId, byte[] data) : this()
         {
             PlayerId = playerId;
             SaveData = data;
         }
 
-        public PacketLoginResult(byte[] bts) : this()
+        public PacketS2CLoginResult(byte[] bts) : this()
         {
             TBinaryReader sr = new TBinaryReader(bts);
             sr.ReadInt32(); //包id

@@ -12,12 +12,17 @@ namespace TaleofMonsters.Rpc
 
         public void Login(string name)
         {
-            client.Send(new PacketLogin(name).Data);
+            client.Send(new PacketC2SLogin(name).Data);
         }
 
         public void Save(string name, byte[] dats)
         {
-            var data = new PacketSave(name, dats).Data;
+            var data = new PacketC2SSave(name, dats).Data;
+            client.Send(data);
+        }
+        public void UpdateLevelExp(int job, int level, int exp)
+        {
+            var data = new PacketC2SLevelExpChange(job, level, exp).Data;
             client.Send(data);
         }
     }

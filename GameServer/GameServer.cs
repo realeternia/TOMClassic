@@ -19,6 +19,7 @@ namespace GameServer
 
         private NetServer server;
         public PlayerManager PlayerManager { get; private set; }
+        public RankManager RankManager { get; private set; }
         private int clientIndex = 100;
 
         private C2SImplement netImpl;
@@ -34,6 +35,7 @@ namespace GameServer
 
             netImpl = new C2SImplement();
             PlayerManager = new PlayerManager();
+            RankManager = new RankManager();
         //    Disconnected = new EventHandler<NetSocketDisconnectedEventArgs>(local_Disconnected);
         }
 
