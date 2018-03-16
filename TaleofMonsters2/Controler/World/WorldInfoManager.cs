@@ -67,27 +67,35 @@ namespace TaleofMonsters.Controler.World
                 {
                     NarlonLib.Log.NLog.Debug("Load " + e.Message);
                 }
-                CheckReso();
+            }
+            else
+            {
+                BGEnable = true;
+                BGVolumn = 30;
+                SoundEnable = true;
+                SoundVolumn = 30;
+            }
 
-                if (Full)
-                {
-                    MainForm.Instance.FormBorderStyle = FormBorderStyle.None;
-                    MainForm.Instance.Width = Screen.PrimaryScreen.Bounds.Width;
-                    MainForm.Instance.Height = Screen.PrimaryScreen.Bounds.Height;
-                    MainForm.Instance.Location = new Point();
+            CheckReso();
+
+            if (Full)
+            {
+                MainForm.Instance.FormBorderStyle = FormBorderStyle.None;
+                MainForm.Instance.Width = Screen.PrimaryScreen.Bounds.Width;
+                MainForm.Instance.Height = Screen.PrimaryScreen.Bounds.Height;
+                MainForm.Instance.Location = new Point();
+            }
+            else
+            {
+                if (FormWidth > Screen.PrimaryScreen.Bounds.Width || FormHeight > Screen.PrimaryScreen.Bounds.Height)
+                {//过宽了
+                    FormWidth = 1152;
+                    FormHeight = 720;
                 }
-                else
-                {
-                    if (FormWidth > Screen.PrimaryScreen.Bounds.Width || FormHeight > Screen.PrimaryScreen.Bounds.Height)
-                    {//过宽了
-                        FormWidth = 1152;
-                        FormHeight = 720;
-                    }
-                    MainForm.Instance.Width = FormWidth;
-                    MainForm.Instance.Height = FormHeight;
-                    MainForm.Instance.Location = new Point(Screen.PrimaryScreen.Bounds.Width/2- FormWidth/2,
-                       Screen.PrimaryScreen.Bounds.Height/2-FormHeight/2);
-                }
+                MainForm.Instance.Width = FormWidth;
+                MainForm.Instance.Height = FormHeight;
+                MainForm.Instance.Location = new Point(Screen.PrimaryScreen.Bounds.Width / 2 - FormWidth / 2,
+                    Screen.PrimaryScreen.Bounds.Height / 2 - FormHeight / 2);
             }
         }
 
