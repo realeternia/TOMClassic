@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
-using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
@@ -11,6 +10,7 @@ using TaleofMonsters.Controler.Battle.Data.MemWeapon;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Config;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Cards.Weapons;

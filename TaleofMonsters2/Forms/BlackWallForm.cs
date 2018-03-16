@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
-using TaleofMonsters.MainItem;
+using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.Forms
 {

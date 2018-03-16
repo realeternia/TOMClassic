@@ -1,10 +1,10 @@
 ﻿using System.Drawing;
-using TaleofMonsters.Config;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Cards.Spells;
 using TaleofMonsters.DataType.Cards.Weapons;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Config;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.DataType.Cards

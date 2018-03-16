@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using ConfigDatas;
-using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Tool;
+using TaleofMonsters.Core.Config;
 using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.Drops;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms;
-using TaleofMonsters.MainItem;
-using TaleofMonsters.MainItem.Blesses;
-using TaleofMonsters.MainItem.Scenes;
+using TaleofMonsters.Forms.CMain;
+using TaleofMonsters.Forms.CMain.Blesses;
+using TaleofMonsters.Forms.CMain.Scenes;
 
 namespace TaleofMonsters.DataType.Items
 {

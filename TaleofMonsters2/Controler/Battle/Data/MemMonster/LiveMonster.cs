@@ -12,7 +12,7 @@ using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Skills;
 using TaleofMonsters.Core;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
-using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Formulas;
 

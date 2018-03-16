@@ -4,7 +4,7 @@ using ConfigDatas;
 using NarlonLib.Tools;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User.Db;
-using TaleofMonsters.MainItem;
+using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.DataType.User
 {

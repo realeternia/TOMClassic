@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Forms.Items;
 using ConfigDatas;
 using NarlonLib.Math;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.Forms.Items.Core;
 

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using ConfigDatas;
-using TaleofMonsters.Controler.Loader;
 using System.Drawing;
+using TaleofMonsters.Core.Loader;
 
 namespace TaleofMonsters.DataType.Maps
 {

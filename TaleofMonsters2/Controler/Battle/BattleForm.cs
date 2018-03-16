@@ -5,29 +5,29 @@ using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
 using NarlonLib.Tools;
-using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Components.CardSelect;
 using TaleofMonsters.Controler.Battle.Data;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Tool;
-using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.Controler.Resource;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Cards.Monsters;
-using TaleofMonsters.DataType.HeroSkills;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Data.MemMap;
 using TaleofMonsters.Controler.Battle.Data.Players;
+using TaleofMonsters.Core.Config;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Decks;
+using TaleofMonsters.DataType.HeroPowers;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms;
+using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
-using TaleofMonsters.MainItem;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.Controler.Battle
 {
@@ -73,7 +73,7 @@ namespace TaleofMonsters.Controler.Battle
         private long lastMouseMoveTime;
 
         private VirtualRegion vRegion;
-        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
+        private ImageToolTip tooltip = SystemToolTip.Instance;
         private MagicRegion magicRegion = new MagicRegion(); //可能会绘制多次
         private CardVisualRegion visualRegion = new CardVisualRegion(); //怪物选中后的地图效果
 

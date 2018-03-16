@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType.Tournaments;
 using TaleofMonsters.Forms.Items.Core;
 

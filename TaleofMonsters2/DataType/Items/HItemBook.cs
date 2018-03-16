@@ -5,10 +5,10 @@ using ConfigDatas;
 using NarlonLib.Drawing;
 using NarlonLib.Log;
 using NarlonLib.Math;
-using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.Controler.Resource;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType.Others;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.DataType.Items
 {

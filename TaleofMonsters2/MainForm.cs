@@ -7,15 +7,16 @@ using ConfigDatas;
 using ControlPlus; 
 using NarlonLib.Log;
 using NarlonLib.Tools;
-using TaleofMonsters.Config;
 using TaleofMonsters.Controler.GM;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Controler.World;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Config;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms;
-using TaleofMonsters.MainItem;
-using TaleofMonsters.MainItem.Scenes;
+using TaleofMonsters.Forms.CMain;
+using TaleofMonsters.Forms.CMain.Scenes;
+using TaleofMonsters.Rpc;
 using TaleofMonsters.Tools;
 
 namespace TaleofMonsters
@@ -135,7 +136,7 @@ namespace TaleofMonsters
             else if (pg == 1)
             {
                 UserProfile.ProfileName = textBoxName.Text;
-                UserProfile.Connect();
+                TalePlayer.Connect();
             }
 
         }
@@ -173,7 +174,7 @@ namespace TaleofMonsters
             if (viewStack1.SelectedIndex == 1)
             {
                 UserProfile.Profile.OnLogout();
-                UserProfile.Save();
+                TalePlayer.Save();
             }
         }
 
@@ -250,7 +251,7 @@ namespace TaleofMonsters
         {
             while (true)
             {
-                UserProfile.Oneloop();
+                TalePlayer.Oneloop();
 
                 if (page == 1)
                 {

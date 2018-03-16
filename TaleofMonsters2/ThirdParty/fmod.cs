@@ -5,10 +5,10 @@
 /* ========================================================================================== */
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
-namespace FMOD
+namespace TaleofMonsters.ThirdParty
 {
     /*
         FMOD version number.  Check this against FMOD::System::getVersion / System_GetVersion

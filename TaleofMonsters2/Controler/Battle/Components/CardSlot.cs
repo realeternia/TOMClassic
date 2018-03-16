@@ -1,10 +1,10 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
-using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Tool;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Config;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards;
 
@@ -104,7 +104,7 @@ namespace TaleofMonsters.Controler.Battle.Components
 
             font = new Font("宋体", 9*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             var cardName = string.Format("{0}Lv{1}", Card.Name, ACard.Level);
-            var cardQual = Config.CardConfigManager.GetCardConfig(Card.CardId).Quality;
+            var cardQual = CardConfigManager.GetCardConfig(Card.CardId).Quality;
             var cardColor = Color.FromName(HSTypes.I2QualityColor((int)cardQual));
             var brush = new SolidBrush(cardColor);
             g.DrawString(cardName, font, Brushes.Black, x + 1, mouse != CardMouseState.MouseOn ? y + 107 : y+ 112);

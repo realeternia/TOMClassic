@@ -4,14 +4,15 @@ using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus;
 using NarlonLib.Control;
-using TaleofMonsters.Config;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.Decks;
 using NarlonLib.Math;
+using TaleofMonsters.Core.Config;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Others;
+using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
@@ -24,7 +25,7 @@ namespace TaleofMonsters.Forms
         private int headId = -1;
         private uint dna;
         private HSCursor myCursor;
-        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
+        private ImageToolTip tooltip = SystemToolTip.Instance;
         private VirtualRegion vRegion;
         private DialogResult result;
 

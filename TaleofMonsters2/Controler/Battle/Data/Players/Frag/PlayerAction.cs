@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
 using NarlonLib.Log;
-using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.MemMissile;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Config;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards.Monsters;
 

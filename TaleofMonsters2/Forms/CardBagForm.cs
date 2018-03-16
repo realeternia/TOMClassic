@@ -3,14 +3,15 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
-using TaleofMonsters.Config;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Interface;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Effects;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
@@ -21,7 +22,7 @@ namespace TaleofMonsters.Forms
     {
         private VirtualRegion vRegion;
         private int[] cardOpenArray;//卡牌配表id
-        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
+        private ImageToolTip tooltip = SystemToolTip.Instance;
         private int[] cardPos;
         private CoverEffect[] coverEffect;
         private int itemId; //卡包id

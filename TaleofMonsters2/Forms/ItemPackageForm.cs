@@ -2,8 +2,9 @@
 using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Control;
-using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType.Items;
+using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
@@ -13,7 +14,7 @@ namespace TaleofMonsters.Forms
     internal sealed partial class ItemPackageForm : BasePanel
     {
         private VirtualRegion vRegion;
-        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
+        private ImageToolTip tooltip = SystemToolTip.Instance;
         private int[] itemPos;
         private int[] itemIds; //卡包id
 

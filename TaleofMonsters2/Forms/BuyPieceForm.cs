@@ -5,15 +5,15 @@ using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus;
 using NarlonLib.Math;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.Forms.Items;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Core;
-using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms
 {

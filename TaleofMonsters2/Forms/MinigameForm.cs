@@ -2,11 +2,11 @@
 using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
-using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.Core.Loader;
+using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
-using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms
 {

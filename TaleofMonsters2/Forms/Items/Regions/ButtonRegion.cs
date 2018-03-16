@@ -1,4 +1,5 @@
 using System.Drawing;
+using TaleofMonsters.Core.Loader;
 
 namespace TaleofMonsters.Forms.Items.Regions
 {
@@ -43,7 +44,7 @@ namespace TaleofMonsters.Forms.Items.Regions
             {
                 if (string.IsNullOrEmpty(path2))
                 {
-                    Image img = Controler.Loader.PicLoader.Read("Button", path1);
+                    Image img = PicLoader.Read("Button", path1);
                     if (img != null)
                     {
                         if (isMouseDown)
@@ -63,7 +64,7 @@ namespace TaleofMonsters.Forms.Items.Regions
                 }
                 else
                 {
-                    Image img = Controler.Loader.PicLoader.Read("Button", isIn | state != RegionState.Free ? path2 : path1);
+                    Image img = PicLoader.Read("Button", isIn | state != RegionState.Free ? path2 : path1);
                     if (img != null)
                     {
                         if (isMouseDown)

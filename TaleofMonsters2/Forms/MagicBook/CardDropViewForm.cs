@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using TaleofMonsters.Config;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.Core;
 using TaleofMonsters.Forms.Items.Core;
 using ConfigDatas;
 using ControlPlus;
 using NarlonLib.Control;
+using TaleofMonsters.Core.Config;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType.CardPieces;
 using TaleofMonsters.DataType.Items;
+using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
 
@@ -30,7 +31,7 @@ namespace TaleofMonsters.Forms.MagicBook
         private CardDetail cardDetail;
         private NLSelectPanel selectPanel;
 
-        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
+        private ImageToolTip tooltip = SystemToolTip.Instance;
         private VirtualRegion vRegion;
 
         public CardDropViewForm()

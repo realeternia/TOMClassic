@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using FMOD;
 using NarlonLib.Log;
 using TaleofMonsters.Controler.World;
+using TaleofMonsters.ThirdParty;
 
 namespace TaleofMonsters.Core
 {
@@ -12,7 +12,7 @@ namespace TaleofMonsters.Core
         private static Stack<string> bgmHistory;
         private static string sceneBGM;
 
-        private static FMOD.System _fmod = null;
+        private static ThirdParty.System _fmod = null;
         private const float BGMVolume = 0.005f; //背景音乐音量
         private const float EffectVolume = 0.02f; //特效音乐音量
 
@@ -32,7 +32,7 @@ namespace TaleofMonsters.Core
 
             Factory.System_Create(out _fmod);
             _fmod.setDSPBufferSize(4096, 2);
-            var result = _fmod.init(16, FMOD.INITFLAGS.NORMAL, (IntPtr)null);//16个频道
+            var result = _fmod.init(16, INITFLAGS.NORMAL, (IntPtr)null);//16个频道
             if (result != RESULT.OK)
             {
                 NLog.Error("fmod SoundManager " + result);

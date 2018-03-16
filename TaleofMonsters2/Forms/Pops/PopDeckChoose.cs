@@ -2,9 +2,9 @@
 using System.Drawing;
 using System.Windows.Forms;
 using ControlPlus;
-using TaleofMonsters.Config;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Config;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Maps;
 using TaleofMonsters.DataType.User;

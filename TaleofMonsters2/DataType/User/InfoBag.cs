@@ -6,7 +6,7 @@ using NarlonLib.Tools;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Others;
-using TaleofMonsters.MainItem;
+using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.DataType.User
 {

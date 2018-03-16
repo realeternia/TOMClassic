@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using ConfigDatas;
-using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards.Monsters;
 

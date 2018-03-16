@@ -3,6 +3,7 @@ using NarlonLib.Math;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Decks;
 using ConfigDatas;
+using TaleofMonsters.Core.Config;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.Tools;
 
@@ -132,7 +133,7 @@ namespace TaleofMonsters.DataType.Cards.Spells
         {
             const string stars = "★★★★★★★★★★";
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
-            var cardQual = Config.CardConfigManager.GetCardConfig(CardId).Quality;
+            var cardQual = CardConfigManager.GetCardConfig(CardId).Quality;
             tipData.AddTextNewLine(spell.SpellConfig.Name, HSTypes.I2QualityColor((int)cardQual), 20);
             tipData.AddText(string.Format("Lv{0}({1})", card.Level, spell.SpellConfig.Ename), "MediumAquamarine");
             tipData.AddTextNewLine(stars.Substring(10 - spell.SpellConfig.Star), "Yellow", 20);

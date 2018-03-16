@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using NarlonLib.Math;
 using TaleofMonsters.Forms;
-using TaleofMonsters.MainItem;
+using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.DataType.Others
 {

@@ -4,11 +4,12 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using ConfigDatas;
 using NarlonLib.Control;
-using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.Players;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Config;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType.Cards;
+using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.Controler.Battle.Components
@@ -18,7 +19,7 @@ namespace TaleofMonsters.Controler.Battle.Components
         internal delegate void LifeClockFigueEventHandler();
         internal event LifeClockFigueEventHandler HeadClicked;
 
-        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
+        private ImageToolTip tooltip = SystemToolTip.Instance;
 
         private Player self;
         private Image back;

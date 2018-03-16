@@ -3,9 +3,9 @@ using System.Drawing;
 using ConfigDatas;
 using ControlPlus;
 using NarlonLib.Math;
+using TaleofMonsters.Core.Loader;
+using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Core;
-using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms.MiniGame
 {

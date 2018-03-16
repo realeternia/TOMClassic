@@ -5,6 +5,7 @@ using NarlonLib.Math;
 using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.Skills;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Config;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.Tools;
 
@@ -199,7 +200,7 @@ namespace TaleofMonsters.DataType.Cards.Weapons
         {
             const string stars = "★★★★★★★★★★";
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
-            var cardQual = Config.CardConfigManager.GetCardConfig(CardId).Quality;
+            var cardQual = CardConfigManager.GetCardConfig(CardId).Quality;
             tipData.AddTextNewLine(weapon.WeaponConfig.Name, HSTypes.I2QualityColor((int)cardQual), 20);
             tipData.AddText(string.Format("Lv{0}({1})", card.Level, weapon.WeaponConfig.Ename), "MediumAquamarine");
             tipData.AddTextNewLine(stars.Substring(10 - weapon.WeaponConfig.Star), "Yellow", 20);

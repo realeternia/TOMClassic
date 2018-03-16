@@ -4,9 +4,9 @@ using System.IO;
 using ConfigDatas;
 using NarlonLib.Core;
 using NarlonLib.Math;
-using TaleofMonsters.Config;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Config;
+using TaleofMonsters.Core.Loader;
 
 namespace TaleofMonsters.DataType.Decks
 {

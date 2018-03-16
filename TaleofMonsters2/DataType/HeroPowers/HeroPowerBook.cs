@@ -1,10 +1,10 @@
 ﻿using System.Drawing;
 using ConfigDatas;
-using TaleofMonsters.Config;
-using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.Controler.Resource;
+using TaleofMonsters.Core.Config;
+using TaleofMonsters.Core.Loader;
+using TaleofMonsters.Tools;
 
-namespace TaleofMonsters.DataType.HeroSkills
+namespace TaleofMonsters.DataType.HeroPowers
 {
     /// <summary>
     /// 英雄的主动技能

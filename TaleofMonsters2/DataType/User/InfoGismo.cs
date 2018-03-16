@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Scenes;
-using TaleofMonsters.MainItem;
+using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.DataType.User
 {

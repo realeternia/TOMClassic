@@ -1,5 +1,5 @@
-﻿using TaleofMonsters.Controler.Loader;
-using System.Drawing;
+﻿using System.Drawing;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType.Decks;
 
 namespace TaleofMonsters.DataType.Cards

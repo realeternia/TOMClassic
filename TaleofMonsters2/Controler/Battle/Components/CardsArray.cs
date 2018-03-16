@@ -7,6 +7,7 @@ using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Core.Interface;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards;
+using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.Controler.Battle.Components
 {
@@ -19,7 +20,7 @@ namespace TaleofMonsters.Controler.Battle.Components
         private int mouseIndex = -1;//从1开始
         private int clickIndex = -1;//从1开始
         private int realCardNum = 0;
-        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
+        private ImageToolTip tooltip = SystemToolTip.Instance;
 
         private Point lastMousePos = new Point(0);
         private bool myEnabled = true;

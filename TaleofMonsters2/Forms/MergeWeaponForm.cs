@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Equips;
 using TaleofMonsters.DataType.Items;
@@ -14,15 +13,17 @@ using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using ControlPlus;
 using NarlonLib.Tools;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.User.Db;
+using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.Forms
 {
     internal sealed partial class MergeWeaponForm : BasePanel
     {
-        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
+        private ImageToolTip tooltip = SystemToolTip.Instance;
         private VirtualRegion vRegion;
         private int[] itemCounts;
         private DbMergeData[] mergeInfos;

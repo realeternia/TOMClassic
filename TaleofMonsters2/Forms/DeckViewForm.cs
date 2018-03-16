@@ -6,20 +6,20 @@ using ConfigDatas;
 using ControlPlus;
 using NarlonLib.Control;
 using NarlonLib.Log;
-using TaleofMonsters.Config;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Config;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.User.Db;
+using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
 using TaleofMonsters.Forms.MagicBook;
-using TaleofMonsters.MainItem;
 
 namespace TaleofMonsters.Forms
 {

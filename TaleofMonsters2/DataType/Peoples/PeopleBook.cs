@@ -5,13 +5,13 @@ using NarlonLib.Log;
 using NarlonLib.Math;
 using NarlonLib.Tools;
 using TaleofMonsters.Controler.Battle;
-using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.Controler.Resource;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Pops;
-using TaleofMonsters.MainItem;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.DataType.Peoples
 {

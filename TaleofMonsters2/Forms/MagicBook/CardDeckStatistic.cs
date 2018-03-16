@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using NarlonLib.Control;
-using TaleofMonsters.Config;
+using TaleofMonsters.Core.Config;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Decks;
 

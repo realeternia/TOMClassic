@@ -2,8 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Log;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items;

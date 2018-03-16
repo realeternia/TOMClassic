@@ -4,13 +4,13 @@ using System.Drawing;
 using System.IO;
 using ConfigDatas;
 using NarlonLib.Math;
-using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.Controler.Resource;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.User;
-using TaleofMonsters.MainItem.Quests.SceneQuests;
-using TaleofMonsters.MainItem.Scenes;
+using TaleofMonsters.Forms.CMain.Quests.SceneQuests;
+using TaleofMonsters.Forms.CMain.Scenes;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.DataType.Scenes
 {

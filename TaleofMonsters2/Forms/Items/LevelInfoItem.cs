@@ -3,8 +3,8 @@ using System.Windows.Forms;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.Core;
-using TaleofMonsters.Controler.Loader;
 using ConfigDatas;
+using TaleofMonsters.Core.Loader;
 
 namespace TaleofMonsters.Forms.Items
 {

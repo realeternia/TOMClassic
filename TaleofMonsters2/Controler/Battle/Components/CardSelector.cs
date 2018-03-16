@@ -4,10 +4,11 @@ using System.Windows.Forms;
 using NarlonLib.Control;
 using TaleofMonsters.Controler.Battle.Components.CardSelect;
 using TaleofMonsters.Controler.Battle.Data.Players;
-using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Decks;
+using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Regions;
 
 namespace TaleofMonsters.Controler.Battle.Components
@@ -20,7 +21,7 @@ namespace TaleofMonsters.Controler.Battle.Components
         private List<CardSlot> cards;
         private VirtualRegion region;
         private ICardSelectMethod selectMethod;
-        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
+        private ImageToolTip tooltip = SystemToolTip.Instance;
 
         private bool canClick;
 

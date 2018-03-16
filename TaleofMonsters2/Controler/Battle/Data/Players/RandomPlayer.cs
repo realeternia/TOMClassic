@@ -1,7 +1,7 @@
 ﻿using ConfigDatas;
-using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Config;
 using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.User;
 

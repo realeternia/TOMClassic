@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.User;
@@ -14,7 +13,9 @@ using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.Controler.Battle.DataTent;
 using TaleofMonsters.Controler.Battle.Tool;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType;
+using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.Controler.Battle
 {
@@ -26,7 +27,7 @@ namespace TaleofMonsters.Controler.Battle
         private int rightId;
         private uint[] resource;
         private uint exp;
-        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
+        private ImageToolTip tooltip = SystemToolTip.Instance;
         private VirtualRegion vRegion;
 
         private List<int> rewardItemList = new List<int>();

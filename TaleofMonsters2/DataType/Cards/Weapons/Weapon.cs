@@ -1,6 +1,6 @@
 ﻿using ConfigDatas;
 using NarlonLib.Math;
-using TaleofMonsters.Config;
+using TaleofMonsters.Core.Config;
 
 namespace TaleofMonsters.DataType.Cards.Weapons
 {

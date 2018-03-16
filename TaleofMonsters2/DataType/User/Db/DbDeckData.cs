@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using ConfigDatas;
-using TaleofMonsters.Config;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Config;
 using TaleofMonsters.DataType.Decks;
 
 namespace TaleofMonsters.DataType.User.Db

@@ -2,8 +2,8 @@
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using TaleofMonsters.Controler.Battle.Tool;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
 
 namespace TaleofMonsters.Controler.Battle.Components
 {

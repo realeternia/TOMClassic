@@ -4,18 +4,19 @@ using System.Drawing;
 using System.Windows.Forms;
 using ControlPlus;
 using NarlonLib.Control;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Equips;
-using TaleofMonsters.DataType.HeroSkills;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.Forms.Items.Core;
 using ConfigDatas;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
+using TaleofMonsters.DataType.HeroPowers;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.Forms
 {
@@ -29,7 +30,7 @@ namespace TaleofMonsters.Forms
         private int selectJobId;
         private VirtualRegion vRegion;
         private ColorWordRegion jobDes;
-        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
+        private ImageToolTip tooltip = SystemToolTip.Instance;
 
         private List<PictureRegionCellType> cellTypeList = new List<PictureRegionCellType>();
 

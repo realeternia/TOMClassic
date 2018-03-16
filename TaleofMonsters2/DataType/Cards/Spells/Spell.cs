@@ -1,8 +1,8 @@
 using System;
 using NarlonLib.Math;
-using TaleofMonsters.Config;
 using ConfigDatas;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Config;
 
 namespace TaleofMonsters.DataType.Cards.Spells
 {

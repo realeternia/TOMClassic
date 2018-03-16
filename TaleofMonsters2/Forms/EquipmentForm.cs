@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Control;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Equips;
@@ -11,9 +10,10 @@ using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using ConfigDatas;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Quests;
-using TaleofMonsters.MainItem;
+using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.Forms
 {

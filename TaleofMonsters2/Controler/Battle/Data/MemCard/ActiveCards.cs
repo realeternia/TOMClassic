@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using NarlonLib.Math;
 using NarlonLib.Tools;
-using TaleofMonsters.Config;
+using TaleofMonsters.Core.Config;
 using TaleofMonsters.DataType.Decks;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemCard

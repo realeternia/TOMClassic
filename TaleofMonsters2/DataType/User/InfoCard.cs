@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using NarlonLib.Tools;
-using TaleofMonsters.Config;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Config;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User.Db;
-using TaleofMonsters.MainItem;
+using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.DataType.User
 {

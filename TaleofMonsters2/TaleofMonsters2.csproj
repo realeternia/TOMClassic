@@ -89,8 +89,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\Config.cs" />
-    <Compile Include="Config\ConfigIdManager.cs" />
+    <Compile Include="Core\Config\Config.cs" />
+    <Compile Include="Core\Config\ConfigIdManager.cs" />
     <Compile Include="Controler\Battle\AIStrategy.cs">
     </Compile>
     <Compile Include="Controler\Battle\Components\CardFlow.cs">
@@ -163,9 +163,10 @@
     <Compile Include="Controler\Battle\FastBattle.cs" />
     <Compile Include="Controler\GM\GMCommand.cs" />
     <Compile Include="Controler\GM\GmScript.cs" />
-    <Compile Include="Controler\Resource\ImageManager.cs" />
-    <Compile Include="Controler\Rpc\S2CImplement.cs" />
-    <Compile Include="Controler\Rpc\C2SSender.cs" />
+    <Compile Include="Tools\ImageManager.cs" />
+    <Compile Include="Rpc\S2CImplement.cs" />
+    <Compile Include="Rpc\C2SSender.cs" />
+    <Compile Include="Rpc\TalePlayer.cs" />
     <Compile Include="Controler\World\TimeManager.cs" />
     <Compile Include="Controler\World\WorldInfoManager.cs" />
     <Compile Include="DataType\Blesses\BlessBook.cs" />
@@ -297,48 +298,48 @@
     <Compile Include="Forms\StoryForm.Designer.cs">
       <DependentUpon>StoryForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainItem\Blesses\BlessManager.cs" />
-    <Compile Include="MainItem\MainFlowController.cs" />
-    <Compile Include="MainItem\Quests\TalkEventItem.cs" />
-    <Compile Include="MainItem\Quests\TalkEventItemEnd.cs" />
-    <Compile Include="MainItem\Quests\TalkEventItemGame.cs" />
-    <Compile Include="MainItem\Quests\TalkEventItemNpc.cs" />
-    <Compile Include="MainItem\Quests\TalkEventItemChoose.cs" />
-    <Compile Include="MainItem\Quests\TalkEventItemPunish.cs" />
-    <Compile Include="MainItem\Quests\TalkEventItemPay.cs" />
-    <Compile Include="MainItem\Quests\TalkEventItemRewardQuest.cs" />
-    <Compile Include="MainItem\Quests\TalkEventItemTest.cs" />
-    <Compile Include="MainItem\Quests\TalkEventItemRoll.cs" />
-    <Compile Include="MainItem\Quests\SceneQuests\SceneQuestEvent.cs" />
-    <Compile Include="MainItem\Quests\SceneQuests\SceneQuestRollItem.cs" />
-    <Compile Include="MainItem\Quests\SceneQuests\SceneQuestAnswer.cs" />
-    <Compile Include="MainItem\Quests\SceneQuests\SceneQuestSay.cs" />
-    <Compile Include="MainItem\Quests\SceneQuests\SceneQuestBlock.cs" />
-    <Compile Include="MainItem\Quests\TalkEventItemFight.cs" />
-    <Compile Include="MainItem\Quests\TalkEventItemReward.cs" />
-    <Compile Include="MainItem\Quests\TalkEventItemAction.cs" />
-    <Compile Include="MainItem\Quests\TalkEventItemTrade.cs" />
+    <Compile Include="Forms\CMain\Blesses\BlessManager.cs" />
+    <Compile Include="Forms\CMain\MainFlowController.cs" />
+    <Compile Include="Forms\CMain\Quests\TalkEventItem.cs" />
+    <Compile Include="Forms\CMain\Quests\TalkEventItemEnd.cs" />
+    <Compile Include="Forms\CMain\Quests\TalkEventItemGame.cs" />
+    <Compile Include="Forms\CMain\Quests\TalkEventItemNpc.cs" />
+    <Compile Include="Forms\CMain\Quests\TalkEventItemChoose.cs" />
+    <Compile Include="Forms\CMain\Quests\TalkEventItemPunish.cs" />
+    <Compile Include="Forms\CMain\Quests\TalkEventItemPay.cs" />
+    <Compile Include="Forms\CMain\Quests\TalkEventItemRewardQuest.cs" />
+    <Compile Include="Forms\CMain\Quests\TalkEventItemTest.cs" />
+    <Compile Include="Forms\CMain\Quests\TalkEventItemRoll.cs" />
+    <Compile Include="Forms\CMain\Quests\SceneQuests\SceneQuestEvent.cs" />
+    <Compile Include="Forms\CMain\Quests\SceneQuests\SceneQuestRollItem.cs" />
+    <Compile Include="Forms\CMain\Quests\SceneQuests\SceneQuestAnswer.cs" />
+    <Compile Include="Forms\CMain\Quests\SceneQuests\SceneQuestSay.cs" />
+    <Compile Include="Forms\CMain\Quests\SceneQuests\SceneQuestBlock.cs" />
+    <Compile Include="Forms\CMain\Quests\TalkEventItemFight.cs" />
+    <Compile Include="Forms\CMain\Quests\TalkEventItemReward.cs" />
+    <Compile Include="Forms\CMain\Quests\TalkEventItemAction.cs" />
+    <Compile Include="Forms\CMain\Quests\TalkEventItemTrade.cs" />
     <Compile Include="Controler\GM\GMCodeZone.cs" />
-    <Compile Include="MainItem\Scenes\SceneInfo.cs" />
-    <Compile Include="MainItem\Scenes\SceneInfoRT.cs" />
-    <Compile Include="MainItem\Scenes\SceneObjects\SceneWarp.cs" />
-    <Compile Include="MainItem\Scenes\SceneObjects\SceneQuest.cs" />
-    <Compile Include="MainItem\Scenes\SceneObjects\SceneTile.cs" />
-    <Compile Include="MainItem\Scenes\SceneRules\ISceneRule.cs" />
-    <Compile Include="MainItem\Scenes\SceneRules\SceneRuleTown.cs" />
-    <Compile Include="MainItem\Scenes\SceneRules\SceneRuleDungeon.cs" />
-    <Compile Include="MainItem\Scenes\SceneRules\SceneRuleCommon.cs" />
-    <Compile Include="MainItem\SystemSetup.cs">
+    <Compile Include="Forms\CMain\Scenes\SceneInfo.cs" />
+    <Compile Include="Forms\CMain\Scenes\SceneInfoRT.cs" />
+    <Compile Include="Forms\CMain\Scenes\SceneObjects\SceneWarp.cs" />
+    <Compile Include="Forms\CMain\Scenes\SceneObjects\SceneQuest.cs" />
+    <Compile Include="Forms\CMain\Scenes\SceneObjects\SceneTile.cs" />
+    <Compile Include="Forms\CMain\Scenes\SceneRules\ISceneRule.cs" />
+    <Compile Include="Forms\CMain\Scenes\SceneRules\SceneRuleTown.cs" />
+    <Compile Include="Forms\CMain\Scenes\SceneRules\SceneRuleDungeon.cs" />
+    <Compile Include="Forms\CMain\Scenes\SceneRules\SceneRuleCommon.cs" />
+    <Compile Include="Forms\CMain\SystemSetup.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MainItem\SystemSetup.Designer.cs">
+    <Compile Include="Forms\CMain\SystemSetup.Designer.cs">
       <DependentUpon>SystemSetup.cs</DependentUpon>
     </Compile>
     <Compile Include="ThirdParty\fmod.cs" />
     <Compile Include="DataType\CustomTypes.cs" />
     <Compile Include="DataType\Equips\Equip.cs" />
     <Compile Include="DataType\HeroPowers\HeroPowerBook.cs" />
-    <Compile Include="Config\CardConfigManager.cs" />
+    <Compile Include="Core\Config\CardConfigManager.cs" />
     <Compile Include="Core\DbSerializer.cs" />
     <Compile Include="Core\HSImageAttributes.cs" />
     <Compile Include="Core\Interface\IRegionDecorator.cs" />
@@ -675,20 +676,20 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainItem\MainTipManager.cs" />
-    <Compile Include="MainItem\Scenes\SceneObjects\SceneObject.cs" />
-    <Compile Include="MainItem\PanelManager.cs" />
-    <Compile Include="MainItem\PopMenuDeck.cs">
+    <Compile Include="Forms\CMain\MainTipManager.cs" />
+    <Compile Include="Forms\CMain\Scenes\SceneObjects\SceneObject.cs" />
+    <Compile Include="Forms\CMain\PanelManager.cs" />
+    <Compile Include="Forms\CMain\PopMenuDeck.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MainItem\PopMenuDeck.Designer.cs">
+    <Compile Include="Forms\CMain\PopMenuDeck.Designer.cs">
       <DependentUpon>PopMenuDeck.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainItem\Scenes\Scene.cs" />
-    <Compile Include="MainItem\SystemMenu.cs">
+    <Compile Include="Forms\CMain\Scenes\Scene.cs" />
+    <Compile Include="Forms\CMain\SystemMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MainItem\SystemMenu.Designer.cs">
+    <Compile Include="Forms\CMain\SystemMenu.Designer.cs">
       <DependentUpon>SystemMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="DataType\Scenes\SceneBook.cs" />
@@ -699,7 +700,7 @@
     <Compile Include="Controler\Battle\Data\Players\Frag\EquipModifier.cs" />
     <Compile Include="DataType\User\Profile.cs" />
     <Compile Include="Controler\Battle\Data\Players\RandomPlayer.cs" />
-    <Compile Include="MainItem\Scenes\SceneManager.cs" />
+    <Compile Include="Forms\CMain\Scenes\SceneManager.cs" />
     <Compile Include="DataType\Buffs\Buff.cs" />
     <Compile Include="DataType\Cards\Card.cs" />
     <Compile Include="Forms\MagicBook\CardDetail.cs">
@@ -732,26 +733,26 @@
     <Compile Include="Core\HSCursor.cs" />
     <Compile Include="Core\HSIcons.cs" />
     <Compile Include="Core\HSTypes.cs" />
-    <Compile Include="Controler\Loader\PicLoader.cs" />
+    <Compile Include="Core\Loader\PicLoader.cs" />
     <Compile Include="Controler\Battle\Data\Players\Player.cs" />
-    <Compile Include="MainItem\SystemMenuManager.cs" />
-    <Compile Include="MainItem\SystemToolTip.cs" />
-    <Compile Include="MainItem\PopMenuBase.cs">
+    <Compile Include="Forms\CMain\SystemMenuManager.cs" />
+    <Compile Include="Forms\CMain\SystemToolTip.cs" />
+    <Compile Include="Forms\CMain\PopMenuBase.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MainItem\PopMenuBase.Designer.cs">
+    <Compile Include="Forms\CMain\PopMenuBase.Designer.cs">
       <DependentUpon>PopMenuBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainItem\PopMenuEquip.cs">
+    <Compile Include="Forms\CMain\PopMenuEquip.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MainItem\PopMenuEquip.Designer.cs">
+    <Compile Include="Forms\CMain\PopMenuEquip.Designer.cs">
       <DependentUpon>PopMenuEquip.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainItem\PopMenuItem.cs">
+    <Compile Include="Forms\CMain\PopMenuItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MainItem\PopMenuItem.Designer.cs">
+    <Compile Include="Forms\CMain\PopMenuItem.Designer.cs">
       <DependentUpon>PopMenuItem.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -1021,27 +1022,27 @@
       <SubType>Designer</SubType>
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainItem\PopMenuDeck.resx">
+    <EmbeddedResource Include="Forms\CMain\PopMenuDeck.resx">
       <SubType>Designer</SubType>
       <DependentUpon>PopMenuDeck.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainItem\SystemSetup.resx">
+    <EmbeddedResource Include="Forms\CMain\SystemSetup.resx">
       <DependentUpon>SystemSetup.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainItem\SystemMenu.resx">
+    <EmbeddedResource Include="Forms\CMain\SystemMenu.resx">
       <SubType>Designer</SubType>
       <DependentUpon>SystemMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainItem\PopMenuBase.resx">
+    <EmbeddedResource Include="Forms\CMain\PopMenuBase.resx">
       <DependentUpon>PopMenuBase.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainItem\PopMenuEquip.resx">
+    <EmbeddedResource Include="Forms\CMain\PopMenuEquip.resx">
       <DependentUpon>PopMenuEquip.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainItem\PopMenuItem.resx">
+    <EmbeddedResource Include="Forms\CMain\PopMenuItem.resx">
       <DependentUpon>PopMenuItem.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -1129,7 +1130,7 @@
     <Compile Include="Forms\DeckViewForm.Designer.cs">
       <DependentUpon>DeckViewForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controler\Loader\DataLoader.cs" />
+    <Compile Include="Core\Loader\DataLoader.cs" />
     <Compile Include="Forms\PeopleViewForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -1148,7 +1149,7 @@
     <Compile Include="Controler\Battle\BattleResultForm.Designer.cs">
       <DependentUpon>BattleResultForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainItem\ToolBarItemData.cs" />
+    <Compile Include="Forms\CMain\ToolBarItemData.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BaseType\BaseType.csproj">

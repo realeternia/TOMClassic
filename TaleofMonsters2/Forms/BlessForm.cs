@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Forms.Items;
 using TaleofMonsters.Forms.Items.Core;
 using NarlonLib.Core;
 using NarlonLib.Tools;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.User;
-using TaleofMonsters.MainItem.Blesses;
+using TaleofMonsters.Forms.CMain.Blesses;
 
 namespace TaleofMonsters.Forms
 {

@@ -4,11 +4,12 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.Forms.Items
 {
@@ -19,7 +20,7 @@ namespace TaleofMonsters.Forms.Items
         private bool show;
         private int tar; //背包里的格子偏移
         private int page;
-        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
+        private ImageToolTip tooltip = SystemToolTip.Instance;
         private HSCursor myCursor;
         private List<int> ids;
         private MiniItemViewItem[] items;

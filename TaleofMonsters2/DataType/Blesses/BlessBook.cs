@@ -4,9 +4,9 @@ using System.Drawing;
 using ConfigDatas;
 using ControlPlus;
 using NarlonLib.Math;
-using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.Controler.Resource;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.DataType.Blesses
 {

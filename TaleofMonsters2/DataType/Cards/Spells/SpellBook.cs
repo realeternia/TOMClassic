@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using NarlonLib.Log;
 using NarlonLib.Math;
-using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.Controler.Resource;
 using ConfigDatas;
-using TaleofMonsters.Config;
+using TaleofMonsters.Core.Config;
+using TaleofMonsters.Core.Loader;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.DataType.Cards.Spells
 {

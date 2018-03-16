@@ -2,8 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.Items.Core;

@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
-using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Forms.Items.Core;
 
 namespace TaleofMonsters.Forms

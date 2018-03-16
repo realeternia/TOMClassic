@@ -4,6 +4,7 @@ using TaleofMonsters.Core;
 using ConfigDatas;
 using NarlonLib.Tools;
 using TaleofMonsters.DataType.Blesses;
+using TaleofMonsters.Rpc;
 
 namespace TaleofMonsters.DataType.User
 {
@@ -97,7 +98,7 @@ namespace TaleofMonsters.DataType.User
             InfoEquip.CheckExpireAndDura(true);
             InfoQuest.OnSwitchScene(isWarp);
             if(isWarp)
-                UserProfile.Save();//每次切场景存个档
+                TalePlayer.Save();//每次切场景存个档
         }
 
         public void OnNewDay()

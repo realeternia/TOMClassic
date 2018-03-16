@@ -2,6 +2,7 @@
 using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Config;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Buffs;
 using TaleofMonsters.DataType.Cards.Monsters;
@@ -42,7 +43,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         private Image GetMonsterImage()
         {
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
-            var cardQual = Config.CardConfigManager.GetCardConfig(self.CardId).Quality;
+            var cardQual = CardConfigManager.GetCardConfig(self.CardId).Quality;
             var name = string.Format("{0}(Lv{1})", self.Avatar.Name, self.Level);
             tipData.AddTextNewLine(name, HSTypes.I2QualityColor((int)cardQual), 20);
             tipData.AddImage(HSIcons.GetIconsByEName("atr" + self.Avatar.MonsterConfig.Attr), 16, 16);

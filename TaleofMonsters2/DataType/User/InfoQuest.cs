@@ -4,8 +4,8 @@ using NarlonLib.Log;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.User.Db;
-using TaleofMonsters.MainItem;
-using TaleofMonsters.MainItem.Scenes;
+using TaleofMonsters.Forms.CMain;
+using TaleofMonsters.Forms.CMain.Scenes;
 
 namespace TaleofMonsters.DataType.User
 {

@@ -6,8 +6,8 @@ using NarlonLib.Math;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Blesses;
 using TaleofMonsters.DataType.User.Db;
-using TaleofMonsters.MainItem;
-using TaleofMonsters.MainItem.Blesses;
+using TaleofMonsters.Forms.CMain;
+using TaleofMonsters.Forms.CMain.Blesses;
 
 namespace TaleofMonsters.DataType.User
 {

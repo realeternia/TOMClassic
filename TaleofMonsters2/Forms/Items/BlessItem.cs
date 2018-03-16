@@ -2,14 +2,15 @@
 using System.Drawing;
 using ConfigDatas;
 using NarlonLib.Control;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Blesses;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.Forms.CMain;
+using TaleofMonsters.Forms.CMain.Blesses;
 using TaleofMonsters.Forms.Items.Regions;
-using TaleofMonsters.MainItem.Blesses;
 
 namespace TaleofMonsters.Forms.Items
 {
@@ -18,7 +19,7 @@ namespace TaleofMonsters.Forms.Items
         private int index;
         private int blessId;
         private bool show;
-        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
+        private ImageToolTip tooltip = SystemToolTip.Instance;
         private VirtualRegion vRegion;
 
         private int x, y, width, height;

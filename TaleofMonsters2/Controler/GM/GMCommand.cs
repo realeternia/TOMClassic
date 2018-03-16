@@ -7,9 +7,9 @@ using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms;
-using TaleofMonsters.MainItem;
-using TaleofMonsters.MainItem.Blesses;
-using TaleofMonsters.MainItem.Scenes;
+using TaleofMonsters.Forms.CMain;
+using TaleofMonsters.Forms.CMain.Blesses;
+using TaleofMonsters.Forms.CMain.Scenes;
 
 namespace TaleofMonsters.Controler.GM
 {

@@ -4,12 +4,13 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.User.Db;
+using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
@@ -22,7 +23,7 @@ namespace TaleofMonsters.Forms
         private const int cardHeight = 60;
         private bool showImage;
         private int realTar = -1;
-        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
+        private ImageToolTip tooltip = SystemToolTip.Instance;
         private List<DbRivalState> peopleList;
         private VirtualRegion vRegion;
 

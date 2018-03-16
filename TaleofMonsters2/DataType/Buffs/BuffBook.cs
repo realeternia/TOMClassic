@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.Controler.Resource;
 using ConfigDatas;
+using TaleofMonsters.Core.Loader;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.DataType.Buffs
 {

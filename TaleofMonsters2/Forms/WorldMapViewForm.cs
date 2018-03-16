@@ -5,12 +5,12 @@ using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus;
 using NarlonLib.Math;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.Forms.CMain.Scenes;
 using TaleofMonsters.Forms.Items.Core;
-using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.Forms
 {

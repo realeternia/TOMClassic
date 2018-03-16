@@ -5,21 +5,22 @@ using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus;
 using NarlonLib.Control;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.User;
 using TaleofMonsters.DataType.Scenes;
+using TaleofMonsters.Forms.CMain;
+using TaleofMonsters.Forms.CMain.Scenes;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
-using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.Forms
 {
     internal partial class DungeonForm : BasePanel
     {
         private Image backImage;
-        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
+        private ImageToolTip tooltip = SystemToolTip.Instance;
         private VirtualRegion vRegion;
         private List<int> gismoList;
         private int gismoGet;

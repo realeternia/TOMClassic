@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Math;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Forms.Items.Regions;
 
 namespace TaleofMonsters.Forms.MiniGame

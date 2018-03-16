@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.DataType.User;
 using NarlonLib.Control;
-using TaleofMonsters.Config;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Equips;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
+using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Regions;
 
 namespace TaleofMonsters.Forms.Pops
@@ -19,7 +19,7 @@ namespace TaleofMonsters.Forms.Pops
         private int count;
         private string fontcolor;
         private VirtualRegion vRegion;
-        private ImageToolTip toolTip =MainItem.SystemToolTip.Instance;
+        private ImageToolTip toolTip =SystemToolTip.Instance;
 
         public PopBuyProduct()
         {

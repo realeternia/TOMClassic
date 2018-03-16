@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Others;
-using TaleofMonsters.MainItem;
+using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.DataType.User
 {
@@ -44,10 +44,10 @@ namespace TaleofMonsters.DataType.User
                 while (CheckNewLevel()) //循环升级
                     OnLevel(Level);
 
-                MainItem.SystemMenuManager.ResetIconState();
+                SystemMenuManager.ResetIconState();
                 MainForm.Instance.RefreshView();
 
-                MainItem.PanelManager.ShowLevelInfo(oldLevel, UserProfile.InfoBasic.Level);
+                PanelManager.ShowLevelInfo(oldLevel, UserProfile.InfoBasic.Level);
             }
         }
 

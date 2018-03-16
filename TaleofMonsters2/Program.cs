@@ -2,8 +2,8 @@
 using System.Windows.Forms;
 using JLM.NetSocket;
 using NarlonLib.Log;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
 
 namespace TaleofMonsters
 {

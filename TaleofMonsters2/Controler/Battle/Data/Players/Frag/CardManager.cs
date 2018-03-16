@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Math;
 using NarlonLib.Tools;
-using TaleofMonsters.Config;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Config;
 using TaleofMonsters.DataType;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players.Frag

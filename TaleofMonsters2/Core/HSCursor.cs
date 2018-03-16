@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
-using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.Core.Loader;
 
 namespace TaleofMonsters.Core
 {

@@ -5,18 +5,19 @@ using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
 using NarlonLib.Drawing;
-using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Others;
 using TaleofMonsters.DataType.Quests;
 using TaleofMonsters.DataType.Scenes;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.Forms.CMain;
+using TaleofMonsters.Forms.CMain.Blesses;
+using TaleofMonsters.Forms.CMain.Quests;
+using TaleofMonsters.Forms.CMain.Quests.SceneQuests;
+using TaleofMonsters.Forms.CMain.Scenes;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
-using TaleofMonsters.MainItem.Blesses;
-using TaleofMonsters.MainItem.Quests;
-using TaleofMonsters.MainItem.Quests.SceneQuests;
-using TaleofMonsters.MainItem.Scenes;
 
 namespace TaleofMonsters.Forms
 {
@@ -31,7 +32,7 @@ namespace TaleofMonsters.Forms
         private SceneQuestConfig config;
         private List<SceneQuestBlock> answerList; //回答区
         private TalkEventItem evtItem; //事件交互区
-        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
+        private ImageToolTip tooltip = SystemToolTip.Instance;
 
         public int EventId { get; set; }
         public int CellId { get; set; } //格子id

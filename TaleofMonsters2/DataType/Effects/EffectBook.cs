@@ -2,8 +2,8 @@
 using System.Drawing;
 using System.IO;
 using NarlonLib.Drawing;
-using TaleofMonsters.Controler.Loader;
-using TaleofMonsters.Controler.Resource;
+using TaleofMonsters.Core.Loader;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.DataType.Effects
 {

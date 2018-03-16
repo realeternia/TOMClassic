@@ -9,10 +9,9 @@
 /* ========================================================================================== */
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
 
-namespace FMOD
+namespace TaleofMonsters.ThirdParty
 {
 /*$ preserve end $*/
 

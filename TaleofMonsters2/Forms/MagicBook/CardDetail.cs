@@ -3,15 +3,16 @@ using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Control;
 using NarlonLib.Drawing;
-using TaleofMonsters.Config;
 using TaleofMonsters.Core;
 using TaleofMonsters.DataType.Cards;
 using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.DataType.Skills;
 using TaleofMonsters.DataType.Decks;
 using ConfigDatas;
+using TaleofMonsters.Core.Config;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Effects;
+using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items;
 using TaleofMonsters.Forms.Items.Regions;
 
@@ -27,7 +28,7 @@ namespace TaleofMonsters.Forms.MagicBook
 
         private int cid;
         private int level;
-        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
+        private ImageToolTip tooltip = SystemToolTip.Instance;
         private Card card;
         private List<MonsterSkill> skills;
         private CoverEffect coverEffect;

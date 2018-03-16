@@ -1,15 +1,16 @@
 using System.Drawing;
 using System.Windows.Forms;
-using TaleofMonsters.Config;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Interface;
 using ConfigDatas;
 using NarlonLib.Control;
 using NarlonLib.Drawing;
 using TaleofMonsters.Controler.Battle;
+using TaleofMonsters.Core.Config;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType.Blesses;
 using TaleofMonsters.DataType.Equips;
+using TaleofMonsters.DataType.HeroPowers;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.Peoples;
 using TaleofMonsters.DataType.Scenes;
@@ -93,7 +94,7 @@ namespace TaleofMonsters.Forms.Items.Regions
                 }
                 else if (type == PictureRegionCellType.HeroSkill)
                 {
-                    img = DataType.HeroSkills.HeroPowerBook.GetImage(nid);
+                    img = HeroPowerBook.GetImage(nid);
                 }
                 else if (type == PictureRegionCellType.CardQual)
                 {

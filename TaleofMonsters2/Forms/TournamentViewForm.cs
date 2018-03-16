@@ -3,11 +3,12 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType;
 using TaleofMonsters.DataType.Tournaments;
 using TaleofMonsters.DataType.User;
+using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Core;
 
 namespace TaleofMonsters.Forms
@@ -15,7 +16,7 @@ namespace TaleofMonsters.Forms
     internal sealed partial class TournamentViewForm : BasePanel
     {
         private int tid;
-        private ImageToolTip tooltip = MainItem.SystemToolTip.Instance;
+        private ImageToolTip tooltip = SystemToolTip.Instance;
 
         public TournamentViewForm()
         {

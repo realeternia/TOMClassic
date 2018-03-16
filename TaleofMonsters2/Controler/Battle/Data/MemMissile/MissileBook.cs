@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
-using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.Core.Loader;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMissile
 {

@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
-using TaleofMonsters.Controler.Loader;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.DataType.Items;
 using TaleofMonsters.DataType.User;
 

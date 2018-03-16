@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-using TaleofMonsters.Controler.Loader;
+using TaleofMonsters.Core.Loader;
 
 namespace TaleofMonsters.Forms.Items.Core
 {
