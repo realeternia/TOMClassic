@@ -8,7 +8,6 @@ using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players.Frag;
 using TaleofMonsters.Core.Interface;
-using TaleofMonsters.DataType.Cards.Monsters;
 using TaleofMonsters.Core;
 using System.Drawing;
 using TaleofMonsters.Controler.Battle.Tool;
@@ -16,11 +15,12 @@ using TaleofMonsters.Controler.Battle.Data.MemSpell;
 using NarlonLib.Log;
 using TaleofMonsters.Controler.Battle.Components.CardSelect;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards.Spells;
-using TaleofMonsters.DataType.Cards.Weapons;
-using TaleofMonsters.DataType.Effects;
-using TaleofMonsters.DataType.Equips;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Cards.Monsters;
+using TaleofMonsters.Datas.Cards.Spells;
+using TaleofMonsters.Datas.Cards.Weapons;
+using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Equips;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
 {
@@ -211,7 +211,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public virtual void InitialCards()
         {
-            DrawNextNCard(null, GameConstants.BattleInitialCardCount, DataType.AddCardReasons.InitCard);
+            DrawNextNCard(null, GameConstants.BattleInitialCardCount, AddCardReasons.InitCard);
 
             BattleManager.Instance.RuleData.CheckInitialCards(this);
         }

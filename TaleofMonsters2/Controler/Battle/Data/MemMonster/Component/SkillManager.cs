@@ -2,10 +2,10 @@
 using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Tool;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards.Monsters;
-using TaleofMonsters.DataType.Effects;
-using TaleofMonsters.DataType.Skills;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Cards.Monsters;
+using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Skills;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 {

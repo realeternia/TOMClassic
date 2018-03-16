@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using TaleofMonsters.DataType.Decks;
 using ConfigDatas;
 using TaleofMonsters.Core.Config;
-using TaleofMonsters.DataType;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Decks;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemCard
 {

@@ -6,10 +6,10 @@ using NarlonLib.Control;
 using NarlonLib.Drawing;
 using NarlonLib.Tools;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards;
-using TaleofMonsters.DataType.Cards.Spells;
-using TaleofMonsters.DataType.Decks;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Cards;
+using TaleofMonsters.Datas.Cards.Spells;
+using TaleofMonsters.Datas.Decks;
 
 namespace TaleofMonsters.Controler.Battle.Components
 {

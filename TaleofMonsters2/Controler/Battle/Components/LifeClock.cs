@@ -8,7 +8,7 @@ using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType.Cards;
+using TaleofMonsters.Datas.Cards;
 using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Tools;
 

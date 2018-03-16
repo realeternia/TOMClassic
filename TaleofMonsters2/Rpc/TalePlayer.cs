@@ -3,7 +3,7 @@ using JLM.NetSocket;
 using NarlonLib.Log;
 using TaleofMonsters.Controler.World;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Rpc
 {

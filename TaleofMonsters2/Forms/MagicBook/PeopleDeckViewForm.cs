@@ -7,8 +7,8 @@ using ControlPlus;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType.Decks;
-using TaleofMonsters.DataType.Peoples;
+using TaleofMonsters.Datas.Decks;
+using TaleofMonsters.Datas.Peoples;
 using TaleofMonsters.Forms.Items.Core;
 
 namespace TaleofMonsters.Forms.MagicBook

@@ -4,10 +4,10 @@ using System.Drawing;
 using System.Windows.Forms;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType.User;
-using TaleofMonsters.DataType.Decks;
-using TaleofMonsters.DataType.Cards;
-using TaleofMonsters.DataType.Others;
+using TaleofMonsters.Datas.Cards;
+using TaleofMonsters.Datas.Decks;
+using TaleofMonsters.Datas.Others;
+using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Forms.Pops
 {

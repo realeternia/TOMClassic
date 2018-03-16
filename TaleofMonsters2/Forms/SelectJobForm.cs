@@ -4,18 +4,18 @@ using System.Drawing;
 using System.Windows.Forms;
 using ControlPlus;
 using NarlonLib.Control;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards;
-using TaleofMonsters.DataType.Equips;
-using TaleofMonsters.DataType.Items;
 using TaleofMonsters.Forms.Items.Core;
 using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType.HeroPowers;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Cards;
+using TaleofMonsters.Datas.Equips;
+using TaleofMonsters.Datas.HeroPowers;
+using TaleofMonsters.Datas.Items;
+using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
-using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.Forms

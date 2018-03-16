@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using TaleofMonsters.DataType.CardPieces;
-using TaleofMonsters.DataType.Items;
 using TaleofMonsters.Forms.Items.Core;
 using ConfigDatas;
 using ControlPlus;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.CardPieces;
+using TaleofMonsters.Datas.Items;
+using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Forms.MagicBook
 {

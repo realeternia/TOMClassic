@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.Items;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;

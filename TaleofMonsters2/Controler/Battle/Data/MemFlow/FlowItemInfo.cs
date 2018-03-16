@@ -1,7 +1,7 @@
 using System.Drawing;
 using ConfigDatas;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Items;
+using TaleofMonsters.Datas.Items;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemFlow
 {

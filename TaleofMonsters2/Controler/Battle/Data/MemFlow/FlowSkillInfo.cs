@@ -1,5 +1,5 @@
 using System.Drawing;
-using TaleofMonsters.DataType.Skills;
+using TaleofMonsters.Datas.Skills;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemFlow
 {

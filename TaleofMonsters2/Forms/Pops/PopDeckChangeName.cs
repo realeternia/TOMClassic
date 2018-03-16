@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Forms.Pops
 {

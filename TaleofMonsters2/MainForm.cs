@@ -12,7 +12,7 @@ using TaleofMonsters.Controler.World;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms;
 using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.CMain.Scenes;

@@ -5,9 +5,9 @@ using NarlonLib.Control;
 using TaleofMonsters.Controler.Battle.Components.CardSelect;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards;
-using TaleofMonsters.DataType.Decks;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Cards;
+using TaleofMonsters.Datas.Decks;
 using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Regions;
 

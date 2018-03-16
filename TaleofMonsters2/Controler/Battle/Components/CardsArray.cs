@@ -5,8 +5,8 @@ using System.Windows.Forms;
 using NarlonLib.Control;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Core.Interface;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Cards;
 using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.Controler.Battle.Components

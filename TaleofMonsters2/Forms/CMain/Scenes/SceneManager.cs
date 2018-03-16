@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using NarlonLib.Math;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Scenes;
-using TaleofMonsters.DataType.User;
-using TaleofMonsters.DataType.User.Db;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Scenes;
+using TaleofMonsters.Datas.User;
+using TaleofMonsters.Datas.User.Db;
 using TaleofMonsters.Forms.CMain.Blesses;
 
 namespace TaleofMonsters.Forms.CMain.Scenes

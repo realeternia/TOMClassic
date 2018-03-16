@@ -3,12 +3,12 @@ using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Buffs;
-using TaleofMonsters.DataType.Cards.Monsters;
-using TaleofMonsters.DataType.Cards.Spells;
-using TaleofMonsters.DataType.Cards.Weapons;
-using TaleofMonsters.DataType.Skills;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Buffs;
+using TaleofMonsters.Datas.Cards.Monsters;
+using TaleofMonsters.Datas.Cards.Spells;
+using TaleofMonsters.Datas.Cards.Weapons;
+using TaleofMonsters.Datas.Skills;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 {

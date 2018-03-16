@@ -1,7 +1,7 @@
 ﻿using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.Players;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Decks;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Decks;
 
 namespace TaleofMonsters.Controler.Battle.DataTent
 {

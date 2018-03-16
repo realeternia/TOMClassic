@@ -3,12 +3,12 @@ using System.Drawing;
 using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Drops;
-using TaleofMonsters.DataType.Others;
-using TaleofMonsters.DataType.Peoples;
-using TaleofMonsters.DataType.Scenes;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Drops;
+using TaleofMonsters.Datas.Others;
+using TaleofMonsters.Datas.Peoples;
+using TaleofMonsters.Datas.Scenes;
+using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain.Blesses;
 using TaleofMonsters.Forms.CMain.Scenes;
 

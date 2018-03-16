@@ -1,10 +1,10 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Control;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Blesses;
-using TaleofMonsters.DataType.Others;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Blesses;
+using TaleofMonsters.Datas.Others;
+using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain.Blesses;
 using TaleofMonsters.Forms.CMain.Quests.SceneQuests;
 using TaleofMonsters.Forms.Items.Regions;

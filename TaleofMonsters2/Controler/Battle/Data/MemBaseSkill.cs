@@ -4,12 +4,12 @@ using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
-using TaleofMonsters.DataType.Effects;
-using TaleofMonsters.DataType.Skills;
 using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Skills;
 
 namespace TaleofMonsters.Controler.Battle.Data
 {

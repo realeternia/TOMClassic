@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
-using TaleofMonsters.DataType.Tournaments;
-using TaleofMonsters.DataType.User;
-using TaleofMonsters.DataType.User.Db;
+using TaleofMonsters.Datas.Tournaments;
+using TaleofMonsters.Datas.User;
+using TaleofMonsters.Datas.User.Db;
 
 namespace TaleofMonsters.Forms.TourGame
 {

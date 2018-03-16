@@ -4,8 +4,8 @@ using System.Windows.Forms;
 using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.Items.Core;
 
 namespace TaleofMonsters.Forms

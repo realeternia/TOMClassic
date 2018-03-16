@@ -2,12 +2,12 @@
 using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
-using TaleofMonsters.DataType.User;
-using TaleofMonsters.DataType.Decks;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.CardPieces;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.CardPieces;
+using TaleofMonsters.Datas.Decks;
+using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
 {

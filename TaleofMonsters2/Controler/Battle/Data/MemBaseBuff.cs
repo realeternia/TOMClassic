@@ -1,6 +1,6 @@
-using ConfigDatas;
+锘縰sing ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
-using TaleofMonsters.DataType.Buffs;
+using TaleofMonsters.Datas.Buffs;
 
 namespace TaleofMonsters.Controler.Battle.Data
 {
@@ -56,7 +56,7 @@ namespace TaleofMonsters.Controler.Battle.Data
             TimeLeft -= 0.025;
             RoundMark++;
 
-            if (RoundMark%100 == 50) //每0.5回合触发
+            if (RoundMark%100 == 50) //每0.5锟截合达拷锟斤拷
             {
                 if (BuffConfig.OnRound != null)
                     BuffConfig.OnRound(BuffInfo, src);

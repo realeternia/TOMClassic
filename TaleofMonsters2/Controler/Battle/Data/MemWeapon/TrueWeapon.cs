@@ -3,8 +3,8 @@ using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Tool;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards.Weapons;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Cards.Weapons;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
 {

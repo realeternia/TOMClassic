@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using NarlonLib.Math;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain.Blesses;
 using TaleofMonsters.Forms.CMain.Quests.SceneQuests;
 

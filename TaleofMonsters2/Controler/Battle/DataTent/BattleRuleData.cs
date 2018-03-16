@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Peoples;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Peoples;
+using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Controler.Battle.DataTent
 {

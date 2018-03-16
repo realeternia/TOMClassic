@@ -8,8 +8,8 @@ using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards.Monsters;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Cards.Monsters;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 {

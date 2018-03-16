@@ -1,6 +1,6 @@
 ﻿using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
 {

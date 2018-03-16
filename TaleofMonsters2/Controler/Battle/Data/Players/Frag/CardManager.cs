@@ -6,7 +6,7 @@ using NarlonLib.Tools;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
-using TaleofMonsters.DataType;
+using TaleofMonsters.Datas;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 {

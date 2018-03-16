@@ -5,8 +5,8 @@ using NarlonLib.Control;
 using NarlonLib.Drawing;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Regions;
 

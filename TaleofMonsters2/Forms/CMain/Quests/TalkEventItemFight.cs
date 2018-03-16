@@ -2,10 +2,10 @@
 using System.Drawing;
 using ConfigDatas;
 using TaleofMonsters.Controler.Battle;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Others;
-using TaleofMonsters.DataType.Peoples;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Others;
+using TaleofMonsters.Datas.Peoples;
+using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain.Blesses;
 using TaleofMonsters.Forms.CMain.Quests.SceneQuests;
 

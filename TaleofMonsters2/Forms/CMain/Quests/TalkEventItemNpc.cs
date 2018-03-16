@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-using TaleofMonsters.DataType.Others;
+using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Forms.CMain.Quests.SceneQuests;
 
 namespace TaleofMonsters.Forms.CMain.Quests

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
 using ControlPlus;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Buffs;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Buffs;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 {

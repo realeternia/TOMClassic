@@ -8,7 +8,8 @@ using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas.Cards;
+using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Forms
 {
@@ -106,7 +107,7 @@ namespace TaleofMonsters.Forms
                     g.DrawImage(border, xOff, yOff + 10 + i * 40, 196, 32);
 
                     var cardId = cardIdList[i+cardStart];
-                    var img = DataType.Cards.CardAssistant.GetCardImage(cardId, 80, 80);
+                    var img = CardAssistant.GetCardImage(cardId, 80, 80);
                     g.DrawImage(img, new Rectangle(xOff+110, yOff+15 + i * 40, 80, 22), 0, 6, 80, 24, GraphicsUnit.Pixel);
                     g.DrawImage(mask, xOff + 110, yOff + 15 + i * 40, 80, 22);
                   

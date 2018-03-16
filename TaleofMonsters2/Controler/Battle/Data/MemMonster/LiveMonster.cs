@@ -8,13 +8,13 @@ using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMonster.Component;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
-using TaleofMonsters.DataType.Cards.Monsters;
-using TaleofMonsters.DataType.Skills;
 using TaleofMonsters.Core;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Formulas;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Cards.Monsters;
+using TaleofMonsters.Datas.Formulas;
+using TaleofMonsters.Datas.Skills;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 {

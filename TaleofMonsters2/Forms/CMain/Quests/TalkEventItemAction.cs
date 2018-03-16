@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Others;
-using TaleofMonsters.DataType.Scenes;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Others;
+using TaleofMonsters.Datas.Scenes;
+using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain.Blesses;
 using TaleofMonsters.Forms.CMain.Quests.SceneQuests;
 using TaleofMonsters.Forms.CMain.Scenes;

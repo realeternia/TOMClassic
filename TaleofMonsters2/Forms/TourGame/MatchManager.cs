@@ -1,8 +1,8 @@
 using System.Drawing;
-using TaleofMonsters.DataType.Peoples;
-using TaleofMonsters.DataType.User;
 using System.Windows.Forms;
 using TaleofMonsters.Core.Loader;
+using TaleofMonsters.Datas.Peoples;
+using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Forms.TourGame
 {

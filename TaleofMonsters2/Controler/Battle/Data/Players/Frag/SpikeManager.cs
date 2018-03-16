@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using ConfigDatas;
-using TaleofMonsters.DataType;
+using TaleofMonsters.Datas;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 {

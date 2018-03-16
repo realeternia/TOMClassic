@@ -4,8 +4,8 @@ using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemMissile;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Cards.Monsters;
-using TaleofMonsters.DataType.Effects;
+using TaleofMonsters.Datas.Cards.Monsters;
+using TaleofMonsters.Datas.Effects;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 {

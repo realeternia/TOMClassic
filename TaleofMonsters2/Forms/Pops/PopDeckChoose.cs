@@ -5,9 +5,9 @@ using ControlPlus;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType.Cards;
-using TaleofMonsters.DataType.Maps;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas.Cards;
+using TaleofMonsters.Datas.Maps;
+using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Forms.Pops
 {

@@ -3,11 +3,11 @@ using System.Drawing;
 using System.Windows.Forms;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType.Items;
+using TaleofMonsters.Datas.Items;
+using TaleofMonsters.Datas.Others;
+using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.Items;
 using TaleofMonsters.Forms.Items.Core;
-using TaleofMonsters.DataType.Others;
-using TaleofMonsters.DataType.User;
 
 namespace TaleofMonsters.Forms
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Core.Interface;
-using TaleofMonsters.DataType.Cards;
+using TaleofMonsters.Datas.Cards;
 
 namespace TaleofMonsters.Controler.Battle.Components
 {

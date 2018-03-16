@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using NarlonLib.Math;
 using NarlonLib.Tools;
 using TaleofMonsters.Core.Config;
-using TaleofMonsters.DataType.Decks;
+using TaleofMonsters.Datas.Decks;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemCard
 {

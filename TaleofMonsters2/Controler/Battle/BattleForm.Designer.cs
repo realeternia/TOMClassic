@@ -1,5 +1,6 @@
 ﻿using NarlonLib.Control;
 using TaleofMonsters.Controler.Battle.Components;
+using TaleofMonsters.Datas;
 
 namespace TaleofMonsters.Controler.Battle
 {
@@ -92,7 +93,7 @@ namespace TaleofMonsters.Controler.Battle
             this.miniItemView1.Name = "miniItemView1";
             this.miniItemView1.Size = new System.Drawing.Size(72, 135);
             this.miniItemView1.TabIndex = 38;
-            this.miniItemView1.UseType = TaleofMonsters.DataType.HItemUseTypes.Fight;
+            this.miniItemView1.UseType = HItemUseTypes.Fight;
             // 
             // cardList2
             // 

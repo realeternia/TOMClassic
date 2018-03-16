@@ -2,7 +2,7 @@
 using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType.Scenes;
+using TaleofMonsters.Datas.Scenes;
 
 namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects
 { 

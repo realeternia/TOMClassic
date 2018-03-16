@@ -2,8 +2,8 @@
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
-using TaleofMonsters.DataType.Decks;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas.Decks;
+using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
 {

@@ -2,14 +2,14 @@
 using System.Drawing;
 using NarlonLib.Control;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Items;
 using TaleofMonsters.Forms.Items.Regions;
 using ConfigDatas;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Others;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Items;
+using TaleofMonsters.Datas.Others;
+using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.Forms.Items

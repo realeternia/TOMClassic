@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Tool;
-using TaleofMonsters.DataType;
+using TaleofMonsters.Datas;
 
 namespace TaleofMonsters.Controler.Battle.Data
 {

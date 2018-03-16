@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Effects;
+using TaleofMonsters.Datas.Effects;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemEffect
 {

@@ -8,12 +8,13 @@ using NarlonLib.Drawing;
 using TaleofMonsters.Controler.Battle;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType.Blesses;
-using TaleofMonsters.DataType.Equips;
-using TaleofMonsters.DataType.HeroPowers;
-using TaleofMonsters.DataType.Items;
-using TaleofMonsters.DataType.Peoples;
-using TaleofMonsters.DataType.Scenes;
+using TaleofMonsters.Datas.Blesses;
+using TaleofMonsters.Datas.Cards;
+using TaleofMonsters.Datas.Equips;
+using TaleofMonsters.Datas.HeroPowers;
+using TaleofMonsters.Datas.Items;
+using TaleofMonsters.Datas.Peoples;
+using TaleofMonsters.Datas.Scenes;
 
 namespace TaleofMonsters.Forms.Items.Regions
 {
@@ -39,7 +40,7 @@ namespace TaleofMonsters.Forms.Items.Regions
                 HsActionCallback action = null;
                 if (type == PictureRegionCellType.Item)
                 {
-                    img = DataType.Items.HItemBook.GetHItemImage(nid);
+                    img = HItemBook.GetHItemImage(nid);
                     action = () =>
                     {
                         var itemConfig = ConfigData.GetHItemConfig(nid);
@@ -50,7 +51,7 @@ namespace TaleofMonsters.Forms.Items.Regions
                 }
                 else if (type == PictureRegionCellType.Equip)
                 {
-                    img = DataType.Equips.EquipBook.GetEquipImage(nid);
+                    img = EquipBook.GetEquipImage(nid);
                     action = () =>
                     {
                         var equipConfig = ConfigData.GetEquipConfig(nid);
@@ -64,11 +65,11 @@ namespace TaleofMonsters.Forms.Items.Regions
                     var size = 40;
                     if (Width > 100) size = 100;
                     else if (Width > 60) size = 60;
-                    img = DataType.Cards.CardAssistant.GetCardImage(nid, size, size);
+                    img = CardAssistant.GetCardImage(nid, size, size);
                     action = () =>
                     {
                         var cardData = CardConfigManager.GetCardConfig(nid);
-                        string cardBorder = DataType.Cards.CardAssistant.GetCardBorder(cardData);
+                        string cardBorder = CardAssistant.GetCardBorder(cardData);
                         var borderImg = PicLoader.Read("Border", cardBorder);
                         g.DrawImage(borderImg, X, Y, Width, Height);
                         borderImg.Dispose();
@@ -76,11 +77,11 @@ namespace TaleofMonsters.Forms.Items.Regions
                 }
                 else if (type == PictureRegionCellType.Gismo)
                 {
-                    img = DataType.Scenes.DungeonBook.GetGismoImage(nid);
+                    img = DungeonBook.GetGismoImage(nid);
                 }
                 else if (type == PictureRegionCellType.People)
                 {
-                    img = DataType.Peoples.PeopleBook.GetPersonImage(nid);
+                    img = PeopleBook.GetPersonImage(nid);
                     preAction = () =>
                     {
                         var peopleConfig = ConfigData.GetPeopleConfig(nid);

@@ -1,6 +1,4 @@
-﻿using TaleofMonsters.DataType.Cards;
-
-namespace TaleofMonsters.Controler.Battle.Components
+﻿namespace TaleofMonsters.Controler.Battle.Components
 {
     partial class CardsArray
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Reflection;
 using AltSerialize;
-using TaleofMonsters.DataType.Others;
-using TaleofMonsters.DataType.User;
-using TaleofMonsters.DataType.User.Db;
+using TaleofMonsters.Datas.Others;
+using TaleofMonsters.Datas.User;
+using TaleofMonsters.Datas.User.Db;
 using TaleofMonsters.Forms.TourGame;
 
 namespace TaleofMonsters.Core

@@ -5,9 +5,9 @@ using ConfigDatas;
 using NarlonLib.Control;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Tournaments;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Tournaments;
+using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Core;
 

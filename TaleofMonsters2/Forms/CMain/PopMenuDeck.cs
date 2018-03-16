@@ -1,10 +1,10 @@
 ﻿using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Decks;
-using TaleofMonsters.DataType.Others;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Decks;
+using TaleofMonsters.Datas.Others;
+using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Forms.CMain
 {

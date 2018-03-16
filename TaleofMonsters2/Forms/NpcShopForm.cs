@@ -5,7 +5,7 @@ using TaleofMonsters.Forms.Items;
 using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType.Items;
+using TaleofMonsters.Datas.Items;
 using TaleofMonsters.Forms.Items.Core;
 
 namespace TaleofMonsters.Forms

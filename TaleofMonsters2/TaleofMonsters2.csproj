@@ -169,20 +169,20 @@
     <Compile Include="Rpc\TalePlayer.cs" />
     <Compile Include="Controler\World\TimeManager.cs" />
     <Compile Include="Controler\World\WorldInfoManager.cs" />
-    <Compile Include="DataType\Blesses\BlessBook.cs" />
-    <Compile Include="DataType\Drops\DropBook.cs" />
-    <Compile Include="DataType\Others\DnaBook.cs" />
-    <Compile Include="DataType\Others\TreasureWheelBook.cs" />
-    <Compile Include="DataType\Quests\QuestBook.cs" />
-    <Compile Include="DataType\Peoples\PeopleFightReason.cs" />
-    <Compile Include="DataType\Scenes\DungeonBook.cs" />
-    <Compile Include="DataType\Scenes\SceneQuestBook.cs" />
-    <Compile Include="DataType\User\Db\DbGismoState.cs" />
-    <Compile Include="DataType\User\Db\DbQuestData.cs" />
-    <Compile Include="DataType\User\Db\DbEquip.cs" />
-    <Compile Include="DataType\User\Db\DbDeckCard.cs" />
-    <Compile Include="DataType\User\Db\DbSceneSpecialPosData.cs" />
-    <Compile Include="DataType\User\InfoDungeon.cs" />
+    <Compile Include="Datas\Blesses\BlessBook.cs" />
+    <Compile Include="Datas\Drops\DropBook.cs" />
+    <Compile Include="Datas\Others\DnaBook.cs" />
+    <Compile Include="Datas\Others\TreasureWheelBook.cs" />
+    <Compile Include="Datas\Quests\QuestBook.cs" />
+    <Compile Include="Datas\Peoples\PeopleFightReason.cs" />
+    <Compile Include="Datas\Scenes\DungeonBook.cs" />
+    <Compile Include="Datas\Scenes\SceneQuestBook.cs" />
+    <Compile Include="Datas\User\Db\DbGismoState.cs" />
+    <Compile Include="Datas\User\Db\DbQuestData.cs" />
+    <Compile Include="Datas\User\Db\DbEquip.cs" />
+    <Compile Include="Datas\User\Db\DbDeckCard.cs" />
+    <Compile Include="Datas\User\Db\DbSceneSpecialPosData.cs" />
+    <Compile Include="Datas\User\InfoDungeon.cs" />
     <Compile Include="Forms\ChangeResForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -336,9 +336,9 @@
       <DependentUpon>SystemSetup.cs</DependentUpon>
     </Compile>
     <Compile Include="ThirdParty\fmod.cs" />
-    <Compile Include="DataType\CustomTypes.cs" />
-    <Compile Include="DataType\Equips\Equip.cs" />
-    <Compile Include="DataType\HeroPowers\HeroPowerBook.cs" />
+    <Compile Include="Datas\CustomTypes.cs" />
+    <Compile Include="Datas\Equips\Equip.cs" />
+    <Compile Include="Datas\HeroPowers\HeroPowerBook.cs" />
     <Compile Include="Core\Config\CardConfigManager.cs" />
     <Compile Include="Core\DbSerializer.cs" />
     <Compile Include="Core\HSImageAttributes.cs" />
@@ -347,25 +347,25 @@
     <Compile Include="Core\SoundManager.cs" />
     <Compile Include="Core\GameConstants.cs" />
     <Compile Include="Core\HSErrors.cs" />
-    <Compile Include="DataType\CardPieces\CardPieceRate.cs" />
-    <Compile Include="DataType\Effects\CoverEffect.cs" />
-    <Compile Include="DataType\Items\Consumer.cs" />
-    <Compile Include="DataType\User\Db\DbFarmState.cs" />
-    <Compile Include="DataType\Formulas\FormulaBook.cs" />
-    <Compile Include="DataType\Others\GameResourceBook.cs" />
-    <Compile Include="DataType\Others\LevelInfoBook.cs" />
-    <Compile Include="DataType\User\InfoGismo.cs" />
-    <Compile Include="DataType\User\InfoBag.cs" />
-    <Compile Include="DataType\User\InfoBasic.cs" />
-    <Compile Include="DataType\User\InfoCard.cs" />
-    <Compile Include="DataType\User\InfoEquip.cs" />
-    <Compile Include="DataType\User\InfoFarm.cs" />
-    <Compile Include="DataType\User\InfoQuest.cs" />
-    <Compile Include="DataType\User\InfoRecord.cs" />
-    <Compile Include="DataType\User\InfoRival.cs" />
-    <Compile Include="DataType\User\Db\DbMergeData.cs" />
-    <Compile Include="DataType\Others\Question.cs" />
-    <Compile Include="DataType\Others\QuestionBook.cs" />
+    <Compile Include="Datas\CardPieces\CardPieceRate.cs" />
+    <Compile Include="Datas\Effects\CoverEffect.cs" />
+    <Compile Include="Datas\Items\Consumer.cs" />
+    <Compile Include="Datas\User\Db\DbFarmState.cs" />
+    <Compile Include="Datas\Formulas\FormulaBook.cs" />
+    <Compile Include="Datas\Others\GameResourceBook.cs" />
+    <Compile Include="Datas\Others\LevelInfoBook.cs" />
+    <Compile Include="Datas\User\InfoGismo.cs" />
+    <Compile Include="Datas\User\InfoBag.cs" />
+    <Compile Include="Datas\User\InfoBasic.cs" />
+    <Compile Include="Datas\User\InfoCard.cs" />
+    <Compile Include="Datas\User\InfoEquip.cs" />
+    <Compile Include="Datas\User\InfoFarm.cs" />
+    <Compile Include="Datas\User\InfoQuest.cs" />
+    <Compile Include="Datas\User\InfoRecord.cs" />
+    <Compile Include="Datas\User\InfoRival.cs" />
+    <Compile Include="Datas\User\Db\DbMergeData.cs" />
+    <Compile Include="Datas\Others\Question.cs" />
+    <Compile Include="Datas\Others\QuestionBook.cs" />
     <Compile Include="Forms\CalendarForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -452,23 +452,23 @@
     <Compile Include="Forms\CardBagForm.Designer.cs">
       <DependentUpon>CardBagForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataType\User\Db\DbDeckData.cs" />
-    <Compile Include="DataType\Decks\DeckBook.cs" />
-    <Compile Include="DataType\Decks\DeckCard.cs" />
-    <Compile Include="DataType\CardPieces\CardPieceBook.cs" />
+    <Compile Include="Datas\User\Db\DbDeckData.cs" />
+    <Compile Include="Datas\Decks\DeckBook.cs" />
+    <Compile Include="Datas\Decks\DeckCard.cs" />
+    <Compile Include="Datas\CardPieces\CardPieceBook.cs" />
     <Compile Include="Controler\Battle\Data\MemFlow\FlowSkillInfo.cs" />
     <Compile Include="Controler\Battle\Data\MemFlow\FlowResourceInfo.cs" />
-    <Compile Include="DataType\Maps\BattleMapInfo.cs" />
-    <Compile Include="DataType\Maps\BattleMapBook.cs" />
-    <Compile Include="DataType\User\Db\DbTournamentData.cs" />
-    <Compile Include="DataType\Others\RankData.cs" />
-    <Compile Include="DataType\User\InfoWorld.cs" />
-    <Compile Include="DataType\Peoples\DropResource.cs" />
+    <Compile Include="Datas\Maps\BattleMapInfo.cs" />
+    <Compile Include="Datas\Maps\BattleMapBook.cs" />
+    <Compile Include="Datas\User\Db\DbTournamentData.cs" />
+    <Compile Include="Datas\Others\RankData.cs" />
+    <Compile Include="Datas\User\InfoWorld.cs" />
+    <Compile Include="Datas\Peoples\DropResource.cs" />
     <Compile Include="Controler\Battle\Data\MemBaseBuff.cs" />
-    <Compile Include="DataType\User\Db\DbCardProduct.cs" />
-    <Compile Include="DataType\Skills\MonsterSkill.cs" />
-    <Compile Include="DataType\Tournaments\TournamentBook.cs" />
-    <Compile Include="DataType\Cards\Weapons\Weapon.cs" />
+    <Compile Include="Datas\User\Db\DbCardProduct.cs" />
+    <Compile Include="Datas\Skills\MonsterSkill.cs" />
+    <Compile Include="Datas\Tournaments\TournamentBook.cs" />
+    <Compile Include="Datas\Cards\Weapons\Weapon.cs" />
     <Compile Include="Forms\Items\Core\BorderPainter.cs" />
     <Compile Include="Forms\Items\ShopItem.cs">
     </Compile>
@@ -535,14 +535,14 @@
     <Compile Include="Forms\NpcShopForm.Designer.cs">
       <DependentUpon>NpcShopForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataType\User\Db\DbRivalState.cs" />
+    <Compile Include="Datas\User\Db\DbRivalState.cs" />
     <Compile Include="Forms\EquipmentForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Forms\EquipmentForm.Designer.cs">
       <DependentUpon>EquipmentForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataType\Equips\EquipBook.cs" />
+    <Compile Include="Datas\Equips\EquipBook.cs" />
     <Compile Include="Forms\CardShopViewForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -550,8 +550,8 @@
       <DependentUpon>CardShopViewForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Controler\Battle\Data\MemCard\ActiveCards.cs" />
-    <Compile Include="DataType\Cards\CardAssistant.cs" />
-    <Compile Include="DataType\Cards\Spells\SpellCard.cs" />
+    <Compile Include="Datas\Cards\CardAssistant.cs" />
+    <Compile Include="Datas\Cards\Spells\SpellCard.cs" />
     <Compile Include="Forms\CreatePlayerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -566,17 +566,17 @@
       <DependentUpon>CardList.cs</DependentUpon>
     </Compile>
     <Compile Include="Controler\Battle\Components\CardSlot.cs" />
-    <Compile Include="DataType\Cards\Weapons\WeaponCard.cs" />
+    <Compile Include="Datas\Cards\Weapons\WeaponCard.cs" />
     <Compile Include="Controler\Battle\BattleForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controler\Battle\BattleForm.Designer.cs">
       <DependentUpon>BattleForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataType\Effects\EffectFrame.cs" />
-    <Compile Include="DataType\Others\ExpTree.cs" />
-    <Compile Include="DataType\Others\GameResource.cs" />
-    <Compile Include="DataType\Items\HItemBook.cs" />
+    <Compile Include="Datas\Effects\EffectFrame.cs" />
+    <Compile Include="Datas\Others\ExpTree.cs" />
+    <Compile Include="Datas\Others\GameResource.cs" />
+    <Compile Include="Datas\Items\HItemBook.cs" />
     <Compile Include="Forms\MagicBook\MonsterSkillViewForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -692,17 +692,17 @@
     <Compile Include="Forms\CMain\SystemMenu.Designer.cs">
       <DependentUpon>SystemMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataType\Scenes\SceneBook.cs" />
-    <Compile Include="DataType\Peoples\PeopleBook.cs" />
-    <Compile Include="DataType\Peoples\PeopleDrop.cs" />
+    <Compile Include="Datas\Scenes\SceneBook.cs" />
+    <Compile Include="Datas\Peoples\PeopleBook.cs" />
+    <Compile Include="Datas\Peoples\PeopleDrop.cs" />
     <Compile Include="Controler\Battle\Data\Players\AIPlayer.cs" />
     <Compile Include="Controler\Battle\Data\Players\HumanPlayer.cs" />
     <Compile Include="Controler\Battle\Data\Players\Frag\EquipModifier.cs" />
-    <Compile Include="DataType\User\Profile.cs" />
+    <Compile Include="Datas\User\Profile.cs" />
     <Compile Include="Controler\Battle\Data\Players\RandomPlayer.cs" />
     <Compile Include="Forms\CMain\Scenes\SceneManager.cs" />
-    <Compile Include="DataType\Buffs\Buff.cs" />
-    <Compile Include="DataType\Cards\Card.cs" />
+    <Compile Include="Datas\Buffs\Buff.cs" />
+    <Compile Include="Datas\Cards\Card.cs" />
     <Compile Include="Forms\MagicBook\CardDetail.cs">
     </Compile>
     <Compile Include="Controler\Battle\Components\CardsArray.cs">
@@ -725,10 +725,10 @@
       <DependentUpon>LifeClock.cs</DependentUpon>
     </Compile>
     <Compile Include="Controler\Battle\Data\MemMonster\LiveMonster.cs" />
-    <Compile Include="DataType\Cards\Monsters\Monster.cs" />
-    <Compile Include="DataType\Cards\Monsters\MonsterBook.cs" />
-    <Compile Include="DataType\Cards\Monsters\MonsterCard.cs" />
-    <Compile Include="DataType\Skills\Skill.cs" />
+    <Compile Include="Datas\Cards\Monsters\Monster.cs" />
+    <Compile Include="Datas\Cards\Monsters\MonsterBook.cs" />
+    <Compile Include="Datas\Cards\Monsters\MonsterCard.cs" />
+    <Compile Include="Datas\Skills\Skill.cs" />
     <Compile Include="Tools\PaintTool.cs" />
     <Compile Include="Core\HSCursor.cs" />
     <Compile Include="Core\HSIcons.cs" />
@@ -1093,14 +1093,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="DataType\Skills\SkillAssistant.cs" />
-    <Compile Include="DataType\Cards\SpecialCard.cs" />
-    <Compile Include="DataType\Effects\Effect.cs" />
-    <Compile Include="DataType\Effects\EffectBook.cs" />
-    <Compile Include="DataType\Skills\SkillBook.cs" />
-    <Compile Include="DataType\Buffs\BuffBook.cs" />
-    <Compile Include="DataType\Cards\Spells\Spell.cs" />
-    <Compile Include="DataType\Cards\Spells\SpellBook.cs" />
+    <Compile Include="Datas\Skills\SkillAssistant.cs" />
+    <Compile Include="Datas\Cards\SpecialCard.cs" />
+    <Compile Include="Datas\Effects\Effect.cs" />
+    <Compile Include="Datas\Effects\EffectBook.cs" />
+    <Compile Include="Datas\Skills\SkillBook.cs" />
+    <Compile Include="Datas\Buffs\BuffBook.cs" />
+    <Compile Include="Datas\Cards\Spells\Spell.cs" />
+    <Compile Include="Datas\Cards\Spells\SpellBook.cs" />
     <Compile Include="Controler\Battle\Data\MemSpell\SpellAssistant.cs" />
     <Compile Include="Forms\NpcTalkForm.cs">
       <SubType>UserControl</SubType>
@@ -1114,16 +1114,16 @@
     <Compile Include="Forms\QuestForm.Designer.cs">
       <DependentUpon>QuestForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataType\Others\TileBook.cs" />
+    <Compile Include="Datas\Others\TileBook.cs" />
     <Compile Include="Controler\Battle\Components\TimeViewer.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controler\Battle\Components\TimeViewer.Designer.cs">
       <DependentUpon>TimeViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataType\User\UserProfile.cs" />
+    <Compile Include="Datas\User\UserProfile.cs" />
     <Compile Include="Controler\Battle\Data\MemWeapon\TrueWeapon.cs" />
-    <Compile Include="DataType\Cards\Weapons\WeaponBook.cs" />
+    <Compile Include="Datas\Cards\Weapons\WeaponBook.cs" />
     <Compile Include="Forms\DeckViewForm.cs">
       <SubType>UserControl</SubType>
     </Compile>

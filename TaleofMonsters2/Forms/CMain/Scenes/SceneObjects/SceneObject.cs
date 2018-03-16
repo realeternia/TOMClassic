@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain.Blesses;
 
 namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects

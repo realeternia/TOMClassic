@@ -3,8 +3,8 @@ using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using System.Drawing;
 using TaleofMonsters.Controler.Battle.Data.MemMap;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards.Monsters;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Cards.Monsters;
 
 namespace TaleofMonsters.Controler.Battle.Tool
 {

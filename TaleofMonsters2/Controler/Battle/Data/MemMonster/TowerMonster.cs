@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
 using ConfigDatas;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards.Monsters;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Cards.Monsters;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 {

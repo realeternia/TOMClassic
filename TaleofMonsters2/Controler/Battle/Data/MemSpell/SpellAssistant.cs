@@ -4,8 +4,8 @@ using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Tool;
-using TaleofMonsters.DataType.Cards.Spells;
-using TaleofMonsters.DataType.Effects;
+using TaleofMonsters.Datas.Cards.Spells;
+using TaleofMonsters.Datas.Effects;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemSpell
 {

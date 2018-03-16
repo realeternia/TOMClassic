@@ -11,13 +11,13 @@ using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards.Monsters;
-using TaleofMonsters.DataType.Cards.Weapons;
-using TaleofMonsters.DataType.Decks;
-using TaleofMonsters.DataType.Effects;
-using TaleofMonsters.DataType.Skills;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Cards.Monsters;
+using TaleofMonsters.Datas.Cards.Weapons;
+using TaleofMonsters.Datas.Decks;
+using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Skills;
+using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 {

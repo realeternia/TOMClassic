@@ -7,10 +7,10 @@ using NarlonLib.Math;
 using NarlonLib.Tools;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Others;
-using TaleofMonsters.DataType.User;
-using TaleofMonsters.DataType.User.Db;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Others;
+using TaleofMonsters.Datas.User;
+using TaleofMonsters.Datas.User.Db;
 using TaleofMonsters.Forms.Items.Core;
 
 namespace TaleofMonsters.Forms

@@ -1,6 +1,6 @@
 ﻿using JLM.NetSocket;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Rpc
 {

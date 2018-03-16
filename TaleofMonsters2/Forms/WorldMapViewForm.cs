@@ -7,8 +7,8 @@ using ControlPlus;
 using NarlonLib.Math;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType.Scenes;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas.Scenes;
+using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain.Scenes;
 using TaleofMonsters.Forms.Items.Core;
 

@@ -5,9 +5,9 @@ using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards;
-using TaleofMonsters.DataType.Decks;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Cards;
+using TaleofMonsters.Datas.Decks;
 
 namespace TaleofMonsters.Forms.Items
 {

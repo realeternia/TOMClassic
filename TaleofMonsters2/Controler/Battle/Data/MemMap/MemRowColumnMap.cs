@@ -2,13 +2,13 @@
 using System.Drawing;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players;
-using TaleofMonsters.DataType.Cards.Monsters;
-using TaleofMonsters.DataType.Maps;
 using TaleofMonsters.Controler.Battle.Tool;
-using TaleofMonsters.DataType.Others;
 using ConfigDatas;
 using NarlonLib.Math;
-using TaleofMonsters.DataType;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Cards.Monsters;
+using TaleofMonsters.Datas.Maps;
+using TaleofMonsters.Datas.Others;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMap
 {

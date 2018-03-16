@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using TaleofMonsters.DataType.User;
-using TaleofMonsters.DataType.User.Db;
+using TaleofMonsters.Datas.User;
+using TaleofMonsters.Datas.User.Db;
 
 namespace TaleofMonsters.Forms.TourGame
 {

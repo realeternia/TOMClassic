@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType.Tournaments;
+using TaleofMonsters.Datas.Tournaments;
 using TaleofMonsters.Forms.Items.Core;
 
 namespace TaleofMonsters.Forms

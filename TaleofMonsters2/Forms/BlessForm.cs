@@ -8,8 +8,8 @@ using NarlonLib.Core;
 using NarlonLib.Tools;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain.Blesses;
 
 namespace TaleofMonsters.Forms

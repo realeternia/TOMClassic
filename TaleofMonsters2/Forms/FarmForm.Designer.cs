@@ -1,4 +1,5 @@
 ﻿using NarlonLib.Control;
+using TaleofMonsters.Datas;
 
 namespace TaleofMonsters.Forms
 {
@@ -59,7 +60,7 @@ namespace TaleofMonsters.Forms
             this.miniItemView1.Name = "miniItemView1";
             this.miniItemView1.Size = new System.Drawing.Size(72, 142);
             this.miniItemView1.TabIndex = 28;
-            this.miniItemView1.UseType = TaleofMonsters.DataType.HItemUseTypes.Seed;
+            this.miniItemView1.UseType = HItemUseTypes.Seed;
             // 
             // FarmForm
             // 

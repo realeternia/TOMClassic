@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Equips;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Equips;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 {

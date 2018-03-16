@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using TaleofMonsters.DataType.User.Db;
+using TaleofMonsters.Datas.User.Db;
 
 namespace TaleofMonsters.Forms.CMain.Scenes.SceneRules
 {

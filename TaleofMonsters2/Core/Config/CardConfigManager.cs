@@ -2,7 +2,7 @@
 using ConfigDatas;
 using NarlonLib.Log;
 using NarlonLib.Math;
-using TaleofMonsters.DataType;
+using TaleofMonsters.Datas;
 
 namespace TaleofMonsters.Core.Config
 {

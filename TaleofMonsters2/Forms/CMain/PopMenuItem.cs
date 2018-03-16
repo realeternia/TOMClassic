@@ -1,5 +1,5 @@
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Forms.CMain
 {

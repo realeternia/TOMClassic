@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType.Items;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas.Items;
+using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Forms.Items
 {

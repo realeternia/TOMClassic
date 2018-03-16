@@ -5,16 +5,16 @@ using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Control;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType.Peoples;
-using TaleofMonsters.DataType.User;
 using TaleofMonsters.Forms;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
-using TaleofMonsters.DataType.Others;
 using TaleofMonsters.Controler.Battle.DataTent;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Others;
+using TaleofMonsters.Datas.Peoples;
+using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.Controler.Battle

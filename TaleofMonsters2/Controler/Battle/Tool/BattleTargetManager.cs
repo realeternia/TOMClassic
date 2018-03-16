@@ -1,4 +1,4 @@
-﻿using TaleofMonsters.DataType;
+﻿using TaleofMonsters.Datas;
 
 namespace TaleofMonsters.Controler.Battle.Tool
 {

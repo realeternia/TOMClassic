@@ -1,7 +1,7 @@
 ﻿using TaleofMonsters.Core;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Others;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Others;
+using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Forms.CMain
 {

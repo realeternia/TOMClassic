@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using TaleofMonsters.DataType.User;
 using NarlonLib.Control;
-using TaleofMonsters.DataType.Items;
-using TaleofMonsters.DataType.Equips;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
+using TaleofMonsters.Datas.Items;
+using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Regions;
 

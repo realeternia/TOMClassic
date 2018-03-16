@@ -5,8 +5,8 @@ using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Cards;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Cards;
 
 namespace TaleofMonsters.Controler.Battle.Components
 {

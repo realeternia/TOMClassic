@@ -4,7 +4,6 @@ using TaleofMonsters.Controler.Battle.Data.MemMap;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.DataTent;
 using TaleofMonsters.Core;
-using TaleofMonsters.DataType;
 
 namespace TaleofMonsters.Controler.Battle.Tool
 {

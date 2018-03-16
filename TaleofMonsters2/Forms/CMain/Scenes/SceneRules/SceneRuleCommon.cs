@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using NarlonLib.Log;
 using NarlonLib.Tools;
-using TaleofMonsters.DataType.Scenes;
-using TaleofMonsters.DataType.User;
-using TaleofMonsters.DataType.User.Db;
+using TaleofMonsters.Datas.Scenes;
+using TaleofMonsters.Datas.User;
+using TaleofMonsters.Datas.User.Db;
 
 namespace TaleofMonsters.Forms.CMain.Scenes.SceneRules
 {

@@ -2,8 +2,8 @@
 using System.Drawing;
 using NarlonLib.Control;
 using TaleofMonsters.Core.Config;
-using TaleofMonsters.DataType;
-using TaleofMonsters.DataType.Decks;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Decks;
 
 namespace TaleofMonsters.Forms.MagicBook
 {

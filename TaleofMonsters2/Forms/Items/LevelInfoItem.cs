@@ -1,10 +1,10 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using TaleofMonsters.Forms.Items.Core;
-using TaleofMonsters.DataType.Others;
 using TaleofMonsters.Core;
 using ConfigDatas;
 using TaleofMonsters.Core.Loader;
+using TaleofMonsters.Datas.Others;
 
 namespace TaleofMonsters.Forms.Items
 {

@@ -6,10 +6,10 @@ using ConfigDatas;
 using ControlPlus;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType.Cards.Monsters;
-using TaleofMonsters.DataType.Skills;
+using TaleofMonsters.Datas.Cards.Monsters;
+using TaleofMonsters.Datas.Cards.Weapons;
+using TaleofMonsters.Datas.Skills;
 using TaleofMonsters.Forms.Items.Core;
-using TaleofMonsters.DataType.Cards.Weapons;
 
 namespace TaleofMonsters.Forms.MagicBook
 {

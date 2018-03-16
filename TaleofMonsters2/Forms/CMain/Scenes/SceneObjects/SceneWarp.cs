@@ -3,7 +3,7 @@ using System.Drawing;
 using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.DataType.User;
+using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects
 { 

@@ -1,5 +1,5 @@
 ﻿using TaleofMonsters.Controler.Battle.Data.MemCard;
-using TaleofMonsters.DataType.Decks;
+using TaleofMonsters.Datas.Decks;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
 {
