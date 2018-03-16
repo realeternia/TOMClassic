@@ -293,6 +293,10 @@ namespace TaleofMonsters
 
         private void tabPageLogin_Paint(object sender, PaintEventArgs e)
         {
+            var loginBg = PicLoader.Read("System", "LoginBg.PNG");
+            e.Graphics.DrawImage(loginBg,Width/2-413/2,310,413,242);
+            loginBg.Dispose();
+
             e.Graphics.DrawImage(HSIcons.GetIconsByEName("rac5"), 10, tabPageLogin.Height - 160, 20, 20);
             e.Graphics.DrawImage(HSIcons.GetIconsByEName("hatt1"), 10, tabPageLogin.Height - 135, 20, 20);
             e.Graphics.DrawImage(HSIcons.GetIconsByEName("spl2"), 10, tabPageLogin.Height - 110, 20, 20);

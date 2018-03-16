@@ -106,7 +106,7 @@ namespace TaleofMonsters
             this.bitmapButtonLogin.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonLogin.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonLogin.ImageNormal = null;
-            this.bitmapButtonLogin.Location = new System.Drawing.Point(416, 491);
+            this.bitmapButtonLogin.Location = new System.Drawing.Point(448, 487);
             this.bitmapButtonLogin.Name = "bitmapButtonLogin";
             this.bitmapButtonLogin.NoUseDrawNine = false;
             this.bitmapButtonLogin.Size = new System.Drawing.Size(111, 29);
@@ -122,7 +122,7 @@ namespace TaleofMonsters
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
             this.label2.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label2.Location = new System.Drawing.Point(329, 456);
+            this.label2.Location = new System.Drawing.Point(361, 450);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(71, 15);
             this.label2.TabIndex = 14;
@@ -134,7 +134,7 @@ namespace TaleofMonsters
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
             this.label1.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label1.Location = new System.Drawing.Point(329, 410);
+            this.label1.Location = new System.Drawing.Point(361, 406);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(71, 15);
             this.label1.TabIndex = 13;
@@ -178,7 +178,7 @@ namespace TaleofMonsters
             this.textBoxPasswd.BackColor = System.Drawing.Color.Silver;
             this.textBoxPasswd.Enabled = false;
             this.textBoxPasswd.Font = new System.Drawing.Font("SimSun", 10F);
-            this.textBoxPasswd.Location = new System.Drawing.Point(416, 451);
+            this.textBoxPasswd.Location = new System.Drawing.Point(448, 445);
             this.textBoxPasswd.MaxLength = 16;
             this.textBoxPasswd.Name = "textBoxPasswd";
             this.textBoxPasswd.Size = new System.Drawing.Size(161, 23);
@@ -190,7 +190,7 @@ namespace TaleofMonsters
             this.textBoxName.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.textBoxName.BackColor = System.Drawing.Color.PowderBlue;
             this.textBoxName.Font = new System.Drawing.Font("SimSun", 10F);
-            this.textBoxName.Location = new System.Drawing.Point(416, 405);
+            this.textBoxName.Location = new System.Drawing.Point(448, 401);
             this.textBoxName.MaxLength = 16;
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(161, 23);
