@@ -78,8 +78,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BitmapButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ColorLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ColorLabel.Designer.cs">
+      <DependentUpon>ColorLabel.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomScrollbar.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DoubleBufferedListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DoubleBufferedPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DoubleBufferedTabPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Drawing\DrawTool.cs" />
+    <Compile Include="Drawing\ImagePixelTool.cs" />
+    <Compile Include="GdiChart.cs" />
+    <Compile Include="ImageTooltip.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="MessageBoxEx.cs">
       <SubType>Form</SubType>
@@ -101,6 +125,18 @@
     </Compile>
     <Compile Include="NLPageSelector.cs">
     </Compile>
+    <Compile Include="PopedCotainer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PopedCotainer.Designer.cs">
+      <DependentUpon>PopedCotainer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PoperContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PoperContainer.designer.cs">
+      <DependentUpon>PoperContainer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -116,11 +152,29 @@
     <Compile Include="NLSelectPanel.cs">
     </Compile>
     <Compile Include="TipImage.cs" />
+    <Compile Include="ViewStack.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="BitmapButton.resx">
+      <DependentUpon>BitmapButton.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorLabel.resx">
+      <DependentUpon>ColorLabel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImageTooltip.resx">
+      <DependentUpon>ImageTooltip.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="MessageBoxEx.resx">
       <SubType>Designer</SubType>
       <DependentUpon>MessageBoxEx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PopedCotainer.resx">
+      <DependentUpon>PopedCotainer.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
@@ -165,9 +219,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\bg3.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\bg2.jpg" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

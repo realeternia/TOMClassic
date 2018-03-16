@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace NarlonLib.Control
+namespace ControlPlus
 {
     public class GdiChart
     {

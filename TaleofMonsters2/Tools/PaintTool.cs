@@ -1,5 +1,6 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using ControlPlus.Drawing;
 
 namespace TaleofMonsters.Tools
 {
@@ -71,8 +72,8 @@ namespace TaleofMonsters.Tools
             int value1 = value%100;
             if (value100 >= 1)
             {
-                colorStart = NarlonLib.Drawing.DrawTool.HSL2RGB(value100 * 0.1-0.1, 0.4, 0.5);
-                colorEnd = NarlonLib.Drawing.DrawTool.HSL2RGB(value100 * 0.1-0.1, 1, 0.5);
+                colorStart = DrawTool.HSL2RGB(value100 * 0.1-0.1, 0.4, 0.5);
+                colorEnd = DrawTool.HSL2RGB(value100 * 0.1-0.1, 1, 0.5);
                 using (Brush b1 = new LinearGradientBrush(new Rectangle(x, y, width, 10), colorStart, colorEnd, LinearGradientMode.Horizontal))
                 {
                     g.FillRectangle(b1, x, y, width, 10);
@@ -80,8 +81,8 @@ namespace TaleofMonsters.Tools
             }
             if (value1 >= 1)
             {
-                colorStart = NarlonLib.Drawing.DrawTool.HSL2RGB(value100 * 0.1, 0.4, 0.5);
-                colorEnd = NarlonLib.Drawing.DrawTool.HSL2RGB(value100 * 0.1, 1, 0.5);
+                colorStart = DrawTool.HSL2RGB(value100 * 0.1, 0.4, 0.5);
+                colorEnd = DrawTool.HSL2RGB(value100 * 0.1, 1, 0.5);
                 using (Brush b1 = new LinearGradientBrush(new Rectangle(x, y, value1 *width/100, 10), colorStart, colorEnd, LinearGradientMode.Horizontal))
                 {
                     g.FillRectangle(b1, x, y, value1 * width/ 100, 10);

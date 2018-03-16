@@ -1,4 +1,6 @@
-﻿namespace TaleofMonsters.Forms.CMain
+﻿using ControlPlus;
+
+namespace TaleofMonsters.Forms.CMain
 {
     sealed partial class SystemSetup
     {
@@ -29,7 +31,7 @@
         private void InitializeComponent()
         {
             this.buttonOk = new System.Windows.Forms.Button();
-            this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
+            this.bitmapButtonClose = new BitmapButton();
             this.label1 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
@@ -241,7 +243,7 @@
         #endregion
 
         private System.Windows.Forms.Button buttonOk;
-        private NarlonLib.Control.BitmapButton bitmapButtonClose;
+        private BitmapButton bitmapButtonClose;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.TrackBar trackBar1;

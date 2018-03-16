@@ -1,5 +1,5 @@
 ﻿using System.Windows.Forms;
-using NarlonLib.Control;
+using ControlPlus;
 
 namespace TaleofMonsters.Forms
 {
@@ -32,8 +32,8 @@ namespace TaleofMonsters.Forms
         private void InitializeComponent()
         {
             this.colorLabel1 = new System.Windows.Forms.Label();
-            this.bitmapButtonC1 = new NarlonLib.Control.BitmapButton();
-            this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
+            this.bitmapButtonC1 = new BitmapButton();
+            this.bitmapButtonClose = new BitmapButton();
             this.SuspendLayout();
             // 
             // colorLabel1

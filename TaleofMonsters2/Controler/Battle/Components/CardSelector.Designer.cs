@@ -1,4 +1,6 @@
-﻿namespace TaleofMonsters.Controler.Battle.Components
+﻿using ControlPlus;
+
+namespace TaleofMonsters.Controler.Battle.Components
 {
     partial class CardSelector
     {
@@ -28,7 +30,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.bitmapButton1 = new NarlonLib.Control.BitmapButton();
+            this.bitmapButton1 = new BitmapButton();
             this.SuspendLayout();
             // 
             // bitmapButton1
@@ -64,6 +66,6 @@
         }
 
         #endregion
-        private NarlonLib.Control.BitmapButton bitmapButton1;
+        private BitmapButton bitmapButton1;
     }
 }

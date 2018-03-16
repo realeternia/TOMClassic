@@ -1,4 +1,4 @@
-﻿using NarlonLib.Control;
+﻿using ControlPlus;
 
 namespace TaleofMonsters.Forms
 {
@@ -30,7 +30,7 @@ namespace TaleofMonsters.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
+            this.bitmapButtonClose = new BitmapButton();
             this.listViewMatchs = new System.Windows.Forms.ListView();
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.tourCup161 = new TaleofMonsters.Forms.TourGame.TourCup16();
@@ -39,7 +39,7 @@ namespace TaleofMonsters.Forms
             this.buttonEngage = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tourLeague41 = new TaleofMonsters.Forms.TourGame.TourLeague4();
-            this.viewStack1 = new NarlonLib.Control.ViewStack();
+            this.viewStack1 = new ViewStack();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tourCup81 = new TaleofMonsters.Forms.TourGame.TourCup8();
             this.tabPage2 = new System.Windows.Forms.TabPage();

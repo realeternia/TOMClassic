@@ -1,4 +1,4 @@
-﻿using NarlonLib.Control;
+﻿using ControlPlus;
 
 namespace TaleofMonsters.Forms
 {
@@ -35,7 +35,7 @@ namespace TaleofMonsters.Forms
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxContent = new System.Windows.Forms.TextBox();
             this.buttonSend = new System.Windows.Forms.Button();
-            this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
+            this.bitmapButtonClose = new BitmapButton();
             this.SuspendLayout();
             // 
             // label1

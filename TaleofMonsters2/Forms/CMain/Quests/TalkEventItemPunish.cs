@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
-using NarlonLib.Control;
+using ControlPlus;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Blesses;
 using TaleofMonsters.Datas.Others;

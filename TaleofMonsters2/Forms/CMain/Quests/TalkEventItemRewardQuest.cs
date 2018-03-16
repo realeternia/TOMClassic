@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
-using NarlonLib.Control;
-using NarlonLib.Drawing;
+using ControlPlus;
+using ControlPlus.Drawing;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Blesses;

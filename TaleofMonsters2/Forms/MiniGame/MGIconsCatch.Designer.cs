@@ -1,4 +1,4 @@
-﻿using NarlonLib.Control;
+﻿using ControlPlus;
 
 namespace TaleofMonsters.Forms.MiniGame
 {
@@ -32,16 +32,16 @@ namespace TaleofMonsters.Forms.MiniGame
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MGIconsCatch));
             this.customScrollbar1 = new ControlPlus.CustomScrollbar();
-            this.colorLabel1 = new NarlonLib.Control.ColorLabel();
-            this.bitmapButtonC9 = new NarlonLib.Control.BitmapButton();
-            this.bitmapButtonC8 = new NarlonLib.Control.BitmapButton();
-            this.bitmapButtonC7 = new NarlonLib.Control.BitmapButton();
-            this.bitmapButtonC6 = new NarlonLib.Control.BitmapButton();
-            this.bitmapButtonC5 = new NarlonLib.Control.BitmapButton();
-            this.bitmapButtonC4 = new NarlonLib.Control.BitmapButton();
-            this.bitmapButtonC3 = new NarlonLib.Control.BitmapButton();
-            this.bitmapButtonC2 = new NarlonLib.Control.BitmapButton();
-            this.bitmapButtonC1 = new NarlonLib.Control.BitmapButton();
+            this.colorLabel1 = new ColorLabel();
+            this.bitmapButtonC9 = new BitmapButton();
+            this.bitmapButtonC8 = new BitmapButton();
+            this.bitmapButtonC7 = new BitmapButton();
+            this.bitmapButtonC6 = new BitmapButton();
+            this.bitmapButtonC5 = new BitmapButton();
+            this.bitmapButtonC4 = new BitmapButton();
+            this.bitmapButtonC3 = new BitmapButton();
+            this.bitmapButtonC2 = new BitmapButton();
+            this.bitmapButtonC1 = new BitmapButton();
             this.SuspendLayout();
             // 
             // customScrollbar1

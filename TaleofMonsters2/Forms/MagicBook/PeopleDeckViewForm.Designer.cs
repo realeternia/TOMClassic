@@ -1,4 +1,4 @@
-﻿using NarlonLib.Control;
+﻿using ControlPlus;
 
 namespace TaleofMonsters.Forms.MagicBook
 {
@@ -30,9 +30,9 @@ namespace TaleofMonsters.Forms.MagicBook
         /// </summary>
         private void InitializeComponent()
         {
-            this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
-            this.bitmapButtonNext = new NarlonLib.Control.BitmapButton();
-            this.bitmapButtonPre = new NarlonLib.Control.BitmapButton();
+            this.bitmapButtonClose = new BitmapButton();
+            this.bitmapButtonNext = new BitmapButton();
+            this.bitmapButtonPre = new BitmapButton();
             this.nlClickLabel1 = new ControlPlus.NLClickLabel();
             this.SuspendLayout();
             // 

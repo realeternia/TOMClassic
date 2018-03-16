@@ -1,4 +1,4 @@
-using NarlonLib.Control;
+using ControlPlus;
 
 namespace TaleofMonsters.Forms.CMain
 {

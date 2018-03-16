@@ -1,7 +1,6 @@
 ﻿using System.Windows.Forms;
 
-
-namespace NarlonLib.Control
+namespace ControlPlus
 {
     public partial class PopedCotainer : UserControl
     {

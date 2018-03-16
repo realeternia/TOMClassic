@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace NarlonLib.Control
+namespace ControlPlus
 {
     public class ViewStack : TabControl
     {

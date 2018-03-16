@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace NarlonLib.Control
+namespace ControlPlus
 {
     public class DoubleBuffedPanel : Panel
     {

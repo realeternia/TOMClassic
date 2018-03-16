@@ -1,7 +1,7 @@
 using System.Drawing;
 using System.Windows.Forms;
-using NarlonLib.Control;
-using NarlonLib.Drawing;
+using ControlPlus;
+using ControlPlus.Drawing;
 using TaleofMonsters.Core.Interface;
 
 namespace TaleofMonsters.Forms.Items.Regions

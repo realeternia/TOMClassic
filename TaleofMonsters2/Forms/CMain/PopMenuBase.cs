@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using NarlonLib.Control;
+using ControlPlus;
 using TaleofMonsters.Core;
 
 namespace TaleofMonsters.Forms.CMain

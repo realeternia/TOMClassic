@@ -6,7 +6,6 @@ using TaleofMonsters.Core;
 using TaleofMonsters.Forms.Items.Core;
 using ConfigDatas;
 using ControlPlus;
-using NarlonLib.Control;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas.CardPieces;

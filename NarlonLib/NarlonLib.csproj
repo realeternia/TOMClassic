@@ -82,43 +82,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Control\BitmapButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Control\ColorLabel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Control\ColorLabel.Designer.cs">
-      <DependentUpon>ColorLabel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Control\GdiChart.cs" />
-    <Compile Include="Control\DoubleBufferedPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Control\DoubleBufferedTabPage.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Control\ImageTooltip.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Control\PopedCotainer.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Control\PopedCotainer.Designer.cs">
-      <DependentUpon>PopedCotainer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Control\PoperContainer.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Control\PoperContainer.designer.cs">
-      <DependentUpon>PoperContainer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Control\ViewStack.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Control\DoubleBufferedListView.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Core\NLCoroutineManager.cs" />
     <Compile Include="Core\NLPair.cs" />
     <Compile Include="Core\NLTimeCoroutine.cs" />
@@ -127,8 +90,6 @@
     <Compile Include="Core\SimpleSet.cs" />
     <Compile Include="Core\NLPriorityQueue.cs" />
     <Compile Include="Core\NLTimerManager.cs" />
-    <Compile Include="Drawing\DrawTool.cs" />
-    <Compile Include="Drawing\ImagePixelTool.cs" />
     <Compile Include="File\CsvDataReader.cs" />
     <Compile Include="Log\NLog.cs" />
     <Compile Include="Math\Adder.cs" />
@@ -143,23 +104,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\TimeTool.cs" />
     <Compile Include="Core\AutoDictionary.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Control\BitmapButton.resx">
-      <DependentUpon>BitmapButton.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Control\ColorLabel.resx">
-      <DependentUpon>ColorLabel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Control\ImageTooltip.resx">
-      <DependentUpon>ImageTooltip.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Control\PopedCotainer.resx">
-      <DependentUpon>PopedCotainer.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

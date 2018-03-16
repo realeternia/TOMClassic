@@ -1,4 +1,5 @@
-﻿using TaleofMonsters.Core;
+﻿using ControlPlus;
+using TaleofMonsters.Core;
 namespace TaleofMonsters
 {
     partial class MainForm
@@ -30,17 +31,17 @@ namespace TaleofMonsters
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.viewStack1 = new NarlonLib.Control.ViewStack();
-            this.tabPageLogin = new NarlonLib.Control.DoubleBufferedTabPage();
-            this.bitmapButtonExit = new NarlonLib.Control.BitmapButton();
-            this.bitmapButtonLogin = new NarlonLib.Control.BitmapButton();
+            this.viewStack1 = new ViewStack();
+            this.tabPageLogin = new DoubleBufferedTabPage();
+            this.bitmapButtonExit = new BitmapButton();
+            this.bitmapButtonLogin = new BitmapButton();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonConnect = new System.Windows.Forms.Button();
             this.buttonRegister = new System.Windows.Forms.Button();
             this.textBoxPasswd = new System.Windows.Forms.TextBox();
             this.textBoxName = new System.Windows.Forms.TextBox();
-            this.tabPageGame = new NarlonLib.Control.DoubleBufferedTabPage();
+            this.tabPageGame = new DoubleBufferedTabPage();
             this.viewStack1.SuspendLayout();
             this.tabPageLogin.SuspendLayout();
             this.SuspendLayout();
@@ -235,17 +236,17 @@ namespace TaleofMonsters
 
         #endregion
 
-        private NarlonLib.Control.ViewStack viewStack1;
-        private NarlonLib.Control.DoubleBufferedTabPage tabPageLogin;
-        private NarlonLib.Control.DoubleBufferedTabPage tabPageGame;
+        private ViewStack viewStack1;
+        private DoubleBufferedTabPage tabPageLogin;
+        private DoubleBufferedTabPage tabPageGame;
         private System.Windows.Forms.Button buttonConnect;
         private System.Windows.Forms.Button buttonRegister;
         private System.Windows.Forms.TextBox textBoxPasswd;
         private System.Windows.Forms.TextBox textBoxName;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private NarlonLib.Control.BitmapButton bitmapButtonLogin;
-        private NarlonLib.Control.BitmapButton bitmapButtonExit;
+        private BitmapButton bitmapButtonLogin;
+        private BitmapButton bitmapButtonExit;
 
     }
 }

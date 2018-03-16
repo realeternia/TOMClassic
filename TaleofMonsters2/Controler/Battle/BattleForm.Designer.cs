@@ -1,4 +1,4 @@
-﻿using NarlonLib.Control;
+﻿using ControlPlus;
 using TaleofMonsters.Controler.Battle.Components;
 using TaleofMonsters.Datas;
 
@@ -32,8 +32,8 @@ namespace TaleofMonsters.Controler.Battle
         /// </summary>
         private void InitializeComponent()
         {
-            this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
-            this.panelBattle = new NarlonLib.Control.DoubleBuffedPanel();
+            this.bitmapButtonClose = new BitmapButton();
+            this.panelBattle = new DoubleBuffedPanel();
             this.cardSelector1 = new TaleofMonsters.Controler.Battle.Components.CardSelector();
             this.miniItemView1 = new TaleofMonsters.Forms.Items.MiniItemView();
             this.cardList2 = new TaleofMonsters.Controler.Battle.Components.CardList();

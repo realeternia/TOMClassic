@@ -1,4 +1,4 @@
-﻿using NarlonLib.Control;
+﻿using ControlPlus;
 
 namespace TaleofMonsters.Forms.MiniGame
 {
@@ -30,8 +30,8 @@ namespace TaleofMonsters.Forms.MiniGame
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MGThreeBody));
-            this.colorLabel1 = new NarlonLib.Control.ColorLabel();
-            this.bitmapButtonC1 = new NarlonLib.Control.BitmapButton();
+            this.colorLabel1 = new ColorLabel();
+            this.bitmapButtonC1 = new BitmapButton();
             this.SuspendLayout();
             // 
             // colorLabel1

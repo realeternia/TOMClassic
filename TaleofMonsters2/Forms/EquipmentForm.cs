@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using NarlonLib.Control;
 using TaleofMonsters.Core;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using ConfigDatas;
+using ControlPlus;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas.Cards.Monsters;
 using TaleofMonsters.Datas.Equips;

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Drawing;
-using NarlonLib.Math;
 
-namespace NarlonLib.Drawing
+namespace ControlPlus.Drawing
 {
     public class ImagePixelTool
     {
@@ -22,6 +21,13 @@ namespace NarlonLib.Drawing
             RandomColumnMove = 32,
             RandomPoint = 33,
         }
+        private static readonly Random r;
+        static ImagePixelTool()
+        {
+            var seed = (int)DateTime.Now.Ticks;
+            r = new Random(seed);
+        }
+
         public static void Effect(Bitmap source, ImagePixelEffects effect, int level)
         {
             int imageWidth = source.Width;
@@ -208,12 +214,12 @@ namespace NarlonLib.Drawing
             {
                 for (int j = 0; j < imageWidth; j++)
                 {
-                    int yoff = i + MathTool.GetRandom(level*3);
+                    int yoff = i + r.Next(level*3);
                     if (yoff>=imageHeight)
                     {
                         yoff = imageHeight - 1;
                     }
-                    int xoff = j + MathTool.GetRandom(level * 3);
+                    int xoff = j + r.Next(level * 3);
                     if (xoff >= imageWidth)
                     {
                         xoff = imageWidth - 1;
@@ -236,8 +242,8 @@ namespace NarlonLib.Drawing
         {
             for (int i = 0; i < imageHeight; i++)
             {
-                int direct = MathTool.GetRandom(2);
-                int len = MathTool.GetRandom(level*3);
+                int direct = r.Next(2);
+                int len = r.Next(level*3);
                 if (direct ==0) //右移
                 {
                     for (int j = imageWidth - 1; j >=0; j--)
@@ -279,8 +285,8 @@ namespace NarlonLib.Drawing
         {
             for (int i = 0; i < imageWidth; i++)
             {
-                int direct = MathTool.GetRandom(2);
-                int len = MathTool.GetRandom(level * 3);
+                int direct = r.Next(2);
+                int len = r.Next(level * 3);
                 if (direct == 0)
                 {
                     for (int j = imageHeight - 1; j >= 0; j--)
@@ -325,12 +331,12 @@ namespace NarlonLib.Drawing
             {
                 for (int j = 0; j < imageWidth; j++)
                 {
-                    if (MathTool.GetRandom(100) > level*10)
+                    if (r.Next(100) > level*10)
                     {
                         index += 4;
                         continue;
                     }
-                    int pv = MathTool.GetRandom(255);
+                    int pv = r.Next(255);
                     pixelValues[index] = (byte)pv; //B
                     index++;
                     pixelValues[index] = (byte)pv; //G

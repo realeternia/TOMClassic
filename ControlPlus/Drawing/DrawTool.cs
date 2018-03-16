@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace NarlonLib.Drawing
+namespace ControlPlus.Drawing
 {
     public static class DrawTool
     {

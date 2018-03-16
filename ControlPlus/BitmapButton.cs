@@ -1,9 +1,9 @@
-using System;
+ï»¿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace NarlonLib.Control
+namespace ControlPlus
 {
     /// <summary>
     /// possible button states
@@ -65,7 +65,7 @@ namespace NarlonLib.Control
         /// Enable the shadowing of the button text
         /// </summary>
         [Browsable(true),
-        CategoryAttribute("Appearance"),
+        Category("Appearance"),
         Description("enables the text to cast a shadow"),
         System.ComponentModel.RefreshProperties(RefreshProperties.Repaint)
         ]
@@ -78,7 +78,7 @@ namespace NarlonLib.Control
         /// Color of the border around the button
         /// </summary>
 		[Browsable(true),
-        CategoryAttribute("Appearance"),
+        Category("Appearance"),
         Description("Color of the border around the button"),
         System.ComponentModel.RefreshProperties(RefreshProperties.Repaint)
         ]
@@ -91,7 +91,7 @@ namespace NarlonLib.Control
         /// Set to true if to offset button elements when button is pressed
         /// </summary>
         [Browsable(true),
-        CategoryAttribute("Appearance"),
+        Category("Appearance"),
         Description("Set to true if to offset image/text when button is pressed"),
         System.ComponentModel.RefreshProperties(RefreshProperties.Repaint)
         ]
@@ -109,7 +109,7 @@ namespace NarlonLib.Control
         /// states do not specify an image, this image is used as a substitute.
         /// </summary>
         [Browsable(true),
-        CategoryAttribute("Appearance"),
+        Category("Appearance"),
         Description("Image to be displayed while the button state is in normal state"),
         System.ComponentModel.RefreshProperties(RefreshProperties.Repaint)
         ]
@@ -179,7 +179,7 @@ namespace NarlonLib.Control
         {
             //CreateRegion(0);			
             // paint_Background(e);
-            if (ImageNormal == null)//±à¼­Æ÷Ä£Ê½Ê¹ÓÃ
+            if (ImageNormal == null)//ï¿½à¼­ï¿½ï¿½Ä£Ê½Ê¹ï¿½ï¿½
             {
                 var brush = new SolidBrush(Color.FromArgb(ForeColor.A, (ForeColor.R + 100) % 255, (ForeColor.G + 100) % 255, (ForeColor.B + 100) % 255));
                 e.Graphics.FillRectangle(brush, 0, 0, Width, Height);
@@ -217,7 +217,7 @@ namespace NarlonLib.Control
             //
             Point pt = Calculate_LeftEdgeTopEdge(this.TextAlign, rect, (int)size.Width, (int)size.Height);
             pt.X += TextOffX;
-            pt.Y += 1;//Î¢µ÷
+            pt.Y += 1;//Î¢ï¿½ï¿½
             //
             // If button state is inactive, paint the inactive text
             //
@@ -283,7 +283,7 @@ namespace NarlonLib.Control
                 {
                     g.DrawImage(image, rect, 0,0,image.Width,image.Height, GraphicsUnit.Pixel);
                 }
-                else//Ä¬ÈÏÓÃ¾Å¹¬¸ñ»­
+                else//Ä¬ï¿½ï¿½ï¿½Ã¾Å¹ï¿½ï¿½ï¿½
                 {
                     DrawNine(g, image, rect); 
                 }

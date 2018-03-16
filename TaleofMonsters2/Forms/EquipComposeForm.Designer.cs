@@ -1,4 +1,4 @@
-﻿using NarlonLib.Control;
+﻿using ControlPlus;
 
 namespace TaleofMonsters.Forms
 {
@@ -30,12 +30,12 @@ namespace TaleofMonsters.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.bitmapButton1 = new NarlonLib.Control.BitmapButton();
-            this.bitmapButtonClose = new NarlonLib.Control.BitmapButton();
-            this.bitmapButton2 = new NarlonLib.Control.BitmapButton();
-            this.bitmapButton3 = new NarlonLib.Control.BitmapButton();
-            this.bitmapButton4 = new NarlonLib.Control.BitmapButton();
-            this.bitmapButton5 = new NarlonLib.Control.BitmapButton();
+            this.bitmapButton1 = new BitmapButton();
+            this.bitmapButtonClose = new BitmapButton();
+            this.bitmapButton2 = new BitmapButton();
+            this.bitmapButton3 = new BitmapButton();
+            this.bitmapButton4 = new BitmapButton();
+            this.bitmapButton5 = new BitmapButton();
             this.SuspendLayout();
             // 
             // bitmapButton1

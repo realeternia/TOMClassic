@@ -1,9 +1,9 @@
-using System;
+锘縰sing System;
 using System.Drawing;
 using System.Windows.Forms;
-using NarlonLib.Drawing;
+using ControlPlus.Drawing;
 
-namespace NarlonLib.Control
+namespace ControlPlus
 {
     public partial class ColorLabel : Label
     {
@@ -25,7 +25,7 @@ namespace NarlonLib.Control
                 int xoff = 0;
                 var checkData = data;
                 if (checkData.IndexOf('|') < 0)
-                    checkData = "|" + checkData; //强行加一个头
+                    checkData = "|" + checkData; //强锟叫硷拷一锟斤拷头
 
                 string[] text = checkData.Split('|');
                 for (int i = 0; i < text.Length; i += 2)
@@ -38,7 +38,7 @@ namespace NarlonLib.Control
 
                     Brush brush = new SolidBrush(color);
                     var textToDraw = text[i+1];
-                    while (textWidth + xoff > Width-5)//自动回车功能的支持
+                    while (textWidth + xoff > Width-5)//锟皆讹拷锟截筹拷锟斤拷锟杰碉拷支锟斤拷
                     {
                         int showCharCount = textToDraw.Length*(Width - 5 - xoff)/textWidth;
                         var lineText = textToDraw.Substring(0, showCharCount);

@@ -1,4 +1,4 @@
-﻿namespace NarlonLib.Control
+﻿namespace ControlPlus
 {
     partial class PoperContainer
     {

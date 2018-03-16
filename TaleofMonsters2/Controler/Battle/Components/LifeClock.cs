@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using ConfigDatas;
-using NarlonLib.Control;
+using ControlPlus;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;

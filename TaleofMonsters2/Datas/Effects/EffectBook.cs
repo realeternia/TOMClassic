@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using NarlonLib.Drawing;
+using ControlPlus.Drawing;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Tools;
 

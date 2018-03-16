@@ -1,6 +1,4 @@
-﻿using NarlonLib.Control;
-
-namespace TaleofMonsters.Forms
+﻿namespace TaleofMonsters.Forms
 {
     sealed partial class BlackWallForm
     {

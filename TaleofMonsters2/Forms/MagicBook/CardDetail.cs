@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using NarlonLib.Control;
-using NarlonLib.Drawing;
 using TaleofMonsters.Core;
 using ConfigDatas;
+using ControlPlus;
+using ControlPlus.Drawing;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Cards;

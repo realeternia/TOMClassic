@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus;
-using NarlonLib.Control;
 using NarlonLib.Log;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;

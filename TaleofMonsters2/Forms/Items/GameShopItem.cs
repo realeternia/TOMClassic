@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
-using NarlonLib.Control;
 using TaleofMonsters.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using ConfigDatas;
+using ControlPlus;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas;
