@@ -14,7 +14,7 @@ namespace NarlonLib.Log
     {
         private static LogTargets type;
         private static string remoteIP = "";
-        private static int remotePort;
+        private static int remotePort = 808;
 
         private static string name = "HS";
 

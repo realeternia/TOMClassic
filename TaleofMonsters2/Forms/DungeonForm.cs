@@ -89,7 +89,7 @@ namespace TaleofMonsters.Forms
             var deck = UserProfile.InfoCard.Decks[selectPage];
             if (deck.Count < GameConstants.DeckCardCount)
             {
-                MessageBoxEx2.Show("卡组内卡片数不足");
+                MessageBoxEx.Show("卡组内卡片数不足");
                 return;
             }
 
@@ -98,7 +98,7 @@ namespace TaleofMonsters.Forms
                 var card = CardAssistant.GetCard(cardId);
                 if (card.JobId > 0 && card.JobId != UserProfile.InfoBasic.Job)
                 {
-                    MessageBoxEx2.Show("部分卡牌职业不匹配");
+                    MessageBoxEx.Show("部分卡牌职业不匹配");
                     return;
                 }
             }

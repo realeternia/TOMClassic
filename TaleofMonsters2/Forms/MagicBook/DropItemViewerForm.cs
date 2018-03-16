@@ -24,7 +24,6 @@ namespace TaleofMonsters.Forms.MagicBook
         private const int cardCount = xCount * yCount;
         private int totalCount;
         private int page;
-        private bool show;
         private int tar = -1;
         private List<int> items;
         private CardDetail cardDetail;
@@ -55,7 +54,6 @@ namespace TaleofMonsters.Forms.MagicBook
         public override void Init(int width, int height)
         {
             base.Init(width, height);
-            show = true;
             page = 0;
 
             items = new List<int>();
