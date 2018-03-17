@@ -163,6 +163,13 @@
     <Compile Include="Controler\Battle\FastBattle.cs" />
     <Compile Include="Controler\GM\GMCommand.cs" />
     <Compile Include="Controler\GM\GmScript.cs" />
+    <Compile Include="Forms\RankForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\RankForm.Designer.cs">
+      <DependentUpon>RankForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Rpc\NetDataCache.cs" />
     <Compile Include="Tools\ImageManager.cs" />
     <Compile Include="Rpc\S2CImplement.cs" />
     <Compile Include="Rpc\C2SSender.cs" />
@@ -928,6 +935,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SelectCardForm.resx">
       <DependentUpon>SelectCardForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RankForm.resx">
+      <DependentUpon>RankForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UserForm.resx">

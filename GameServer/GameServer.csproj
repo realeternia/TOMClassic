@@ -40,6 +40,7 @@
     <Compile Include="Logic\GamePlayer.cs" />
     <Compile Include="Logic\PlayerManager.cs" />
     <Compile Include="Logic\RankManager.cs" />
+    <Compile Include="Rpc\S2CSender.cs" />
     <Compile Include="Storage\DbManager.cs" />
     <Compile Include="Tools\Environment.cs" />
     <Compile Include="GameServer.cs" />

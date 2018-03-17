@@ -56,15 +56,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BinaryReader.cs" />
-    <Compile Include="BinaryWriter.cs" />
-    <Compile Include="BuffPool.cs" />
-    <Compile Include="ByteQueue.cs" />
+    <Compile Include="NetTypes.cs" />
+    <Compile Include="PacketManager.cs" />
+    <Compile Include="Serialize\BinaryReader.cs" />
+    <Compile Include="Serialize\BinaryWriter.cs" />
+    <Compile Include="Network\BuffPool.cs" />
+    <Compile Include="Network\ByteQueue.cs" />
     <Compile Include="LogHandlerRegister.cs" />
-    <Compile Include="MessageBump.cs" />
-    <Compile Include="NetClient.cs" />
-    <Compile Include="NetServer.cs" />
-    <Compile Include="NetSocket.cs" />
+    <Compile Include="Serialize\MessageBump.cs" />
+    <Compile Include="Network\NetClient.cs" />
+    <Compile Include="Network\NetServer.cs" />
+    <Compile Include="Network\NetSocket.cs" />
     <Compile Include="Packets.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -75,6 +77,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

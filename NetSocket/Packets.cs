@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.IO;
 
 namespace JLM.NetSocket
@@ -7,30 +7,6 @@ namespace JLM.NetSocket
     {
         public virtual int PackRealId { get; }
         public virtual byte[] Data { get; }
-    }
-
-    public class PacketManager
-    {
-        public static PacketBase GetPacket(byte[] datas)
-        {
-            if (datas.Length <= 8) //size = 4, id = 4
-                return new PacketBase();
-
-            var packId = (uint)(datas[4] | datas[5] << 8 | datas[6] << 16 | datas[7] << 24);
-            byte[] newData = new byte[datas.Length - 4];
-            Buffer.BlockCopy(datas, 4, newData, 0, newData.Length);
-
-            switch (packId)
-            {
-                case PacketC2SLogin.PackId: return new PacketC2SLogin(newData);
-                case PacketC2SSave.PackId: return new PacketC2SSave(newData);
-                case PacketC2SLevelExpChange.PackId: return new PacketC2SLevelExpChange(newData);
-                case PacketC2SGetRank.PackId: return new PacketC2SGetRank(newData);
-
-                case PacketS2CLoginResult.PackId: return new PacketS2CLoginResult(newData);
-            }
-            return new PacketBase();
-        }
     }
 
     public class PacketC2SLogin : PacketBase
@@ -107,8 +83,6 @@ namespace JLM.NetSocket
 
         public override int PackRealId { get { return PackId; } }
 
-        private PacketC2SLevelExpChange() { }
-
         public PacketC2SLevelExpChange(int job, int lv, int exp)
         {
             Job = job;
@@ -116,7 +90,7 @@ namespace JLM.NetSocket
             Exp = exp;
         }
 
-        public PacketC2SLevelExpChange(byte[] bts) : this()
+        public PacketC2SLevelExpChange(byte[] bts)
         {
             TBinaryReader sr = new TBinaryReader(bts);
             sr.ReadInt32(); //包id
@@ -145,14 +119,12 @@ namespace JLM.NetSocket
 
         public override int PackRealId { get { return PackId; } }
 
-        private PacketC2SGetRank() { }
-
         public PacketC2SGetRank(int lv)
         {
             Type = lv;
         }
 
-        public PacketC2SGetRank(byte[] bts) : this()
+        public PacketC2SGetRank(byte[] bts)
         {
             TBinaryReader sr = new TBinaryReader(bts);
             sr.ReadInt32(); //包id
@@ -180,15 +152,13 @@ namespace JLM.NetSocket
 
         public override int PackRealId { get { return PackId; } }
 
-        private PacketS2CLoginResult() { }
-
-        public PacketS2CLoginResult(int playerId, byte[] data) : this()
+        public PacketS2CLoginResult(int playerId, byte[] data)
         {
             PlayerId = playerId;
             SaveData = data;
         }
 
-        public PacketS2CLoginResult(byte[] bts) : this()
+        public PacketS2CLoginResult(byte[] bts)
         {
             TBinaryReader sr = new TBinaryReader(bts);
             sr.ReadInt32(); //包id
@@ -204,6 +174,46 @@ namespace JLM.NetSocket
                 sw.Write(PackId);
                 sw.Write(PlayerId);
                 sw.Write(SaveData);
+                return sw.GetBytes();
+            }
+        }
+    }
+    public class PacketS2CRankResult : PacketBase
+    {
+        public const int PackId = 200002;
+
+        public List<RankData> RankList;
+
+        public override int PackRealId { get { return PackId; } }
+
+        public PacketS2CRankResult(List<RankData> data) 
+        {
+            RankList = data;
+        }
+
+        public PacketS2CRankResult(byte[] bts)
+        {
+            TBinaryReader sr = new TBinaryReader(bts);
+            sr.ReadInt32(); //包id
+            RankList = new List<RankData>();
+            var length = sr.ReadInt32();
+            for (int i = 0; i < length; i++)
+            {
+                var dData = new RankData();
+                dData.Read(sr);
+                RankList.Add(dData);
+            }
+        }
+
+        public override byte[] Data
+        {
+            get
+            {
+                TBinaryWriter sw = new TBinaryWriter();
+                sw.Write(PackId);
+                sw.Write(RankList.Count);
+                foreach (var rankData in RankList)
+                    rankData.Write(sw);
                 return sw.GetBytes();
             }
         }

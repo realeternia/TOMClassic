@@ -5,6 +5,12 @@ namespace GameServer.Tools
 {
     public class Logger
     {
+        static Logger()
+        {
+            if (!Directory.Exists("./log"))
+                Directory.CreateDirectory("./log");
+        }
+
         public static void Log(string n)
         {
             var str = string.Format("[{0}]{1}", DateTime.Now, n);

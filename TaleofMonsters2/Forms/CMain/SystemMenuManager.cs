@@ -167,8 +167,8 @@ namespace TaleofMonsters.Forms.CMain
                 case SystemMenuIds.WorldMapViewForm:
                     PanelManager.DealPanel(new WorldMapViewForm());
                     break;
-                case SystemMenuIds.ConnectForm:
-                    PanelManager.DealPanel(new ConnectForm());
+                case SystemMenuIds.RankForm:
+                    PanelManager.DealPanel(new RankForm());
                     break;
                 case SystemMenuIds.CardShopViewForm:
                     PanelManager.DealPanel(new CardShopViewForm());
@@ -211,27 +211,6 @@ namespace TaleofMonsters.Forms.CMain
                     if (!PanelManager.CloseLastPanel())//如果已经没有面板了，才出
                         CheckItemClick(SystemMenuIds.SystemMenu);
                     break;
-                case Keys.C:
-                    CheckItemClick(SystemMenuIds.EquipmentForm);
-                    break;
-                case Keys.I:
-                    CheckItemClick(SystemMenuIds.ItemForm);
-                    break;
-                case Keys.D:
-                    CheckItemClick(SystemMenuIds.DeckViewForm);
-                    break;
-                case Keys.F:
-                    CheckItemClick(SystemMenuIds.PeopleViewForm);
-                    break;
-                case Keys.T:
-                    CheckItemClick(SystemMenuIds.TaskForm);
-                    break;
-                case Keys.V:
-                    CheckItemClick(SystemMenuIds.GameShopViewForm);
-                    break;
-                case Keys.M:
-                    CheckItemClick(SystemMenuIds.WorldMapViewForm);
-                    break;
                 case Keys.Oemtilde:
                     GMMode = !GMMode;
                     MainForm.Instance.RefreshView();
@@ -255,7 +234,7 @@ namespace TaleofMonsters.Forms.CMain
         LeaveDungeon = 31,
         MagicBookViewForm = 32,
         WorldMapViewForm = 33,
-        ConnectForm = 34,
+        RankForm = 34,
         CardShopViewForm = 36,
         TournamentViewForm = 37,
         TreasureWheelForm = 39,

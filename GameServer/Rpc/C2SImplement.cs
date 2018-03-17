@@ -13,6 +13,7 @@ namespace GameServer.Rpc
                 case PacketC2SLogin.PackId: OnPacketLogin(net, packet as PacketC2SLogin); break;
                 case PacketC2SSave.PackId: OnPacketSave(net, packet as PacketC2SSave); break;
                 case PacketC2SLevelExpChange.PackId: OnPacketLevelExpChange(net, packet as PacketC2SLevelExpChange); break;
+                case PacketC2SGetRank.PackId: OnPacketGetRanke(net, packet as PacketC2SGetRank); break;
                 default: Logger.Log(string.Format("CheckPacket error id={0}", packet.PackRealId));
                     net.Close("error packet");
                     break;
@@ -38,7 +39,15 @@ namespace GameServer.Rpc
             var player = GameServer.Instance.PlayerManager.GetPlayer(net.ClientId);
             if (player != null)
             {
-                GameServer.Instance.RankManager.UpdateLevelExp(player.Name, c2SData.Job, c2SData.Level, c2SData.Exp);
+                GameServer.Instance.RankManager.RpcUpdateLevelExp(player.Name, c2SData.Job, c2SData.Level, c2SData.Exp);
+            }
+        }
+        public void OnPacketGetRanke(NetClient net, PacketC2SGetRank c2SData)
+        {
+            var player = GameServer.Instance.PlayerManager.GetPlayer(net.ClientId);
+            if (player != null)
+            {
+                GameServer.Instance.RankManager.RpcGetRank(player, c2SData.Type);
             }
         }
     }

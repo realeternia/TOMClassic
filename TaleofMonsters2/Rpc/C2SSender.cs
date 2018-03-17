@@ -25,5 +25,10 @@ namespace TaleofMonsters.Rpc
             var data = new PacketC2SLevelExpChange(job, level, exp).Data;
             client.Send(data);
         }
+        public void GetRank()
+        {
+            var data = new PacketC2SGetRank(0).Data;
+            client.Send(data);
+        }
     }
 }

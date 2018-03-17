@@ -1,6 +1,8 @@
 ﻿using JLM.NetSocket;
 using TaleofMonsters.Core;
 using TaleofMonsters.Datas.User;
+using TaleofMonsters.Forms;
+using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.Rpc
 {
@@ -11,6 +13,7 @@ namespace TaleofMonsters.Rpc
             switch (packet.PackRealId)
             {
                 case PacketS2CLoginResult.PackId: OnPacketLogin(packet as PacketS2CLoginResult);break;
+                case PacketS2CRankResult.PackId: OnPacketRankResult(packet as PacketS2CRankResult); break;
             }
         }
 
@@ -28,6 +31,12 @@ namespace TaleofMonsters.Rpc
                 UserProfile.Profile = (Profile)tmp;
             }
             MainForm.Instance.LoginResult();
+        }
+
+        public void OnPacketRankResult(PacketS2CRankResult s2CData)
+        {
+            NetDataCache.RankList = s2CData.RankList;
+            PanelManager.SendMessage(typeof(RankForm), 1);
         }
     }
 }

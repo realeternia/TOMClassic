@@ -146,5 +146,14 @@ namespace TaleofMonsters.Forms.CMain
                 DealPanel(basePanel);
             }
         }
+
+        public static void SendMessage(Type t, int signal)
+        {
+            var panel = FindPanel(t);
+            if (panel != null)
+            {
+                panel.BasePanelMessageSafe(signal);
+            }
+        }
     }
 }

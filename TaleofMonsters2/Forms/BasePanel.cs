@@ -8,6 +8,24 @@ namespace TaleofMonsters.Forms
 {
     internal class BasePanel : UserControl
     {
+        delegate void BasePanelMessageCallback(int token);
+        public void BasePanelMessageSafe(int token)
+        {
+            if (InvokeRequired)
+            {
+                BasePanelMessageCallback d = BasePanelMessageSafe;
+                Invoke(d, new object[] { token });
+            }
+            else
+            {
+                BasePanelMessageWork(token);
+            }
+        }
+
+        protected virtual void BasePanelMessageWork(int token)
+        {
+        }
+
         private class FlowData
         {
             public string Text;
@@ -95,12 +113,14 @@ namespace TaleofMonsters.Forms
 
         public void AddFlow(string text, string color, int x, int y)
         {
-            FlowData fw = new FlowData();
-            fw.Text = text;
-            fw.Color = color;
-            fw.X = x;
-            fw.Y = y;
-            fw.Time = 16 + text.Length/2;
+            FlowData fw = new FlowData
+            {
+                Text = text,
+                Color = color,
+                X = x,
+                Y = y,
+                Time = 16 + text.Length/2
+            };
             flows.Add(fw);
         }
 

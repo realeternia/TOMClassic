@@ -1,42 +1,40 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using GameServer.Tools;
+using JLM.NetSocket;
 
 namespace GameServer.Logic
 {
     public class RankManager
     {
-        class RankData
+        internal class CompareByLevelExp : IComparer<RankData>
         {
-            internal class CompareByLevelExp : IComparer<RankData>
+            #region IComparer<RankData> 成员
+
+            public int Compare(RankData x, RankData y)
             {
-                #region IComparer<RankData> 成员
+                if (y.Level != x.Level)
+                    return x.Level.CompareTo(y.Level);
 
-                public int Compare(RankData x, RankData y)
-                {
-                    if (y.Level != x.Level)
-                        return x.Level.CompareTo(y.Level);
-
-                    return x.Exp.CompareTo(y.Exp);
-                }
-
-                #endregion
+                return x.Exp.CompareTo(y.Exp);
             }
-            public string Name;
-            public int Job;
-            public int Level;
-            public int Exp;
+
+            #endregion
         }
 
-        private List<RankData> rankList = new List<RankData>();
 
-        static RankManager()
+        private List<RankData> rankList = new List<RankData>();
+        private const int RankLimit = 30;
+
+        public RankManager()
         {
             if (!Directory.Exists("./Rank"))
                 Directory.CreateDirectory("./Rank");
+            Load();
         }
 
-        public void UpdateLevelExp(string name, int job, int level, int exp)
+        public void RpcUpdateLevelExp(string name, int job, int level, int exp)
         {
             bool found = false;
             foreach (var rankData in rankList)
@@ -54,11 +52,25 @@ namespace GameServer.Logic
             if (!found)
                 rankList.Add(new RankData {Name = name, Job = job, Exp = exp, Level = level});
 
-            rankList.Sort(new RankData.CompareByLevelExp());
-            if (rankList.Count > 10)
+            rankList.Sort(new CompareByLevelExp());
+            if (rankList.Count > RankLimit)
                 rankList.RemoveAt(rankList.Count-1);
 
             Save();
+        }
+
+        private void Load()
+        {
+            StreamReader sr = new StreamReader("./Rank/level.txt");
+            string line;
+            while ((line = sr.ReadLine()) != null)
+            {
+                var datas = line.Split('\t');
+                rankList.Add(new RankData {Name = datas[0], Job = int.Parse(datas[1]), Level = int.Parse(datas[2]), Exp = int.Parse(datas[3])});
+            }
+            sr.Close();
+
+            Logger.Log("Load rank count=" + rankList.Count);
         }
 
         private void Save()
@@ -67,6 +79,12 @@ namespace GameServer.Logic
             foreach (var rankData in rankList)
             sw.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}", rankData.Name, rankData.Job, rankData.Level, rankData.Exp));
             sw.Close();
+        }
+
+        public void RpcGetRank(GamePlayer player, int type)
+        {
+            player.S2C.GetRankResult(rankList);
+            Logger.Log("RpcGetRank " + player.Name);
         }
     }
 }
