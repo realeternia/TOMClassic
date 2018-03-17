@@ -163,6 +163,8 @@ namespace TaleofMonsters.Core
             if (isBGM)
             {
                 channel.setVolume(BGMVolume * WorldInfoManager.BGVolumn);
+                channel.setLoopCount(-1);
+
                 _channelBGM = channel;
             }
             else

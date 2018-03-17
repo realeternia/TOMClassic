@@ -59,8 +59,7 @@ namespace TaleofMonsters.Forms
             }
             virtualRegion_RegionClick(1,0,0, MouseButtons.Left);
 
-            SoundManager.PlayBGM("TOM003.mp3");
-            IsChangeBgm = true;
+            SetBgm("TOM003.mp3");
             OnFrame(0, 0);
         }
 

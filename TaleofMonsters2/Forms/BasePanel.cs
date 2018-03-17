@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Tools;
+using TaleofMonsters.Core;
 using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.Forms
@@ -40,7 +41,7 @@ namespace TaleofMonsters.Forms
         protected int formWidth;
         protected int formHeight;
 
-        public bool IsChangeBgm { get; set; }
+        public bool IsChangeBgm { get; private set; }
 
         public bool NeedBlackForm { get; set; }
 
@@ -51,13 +52,9 @@ namespace TaleofMonsters.Forms
             Location = new Point((formWidth - Width) / 2, (formHeight - Height) / 2);
 
             if (Controls.ContainsKey("bitmapButtonClose"))
-            {
                 Controls["bitmapButtonClose"].Location = new Point(Width - 35, 2);
-            }
             if (Controls.ContainsKey("bitmapButtonHelp"))
-            {
                 Controls["bitmapButtonHelp"].Location = new Point(Width - 62, 2);
-            }
             flows = new List<FlowData>();
             Paint += new PaintEventHandler(BasePanel_Paint);
         }
@@ -135,13 +132,9 @@ namespace TaleofMonsters.Forms
             foreach (char c in s)
             {
                 if (c >= '0' && c <= '9')
-                {
                     wid += 14.20594;
-                }
                 else
-                {
                     wid += 19.98763;
-                }
             }
             return (int)wid;
         }
@@ -166,6 +159,12 @@ namespace TaleofMonsters.Forms
                 }
                 ft.Dispose();
             }            
+        }
+
+        public void SetBgm(string bgmPath)
+        {
+            SoundManager.PlayBGM(bgmPath);
+            IsChangeBgm = true;
         }
     }
 

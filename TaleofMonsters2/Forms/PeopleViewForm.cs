@@ -71,10 +71,9 @@ namespace TaleofMonsters.Forms
             {
                 vRegion.SetRegionState(30, RegionState.Rectangled);
                 Bind(types[0]);
-            }            
+            }
 
-            SoundManager.PlayBGM("TOM002.mp3");
-            IsChangeBgm = true;
+            SetBgm("TOM002.mp3");
 
             if (UserProfile.InfoBasic.LastRival > 0)
                 FastBind(UserProfile.InfoBasic.LastRival);

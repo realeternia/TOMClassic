@@ -53,10 +53,9 @@ namespace TaleofMonsters.Forms
             base.Init(width, height);
             show = true;
 
-            InstallDeckCard(); 
+            InstallDeckCard();
 
-            SoundManager.PlayBGM("TOM003.mp3");
-            IsChangeBgm = true;
+            SetBgm("TOM003.mp3");
         }
 
         public override void OnFrame(int tick, float timePass)

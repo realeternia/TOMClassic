@@ -43,8 +43,6 @@ namespace TaleofMonsters.Forms
         public override void Init(int width, int height)
         {
             base.Init(width, height);
-
-            IsChangeBgm = true;
         }
 
         public void SetData(int item)

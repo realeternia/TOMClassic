@@ -110,7 +110,7 @@ namespace TaleofMonsters.Controler.Battle
 
         public void Init(int lid, DeckCard[] leftCards, int rid, string map, int rlevel, PeopleFightParm reason)
         {
-            SoundManager.PlayBGM("TOM006.mp3");
+            SetBgm("TOM006.mp3");
 
             isHuman = lid == 0;
             rightId = rid;

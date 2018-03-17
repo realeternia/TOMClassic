@@ -152,10 +152,9 @@ namespace TaleofMonsters.Forms
 
             ChangeDeck(1);
             UpdateButtonState();
-            UpdateDeckButtonState();            
+            UpdateDeckButtonState();
 
-            SoundManager.PlayBGM("TOM003.mp3");
-            IsChangeBgm = true;
+            SetBgm("TOM003.mp3");
         }
 
         public override void OnFrame(int tick, float timePass)
