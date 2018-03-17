@@ -15,9 +15,9 @@ namespace GameServer.Logic
             public int Compare(RankData x, RankData y)
             {
                 if (y.Level != x.Level)
-                    return x.Level.CompareTo(y.Level);
+                    return y.Level.CompareTo(x.Level);
 
-                return x.Exp.CompareTo(y.Exp);
+                return y.Exp.CompareTo(x.Exp);
             }
 
             #endregion
@@ -34,13 +34,14 @@ namespace GameServer.Logic
             Load();
         }
 
-        public void RpcUpdateLevelExp(string name, int job, int level, int exp)
+        public void RpcUpdateLevelExp(string name, int headId, int job, int level, int exp)
         {
             bool found = false;
             foreach (var rankData in rankList)
             {
                 if (rankData.Name == name)
                 {
+                    rankData.HeadId = headId;
                     rankData.Level = level;
                     rankData.Exp = exp;
                     rankData.Job = job;
@@ -50,7 +51,7 @@ namespace GameServer.Logic
             }
 
             if (!found)
-                rankList.Add(new RankData {Name = name, Job = job, Exp = exp, Level = level});
+                rankList.Add(new RankData {Name = name, HeadId = headId, Job = job, Exp = exp, Level = level});
 
             rankList.Sort(new CompareByLevelExp());
             if (rankList.Count > RankLimit)
@@ -61,14 +62,24 @@ namespace GameServer.Logic
 
         private void Load()
         {
-            StreamReader sr = new StreamReader("./Rank/level.txt");
-            string line;
-            while ((line = sr.ReadLine()) != null)
+            if (File.Exists("./Rank/level.txt"))
             {
-                var datas = line.Split('\t');
-                rankList.Add(new RankData {Name = datas[0], Job = int.Parse(datas[1]), Level = int.Parse(datas[2]), Exp = int.Parse(datas[3])});
+                StreamReader sr = new StreamReader("./Rank/level.txt");
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    var datas = line.Split('\t');
+                    rankList.Add(new RankData
+                    {
+                        Name = datas[0],
+                        HeadId = int.Parse(datas[1]),
+                        Job = int.Parse(datas[2]),
+                        Level = int.Parse(datas[3]),
+                        Exp = int.Parse(datas[4])
+                    });
+                }
+                sr.Close();
             }
-            sr.Close();
 
             Logger.Log("Load rank count=" + rankList.Count);
         }
@@ -77,14 +88,14 @@ namespace GameServer.Logic
         {
             StreamWriter sw = new StreamWriter("./Rank/level.txt", false, Encoding.UTF8);
             foreach (var rankData in rankList)
-            sw.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}", rankData.Name, rankData.Job, rankData.Level, rankData.Exp));
+            sw.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}", rankData.Name, rankData.HeadId, rankData.Job, rankData.Level, rankData.Exp));
             sw.Close();
         }
 
         public void RpcGetRank(GamePlayer player, int type)
         {
             player.S2C.GetRankResult(rankList);
-            Logger.Log("RpcGetRank " + player.Name);
+            Logger.Log("RpcGetRank " + player.Passport);
         }
     }
 }

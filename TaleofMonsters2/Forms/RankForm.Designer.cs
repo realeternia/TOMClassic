@@ -32,7 +32,7 @@ namespace TaleofMonsters.Forms
         {
             this.listView1 = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.bitmapButtonClose = new BitmapButton();
+            this.bitmapButtonClose = new ControlPlus.BitmapButton();
             this.SuspendLayout();
             // 
             // listView1
@@ -48,14 +48,14 @@ namespace TaleofMonsters.Forms
             this.listView1.Location = new System.Drawing.Point(12, 47);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(280, 443);
+            this.listView1.Size = new System.Drawing.Size(300, 331);
             this.listView1.TabIndex = 40;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Width = 260;
+            this.columnHeader1.Width = 280;
             // 
             // bitmapButtonClose
             // 
@@ -74,14 +74,14 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonClose.UseVisualStyleBackColor = true;
             this.bitmapButtonClose.Click += new System.EventHandler(this.bitmapButtonClose_Click);
             // 
-            // UserForm
+            // RankForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.bitmapButtonClose);
-            this.Name = "UserForm";
-            this.Size = new System.Drawing.Size(303, 506);
+            this.Name = "RankForm";
+            this.Size = new System.Drawing.Size(323, 396);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.RankForm_Paint);
             this.ResumeLayout(false);
 

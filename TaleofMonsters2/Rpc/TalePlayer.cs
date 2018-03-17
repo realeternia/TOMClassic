@@ -40,7 +40,7 @@ namespace TaleofMonsters.Rpc
         {
             Close();
 
-            System.Net.IPEndPoint end = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("127.0.0.1"), 5555);
+            System.Net.IPEndPoint end = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("193.112.9.47"), 5555);
             client = new NetClient();
             C2SSender = new C2SSender(client);
             client.Connected += new EventHandler<NetSocketConnectedEventArgs>(client_Connected);

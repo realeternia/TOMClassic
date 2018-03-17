@@ -13,7 +13,8 @@ namespace GameServer.Rpc
                 case PacketC2SLogin.PackId: OnPacketLogin(net, packet as PacketC2SLogin); break;
                 case PacketC2SSave.PackId: OnPacketSave(net, packet as PacketC2SSave); break;
                 case PacketC2SLevelExpChange.PackId: OnPacketLevelExpChange(net, packet as PacketC2SLevelExpChange); break;
-                case PacketC2SGetRank.PackId: OnPacketGetRanke(net, packet as PacketC2SGetRank); break;
+                case PacketC2SGetRank.PackId: OnPacketGetRank(net, packet as PacketC2SGetRank); break;
+                case PacketC2SSendPlayerInfo.PackId: OnPacketSendPlayerInfo(net, packet as PacketC2SSendPlayerInfo); break;
                 default: Logger.Log(string.Format("CheckPacket error id={0}", packet.PackRealId));
                     net.Close("error packet");
                     break;
@@ -39,15 +40,24 @@ namespace GameServer.Rpc
             var player = GameServer.Instance.PlayerManager.GetPlayer(net.ClientId);
             if (player != null)
             {
-                GameServer.Instance.RankManager.RpcUpdateLevelExp(player.Name, c2SData.Job, c2SData.Level, c2SData.Exp);
+                GameServer.Instance.RankManager.RpcUpdateLevelExp(player.Name, player.HeadId, c2SData.Job, c2SData.Level, c2SData.Exp);
             }
         }
-        public void OnPacketGetRanke(NetClient net, PacketC2SGetRank c2SData)
+        public void OnPacketGetRank(NetClient net, PacketC2SGetRank c2SData)
         {
             var player = GameServer.Instance.PlayerManager.GetPlayer(net.ClientId);
             if (player != null)
             {
                 GameServer.Instance.RankManager.RpcGetRank(player, c2SData.Type);
+            }
+        }
+        public void OnPacketSendPlayerInfo(NetClient net, PacketC2SSendPlayerInfo c2SData)
+        {
+            var player = GameServer.Instance.PlayerManager.GetPlayer(net.ClientId);
+            if (player != null)
+            {
+                player.Name = c2SData.Name;
+                player.HeadId = c2SData.HeadId;
             }
         }
     }

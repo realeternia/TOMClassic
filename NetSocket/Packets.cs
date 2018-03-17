@@ -142,7 +142,40 @@ namespace JLM.NetSocket
             }
         }
     }
+    public class PacketC2SSendPlayerInfo : PacketBase
+    {
+        public const int PackId = 100005;
+        public string Name;
+        public int HeadId;
 
+        public override int PackRealId { get { return PackId; } }
+
+        public PacketC2SSendPlayerInfo(string name, int headId)
+        {
+            Name = name;
+            HeadId = headId;
+        }
+
+        public PacketC2SSendPlayerInfo(byte[] bts)
+        {
+            TBinaryReader sr = new TBinaryReader(bts);
+            sr.ReadInt32(); //包id
+            Name = sr.ReadString();
+            HeadId = sr.ReadInt32();
+        }
+
+        public override byte[] Data
+        {
+            get
+            {
+                TBinaryWriter sw = new TBinaryWriter();
+                sw.Write(PackId);
+                sw.Write(Name);
+                sw.Write(HeadId);
+                return sw.GetBytes();
+            }
+        }
+    }
     public class PacketS2CLoginResult : PacketBase
     {
         public const int PackId = 200001;

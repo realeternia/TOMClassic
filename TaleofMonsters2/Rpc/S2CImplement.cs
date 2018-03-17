@@ -29,6 +29,7 @@ namespace TaleofMonsters.Rpc
                 object tmp;
                 DbSerializer.BytesToCustomType(s2CLogin.SaveData, out tmp, typeof(Profile));
                 UserProfile.Profile = (Profile)tmp;
+                TalePlayer.C2SSender.UpdatePlayerInfo(UserProfile.Profile.Name, UserProfile.Profile.InfoBasic.Head);
             }
             MainForm.Instance.LoginResult();
         }

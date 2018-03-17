@@ -2,10 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
-using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.Datas;
-using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Rpc;
 
@@ -40,7 +37,7 @@ namespace TaleofMonsters.Forms
             {
                 int index = 1;
                 foreach (var rankData in NetDataCache.RankList)
-                    AddText(index++, rankData.Name, rankData.Job, rankData.Level, rankData.Exp);
+                    AddText(index++, rankData.Name, rankData.Job, rankData.Level, rankData.Exp, rankData.HeadId);
             }
         }
 
@@ -54,10 +51,15 @@ namespace TaleofMonsters.Forms
             }
 
             var items = e.Item.Text.Split('-');
-            e.Graphics.DrawString(items[0], listView1.Font, Brushes.White, e.Item.Position.X+20, e.Item.Position.Y + 3);
-            e.Graphics.DrawString(items[1], listView1.Font, Brushes.White, e.Item.Position.X + 50, e.Item.Position.Y + 3);
-            e.Graphics.DrawString(ConfigData.GetJobConfig(int.Parse(items[2])).Name, listView1.Font, Brushes.White, e.Item.Position.X + 140, e.Item.Position.Y + 3);
-            e.Graphics.DrawString(string.Format("Lv{0}({1})",items[3], items[4]), listView1.Font, Brushes.White, e.Item.Position.X + 190, e.Item.Position.Y + 3);
+            e.Graphics.DrawString(items[0], listView1.Font, Brushes.White, e.Item.Position.X+10, e.Item.Position.Y + 3);
+            e.Graphics.DrawString(items[1], listView1.Font, Brushes.White, e.Item.Position.X + 60, e.Item.Position.Y + 3);
+            e.Graphics.DrawString(ConfigData.GetJobConfig(int.Parse(items[2])).Name, listView1.Font, Brushes.White, e.Item.Position.X + 160, e.Item.Position.Y + 3);
+            e.Graphics.DrawString(string.Format("Lv{0}({1})",items[3], items[4]), listView1.Font, Brushes.White, e.Item.Position.X + 210, e.Item.Position.Y + 3);
+
+            int headId = int.Parse(items[5]);
+            Image head = PicLoader.Read("Player", string.Format("{0}.PNG", headId));
+            e.Graphics.DrawImage(head, e.Item.Position.X + 35, e.Item.Position.Y, 20, 20);
+            head.Dispose();
         }
 
         private void RankForm_Paint(object sender, PaintEventArgs e)
@@ -74,10 +76,10 @@ namespace TaleofMonsters.Forms
             Close();
         }
 
-        private void AddText(int index, string name, int job, int level, int exp)
+        private void AddText(int index, string name, int job, int level, int exp, int headId)
         {
             ListViewItem item = new ListViewItem();
-            item.Text = string.Format("{0}-{1}-{2}-{3}-{4}", index, name, job, level, exp);
+            item.Text = string.Format("{0}-{1}-{2}-{3}-{4}-{5}", index, name, job, level, exp, headId);
             listView1.Items.Add(item);
         }
     }

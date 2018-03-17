@@ -39,7 +39,7 @@ namespace GameServer.Logic
                 socketDict[playerDict[name]].Close("kick");
 
             playerDict[name] = socketId;
-            socketDict[socketId].Name = name;
+            socketDict[socketId].Passport = name;
         }
     }
 }

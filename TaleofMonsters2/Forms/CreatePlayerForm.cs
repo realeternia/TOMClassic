@@ -15,6 +15,7 @@ using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
+using TaleofMonsters.Rpc;
 using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.Forms
@@ -136,6 +137,8 @@ namespace TaleofMonsters.Forms
             CreateCards();
             UserProfile.InfoBag.AddItem(HItemBook.GetItemId("xinshoulibao"), 1);//新手礼包
             result = DialogResult.OK;
+
+            TalePlayer.C2SSender.UpdatePlayerInfo(textBoxName.Text, headId);
             Close();
         }
 

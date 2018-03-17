@@ -19,6 +19,7 @@ namespace JLM.NetSocket
                 case PacketC2SSave.PackId: return new PacketC2SSave(newData);
                 case PacketC2SLevelExpChange.PackId: return new PacketC2SLevelExpChange(newData);
                 case PacketC2SGetRank.PackId: return new PacketC2SGetRank(newData);
+                case PacketC2SSendPlayerInfo.PackId: return new PacketC2SSendPlayerInfo(newData);
 
                 case PacketS2CLoginResult.PackId: return new PacketS2CLoginResult(newData);
                 case PacketS2CRankResult.PackId: return new PacketS2CRankResult(newData);
