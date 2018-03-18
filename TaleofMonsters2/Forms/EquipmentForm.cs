@@ -90,7 +90,7 @@ namespace TaleofMonsters.Forms
             RefreshEquip();
             show = true;
 
-            bitmapButtonJob.Visible = QuestBook.HasQuest("selectjob");
+            bitmapButtonJob.Visible = QuestBook.HasQuest("selectjob") && UserProfile.Profile.InfoBasic.Level >= 5;
         }
 
         private void pictureBoxClose_Click(object sender, EventArgs e)

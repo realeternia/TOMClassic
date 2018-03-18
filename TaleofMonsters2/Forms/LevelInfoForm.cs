@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas.Items;
@@ -38,11 +39,20 @@ namespace TaleofMonsters.Forms
             OldLevel++;
             var items = LevelInfoBook.GetLevelInfosByLevel(OldLevel);
             for (int j = 0; j < 3; j++)
-                infoControls[j].RefreshData(0); //清空
+                infoControls[j].RefreshData(0, ""); //清空
             int i;
             for (i = 0; i < items.Length; i++)
-                infoControls[i].RefreshData(items[i]);
-            infoControls[i].RefreshData(100); //赠送卡包
+                infoControls[i].RefreshData(items[i], ConfigData.GetLevelInfoConfig(items[i]).Des);
+            foreach (var jobConfig in ConfigData.JobDict.Values)
+            {
+                if (jobConfig.LevelNeed == OldLevel)
+                {
+                    infoControls[i].RefreshData(101, ConfigData.GetLevelInfoConfig(101).Des.Replace("Job", jobConfig.Name)); //开启职业
+                    i++;
+                    break;
+                }
+            }
+            infoControls[i].RefreshData(100, ConfigData.GetLevelInfoConfig(100).Des); //赠送卡包
             UserProfile.InfoBag.AddItem(HItemBook.GetItemId("kabao1"), 1);
             title = string.Format("恭喜升级到Lv{0}", OldLevel);
             Invalidate();

@@ -140,8 +140,7 @@ namespace TaleofMonsters.Forms
 #endregion
             }
 
-            bitmapButtonSelect.Visible = !jobConfig.InitialLocked ||
-                                         UserProfile.Profile.InfoBasic.AvailJobList.Contains(selectJobId);
+            bitmapButtonSelect.Visible = UserProfile.Profile.InfoBasic.Level>= jobConfig.LevelNeed;
             Invalidate();
         }
 
@@ -162,7 +161,7 @@ namespace TaleofMonsters.Forms
                 g.DrawString(jobConfig.Name, font, Brushes.White, 58 + xOff, 6 + yOff);
                 font.Dispose();
 
-                if (jobConfig.InitialLocked && !UserProfile.Profile.InfoBasic.AvailJobList.Contains(info))
+                if (jobConfig.LevelNeed > UserProfile.Profile.InfoBasic.Level)
                 {
                     Brush b = new SolidBrush(Color.FromArgb(150, Color.Black));
                     g.FillRectangle(b, xOff, yOff, 154, selectPanel.ItemHeight);
@@ -261,7 +260,7 @@ namespace TaleofMonsters.Forms
         private void bitmapButtonSelect_Click(object sender, EventArgs e)
         {
             var jobConfig = ConfigData.GetJobConfig(selectJobId);
-            if (jobConfig.IsSpecial || jobConfig.InitialLocked && !UserProfile.Profile.InfoBasic.AvailJobList.Contains(selectJobId))
+            if (jobConfig.IsSpecial || jobConfig.LevelNeed > UserProfile.Profile.InfoBasic.Level)
                 return;
 
             if (UserProfile.InfoBasic.Job != JobConfig.Indexer.NewBie)

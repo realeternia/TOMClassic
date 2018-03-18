@@ -31,12 +31,12 @@ namespace TaleofMonsters.Forms.Items
             index = idx;
         }
 
-        public void RefreshData(int idx)
+        public void RefreshData(int idx, string des)
         {
             id = idx;
             show = id > 0;
             if (id > 0)
-                colorWord.UpdateText(ConfigData.GetLevelInfoConfig(id).Des);
+                colorWord.UpdateText(des);
         }
 
         public void Draw(Graphics g)
