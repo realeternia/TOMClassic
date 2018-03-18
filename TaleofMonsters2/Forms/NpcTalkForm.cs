@@ -298,6 +298,18 @@ namespace TaleofMonsters.Forms
                 font2.Dispose();
 
                 e.Graphics.DrawImage(SceneQuestBook.GetSceneQuestImage(config.Id), 15, 40, 140, 140);
+                if (config.TriggerRate > 0 && config.TriggerRate <= 30)
+                {
+                    Image rareImg = PicLoader.Read("System", "sqrare2.PNG");
+                    e.Graphics.DrawImage(rareImg, 15 + 70, 40 + 100, 64, 32);
+                    rareImg.Dispose();
+                }
+                else if (config.TriggerRate > 0 && config.TriggerRate <= 60)
+                {
+                    Image rareImg = PicLoader.Read("System", "sqrare1.PNG");
+                    e.Graphics.DrawImage(rareImg, 15 + 70, 40 + 100, 64, 32);
+                    rareImg.Dispose();
+                }
                 Image border = PicLoader.Read("Border", "questb1.PNG"); //边框
                 e.Graphics.DrawImage(border, 15, 40, 140, 140);
                 border.Dispose();
