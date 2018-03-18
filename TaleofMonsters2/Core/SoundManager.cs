@@ -125,7 +125,7 @@ namespace TaleofMonsters.Core
             }
         }
 
-        private static void PlayInThread(byte[] file,bool isBGM)
+        private static void PlayInThread(byte[] file, bool isBGM)
         {//子线程中的处理
             if (isBGM)
             {
@@ -135,36 +135,37 @@ namespace TaleofMonsters.Core
                     _channelBGM.isPlaying(out isPlaying);
                   
                     if (isPlaying)
-                    {
                         _channelBGM.stop();
-                    }
                 }
             }
 
             var info = new CREATESOUNDEXINFO();
             info.length = (uint)file.Length;
             Sound s;
-            var result = _fmod.createSound(file, MODE.OPENMEMORY, ref info, out s);
-            if (result != RESULT.OK)
+            if (isBGM)
             {
-                NLog.Error("fmod createSound " + result);
+                var result2 = _fmod.createSound(file, MODE.OPENMEMORY | MODE.LOOP_NORMAL, ref info, out s);
+                if (result2 != RESULT.OK)
+                    NLog.Error("fmod createSound " + result2);
+            }
+            else
+            {
+                var result2 = _fmod.createSound(file, MODE.OPENMEMORY, ref info, out s);
+                if (result2 != RESULT.OK)
+                    NLog.Error("fmod createSound " + result2);
             }
 
             Channel channel;
-            result = _fmod.playSound(s, null, false, out channel);
+            var result = _fmod.playSound(s, null, false, out channel);
             _fmod.update();
             int index;
             channel.getIndex(out index);
             if (result != RESULT.OK)
-            {
                 NLog.Error("fmod playSound " + result);
-            }
 
             if (isBGM)
             {
                 channel.setVolume(BGMVolume * WorldInfoManager.BGVolumn);
-                channel.setLoopCount(-1);
-
                 _channelBGM = channel;
             }
             else
