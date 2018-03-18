@@ -54,13 +54,13 @@ namespace TaleofMonsters.Datas.Others
         {
             switch ((int)type)
             {
-                case 0: Gold = Math.Max(0, Gold - value); break;
-                case 1: Lumber = Math.Max(0, Lumber - value); break;
-                case 2: Stone = Math.Max(0, Stone - value); break;
-                case 3: Mercury = Math.Max(0, Mercury - value); break;
-                case 4: Carbuncle = Math.Max(0, Carbuncle - value); break;
-                case 5: Sulfur = Math.Max(0, Sulfur - value); break;
-                case 6: Gem = Math.Max(0, Gem - value); break;
+                case 0: Gold = (uint)Math.Max(0, (long)Gold - value); break;
+                case 1: Lumber = (uint)Math.Max(0, (long)Lumber - value); break;
+                case 2: Stone = (uint)Math.Max(0, (long)Stone - value); break;
+                case 3: Mercury = (uint)Math.Max(0, (long)Mercury - value); break;
+                case 4: Carbuncle = (uint)Math.Max(0, (long)Carbuncle - value); break;
+                case 5: Sulfur = (uint)Math.Max(0, (long)Sulfur - value); break;
+                case 6: Gem = (uint)Math.Max(0, (long)Gem - value); break;
             }
         }
 
