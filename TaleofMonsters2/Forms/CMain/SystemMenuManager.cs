@@ -156,7 +156,7 @@ namespace TaleofMonsters.Forms.CMain
                     PanelManager.DealPanel(new QuestForm());
                     break;
                 case SystemMenuIds.EquipmentForm:
-                    PanelManager.DealPanel(new EquipmentForm());
+                    PanelManager.DealPanel(new CastleForm());
                     break;
                 case SystemMenuIds.EquipComposeForm:
                     PanelManager.DealPanel(new EquipComposeForm());

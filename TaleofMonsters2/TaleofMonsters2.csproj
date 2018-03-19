@@ -169,6 +169,12 @@
     <Compile Include="Forms\RankForm.Designer.cs">
       <DependentUpon>RankForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CastleForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\CastleForm.Designer.cs">
+      <DependentUpon>CastleForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Rpc\NetDataCache.cs" />
     <Compile Include="Tools\ImageManager.cs" />
     <Compile Include="Rpc\S2CImplement.cs" />
@@ -939,6 +945,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RankForm.resx">
       <DependentUpon>RankForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CastleForm.resx">
+      <DependentUpon>CastleForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UserForm.resx">
