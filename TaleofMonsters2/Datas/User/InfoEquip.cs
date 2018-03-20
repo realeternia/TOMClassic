@@ -74,7 +74,7 @@ namespace TaleofMonsters.Datas.User
 
             for (int i = 0; i < GameConstants.EquipOnCount; i++)
             {
-                var equip = Equipon[i];
+                var equip = GetEquipOn(i+1);
                 if (equip.BaseId == 0)
                     continue;
 

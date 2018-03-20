@@ -16,5 +16,10 @@ namespace TaleofMonsters.Datas.User.Db
             BaseId = 0;
             Level = 0;
         }
+
+        public override string ToString()
+        {
+            return string.Format("{0}-{1}", BaseId, Level);
+        }
     }
 }
