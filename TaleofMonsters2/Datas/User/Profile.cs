@@ -95,7 +95,6 @@ namespace TaleofMonsters.Datas.User
 
         public void OnSwitchScene(bool isWarp)
         {
-            InfoEquip.CheckExpireAndDura(true);
             InfoQuest.OnSwitchScene(isWarp);
             if(isWarp)
                 TalePlayer.Save();//每次切场景存个档

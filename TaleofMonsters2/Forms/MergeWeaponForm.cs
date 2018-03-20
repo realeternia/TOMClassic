@@ -102,7 +102,7 @@ namespace TaleofMonsters.Forms
                 //g.DrawString("Lv" + equipConfig.Level, font, Brushes.DimGray, 50 + xOff + 10, 5 + yOff + 24);
                 //font.Dispose();
 
-                if (UserProfile.InfoEquip.EquipComposeAvail.Contains(info))
+                if (UserProfile.InfoEquip.HasEquip(info))
                 {
                     var img = PicLoader.Read("System", "Learn.PNG");
                     g.DrawImage(img, xOff + 10, 3 + yOff, img.Width, img.Height);
@@ -164,7 +164,7 @@ namespace TaleofMonsters.Forms
 
             EquipConfig equipConfig = ConfigData.GetEquipConfig(targetid);
             vRegion.SetRegionKey(1, equipConfig.Id);
-            itemCounts[0] = UserProfile.InfoEquip.GetEquipCount(equipConfig.Id);
+            itemCounts[0] = UserProfile.InfoEquip.HasEquip(equipConfig.Id) ? 1 : 0;
 
             int index = 1;
             foreach (var pair in currentInfo.Methods)

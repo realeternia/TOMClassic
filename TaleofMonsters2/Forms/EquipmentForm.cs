@@ -33,9 +33,6 @@ namespace TaleofMonsters.Forms
         private HSCursor myCursor;
         private VirtualRegion vRegion;
 
-        private PopMenuEquip popMenuEquip;
-        private PoperContainer popContainer;
-
         private Monster heroData;
         private List<Equip> equipDataList = new List<Equip>();
         private Equip vEquip; //所有装备的属性
@@ -61,12 +58,12 @@ namespace TaleofMonsters.Forms
             vRegion.AddRegion(new SubVirtualRegion(15, 200, 170, 46, 44));
             vRegion.AddRegion(new SubVirtualRegion(16, 253, 170, 46, 44));
 
-            for (int i = 0; i < UserProfile.InfoEquip.Equipoff.Count; i++)
-            {
-                var region = new PictureRegion(20 + i, 38 + (i % 15) * 32, 227 + (i / 15) * 32, 32, 32, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipoff[i].BaseId);
-             //   region.AddDecorator(new RegionBorderDecorator(region, Color.Yellow));
-                vRegion.AddRegion(region);
-            }
+            //for (int i = 0; i < UserProfile.InfoEquip.Equipoff.Count; i++)
+            //{
+            //    var region = new PictureRegion(20 + i, 38 + (i % 15) * 32, 227 + (i / 15) * 32, 32, 32, PictureRegionCellType.Equip, UserProfile.InfoEquip.Equipoff[i].BaseId);
+            // //   region.AddDecorator(new RegionBorderDecorator(region, Color.Yellow));
+            //    vRegion.AddRegion(region);
+            //}
 
             vRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
             vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
@@ -75,10 +72,7 @@ namespace TaleofMonsters.Forms
             selectTar = -1;
             myCursor = new HSCursor(this);
 
-            popMenuEquip = new PopMenuEquip();
-            popContainer = new PoperContainer(popMenuEquip);
-            popMenuEquip.PoperContainer = popContainer;
-            popMenuEquip.Form = this;
+         //   popMenuEquip.Form = this;
         }
 
         public override void Init(int width, int height)
@@ -110,8 +104,8 @@ namespace TaleofMonsters.Forms
                 if (itemId != 0)
                 {
                     Equip equip = new Equip(itemId);
-                    equip.Dura = UserProfile.InfoEquip.Equipon[id - 1].Dura;
-                    equip.ExpireTime = UserProfile.InfoEquip.Equipon[id - 1].ExpireTime;
+               //     equip.Dura = UserProfile.InfoEquip.Equipon[id - 1].Dura;
+                //    equip.ExpireTime = UserProfile.InfoEquip.Equipon[id - 1].ExpireTime;
                     image = equip.GetPreview();
                 }
                 else
@@ -129,14 +123,14 @@ namespace TaleofMonsters.Forms
             }
             else if (id >= 20)
             {
-                var itemData = UserProfile.InfoEquip.GetEquipOff(id - 20);
-                if (itemData.BaseId != 0)
-                {
-                    Equip equip = new Equip(itemData.BaseId);
-                    equip.Dura = itemData.Dura;
-                    equip.ExpireTime = itemData.ExpireTime;
-                    image = equip.GetPreview();
-                }
+               // var itemData = UserProfile.InfoEquip.GetEquipOff(id - 20);
+               // if (itemData.BaseId != 0)
+               // {
+               //     Equip equip = new Equip(itemData.BaseId);
+               // //    equip.Dura = itemData.Dura;
+               ////     equip.ExpireTime = itemData.ExpireTime;
+               //     image = equip.GetPreview();
+               // }
             }
 
             if (image != null)
@@ -160,26 +154,26 @@ namespace TaleofMonsters.Forms
                 {
                     if (selectTar != -1)//穿上装备
                     {
-                        EquipConfig equipConfig = ConfigData.GetEquipConfig(UserProfile.InfoEquip.GetEquipOff(selectTar).BaseId);
-                        if (UserProfile.InfoEquip.CanEquip(equipConfig.Id, id))
-                        {
-                            var oldItem = UserProfile.InfoEquip.Equipon[id - 1];
-                            UserProfile.InfoEquip.DoEquip(id - 1, selectTar);
-                            vRegion.SetRegionKey(id, UserProfile.InfoEquip.Equipon[id - 1].BaseId);
-                            vRegion.SetRegionKey(selectTar + 20, oldItem.BaseId);
-                            RefreshEquip();
-                            selectTar = -1;
-                            myCursor.ChangeCursor("default");
-                        }
+                        //EquipConfig equipConfig = ConfigData.GetEquipConfig(UserProfile.InfoEquip.GetEquipOff(selectTar).BaseId);
+                        //if (UserProfile.InfoEquip.CanEquip(equipConfig.Id, id))
+                        //{
+                        //    var oldItem = UserProfile.InfoEquip.Equipon[id - 1];
+                        //    UserProfile.InfoEquip.DoEquip(id - 1, selectTar);
+                        //    vRegion.SetRegionKey(id, UserProfile.InfoEquip.Equipon[id - 1].BaseId);
+                        //    vRegion.SetRegionKey(selectTar + 20, oldItem.BaseId);
+                        //    RefreshEquip();
+                        //    selectTar = -1;
+                        //    myCursor.ChangeCursor("default");
+                        //}
                     }
                     else//脱下装备
                     {
-                        int i = UserProfile.InfoEquip.GetBlankEquipPos();
+                        int i = -1;
                         if (i == -1)//没有空格了
                             return;
 
-                        UserProfile.InfoEquip.PutOff(id - 1, i);
-                        vRegion.SetRegionKey(i + 20, UserProfile.InfoEquip.Equipoff[i].BaseId);
+               //         UserProfile.InfoEquip.PutOff(id - 1, i);
+                //        vRegion.SetRegionKey(i + 20, UserProfile.InfoEquip.Equipoff[i].BaseId);
                         vRegion.SetRegionKey(id, 0);
                         RefreshEquip();
                     }
@@ -189,62 +183,29 @@ namespace TaleofMonsters.Forms
                     var tar = id - 20;
                     if (selectTar == -1)
                     {
-                        var targetEquip = UserProfile.InfoEquip.GetEquipOff(tar);
-                        if (targetEquip.BaseId != 0)
-                        {
-                            var icon = ConfigData.GetEquipConfig(targetEquip.BaseId).Url;
-                            myCursor.ChangeCursor("Equip", string.Format("{0}.JPG", icon), 40, 40);
-                            selectTar = tar;
-                            tooltip.Hide(this);
-                        }
+                        //var targetEquip = UserProfile.InfoEquip.GetEquipOff(tar);
+                        //if (targetEquip.BaseId != 0)
+                        //{
+                        //    var icon = ConfigData.GetEquipConfig(targetEquip.BaseId).Url;
+                        //    myCursor.ChangeCursor("Equip", string.Format("{0}.JPG", icon), 40, 40);
+                        //    selectTar = tar;
+                        //    tooltip.Hide(this);
+                        //}
                     }
                     else
                     {
                         myCursor.ChangeCursor("default");
-                        var targetEquip = UserProfile.InfoEquip.GetEquipOff(tar);
-                        if (targetEquip.BaseId == 0)//移动
-                        {
-                            return;//不支持移动到空格子
-                        }
-                        else//交换
-                        {
-                            var oldItem = UserProfile.InfoEquip.Equipoff[tar];
-                            UserProfile.InfoEquip.Equipoff[tar] = UserProfile.InfoEquip.Equipoff[selectTar];
-                            UserProfile.InfoEquip.Equipoff[selectTar] = oldItem;
-
-                            vRegion.SetRegionKey(tar + 20, UserProfile.InfoEquip.Equipoff[tar].BaseId);
-                            vRegion.SetRegionKey(selectTar + 20, UserProfile.InfoEquip.Equipoff[selectTar].BaseId);
-                        }
+                   
                         selectTar = -1;
                     }
                 }
                 Invalidate();
             }
-            else
-            {
-                if (id >= 20)
-                {
-                    var tar = id - 20;
-                    tooltip.Hide(this);
-
-                    popMenuEquip.Clear();
-                    #region 构建菜单
-                    var targetEquip = UserProfile.InfoEquip.GetEquipOff(tar);
-                    if (targetEquip.BaseId != 0)
-                        popMenuEquip.AddItem("decompose", "分解", "Red");
-                    popMenuEquip.AddItem("exit", "退出");
-                    #endregion
-                    popMenuEquip.AutoResize();
-                    popMenuEquip.EquipIndex = tar;
-                    var pos = vRegion.GetRegionPosition(tar + 20);
-                    popContainer.Show(this, pos.X, pos.Y);   
-                }
-            }
         }
 
         public void MenuRefresh(int id)
         {
-            vRegion.SetRegionKey(id + 20, UserProfile.InfoEquip.Equipoff[id].BaseId);
+       //     vRegion.SetRegionKey(id + 20, UserProfile.InfoEquip.Equipoff[id].BaseId);
             Invalidate();
         }
 

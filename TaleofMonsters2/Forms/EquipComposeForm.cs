@@ -46,9 +46,9 @@ namespace TaleofMonsters.Forms
         private void InitEquips(int pos)
         {
             equipIdList = new List<int>();
-            foreach (var eid in UserProfile.Profile.InfoEquip.EquipComposeAvail)
+            foreach (var eData in UserProfile.Profile.InfoEquip.EquipAvail)
             {
-                var equipConfig = ConfigData.GetEquipConfig(eid);
+                var equipConfig = ConfigData.GetEquipConfig(eData.BaseId);
                 if (equipConfig.Id > 0 && equipConfig.Position == pos)
                     equipIdList.Add(equipConfig.Id);
             }
