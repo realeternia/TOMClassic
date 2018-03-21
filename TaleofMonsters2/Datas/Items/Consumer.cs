@@ -121,11 +121,7 @@ namespace TaleofMonsters.Datas.Items
                 var countList = new List<int>();
                 foreach (var itemId in itemList)
                 {
-                    var isEquip = ConfigIdManager.IsEquip(itemId);
-                    if (isEquip)
-                        UserProfile.InfoEquip.AddEquip(itemId, 60*24);
-                    else
-                        UserProfile.InfoBag.AddItem(itemId, 1);
+                    UserProfile.InfoBag.AddItem(itemId, 1);
                     countList.Add(1);
                 }
                 var form = new ItemPackageForm();

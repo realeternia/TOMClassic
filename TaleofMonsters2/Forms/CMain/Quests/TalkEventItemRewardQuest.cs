@@ -72,7 +72,7 @@ namespace TaleofMonsters.Forms.CMain.Quests
                 var isEquip = ConfigIdManager.IsEquip(itemId);
                 if (isEquip)
                 {
-                    UserProfile.InfoEquip.AddEquip(itemId, 24*60);
+                    UserProfile.InfoEquip.AddEquip(itemId);
                     vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25, 60, 60,
                                                         PictureRegionCellType.Equip, itemId));
                 }
@@ -90,19 +90,10 @@ namespace TaleofMonsters.Forms.CMain.Quests
                 var itemList = DropBook.GetDropItemList(questConfig.RewardDrop);
                 foreach (var itemId in itemList)
                 {
-                    var isEquip = ConfigIdManager.IsEquip(itemId);
-                    if (isEquip)
-                    {
-                        UserProfile.InfoEquip.AddEquip(itemId, 24*60);
-                        vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25,
-                                                            60, 60, PictureRegionCellType.Equip, itemId));
-                    }
-                    else
-                    {
-                        UserProfile.InfoBag.AddItem(itemId, 1);
-                        vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25,
-                                                            60, 60, PictureRegionCellType.Item, itemId));
-                    }
+                    UserProfile.InfoBag.AddItem(itemId, 1);
+                    vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25,
+                                                        60, 60, PictureRegionCellType.Item, itemId));
+
                     index++;
                 }
             }

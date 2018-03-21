@@ -119,15 +119,6 @@ namespace TaleofMonsters.Forms
                         }
                     }
                 }
-                if (jobConfig.InitialEquip != null && jobConfig.InitialEquip.Length>0)//初始道具
-                {
-                    foreach (var ename in jobConfig.InitialEquip)
-                    {
-                        vRegion.SetRegionType(imgIndex, PictureRegionCellType.Equip);
-                        vRegion.SetRegionKey(imgIndex++, HItemBook.GetItemId(ename));
-                        cellTypeList.Add(PictureRegionCellType.Equip);
-                    }
-                }
                 if (jobConfig.InitialItem != null && jobConfig.InitialItem.Length > 0)//初始道具
                 {
                     foreach (var ename in jobConfig.InitialItem)
@@ -287,11 +278,6 @@ namespace TaleofMonsters.Forms
                     if (cardId > 0)
                         user.InfoCard.AddCard(cardId);
                 }
-            }
-            if (jobConfig.InitialEquip != null && jobConfig.InitialEquip.Length > 0) //初始道具
-            {
-                foreach (var ename in jobConfig.InitialEquip)
-                    user.InfoEquip.AddEquip(HItemBook.GetItemId(ename), 24 * 60 * 7);
             }
             if (jobConfig.InitialItem != null && jobConfig.InitialItem.Length > 0) //初始道具
             {

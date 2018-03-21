@@ -125,7 +125,7 @@ namespace TaleofMonsters.Forms.Items
             
             UserProfile.InfoBag.SubResource(need.ToArray());
             UserProfile.InfoBag.DeleteItem(equipConfig.ComposeItemId, 1);
-            UserProfile.InfoEquip.AddEquip(equipId, 24*60*3);
+          //  UserProfile.InfoEquip.AddEquip(equipId, 24*60*3);
             parent.Invalidate();
 
             parent.AddFlowCenter("建造成功", "Lime");

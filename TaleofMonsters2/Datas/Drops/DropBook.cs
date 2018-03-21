@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Log;
 using NarlonLib.Math;
-using TaleofMonsters.Datas.Equips;
 using TaleofMonsters.Datas.Items;
 
 namespace TaleofMonsters.Datas.Drops
@@ -43,8 +42,6 @@ namespace TaleofMonsters.Datas.Drops
             {
                 if (dropConfig.Items.Length > 0)
                     DropItems(dropConfig.Items, dropConfig.ItemRate, items);
-                else if (dropConfig.EquipQualityMin > 0 || dropConfig.EquipQualityMax > 0)
-                    DropEquips(dropConfig.EquipQualityMin, dropConfig.EquipQualityMax, items);
                 else if(dropConfig.RandomItemRate.Length > 0)
                     DropLevelItems(dropConfig.RandomItemRate, items);
             }
@@ -65,30 +62,6 @@ namespace TaleofMonsters.Datas.Drops
                     break;
                 }
             }
-        }
-
-        private static void DropEquips(int qualMin, int qualMax, List<int> items)
-        {
-            int resultQual = 0;
-            if (qualMax == qualMin)
-            {
-                resultQual = qualMin;
-            }
-            else
-            {
-                resultQual = qualMin;
-                while (MathTool.GetRandom(3) == 0 && resultQual < qualMax)
-                    resultQual ++;
-            }
-
-            int resultItemId = 0;
-            while (resultItemId == 0)
-            {
-                resultItemId = EquipBook.GetRandEquipByLevelQuality(resultQual);
-                resultQual--;//如果该品质没有道具，就降低一档品质继续查找
-            }
-            
-            items.Add(resultItemId);
         }
 
         private static void DropLevelItems(int[] itemLevelRate, List<int> items)

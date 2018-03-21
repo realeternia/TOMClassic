@@ -17,6 +17,7 @@ namespace TaleofMonsters.Forms
     internal partial class CastleForm : BasePanel
     {
         private VirtualRegion vRegion;
+        private ImageToolTip tooltip = SystemToolTip.Instance;
 
         private PopMenuEquip popMenuEquip;
         private PoperContainer popContainer;
@@ -27,11 +28,14 @@ namespace TaleofMonsters.Forms
         {
             InitializeComponent();
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
+            bitmapButtonBuild.ImageNormal = PicLoader.Read("Button.Panel", "LearnButton.JPG");
             DoubleBuffered = true;
 
             vRegion = new VirtualRegion(this);
             vRegion.CellDrawAfter += VRegion_CellDrawAfter;
             vRegion.RegionClicked += VRegion_RegionClicked;
+            vRegion.RegionEntered += VRegion_RegionEntered;
+            vRegion.RegionLeft += VRegion_RegionLeft;
             for (int i = 0; i < GameConstants.EquipOnCount; i++)
             {
                 EquipSlotConfig slotConfig = ConfigData.GetEquipSlotConfig(i+1);
@@ -44,7 +48,38 @@ namespace TaleofMonsters.Forms
             popMenuEquip.PoperContainer = popContainer;
             popMenuEquip.Form = this;
         }
-        
+
+        private void VRegion_RegionLeft()
+        {
+            tooltip.Hide(this);
+        }
+
+        private void VRegion_RegionEntered(int id, int x, int y, int key)
+        {
+            Image image = null;
+            var itemId = UserProfile.InfoEquip.GetEquipOn(id).BaseId;
+            if (itemId != 0)
+            {
+                Equip equip = new Equip(itemId);
+                //     equip.Dura = UserProfile.InfoEquip.Equipon[id - 1].Dura;
+                //    equip.ExpireTime = UserProfile.InfoEquip.Equipon[id - 1].ExpireTime;
+                image = equip.GetPreview();
+            }
+            else
+            {
+                EquipSlotConfig slotConfig = ConfigData.GetEquipSlotConfig(id);
+                ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+                tipData.AddTextNewLine(slotConfig.Name, "Lime");
+                tipData.AddTextNewLine(slotConfig.Des, "White");
+                image = tipData.Image;
+            }
+
+            if (image != null)
+                tooltip.Show(image, this, x, y);
+            else
+                tooltip.Hide(this);
+        }
+
         public override void Init(int width, int height)
         {
             base.Init(width, height);
@@ -82,7 +117,10 @@ namespace TaleofMonsters.Forms
             var equipList = UserProfile.InfoEquip.GetEquipList(slotConfig.Type);
 
             if (equipList.Count == 0)
+            {
+                AddFlowCenter("没有该位置的装备", "Red");
                 return;
+            }
 
             popMenuEquip.Clear();
             popMenuEquip.EquipPos = id;
@@ -161,6 +199,11 @@ namespace TaleofMonsters.Forms
         private void bitmapButtonClose_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void bitmapButtonBuild_Click(object sender, EventArgs e)
+        {
+            PanelManager.DealPanel(new EquipComposeForm());
         }
     }
 }

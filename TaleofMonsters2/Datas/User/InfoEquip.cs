@@ -22,18 +22,22 @@ namespace TaleofMonsters.Datas.User
                 Equipon[i] = new DbEquip();
         }
 
-        public void AddEquip(int id, int minuteLast)
+        public void AddEquip(int eid)
         {
-            EquipConfig equipConfig = ConfigData.GetEquipConfig(id);
-            if (equipConfig.Id == 0)
-                return;
+            EquipConfig equipConfig = ConfigData.GetEquipConfig(eid);
+
+            var equip = EquipAvail.Find(edata => edata.BaseId == eid);
+            if (equip != null)
+            {
+                //todo 升级
+            }
+            else
+            {
+                EquipAvail.Add(new DbEquip { BaseId = eid, Level = 1 });
+            }
+
             MainTipManager.AddTip(string.Format("|获得装备-|{0}|{1}", HSTypes.I2QualityColor(equipConfig.Quality), equipConfig.Name), "White");
             UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.EquipGet, 1);
-        }
-
-        public void AddEquipCompose(int eid)
-        {
-            EquipAvail.Add(new DbEquip {BaseId = eid, Level = 1});
         }
 
         public bool CanEquip(int equipId, int slotId)

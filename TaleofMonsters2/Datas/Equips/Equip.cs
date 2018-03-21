@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
-using NarlonLib.Tools;
 using TaleofMonsters.Core;
 using TaleofMonsters.Datas.Cards.Monsters;
 using TaleofMonsters.Datas.HeroPowers;
@@ -33,9 +32,6 @@ namespace TaleofMonsters.Datas.Equips
         public int LpRate { get; set; }
         public int PpRate { get; set; }
         public int MpRate { get; set; }
-
-        public int Dura { get; set; } //实际的耐久值
-        public int ExpireTime { get; set; } //过期时间
 
         public List<RLIdValue> CommonSkillList = new List<RLIdValue>();
 
@@ -207,22 +203,6 @@ namespace TaleofMonsters.Datas.Equips
                 else
                 {
                     tipData.AddText(tp, "White");
-                }
-            }
-            tipData.AddLine();
-            if (Dura > 0)//实例化了
-                tipData.AddTextNewLine(string.Format("耐久:{0}/{1}", Dura, equipConfig.Durable), "White");
-            else
-                tipData.AddTextNewLine(string.Format("最大耐久:{0}", equipConfig.Durable), "White");
-            if (ExpireTime > 0)//存在过期
-            {
-                var expireTime = TimeTool.UnixTimeToDateTime(ExpireTime);
-                if (DateTime.Now >= expireTime.AddSeconds(-60))
-                    tipData.AddTextNewLine("即将过期", "Red");
-                else
-                {
-                    var timeDiffer = expireTime - DateTime.Now;
-                    tipData.AddTextNewLine(string.Format("过期:{0}天{1}时{2}分", timeDiffer.Days, timeDiffer.Hours, timeDiffer.Minutes), "White");
                 }
             }
             tipData.AddLine();
