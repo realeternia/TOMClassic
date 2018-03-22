@@ -11,6 +11,7 @@ using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Regions;
+using TaleofMonsters.Forms.Items.Regions.Decorators;
 
 namespace TaleofMonsters.Forms.Items
 {
@@ -18,6 +19,7 @@ namespace TaleofMonsters.Forms.Items
     {
         private int index;
         private int equipId;
+        private bool hasEquip; //是否已经拥有
         private bool show;
         private ImageToolTip tooltip = SystemToolTip.Instance;
         private VirtualRegion vRegion;
@@ -34,7 +36,7 @@ namespace TaleofMonsters.Forms.Items
             this.width = width;
             this.height = height;
             this.bitmapButtonBuy = new BitmapButton();
-            bitmapButtonBuy.Location = new Point(x + 125, y + 53);
+            bitmapButtonBuy.Location = new Point(x + 122, y + 50);
             bitmapButtonBuy.Size = new Size(50, 24);
             this.bitmapButtonBuy.Click += new System.EventHandler(this.pictureBoxBuy_Click);
             this.bitmapButtonBuy.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
@@ -44,7 +46,7 @@ namespace TaleofMonsters.Forms.Items
             bitmapButtonBuy.IconSize = new Size(16,16);
             bitmapButtonBuy.IconXY = new Point(4,4);
             bitmapButtonBuy.TextOffX = 8;
-            this.bitmapButtonBuy.Text = @"建造";
+            this.bitmapButtonBuy.Text = @"强化";
             parent.Controls.Add(bitmapButtonBuy);
         }
 
@@ -62,12 +64,27 @@ namespace TaleofMonsters.Forms.Items
         public void RefreshData(int eid)
         {
             equipId = eid;
+            hasEquip = UserProfile.InfoEquip.HasEquip(eid);
             if (eid > 0)
             {
-                bitmapButtonBuy.Visible = true;
+                bitmapButtonBuy.Visible = hasEquip;
                 vRegion.SetRegionKey(1, eid);
-                var equipConfig = ConfigData.GetEquipConfig(equipId);
-                vRegion.SetRegionKey(2, equipConfig.ComposeItemId);
+                if (hasEquip)
+                {
+                    var equipConfig = ConfigData.GetEquipConfig(equipId);
+                    vRegion.SetRegionKey(2, equipConfig.ComposeItemId);
+                    vRegion.SetRegionEnable(1, true);
+                    vRegion.SetRegionVisible(2, true);
+                    vRegion.SetRegionDecorator(1, 0, null);
+                    vRegion.SetRegionDecorator(1, 1, null);
+                }
+                else
+                {
+                    vRegion.SetRegionEnable(1, false);
+                    vRegion.SetRegionVisible(2, false);
+                    vRegion.SetRegionDecorator(1, 0, new RegionCoverDecorator(Color.FromArgb(180, Color.Black)));
+                    vRegion.SetRegionDecorator(1, 1, new RegionImageDecorator(HSIcons.GetIconsByEName("oth3"), 24));
+                }
                 show = true;
             }
             else
@@ -148,34 +165,37 @@ namespace TaleofMonsters.Forms.Items
 
                 var equipConfig = ConfigData.GetEquipConfig(equipId);
            
-                Font ft = new Font("宋体", 9*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+                Font ft = new Font("宋体", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
                 Brush b = new SolidBrush(Color.FromName(HSTypes.I2QualityColor(equipConfig.Quality)));
                 g.DrawString(equipConfig.Name, ft, Brushes.Black, x + 82 + 1, y + 10 + 1);
-                g.DrawString(equipConfig.Name, ft, b, x + 82, y + 10);
+                if (hasEquip)
+                    g.DrawString(equipConfig.Name, ft, b, x + 82, y + 10);
                 b.Dispose();
 
-                bool costStone = false;
-                if (equipConfig.ComposeStone > 0)
+                if (hasEquip)
                 {
-                    int xOff = x + 82;
-                    var cost = (uint)(GameResourceBook.OutStoneCompose(equipConfig.Quality + 1) * equipConfig.ComposeStone / 100);
-                    g.DrawString(cost.ToString(), ft, Brushes.White, xOff + 20, y + 32);
+                    bool costStone = false;
+                    if (equipConfig.ComposeStone > 0)
+                    {
+                        int xOff = x + 82;
+                        var cost = (uint) (GameResourceBook.OutStoneCompose(equipConfig.Quality + 1)*equipConfig.ComposeStone/100);
+                        g.DrawString(cost.ToString(), ft, Brushes.White, xOff + 20, y + 32);
 
-                    g.DrawImage(HSIcons.GetIconsByEName("res3"), xOff, y + 32 - 3, 18, 18);
-                    costStone = true;
+                        g.DrawImage(HSIcons.GetIconsByEName("res3"), xOff, y + 32 - 3, 18, 18);
+                        costStone = true;
+                    }
+
+                    if (equipConfig.ComposeWood > 0)
+                    {
+                        int xOff = x + 82;
+                        if (costStone)
+                            xOff += 46;
+                        var cost = (uint)(GameResourceBook.OutWoodCompose(equipConfig.Quality + 1)*equipConfig.ComposeWood/100);
+                        g.DrawString(cost.ToString(), ft, Brushes.White, xOff + 20, y + 32);
+
+                        g.DrawImage(HSIcons.GetIconsByEName("res2"), xOff, y + 32 - 3, 18, 18);
+                    }
                 }
-
-                if (equipConfig.ComposeWood > 0)
-                {
-                    int xOff = x + 82;
-                    if (costStone)
-                        xOff += 46;
-                    var cost = (uint)(GameResourceBook.OutWoodCompose(equipConfig.Quality + 1) * equipConfig.ComposeWood / 100);
-                    g.DrawString(cost.ToString(), ft, Brushes.White, xOff + 20, y + 32);
-
-                    g.DrawImage(HSIcons.GetIconsByEName("res2"), xOff, y + 32 - 3, 18, 18);
-                }
-
                 ft.Dispose();
             }
         }

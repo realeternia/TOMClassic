@@ -46,10 +46,20 @@ namespace TaleofMonsters.Forms
         private void InitEquips(int pos)
         {
             equipIdList = new List<int>();
-            foreach (var eData in UserProfile.Profile.InfoEquip.EquipAvail)
+            Dictionary<int, bool> hasEquip = new Dictionary<int, bool>();
+            foreach (var eData in UserProfile.InfoEquip.EquipAvail)//先显示有的
             {
                 var equipConfig = ConfigData.GetEquipConfig(eData.BaseId);
                 if (equipConfig.Id > 0 && equipConfig.Position == pos)
+                {
+                    equipIdList.Add(equipConfig.Id);
+                    hasEquip[equipConfig.Id] = true;
+                }
+            }
+            foreach (var eData in ConfigData.EquipDict.Values)//再显示没有的
+            {
+                var equipConfig = ConfigData.GetEquipConfig(eData.Id);
+                if (equipConfig.Id > 0 && equipConfig.Position == pos && !hasEquip.ContainsKey(eData.Id))
                     equipIdList.Add(equipConfig.Id);
             }
             page = 0;
@@ -60,9 +70,7 @@ namespace TaleofMonsters.Forms
         private void RefreshInfo()
         {
             for (int i = 0; i < 9; i++)
-            {
                 equipControls[i].RefreshData((page*9 + i < equipIdList.Count) ? equipIdList[page*9 + i] : 0);
-            }
         }
 
         private void buttonClose_Click(object sender, EventArgs e)

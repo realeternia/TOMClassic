@@ -86,6 +86,13 @@ namespace TaleofMonsters.Forms.Items.Regions
                 region.Visible = visible;
         }
 
+        public void SetRegionEnable(int id, bool value)
+        {
+            SubVirtualRegion region;
+            if (subRegions.TryGetValue(id, out region))
+                region.Enabled = value;
+        }
+
         public Point GetRegionPosition(int id)
         {
             SubVirtualRegion region;
