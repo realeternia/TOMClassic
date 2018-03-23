@@ -2,7 +2,7 @@
 
 namespace TaleofMonsters.Forms
 {
-    sealed partial class EquipmentForm
+    sealed partial class RoleForm
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -68,7 +68,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonJob.UseVisualStyleBackColor = true;
             this.bitmapButtonJob.Click += new System.EventHandler(this.bitmapButtonJob_Click);
             // 
-            // EquipmentForm
+            // CastleForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
@@ -77,7 +77,7 @@ namespace TaleofMonsters.Forms
             this.DoubleBuffered = true;
             this.Name = "EquipmentForm";
             this.Size = new System.Drawing.Size(547, 394);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.EquipmentForm_Paint);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.RoleForm_Paint);
             this.ResumeLayout(false);
 
         }

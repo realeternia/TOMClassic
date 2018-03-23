@@ -549,11 +549,11 @@
       <DependentUpon>NpcShopForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Datas\User\Db\DbRivalState.cs" />
-    <Compile Include="Forms\EquipmentForm.cs">
+    <Compile Include="Forms\RoleForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\EquipmentForm.Designer.cs">
-      <DependentUpon>EquipmentForm.cs</DependentUpon>
+    <Compile Include="Forms\RoleForm.Designer.cs">
+      <DependentUpon>RoleForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Datas\Equips\EquipBook.cs" />
     <Compile Include="Forms\CardShopViewForm.cs">
@@ -803,9 +803,9 @@
       <SubType>Designer</SubType>
       <DependentUpon>BasePanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\EquipmentForm.resx">
+    <EmbeddedResource Include="Forms\RoleForm.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>EquipmentForm.cs</DependentUpon>
+      <DependentUpon>RoleForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CardShopViewForm.resx">
       <SubType>Designer</SubType>

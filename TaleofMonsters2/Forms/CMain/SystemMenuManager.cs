@@ -32,7 +32,7 @@ namespace TaleofMonsters.Forms.CMain
         public static void Load(int width, int height)
         {
             flowList = new List<RiverFlow>();
-            flowList.Add(new RiverFlow(width-138, height-55, 50, 50, 4, IconDirections.RightToLeft));
+            flowList.Add(new RiverFlow(width - 138, height - 55, 50, 50, 4, IconDirections.RightToLeft));
        //     flowList.Add(new RiverFlow(10, 50, 50, 50, 5, IconDirections.LeftToRight)); bless system conflict
             flowList.Add(new RiverFlow(width-54, 200, 50, 50, 5, IconDirections.UpToDown));
 
@@ -133,6 +133,9 @@ namespace TaleofMonsters.Forms.CMain
                 case SystemMenuIds.UserForm:
                     PanelManager.DealPanel(new UserForm());
                     break;
+                case SystemMenuIds.RoleForm:
+                    PanelManager.DealPanel(new RoleForm());
+                    break;
                 case SystemMenuIds.LeaveDungeon:
                     if (MessageBoxEx2.Show("确定离开副本?") == DialogResult.OK)
                         Scene.Instance.LeaveDungeon();
@@ -155,7 +158,7 @@ namespace TaleofMonsters.Forms.CMain
                 case SystemMenuIds.TaskForm:
                     PanelManager.DealPanel(new QuestForm());
                     break;
-                case SystemMenuIds.EquipmentForm:
+                case SystemMenuIds.CastleForm:
                     PanelManager.DealPanel(new CastleForm());
                     break;
                 case SystemMenuIds.EquipComposeForm:
@@ -223,14 +226,15 @@ namespace TaleofMonsters.Forms.CMain
     {
         SystemMenu = 1,
         GameShopViewForm = 2,
-        UserForm = 3,
-        TaskForm = 6,
+        UserForm = 4,
+        TaskForm = 5,
         PeopleViewForm = 7,
         DeckViewForm = 8,
         DeckViewDungeonForm = 9,
         EquipComposeForm = 10,
         ItemForm = 11,
-        EquipmentForm = 12,
+        CastleForm = 12,
+        RoleForm = 13,
         LeaveDungeon = 31,
         MagicBookViewForm = 32,
         WorldMapViewForm = 33,
