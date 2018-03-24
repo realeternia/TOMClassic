@@ -52,8 +52,6 @@ namespace TaleofMonsters.Datas.User
             InfoBasic.MentalPoint = 100;
             InfoBasic.FoodPoint = 100;
             InfoBag.BagCount = 50;
-            InfoEquip.AddEquip(21100001);
-            InfoEquip.AddEquip(21300001);
             InfoWorld.AddBless(BlessBook.GetBlessByName("newbie"), 50);
         }
 

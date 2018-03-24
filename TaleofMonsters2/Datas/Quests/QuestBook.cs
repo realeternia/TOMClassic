@@ -65,10 +65,10 @@ namespace TaleofMonsters.Datas.Quests
                 rt += "金钱 ";
             if (questConfig.RewardExp > 0)
                 rt += "经验 ";
-            if (string.IsNullOrEmpty(questConfig.RewardItem) || string.IsNullOrEmpty(questConfig.RewardDrop))
+            if (!string.IsNullOrEmpty(questConfig.RewardItem1) || !string.IsNullOrEmpty(questConfig.RewardItem2) ||! string.IsNullOrEmpty(questConfig.RewardDrop))
                 rt += "道具 ";
             if (questConfig.RewardFood > 0|| questConfig.RewardHealth > 0|| questConfig.RewardMental > 0)
-                rt += "生存 ";
+                rt += "补给 ";
             if (questConfig.RewardBlessLevel > 0)
                 rt += "祝福 ";
             return rt;

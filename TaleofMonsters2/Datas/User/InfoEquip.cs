@@ -34,10 +34,9 @@ namespace TaleofMonsters.Datas.User
             else
             {
                 EquipAvail.Add(new DbEquip { BaseId = eid, Level = 1 });
+                MainTipManager.AddTip(string.Format("|获得装备-|{0}|{1}", HSTypes.I2QualityColor(equipConfig.Quality), equipConfig.Name), "White");
+                UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.EquipGet, 1);
             }
-
-            MainTipManager.AddTip(string.Format("|获得装备-|{0}|{1}", HSTypes.I2QualityColor(equipConfig.Quality), equipConfig.Name), "White");
-            UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.EquipGet, 1);
         }
 
         public bool CanEquip(int equipId, int slotId)

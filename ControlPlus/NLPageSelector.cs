@@ -89,7 +89,8 @@ namespace ControlPlus
                 return;
             }
 
-            buttons[selectIndex].BackColor = Color.Maroon;
+            if (selectIndex < buttons.Length)
+                buttons[selectIndex].BackColor = Color.Maroon;
             selectIndex = targetId;
             buttons[selectIndex].BackColor = Color.Green;
             if (PageChange != null)

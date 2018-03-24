@@ -66,23 +66,14 @@ namespace TaleofMonsters.Forms.CMain.Quests
         
         private void RewardItem(ref int index)
         {
-            if (!string.IsNullOrEmpty(questConfig.RewardItem))
+            if (!string.IsNullOrEmpty(questConfig.RewardItem1))
             {
-                var itemId = HItemBook.GetItemId(questConfig.RewardItem);
-                var isEquip = ConfigIdManager.IsEquip(itemId);
-                if (isEquip)
-                {
-                    UserProfile.InfoEquip.AddEquip(itemId);
-                    vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25, 60, 60,
-                                                        PictureRegionCellType.Equip, itemId));
-                }
-                else
-                {
-                    UserProfile.InfoBag.AddItem(itemId, 1);
-                    vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25, 60, 60,
-                                                        PictureRegionCellType.Item, itemId));
-                }
-
+                AddItem(index, questConfig.RewardItem1);
+                index++;
+            }
+            if (!string.IsNullOrEmpty(questConfig.RewardItem2))
+            {
+                AddItem(index, questConfig.RewardItem2);
                 index++;
             }
             if (!string.IsNullOrEmpty(questConfig.RewardDrop))
@@ -96,6 +87,24 @@ namespace TaleofMonsters.Forms.CMain.Quests
 
                     index++;
                 }
+            }
+        }
+
+        private void AddItem(int index, string name)
+        {
+            var itemId = HItemBook.GetItemId(name);
+            var isEquip = ConfigIdManager.IsEquip(itemId);
+            if (isEquip)
+            {
+                UserProfile.InfoEquip.AddEquip(itemId);
+                vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25, 60, 60,
+                    PictureRegionCellType.Equip, itemId));
+            }
+            else
+            {
+                UserProfile.InfoBag.AddItem(itemId, 1);
+                vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25, 60, 60,
+                    PictureRegionCellType.Item, itemId));
             }
         }
 
