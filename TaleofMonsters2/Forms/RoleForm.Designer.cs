@@ -76,7 +76,7 @@ namespace TaleofMonsters.Forms
             this.Controls.Add(this.bitmapButtonClose);
             this.DoubleBuffered = true;
             this.Name = "RoleForm";
-            this.Size = new System.Drawing.Size(325, 394);
+            this.Size = new System.Drawing.Size(325, 456);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.RoleForm_Paint);
             this.ResumeLayout(false);
 
