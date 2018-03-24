@@ -30,8 +30,8 @@ namespace TaleofMonsters.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.bitmapButtonClose = new BitmapButton();
-            this.bitmapButtonJob = new BitmapButton();
+            this.bitmapButtonClose = new ControlPlus.BitmapButton();
+            this.bitmapButtonJob = new ControlPlus.BitmapButton();
             this.SuspendLayout();
             // 
             // bitmapButtonClose
@@ -42,7 +42,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonClose.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonClose.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonClose.ImageNormal = null;
-            this.bitmapButtonClose.Location = new System.Drawing.Point(508, 6);
+            this.bitmapButtonClose.Location = new System.Drawing.Point(287, 16);
             this.bitmapButtonClose.Name = "bitmapButtonClose";
             this.bitmapButtonClose.NoUseDrawNine = false;
             this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
@@ -68,15 +68,15 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonJob.UseVisualStyleBackColor = true;
             this.bitmapButtonJob.Click += new System.EventHandler(this.bitmapButtonJob_Click);
             // 
-            // CastleForm
+            // RoleForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.bitmapButtonJob);
             this.Controls.Add(this.bitmapButtonClose);
             this.DoubleBuffered = true;
-            this.Name = "EquipmentForm";
-            this.Size = new System.Drawing.Size(547, 394);
+            this.Name = "RoleForm";
+            this.Size = new System.Drawing.Size(325, 394);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.RoleForm_Paint);
             this.ResumeLayout(false);
 
