@@ -21,7 +21,10 @@ namespace TaleofMonsters.Forms
         {
             InitializeComponent();
             bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
-            bitmapButtonJob.ImageNormal = PicLoader.Read("Button.Panel", "LearnButton.JPG");
+            bitmapButtonJob.ImageNormal = PicLoader.Read("Button.Panel", "JobButton.JPG");
+            bitmapButtonJob.NoUseDrawNine = true;
+            bitmapButtonHistory.ImageNormal = PicLoader.Read("Button.Panel", "InfoButton.JPG");
+            bitmapButtonHistory.NoUseDrawNine = true;
 
             vRegion = new VirtualRegion(this);
             vRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
@@ -34,7 +37,6 @@ namespace TaleofMonsters.Forms
             base.Init(width, height);
 
             show = true;
-            bitmapButtonJob.Visible = QuestBook.HasQuest("selectjob") && UserProfile.Profile.InfoBasic.Level >= 5;
         }
 
         private void pictureBoxClose_Click(object sender, EventArgs e)
@@ -112,7 +114,24 @@ namespace TaleofMonsters.Forms
 
         private void bitmapButtonJob_Click(object sender, EventArgs e)
         {
+            if (UserProfile.Profile.InfoBasic.Level < 5)
+            {
+                AddFlowCenter("等级5开启转职系统","Red");
+                return;
+            }
+
+            if (!QuestBook.HasQuest("selectjob"))
+            {
+                AddFlowCenter("完成任务【开始】开启转职系统", "Red");
+                return;
+            }
+
             PanelManager.DealPanel(new SelectJobForm());
+        }
+
+        private void bitmapButtonHistory_Click(object sender, EventArgs e)
+        {
+            PanelManager.DealPanel(new UserForm());
         }
     }
 }

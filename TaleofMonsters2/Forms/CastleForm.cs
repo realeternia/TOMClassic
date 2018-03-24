@@ -28,7 +28,8 @@ namespace TaleofMonsters.Forms
         {
             InitializeComponent();
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
-            bitmapButtonBuild.ImageNormal = PicLoader.Read("Button.Panel", "LearnButton.JPG");
+            bitmapButtonBuild.ImageNormal = PicLoader.Read("Button.Panel", "BuildButton.JPG");
+            bitmapButtonBuild.NoUseDrawNine = true;
             DoubleBuffered = true;
 
             vRegion = new VirtualRegion(this);

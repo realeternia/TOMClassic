@@ -32,6 +32,7 @@ namespace TaleofMonsters.Forms
         {
             this.bitmapButtonClose = new ControlPlus.BitmapButton();
             this.bitmapButtonJob = new ControlPlus.BitmapButton();
+            this.bitmapButtonHistory = new ControlPlus.BitmapButton();
             this.SuspendLayout();
             // 
             // bitmapButtonClose
@@ -59,19 +60,37 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonJob.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonJob.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonJob.ImageNormal = null;
-            this.bitmapButtonJob.Location = new System.Drawing.Point(28, 189);
+            this.bitmapButtonJob.Location = new System.Drawing.Point(64, 410);
             this.bitmapButtonJob.Name = "bitmapButtonJob";
             this.bitmapButtonJob.NoUseDrawNine = false;
-            this.bitmapButtonJob.Size = new System.Drawing.Size(28, 28);
+            this.bitmapButtonJob.Size = new System.Drawing.Size(32, 32);
             this.bitmapButtonJob.TabIndex = 26;
             this.bitmapButtonJob.TextOffX = 0;
             this.bitmapButtonJob.UseVisualStyleBackColor = true;
             this.bitmapButtonJob.Click += new System.EventHandler(this.bitmapButtonJob_Click);
             // 
+            // bitmapButtonHistory
+            // 
+            this.bitmapButtonHistory.BorderColor = System.Drawing.Color.DarkBlue;
+            this.bitmapButtonHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bitmapButtonHistory.IconImage = null;
+            this.bitmapButtonHistory.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonHistory.IconXY = new System.Drawing.Point(0, 0);
+            this.bitmapButtonHistory.ImageNormal = null;
+            this.bitmapButtonHistory.Location = new System.Drawing.Point(22, 410);
+            this.bitmapButtonHistory.Name = "bitmapButtonHistory";
+            this.bitmapButtonHistory.NoUseDrawNine = false;
+            this.bitmapButtonHistory.Size = new System.Drawing.Size(32, 32);
+            this.bitmapButtonHistory.TabIndex = 27;
+            this.bitmapButtonHistory.TextOffX = 0;
+            this.bitmapButtonHistory.UseVisualStyleBackColor = true;
+            this.bitmapButtonHistory.Click += new System.EventHandler(this.bitmapButtonHistory_Click);
+            // 
             // RoleForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.bitmapButtonHistory);
             this.Controls.Add(this.bitmapButtonJob);
             this.Controls.Add(this.bitmapButtonClose);
             this.DoubleBuffered = true;
@@ -86,5 +105,6 @@ namespace TaleofMonsters.Forms
 
         private BitmapButton bitmapButtonClose;
         private BitmapButton bitmapButtonJob;
+        private BitmapButton bitmapButtonHistory;
     }
 }

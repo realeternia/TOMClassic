@@ -32,6 +32,7 @@ namespace TaleofMonsters.Forms
             InitializeComponent();
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
             this.bitmapButtonRefresh.ImageNormal = PicLoader.Read("Button.Panel", "LearnButton.JPG");
+            bitmapButtonRefresh.NoUseDrawNine = true;
             this.nlPageSelector1 = new NLPageSelector(this, 371, 438, 150);
             nlPageSelector1.PageChange += nlPageSelector1_PageChange;
 
