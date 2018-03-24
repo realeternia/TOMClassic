@@ -10,9 +10,9 @@ using TaleofMonsters.Forms.Items.Core;
 
 namespace TaleofMonsters.Forms
 {
-    internal partial class UserForm : BasePanel
+    internal partial class PlayerHistoryForm : BasePanel
     {
-        public UserForm()
+        public PlayerHistoryForm()
         {
             InitializeComponent();
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
@@ -77,7 +77,7 @@ namespace TaleofMonsters.Forms
             //  e.DrawText();
         }
 
-        private void UserForm_Paint(object sender, PaintEventArgs e)
+        private void PlayerHistoryForm_Paint(object sender, PaintEventArgs e)
         {
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 

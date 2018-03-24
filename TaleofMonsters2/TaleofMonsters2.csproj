@@ -299,11 +299,11 @@
     <Compile Include="Forms\SelectCardForm.Designer.cs">
       <DependentUpon>SelectCardForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\UserForm.cs">
+    <Compile Include="Forms\PlayerHistoryForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\UserForm.Designer.cs">
-      <DependentUpon>UserForm.cs</DependentUpon>
+    <Compile Include="Forms\PlayerHistoryForm.Designer.cs">
+      <DependentUpon>PlayerHistoryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\StoryForm.cs">
       <SubType>UserControl</SubType>
@@ -951,8 +951,8 @@
       <DependentUpon>CastleForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\UserForm.resx">
-      <DependentUpon>UserForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\PlayerHistoryForm.resx">
+      <DependentUpon>PlayerHistoryForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TourGame\TourCup8.resx">

@@ -130,9 +130,6 @@ namespace TaleofMonsters.Forms.CMain
                 case SystemMenuIds.SystemMenu:
                     PanelManager.DealPanel(new SystemMenu());
                     break;
-                case SystemMenuIds.UserForm:
-                    PanelManager.DealPanel(new UserForm());
-                    break;
                 case SystemMenuIds.RoleForm:
                     PanelManager.DealPanel(new RoleForm());
                     break;
@@ -226,7 +223,6 @@ namespace TaleofMonsters.Forms.CMain
     {
         SystemMenu = 1,
         GameShopViewForm = 2,
-        UserForm = 4,
         TaskForm = 5,
         PeopleViewForm = 7,
         DeckViewForm = 8,

@@ -2,7 +2,7 @@
 
 namespace TaleofMonsters.Forms
 {
-    partial class UserForm
+    partial class PlayerHistoryForm
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -82,7 +82,7 @@ namespace TaleofMonsters.Forms
             this.Controls.Add(this.bitmapButtonClose);
             this.Name = "UserForm";
             this.Size = new System.Drawing.Size(303, 506);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.UserForm_Paint);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.PlayerHistoryForm_Paint);
             this.ResumeLayout(false);
 
         }

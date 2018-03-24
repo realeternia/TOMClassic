@@ -131,7 +131,7 @@ namespace TaleofMonsters.Forms
 
         private void bitmapButtonHistory_Click(object sender, EventArgs e)
         {
-            PanelManager.DealPanel(new UserForm());
+            PanelManager.DealPanel(new PlayerHistoryForm());
         }
     }
 }
