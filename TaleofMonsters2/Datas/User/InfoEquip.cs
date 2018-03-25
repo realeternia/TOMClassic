@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ConfigDatas;
 using TaleofMonsters.Core;
+using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Datas.User.Db;
 using TaleofMonsters.Forms.CMain;
 
@@ -113,6 +114,21 @@ namespace TaleofMonsters.Datas.User
                     list.Add(dbEquip);
             }
             return list;
+        }
+
+        public void AddExp(int id, int exp)
+        {
+            var equip = GetEquipById(id);
+            if (equip != null)
+            {
+                equip.Exp += exp;
+                var expNeed = ExpTree.GetNextRequiredEquip(equip.Level);
+                if (equip.Exp >= expNeed)
+                {
+                    equip.Exp -= expNeed;
+                    equip.Level++;
+                }
+            }
         }
     }
 }

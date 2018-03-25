@@ -6,6 +6,7 @@ namespace TaleofMonsters.Datas.User.Db
     {
         [FieldIndex(Index = 1)] public int BaseId;
         [FieldIndex(Index = 2)] public int Level;
+        [FieldIndex(Index = 3)] public int Exp;
 
         public DbEquip()
         {
@@ -15,6 +16,7 @@ namespace TaleofMonsters.Datas.User.Db
         {
             BaseId = 0;
             Level = 0;
+            Exp = 0;
         }
 
         public override string ToString()

@@ -163,6 +163,12 @@
     <Compile Include="Controler\Battle\FastBattle.cs" />
     <Compile Include="Controler\GM\GMCommand.cs" />
     <Compile Include="Controler\GM\GmScript.cs" />
+    <Compile Include="Forms\Pops\PopBuildUpgrade.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Pops\PopBuildUpgrade.Designer.cs">
+      <DependentUpon>PopBuildUpgrade.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\RankForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -802,6 +808,10 @@
     <EmbeddedResource Include="Forms\BasePanel.resx">
       <SubType>Designer</SubType>
       <DependentUpon>BasePanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Pops\PopBuildUpgrade.resx">
+      <DependentUpon>PopBuildUpgrade.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RoleForm.resx">
       <SubType>Designer</SubType>

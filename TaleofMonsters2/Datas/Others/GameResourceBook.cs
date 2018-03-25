@@ -153,21 +153,14 @@ namespace TaleofMonsters.Datas.Others
         /// </summary>
         public static uint OutStoneCompose(int qual)
         {
-            return (uint)((float)2 * 2 * Math.Sqrt(qual))*4;//2-5-10-16
-        }
-        /// <summary>
-        /// 分解装备获得金币
-        /// </summary>
-        public static uint InGoldEquipDecompose(int qual)
-        {
-            return Math.Max(1, (uint)(2 * Math.Sqrt(qual) * 0.7))*2;//2-5-10-16 0.7
+            return 80 + (uint)qual*20;
         }
         /// <summary>
         /// 消耗木材制作装备,level 1-5
         /// </summary>
         public static uint OutWoodCompose(int qual)
         {
-            return (uint)((float)2 * 2 * Math.Sqrt(qual))*4;//2-5-10-16
+            return 80 + (uint)qual * 20;
         }
         /// <summary>
         /// 消耗木材建设农场

@@ -13,6 +13,10 @@ namespace TaleofMonsters.Datas.Others
         {
             return ConfigDatas.ConfigData.GetLevelExpConfig(level).CardExp;
         }
+        public static int GetNextRequiredEquip(int level)
+        {
+            return ConfigDatas.ConfigData.GetLevelExpConfig(level).EquipExp;
+        }
         public static double GetGoldFactor(int level)
         {
             return ConfigDatas.ConfigData.GetLevelExpConfig(level).GoldFactor;

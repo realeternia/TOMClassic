@@ -43,6 +43,10 @@ namespace TaleofMonsters.Datas.Equips
         {
             TemplateId = id;
 
+            EquipConfig equipConfig = ConfigData.GetEquipConfig(TemplateId);
+            if (equipConfig.CommonSkillId > 0)
+                CommonSkillList.Add(new RLIdValue { Id = equipConfig.CommonSkillId, Value = equipConfig.CommonSkillRate });
+
             UpgradeToLevel();
         }
 
@@ -68,9 +72,6 @@ namespace TaleofMonsters.Datas.Equips
             Luk = equipConfig.Luk;
 
             Range = equipConfig.Range;
-
-            if (equipConfig.CommonSkillId > 0)
-                CommonSkillList.Add(new RLIdValue {Id = equipConfig.CommonSkillId, Value = equipConfig.CommonSkillRate});
         }
 
         public Image GetPreview()
@@ -205,9 +206,6 @@ namespace TaleofMonsters.Datas.Equips
                     tipData.AddText(tp, "White");
                 }
             }
-            tipData.AddLine();
-            tipData.AddTextNewLine(string.Format("出售价格:{0}", equipConfig.Value), "Yellow");
-            tipData.AddImage(HSIcons.GetIconsByEName("res1"));
             tipData.AddImageXY(EquipBook.GetEquipImage(TemplateId), 8, 8, 48, 48, 7, 24, 30, 30);
             return tipData.Image;
         }
