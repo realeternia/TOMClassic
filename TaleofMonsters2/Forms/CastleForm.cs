@@ -58,13 +58,13 @@ namespace TaleofMonsters.Forms
         private void VRegion_RegionEntered(int id, int x, int y, int key)
         {
             Image image = null;
-            var itemId = UserProfile.InfoEquip.GetEquipOn(id).BaseId;
-            if (itemId != 0)
+            var equip = UserProfile.InfoEquip.GetEquipOn(id);
+            if (equip.BaseId != 0)
             {
-                Equip equip = new Equip(itemId);
-                //     equip.Dura = UserProfile.InfoEquip.Equipon[id - 1].Dura;
-                //    equip.ExpireTime = UserProfile.InfoEquip.Equipon[id - 1].ExpireTime;
-                image = equip.GetPreview();
+                Equip equipD = new Equip(equip.BaseId);
+                if (equip.Level > 1)
+                    equipD.UpgradeToLevel(equip.Level);
+                image = equipD.GetPreview();
             }
             else
             {
@@ -132,7 +132,7 @@ namespace TaleofMonsters.Forms
                 if(UserProfile.InfoEquip.HasEquipOn(dbEquip.BaseId))
                     continue;
                 var equipConfig = ConfigData.GetEquipConfig(dbEquip.BaseId);
-                popMenuEquip.AddItem(equipConfig.Id.ToString(), equipConfig.Name, HSTypes.I2QualityColor(equipConfig.Quality));
+                popMenuEquip.AddItem(equipConfig.Id.ToString(), string.Format("{0}{1}", dbEquip.Level, equipConfig.Name), HSTypes.I2QualityColor(equipConfig.Quality));
             }
             popMenuEquip.AddItem("exit", "退出");
             #endregion
@@ -160,7 +160,7 @@ namespace TaleofMonsters.Forms
             e.Graphics.FillRectangle(brush, new Rectangle(10, 35, 100, 180));
             brush.Dispose();
 
-            var equipDataList = UserProfile.InfoEquip.GetValidEquipsList().ConvertAll(equipId => new Equip(equipId));
+            var equipDataList = UserProfile.InfoEquip.GetValidEquipsList();
             var vEquip = EquipBook.GetVirtualEquips(equipDataList);
 
             Font font3 = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);

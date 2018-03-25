@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ConfigDatas;
 using TaleofMonsters.Core;
+using TaleofMonsters.Datas.Equips;
 using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Datas.User.Db;
 using TaleofMonsters.Forms.CMain;
@@ -65,16 +66,16 @@ namespace TaleofMonsters.Datas.User
         {
             if (equipPos == MainHouseIndex) //如果主楼，移除所有其他建筑
             {
-                foreach (var dbEquip in Equipon)
-                    dbEquip.Reset();
+                for (int i = 0; i < Equipon.Length; i++)
+                    Equipon[i] = new DbEquip();
             }
             UserProfile.InfoEquip.Equipon[equipPos] = GetEquipById(equipId);
             UserProfile.InfoDungeon.RecalculateAttr(); //会影响力量啥的属性
         }
 
-        public List<int> GetValidEquipsList()
+        public List<Equip> GetValidEquipsList()
         {
-            List<int> equips = new List<int>();
+            List<Equip> equips = new List<Equip>();
 
             for (int i = 0; i < GameConstants.EquipOnCount; i++)
             {
@@ -83,7 +84,12 @@ namespace TaleofMonsters.Datas.User
                     continue;
 
                 if (CanEquip(equip.BaseId, i + 1))
-                    equips.Add(equip.BaseId);
+                {
+                    var equipD = new Equip(equip.BaseId);
+                    if (equip.Level > 1)
+                        equipD.UpgradeToLevel(equip.Level);
+                    equips.Add(equipD);
+                }
             }
             return equips;
         }
@@ -127,6 +133,14 @@ namespace TaleofMonsters.Datas.User
                 {
                     equip.Exp -= expNeed;
                     equip.Level++;
+                }
+
+                var equipOn = GetEquipOn(id);
+                equipOn.Exp += exp;
+                if (equipOn.Exp >= expNeed)
+                {
+                    equipOn.Exp -= expNeed;
+                    equipOn.Level++;
                 }
             }
         }

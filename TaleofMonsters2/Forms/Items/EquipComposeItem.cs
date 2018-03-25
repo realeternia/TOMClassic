@@ -4,9 +4,7 @@ using ConfigDatas;
 using ControlPlus;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Equips;
-using TaleofMonsters.Datas.Items;
 using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain;
@@ -103,8 +101,12 @@ namespace TaleofMonsters.Forms.Items
         {
             if (info == 1 && key > 0)
             {
-                Equip equip = new Equip(key);
-                Image image = equip.GetPreview();
+                Equip equipD = new Equip(key);
+
+                var eData = UserProfile.InfoEquip.GetEquipById(key);
+                if (eData != null && eData.Level > 1)
+                    equipD.UpgradeToLevel(eData.Level);
+                Image image = equipD.GetPreview();
                 tooltip.Show(image, parent, mx, my, equipId);
             }
             //else if (info == 2 && key > 0)

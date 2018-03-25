@@ -6,6 +6,7 @@ using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
 using TaleofMonsters.Datas.Decks;
+using TaleofMonsters.Datas.Equips;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
 {
@@ -30,7 +31,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             DeckCards = new ActiveCards(cds);
 
             int[] energyRate = { 0, 0, 0 };
-            CalculateEquipAndSkill(new List<int>(), energyRate); //todo
+            CalculateEquipAndSkill(new List<Equip>(), energyRate); //todo
             EnergyGenerator.SetRateNpc(energyRate, peopleConfig);
             EnergyGenerator.Next(0);
 

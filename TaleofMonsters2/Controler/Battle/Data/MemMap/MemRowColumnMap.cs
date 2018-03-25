@@ -86,6 +86,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                 }
 
                 var level = ConfigData.GetLevelExpConfig(player.Level).TowerLevel;
+                towerData.UpgradeToLevel(level);
                 var towerUnit = new TowerMonster(level, towerData, isKingTower, new Point(xPos * CardSize, yPos * CardSize), player.IsLeft);
 
                 BattleManager.Instance.RuleData.CheckTowerData(towerUnit);

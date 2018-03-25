@@ -117,13 +117,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             Pp = 3;
         }
 
-        protected void CalculateEquipAndSkill(List<int> equipids, int[] energyData)
+        protected void CalculateEquipAndSkill(List<Equip> equipList, int[] energyData)
         {
             var jobConfig = ConfigData.GetJobConfig(Job);
             if (jobConfig.SkillId > 0)
                 HeroSkillList.Add(jobConfig.SkillId);//添加职业技能
 
-            var equipList = equipids.ConvertAll(equipId => new Equip(equipId));
             List<int> monsterBoostItemList = new List<int>();
             foreach (var equip in equipList)
             {

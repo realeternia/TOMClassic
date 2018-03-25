@@ -141,6 +141,12 @@ namespace TaleofMonsters.Forms.Pops
         private void bitmapButtonClose_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+
             ParentPanel.SetBlacken(false);
         }
     }
