@@ -157,7 +157,7 @@ namespace TaleofMonsters.Forms
                 vRegion.Draw(e.Graphics);
 
             var brush = new SolidBrush(Color.FromArgb(100, Color.Black));
-            e.Graphics.FillRectangle(brush, new Rectangle(10, 35, 100, 180));
+            e.Graphics.FillRectangle(brush, new Rectangle(10, 35, 100, 160));
             brush.Dispose();
 
             var equipDataList = UserProfile.InfoEquip.GetValidEquipsList();

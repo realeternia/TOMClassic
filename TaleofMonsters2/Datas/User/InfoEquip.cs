@@ -31,7 +31,7 @@ namespace TaleofMonsters.Datas.User
             var equip = EquipAvail.Find(edata => edata.BaseId == eid);
             if (equip != null)
             {
-                //todo 升级
+                equip.Exp += 10;
             }
             else
             {
@@ -133,14 +133,6 @@ namespace TaleofMonsters.Datas.User
                 {
                     equip.Exp -= expNeed;
                     equip.Level++;
-                }
-
-                var equipOn = GetEquipOn(id);
-                equipOn.Exp += exp;
-                if (equipOn.Exp >= expNeed)
-                {
-                    equipOn.Exp -= expNeed;
-                    equipOn.Level++;
                 }
             }
         }

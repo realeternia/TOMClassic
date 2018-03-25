@@ -55,7 +55,6 @@ namespace TaleofMonsters.Forms.Items
 
             vRegion = new VirtualRegion(parent);
             vRegion.AddRegion(new PictureRegion(1, x + 3 + 6, y + 3 + 6,  76 - 12, 75 - 12, PictureRegionCellType.Equip, 0));
-         //   vRegion.AddRegion(new PictureRegion(2, x + 80, y + 50, 24,24, PictureRegionCellType.Item, 0));
             vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
@@ -70,17 +69,13 @@ namespace TaleofMonsters.Forms.Items
                 vRegion.SetRegionKey(1, eid);
                 if (hasEquip)
                 {
-                    var equipConfig = ConfigData.GetEquipConfig(equipId);
-                 //   vRegion.SetRegionKey(2, equipConfig.ComposeItemId);
                     vRegion.SetRegionEnable(1, true);
-                 //   vRegion.SetRegionVisible(2, true);
                     vRegion.SetRegionDecorator(1, 0, null);
                     vRegion.SetRegionDecorator(1, 1, null);
                 }
                 else
                 {
                     vRegion.SetRegionEnable(1, false);
-                 //   vRegion.SetRegionVisible(2, false);
                     vRegion.SetRegionDecorator(1, 0, new RegionCoverDecorator(Color.FromArgb(180, Color.Black)));
                     vRegion.SetRegionDecorator(1, 1, new RegionImageDecorator(HSIcons.GetIconsByEName("oth3"), 24));
                 }
@@ -109,11 +104,6 @@ namespace TaleofMonsters.Forms.Items
                 Image image = equipD.GetPreview();
                 tooltip.Show(image, parent, mx, my, equipId);
             }
-            //else if (info == 2 && key > 0)
-            //{
-            //    Image image = HItemBook.GetPreview(key);
-            //    tooltip.Show(image, parent, mx, my, equipId);
-            //}
         }
 
         private void virtualRegion_RegionLeft()

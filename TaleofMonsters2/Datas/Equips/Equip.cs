@@ -78,7 +78,7 @@ namespace TaleofMonsters.Datas.Equips
             EquipConfig equipConfig = ConfigData.GetEquipConfig(TemplateId);
 
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
-            tipData.AddTextNewLine(String.Format("{0} Lv{1}", equipConfig.Name, level), HSTypes.I2QualityColor(equipConfig.Quality), 20);
+            tipData.AddTextNewLine(string.Format("{0} Lv{1}", equipConfig.Name, level), HSTypes.I2QualityColor(equipConfig.Quality), 20);
             tipData.AddTextNewLine(string.Format("       位置:{0}", HSTypes.I2EquipSlotType(equipConfig.Position)), "White");
             tipData.AddTextNewLine("", "White");
             if (Atk > 0)
@@ -140,7 +140,15 @@ namespace TaleofMonsters.Datas.Equips
             }
             if (!string.IsNullOrEmpty(equipConfig.Des))
             {
-                tipData.AddTextNewLine(equipConfig.Des, "Lime");
+                if (equipConfig.Des.Length > 15)
+                {
+                    tipData.AddTextNewLine(equipConfig.Des.Substring(0, 14), "Lime");
+                    tipData.AddTextNewLine(equipConfig.Des.Substring(14), "Lime");
+                }
+                else
+                {
+                    tipData.AddTextNewLine(equipConfig.Des, "Lime");
+                }
             }
             if (equipConfig.EnergyRate[0] != 0 || equipConfig.EnergyRate[1] != 0 || equipConfig.EnergyRate[2] != 0)
             {
@@ -179,10 +187,10 @@ namespace TaleofMonsters.Datas.Equips
                 tipData.AddImageNewLine(HeroPowerBook.GetImage(equipConfig.HeroSkillId));
                 var skillConfig = ConfigData.GetHeroPowerConfig(equipConfig.HeroSkillId);
                 string tp = string.Format("{0}:{1}", skillConfig.Name, skillConfig.Des);
-                if (tp.Length > 12)
+                if (tp.Length > 15)
                 {
-                    tipData.AddText(tp.Substring(0, 11), "White");
-                    tipData.AddTextNewLine(tp.Substring(11), "White");
+                    tipData.AddText(tp.Substring(0, 14), "White");
+                    tipData.AddTextNewLine(tp.Substring(14), "White");
                 }
                 else
                 {
@@ -195,10 +203,10 @@ namespace TaleofMonsters.Datas.Equips
                 tipData.AddImageNewLine(SkillBook.GetSkillImage(equipConfig.CommonSkillId));
                 var skillConfig = ConfigData.GetSkillConfig(equipConfig.CommonSkillId);
                 string tp = string.Format("{0}(被动)({2}%):{1}", skillConfig.Name, skillConfig.GetDescript(level), equipConfig.CommonSkillRate);
-                if (tp.Length > 12)
+                if (tp.Length > 15)
                 {
-                    tipData.AddText(tp.Substring(0, 11), "White");
-                    tipData.AddTextNewLine(tp.Substring(11), "White");
+                    tipData.AddText(tp.Substring(0, 14), "White");
+                    tipData.AddTextNewLine(tp.Substring(14), "White");
                 }
                 else
                 {

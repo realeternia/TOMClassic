@@ -6,7 +6,7 @@ using ControlPlus;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas;
-using TaleofMonsters.Datas.Items;
+using TaleofMonsters.Datas.Equips;
 using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain;
@@ -36,7 +36,10 @@ namespace TaleofMonsters.Forms.Pops
             vRegion.AddRegion(new PictureRegion(1, 20, 45, 40, 40, PictureRegionCellType.Equip, equipId));
 
             var equipConfig = ConfigDatas.ConfigData.GetEquipConfig(equipId);
-            vRegion.AddRegion(new ImageRegion(2, 30, 45+60, 32, 32, ImageRegionCellType.Lumber + equipConfig.ComposeRes[0]-1, HSIcons.GetIconsByEName("res"+ (equipConfig.ComposeRes[0]+1) )));
+            var eRegion = ComplexRegion.GetResShowRegion(2, new Point(30, 45 + 60), 32,
+                ImageRegionCellType.Lumber + equipConfig.ComposeRes[0] - 1,
+                (int)GameResourceBook.OutWoodCompose(equipConfig.Quality));
+            vRegion.AddRegion(eRegion);
             vRegion.AddRegion(new PictureRegion(4, 30, 45 + 60+44, 32, 32, PictureRegionCellType.Item, equipConfig.ComposeItemId[0]));
             vRegion.AddRegion(new PictureRegion(5, 30, 45 + 60+88, 32, 32, PictureRegionCellType.Item, equipConfig.ComposeItemId[1]));
         }
@@ -48,12 +51,26 @@ namespace TaleofMonsters.Forms.Pops
 
         void virtualRegion_RegionEntered(int id, int x, int y, int key)
         {
-            Image image = null;
-            image = HItemBook.GetPreview(equipId);
-            toolTip.Show(image, this, 108, 44);
+            if (id == 1)
+            {
+                var equip = UserProfile.InfoEquip.GetEquipById(key);
+                if (equip.BaseId != 0)
+                {
+                    Equip equipD = new Equip(equip.BaseId);
+                    if (equip.Level > 1)
+                        equipD.UpgradeToLevel(equip.Level);
+                    var image = equipD.GetPreview();
+                    toolTip.Show(image, this, x, y, equipId);
+                    return;
+                }
+            }
+
+            var region = vRegion.GetRegion(id);
+            if (region != null)
+                region.ShowTip(toolTip, this, x, y);
         }
 
-        private void MessageBoxEx_Paint(object sender, PaintEventArgs e)
+        private void PopBuildUpgrade_Paint(object sender, PaintEventArgs e)
         {
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 

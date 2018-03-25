@@ -106,7 +106,7 @@
             this.Name = "PopBuildUpgrade";
             this.Size = new System.Drawing.Size(242, 243);
             this.Load += new System.EventHandler(this.PopBuyProduct_Load);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.MessageBoxEx_Paint);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.PopBuildUpgrade_Paint);
             this.ResumeLayout(false);
 
         }
