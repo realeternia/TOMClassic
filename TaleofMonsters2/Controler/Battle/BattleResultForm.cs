@@ -36,7 +36,6 @@ namespace TaleofMonsters.Controler.Battle
         internal BattleResultForm()
         {
             InitializeComponent();
-            NeedBlackForm = true;
             this.bitmapButtonClose2.ImageNormal = PicLoader.Read("Button.Panel", "CancelButton.JPG");
             bitmapButtonClose2.NoUseDrawNine = true;
             vRegion = new VirtualRegion(this);

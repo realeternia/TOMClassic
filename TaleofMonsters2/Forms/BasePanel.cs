@@ -36,6 +36,7 @@ namespace TaleofMonsters.Forms
             public int Time;
         }
 
+        private Panel panel1;
         private long lastMouseMoveTime;
         private List<FlowData> flows;
         protected int formWidth;
@@ -44,6 +45,28 @@ namespace TaleofMonsters.Forms
         public bool IsChangeBgm { get; private set; }
 
         public bool NeedBlackForm { get; set; }
+        public BasePanel ParentPanel; //黑化用
+
+        public BasePanel()
+        {
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.SuspendLayout();
+            // 
+            // panel1
+            // 
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(200, 100);
+            this.panel1.TabIndex = 0;
+            this.panel1.Visible = false;
+            // 
+            // BasePanel
+            // 
+            this.Controls.Add(this.panel1);
+            this.Name = "BasePanel";
+            this.ResumeLayout(false);
+
+        }
 
         public virtual void Init(int width, int height)
         {
@@ -93,9 +116,7 @@ namespace TaleofMonsters.Forms
         protected override void OnMouseMove(MouseEventArgs e)
         {
             if (lastMouseMoveTime + 50 > TimeTool.GetNowMiliSecond())
-            {
                 return;
-            }
             lastMouseMoveTime = TimeTool.GetNowMiliSecond();
 
             base.OnMouseMove(e);
@@ -166,6 +187,22 @@ namespace TaleofMonsters.Forms
             SoundManager.PlayBGM(bgmPath);
             IsChangeBgm = true;
         }
+
+        public virtual void SetBlacken(bool val)
+        {
+            if (val)
+            {
+                panel1.Width = Width;
+                panel1.Height = Height;
+                panel1.BackColor = Color.FromArgb(180, Color.Black);
+                panel1.Visible = true;
+            }
+            else
+            {
+                panel1.Visible = false;
+            }
+        }
+
     }
 
 }

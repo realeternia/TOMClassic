@@ -11,7 +11,7 @@ using TaleofMonsters.Forms.Items.Regions;
 
 namespace TaleofMonsters.Forms.Pops
 {
-    internal partial class PopBuyProduct : Form
+    internal partial class PopBuyProduct : BasePanel
     {
         private int itemid;
         private int itemprice;
@@ -24,7 +24,6 @@ namespace TaleofMonsters.Forms.Pops
         {
             InitializeComponent();
             BackgroundImage = PicLoader.Read("System", "DeckChoose.PNG");
-            FormBorderStyle = FormBorderStyle.None;
             vRegion = new VirtualRegion(this);
             vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
@@ -64,13 +63,15 @@ namespace TaleofMonsters.Forms.Pops
             e.Graphics.DrawImage(HSIcons.GetIconsByEName("res8"), 212, 140, 16, 16);
         }
 
-        public static void Show(int id, int price)
+        public static void Show(int id, int price, BasePanel p)
         {
             PopBuyProduct mb = new PopBuyProduct();
             mb.itemid = id;
             mb.itemprice = price;
+            mb.ParentPanel = p;
             mb.vRegion.AddRegion(new PictureRegion(1, 68, 44, 40, 40, PictureRegionCellType.Item, id));
-            mb.ShowDialog();
+            PanelManager.DealPanel(mb);
+            p.SetBlacken(true);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -79,12 +80,14 @@ namespace TaleofMonsters.Forms.Pops
             {
                 UserProfile.InfoBag.AddItem(itemid, count);
                 Close();
+                ParentPanel.SetBlacken(false);
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             Close();
+            ParentPanel.SetBlacken(false);
         }
 
         private void textBoxCount_KeyPress(object sender, KeyPressEventArgs e)

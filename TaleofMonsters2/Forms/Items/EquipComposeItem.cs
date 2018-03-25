@@ -121,7 +121,7 @@ namespace TaleofMonsters.Forms.Items
 
         private void pictureBoxBuy_Click(object sender, EventArgs e)
         {
-            PopBuildUpgrade.Show(equipId);
+            PopBuildUpgrade.Show(equipId, parent);
         }
 
         public void Draw(Graphics g)

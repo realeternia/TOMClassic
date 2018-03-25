@@ -100,7 +100,6 @@ namespace TaleofMonsters.Controler.GM
                     case "sceq":
                         NpcTalkForm sw = new NpcTalkForm();
                         sw.EventId = SceneQuestBook.GetSceneQuestByName(data[1]);
-                        sw.NeedBlackForm = true;
                         PanelManager.DealPanel(sw); break;
                     case "cure": UserProfile.InfoBasic.MentalPoint=100; UserProfile.InfoBasic.HealthPoint=100;
                         UserProfile.InfoBasic.FoodPoint = 100;break;

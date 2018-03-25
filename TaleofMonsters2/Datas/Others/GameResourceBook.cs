@@ -153,14 +153,14 @@ namespace TaleofMonsters.Datas.Others
         /// </summary>
         public static uint OutStoneCompose(int qual)
         {
-            return 80 + (uint)qual*20;
+            return 60 + (uint)qual*40;
         }
         /// <summary>
         /// 消耗木材制作装备,level 1-5
         /// </summary>
         public static uint OutWoodCompose(int qual)
         {
-            return 80 + (uint)qual * 20;
+            return 60 + (uint)qual * 40;
         }
         /// <summary>
         /// 消耗木材建设农场

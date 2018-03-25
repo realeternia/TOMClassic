@@ -31,6 +31,7 @@
             this.buttonBuy1 = new System.Windows.Forms.Button();
             this.buttonBuy2 = new System.Windows.Forms.Button();
             this.buttonBuy3 = new System.Windows.Forms.Button();
+            this.bitmapButtonClose = new ControlPlus.BitmapButton();
             this.SuspendLayout();
             // 
             // buttonBuy1
@@ -78,20 +79,32 @@
             this.buttonBuy3.UseVisualStyleBackColor = false;
             this.buttonBuy3.Click += new System.EventHandler(this.buttonBuy3_Click);
             // 
+            // bitmapButtonClose
+            // 
+            this.bitmapButtonClose.BorderColor = System.Drawing.Color.DarkBlue;
+            this.bitmapButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bitmapButtonClose.IconImage = null;
+            this.bitmapButtonClose.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonClose.IconXY = new System.Drawing.Point(0, 0);
+            this.bitmapButtonClose.ImageNormal = null;
+            this.bitmapButtonClose.Location = new System.Drawing.Point(206, 3);
+            this.bitmapButtonClose.Name = "bitmapButtonClose";
+            this.bitmapButtonClose.NoUseDrawNine = false;
+            this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
+            this.bitmapButtonClose.TabIndex = 26;
+            this.bitmapButtonClose.TextOffX = 0;
+            this.bitmapButtonClose.UseVisualStyleBackColor = true;
+            this.bitmapButtonClose.Click += new System.EventHandler(this.bitmapButtonClose_Click);
+            // 
             // PopBuildUpgrade
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(242, 243);
+            this.Controls.Add(this.bitmapButtonClose);
             this.Controls.Add(this.buttonBuy3);
             this.Controls.Add(this.buttonBuy2);
             this.Controls.Add(this.buttonBuy1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "PopBuildUpgrade";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "提示";
-            this.TransparencyKey = System.Drawing.SystemColors.Control;
+            this.Size = new System.Drawing.Size(242, 243);
             this.Load += new System.EventHandler(this.PopBuyProduct_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MessageBoxEx_Paint);
             this.ResumeLayout(false);
@@ -103,5 +116,6 @@
         private System.Windows.Forms.Button buttonBuy1;
         private System.Windows.Forms.Button buttonBuy2;
         private System.Windows.Forms.Button buttonBuy3;
+        private ControlPlus.BitmapButton bitmapButtonClose;
     }
 }

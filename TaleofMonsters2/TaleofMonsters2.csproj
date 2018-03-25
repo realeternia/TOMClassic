@@ -164,7 +164,7 @@
     <Compile Include="Controler\GM\GMCommand.cs" />
     <Compile Include="Controler\GM\GmScript.cs" />
     <Compile Include="Forms\Pops\PopBuildUpgrade.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Forms\Pops\PopBuildUpgrade.Designer.cs">
       <DependentUpon>PopBuildUpgrade.cs</DependentUpon>
@@ -435,12 +435,6 @@
     <Compile Include="Forms\MiniGame\MGSeven.Designer.cs">
       <DependentUpon>MGSeven.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Pops\PopSelectCard.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Pops\PopSelectCard.Designer.cs">
-      <DependentUpon>PopSelectCard.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\QuestionForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -536,12 +530,6 @@
     <Compile Include="Forms\MiniGame\MGBattleRobot.Designer.cs">
       <DependentUpon>MGBattleRobot.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Pops\PopDeckChangeName.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Pops\PopDeckChangeName.Designer.cs">
-      <DependentUpon>PopDeckChangeName.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Pops\PopDeckChoose.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -627,7 +615,7 @@
       <DependentUpon>MergeWeaponForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Pops\PopBuyProduct.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Forms\Pops\PopBuyProduct.Designer.cs">
       <DependentUpon>PopBuyProduct.cs</DependentUpon>
@@ -909,10 +897,6 @@
       <DependentUpon>MGLinkGame.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Pops\PopDeckChangeName.resx">
-      <DependentUpon>PopDeckChangeName.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Pops\PopDeckChoose.resx">
       <DependentUpon>PopDeckChoose.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -943,10 +927,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Pops\PopBuyProduct.resx">
       <DependentUpon>PopBuyProduct.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Pops\PopSelectCard.resx">
-      <DependentUpon>PopSelectCard.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SelectCardForm.resx">

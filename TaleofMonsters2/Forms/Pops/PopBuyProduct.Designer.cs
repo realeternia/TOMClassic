@@ -134,13 +134,8 @@
             this.Controls.Add(this.textBoxCount);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "PopBuyProduct";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "提示";
-            this.TransparencyKey = System.Drawing.SystemColors.Control;
             this.Load += new System.EventHandler(this.PopBuyProduct_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MessageBoxEx_Paint);
             this.ResumeLayout(false);

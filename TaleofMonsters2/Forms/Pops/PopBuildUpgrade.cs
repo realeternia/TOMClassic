@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using ConfigDatas;
 using ControlPlus;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Items;
 using TaleofMonsters.Datas.Others;
@@ -13,7 +15,7 @@ using TaleofMonsters.Forms.Items.Regions;
 
 namespace TaleofMonsters.Forms.Pops
 {
-    internal partial class PopBuildUpgrade : Form
+    internal partial class PopBuildUpgrade : BasePanel
     {
         private int equipId;
         private VirtualRegion vRegion;
@@ -22,7 +24,8 @@ namespace TaleofMonsters.Forms.Pops
         public PopBuildUpgrade()
         {
             InitializeComponent();
-            FormBorderStyle = FormBorderStyle.None;
+            DoubleBuffered = true;
+            bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
             vRegion = new VirtualRegion(this);
             vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
@@ -80,11 +83,13 @@ namespace TaleofMonsters.Forms.Pops
 
         }
 
-        public static void Show(int id)
+        public static void Show(int id, BasePanel p)
         {
             PopBuildUpgrade mb = new PopBuildUpgrade();
             mb.equipId = id;
-            mb.ShowDialog();
+            mb.ParentPanel = p;
+            PanelManager.DealPanel(mb);
+            p.SetBlacken(true);
         }
 
         private void buttonBuy1_Click(object sender, EventArgs e)
@@ -98,7 +103,7 @@ namespace TaleofMonsters.Forms.Pops
             
             if (!UserProfile.InfoBag.CheckResource(need.ToArray()))
             {
-             //   parent.AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughResource), "Red");
+                AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughResource), "Red");
                 return;
             }
 
@@ -112,7 +117,7 @@ namespace TaleofMonsters.Forms.Pops
             var equipConfig = ConfigDatas.ConfigData.GetEquipConfig(equipId);
             if (UserProfile.InfoBag.GetItemCount(equipConfig.ComposeItemId[0]) <= 0)
             {
-             //   AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughItems), "Red");
+                AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughItems), "Red");
                 return;
             }
             UserProfile.InfoBag.DeleteItem(equipConfig.ComposeItemId[0], 1);
@@ -125,12 +130,18 @@ namespace TaleofMonsters.Forms.Pops
             var equipConfig = ConfigDatas.ConfigData.GetEquipConfig(equipId);
             if (UserProfile.InfoBag.GetItemCount(equipConfig.ComposeItemId[1]) <= 0)
             {
-                //   AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughItems), "Red");
+                   AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughItems), "Red");
                 return;
             }
             UserProfile.InfoBag.DeleteItem(equipConfig.ComposeItemId[1], 1);
             UserProfile.InfoEquip.AddExp(equipId, 300);
             Invalidate();
+        }
+
+        private void bitmapButtonClose_Click(object sender, EventArgs e)
+        {
+            Close();
+            ParentPanel.SetBlacken(false);
         }
     }
 }
