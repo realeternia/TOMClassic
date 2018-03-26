@@ -22,6 +22,9 @@ namespace TaleofMonsters.Forms
         {
             base.Init(width, height);
 
+            if (ParentPanel != null)
+                Location = new Point(ParentPanel.Location.X + ParentPanel.Width, ParentPanel.Location.Y);
+
             listView1.OwnerDraw = true;
             listView1.DrawItem += ListView1_DrawItem;
             AddText("获得卡牌", MemPlayerRecordTypes.CardGet, Color.White, "tsk7");

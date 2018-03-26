@@ -6,7 +6,7 @@ namespace TaleofMonsters.Datas.User
     public class InfoRecord
     {
         [FieldIndex(Index = 1)] public Dictionary<int, int> Records;
-        [FieldIndex(Index = 2)] public uint[] Flags; //��λ�棬10x32
+        [FieldIndex(Index = 2)] public uint[] Flags; //标记值10x32
 
         public InfoRecord()
         {

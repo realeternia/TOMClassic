@@ -46,24 +46,24 @@ namespace TaleofMonsters.Forms
             bitmapButtonSelect.IconXY = new Point(8, 5);
             bitmapButtonSelect.TextOffX = 8;
 
-            selectPanel = new NLSelectPanel(8, 38, 154, 400, this);
+            selectPanel = new NLSelectPanel(8, 38, 104, 494, this);
             selectPanel.ItemHeight = 35;
             selectPanel.SelectIndexChanged += selectPanel_SelectedIndexChanged;
             selectPanel.DrawCell += selectPanel_DrawCell;
 
-            this.nlPageSelector1 = new NLPageSelector(this, 10, 321, 150);
+            this.nlPageSelector1 = new NLPageSelector(this, 10, 385, 150);
             nlPageSelector1.PageChange += nlPageSelector1_PageChange;
 
-            jobDes = new ColorWordRegion(180, 70, 320, new Font("宋体", 10 * 1.33f, GraphicsUnit.Pixel), Color.White);
+            jobDes = new ColorWordRegion(130, 70, 220, new Font("宋体", 10 * 1.33f, GraphicsUnit.Pixel), Color.White);
 
             vRegion = new VirtualRegion(this);
-            PictureRegion region = new PictureRegion(1, 178, 266, 48, 48, PictureRegionCellType.HeroSkill, 0);
+            PictureRegion region = new PictureRegion(1, 128, 360, 48, 48, PictureRegionCellType.HeroSkill, 0);
             region.AddDecorator(new RegionBorderDecorator(Color.DodgerBlue));
             vRegion.AddRegion(region);
 
-            vRegion.AddRegion(new PictureRegion(2, 238, 266, 48, 48, PictureRegionCellType.Card, 0));
-            vRegion.AddRegion(new PictureRegion(3, 298, 266, 48, 48, PictureRegionCellType.Card, 0));
-            vRegion.AddRegion(new PictureRegion(4, 358, 266, 48, 48, PictureRegionCellType.Card, 0));
+            vRegion.AddRegion(new PictureRegion(2, 178, 360, 48, 48, PictureRegionCellType.Card, 0));
+            vRegion.AddRegion(new PictureRegion(3, 238, 360, 48, 48, PictureRegionCellType.Card, 0));
+            vRegion.AddRegion(new PictureRegion(4, 298, 360, 48, 48, PictureRegionCellType.Card, 0));
             vRegion.RegionEntered += VRegionRegionEntered;
             vRegion.RegionLeft += VRegionRegionLeft;
         }
@@ -71,6 +71,9 @@ namespace TaleofMonsters.Forms
         public override void Init(int width, int height)
         {
             base.Init(width, height);
+            if (ParentPanel != null)
+                Location = new Point(ParentPanel.Location.X + ParentPanel.Width, ParentPanel.Location.Y);
+
             jobIdList = new List<int>();
             foreach (var jobConfig in ConfigData.JobDict.Values)
             {
@@ -78,14 +81,14 @@ namespace TaleofMonsters.Forms
                     continue;
                 jobIdList.Add(jobConfig.Id);
             }
-            nlPageSelector1.TotalPage = (jobIdList.Count + 7) / 8;
+            nlPageSelector1.TotalPage = (jobIdList.Count + 7) / 10;
             RefreshInfo();
         }
 
         private void RefreshInfo()
         {
             var datas = new List<int>();
-            for (int i = baseid; i < Math.Min(baseid + 8, jobIdList.Count); i++)
+            for (int i = baseid; i < Math.Min(baseid + 10, jobIdList.Count); i++)
                 datas.Add(jobIdList[i]);
             selectPanel.AddContent(datas);
             selectPanel.SelectIndex = 0;
@@ -138,10 +141,10 @@ namespace TaleofMonsters.Forms
         private void selectPanel_DrawCell(Graphics g, int info, int xOff, int yOff, bool inMouseOn, bool isTarget, bool onlyBorder)
         {
             if (isTarget)
-                g.FillRectangle(Brushes.DarkGreen, xOff, yOff, 154, 35);
+                g.FillRectangle(Brushes.DarkGreen, xOff, yOff, 104, 35);
             else if (inMouseOn)
-                g.FillRectangle(Brushes.DarkCyan, xOff, yOff, 154, 35);
-            g.DrawRectangle(Pens.Thistle, 1 + xOff, yOff, 154 - 2, 35 - 4);
+                g.FillRectangle(Brushes.DarkCyan, xOff, yOff, 104, 35);
+            g.DrawRectangle(Pens.Thistle, 1 + xOff, yOff, 104 - 2, 35 - 4);
 
             if (!onlyBorder)
             {
@@ -149,16 +152,16 @@ namespace TaleofMonsters.Forms
                 var img = HSIcons.GetIconsByEName("job" + jobConfig.JobIndex);
                 g.DrawImage(img, 14 + xOff, 2 + yOff, 28, 28);
                 Font font = new Font("微软雅黑", 11.25F * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-                g.DrawString(jobConfig.Name, font, Brushes.White, 58 + xOff, 6 + yOff);
+                g.DrawString(jobConfig.Name, font, Brushes.White, 50 + xOff, 6 + yOff);
                 font.Dispose();
 
                 if (jobConfig.LevelNeed > UserProfile.Profile.InfoBasic.Level)
                 {
                     Brush b = new SolidBrush(Color.FromArgb(150, Color.Black));
-                    g.FillRectangle(b, xOff, yOff, 154, selectPanel.ItemHeight);
+                    g.FillRectangle(b, xOff, yOff, 104, selectPanel.ItemHeight);
 
                     var lockIcon = HSIcons.GetIconsByEName("oth4");
-                    g.DrawImage(lockIcon, 65 + xOff, 6 + yOff, 24, 24);
+                    g.DrawImage(lockIcon, 40 + xOff, 6 + yOff, 24, 24);
                 }
             }
        
@@ -222,29 +225,29 @@ namespace TaleofMonsters.Forms
             {
                 var jobConfig = ConfigData.GetJobConfig(selectJobId);
                 Font font1 = new Font("宋体", 12 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-                e.Graphics.DrawString(jobConfig.Name, font1, Brushes.Gold, 180, 45);
+                e.Graphics.DrawString(jobConfig.Name, font1, Brushes.Gold, 130, 45);
                 font1.Dispose();
 
                 Font fontDes = new Font("宋体", 10 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-                e.Graphics.DrawString("领导", fontDes, Brushes.White, 180, 175);
-                e.Graphics.DrawString(GetStarText(jobConfig.EnergyRate[0] / 8 + 1), fontDes, Brushes.Gold, 210, 175);
-                e.Graphics.DrawString("力量", fontDes, Brushes.White, 180, 195);
-                e.Graphics.DrawString(GetStarText(jobConfig.EnergyRate[1] / 8 + 1), fontDes, Brushes.Red, 210, 195);
-                e.Graphics.DrawString("魔力", fontDes, Brushes.White, 180, 215);
-                e.Graphics.DrawString(GetStarText(jobConfig.EnergyRate[2] / 8 + 1), fontDes, Brushes.Blue, 210, 215);
+                e.Graphics.DrawString("领导", fontDes, Brushes.White, 130, 274);
+                e.Graphics.DrawString(GetStarText(jobConfig.EnergyRate[0] / 8 + 1), fontDes, Brushes.Gold, 170, 274);
+                e.Graphics.DrawString("力量", fontDes, Brushes.White, 130, 294);
+                e.Graphics.DrawString(GetStarText(jobConfig.EnergyRate[1] / 8 + 1), fontDes, Brushes.Red, 170, 294);
+                e.Graphics.DrawString("魔力", fontDes, Brushes.White, 130, 314);
+                e.Graphics.DrawString(GetStarText(jobConfig.EnergyRate[2] / 8 + 1), fontDes, Brushes.Blue, 170, 314);
                 fontDes.Dispose();
             }
 
-            e.Graphics.DrawRectangle(Pens.DodgerBlue, 8, 39, 153, 279);
-            e.Graphics.DrawRectangle(Pens.DodgerBlue, 170, 38, 330, 125);
-            e.Graphics.DrawRectangle(Pens.DodgerBlue, 170, 168, 330, 86);
-            e.Graphics.DrawRectangle(Pens.DodgerBlue, 170, 259, 330, 59);
+            e.Graphics.DrawRectangle(Pens.DodgerBlue, 8, 39, 103, 279);
+            e.Graphics.DrawRectangle(Pens.DodgerBlue, 120, 38, 230, 219);
+            e.Graphics.DrawRectangle(Pens.DodgerBlue, 120, 262, 230, 86);
+            e.Graphics.DrawRectangle(Pens.DodgerBlue, 120, 353, 230, 59);
         }
 
         private void nlPageSelector1_PageChange(int pg)
         {
             pageid = pg;
-            baseid = pageid * 8;
+            baseid = pageid * 10;
             RefreshInfo();
         }
 

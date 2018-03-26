@@ -32,7 +32,7 @@ namespace TaleofMonsters.Forms
         {
             this.listView1 = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.bitmapButtonClose = new BitmapButton();
+            this.bitmapButtonClose = new ControlPlus.BitmapButton();
             this.SuspendLayout();
             // 
             // listView1
@@ -48,7 +48,7 @@ namespace TaleofMonsters.Forms
             this.listView1.Location = new System.Drawing.Point(12, 47);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(280, 443);
+            this.listView1.Size = new System.Drawing.Size(280, 393);
             this.listView1.TabIndex = 40;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -71,18 +71,21 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
             this.bitmapButtonClose.TabIndex = 39;
             this.bitmapButtonClose.TextOffX = 0;
+            this.bitmapButtonClose.TipText = null;
             this.bitmapButtonClose.UseVisualStyleBackColor = true;
             this.bitmapButtonClose.Click += new System.EventHandler(this.bitmapButtonClose_Click);
             // 
-            // UserForm
+            // PlayerHistoryForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.bitmapButtonClose);
-            this.Name = "UserForm";
-            this.Size = new System.Drawing.Size(303, 506);
+            this.Name = "PlayerHistoryForm";
+            this.Size = new System.Drawing.Size(303, 456);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.PlayerHistoryForm_Paint);
+            this.Controls.SetChildIndex(this.bitmapButtonClose, 0);
+            this.Controls.SetChildIndex(this.listView1, 0);
             this.ResumeLayout(false);
 
         }

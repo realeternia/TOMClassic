@@ -35,7 +35,7 @@ namespace TaleofMonsters.Forms
         public override void Init(int width, int height)
         {
             base.Init(width, height);
-
+            Location = new Point(Location.X - 303/2, Location.Y); //空出右边historyform
             show = true;
         }
 
@@ -126,12 +126,16 @@ namespace TaleofMonsters.Forms
                 return;
             }
 
-            PanelManager.DealPanel(new SelectJobForm());
+            var jobForm = new SelectJobForm();
+            jobForm.ParentPanel = this;
+            PanelManager.DealPanel(jobForm);
         }
 
         private void bitmapButtonHistory_Click(object sender, EventArgs e)
         {
-            PanelManager.DealPanel(new PlayerHistoryForm());
+            var historyForm = new PlayerHistoryForm();
+            historyForm.ParentPanel = this;
+            PanelManager.DealPanel(historyForm);
         }
     }
 }
