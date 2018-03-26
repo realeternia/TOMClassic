@@ -30,9 +30,9 @@ namespace TaleofMonsters.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.colorLabel1 = new ColorLabel();
-            this.bitmapButtonC1 = new BitmapButton();
-            this.bitmapButtonClose = new BitmapButton();
+            this.colorLabel1 = new ControlPlus.ColorLabel();
+            this.bitmapButtonC1 = new ControlPlus.BitmapButton();
+            this.bitmapButtonClose = new ControlPlus.BitmapButton();
             this.SuspendLayout();
             // 
             // colorLabel1
@@ -43,8 +43,8 @@ namespace TaleofMonsters.Forms
             this.colorLabel1.Name = "colorLabel1";
             this.colorLabel1.Size = new System.Drawing.Size(326, 61);
             this.colorLabel1.TabIndex = 37;
-            this.colorLabel1.Text = "|通过点击下方|#0033cc|旋转||可以花费|#ff3300|一些金币||启动转盘。\r\n|转盘的光圈最后会停留在目标格，玩家可以获得|#339900|对应道具" +
-    "||。\r\n#ff0000|GOOD LUCK!";
+            this.colorLabel1.Text = "|通过点击下方|#0033cc|旋转||可以花费|#ff3300|一些金币||启动转盘。|n|转盘的光圈最后会停留在目标格，玩家可以获得|#339900|对应道具" +
+    "||。|n\r\n#ff0000|GOOD LUCK!";
             // 
             // bitmapButtonC1
             // 
@@ -62,6 +62,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonC1.Tag = "1";
             this.bitmapButtonC1.Text = "旋转";
             this.bitmapButtonC1.TextOffX = 0;
+            this.bitmapButtonC1.TipText = null;
             this.bitmapButtonC1.UseVisualStyleBackColor = true;
             this.bitmapButtonC1.Click += new System.EventHandler(this.bitmapButtonC1_Click);
             // 
@@ -79,6 +80,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
             this.bitmapButtonClose.TabIndex = 39;
             this.bitmapButtonClose.TextOffX = 0;
+            this.bitmapButtonClose.TipText = null;
             this.bitmapButtonClose.UseVisualStyleBackColor = true;
             this.bitmapButtonClose.Click += new System.EventHandler(this.bitmapButtonClose_Click);
             // 
@@ -92,6 +94,9 @@ namespace TaleofMonsters.Forms
             this.Name = "TreasureWheelForm";
             this.Size = new System.Drawing.Size(350, 408);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.TreasureWheelForm_Paint);
+            this.Controls.SetChildIndex(this.bitmapButtonC1, 0);
+            this.Controls.SetChildIndex(this.colorLabel1, 0);
+            this.Controls.SetChildIndex(this.bitmapButtonClose, 0);
             this.ResumeLayout(false);
 
         }

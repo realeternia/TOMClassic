@@ -30,10 +30,10 @@ namespace TaleofMonsters.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.bitmapButtonFresh = new BitmapButton();
-            this.bitmapButtonRefresh = new BitmapButton();
-            this.bitmapButtonClose = new BitmapButton();
-            this.bitmapButtonDouble = new BitmapButton();
+            this.bitmapButtonFresh = new ControlPlus.BitmapButton();
+            this.bitmapButtonRefresh = new ControlPlus.BitmapButton();
+            this.bitmapButtonClose = new ControlPlus.BitmapButton();
+            this.bitmapButtonDouble = new ControlPlus.BitmapButton();
             this.SuspendLayout();
             // 
             // bitmapButtonFresh
@@ -50,6 +50,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonFresh.Size = new System.Drawing.Size(40, 40);
             this.bitmapButtonFresh.TabIndex = 48;
             this.bitmapButtonFresh.TextOffX = 0;
+            this.bitmapButtonFresh.TipText = "刷新所有素材";
             this.bitmapButtonFresh.UseVisualStyleBackColor = true;
             this.bitmapButtonFresh.Click += new System.EventHandler(this.bitmapButtonFresh_Click);
             // 
@@ -67,6 +68,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonRefresh.Size = new System.Drawing.Size(40, 40);
             this.bitmapButtonRefresh.TabIndex = 47;
             this.bitmapButtonRefresh.TextOffX = 0;
+            this.bitmapButtonRefresh.TipText = "增加一种素材";
             this.bitmapButtonRefresh.UseVisualStyleBackColor = true;
             this.bitmapButtonRefresh.Click += new System.EventHandler(this.bitmapButtonRefresh_Click);
             // 
@@ -84,6 +86,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
             this.bitmapButtonClose.TabIndex = 23;
             this.bitmapButtonClose.TextOffX = 0;
+            this.bitmapButtonClose.TipText = null;
             this.bitmapButtonClose.UseVisualStyleBackColor = true;
             this.bitmapButtonClose.Click += new System.EventHandler(this.pictureBoxCancel_Click);
             // 
@@ -101,6 +104,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonDouble.Size = new System.Drawing.Size(40, 40);
             this.bitmapButtonDouble.TabIndex = 49;
             this.bitmapButtonDouble.TextOffX = 0;
+            this.bitmapButtonDouble.TipText = "素材数量翻倍";
             this.bitmapButtonDouble.UseVisualStyleBackColor = true;
             this.bitmapButtonDouble.Click += new System.EventHandler(this.bitmapButtonDouble_Click);
             // 
@@ -116,6 +120,10 @@ namespace TaleofMonsters.Forms
             this.Name = "BuyPieceForm";
             this.Size = new System.Drawing.Size(401, 388);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.BuyPieceForm_Paint);
+            this.Controls.SetChildIndex(this.bitmapButtonClose, 0);
+            this.Controls.SetChildIndex(this.bitmapButtonRefresh, 0);
+            this.Controls.SetChildIndex(this.bitmapButtonFresh, 0);
+            this.Controls.SetChildIndex(this.bitmapButtonDouble, 0);
             this.ResumeLayout(false);
 
         }

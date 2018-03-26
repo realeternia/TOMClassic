@@ -43,7 +43,7 @@ namespace ControlPlus
         private bool _OffsetPressedContent = true;
         private BtnState btnState = BtnState.Normal;
         private bool CapturingMouse = false;
-        private ToolTip tooltip = new ToolTip();
+        private ImageToolTip tooltip = new ImageToolTip();
 
         #endregion
         #region Public Properties
@@ -128,6 +128,8 @@ namespace ControlPlus
 
         public bool NoUseDrawNine { get; set; }
 
+        public string TipText { get; set; }
+
         #endregion
         /// <summary>
         /// Required designer variable.
@@ -141,7 +143,6 @@ namespace ControlPlus
             // This call is required by the Windows.Forms Form Designer.
             InitializeComponent();
             // TODO: Add any initialization after the InitComponent call			
-            tooltip.BackColor = Color.FromArgb(215, 210, 200);
             IconXY = new Point(0);
             //LoadGraphics();
         }
@@ -557,7 +558,8 @@ namespace ControlPlus
         protected override void OnMouseEnter(EventArgs e)
         {
             base.OnMouseEnter(e);
-          //  tooltip.Show(this.Text, this, this.Width + 2, 5, 5000);
+            if (!string.IsNullOrEmpty(TipText))
+                tooltip.Show(this.TipText, this, this.Width + 2, 5);
         }
         /// <summary>
         /// Enable/Disable Event:

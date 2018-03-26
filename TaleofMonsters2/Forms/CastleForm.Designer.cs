@@ -48,6 +48,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
             this.bitmapButtonClose.TabIndex = 39;
             this.bitmapButtonClose.TextOffX = 0;
+            this.bitmapButtonClose.TipText = null;
             this.bitmapButtonClose.UseVisualStyleBackColor = true;
             this.bitmapButtonClose.Click += new System.EventHandler(this.bitmapButtonClose_Click);
             // 
@@ -65,6 +66,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonBuild.Size = new System.Drawing.Size(40, 40);
             this.bitmapButtonBuild.TabIndex = 40;
             this.bitmapButtonBuild.TextOffX = 0;
+            this.bitmapButtonBuild.TipText = "查看所有建筑";
             this.bitmapButtonBuild.UseVisualStyleBackColor = true;
             this.bitmapButtonBuild.Click += new System.EventHandler(this.bitmapButtonBuild_Click);
             // 
@@ -77,6 +79,8 @@ namespace TaleofMonsters.Forms
             this.Name = "CastleForm";
             this.Size = new System.Drawing.Size(753, 485);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.CastleForm_Paint);
+            this.Controls.SetChildIndex(this.bitmapButtonClose, 0);
+            this.Controls.SetChildIndex(this.bitmapButtonBuild, 0);
             this.ResumeLayout(false);
 
         }

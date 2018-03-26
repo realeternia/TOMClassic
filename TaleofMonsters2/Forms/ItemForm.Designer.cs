@@ -30,8 +30,8 @@ namespace TaleofMonsters.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.bitmapButtonClose = new BitmapButton();
-            this.bitmapButtonSort = new BitmapButton();
+            this.bitmapButtonClose = new ControlPlus.BitmapButton();
+            this.bitmapButtonSort = new ControlPlus.BitmapButton();
             this.SuspendLayout();
             // 
             // bitmapButtonClose
@@ -39,13 +39,16 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonClose.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bitmapButtonClose.IconImage = null;
+            this.bitmapButtonClose.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonClose.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonClose.ImageNormal = null;
             this.bitmapButtonClose.Location = new System.Drawing.Point(303, 6);
             this.bitmapButtonClose.Name = "bitmapButtonClose";
+            this.bitmapButtonClose.NoUseDrawNine = false;
             this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
             this.bitmapButtonClose.TabIndex = 25;
             this.bitmapButtonClose.TextOffX = 0;
+            this.bitmapButtonClose.TipText = null;
             this.bitmapButtonClose.UseVisualStyleBackColor = true;
             this.bitmapButtonClose.Click += new System.EventHandler(this.pictureBoxClose_Click);
             // 
@@ -54,13 +57,16 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonSort.BorderColor = System.Drawing.Color.DarkBlue;
             this.bitmapButtonSort.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bitmapButtonSort.IconImage = null;
+            this.bitmapButtonSort.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonSort.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonSort.ImageNormal = null;
             this.bitmapButtonSort.Location = new System.Drawing.Point(14, 362);
             this.bitmapButtonSort.Name = "bitmapButtonSort";
+            this.bitmapButtonSort.NoUseDrawNine = false;
             this.bitmapButtonSort.Size = new System.Drawing.Size(28, 28);
             this.bitmapButtonSort.TabIndex = 33;
             this.bitmapButtonSort.TextOffX = 0;
+            this.bitmapButtonSort.TipText = "整理背包";
             this.bitmapButtonSort.UseVisualStyleBackColor = true;
             this.bitmapButtonSort.Click += new System.EventHandler(this.bitmapButtonSort_Click);
             // 
@@ -77,6 +83,8 @@ namespace TaleofMonsters.Forms
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ItemView_MouseClick);
             this.MouseLeave += new System.EventHandler(this.ItemForm_MouseLeave);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ItemView_MouseMove);
+            this.Controls.SetChildIndex(this.bitmapButtonSort, 0);
+            this.Controls.SetChildIndex(this.bitmapButtonClose, 0);
             this.ResumeLayout(false);
 
         }

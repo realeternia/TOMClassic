@@ -49,6 +49,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
             this.bitmapButtonClose.TabIndex = 25;
             this.bitmapButtonClose.TextOffX = 0;
+            this.bitmapButtonClose.TipText = null;
             this.bitmapButtonClose.UseVisualStyleBackColor = true;
             this.bitmapButtonClose.Click += new System.EventHandler(this.pictureBoxClose_Click);
             // 
@@ -66,6 +67,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonJob.Size = new System.Drawing.Size(32, 32);
             this.bitmapButtonJob.TabIndex = 26;
             this.bitmapButtonJob.TextOffX = 0;
+            this.bitmapButtonJob.TipText = "切换职业";
             this.bitmapButtonJob.UseVisualStyleBackColor = true;
             this.bitmapButtonJob.Click += new System.EventHandler(this.bitmapButtonJob_Click);
             // 
@@ -83,6 +85,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonHistory.Size = new System.Drawing.Size(32, 32);
             this.bitmapButtonHistory.TabIndex = 27;
             this.bitmapButtonHistory.TextOffX = 0;
+            this.bitmapButtonHistory.TipText = "查看游戏记录";
             this.bitmapButtonHistory.UseVisualStyleBackColor = true;
             this.bitmapButtonHistory.Click += new System.EventHandler(this.bitmapButtonHistory_Click);
             // 
@@ -97,6 +100,9 @@ namespace TaleofMonsters.Forms
             this.Name = "RoleForm";
             this.Size = new System.Drawing.Size(325, 456);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.RoleForm_Paint);
+            this.Controls.SetChildIndex(this.bitmapButtonClose, 0);
+            this.Controls.SetChildIndex(this.bitmapButtonJob, 0);
+            this.Controls.SetChildIndex(this.bitmapButtonHistory, 0);
             this.ResumeLayout(false);
 
         }
