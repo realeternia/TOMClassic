@@ -36,10 +36,10 @@ namespace TaleofMonsters.Forms.CMain
             this.DoubleBuffered = true;
             this.Name = "PopMenuDeck";
             this.Size = new System.Drawing.Size(154, 215);
-            this.MouseLeave += new System.EventHandler(this.PopMenuDeck_MouseLeave);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.PopMenuDeck_Paint);
-            this.Click += new System.EventHandler(this.PopMenuDeck_Click);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PopMenuDeck_MouseMove);
+            this.MouseLeave += new System.EventHandler(this.PopMenuBase_MouseLeave);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.PopMenuBase_Paint);
+            this.Click += new System.EventHandler(this.PopMenuBase_Click);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PopMenuBase_MouseMove);
             this.ResumeLayout(false);
 
         }

@@ -10,6 +10,7 @@ namespace TaleofMonsters.Forms.CMain
         public PopMenuEquip()
         {
             InitializeComponent();
+            columnCount = 2; //一行2个
         }
 
         protected override void OnClick(MenuItemData target)
