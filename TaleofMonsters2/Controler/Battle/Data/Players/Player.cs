@@ -152,8 +152,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 }
             }
 
-            var addon = EquipBook.GetVirtualEquips(equipList);
-            Modifier.UpdateInfo(addon, monsterBoostItemList);
+            foreach (var equip in equipList)
+                Modifier.UpdateInfo(equip.GetEquipAddons(), equip.CommonSkillList);
 
             if (HeroSkillList.Count > 3)
                 HeroSkillList = HeroSkillList.GetRange(HeroSkillList.Count - 3, 3); //最多保留3个技能

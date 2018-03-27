@@ -103,7 +103,13 @@ namespace TaleofMonsters.Forms
 
             var equipData = UserProfile.InfoEquip.GetEquipOn(id);
             if (equipData.BaseId > 0)
+            {
+                var equipConfig = ConfigData.GetEquipConfig(equipData.BaseId);
                 g.DrawImage(EquipBook.GetEquipImage(equipData.BaseId), x, y, 64, 64);
+                var pen = new Pen(Color.FromName(HSTypes.I2QualityColor(equipConfig.Quality)), 2);
+                g.DrawRectangle(pen, x, y, 64, 64);
+                pen.Dispose();
+            }
 
             if (!UserProfile.InfoEquip.CanEquip(0, id))
                 g.DrawImage(HSIcons.GetIconsByEName("wrong"), x + 8, y + 8, 48, 48);

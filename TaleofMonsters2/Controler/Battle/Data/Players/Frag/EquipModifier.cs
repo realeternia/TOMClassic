@@ -2,7 +2,6 @@
 using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Datas;
-using TaleofMonsters.Datas.Equips;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 {
@@ -11,9 +10,14 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
     /// </summary>
     internal class EquipModifier
     {
-        private Equip equipAddon;//来自装备的属性加成
+        public class EquipModifyState
+        {
+            public int Id;
+            public int Value;
+        }
 
-        private List<int> monsterBoostItemList;
+        private List<EquipModifyState> addonList;
+        private List<RLIdValue> skillList;
 
         public int CoreId { get; set; }
         public int Weapon1Id { get; set; }
@@ -23,13 +27,21 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 
         public EquipModifier()
         {
-            equipAddon = new Equip();
+            addonList = new List<EquipModifyState>();
+            skillList = new List<RLIdValue>();
         }
 
-        public void UpdateInfo(Equip equip, List<int> itemList)
+        public void UpdateInfo(List<EquipModifyState> itemList, List<RLIdValue> skills)
         {
-            equipAddon = equip;
-            monsterBoostItemList = itemList;
+            foreach (var rlIdValue in itemList)
+            {
+                var checkItem = addonList.Find(p => p.Id == rlIdValue.Id);
+                if (checkItem != null)
+                    checkItem.Value += rlIdValue.Value;
+                else
+                    addonList.Add(new EquipModifyState {Id = rlIdValue.Id, Value = rlIdValue.Value});
+            }
+            skillList.AddRange(skills);
         }
 
         public void CheckMonsterEvent(bool isAdd, LiveMonster mon)
@@ -37,64 +49,48 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             if (!isAdd)
                 return;
 
+            int type = 1;
+            if (mon.Type != (int)CardTypeSub.KingTower && mon.Type != (int) CardTypeSub.NormalTower)
+                type = 2;
+
+            foreach (var equipModifyState in addonList)
+            {
+                var addonConfig = ConfigData.GetEquipAddonConfig(equipModifyState.Id);
+                if (addonConfig.Type != type)
+                    continue;
+
+                if(addonConfig.PickMethod != null && !addonConfig.PickMethod(mon))
+                    continue;
+
+                if (addonConfig.AtkP > 0)
+                    mon.Atk += addonConfig.AtkP;
+                if (addonConfig.VitP > 0)
+                {
+                    mon.MaxHp += addonConfig.VitP;
+                    mon.AddHp(addonConfig.VitP); //顺便把hp也加上
+                }
+                if (addonConfig.Def > 0)
+                    mon.Def += addonConfig.Def;
+                if (addonConfig.Mag > 0)
+                    mon.Mag += addonConfig.Mag;
+                if (addonConfig.Spd > 0)
+                    mon.Spd += addonConfig.Spd;
+                if (addonConfig.Hit > 0)
+                    mon.Hit += addonConfig.Hit;
+                if (addonConfig.Dhit > 0)
+                    mon.Dhit += addonConfig.Dhit;
+                if (addonConfig.Crt > 0)
+                    mon.Crt += addonConfig.Crt;
+                if (addonConfig.Luk > 0)
+                    mon.Luk += addonConfig.Luk;
+                if (addonConfig.Range > 0)
+                    mon.Avatar.Range += addonConfig.Range;
+            }
+
             if (mon.Type == (int)CardTypeSub.KingTower)
             {
-                if (equipAddon.Atk > 0)
-                    mon.Atk += equipAddon.Atk;    
-                if (equipAddon.Hp > 0)
-                {
-                    mon.MaxHp += equipAddon.Hp;
-                    mon.AddHp(equipAddon.Hp);//顺便把hp也加上
-                }
-                if (equipAddon.Def > 0)
-                    mon.Def += equipAddon.Def;
-                if (equipAddon.Mag > 0)
-                    mon.Mag += equipAddon.Mag;
-                if (equipAddon.Spd > 0)
-                    mon.Spd += equipAddon.Spd;
-                if (equipAddon.Hit > 0)
-                    mon.Hit += equipAddon.Hit;
-                if (equipAddon.Dhit > 0)
-                    mon.Dhit += equipAddon.Dhit;
-                if (equipAddon.Crt > 0)
-                    mon.Crt += equipAddon.Crt;
-                if (equipAddon.Luk > 0)
-                    mon.Luk += equipAddon.Luk;
-                if (equipAddon.Range > 0)
-                    mon.Avatar.Range += equipAddon.Range;
-                if (equipAddon.CommonSkillList.Count > 0)
-                    mon.SkillManager.AddSkillBeforeInit(equipAddon.CommonSkillList, SkillSourceTypes.Equip);
-            }
-            else if (mon.Type == (int) CardTypeSub.NormalTower)
-            {
-                if (equipAddon.Atk > 0)
-                    mon.Atk += (int)(equipAddon.Atk * 0.5);
-                if (equipAddon.Hp > 0)
-                {
-                    mon.MaxHp += (int)(equipAddon.Hp * 0.5);
-                    mon.AddHp(equipAddon.Hp * 0.5);//顺便把hp也加上
-                }
-            }
-            else
-            {
-                if (monsterBoostItemList != null)
-                {
-                    foreach (var monId in monsterBoostItemList)
-                    {
-                        var equipConfig = ConfigData.GetEquipConfig(monId);
-                        if (equipConfig.PickMethod(mon))
-                        {
-                            if (equipConfig.MonsterAtk > 0)
-                                mon.Atk += mon.Atk*equipConfig.MonsterAtk/100;
-                            if (equipConfig.MonsterHp > 0)
-                            {
-                                var addon = mon.MaxHp*equipConfig.MonsterHp/100;
-                                mon.MaxHp += addon;
-                                mon.AddHp(addon); //顺便把hp也加上
-                            }
-                        }
-                    }
-                }
+                if (skillList.Count > 0)
+                    mon.SkillManager.AddSkillBeforeInit(skillList, SkillSourceTypes.Equip);
             }
         }
     }

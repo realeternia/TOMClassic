@@ -241,7 +241,7 @@
     }
     internal enum EquipAttrs
     {
-        AtkRate,
+        AtkRate = 1,
         HpRate,
         Spd,
         Range,

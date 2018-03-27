@@ -42,7 +42,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonSelect.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonSelect.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonSelect.ImageNormal = null;
-            this.bitmapButtonSelect.Location = new System.Drawing.Point(194, 413);
+            this.bitmapButtonSelect.Location = new System.Drawing.Point(208, 418);
             this.bitmapButtonSelect.Name = "bitmapButtonSelect";
             this.bitmapButtonSelect.NoUseDrawNine = false;
             this.bitmapButtonSelect.Size = new System.Drawing.Size(56, 30);
