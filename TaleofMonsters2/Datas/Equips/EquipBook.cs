@@ -62,29 +62,5 @@ namespace TaleofMonsters.Datas.Equips
             }
             return datas[MathTool.GetRandom(datas.Count)];
         }
-
-
-        public static Equip GetVirtualEquips(List<Equip> equipList)
-        {
-            var vEquip = new Equip();
-            foreach (var equip in equipList)
-            {
-                vEquip.Atk += equip.Atk;
-                vEquip.Hp += equip.Hp;
-                vEquip.Def += equip.Def;
-                vEquip.Mag += equip.Mag;
-                vEquip.Spd += equip.Spd;
-                vEquip.Hit += equip.Hit;
-                vEquip.Dhit += equip.Dhit;
-                vEquip.Crt += equip.Crt;
-                vEquip.Luk += equip.Luk;
-                vEquip.Range += equip.Range;
-                vEquip.MpRate += equip.MpRate;
-                vEquip.PpRate += equip.PpRate;
-                vEquip.LpRate += equip.LpRate;
-                vEquip.CommonSkillList.AddRange(equip.CommonSkillList);
-            }
-            return vEquip;
-        }
     }
 }

@@ -61,7 +61,7 @@ namespace TaleofMonsters.Datas.Equips
 
             var standardValue = CardAssistant.GetCardModify(3, level, (CardQualityTypes)equipConfig.Quality, 0);
             Atk = (int)(standardValue * (0 + equipConfig.AtkP*0.6) / 100); //200
-            Hp = (int)(standardValue * (0 + equipConfig.VitP*2.4) / 100 * 5); //200
+            Hp = (int)(standardValue * (0 + equipConfig.VitP*2.4)*5 / 100); //200
 
             Def = equipConfig.Def;
             Mag = equipConfig.Mag;
@@ -97,6 +97,10 @@ namespace TaleofMonsters.Datas.Equips
                 addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.Luk), Value = Luk });
             if (Range > 0)
                 addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.Range), Value = Range });
+
+            EquipConfig equipConfig = ConfigData.GetEquipConfig(TemplateId);
+            if (equipConfig.AttrId > 0)
+                addons.Add(new EquipModifier.EquipModifyState { Id = equipConfig.AttrId, Value = Atk });//todo 生命值参考atk会很小
             return addons;
         }
 

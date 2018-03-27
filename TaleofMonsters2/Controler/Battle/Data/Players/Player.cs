@@ -123,7 +123,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             if (jobConfig.SkillId > 0)
                 HeroSkillList.Add(jobConfig.SkillId);//添加职业技能
 
-            List<int> monsterBoostItemList = new List<int>();
             foreach (var equip in equipList)
             {
                 EquipConfig equipConfig = ConfigData.GetEquipConfig(equip.TemplateId);
@@ -132,8 +131,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
                 if (equipConfig.HeroSkillId > 0)
                     HeroSkillList.Add(equipConfig.HeroSkillId); //添加装备附带的技能
-                if (equipConfig.PickMethod != null)
-                    monsterBoostItemList.Add(equip.TemplateId);
                 if (equipConfig.Position == (int)EquipTypes.Core)
                     Modifier.CoreId = equipConfig.Id;
                 else if (equipConfig.Position == (int)EquipTypes.Wall)

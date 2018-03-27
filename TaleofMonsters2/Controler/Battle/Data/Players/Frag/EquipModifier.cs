@@ -44,6 +44,15 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             skillList.AddRange(skills);
         }
 
+        public int GetAttr(EquipAttrs type)
+        {
+            var target = addonList.Find(a => a.Id == (int) type);
+            if (target == null)
+                return 0;
+
+            return target.Value;
+        }
+
         public void CheckMonsterEvent(bool isAdd, LiveMonster mon)
         {
             if (!isAdd)
@@ -63,28 +72,28 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                     continue;
 
                 if (addonConfig.AtkP > 0)
-                    mon.Atk += addonConfig.AtkP;
+                    mon.Atk += (int)(addonConfig.AtkP * equipModifyState.Value);
                 if (addonConfig.VitP > 0)
                 {
-                    mon.MaxHp += addonConfig.VitP;
-                    mon.AddHp(addonConfig.VitP); //顺便把hp也加上
+                    mon.MaxHp += (int)(addonConfig.VitP * equipModifyState.Value);
+                    mon.AddHp((int)(addonConfig.VitP * equipModifyState.Value)); //顺便把hp也加上
                 }
                 if (addonConfig.Def > 0)
-                    mon.Def += addonConfig.Def;
+                    mon.Def += equipModifyState.Value;
                 if (addonConfig.Mag > 0)
-                    mon.Mag += addonConfig.Mag;
+                    mon.Mag += equipModifyState.Value;
                 if (addonConfig.Spd > 0)
-                    mon.Spd += addonConfig.Spd;
+                    mon.Spd += equipModifyState.Value;
                 if (addonConfig.Hit > 0)
-                    mon.Hit += addonConfig.Hit;
+                    mon.Hit += equipModifyState.Value;
                 if (addonConfig.Dhit > 0)
-                    mon.Dhit += addonConfig.Dhit;
+                    mon.Dhit += equipModifyState.Value;
                 if (addonConfig.Crt > 0)
-                    mon.Crt += addonConfig.Crt;
+                    mon.Crt += equipModifyState.Value;
                 if (addonConfig.Luk > 0)
-                    mon.Luk += addonConfig.Luk;
+                    mon.Luk += equipModifyState.Value;
                 if (addonConfig.Range > 0)
-                    mon.Avatar.Range += addonConfig.Range;
+                    mon.Avatar.Range += equipModifyState.Value;
             }
 
             if (mon.Type == (int)CardTypeSub.KingTower)

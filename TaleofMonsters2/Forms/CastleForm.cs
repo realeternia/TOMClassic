@@ -3,8 +3,10 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus;
+using TaleofMonsters.Controler.Battle.Data.Players.Frag;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
+using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Cards.Monsters;
 using TaleofMonsters.Datas.Equips;
 using TaleofMonsters.Datas.User;
@@ -166,40 +168,42 @@ namespace TaleofMonsters.Forms
             e.Graphics.FillRectangle(brush, new Rectangle(10, 35, 100, 160));
             brush.Dispose();
 
+            var modifier = new EquipModifier();
             var equipDataList = UserProfile.InfoEquip.GetValidEquipsList();
-            var vEquip = EquipBook.GetVirtualEquips(equipDataList);
+            foreach (var equip in equipDataList)
+                modifier.UpdateInfo(equip.GetEquipAddons(), equip.CommonSkillList);
 
             Font font3 = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             e.Graphics.DrawString(string.Format("攻击 {0:###}", heroData.Atk), font3, Brushes.White, 15, 40);
-            if(vEquip.Atk != 0)
-                e.Graphics.DrawString(string.Format("+{0:###}", vEquip.Atk), font3, Brushes.Lime, 70, 40);
+            if(modifier.GetAttr(EquipAttrs.AtkRate)!= 0)
+                e.Graphics.DrawString(string.Format("+{0:###}", modifier.GetAttr(EquipAttrs.AtkRate)), font3, Brushes.Lime, 70, 40);
             e.Graphics.DrawString(string.Format("生命 {0:###}", heroData.Hp), font3, Brushes.White, 15, 40+15);
-            if (vEquip.Hp != 0)
-                e.Graphics.DrawString(string.Format("+{0:###}", vEquip.Hp), font3, Brushes.Lime, 70, 40+15);
+            if (modifier.GetAttr(EquipAttrs.HpRate) != 0)
+                e.Graphics.DrawString(string.Format("+{0:###}", modifier.GetAttr(EquipAttrs.HpRate)), font3, Brushes.Lime, 70, 40+15);
             e.Graphics.DrawString(string.Format("射程 {0:###}", heroData.Range), font3, Brushes.White, 15, 40 + 30);
-            if (vEquip.Range != 0)
-                e.Graphics.DrawString(string.Format("+{0:###}", vEquip.Range), font3, Brushes.Lime, 70, 40 + 30);
+            if (modifier.GetAttr(EquipAttrs.Range) != 0)
+                e.Graphics.DrawString(string.Format("+{0:###}", modifier.GetAttr(EquipAttrs.Range)), font3, Brushes.Lime, 70, 40 + 30);
             e.Graphics.DrawString(string.Format("防御 {0:###}", heroData.Def), font3, Brushes.White, 15, 40 + 45);
-            if (vEquip.Def != 0)
-                e.Graphics.DrawString(string.Format("+{0:###}", vEquip.Def), font3, Brushes.Lime, 70, 40 + 45);
+            if (modifier.GetAttr(EquipAttrs.Def) != 0)
+                e.Graphics.DrawString(string.Format("+{0:###}", modifier.GetAttr(EquipAttrs.Def)), font3, Brushes.Lime, 70, 40 + 45);
             e.Graphics.DrawString(string.Format("魔力 {0:###}", heroData.Mag), font3, Brushes.White, 15, 40 + 60);
-            if (vEquip.Mag != 0)
-                e.Graphics.DrawString(string.Format("+{0:###}", vEquip.Mag), font3, Brushes.Lime, 70, 40 + 60);
+            if (modifier.GetAttr(EquipAttrs.Mag) != 0)
+                e.Graphics.DrawString(string.Format("+{0:###}", modifier.GetAttr(EquipAttrs.Mag)), font3, Brushes.Lime, 70, 40 + 60);
             e.Graphics.DrawString(string.Format("攻速 {0:###}", heroData.Spd), font3, Brushes.White, 15, 40 + 75);
-            if (vEquip.Spd != 0)
-                e.Graphics.DrawString(string.Format("+{0:###}", vEquip.Spd), font3, Brushes.Lime, 70, 40 + 75);
+            if (modifier.GetAttr(EquipAttrs.Spd) != 0)
+                e.Graphics.DrawString(string.Format("+{0:###}", modifier.GetAttr(EquipAttrs.Spd)), font3, Brushes.Lime, 70, 40 + 75);
             e.Graphics.DrawString(string.Format("命中 {0:###}", heroData.Hit), font3, Brushes.White, 15, 40 + 90);
-            if (vEquip.Hit != 0)
-                e.Graphics.DrawString(string.Format("+{0:###}", vEquip.Hit), font3, Brushes.Lime, 70, 40 + 90);
+            if (modifier.GetAttr(EquipAttrs.Hit) != 0)
+                e.Graphics.DrawString(string.Format("+{0:###}", modifier.GetAttr(EquipAttrs.Hit)), font3, Brushes.Lime, 70, 40 + 90);
             e.Graphics.DrawString(string.Format("回避 {0:###}", heroData.Dhit), font3, Brushes.White, 15, 40 + 105);
-            if (vEquip.Dhit != 0)
-                e.Graphics.DrawString(string.Format("+{0:###}", vEquip.Dhit), font3, Brushes.Lime, 70, 40 + 105);
+            if (modifier.GetAttr(EquipAttrs.Dhit) != 0)
+                e.Graphics.DrawString(string.Format("+{0:###}", modifier.GetAttr(EquipAttrs.Dhit)), font3, Brushes.Lime, 70, 40 + 105);
             e.Graphics.DrawString(string.Format("暴击 {0:###}", heroData.Crt), font3, Brushes.White, 15, 40 + 120);
-            if (vEquip.Crt != 0)
-                e.Graphics.DrawString(string.Format("+{0:###}", vEquip.Crt), font3, Brushes.Lime, 70, 40 + 120);
+            if (modifier.GetAttr(EquipAttrs.Crt) != 0)
+                e.Graphics.DrawString(string.Format("+{0:###}", modifier.GetAttr(EquipAttrs.Crt)), font3, Brushes.Lime, 70, 40 + 120);
             e.Graphics.DrawString(string.Format("幸运 {0:###}", heroData.Luk), font3, Brushes.White, 15, 40 + 135);
-            if (vEquip.Luk != 0)
-                e.Graphics.DrawString(string.Format("+{0:###}", vEquip.Luk), font3, Brushes.Lime, 70, 40 + 135);
+            if (modifier.GetAttr(EquipAttrs.Luk) != 0)
+                e.Graphics.DrawString(string.Format("+{0:###}", modifier.GetAttr(EquipAttrs.Luk)), font3, Brushes.Lime, 70, 40 + 135);
             font3.Dispose();
         }
 
