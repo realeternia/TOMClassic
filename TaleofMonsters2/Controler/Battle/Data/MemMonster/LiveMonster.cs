@@ -89,7 +89,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public int Crt { get; set; }
         public int Luk { get; set; }
 
-        public List<AttrModifyInfo> ModifyList { get; private set; }
+        public List<AttrModifyInfo> ModifyList { get; private set; } //属性加成和修改
         public int Cure { get { return Avatar.Cure; } }
         public double CrtDamAddRate { get; set; }
         public int MovRound { get; set; }
@@ -110,7 +110,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public int RealAtk { get; private set; }
 
-        public int RealMaxHp { get; private set; }
+        public int RealMaxHp { get; set; }
 
         public int RealDef { get; private set; }
 
@@ -596,7 +596,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             RefreshAttrs();
         }
 
-        private void RefreshAttrs()
+        public void RefreshAttrs()
         {
             RealAtk = Atk;
             RealDef = Def;

@@ -72,12 +72,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                     continue;
 
                 if (addonConfig.AtkP > 0)
-                    mon.Atk += (int)(addonConfig.AtkP * equipModifyState.Value);
+                    mon.Atk += (int)(equipModifyState.Value);
                 if (addonConfig.VitP > 0)
-                {
-                    mon.MaxHp += (int)(addonConfig.VitP * equipModifyState.Value);
-                    mon.AddHp((int)(addonConfig.VitP * equipModifyState.Value)); //顺便把hp也加上
-                }
+                    mon.MaxHp += (int)(equipModifyState.Value);
                 if (addonConfig.Def > 0)
                     mon.Def += equipModifyState.Value;
                 if (addonConfig.Mag > 0)
@@ -95,6 +92,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                 if (addonConfig.Range > 0)
                     mon.Avatar.Range += equipModifyState.Value;
             }
+            mon.RefreshAttrs();
+            if(mon.Hp != mon.MaxHp)
+                mon.HpBar.AddHp(mon.MaxHp - mon.Hp);
 
             if (mon.Type == (int)CardTypeSub.KingTower)
             {

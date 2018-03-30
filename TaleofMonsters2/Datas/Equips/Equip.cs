@@ -18,6 +18,7 @@ namespace TaleofMonsters.Datas.Equips
 
         public int Atk { get; set; }//实际的攻击力
         public int Hp { get; set; }
+        public int Attr { get; set; } //辅助属性
 
         public int Def { get; set; }
         public int Mag { get; set; }
@@ -62,6 +63,7 @@ namespace TaleofMonsters.Datas.Equips
             var standardValue = CardAssistant.GetCardModify(3, level, (CardQualityTypes)equipConfig.Quality, 0);
             Atk = (int)(standardValue * (0 + equipConfig.AtkP*0.6) / 100); //200
             Hp = (int)(standardValue * (0 + equipConfig.VitP*2.4)*5 / 100); //200
+            Attr = (int)(standardValue * (0 + equipConfig.Attr * 5) / 100); //200
 
             Def = equipConfig.Def;
             Mag = equipConfig.Mag;
@@ -100,7 +102,10 @@ namespace TaleofMonsters.Datas.Equips
 
             EquipConfig equipConfig = ConfigData.GetEquipConfig(TemplateId);
             if (equipConfig.AttrId > 0)
-                addons.Add(new EquipModifier.EquipModifyState { Id = equipConfig.AttrId, Value = Atk });//todo 生命值参考atk会很小
+            {
+                var attrConfig = ConfigData.GetEquipAddonConfig(equipConfig.AttrId);
+                addons.Add(new EquipModifier.EquipModifyState {Id = equipConfig.AttrId, Value = Math.Max(1, (int)(Attr* attrConfig.Attr))});
+            }
             return addons;
         }
 
@@ -124,18 +129,6 @@ namespace TaleofMonsters.Datas.Equips
                 foreach (var availId in equipConfig.SlotId)
                     availStr += ConfigData.GetEquipSlotConfig(availId).Name + " ";
                 tipData.AddTextNewLine(availStr, "Lime");
-            }
-            if (!string.IsNullOrEmpty(equipConfig.Des))
-            {
-                if (equipConfig.Des.Length > 15)
-                {
-                    tipData.AddTextNewLine(equipConfig.Des.Substring(0, 14), "Lime");
-                    tipData.AddTextNewLine(equipConfig.Des.Substring(14), "Lime");
-                }
-                else
-                {
-                    tipData.AddTextNewLine(equipConfig.Des, "Lime");
-                }
             }
             if (equipConfig.EnergyRate[0] != 0 || equipConfig.EnergyRate[1] != 0 || equipConfig.EnergyRate[2] != 0)
             {
