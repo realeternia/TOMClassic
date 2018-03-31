@@ -30,6 +30,7 @@ namespace TaleofMonsters.Datas.User
         [FieldIndex(Index = 9)] public List<int> BlessShopItems;
         [FieldIndex(Index = 10)] public List<int> SavedDungeonQuests;
         [FieldIndex(Index = 11)] public List<int> DailyCardData;
+        [FieldIndex(Index = 12)] public Dictionary<int, DbEquipComposeData> EquipComposes;
 
         public InfoWorld()
         {
@@ -42,6 +43,7 @@ namespace TaleofMonsters.Datas.User
             BlessShopItems = new List<int>();
             SavedDungeonQuests = new List<int>();
             DailyCardData = new List<int>();
+            EquipComposes = new Dictionary<int, DbEquipComposeData>();
         }
 
         internal DbCardProduct[] GetCardProductsByType(CardTypes type)
@@ -383,7 +385,7 @@ namespace TaleofMonsters.Datas.User
                 DailyCardData = new List<int>();
 
                 DailyCardData.Clear();
-                DailyCardData.Add(HItemBook.GetRandRareItemIdWithGroup(HItemRandomGroups.Gather, MathTool.GetRandom(1, 6)));
+                DailyCardData.Add(HItemBook.GetRandRareItemIdWithGroup(HItemRandomGroups.Flower, MathTool.GetRandom(1, 6)));
                 DailyCardData.Add(HItemBook.GetRandRareItemIdWithGroup(HItemRandomGroups.Fight, MathTool.GetRandom(1, 6)));
                 DailyCardData.Add(HItemBook.GetRandRareItemIdWithGroup(HItemRandomGroups.Fight, MathTool.GetRandom(1, 5)));
                 DailyCardData.Add(HItemBook.GetRandRareItemIdWithGroup(HItemRandomGroups.Shopping, 2));
@@ -392,6 +394,22 @@ namespace TaleofMonsters.Datas.User
             }
 
             return DailyCardData;
+        }
+
+        public DbEquipComposeData GetEquipCompose(int eid)
+        {
+            if (!EquipComposes.ContainsKey(eid))
+            {
+                EquipConfig equipConfig = ConfigData.GetEquipConfig(eid);
+                DbEquipComposeData composeData = new DbEquipComposeData();
+                composeData.EquipId = eid;
+                var myGroup = equipConfig.ComposeRes == 1 ? HItemRandomGroups.Wood : HItemRandomGroups.Ore;
+                composeData.ItemId1 = HItemBook.GetRandRareItemIdWithGroup(myGroup, equipConfig.Quality + 1);
+                composeData.ItemId2 = HItemBook.GetRandRareItemIdWithGroup(myGroup, equipConfig.Quality + 3);
+                EquipComposes[eid] = composeData;
+            }
+
+            return EquipComposes[eid];
         }
     }
 }

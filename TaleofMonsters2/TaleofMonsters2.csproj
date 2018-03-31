@@ -163,6 +163,7 @@
     <Compile Include="Controler\Battle\FastBattle.cs" />
     <Compile Include="Controler\GM\GMCommand.cs" />
     <Compile Include="Controler\GM\GmScript.cs" />
+    <Compile Include="Datas\User\Db\DbEquipComposeData.cs" />
     <Compile Include="Forms\Pops\PopBuildUpgrade.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
 using ControlPlus.Drawing;
@@ -77,14 +78,13 @@ namespace TaleofMonsters.Datas.Items
             if (rareMidDict == null)
             {
                 rareMidDict = new Dictionary<HItemRandomGroups, Dictionary<int, List<int>>>();
-                rareMidDict[HItemRandomGroups.Gather] = new Dictionary<int, List<int>>();
-                rareMidDict[HItemRandomGroups.Fight] = new Dictionary<int, List<int>>();
-                rareMidDict[HItemRandomGroups.Shopping] = new Dictionary<int, List<int>>();//目前只有3个随机组
+                foreach (var value in Enum.GetValues(typeof(HItemRandomGroups)))
+                    rareMidDict[(HItemRandomGroups)value] = new Dictionary<int, List<int>>();
                 foreach (var hItemConfig in ConfigData.HItemDict.Values)
                 {
                     if (hItemConfig.RandomGroup > 0)
                     {
-                        var group1 = (HItemRandomGroups)hItemConfig.RandomGroup;
+                        HItemRandomGroups group1 = (HItemRandomGroups)hItemConfig.RandomGroup;
                         if (!rareMidDict[group1].ContainsKey(hItemConfig.Rare))
                             rareMidDict[group1].Add(hItemConfig.Rare, new List<int>());
                         rareMidDict[group1][hItemConfig.Rare].Add(hItemConfig.Id);

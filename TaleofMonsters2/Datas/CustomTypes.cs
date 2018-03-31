@@ -102,9 +102,13 @@
     internal enum HItemRandomGroups
     {
         None = 0,
-        Gather = 1,
-        Fight = 2,
-        Shopping=3,
+        Flower = 1,
+        Fish = 2,
+        Ore = 3,
+        Mushroom = 4,
+        Wood = 5,
+        Fight = 10,
+        Shopping = 20,
     }
 
     internal enum BuffEffectTypes

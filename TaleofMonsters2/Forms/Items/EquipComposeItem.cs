@@ -73,7 +73,8 @@ namespace TaleofMonsters.Forms.Items
                     vRegion.SetRegionDecorator(1, 0, null);
                     vRegion.SetRegionDecorator(1, 1, null);
                     var equipConfig = ConfigData.GetEquipConfig(eid);
-                    bitmapButtonBuy.Visible = equipConfig.ComposeItemId != null && equipConfig.ComposeItemId.Length > 0;
+                    var equipInfo = UserProfile.InfoEquip.GetEquipById(eid);
+                    bitmapButtonBuy.Visible = equipInfo.Level < equipConfig.MaxLevel;
                 }
                 else
                 {
@@ -145,7 +146,7 @@ namespace TaleofMonsters.Forms.Items
                     g.DrawString(string.Format("{0} Lv{1}", equipConfig.Name, equipInfo.Level), ft, b, x + 82, y + 10);
                     b.Dispose();
 
-                    if (equipConfig.ComposeItemId != null && equipConfig.ComposeItemId.Length > 0)
+                    if (equipInfo.Level < equipConfig.MaxLevel)
                     {
                         string expstr = string.Format("{0}/{1}", equipInfo.Exp, ExpTree.GetNextRequiredEquip(equipInfo.Level));
                         g.DrawString(expstr, ft, Brushes.AliceBlue, x + 102, y + 27);

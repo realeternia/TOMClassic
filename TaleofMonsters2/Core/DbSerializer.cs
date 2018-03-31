@@ -104,6 +104,7 @@ namespace TaleofMonsters.Core
             register.Register(typeof(InfoRecord), 28);
             register.Register(typeof(InfoCard), 29);
             register.Register(typeof(GameResource), 30);
+            register.Register(typeof(DbEquipComposeData), 31);
 
             //在此处上面添加
             // register.RegisterEnum<CardProductMarkTypes>(23);

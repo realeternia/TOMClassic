@@ -37,11 +37,13 @@ namespace TaleofMonsters.Forms.Pops
 
             var equipConfig = ConfigDatas.ConfigData.GetEquipConfig(equipId);
             var eRegion = ComplexRegion.GetResShowRegion(2, new Point(30, 45 + 60), 32,
-                ImageRegionCellType.Lumber + equipConfig.ComposeRes[0] - 1,
+                ImageRegionCellType.Lumber + equipConfig.ComposeRes - 1,
                 (int)GameResourceBook.OutWoodCompose(equipConfig.Quality));
             vRegion.AddRegion(eRegion);
-            vRegion.AddRegion(new PictureRegion(4, 30, 45 + 60+44, 32, 32, PictureRegionCellType.Item, equipConfig.ComposeItemId[0]));
-            vRegion.AddRegion(new PictureRegion(5, 30, 45 + 60+88, 32, 32, PictureRegionCellType.Item, equipConfig.ComposeItemId[1]));
+
+            var composeItem = UserProfile.InfoWorld.GetEquipCompose(equipId);
+            vRegion.AddRegion(new PictureRegion(4, 30, 45 + 60+44, 32, 32, PictureRegionCellType.Item, composeItem.ItemId1));
+            vRegion.AddRegion(new PictureRegion(5, 30, 45 + 60+88, 32, 32, PictureRegionCellType.Item, composeItem.ItemId2));
         }
 
         void virtualRegion_RegionLeft()
@@ -95,7 +97,7 @@ namespace TaleofMonsters.Forms.Pops
 
             e.Graphics.DrawString(string.Format("每{0}点资源提升100点经验", GameResourceBook.OutWoodCompose(equipConfig.Quality)),font, Brushes.White, 70, 45 + 60);
             e.Graphics.DrawString("每1个道具提升100点经验", font, Brushes.White, 70, 45 + 60+44);
-            e.Graphics.DrawString("每1个道具提升300点经验", font, Brushes.White, 70, 45 + 60+88);
+            e.Graphics.DrawString("每1个道具提升500点经验", font, Brushes.White, 70, 45 + 60+88);
             font.Dispose();
 
         }
@@ -113,9 +115,9 @@ namespace TaleofMonsters.Forms.Pops
         {
             GameResource need = new GameResource();
             var equipConfig = ConfigDatas.ConfigData.GetEquipConfig(equipId);
-            if (equipConfig.ComposeRes[0] == 1)
+            if (equipConfig.ComposeRes == 1)
                 need.Add(GameResourceType.Lumber, GameResourceBook.OutWoodCompose(equipConfig.Quality));
-            if (equipConfig.ComposeRes[0] == 2)
+            if (equipConfig.ComposeRes == 2)
                 need.Add(GameResourceType.Stone, GameResourceBook.OutStoneCompose(equipConfig.Quality));
             
             if (!UserProfile.InfoBag.CheckResource(need.ToArray()))
@@ -131,27 +133,27 @@ namespace TaleofMonsters.Forms.Pops
 
         private void buttonBuy2_Click(object sender, EventArgs e)
         {
-            var equipConfig = ConfigDatas.ConfigData.GetEquipConfig(equipId);
-            if (UserProfile.InfoBag.GetItemCount(equipConfig.ComposeItemId[0]) <= 0)
+            var composeItem = UserProfile.InfoWorld.GetEquipCompose(equipId);
+            if (UserProfile.InfoBag.GetItemCount(composeItem.ItemId1) <= 0)
             {
                 AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughItems), "Red");
                 return;
             }
-            UserProfile.InfoBag.DeleteItem(equipConfig.ComposeItemId[0], 1);
+            UserProfile.InfoBag.DeleteItem(composeItem.ItemId1, 1);
             UserProfile.InfoEquip.AddExp(equipId, 100);
             Invalidate();
         }
 
         private void buttonBuy3_Click(object sender, EventArgs e)
         {
-            var equipConfig = ConfigDatas.ConfigData.GetEquipConfig(equipId);
-            if (UserProfile.InfoBag.GetItemCount(equipConfig.ComposeItemId[1]) <= 0)
+            var composeItem = UserProfile.InfoWorld.GetEquipCompose(equipId);
+            if (UserProfile.InfoBag.GetItemCount(composeItem.ItemId2) <= 0)
             {
-                   AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughItems), "Red");
+                AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughItems), "Red");
                 return;
             }
-            UserProfile.InfoBag.DeleteItem(equipConfig.ComposeItemId[1], 1);
-            UserProfile.InfoEquip.AddExp(equipId, 300);
+            UserProfile.InfoBag.DeleteItem(composeItem.ItemId2, 1);
+            UserProfile.InfoEquip.AddExp(equipId, 500);
             Invalidate();
         }
 
