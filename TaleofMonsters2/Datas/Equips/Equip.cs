@@ -16,23 +16,9 @@ namespace TaleofMonsters.Datas.Equips
 
         private int level;
 
-        public int Atk { get; set; }//实际的攻击力
-        public int Hp { get; set; }
-        public int Attr { get; set; } //辅助属性
-
-        public int Def { get; set; }
-        public int Mag { get; set; }
-        public int Spd { get; set; }
-        public int Hit { get; set; }
-        public int Dhit { get; set; }
-        public int Crt { get; set; }
-        public int Luk { get; set; }
-
-        public int Range { get; set; }
-
-        public int LpRate { get; set; }
-        public int PpRate { get; set; }
-        public int MpRate { get; set; }
+        private int atk;//实际的攻击力
+        private int hp;
+        private int attr; //辅助属性
 
         public List<RLIdValue> CommonSkillList = new List<RLIdValue>();
 
@@ -56,55 +42,41 @@ namespace TaleofMonsters.Datas.Equips
             level = lv;
 
             EquipConfig equipConfig = ConfigData.GetEquipConfig(TemplateId);
-            LpRate = equipConfig.EnergyRate[0];
-            PpRate = equipConfig.EnergyRate[1];
-            MpRate = equipConfig.EnergyRate[2];
-
             var standardValue = CardAssistant.GetCardModify(3, level, (CardQualityTypes)equipConfig.Quality, 0);
-            Atk = (int)(standardValue * (0 + equipConfig.AtkP*0.6) / 100); //200
-            Hp = (int)(standardValue * (0 + equipConfig.VitP*2.4)*5 / 100); //200
-            Attr = (int)(standardValue * (0 + equipConfig.Attr * 5) / 100); //200
-
-            Def = equipConfig.Def;
-            Mag = equipConfig.Mag;
-            Spd = equipConfig.Spd;
-            Hit = equipConfig.Hit;
-            Dhit = equipConfig.Dhit;
-            Crt = equipConfig.Crt;
-            Luk = equipConfig.Luk;
-
-            Range = equipConfig.Range;
+            atk = (int)(standardValue * (0 + equipConfig.AtkP*0.6) / 100); //200
+            hp = (int)(standardValue * (0 + equipConfig.VitP*2.4)*5 / 100); //200
+            attr = (int)(standardValue * (0 + equipConfig.Attr * 5) / 100); //200
         }
 
         internal List<EquipModifier.EquipModifyState> GetEquipAddons()
         {
-            var addons = new List<EquipModifier.EquipModifyState>();
-            if (Atk > 0)
-                addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.AtkRate) , Value = Atk });
-            if (Hp > 0)
-                addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.HpRate), Value = Hp });
-            if (Def > 0)
-                addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.Def), Value = Def });
-            if (Mag > 0)
-                addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.Mag), Value = Mag });
-            if (Spd > 0)
-                addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.Spd), Value = Spd });
-            if (Hit > 0)
-                addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.Hit), Value = Hit });
-            if (Dhit > 0)
-                addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.Dhit), Value = Dhit });
-            if (Crt > 0)
-                addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.Crt), Value = Crt });
-            if (Luk > 0)
-                addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.Luk), Value = Luk });
-            if (Range > 0)
-                addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.Range), Value = Range });
-
             EquipConfig equipConfig = ConfigData.GetEquipConfig(TemplateId);
+            var addons = new List<EquipModifier.EquipModifyState>();
+            if (equipConfig.AtkP > 0)
+                addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.AtkRate) , Value = Math.Max(1, atk) });
+            if (equipConfig.VitP > 0)
+                addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.HpRate), Value = Math.Max(1, hp) });
+            if (equipConfig.Def > 0)
+                addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.Def), Value = equipConfig.Def });
+            if (equipConfig.Mag > 0)
+                addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.Mag), Value = equipConfig.Mag });
+            if (equipConfig.Spd > 0)
+                addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.Spd), Value = equipConfig.Spd });
+            if (equipConfig.Hit > 0)
+                addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.Hit), Value = equipConfig.Hit });
+            if (equipConfig.Dhit > 0)
+                addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.Dhit), Value = equipConfig.Dhit });
+            if (equipConfig.Crt > 0)
+                addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.Crt), Value = equipConfig.Crt });
+            if (equipConfig.Luk > 0)
+                addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.Luk), Value = equipConfig.Luk });
+            if (equipConfig.Range > 0)
+                addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.Range), Value = equipConfig.Range });
+
             if (equipConfig.AttrId > 0)
             {
                 var attrConfig = ConfigData.GetEquipAddonConfig(equipConfig.AttrId);
-                addons.Add(new EquipModifier.EquipModifyState {Id = equipConfig.AttrId, Value = Math.Max(1, (int)(Attr* attrConfig.Attr))});
+                addons.Add(new EquipModifier.EquipModifyState {Id = equipConfig.AttrId, Value = Math.Max(1, (int)(attr* attrConfig.Attr))});
             }
             return addons;
         }

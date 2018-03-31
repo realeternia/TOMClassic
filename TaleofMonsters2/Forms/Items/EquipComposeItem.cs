@@ -45,7 +45,7 @@ namespace TaleofMonsters.Forms.Items
             bitmapButtonBuy.IconSize = new Size(16,16);
             bitmapButtonBuy.IconXY = new Point(4,4);
             bitmapButtonBuy.TextOffX = 8;
-            this.bitmapButtonBuy.Text = @"强化";
+            this.bitmapButtonBuy.Text = @"改造";
             parent.Controls.Add(bitmapButtonBuy);
         }
 
@@ -72,6 +72,8 @@ namespace TaleofMonsters.Forms.Items
                     vRegion.SetRegionEnable(1, true);
                     vRegion.SetRegionDecorator(1, 0, null);
                     vRegion.SetRegionDecorator(1, 1, null);
+                    var equipConfig = ConfigData.GetEquipConfig(eid);
+                    bitmapButtonBuy.Visible = equipConfig.ComposeItemId != null && equipConfig.ComposeItemId.Length > 0;
                 }
                 else
                 {
@@ -143,11 +145,13 @@ namespace TaleofMonsters.Forms.Items
                     g.DrawString(string.Format("{0} Lv{1}", equipConfig.Name, equipInfo.Level), ft, b, x + 82, y + 10);
                     b.Dispose();
 
-                    string expstr = string.Format("{0}/{1}", equipInfo.Exp, ExpTree.GetNextRequiredEquip(equipInfo.Level));
-                    g.DrawString(expstr, ft, Brushes.AliceBlue, x+102, y+27);
-                    g.FillRectangle(Brushes.DimGray, x+82, y+42, 80, 4);
-                    g.FillRectangle(Brushes.DodgerBlue, x + 82, y + 42, Math.Min(equipInfo.Exp * 79 / ExpTree.GetNextRequiredEquip(equipInfo.Level) + 1, 80), 2);
-
+                    if (equipConfig.ComposeItemId != null && equipConfig.ComposeItemId.Length > 0)
+                    {
+                        string expstr = string.Format("{0}/{1}", equipInfo.Exp, ExpTree.GetNextRequiredEquip(equipInfo.Level));
+                        g.DrawString(expstr, ft, Brushes.AliceBlue, x + 102, y + 27);
+                        g.FillRectangle(Brushes.DimGray, x + 82, y + 42, 80, 4);
+                        g.FillRectangle(Brushes.DodgerBlue, x + 82, y + 42, Math.Min(equipInfo.Exp*79/ExpTree.GetNextRequiredEquip(equipInfo.Level) + 1, 80), 2);
+                    }
                 }
                 ft.Dispose();
             }

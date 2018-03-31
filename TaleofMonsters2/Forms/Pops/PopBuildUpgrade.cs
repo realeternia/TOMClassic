@@ -31,7 +31,7 @@ namespace TaleofMonsters.Forms.Pops
             vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
 
-        private void PopBuyProduct_Load(object sender, EventArgs e)
+        private void PopBuildUpgrade_Load(object sender, EventArgs e)
         {
             vRegion.AddRegion(new PictureRegion(1, 20, 45, 40, 40, PictureRegionCellType.Equip, equipId));
 
