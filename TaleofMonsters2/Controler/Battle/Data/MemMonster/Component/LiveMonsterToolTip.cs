@@ -105,15 +105,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                     continue;
                 }
                 string tp = string.Format("{0}:{1}{2}", memBaseSkill.SkillInfo.Name, memBaseSkill.SkillInfo.Descript, memBaseSkill.Percent == 100 ? "" : string.Format("({0}%)", memBaseSkill.Percent));
-                if (tp.Length > 20)
-                {
-                    tipData.AddText(tp.Substring(0, 19), "White");
-                    tipData.AddTextNewLine(tp.Substring(19), "White");
-                }
-                else
-                {
-                    tipData.AddText(tp, "White");
-                }
+                tipData.AddTextLines(tp, "White", 20, false);
             }
             if (self.Weapon != null)
             {
