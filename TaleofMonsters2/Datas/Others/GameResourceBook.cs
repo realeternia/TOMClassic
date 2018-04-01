@@ -122,7 +122,7 @@ namespace TaleofMonsters.Datas.Others
         public static uint InExpSceneQuest(int level, int rate)
         {
             if (rate > 0)
-                return Math.Max(1, (uint)(ExpTree.GetNextRequired(level) / 12 * rate / 100));
+                return Math.Max(1, (uint)(10 * rate / 100));
             return 0;
         }
         /// <summary>
@@ -130,7 +130,7 @@ namespace TaleofMonsters.Datas.Others
         /// </summary>
         public static uint InExpFight(int level, int rLevel)
         {
-            return Math.Max(1, (uint)(ExpTree.GetNextRequired(rLevel) / 2 / (14 + Math.Max(0, level - rLevel) * 3) + 1));
+            return Math.Max(1, (uint)(150 / (15 + Math.Max(0, level - rLevel) * 3) + 1));
         }
 
 
