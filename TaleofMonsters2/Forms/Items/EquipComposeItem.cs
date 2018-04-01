@@ -135,15 +135,17 @@ namespace TaleofMonsters.Forms.Items
                 vRegion.Draw(g);
 
                 var equipConfig = ConfigData.GetEquipConfig(equipId);
-           
+
+                var textBack = PicLoader.Read("System", "TipBack.PNG");
+                g.DrawImage(textBack, x + 82, y + 8, 90, 16);
+                textBack.Dispose();
                 Font ft = new Font("宋体", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
 
-                g.DrawString(equipConfig.Name, ft, Brushes.Black, x + 82 + 1, y + 10 + 1);
                 if (hasEquip)
                 {
                     var equipInfo = UserProfile.InfoEquip.GetEquipById(equipId);
                     Brush b = new SolidBrush(Color.FromName(HSTypes.I2QualityColor(equipConfig.Quality)));
-                    g.DrawString(string.Format("{0} Lv{1}", equipConfig.Name, equipInfo.Level), ft, b, x + 82, y + 10);
+                    g.DrawString(string.Format("{0}v{1}", equipConfig.Name, equipInfo.Level), ft, b, x + 82, y + 10);
                     b.Dispose();
 
                     if (equipInfo.Level < equipConfig.MaxLevel)
@@ -153,6 +155,10 @@ namespace TaleofMonsters.Forms.Items
                         g.FillRectangle(Brushes.DimGray, x + 82, y + 42, 80, 4);
                         g.FillRectangle(Brushes.DodgerBlue, x + 82, y + 42, Math.Min(equipInfo.Exp*79/ExpTree.GetNextRequiredEquip(equipInfo.Level) + 1, 80), 2);
                     }
+                }
+                else
+                {
+                    g.DrawString(equipConfig.Name, ft, Brushes.Gray, x + 82, y + 10);
                 }
                 ft.Dispose();
             }

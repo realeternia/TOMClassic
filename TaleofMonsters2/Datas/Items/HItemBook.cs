@@ -6,6 +6,7 @@ using ControlPlus.Drawing;
 using NarlonLib.Log;
 using NarlonLib.Math;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Tools;
@@ -122,6 +123,15 @@ namespace TaleofMonsters.Datas.Items
                 }
             }
             return itemNameIdDict[ename];
+        }
+
+        public static string GetItemName(string ename)
+        {
+            var itemId = GetItemId(ename);
+            var isEquip = ConfigIdManager.IsEquip(itemId);
+            if (isEquip)
+                return ConfigData.GetEquipConfig(itemId).Name + "(建筑图)";
+            return ConfigData.GetHItemConfig(itemId).Name;
         }
 
         public static Image GetHItemImage(int id)

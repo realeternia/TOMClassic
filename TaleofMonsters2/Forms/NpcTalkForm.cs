@@ -215,7 +215,7 @@ namespace TaleofMonsters.Forms
                             var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockquest");
                             questBlock.Script = string.Format("【{0}】{1}", questConfig.TypeR == 0 ? "主线" : "支线", questConfig.Name);
                             questBlock.Prefix = "quest";
-                            questBlock.Children[0].Script = questConfig.Descript + "$$报酬:" + QuestBook.GetRewardStr(questConfig.Id);
+                            questBlock.Children[0].Script = questConfig.Descript + "$$|报酬:" + QuestBook.GetRewardStr(questConfig.Id, eventLevel);
                             (questBlock.Children[0].Children[0].Children[0] as SceneQuestEvent).ParamList[0] = questConfig.Id.ToString();
                             answerList.Add(questBlock);
                         }

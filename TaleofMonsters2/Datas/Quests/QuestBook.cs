@@ -1,5 +1,7 @@
 ﻿using System.Drawing;
 using ConfigDatas;
+using TaleofMonsters.Datas.Items;
+using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Datas.Quests
@@ -57,20 +59,40 @@ namespace TaleofMonsters.Datas.Quests
             }
         }
 
-        public static string GetRewardStr(int qid)
+        public static string GetRewardStr(int qid, int level)
         {
             string rt = "";
             var questConfig = ConfigData.GetQuestConfig(qid);
             if (questConfig.RewardGold > 0)
-                rt += "金钱 ";
+            {
+                var goldGet = GameResourceBook.InGoldSceneQuest(level, questConfig.RewardGold);
+                rt += string.Format( "|Y|{0}金币|| ", goldGet);
+            }
             if (questConfig.RewardExp > 0)
-                rt += "经验 ";
-            if (!string.IsNullOrEmpty(questConfig.RewardItem1) || !string.IsNullOrEmpty(questConfig.RewardItem2) ||! string.IsNullOrEmpty(questConfig.RewardDrop))
-                rt += "道具 ";
-            if (questConfig.RewardFood > 0|| questConfig.RewardHealth > 0|| questConfig.RewardMental > 0)
-                rt += "补给 ";
+            {
+                var expGet = GameResourceBook.InExpSceneQuest(level, questConfig.RewardExp);
+                rt += string.Format("|P|{0}EXP|| ", expGet);
+            }
+            if (!string.IsNullOrEmpty(questConfig.RewardItem1))
+            {
+                var itemName = HItemBook.GetItemName(questConfig.RewardItem1);
+                rt += string.Format("|Lime|{0}|| ", itemName);
+            }
+            if (!string.IsNullOrEmpty(questConfig.RewardItem2))
+            {
+                var itemName = HItemBook.GetItemName(questConfig.RewardItem2);
+                rt += string.Format("|Lime|{0}|| ", itemName);
+            }
+            if (string.IsNullOrEmpty(questConfig.RewardDrop))
+                rt += "|Aqua|随机道具|| ";
+            if (questConfig.RewardFood > 0)
+                rt += string.Format("|Green|{0}食物|| ", questConfig.RewardFood);
+            if (questConfig.RewardHealth > 0)
+                rt += string.Format("|Red|{0}生命|| ", questConfig.RewardHealth);
+            if (questConfig.RewardMental > 0)
+                rt += string.Format("|LightBlue|{0}精神|| ", questConfig.RewardMental);
             if (questConfig.RewardBlessLevel > 0)
-                rt += "祝福 ";
+                rt += "|Gold|祝福|| ";
             return rt;
         }
 
