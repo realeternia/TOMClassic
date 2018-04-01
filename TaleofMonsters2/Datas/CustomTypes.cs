@@ -166,12 +166,6 @@
         All = 9,
     }
 
-    internal enum QuestTypes
-    {
-        None = 0,
-        Kill = 1,
-    }
-
     public enum QuestStates
     {
         Receive = 1,

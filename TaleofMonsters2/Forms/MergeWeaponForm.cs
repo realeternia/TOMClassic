@@ -98,14 +98,10 @@ namespace TaleofMonsters.Forms
                 sb.Dispose();
                 font.Dispose();
 
-                //font = new Font("宋体", 10F * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-                //g.DrawString("Lv" + equipConfig.Level, font, Brushes.DimGray, 50 + xOff + 10, 5 + yOff + 24);
-                //font.Dispose();
-
                 if (UserProfile.InfoEquip.HasEquip(info))
                 {
                     var img = PicLoader.Read("System", "Learn.PNG");
-                    g.DrawImage(img, xOff + 10, 3 + yOff, img.Width, img.Height);
+                    g.DrawImage(img, xOff + 70, 3 + yOff, img.Width, img.Height);
                     img.Dispose();
                 }
             }
@@ -119,7 +115,7 @@ namespace TaleofMonsters.Forms
             foreach (var pairValue in currentInfo.Methods)
                 UserProfile.InfoBag.DeleteItem(pairValue.Type, pairValue.Value);
 
-            UserProfile.InfoEquip.AddEquip(equipConfig.Id);
+            UserProfile.InfoEquip.AddEquip(equipConfig.Id, 600);
         }
 
         private void buttonBuy_Click(object sender, EventArgs e)
@@ -174,6 +170,17 @@ namespace TaleofMonsters.Forms
             }
             for (int i = index; i < 6; i++)
                 vRegion.SetRegionKey(i+1, 0);
+
+            if (UserProfile.InfoEquip.HasEquip(targetid))
+            {
+                buttonBuy.Text = "经验+600";
+                buttonBuy.BackColor = Color.Goldenrod;
+            }
+            else
+            {
+                buttonBuy.Text = "学习";
+                buttonBuy.BackColor = Color.Blue;
+            }
 
             Invalidate();
         }

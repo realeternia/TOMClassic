@@ -24,14 +24,15 @@ namespace TaleofMonsters.Datas.User
                 Equipon[i] = new DbEquip();
         }
 
-        public void AddEquip(int eid)
+        public void AddEquip(int eid, int expAdd)
         {
             EquipConfig equipConfig = ConfigData.GetEquipConfig(eid);
 
             var equip = EquipAvail.Find(edata => edata.BaseId == eid);
             if (equip != null)
             {
-                equip.Exp += 10;
+                equip.Exp += expAdd;
+                MainTipManager.AddTip(string.Format("|装备|{0}|{1}||经验+{2}", HSTypes.I2QualityColor(equipConfig.Quality), equipConfig.Name, expAdd), "White");
             }
             else
             {
