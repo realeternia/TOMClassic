@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ConfigDatas;
+using NarlonLib.Log;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core.Config;
@@ -102,9 +103,8 @@ namespace TaleofMonsters.Datas.Items
         {
             var form = PanelManager.FindPanel(typeof(CardBagForm));
             if (form != null)//如果打开着开包面板，退出
-            {
                 return false;
-            }
+
             form = new CardBagForm();
             ((CardBagForm)form).SetData(itemConfig.Id);
             PanelManager.DealPanel(form);
@@ -121,6 +121,12 @@ namespace TaleofMonsters.Datas.Items
                 var countList = new List<int>();
                 foreach (var itemId in itemList)
                 {
+                    if (ConfigIdManager.IsEquip(itemId))
+                    {
+                        NLog.Warn("UseDropItem id={0} contains equip", itemConfig.Id);
+                        continue;
+                    }
+
                     UserProfile.InfoBag.AddItem(itemId, 1);
                     countList.Add(1);
                 }

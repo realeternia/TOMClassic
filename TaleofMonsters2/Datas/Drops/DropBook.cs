@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Log;
 using NarlonLib.Math;
+using TaleofMonsters.Datas.Equips;
 using TaleofMonsters.Datas.Items;
 
 namespace TaleofMonsters.Datas.Drops
@@ -42,8 +43,10 @@ namespace TaleofMonsters.Datas.Drops
             {
                 if (dropConfig.Items.Length > 0)
                     DropItems(dropConfig.Items, dropConfig.ItemRate, items);
-                else if(dropConfig.RandomItemRate.Length > 0)
-                    DropLevelItems(dropConfig.RandomItemRate, items);
+                else if(dropConfig.MaterialRate.Length > 0)
+                    DropMaterials(dropConfig.MaterialRate, items);
+                else if (dropConfig.DropEquip > 0)
+                    DropEquips(dropConfig.DropEquip, items);
             }
             return items;
         }
@@ -64,7 +67,7 @@ namespace TaleofMonsters.Datas.Drops
             }
         }
 
-        private static void DropLevelItems(int[] itemLevelRate, List<int> items)
+        private static void DropMaterials(int[] itemLevelRate, List<int> items)
         {
             int sum = 0;
             foreach (var rate in itemLevelRate)
@@ -83,6 +86,12 @@ namespace TaleofMonsters.Datas.Drops
             }
 
             items.Add(HItemBook.GetRandRareItemIdWithGroup(HItemRandomGroups.Fight, rare));
+        }
+
+        private static void DropEquips(double rate, List<int> items)
+        {
+            if(MathTool.GetRandom(0f, 1f) < rate)
+                items.Add(EquipBook.GetCanDropId());
         }
 
         /// <summary>

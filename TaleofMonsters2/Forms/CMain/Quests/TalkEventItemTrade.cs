@@ -137,8 +137,16 @@ namespace TaleofMonsters.Forms.CMain.Quests
                 var itemList = DropBook.GetDropItemList(config.TradeDropItem);
                 foreach (var itemId in itemList)
                 {
-                    UserProfile.InfoBag.AddItem(itemId, 1);
-                    vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25, 60, 60, PictureRegionCellType.Item, itemId));
+                    if (!ConfigIdManager.IsEquip(itemId))
+                    {
+                        UserProfile.InfoBag.AddItem(itemId, 1);
+                        vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25, 60, 60, PictureRegionCellType.Item, itemId));
+                    }
+                    else
+                    {
+                        UserProfile.InfoEquip.AddEquip(itemId, 100);
+                        vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25, 60, 60, PictureRegionCellType.Equip, itemId));
+                    }
 
                     index++;
                 }
