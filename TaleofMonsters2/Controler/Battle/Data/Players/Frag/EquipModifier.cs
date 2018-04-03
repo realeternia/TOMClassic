@@ -76,21 +76,21 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                 if (addonConfig.VitP > 0)
                     mon.MaxHp += (int)(equipModifyState.Value);
                 if (addonConfig.Def > 0)
-                    mon.Def += equipModifyState.Value;
+                    mon.Def += addonConfig.Def;
                 if (addonConfig.Mag > 0)
-                    mon.Mag += equipModifyState.Value;
+                    mon.Mag += addonConfig.Mag;
                 if (addonConfig.Spd > 0)
-                    mon.Spd += equipModifyState.Value;
+                    mon.Spd += addonConfig.Spd;
                 if (addonConfig.Hit > 0)
-                    mon.Hit += equipModifyState.Value;
+                    mon.Hit += addonConfig.Hit;
                 if (addonConfig.Dhit > 0)
-                    mon.Dhit += equipModifyState.Value;
+                    mon.Dhit += addonConfig.Dhit;
                 if (addonConfig.Crt > 0)
-                    mon.Crt += equipModifyState.Value;
+                    mon.Crt += addonConfig.Crt;
                 if (addonConfig.Luk > 0)
-                    mon.Luk += equipModifyState.Value;
+                    mon.Luk += addonConfig.Luk;
                 if (addonConfig.Range > 0)
-                    mon.Avatar.Range += equipModifyState.Value;
+                    mon.Avatar.Range += addonConfig.Range;
             }
             mon.RefreshAttrs();
             if(mon.Hp != mon.MaxHp)

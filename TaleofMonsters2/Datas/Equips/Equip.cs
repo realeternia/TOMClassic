@@ -53,7 +53,7 @@ namespace TaleofMonsters.Datas.Equips
             EquipConfig equipConfig = ConfigData.GetEquipConfig(TemplateId);
             var addons = new List<EquipModifier.EquipModifyState>();
             if (equipConfig.AtkP > 0)
-                addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.AtkRate) , Value = Math.Max(1, atk) });
+                addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.AtkRate), Value = Math.Max(1, atk) });
             if (equipConfig.VitP > 0)
                 addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.HpRate), Value = Math.Max(1, hp) });
             if (equipConfig.Def > 0)
