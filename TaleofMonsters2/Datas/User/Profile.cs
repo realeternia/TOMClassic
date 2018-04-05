@@ -17,8 +17,7 @@ namespace TaleofMonsters.Datas.User
         [FieldIndex(Index = 5)] public InfoCard InfoCard;
         [FieldIndex(Index = 6)] public InfoDungeon InfoDungeon;
         [FieldIndex(Index = 8)] public InfoRival InfoRival;
-        [FieldIndex(Index = 9)] public InfoFarm InfoFarm;
-        [FieldIndex(Index = 10)] public InfoEquip InfoEquip;
+        [FieldIndex(Index = 10)] public InfoCastle InfoCastle;
         [FieldIndex(Index = 11)] public InfoQuest InfoQuest;
         [FieldIndex(Index = 12)] public InfoRecord InfoRecord;
         [FieldIndex(Index = 13)] public InfoGismo InfoGismo;
@@ -28,11 +27,10 @@ namespace TaleofMonsters.Datas.User
         {
             InfoBasic = new InfoBasic();
             InfoBag = new InfoBag();
-            InfoEquip = new InfoEquip();
+            InfoCastle = new InfoCastle();
             InfoCard = new InfoCard();
             InfoDungeon = new InfoDungeon();
             InfoRival = new InfoRival();
-            InfoFarm = new InfoFarm();
             InfoQuest = new InfoQuest();
             InfoRecord = new InfoRecord();
             InfoGismo = new InfoGismo();

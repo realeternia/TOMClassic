@@ -83,13 +83,12 @@ namespace TaleofMonsters.Core
             register.Register(typeof(InfoBag), 4);
             register.Register(typeof(DbDeckCard), 5);
             register.Register(typeof(InfoGismo), 6);
-            register.Register(typeof(InfoEquip), 7);
+            register.Register(typeof(InfoCastle), 7);
             register.Register(typeof(DbFarmState), 8);
             register.Register(typeof(DbCardProduct), 10);
             register.Register(typeof(InfoQuest), 11);
             register.Register(typeof(InfoDungeon), 12);
             register.Register(typeof(MatchResult), 13);
-            register.Register(typeof(InfoFarm), 14);
             register.Register(typeof(DbQuestData), 15);
             register.Register(typeof(DbSceneSpecialPosData), 16);
             register.Register(typeof(DbGismoState), 17);

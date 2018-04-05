@@ -23,7 +23,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             DeckCards = new ActiveCards(cardInitial);
 
             int[] energyRate = {0, 0, 0};
-            CalculateEquipAndSkill(UserProfile.InfoEquip.GetValidEquipsList(), energyRate);
+            CalculateEquipAndSkill(UserProfile.InfoCastle.GetValidEquipsList(), energyRate);
             EnergyGenerator.SetRate(energyRate, UserProfile.InfoBasic.Job);
             EnergyGenerator.Next(0);
             

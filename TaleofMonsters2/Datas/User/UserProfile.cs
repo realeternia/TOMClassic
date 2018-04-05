@@ -15,9 +15,9 @@
             get { return Profile.InfoBag; }
         }
 
-        public static InfoEquip InfoEquip
+        public static InfoCastle InfoCastle
         {
-            get { return Profile.InfoEquip; }
+            get { return Profile.InfoCastle; }
         }
 
         public static InfoCard InfoCard

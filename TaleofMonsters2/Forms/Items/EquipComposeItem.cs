@@ -62,7 +62,7 @@ namespace TaleofMonsters.Forms.Items
         public void RefreshData(int eid)
         {
             equipId = eid;
-            hasEquip = UserProfile.InfoEquip.HasEquip(eid);
+            hasEquip = UserProfile.InfoCastle.HasEquip(eid);
             if (eid > 0)
             {
                 bitmapButtonBuy.Visible = hasEquip;
@@ -73,7 +73,7 @@ namespace TaleofMonsters.Forms.Items
                     vRegion.SetRegionDecorator(1, 0, null);
                     vRegion.SetRegionDecorator(1, 1, null);
                     var equipConfig = ConfigData.GetEquipConfig(eid);
-                    var equipInfo = UserProfile.InfoEquip.GetEquipById(eid);
+                    var equipInfo = UserProfile.InfoCastle.GetEquipById(eid);
                     bitmapButtonBuy.Visible = equipInfo.Level < equipConfig.MaxLevel;
                 }
                 else
@@ -101,7 +101,7 @@ namespace TaleofMonsters.Forms.Items
             {
                 Equip equipD = new Equip(key);
 
-                var eData = UserProfile.InfoEquip.GetEquipById(key);
+                var eData = UserProfile.InfoCastle.GetEquipById(key);
                 if (eData != null && eData.Level > 1)
                     equipD.UpgradeToLevel(eData.Level);
                 Image image = equipD.GetPreview();
@@ -143,7 +143,7 @@ namespace TaleofMonsters.Forms.Items
 
                 if (hasEquip)
                 {
-                    var equipInfo = UserProfile.InfoEquip.GetEquipById(equipId);
+                    var equipInfo = UserProfile.InfoCastle.GetEquipById(equipId);
                     Brush b = new SolidBrush(Color.FromName(HSTypes.I2QualityColor(equipConfig.Quality)));
                     g.DrawString(string.Format("{0}v{1}", equipConfig.Name, equipInfo.Level), ft, b, x + 82, y + 10);
                     b.Dispose();

@@ -19,7 +19,7 @@ namespace TaleofMonsters.Forms.CMain
                 return;
 
             var equipId = int.Parse(target.Type);
-            UserProfile.InfoEquip.DoEquip(EquipPos, equipId);
+            UserProfile.InfoCastle.DoEquip(EquipPos, equipId);
             Form.OnEquipChange();
         }
     }

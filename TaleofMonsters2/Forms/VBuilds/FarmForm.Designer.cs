@@ -1,7 +1,6 @@
 ﻿using ControlPlus;
-using TaleofMonsters.Datas;
 
-namespace TaleofMonsters.Forms
+namespace TaleofMonsters.Forms.VBuilds
 {
     sealed partial class FarmForm
     {

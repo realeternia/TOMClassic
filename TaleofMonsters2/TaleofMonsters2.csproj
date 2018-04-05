@@ -378,8 +378,7 @@
     <Compile Include="Datas\User\InfoBag.cs" />
     <Compile Include="Datas\User\InfoBasic.cs" />
     <Compile Include="Datas\User\InfoCard.cs" />
-    <Compile Include="Datas\User\InfoEquip.cs" />
-    <Compile Include="Datas\User\InfoFarm.cs" />
+    <Compile Include="Datas\User\InfoCastle.cs" />
     <Compile Include="Datas\User\InfoQuest.cs" />
     <Compile Include="Datas\User\InfoRecord.cs" />
     <Compile Include="Datas\User\InfoRival.cs" />
@@ -394,10 +393,10 @@
     </Compile>
     <Compile Include="Forms\Items\DeckCardRegion.cs" />
     <Compile Include="Forms\Items\DeckSelectCardRegion.cs" />
-    <Compile Include="Forms\FarmForm.cs">
+    <Compile Include="Forms\VBuilds\FarmForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\FarmForm.Designer.cs">
+    <Compile Include="Forms\VBuilds\FarmForm.Designer.cs">
       <DependentUpon>FarmForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Items\MiniItemViewItem.cs" />
@@ -994,7 +993,7 @@
       <DependentUpon>CalendarForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FarmForm.resx">
+    <EmbeddedResource Include="Forms\VBuilds\FarmForm.resx">
       <DependentUpon>FarmForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>

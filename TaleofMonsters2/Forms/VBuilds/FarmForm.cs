@@ -13,7 +13,7 @@ using TaleofMonsters.Datas.User;
 using TaleofMonsters.Datas.User.Db;
 using TaleofMonsters.Forms.Items.Core;
 
-namespace TaleofMonsters.Forms
+namespace TaleofMonsters.Forms.VBuilds
 {
     internal sealed partial class FarmForm : BasePanel
     {
@@ -82,16 +82,16 @@ namespace TaleofMonsters.Forms
             int newsel = GetSelectedCell(e.X, e.Y);
             if (newsel != -1)
             {
-                DbFarmState timeState = UserProfile.Profile.InfoFarm.GetFarmState(newsel);
+                DbFarmState timeState = UserProfile.Profile.InfoCastle.GetFarmState(newsel);
                 if (timeState.Type == -1)
                 {
-                    var pricecount = GameResourceBook.OutWoodBuildFarm((uint)UserProfile.Profile.InfoFarm.GetFarmAvailCount() * 20);
+                    var pricecount = GameResourceBook.OutWoodBuildFarm((uint)UserProfile.Profile.InfoCastle.GetFarmAvailCount() * 20);
                     if (MessageBoxEx2.Show(string.Format("是否花{0}木材开启额外农田?", pricecount)) == DialogResult.OK)
                     {
                         if (UserProfile.InfoBag.HasResource(GameResourceType.Lumber, pricecount))
                         {
                             UserProfile.InfoBag.SubResource(GameResourceType.Lumber, pricecount);
-                            UserProfile.Profile.InfoFarm.SetFarmState(newsel, new DbFarmState(0, 0));
+                            UserProfile.Profile.InfoCastle.SetFarmState(newsel, new DbFarmState(0, 0));
                         }
                         else
                         {
@@ -104,7 +104,7 @@ namespace TaleofMonsters.Forms
                     if (timeState.Time < TimeTool.DateTimeToUnixTime(DateTime.Now))
                     {
                         UserProfile.InfoBag.AddItem(timeState.Type, 1);
-                        UserProfile.Profile.InfoFarm.SetFarmState(newsel, new DbFarmState(0, 0));
+                        UserProfile.Profile.InfoCastle.SetFarmState(newsel, new DbFarmState(0, 0));
                     }
                     else
                     {
@@ -113,7 +113,7 @@ namespace TaleofMonsters.Forms
                         {
                             if (UserProfile.InfoBag.PayDiamond(pricecount))
                             {
-                                UserProfile.Profile.InfoFarm.SetFarmState(newsel, new DbFarmState(timeState.Type, 0));
+                                UserProfile.Profile.InfoCastle.SetFarmState(newsel, new DbFarmState(timeState.Type, 0));
                             }
                         }
                     }
@@ -158,7 +158,7 @@ namespace TaleofMonsters.Forms
                     baseX -= 80 * (i % 3);
                     baseY += 40 * (i % 3);
                 }
-                DbFarmState timeState = UserProfile.Profile.InfoFarm.GetFarmState(i);
+                DbFarmState timeState = UserProfile.Profile.InfoCastle.GetFarmState(i);
                 string baseName = timeState.Type == -1 ? "Farm.tile2" : "Farm.tile1";
                 Image tile = PicLoader.Read("Build", i == select ? baseName + "On.PNG" : baseName + ".PNG");
                 e.Graphics.DrawImage(tile, baseX, baseY + 86 - tile.Height, tile.Width, tile.Height);

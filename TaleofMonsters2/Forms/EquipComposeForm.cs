@@ -47,7 +47,7 @@ namespace TaleofMonsters.Forms
         {
             equipIdList = new List<int>();
             Dictionary<int, bool> hasEquip = new Dictionary<int, bool>();
-            foreach (var eData in UserProfile.InfoEquip.EquipAvail)//先显示有的
+            foreach (var eData in UserProfile.InfoCastle.EquipAvail)//先显示有的
             {
                 var equipConfig = ConfigData.GetEquipConfig(eData.BaseId);
                 if (equipConfig.Id > 0 && equipConfig.Position == pos)

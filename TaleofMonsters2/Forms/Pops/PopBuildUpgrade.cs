@@ -55,7 +55,7 @@ namespace TaleofMonsters.Forms.Pops
         {
             if (id == 1)
             {
-                var equip = UserProfile.InfoEquip.GetEquipById(key);
+                var equip = UserProfile.InfoCastle.GetEquipById(key);
                 if (equip.BaseId != 0)
                 {
                     Equip equipD = new Equip(equip.BaseId);
@@ -85,7 +85,7 @@ namespace TaleofMonsters.Forms.Pops
             var equipConfig = ConfigDatas.ConfigData.GetEquipConfig(equipId);
             font = new Font("宋体", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
 
-            var equipInfo = UserProfile.InfoEquip.GetEquipById(equipId);
+            var equipInfo = UserProfile.InfoCastle.GetEquipById(equipId);
             Brush b = new SolidBrush(Color.FromName(HSTypes.I2QualityColor(equipConfig.Quality)));
             e.Graphics.DrawString(string.Format("{0} Lv{1}", equipConfig.Name, equipInfo.Level), font, b, 90, 45);
             b.Dispose();
@@ -127,7 +127,7 @@ namespace TaleofMonsters.Forms.Pops
             }
 
             UserProfile.InfoBag.SubResource(need.ToArray());
-            UserProfile.InfoEquip.AddExp(equipId, 100);
+            UserProfile.InfoCastle.AddExp(equipId, 100);
             Invalidate();
         }
 
@@ -140,7 +140,7 @@ namespace TaleofMonsters.Forms.Pops
                 return;
             }
             UserProfile.InfoBag.DeleteItem(composeItem.ItemId1, 1);
-            UserProfile.InfoEquip.AddExp(equipId, 100);
+            UserProfile.InfoCastle.AddExp(equipId, 100);
             Invalidate();
         }
 
@@ -153,7 +153,7 @@ namespace TaleofMonsters.Forms.Pops
                 return;
             }
             UserProfile.InfoBag.DeleteItem(composeItem.ItemId2, 1);
-            UserProfile.InfoEquip.AddExp(equipId, 500);
+            UserProfile.InfoCastle.AddExp(equipId, 500);
             Invalidate();
         }
 

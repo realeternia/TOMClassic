@@ -98,7 +98,7 @@ namespace TaleofMonsters.Forms
                 sb.Dispose();
                 font.Dispose();
 
-                if (UserProfile.InfoEquip.HasEquip(info))
+                if (UserProfile.InfoCastle.HasEquip(info))
                 {
                     var img = PicLoader.Read("System", "Learn.PNG");
                     g.DrawImage(img, xOff + 70, 3 + yOff, img.Width, img.Height);
@@ -115,7 +115,7 @@ namespace TaleofMonsters.Forms
             foreach (var pairValue in currentInfo.Methods)
                 UserProfile.InfoBag.DeleteItem(pairValue.Type, pairValue.Value);
 
-            UserProfile.InfoEquip.AddEquip(equipConfig.Id, 600);
+            UserProfile.InfoCastle.AddEquip(equipConfig.Id, 600);
         }
 
         private void buttonBuy_Click(object sender, EventArgs e)
@@ -159,7 +159,7 @@ namespace TaleofMonsters.Forms
 
             EquipConfig equipConfig = ConfigData.GetEquipConfig(targetid);
             vRegion.SetRegionKey(1, equipConfig.Id);
-            itemCounts[0] = UserProfile.InfoEquip.HasEquip(equipConfig.Id) ? 1 : 0;
+            itemCounts[0] = UserProfile.InfoCastle.HasEquip(equipConfig.Id) ? 1 : 0;
 
             int index = 1;
             foreach (var pair in currentInfo.Methods)
@@ -171,7 +171,7 @@ namespace TaleofMonsters.Forms
             for (int i = index; i < 6; i++)
                 vRegion.SetRegionKey(i+1, 0);
 
-            if (UserProfile.InfoEquip.HasEquip(targetid))
+            if (UserProfile.InfoCastle.HasEquip(targetid))
             {
                 buttonBuy.Text = "经验+600";
                 buttonBuy.BackColor = Color.Goldenrod;

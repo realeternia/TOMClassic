@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ConfigDatas;
+using NarlonLib.Tools;
 using TaleofMonsters.Core;
 using TaleofMonsters.Datas.Equips;
 using TaleofMonsters.Datas.Others;
@@ -9,19 +10,26 @@ using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.Datas.User
 {
-    public class InfoEquip
+    public class InfoCastle
     {
         [FieldIndex(Index = 6)] public DbEquip[] Equipon;
         [FieldIndex(Index = 7)] public List<DbEquip> EquipAvail;
 
+        [FieldIndex(Index = 10)] public DbFarmState[] DbFarmState;
+
         private const int MainHouseIndex = 5;
 
-        public InfoEquip()
+        public InfoCastle()
         {
             Equipon = new DbEquip[GameConstants.EquipOnCount+1];
             EquipAvail = new List<DbEquip>();
             for (int i = 0; i < Equipon.Length; i++)
                 Equipon[i] = new DbEquip();
+
+            DbFarmState = new DbFarmState[GameConstants.PlayFarmCount];
+            DbFarmState[0] = new DbFarmState(0, 0);//初始送1片田
+            for (int i = 1; i < DbFarmState.Length; i++)
+                DbFarmState[i] = new DbFarmState(-1, 0);
         }
 
         public void AddEquip(int eid, int expAdd)
@@ -70,7 +78,7 @@ namespace TaleofMonsters.Datas.User
                 for (int i = 0; i < Equipon.Length; i++)
                     Equipon[i] = new DbEquip();
             }
-            UserProfile.InfoEquip.Equipon[equipPos] = GetEquipById(equipId);
+            UserProfile.InfoCastle.Equipon[equipPos] = GetEquipById(equipId);
             UserProfile.InfoDungeon.RecalculateAttr(); //会影响力量啥的属性
         }
 
@@ -136,6 +144,45 @@ namespace TaleofMonsters.Datas.User
                     equip.Level++;
                 }
             }
+        }
+
+
+        public DbFarmState GetFarmState(int id)
+        {
+            return DbFarmState[id];
+        }
+
+        public void SetFarmState(int id, DbFarmState state)
+        {
+            DbFarmState[id] = state;
+        }
+
+        public int GetFarmAvailCount()
+        {
+            int count = 0;
+            foreach (DbFarmState state in DbFarmState)
+            {
+                if (state.Type != -1)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        public bool UseSeed(int type, int dura)
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                var targetCell = DbFarmState[i];
+                if (targetCell.Type == 0)
+                {
+                    targetCell.Type = type;
+                    targetCell.Time = TimeTool.DateTimeToUnixTime(DateTime.Now) + dura;
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

@@ -185,7 +185,7 @@ namespace TaleofMonsters.Datas.User
             Perc += PercAddon;
             Endu += EnduAddon;
 
-            foreach (var dbEquip in UserProfile.InfoEquip.Equipon) //装备的属性修改
+            foreach (var dbEquip in UserProfile.InfoCastle.Equipon) //装备的属性修改
             {
                 if (dbEquip.BaseId > 0)
                 {

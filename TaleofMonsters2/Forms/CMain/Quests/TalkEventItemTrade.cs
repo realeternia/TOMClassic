@@ -144,7 +144,7 @@ namespace TaleofMonsters.Forms.CMain.Quests
                     }
                     else
                     {
-                        UserProfile.InfoEquip.AddEquip(itemId, 100);
+                        UserProfile.InfoCastle.AddEquip(itemId, 100);
                         vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25, 60, 60, PictureRegionCellType.Equip, itemId));
                     }
 

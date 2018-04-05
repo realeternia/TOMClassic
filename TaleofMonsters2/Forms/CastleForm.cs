@@ -14,6 +14,7 @@ using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
+using TaleofMonsters.Forms.VBuilds;
 
 namespace TaleofMonsters.Forms
 {
@@ -35,6 +36,8 @@ namespace TaleofMonsters.Forms
             bitmapButtonBuild.NoUseDrawNine = true;
             bitmapButtonFarm.ImageNormal = PicLoader.Read("Button.Panel", "FarmButton.JPG");
             bitmapButtonFarm.NoUseDrawNine = true;
+            bitmapButtonOre.ImageNormal = PicLoader.Read("Button.Panel", "FarmButton.JPG");
+            bitmapButtonOre.NoUseDrawNine = true;
             DoubleBuffered = true;
 
             vRegion = new VirtualRegion(this);
@@ -63,7 +66,7 @@ namespace TaleofMonsters.Forms
         private void VRegion_RegionEntered(int id, int x, int y, int key)
         {
             Image image = null;
-            var equip = UserProfile.InfoEquip.GetEquipOn(id);
+            var equip = UserProfile.InfoCastle.GetEquipOn(id);
             if (equip.BaseId != 0)
             {
                 Equip equipD = new Equip(equip.BaseId);
@@ -98,7 +101,9 @@ namespace TaleofMonsters.Forms
         public void OnEquipChange()
         {
             var farmId = HItemBook.GetItemId("eqtian");
-            bitmapButtonFarm.Enabled = UserProfile.InfoEquip.HasEquipOn(farmId);
+            bitmapButtonFarm.Enabled = UserProfile.InfoCastle.HasEquipOn(farmId);
+            var oreId = HItemBook.GetItemId("eqkuang");
+            bitmapButtonOre.Enabled = UserProfile.InfoCastle.HasEquipOn(oreId);
             Invalidate();
         }
 
@@ -109,7 +114,7 @@ namespace TaleofMonsters.Forms
             g.DrawImage(img, x, y, 64, 64);
             img.Dispose();
 
-            var equipData = UserProfile.InfoEquip.GetEquipOn(id);
+            var equipData = UserProfile.InfoCastle.GetEquipOn(id);
             if (equipData.BaseId > 0)
             {
                 var equipConfig = ConfigData.GetEquipConfig(equipData.BaseId);
@@ -119,17 +124,17 @@ namespace TaleofMonsters.Forms
                 pen.Dispose();
             }
 
-            if (!UserProfile.InfoEquip.CanEquip(0, id))
+            if (!UserProfile.InfoCastle.CanEquip(0, id))
                 g.DrawImage(HSIcons.GetIconsByEName("wrong"), x + 8, y + 8, 48, 48);
         }
 
         private void VRegion_RegionClicked(int id, int x, int y, MouseButtons button)
         {
-            if (!UserProfile.InfoEquip.CanEquip(0, id))
+            if (!UserProfile.InfoCastle.CanEquip(0, id))
                 return;
 
             EquipSlotConfig slotConfig = ConfigData.GetEquipSlotConfig(id);
-            var equipList = UserProfile.InfoEquip.GetEquipList(slotConfig.Type);
+            var equipList = UserProfile.InfoCastle.GetEquipList(slotConfig.Type);
 
             if (equipList.Count == 0)
             {
@@ -143,7 +148,7 @@ namespace TaleofMonsters.Forms
 
             foreach (var dbEquip in equipList)
             {
-                if(UserProfile.InfoEquip.HasEquipOn(dbEquip.BaseId))
+                if(UserProfile.InfoCastle.HasEquipOn(dbEquip.BaseId))
                     continue;
                 var equipConfig = ConfigData.GetEquipConfig(dbEquip.BaseId);
                 popMenuEquip.AddItem(equipConfig.Id.ToString(), string.Format("{0}{1}", dbEquip.Level, equipConfig.Name), HSTypes.I2QualityColor(equipConfig.Quality));
@@ -175,7 +180,7 @@ namespace TaleofMonsters.Forms
             brush.Dispose();
 
             var modifier = new EquipModifier();
-            var equipDataList = UserProfile.InfoEquip.GetValidEquipsList();
+            var equipDataList = UserProfile.InfoCastle.GetValidEquipsList();
             foreach (var equip in equipDataList)
                 modifier.UpdateInfo(equip.GetEquipAddons(), equip.CommonSkillList);
 
@@ -226,6 +231,11 @@ namespace TaleofMonsters.Forms
         private void bitmapButtonFarm_Click(object sender, EventArgs e)
         {
             PanelManager.DealPanel(new FarmForm());
+        }
+
+        private void bitmapButtonOre_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
