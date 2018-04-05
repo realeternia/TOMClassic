@@ -149,6 +149,11 @@ namespace TaleofMonsters.Datas.Equips
                 string tp = string.Format("{0}(被动)({2}%):{1}", skillConfig.Name, skillConfig.GetDescript(level), equipConfig.CommonSkillRate);
                 tipData.AddTextLines(tp, "White", 15, false);
             }
+            if (!string.IsNullOrEmpty(equipConfig.Des))
+            {
+                tipData.AddLine();
+                tipData.AddTextNewLine(equipConfig.Des, "Gold");
+            }
             tipData.AddImageXY(EquipBook.GetEquipImage(TemplateId), 8, 8, 48, 48, 7, 24, 30, 30);
             return tipData.Image;
         }

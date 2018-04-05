@@ -31,7 +31,7 @@ namespace TaleofMonsters.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.bitmapButtonClose = new BitmapButton();
+            this.bitmapButtonClose = new ControlPlus.BitmapButton();
             this.miniItemView1 = new TaleofMonsters.Forms.Items.MiniItemView();
             this.SuspendLayout();
             // 
@@ -43,12 +43,13 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonClose.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonClose.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonClose.ImageNormal = null;
-            this.bitmapButtonClose.Location = new System.Drawing.Point(581, 3);
+            this.bitmapButtonClose.Location = new System.Drawing.Point(565, 14);
             this.bitmapButtonClose.Name = "bitmapButtonClose";
             this.bitmapButtonClose.NoUseDrawNine = false;
             this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
             this.bitmapButtonClose.TabIndex = 27;
             this.bitmapButtonClose.TextOffX = 0;
+            this.bitmapButtonClose.TipText = null;
             this.bitmapButtonClose.UseVisualStyleBackColor = true;
             this.bitmapButtonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
@@ -56,11 +57,11 @@ namespace TaleofMonsters.Forms
             // 
             this.miniItemView1.BackColor = System.Drawing.Color.Black;
             this.miniItemView1.ItemSubType = 17;
-            this.miniItemView1.Location = new System.Drawing.Point(533, 272);
+            this.miniItemView1.Location = new System.Drawing.Point(517, 256);
             this.miniItemView1.Name = "miniItemView1";
             this.miniItemView1.Size = new System.Drawing.Size(72, 142);
             this.miniItemView1.TabIndex = 28;
-            this.miniItemView1.UseType = HItemUseTypes.Seed;
+            this.miniItemView1.UseType = TaleofMonsters.Datas.HItemUseTypes.Seed;
             // 
             // FarmForm
             // 
@@ -70,10 +71,12 @@ namespace TaleofMonsters.Forms
             this.Controls.Add(this.bitmapButtonClose);
             this.DoubleBuffered = true;
             this.Name = "FarmForm";
-            this.Size = new System.Drawing.Size(631, 450);
+            this.Size = new System.Drawing.Size(601, 405);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FarmForm_Paint);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FarmForm_MouseClick);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FarmForm_MouseMove);
+            this.Controls.SetChildIndex(this.bitmapButtonClose, 0);
+            this.Controls.SetChildIndex(this.miniItemView1, 0);
             this.ResumeLayout(false);
 
         }

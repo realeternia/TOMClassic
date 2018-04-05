@@ -32,6 +32,7 @@ namespace TaleofMonsters.Forms
         {
             this.bitmapButtonClose = new ControlPlus.BitmapButton();
             this.bitmapButtonBuild = new ControlPlus.BitmapButton();
+            this.bitmapButtonFarm = new ControlPlus.BitmapButton();
             this.SuspendLayout();
             // 
             // bitmapButtonClose
@@ -60,20 +61,39 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonBuild.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonBuild.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonBuild.ImageNormal = null;
-            this.bitmapButtonBuild.Location = new System.Drawing.Point(20, 349);
+            this.bitmapButtonBuild.Location = new System.Drawing.Point(14, 217);
             this.bitmapButtonBuild.Name = "bitmapButtonBuild";
             this.bitmapButtonBuild.NoUseDrawNine = false;
-            this.bitmapButtonBuild.Size = new System.Drawing.Size(40, 40);
+            this.bitmapButtonBuild.Size = new System.Drawing.Size(36, 36);
             this.bitmapButtonBuild.TabIndex = 40;
             this.bitmapButtonBuild.TextOffX = 0;
             this.bitmapButtonBuild.TipText = "查看所有建筑";
             this.bitmapButtonBuild.UseVisualStyleBackColor = true;
             this.bitmapButtonBuild.Click += new System.EventHandler(this.bitmapButtonBuild_Click);
             // 
+            // bitmapButtonFarm
+            // 
+            this.bitmapButtonFarm.BorderColor = System.Drawing.Color.DarkBlue;
+            this.bitmapButtonFarm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bitmapButtonFarm.IconImage = null;
+            this.bitmapButtonFarm.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonFarm.IconXY = new System.Drawing.Point(0, 0);
+            this.bitmapButtonFarm.ImageNormal = null;
+            this.bitmapButtonFarm.Location = new System.Drawing.Point(14, 262);
+            this.bitmapButtonFarm.Name = "bitmapButtonFarm";
+            this.bitmapButtonFarm.NoUseDrawNine = false;
+            this.bitmapButtonFarm.Size = new System.Drawing.Size(36, 36);
+            this.bitmapButtonFarm.TabIndex = 41;
+            this.bitmapButtonFarm.TextOffX = 0;
+            this.bitmapButtonFarm.TipText = "查看农场";
+            this.bitmapButtonFarm.UseVisualStyleBackColor = true;
+            this.bitmapButtonFarm.Click += new System.EventHandler(this.bitmapButtonFarm_Click);
+            // 
             // CastleForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.bitmapButtonFarm);
             this.Controls.Add(this.bitmapButtonBuild);
             this.Controls.Add(this.bitmapButtonClose);
             this.Name = "CastleForm";
@@ -81,6 +101,7 @@ namespace TaleofMonsters.Forms
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.CastleForm_Paint);
             this.Controls.SetChildIndex(this.bitmapButtonClose, 0);
             this.Controls.SetChildIndex(this.bitmapButtonBuild, 0);
+            this.Controls.SetChildIndex(this.bitmapButtonFarm, 0);
             this.ResumeLayout(false);
 
         }
@@ -88,5 +109,6 @@ namespace TaleofMonsters.Forms
         #endregion
         private BitmapButton bitmapButtonClose;
         private BitmapButton bitmapButtonBuild;
+        private BitmapButton bitmapButtonFarm;
     }
 }

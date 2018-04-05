@@ -36,10 +36,6 @@ namespace TaleofMonsters.Forms.CMain.Quests
             {
                 PanelManager.DealPanel(new MergeWeaponForm());
             }
-            else if (evt.ParamList[0] == "farm")
-            {
-                PanelManager.DealPanel(new FarmForm());
-            }
             else if (evt.ParamList[0] == "bless")
             {
                 PanelManager.DealPanel(new BlessForm());

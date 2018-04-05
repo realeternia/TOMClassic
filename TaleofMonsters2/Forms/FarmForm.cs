@@ -134,14 +134,14 @@ namespace TaleofMonsters.Forms
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
             Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString("农 场", font, Brushes.White, Width / 2 - 40, 8);
+            e.Graphics.DrawString("农场", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
 
             if (!showImage)
                 return;
 
-            Image back = PicLoader.Read("Farm", "back.JPG");
-            e.Graphics.DrawImage(back, 15, 40,602,392);
+            Image back = PicLoader.Read("Build", "farm.JPG");
+            e.Graphics.DrawImage(back, 15, 40,572,352);
             back.Dispose();
 
             for (int i = 0; i < 9; i++)
@@ -159,8 +159,8 @@ namespace TaleofMonsters.Forms
                     baseY += 40 * (i % 3);
                 }
                 DbFarmState timeState = UserProfile.Profile.InfoFarm.GetFarmState(i);
-                string baseName = timeState.Type == -1 ? "tile2" : "tile1";
-                Image tile = PicLoader.Read("Farm", i == select ? baseName + "On.PNG" : baseName + ".PNG");
+                string baseName = timeState.Type == -1 ? "Farm.tile2" : "Farm.tile1";
+                Image tile = PicLoader.Read("Build", i == select ? baseName + "On.PNG" : baseName + ".PNG");
                 e.Graphics.DrawImage(tile, baseX, baseY + 86 - tile.Height, tile.Width, tile.Height);
                 tile.Dispose();
 
@@ -169,7 +169,7 @@ namespace TaleofMonsters.Forms
 
                 TimeSpan span = TimeTool.UnixTimeToDateTime(timeState.Time) - DateTime.Now;
                 var itemConfig = ConfigData.GetHItemConfig(timeState.Type);
-                Image veg = PicLoader.Read("Farm", string.Format("{0}.PNG", itemConfig.Url));
+                Image veg = PicLoader.Read("Build", string.Format("Farm.{0}.PNG", itemConfig.Url));
                 if (veg != null)
                 {
                     if (span.TotalSeconds > 0)

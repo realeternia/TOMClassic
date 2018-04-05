@@ -9,6 +9,7 @@ using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Cards.Monsters;
 using TaleofMonsters.Datas.Equips;
+using TaleofMonsters.Datas.Items;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Core;
@@ -32,6 +33,8 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
             bitmapButtonBuild.ImageNormal = PicLoader.Read("Button.Panel", "BuildButton.JPG");
             bitmapButtonBuild.NoUseDrawNine = true;
+            bitmapButtonFarm.ImageNormal = PicLoader.Read("Button.Panel", "FarmButton.JPG");
+            bitmapButtonFarm.NoUseDrawNine = true;
             DoubleBuffered = true;
 
             vRegion = new VirtualRegion(this);
@@ -89,10 +92,13 @@ namespace TaleofMonsters.Forms
 
             heroData = new Monster(MonsterConfig.Indexer.KingTowerId);
             heroData.UpgradeToLevel(ConfigData.GetLevelExpConfig(UserProfile.Profile.InfoBasic.Level).TowerLevel);
+            OnEquipChange();
         }
 
-        public void MenuRefresh()
+        public void OnEquipChange()
         {
+            var farmId = HItemBook.GetItemId("eqtian");
+            bitmapButtonFarm.Enabled = UserProfile.InfoEquip.HasEquipOn(farmId);
             Invalidate();
         }
 
@@ -215,6 +221,11 @@ namespace TaleofMonsters.Forms
         private void bitmapButtonBuild_Click(object sender, EventArgs e)
         {
             PanelManager.DealPanel(new EquipComposeForm());
+        }
+
+        private void bitmapButtonFarm_Click(object sender, EventArgs e)
+        {
+            PanelManager.DealPanel(new FarmForm());
         }
     }
 }
