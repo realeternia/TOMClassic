@@ -36,7 +36,7 @@ namespace TaleofMonsters.Forms
             bitmapButtonBuild.NoUseDrawNine = true;
             bitmapButtonFarm.ImageNormal = PicLoader.Read("Button.Panel", "FarmButton.JPG");
             bitmapButtonFarm.NoUseDrawNine = true;
-            bitmapButtonOre.ImageNormal = PicLoader.Read("Button.Panel", "FarmButton.JPG");
+            bitmapButtonOre.ImageNormal = PicLoader.Read("Button.Panel", "OreButton.JPG");
             bitmapButtonOre.NoUseDrawNine = true;
             DoubleBuffered = true;
 
@@ -235,7 +235,7 @@ namespace TaleofMonsters.Forms
 
         private void bitmapButtonOre_Click(object sender, EventArgs e)
         {
-
+            PanelManager.DealPanel(new OreForm());
         }
     }
 }

@@ -24,6 +24,7 @@ namespace TaleofMonsters.Forms.VBuilds
         {
             InitializeComponent();
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
+            this.bitmapButtonHelp.ImageNormal = PicLoader.Read("Button.Panel", "LearnButton.JPG");
         }
 
         public override void Init(int width, int height)
@@ -179,6 +180,11 @@ namespace TaleofMonsters.Forms.VBuilds
                     font.Dispose();
                 }
             }
+        }
+
+        private void bitmapButtonHelp_Click(object sender, EventArgs e)
+        {
+            MessageBoxEx.Show("通过完成事件和战斗可以使作物成熟");
         }
     }
 }

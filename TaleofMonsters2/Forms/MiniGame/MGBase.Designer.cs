@@ -29,8 +29,8 @@ namespace TaleofMonsters.Forms.MiniGame
         /// </summary>
         private void InitializeComponent()
         {
-            this.bitmapButtonClose = new BitmapButton();
-            this.bitmapButtonHelp = new BitmapButton();
+            this.bitmapButtonClose = new ControlPlus.BitmapButton();
+            this.bitmapButtonHelp = new ControlPlus.BitmapButton();
             this.SuspendLayout();
             // 
             // bitmapButtonClose
@@ -47,6 +47,7 @@ namespace TaleofMonsters.Forms.MiniGame
             this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
             this.bitmapButtonClose.TabIndex = 39;
             this.bitmapButtonClose.TextOffX = 0;
+            this.bitmapButtonClose.TipText = null;
             this.bitmapButtonClose.UseVisualStyleBackColor = true;
             this.bitmapButtonClose.Click += new System.EventHandler(this.bitmapButtonClose_Click);
             // 
@@ -64,6 +65,7 @@ namespace TaleofMonsters.Forms.MiniGame
             this.bitmapButtonHelp.Size = new System.Drawing.Size(24, 24);
             this.bitmapButtonHelp.TabIndex = 40;
             this.bitmapButtonHelp.TextOffX = 0;
+            this.bitmapButtonHelp.TipText = null;
             this.bitmapButtonHelp.UseVisualStyleBackColor = true;
             this.bitmapButtonHelp.MouseEnter += new System.EventHandler(this.bitmapButtonHelp_MouseEnter);
             this.bitmapButtonHelp.MouseLeave += new System.EventHandler(this.bitmapButtonHelp_MouseLeave);
@@ -77,6 +79,8 @@ namespace TaleofMonsters.Forms.MiniGame
             this.DoubleBuffered = true;
             this.Name = "MGBase";
             this.Size = new System.Drawing.Size(345, 416);
+            this.Controls.SetChildIndex(this.bitmapButtonClose, 0);
+            this.Controls.SetChildIndex(this.bitmapButtonHelp, 0);
             this.ResumeLayout(false);
 
         }

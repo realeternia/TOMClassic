@@ -104,7 +104,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonOre.Size = new System.Drawing.Size(36, 36);
             this.bitmapButtonOre.TabIndex = 42;
             this.bitmapButtonOre.TextOffX = 0;
-            this.bitmapButtonOre.TipText = "查看农场";
+            this.bitmapButtonOre.TipText = "查看矿场";
             this.bitmapButtonOre.UseVisualStyleBackColor = true;
             this.bitmapButtonOre.Click += new System.EventHandler(this.bitmapButtonOre_Click);
             // 

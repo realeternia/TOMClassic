@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using ConfigDatas;
-using NarlonLib.Tools;
 using TaleofMonsters.Core;
 using TaleofMonsters.Datas.Equips;
 using TaleofMonsters.Datas.Others;
@@ -16,6 +15,7 @@ namespace TaleofMonsters.Datas.User
         [FieldIndex(Index = 7)] public List<DbEquip> EquipAvail;
 
         [FieldIndex(Index = 10)] public DbFarmState[] DbFarmState;
+        [FieldIndex(Index = 11)] public int OreDigEp; 
 
         private const int MainHouseIndex = 5;
 
@@ -144,6 +144,11 @@ namespace TaleofMonsters.Datas.User
                     equip.Level++;
                 }
             }
+        }
+
+        public void AddEp()
+        {
+            //todo 加各种建筑能量
         }
 
         #region 农场

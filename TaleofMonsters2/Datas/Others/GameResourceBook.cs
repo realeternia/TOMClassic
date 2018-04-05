@@ -135,7 +135,7 @@ namespace TaleofMonsters.Datas.Others
 
 
         /// <summary>
-        /// 资源获得通用入口
+        /// sq资源获得通用入口
         /// </summary>
         public static uint InResSceneQuest(int resId, int level, int rate, bool noRandom = false)
         {
@@ -147,6 +147,19 @@ namespace TaleofMonsters.Datas.Others
             if (resId == (int)GameResourceType.Lumber || resId == (int)GameResourceType.Stone)
                 count *= 2;
             return Math.Max(1, count);
+        }
+        /// <summary>
+        /// ore资源获得通用入口
+        /// </summary>
+        public static uint InResBuildOre(int resId, int level)
+        {
+            var count = (uint)ExpTree.GetResFactor(level);
+            if (resId == (int)GameResourceType.Gold)
+                count *= 10;
+            if (resId == (int)GameResourceType.Lumber || resId == (int)GameResourceType.Stone)
+                count *= 2;
+            var valGet = MathTool.GetRandom(count*0.75, count*1.25);
+            return (uint)Math.Max(1, valGet);
         }
         /// <summary>
         /// 消耗石材制作装备,level 1-5

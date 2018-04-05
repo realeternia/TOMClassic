@@ -32,6 +32,7 @@ namespace TaleofMonsters.Forms.VBuilds
         {
             this.bitmapButtonClose = new ControlPlus.BitmapButton();
             this.miniItemView1 = new TaleofMonsters.Forms.Items.MiniItemView();
+            this.bitmapButtonHelp = new ControlPlus.BitmapButton();
             this.SuspendLayout();
             // 
             // bitmapButtonClose
@@ -62,10 +63,29 @@ namespace TaleofMonsters.Forms.VBuilds
             this.miniItemView1.TabIndex = 28;
             this.miniItemView1.UseType = TaleofMonsters.Datas.HItemUseTypes.Seed;
             // 
+            // bitmapButtonHelp
+            // 
+            this.bitmapButtonHelp.BorderColor = System.Drawing.Color.DarkBlue;
+            this.bitmapButtonHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bitmapButtonHelp.IconImage = null;
+            this.bitmapButtonHelp.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonHelp.IconXY = new System.Drawing.Point(0, 0);
+            this.bitmapButtonHelp.ImageNormal = null;
+            this.bitmapButtonHelp.Location = new System.Drawing.Point(535, 14);
+            this.bitmapButtonHelp.Name = "bitmapButtonHelp";
+            this.bitmapButtonHelp.NoUseDrawNine = true;
+            this.bitmapButtonHelp.Size = new System.Drawing.Size(24, 24);
+            this.bitmapButtonHelp.TabIndex = 41;
+            this.bitmapButtonHelp.TextOffX = 0;
+            this.bitmapButtonHelp.TipText = null;
+            this.bitmapButtonHelp.UseVisualStyleBackColor = true;
+            this.bitmapButtonHelp.Click += new System.EventHandler(this.bitmapButtonHelp_Click);
+            // 
             // FarmForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.bitmapButtonHelp);
             this.Controls.Add(this.miniItemView1);
             this.Controls.Add(this.bitmapButtonClose);
             this.DoubleBuffered = true;
@@ -76,6 +96,7 @@ namespace TaleofMonsters.Forms.VBuilds
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FarmForm_MouseMove);
             this.Controls.SetChildIndex(this.bitmapButtonClose, 0);
             this.Controls.SetChildIndex(this.miniItemView1, 0);
+            this.Controls.SetChildIndex(this.bitmapButtonHelp, 0);
             this.ResumeLayout(false);
 
         }
@@ -84,5 +105,6 @@ namespace TaleofMonsters.Forms.VBuilds
 
         private BitmapButton bitmapButtonClose;
         private TaleofMonsters.Forms.Items.MiniItemView miniItemView1;
+        private BitmapButton bitmapButtonHelp;
     }
 }

@@ -182,6 +182,12 @@
     <Compile Include="Forms\CastleForm.Designer.cs">
       <DependentUpon>CastleForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\VBuilds\OreForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\VBuilds\OreForm.Designer.cs">
+      <DependentUpon>OreForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Rpc\NetDataCache.cs" />
     <Compile Include="Tools\ImageManager.cs" />
     <Compile Include="Rpc\S2CImplement.cs" />
@@ -967,6 +973,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\StoryForm.resx">
       <DependentUpon>StoryForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\VBuilds\OreForm.resx">
+      <DependentUpon>OreForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\WorldMapViewForm.resx">
