@@ -35,5 +35,10 @@ namespace TaleofMonsters.Rpc
             var data = new PacketC2SSendPlayerInfo(name, headId).Data;
             client.Send(data);
         }
+        public void SendHeartbeat()
+        {
+            var data = new PacketC2SSendHeartbeat().Data;
+            client.Send(data);
+        }
     }
 }

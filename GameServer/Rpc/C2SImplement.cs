@@ -15,6 +15,7 @@ namespace GameServer.Rpc
                 case PacketC2SLevelExpChange.PackId: OnPacketLevelExpChange(net, packet as PacketC2SLevelExpChange); break;
                 case PacketC2SGetRank.PackId: OnPacketGetRank(net, packet as PacketC2SGetRank); break;
                 case PacketC2SSendPlayerInfo.PackId: OnPacketSendPlayerInfo(net, packet as PacketC2SSendPlayerInfo); break;
+                case PacketC2SSendHeartbeat.PackId: OnPacketSendHeartbeat(net, packet as PacketC2SSendHeartbeat); break;
                 default: Logger.Log(string.Format("CheckPacket error id={0}", packet.PackRealId));
                     net.Close("error packet");
                     break;
@@ -58,6 +59,14 @@ namespace GameServer.Rpc
             {
                 player.Name = c2SData.Name;
                 player.HeadId = c2SData.HeadId;
+            }
+        }
+        public void OnPacketSendHeartbeat(NetClient net, PacketC2SSendHeartbeat c2SData)
+        {
+            var player = GameServer.Instance.PlayerManager.GetPlayer(net.ClientId);
+            if (player != null)
+            {
+                player.S2C.ReplyHeartbeat();
             }
         }
     }

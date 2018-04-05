@@ -16,5 +16,10 @@ namespace GameServer.Rpc
             var data = new PacketS2CRankResult(rankList).Data;
             client.Send(data);
         }
+        public void ReplyHeartbeat()
+        {
+            var data = new PacketS2CReplyHeartbeat().Data;
+            client.Send(data);
+        }
     }
 }

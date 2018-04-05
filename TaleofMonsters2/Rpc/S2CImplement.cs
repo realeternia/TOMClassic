@@ -1,4 +1,5 @@
 ﻿using JLM.NetSocket;
+using NarlonLib.Log;
 using TaleofMonsters.Core;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms;
@@ -14,6 +15,7 @@ namespace TaleofMonsters.Rpc
             {
                 case PacketS2CLoginResult.PackId: OnPacketLogin(packet as PacketS2CLoginResult);break;
                 case PacketS2CRankResult.PackId: OnPacketRankResult(packet as PacketS2CRankResult); break;
+                case PacketS2CReplyHeartbeat.PackId: OnPacketReplyHeartbeat(packet as PacketS2CReplyHeartbeat); break;
             }
         }
 
@@ -38,6 +40,10 @@ namespace TaleofMonsters.Rpc
         {
             NetDataCache.RankList = s2CData.RankList;
             PanelManager.SendMessage(typeof(RankForm), 1);
+        }
+        public void OnPacketReplyHeartbeat(PacketS2CReplyHeartbeat s2CData)
+        {
+           // NLog.Debug("HB RECV");
         }
     }
 }

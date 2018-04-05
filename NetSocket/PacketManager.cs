@@ -20,9 +20,11 @@ namespace JLM.NetSocket
                 case PacketC2SLevelExpChange.PackId: return new PacketC2SLevelExpChange(newData);
                 case PacketC2SGetRank.PackId: return new PacketC2SGetRank(newData);
                 case PacketC2SSendPlayerInfo.PackId: return new PacketC2SSendPlayerInfo(newData);
+                case PacketC2SSendHeartbeat.PackId: return new PacketC2SSendHeartbeat(newData);
 
                 case PacketS2CLoginResult.PackId: return new PacketS2CLoginResult(newData);
                 case PacketS2CRankResult.PackId: return new PacketS2CRankResult(newData);
+                case PacketS2CReplyHeartbeat.PackId: return new PacketS2CReplyHeartbeat(newData);
             }
             return new PacketBase();
         }

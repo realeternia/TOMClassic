@@ -176,6 +176,43 @@ namespace JLM.NetSocket
             }
         }
     }
+    public class PacketC2SSendHeartbeat : PacketBase
+    {
+        public const int PackId = 100006;
+        public int Token;
+
+        public override int PackRealId { get { return PackId; } }
+
+        public PacketC2SSendHeartbeat()
+        {
+
+        }
+
+        public PacketC2SSendHeartbeat(byte[] bts)
+        {
+            TBinaryReader sr = new TBinaryReader(bts);
+            sr.ReadInt32(); //包id
+            Token = sr.ReadInt32();
+        }
+
+        public override byte[] Data
+        {
+            get
+            {
+                TBinaryWriter sw = new TBinaryWriter();
+                sw.Write(PackId);
+                sw.Write(Token);
+                return sw.GetBytes();
+            }
+        }
+    }
+
+
+
+
+
+
+
     public class PacketS2CLoginResult : PacketBase
     {
         public const int PackId = 200001;
@@ -247,6 +284,35 @@ namespace JLM.NetSocket
                 sw.Write(RankList.Count);
                 foreach (var rankData in RankList)
                     rankData.Write(sw);
+                return sw.GetBytes();
+            }
+        }
+    }
+    public class PacketS2CReplyHeartbeat : PacketBase
+    {
+        public const int PackId = 200003;
+        public int Token;
+        public override int PackRealId { get { return PackId; } }
+
+        public PacketS2CReplyHeartbeat()
+        {
+
+        }
+
+        public PacketS2CReplyHeartbeat(byte[] bts)
+        {
+            TBinaryReader sr = new TBinaryReader(bts);
+            sr.ReadInt32(); //包id
+            Token = sr.ReadInt32();
+        }
+
+        public override byte[] Data
+        {
+            get
+            {
+                TBinaryWriter sw = new TBinaryWriter();
+                sw.Write(PackId);
+                sw.Write(Token);
                 return sw.GetBytes();
             }
         }

@@ -14,6 +14,8 @@ namespace TaleofMonsters.Rpc
         private static S2CImplement s2cImpl = new S2CImplement();
         public static C2SSender C2SSender;
 
+        private static DateTime lastHeartbeatTime = DateTime.Now;
+
         public static void Oneloop()
         {
             if (client != null)
@@ -28,6 +30,7 @@ namespace TaleofMonsters.Rpc
                 try
                 {
                     client.Oneloop();
+                    CheckHeartbeat();
                 }
                 catch (Exception e)
                 {
@@ -64,6 +67,15 @@ namespace TaleofMonsters.Rpc
         private static void DataArrived(object sender, NetSockDataArrivalEventArgs arg)
         {
             s2cImpl.CheckPacket(arg.Data, arg.Net);
+        }
+
+        private static void CheckHeartbeat()
+        {
+            if ((DateTime.Now - lastHeartbeatTime).TotalSeconds > 10)
+            {
+                C2SSender.SendHeartbeat();
+                lastHeartbeatTime = DateTime.Now;
+            }
         }
 
         private static void client_Connected(object sender, NetSocketConnectedEventArgs e)
