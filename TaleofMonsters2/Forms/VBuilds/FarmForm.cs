@@ -82,8 +82,8 @@ namespace TaleofMonsters.Forms.VBuilds
             int newsel = GetSelectedCell(e.X, e.Y);
             if (newsel != -1)
             {
-                DbFarmState timeState = UserProfile.Profile.InfoCastle.GetFarmState(newsel);
-                if (timeState.Type == -1)
+                DbFarmState farmState = UserProfile.Profile.InfoCastle.GetFarmState(newsel);
+                if (farmState.Type == -1)//空地
                 {
                     var pricecount = GameResourceBook.OutWoodBuildFarm((uint)UserProfile.Profile.InfoCastle.GetFarmAvailCount() * 20);
                     if (MessageBoxEx2.Show(string.Format("是否花{0}木材开启额外农田?", pricecount)) == DialogResult.OK)
@@ -91,7 +91,7 @@ namespace TaleofMonsters.Forms.VBuilds
                         if (UserProfile.InfoBag.HasResource(GameResourceType.Lumber, pricecount))
                         {
                             UserProfile.InfoBag.SubResource(GameResourceType.Lumber, pricecount);
-                            UserProfile.Profile.InfoCastle.SetFarmState(newsel, new DbFarmState(0, 0));
+                            UserProfile.Profile.InfoCastle.SetFarmState(newsel, new DbFarmState(0));
                         }
                         else
                         {
@@ -99,23 +99,16 @@ namespace TaleofMonsters.Forms.VBuilds
                         }
                     }
                 }
-                else if (timeState.Type > 0)
+                else if (farmState.Type > 0) //有种子
                 {
-                    if (timeState.Time < TimeTool.DateTimeToUnixTime(DateTime.Now))
+                    if (farmState.Ep >= farmState.EpNeed)
                     {
-                        UserProfile.InfoBag.AddItem(timeState.Type, 1);
-                        UserProfile.Profile.InfoCastle.SetFarmState(newsel, new DbFarmState(0, 0));
+                        UserProfile.InfoBag.AddItem(farmState.Type, 1);
+                        UserProfile.Profile.InfoCastle.SetFarmState(newsel, new DbFarmState(0));
                     }
                     else
                     {
-                        int pricecount = (timeState.Time - TimeTool.DateTimeToUnixTime(DateTime.Now)) / 600 + 1;
-                        if (MessageBoxEx2.Show(string.Format("是否花{0}钻石催熟作物?", pricecount)) == DialogResult.OK)
-                        {
-                            if (UserProfile.InfoBag.PayDiamond(pricecount))
-                            {
-                                UserProfile.Profile.InfoCastle.SetFarmState(newsel, new DbFarmState(timeState.Type, 0));
-                            }
-                        }
+                        AddFlowCenter("作物还未成熟", "Red");
                     }
                 }
             }
@@ -158,30 +151,29 @@ namespace TaleofMonsters.Forms.VBuilds
                     baseX -= 80 * (i % 3);
                     baseY += 40 * (i % 3);
                 }
-                DbFarmState timeState = UserProfile.Profile.InfoCastle.GetFarmState(i);
-                string baseName = timeState.Type == -1 ? "Farm.tile2" : "Farm.tile1";
+                DbFarmState farmState = UserProfile.Profile.InfoCastle.GetFarmState(i);
+                string baseName = farmState.Type == -1 ? "Farm.tile2" : "Farm.tile1";
                 Image tile = PicLoader.Read("Build", i == select ? baseName + "On.PNG" : baseName + ".PNG");
                 e.Graphics.DrawImage(tile, baseX, baseY + 86 - tile.Height, tile.Width, tile.Height);
                 tile.Dispose();
 
-                if (timeState.Type <= 0)
+                if (farmState.Type <= 0)
                     continue;
 
-                TimeSpan span = TimeTool.UnixTimeToDateTime(timeState.Time) - DateTime.Now;
-                var itemConfig = ConfigData.GetHItemConfig(timeState.Type);
+                var itemConfig = ConfigData.GetHItemConfig(farmState.Type);
                 Image veg = PicLoader.Read("Build", string.Format("Farm.{0}.PNG", itemConfig.Url));
                 if (veg != null)
                 {
-                    if (span.TotalSeconds > 0)
+                    if (farmState.Ep < farmState.EpNeed)
                         e.Graphics.DrawImage(veg, new Rectangle(baseX + 59, baseY + 6, veg.Width, veg.Height), 0, 0, veg.Width, veg.Height, GraphicsUnit.Pixel, Core.HSImageAttributes.ToGray);
                     else
                         e.Graphics.DrawImage(veg, baseX + 59, baseY + 6, veg.Width, veg.Height);
                     veg.Dispose();
                 }
 
-                if (span.TotalSeconds > 0)
+                if (farmState.Ep < farmState.EpNeed)
                 {
-                    string timeText = string.Format("{0}:{1:00}:{2:00}", span.Hours, span.Minutes, span.Seconds);
+                    string timeText = string.Format("{0}/{1}", farmState.Ep, farmState.EpNeed);
                     font = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
                     e.Graphics.DrawString(timeText, font, Brushes.White, baseX + 55, baseY + 30);
                     font.Dispose();

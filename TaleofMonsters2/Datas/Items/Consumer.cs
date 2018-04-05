@@ -96,7 +96,7 @@ namespace TaleofMonsters.Datas.Items
 
         private static bool UseSeedItem(ItemConsumerConfig itemConfig)
         {
-            return UserProfile.Profile.InfoCastle.UseSeed(itemConfig.FarmItemId, itemConfig.FarmTime);
+            return UserProfile.Profile.InfoCastle.UseSeed(itemConfig.FarmItemId, itemConfig.FarmEnergy);
         }
         
         private static bool UseRandomCard(ItemConsumerConfig itemConfig)

@@ -27,9 +27,9 @@ namespace TaleofMonsters.Datas.User
                 Equipon[i] = new DbEquip();
 
             DbFarmState = new DbFarmState[GameConstants.PlayFarmCount];
-            DbFarmState[0] = new DbFarmState(0, 0);//初始送1片田
+            DbFarmState[0] = new DbFarmState(0);//初始送1片田
             for (int i = 1; i < DbFarmState.Length; i++)
-                DbFarmState[i] = new DbFarmState(-1, 0);
+                DbFarmState[i] = new DbFarmState(-1);
         }
 
         public void AddEquip(int eid, int expAdd)
@@ -146,7 +146,7 @@ namespace TaleofMonsters.Datas.User
             }
         }
 
-
+        #region 农场
         public DbFarmState GetFarmState(int id)
         {
             return DbFarmState[id];
@@ -160,17 +160,15 @@ namespace TaleofMonsters.Datas.User
         public int GetFarmAvailCount()
         {
             int count = 0;
-            foreach (DbFarmState state in DbFarmState)
+            foreach (var state in DbFarmState)
             {
                 if (state.Type != -1)
-                {
                     count++;
-                }
             }
             return count;
         }
 
-        public bool UseSeed(int type, int dura)
+        public bool UseSeed(int type, int epNeed)
         {
             for (int i = 0; i < 9; i++)
             {
@@ -178,11 +176,13 @@ namespace TaleofMonsters.Datas.User
                 if (targetCell.Type == 0)
                 {
                     targetCell.Type = type;
-                    targetCell.Time = TimeTool.DateTimeToUnixTime(DateTime.Now) + dura;
+                    targetCell.Ep = 0;
+                    targetCell.EpNeed = epNeed;
                     return true;
                 }
             }
             return false;
         }
+        #endregion
     }
 }
