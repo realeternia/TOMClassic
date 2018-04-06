@@ -51,86 +51,43 @@ namespace TaleofMonsters.Forms.Items.Regions
         public override void ShowTip(ImageToolTip tooltip, Control form, int x, int y)
         {
             var regionType = GetVType();
+            string resStr = "";
             if (regionType == ImageRegionCellType.Gold)
-            {
-                string resStr = string.Format("黄金:{0}", Parm);
-                tooltip.Show(DrawTool.GetImageByString(resStr, 100), form, x, y);
-            }
+                resStr = string.Format("黄金:{0}", Parm);
             else if (regionType == ImageRegionCellType.Lumber)
-            {
-                string resStr = string.Format("木材:{0}", Parm);
-                tooltip.Show(DrawTool.GetImageByString(resStr, 100), form, x, y);
-            }
+                resStr = string.Format("木材:{0}", Parm);
             else if (regionType == ImageRegionCellType.Stone)
-            {
-                string resStr = string.Format("石材:{0}", Parm);
-                tooltip.Show(DrawTool.GetImageByString(resStr, 100), form, x, y);
-            }
+                resStr = string.Format("石材:{0}", Parm);
             else if (regionType == ImageRegionCellType.Mercury)
-            {
-                string resStr = string.Format("水银:{0}", Parm);
-                tooltip.Show(DrawTool.GetImageByString(resStr, 100), form, x, y);
-            }
+                resStr = string.Format("水银:{0}", Parm);
             else if (regionType == ImageRegionCellType.Carbuncle)
-            {
-                string resStr = string.Format("红宝石:{0}", Parm);
-                tooltip.Show(DrawTool.GetImageByString(resStr, 100), form, x, y);
-            }
+                resStr = string.Format("红宝石:{0}", Parm);
             else if (regionType == ImageRegionCellType.Sulfur)
-            {
-                string resStr = string.Format("硫磺:{0}", Parm);
-                tooltip.Show(DrawTool.GetImageByString(resStr, 100), form, x, y);
-            }
+                resStr = string.Format("硫磺:{0}", Parm);
             else if (regionType == ImageRegionCellType.Gem)
-            {
-                string resStr = string.Format("水晶:{0}", Parm);
-                tooltip.Show(DrawTool.GetImageByString(resStr, 100), form, x, y);
-            }
+                resStr = string.Format("水晶:{0}", Parm);
             else if (regionType == ImageRegionCellType.Food)
-            {
-                string resStr = string.Format("食物:{0}", Parm);
-                tooltip.Show(DrawTool.GetImageByString(resStr, 100), form, x, y);
-            }
+                resStr = string.Format("食物:{0}", Parm);
             else if (regionType == ImageRegionCellType.Health)
-            {
-                string resStr = string.Format("生命:{0}", Parm);
-                tooltip.Show(DrawTool.GetImageByString(resStr, 100), form, x, y);
-            }
+                resStr = string.Format("生命:{0}", Parm);
             else if (regionType == ImageRegionCellType.Mental)
-            {
-                string resStr = string.Format("精神:{0}", Parm);
-                tooltip.Show(DrawTool.GetImageByString(resStr, 100), form, x, y);
-            }
+                resStr = string.Format("精神:{0}", Parm);
             else if (regionType == ImageRegionCellType.Exp)
-            {
-                string resStr = string.Format("经验值:{0}", Parm);
-                tooltip.Show(DrawTool.GetImageByString(resStr, 100), form, x, y);
-            }
+                resStr = string.Format("经验值:{0}", Parm);
             else if (regionType == ImageRegionCellType.Str)
-            {
-                string resStr = string.Format("力量（副本属性）+{0}", Parm);
-                tooltip.Show(DrawTool.GetImageByString(resStr, 120), form, x, y);
-            }
+                resStr = string.Format("力量（副本属性）+{0}", Parm);
             else if (regionType == ImageRegionCellType.Agi)
-            {
-                string resStr = string.Format("敏捷（副本属性）+{0}", Parm);
-                tooltip.Show(DrawTool.GetImageByString(resStr, 120), form, x, y);
-            }
+                resStr = string.Format("敏捷（副本属性）+{0}", Parm);
             else if (regionType == ImageRegionCellType.Intl)
-            {
-                string resStr = string.Format("智慧（副本属性）+{0}", Parm);
-                tooltip.Show(DrawTool.GetImageByString(resStr, 120), form, x, y);
-            }
+                resStr = string.Format("智慧（副本属性）+{0}", Parm);
             else if (regionType == ImageRegionCellType.Perc)
-            {
-                string resStr = string.Format("感知（副本属性）+{0}", Parm);
-                tooltip.Show(DrawTool.GetImageByString(resStr, 120), form, x, y);
-            }
+                resStr = string.Format("感知（副本属性）+{0}", Parm);
             else if (regionType == ImageRegionCellType.Endu)
-            {
-                string resStr = string.Format("耐力（副本属性）+{0}", Parm);
-                tooltip.Show(DrawTool.GetImageByString(resStr, 120), form, x, y);
-            }
+                resStr = string.Format("耐力（副本属性）+{0}", Parm);
+            else if (regionType == ImageRegionCellType.BuildEp)
+                resStr = string.Format("城堡建筑能量+{0}", Parm);
+
+            tooltip.Show(DrawTool.GetImageByString(resStr, 120), form, x, y);
         }
     }
 
@@ -152,6 +109,7 @@ namespace TaleofMonsters.Forms.Items.Regions
         Agi,
         Intl,
         Perc,
-        Endu
+        Endu,
+        BuildEp
     }
 }

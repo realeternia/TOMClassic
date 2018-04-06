@@ -25,12 +25,14 @@ namespace TaleofMonsters.Controler.Battle
         private bool isWin;
         private int leftId;
         private int rightId;
-        private uint[] resource;
+
+        private uint goldDrop;
         private uint exp;
         private ImageToolTip tooltip = SystemToolTip.Instance;
         private VirtualRegion vRegion;
 
         private List<int> rewardItemList = new List<int>();
+
         private int cellIndex;
 
         internal BattleResultForm()
@@ -56,11 +58,11 @@ namespace TaleofMonsters.Controler.Battle
             {
                 BattleStatisticData statisticData = BattleManager.Instance.StatisticData;
                 PeopleDrop drop = new PeopleDrop(rightId);
-                resource = drop.GetDropResource();
+                goldDrop = drop.Gold;
                 PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(rightId);
                 exp = GameResourceBook.InExpFight(UserProfile.InfoBasic.Level, peopleConfig.Level);
 
-                resource[0] = (uint)(resource[0]*(100 + statisticData.GoldRatePlus)/100);
+                goldDrop = (uint)(goldDrop * (100 + statisticData.GoldRatePlus)/100);
                 exp = exp*(100 + (uint)statisticData.ExpRatePlus)/100;
 
                 if (isWin)
@@ -71,8 +73,7 @@ namespace TaleofMonsters.Controler.Battle
                 }
                 else
                 {
-                    for (int i = 0; i < 7; i++)
-                        resource[i] /= 5;
+                    goldDrop /= 5;
                     exp /= 4;
                 }
                 //resource[0] = 10;  //todo 测试使用
@@ -81,30 +82,15 @@ namespace TaleofMonsters.Controler.Battle
                 //    StatisticData.Items.Add(22033032);
                 //}
                 //exp = 15;
-                if (resource[0] > 0)
-                {
-                    var pos = GetCellPosition();
-                    var pictureRegion = ComplexRegion.GetResShowRegion(cellIndex, pos, 45, ImageRegionCellType.Gold, (int)resource[0]);
-                    vRegion.AddRegion(pictureRegion);
-                }
-
-                if (exp > 0)
-                {
-                    var pos = GetCellPosition();
-                    var pictureRegion = ComplexRegion.GetResShowRegion(cellIndex, pos, 45, ImageRegionCellType.Exp,(int)exp);
-                    vRegion.AddRegion(pictureRegion);
-                }
 
                 for (int i = 0; i < statisticData.Items.Count; i++)
                 {
                     rewardItemList.Add(statisticData.Items[i]);
-                    var pos = GetCellPosition();
-                    vRegion.AddRegion(new PictureAnimRegion(cellIndex, pos.X, pos.Y, 45, 45, PictureRegionCellType.Item, statisticData.Items[i]));
                 }
             }
             else
             {
-                resource = new uint[7];
+                goldDrop = 0;
             }
             show = true;
             Reward();
@@ -129,10 +115,41 @@ namespace TaleofMonsters.Controler.Battle
                 UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.ContinueWin, 0);
             }
 
-            foreach (var itemId in rewardItemList)
-                UserProfile.InfoBag.AddItem(itemId, 1);
-            UserProfile.InfoBasic.AddExp((int)exp);
-            UserProfile.InfoBag.AddResource(resource);
+            if (goldDrop > 0)
+            {
+                UserProfile.InfoBag.AddResource(GameResourceType.Gold, goldDrop);
+
+                var pos = GetCellPosition();
+                var pictureRegion = ComplexRegion.GetResShowRegion(cellIndex, pos, 45, ImageRegionCellType.Gold, (int)goldDrop);
+                vRegion.AddRegion(pictureRegion);
+            }
+
+            if (exp > 0)
+            {
+                UserProfile.InfoBasic.AddExp((int)exp);
+
+                var pos = GetCellPosition();
+                var pictureRegion = ComplexRegion.GetResShowRegion(cellIndex, pos, 45, ImageRegionCellType.Exp, (int)exp);
+                vRegion.AddRegion(pictureRegion);
+
+                if (isWin) //获胜了才有建筑能量
+                {
+                    bool buildSuccess = UserProfile.InfoCastle.AddEp(1);
+                    if (buildSuccess)
+                    {
+                        pos = GetCellPosition();
+                        pictureRegion = ComplexRegion.GetResShowRegion(cellIndex, pos, 45, ImageRegionCellType.BuildEp, 1);
+                        vRegion.AddRegion(pictureRegion);
+                    }
+                }
+            }
+
+            for (int i = 0; i < rewardItemList.Count; i++)
+            {
+                UserProfile.InfoBag.AddItem(rewardItemList[i], 1);
+                var pos = GetCellPosition();
+                vRegion.AddRegion(new PictureAnimRegion(cellIndex, pos.X, pos.Y, 45, 45, PictureRegionCellType.Item, rewardItemList[i]));
+            }
         }
 
         private Point GetCellPosition()

@@ -116,6 +116,11 @@ namespace TaleofMonsters.Forms.Items.Regions
                 iconName = "abl5";
                 borderColor = Color.YellowGreen;
             }
+            else if (type == ImageRegionCellType.BuildEp)
+            {
+                iconName = "tsk10";
+                borderColor = Color.MediumPurple;
+            }
         }
     }
 }

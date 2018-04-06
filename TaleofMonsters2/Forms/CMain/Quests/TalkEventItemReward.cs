@@ -218,6 +218,18 @@ namespace TaleofMonsters.Forms.CMain.Quests
                 vRegion.AddRegion(pictureRegion);
                 index++;
             }
+
+            if (expGet > 0) //同时给建筑经验
+            {
+                var epSuccess = UserProfile.Profile.InfoCastle.AddEp(1);
+                if (epSuccess)
+                {
+                    var pictureRegion = ComplexRegion.GetResShowRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25),
+                                                              60, ImageRegionCellType.BuildEp, 1);
+                    vRegion.AddRegion(pictureRegion);
+                    index++;
+                }
+            }
         }
 
         private void RewardMental(ref int index)

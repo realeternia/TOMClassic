@@ -147,10 +147,14 @@ namespace TaleofMonsters.Datas.User
             }
         }
 
-        public void AddEp(int epAdd)
+        public bool AddEp(int epAdd)
         {
+            bool flag = false;
             if (HasEquipOn(HItemBook.GetItemId("eqkuang")))
+            {
                 OreDigEp += epAdd;
+                flag = true;
+            }
             if (HasEquipOn(HItemBook.GetItemId("eqtian")))
             {
                 foreach (var state in DbFarmState)
@@ -158,7 +162,9 @@ namespace TaleofMonsters.Datas.User
                     if (state.Type > 0)
                         state.Ep += epAdd;
                 }
+                flag = true;
             }
+            return flag;
         }
 
         #region 农场

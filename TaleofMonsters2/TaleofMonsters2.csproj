@@ -482,7 +482,6 @@
     <Compile Include="Datas\User\Db\DbTournamentData.cs" />
     <Compile Include="Datas\Others\RankData.cs" />
     <Compile Include="Datas\User\InfoWorld.cs" />
-    <Compile Include="Datas\Peoples\DropResource.cs" />
     <Compile Include="Controler\Battle\Data\MemBaseBuff.cs" />
     <Compile Include="Datas\User\Db\DbCardProduct.cs" />
     <Compile Include="Datas\Skills\MonsterSkill.cs" />
