@@ -59,6 +59,8 @@ namespace TaleofMonsters.Datas.Items
                 UserProfile.InfoBasic.AddMental((uint)itemConfig.GainMental);
             if (itemConfig.BlessId > 0)
                 BlessManager.AddBless(itemConfig.BlessId);
+            if (itemConfig.BuildPoint > 0)
+                UserProfile.InfoCastle.AddEp(itemConfig.BuildPoint);
             if (!string.IsNullOrEmpty(itemConfig.Instruction))
                 CheckInstruction(itemConfig.Instruction);
             if (itemConfig.DungeonAttr != null && itemConfig.DungeonAttr.Length > 0)

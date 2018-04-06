@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.Datas.Equips;
+using TaleofMonsters.Datas.Items;
 using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Datas.User.Db;
 using TaleofMonsters.Forms.CMain;
@@ -146,9 +147,18 @@ namespace TaleofMonsters.Datas.User
             }
         }
 
-        public void AddEp()
+        public void AddEp(int epAdd)
         {
-            //todo 加各种建筑能量
+            if (HasEquipOn(HItemBook.GetItemId("eqkuang")))
+                OreDigEp += epAdd;
+            if (HasEquipOn(HItemBook.GetItemId("eqtian")))
+            {
+                foreach (var state in DbFarmState)
+                {
+                    if (state.Type > 0)
+                        state.Ep += epAdd;
+                }
+            }
         }
 
         #region 农场

@@ -153,9 +153,11 @@ namespace TaleofMonsters.Datas.Others
         /// </summary>
         public static uint InResBuildOre(int resId, int level)
         {
-            var count = (uint)ExpTree.GetResFactor(level);
+            uint count = 0;
             if (resId == (int)GameResourceType.Gold)
-                count *= 10;
+                count = (uint)ExpTree.GetGoldFactor(level);
+            else
+                count = (uint)ExpTree.GetResFactor(level);
             if (resId == (int)GameResourceType.Lumber || resId == (int)GameResourceType.Stone)
                 count *= 2;
             var valGet = MathTool.GetRandom(count*0.75, count*1.25);

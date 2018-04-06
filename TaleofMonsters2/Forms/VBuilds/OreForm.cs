@@ -101,7 +101,7 @@ namespace TaleofMonsters.Forms.VBuilds
                 return;
             }
 
-            var addon = GameResourceBook.InResBuildOre(resId, 3);
+            var addon = GameResourceBook.InResBuildOre(resId, 60);
             UserProfile.InfoBag.AddResource((GameResourceType) resId, addon);
             AddFlowCenter(string.Format("{0}+{1}", HSTypes.I2Resource(resId), addon), "Lime");
             UserProfile.InfoCastle.OreDigEp -= 5;
