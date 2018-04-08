@@ -49,7 +49,7 @@ namespace TaleofMonsters.Datas.User
             InfoBasic.HealthPoint = 100;
             InfoBasic.MentalPoint = 100;
             InfoBasic.FoodPoint = 100;
-            InfoBag.BagCount = 50;
+            InfoBag.BagCount = GameConstants.BagInitCount;
             InfoWorld.AddBless(BlessBook.GetBlessByName("newbie"), 50);
         }
 

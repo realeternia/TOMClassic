@@ -38,6 +38,8 @@ namespace TaleofMonsters.Forms
             bitmapButtonFarm.NoUseDrawNine = true;
             bitmapButtonOre.ImageNormal = PicLoader.Read("Button.Panel", "OreButton.JPG");
             bitmapButtonOre.NoUseDrawNine = true;
+            bitmapButtonHunt.ImageNormal = PicLoader.Read("Button.Panel", "HuntButton.JPG");
+            bitmapButtonHunt.NoUseDrawNine = true;
             DoubleBuffered = true;
 
             vRegion = new VirtualRegion(this);
@@ -100,10 +102,9 @@ namespace TaleofMonsters.Forms
 
         public void OnEquipChange()
         {
-            var farmId = HItemBook.GetItemId("eqtian");
-            bitmapButtonFarm.Enabled = UserProfile.InfoCastle.HasEquipOn(farmId);
-            var oreId = HItemBook.GetItemId("eqkuang");
-            bitmapButtonOre.Enabled = UserProfile.InfoCastle.HasEquipOn(oreId);
+            bitmapButtonFarm.Enabled = UserProfile.InfoCastle.HasEquipOn(HItemBook.GetItemId("eqtian"));
+            bitmapButtonOre.Enabled = UserProfile.InfoCastle.HasEquipOn(HItemBook.GetItemId("eqkuang"));
+            bitmapButtonHunt.Enabled = UserProfile.InfoCastle.HasEquipOn(HItemBook.GetItemId("eqliechang"));
             Invalidate();
         }
 
@@ -236,6 +237,11 @@ namespace TaleofMonsters.Forms
         private void bitmapButtonOre_Click(object sender, EventArgs e)
         {
             PanelManager.DealPanel(new OreForm());
+        }
+
+        private void bitmapButtonHunt_Click(object sender, EventArgs e)
+        {
+            PanelManager.DealPanel(new HuntForm());
         }
     }
 }

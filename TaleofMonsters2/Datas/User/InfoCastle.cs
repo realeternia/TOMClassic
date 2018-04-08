@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ConfigDatas;
 using TaleofMonsters.Core;
+using TaleofMonsters.Datas.Cards.Monsters;
 using TaleofMonsters.Datas.Equips;
 using TaleofMonsters.Datas.Items;
 using TaleofMonsters.Datas.Others;
@@ -16,7 +17,9 @@ namespace TaleofMonsters.Datas.User
         [FieldIndex(Index = 7)] public List<DbEquip> EquipAvail;
 
         [FieldIndex(Index = 10)] public DbFarmState[] DbFarmState;
-        [FieldIndex(Index = 11)] public int OreDigEp; 
+        [FieldIndex(Index = 11)] public int OreDigEp;
+        [FieldIndex(Index = 12)] public int HuntMonsterId;
+        [FieldIndex(Index = 13)] public int HuntHpLeft;
 
         private const int MainHouseIndex = 5;
 
@@ -205,5 +208,14 @@ namespace TaleofMonsters.Datas.User
             return false;
         }
         #endregion
+
+        public void RefreshHuntMonster(bool force)
+        {
+            if (HuntMonsterId == 0 || force || HuntHpLeft == 0)
+            {
+                HuntMonsterId = MonsterBook.GetRandMonsterId();
+                HuntHpLeft = ConfigData.GetMonsterConfig(HuntMonsterId).Quality*5 + 5;
+            }
+        }
     }
 }

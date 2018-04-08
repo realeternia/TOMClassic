@@ -63,7 +63,8 @@ namespace TaleofMonsters.Forms.Items.Regions
                 else if (type == PictureRegionCellType.Card)
                 {
                     var size = 40;
-                    if (Width > 100) size = 100;
+                    if (Width >= 180) size = 180;
+                    else if (Width >= 100) size = 100;
                     else if (Width > 60) size = 60;
                     img = CardAssistant.GetCardImage(nid, size, size);
                     action = () =>

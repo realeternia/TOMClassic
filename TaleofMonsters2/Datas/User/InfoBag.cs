@@ -22,8 +22,8 @@ namespace TaleofMonsters.Datas.User
         public InfoBag()
         {
             Resource = new GameResource();
-            Items = new IntPair[100];
-            for (int i = 0; i < 100; i++)
+            Items = new IntPair[GameConstants.BagInitCount];
+            for (int i = 0; i < GameConstants.BagInitCount; i++)
                 Items[i] = new IntPair();
             CdGroupStartTime = new int[GameConstants.ItemCdGroupCount];
             CdGroupTime = new int[GameConstants.ItemCdGroupCount];
