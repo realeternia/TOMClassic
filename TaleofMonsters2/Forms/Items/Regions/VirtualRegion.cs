@@ -97,8 +97,17 @@ namespace TaleofMonsters.Forms.Items.Regions
         {
             SubVirtualRegion region;
             if (subRegions.TryGetValue(id, out region))
-                return new Point(region.X + selectRegion.Width + 1, region.Y);
+                return new Point(region.X + region.Width + 1, region.Y);
             return new Point(0,0);
+        }
+        public void SetRegionPosition(int id, Point pos)
+        {
+            SubVirtualRegion region;
+            if (subRegions.TryGetValue(id, out region))
+            {
+                region.X = pos.X;
+                region.Y = pos.Y;
+            }
         }
 
         public SubVirtualRegion GetRegion(int id)

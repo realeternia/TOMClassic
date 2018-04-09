@@ -7,6 +7,7 @@ using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.CardPieces;
 using TaleofMonsters.Datas.Cards;
+using TaleofMonsters.Datas.Effects;
 using TaleofMonsters.Datas.Items;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain;
@@ -20,6 +21,7 @@ namespace TaleofMonsters.Forms.VBuilds
         private bool showImage;
         private ImageToolTip tooltip = SystemToolTip.Instance;
         private VirtualRegion vRegion;
+        private VirtualRegionMoveMediator moveMediator;
 
         public HuntForm()
         {
@@ -39,7 +41,6 @@ namespace TaleofMonsters.Forms.VBuilds
 
             showImage = true;
             vRegion = new VirtualRegion(this);
-
             
             vRegion.AddRegion(new PictureAnimRegion(10, 210, 100, 160, 160, PictureRegionCellType.Card, 0));
             for (int i = 0; i < 9; i++)
@@ -48,8 +49,15 @@ namespace TaleofMonsters.Forms.VBuilds
             UserProfile.InfoCastle.RefreshHuntMonster(false);
             UpdateMonsterInfo();
 
+            moveMediator = new VirtualRegionMoveMediator(vRegion);
+
             vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+        }
+
+        public override void OnFrame(int tick, float timePass)
+        {
+            base.OnFrame(tick, timePass);
         }
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)
@@ -107,11 +115,26 @@ namespace TaleofMonsters.Forms.VBuilds
         private void bitmapButtonC1_Click(object sender, EventArgs e)
         {
             if (UserProfile.InfoCastle.HuntHpLeft <= 0)
-            {
                 return;
-            }
+
+            var effect = new CoverEffect(EffectBook.GetEffect("hit1"), new Point(210+30, 100+30), new Size(100, 100));
+            effect.PlayOnce = true;
+            AddEffect(effect);
+            moveMediator.FireShake(10);
 
             UserProfile.InfoCastle.HuntHpLeft--;
+            int itemId = CardPieceBook.CheckPieceDrop(UserProfile.InfoCastle.HuntMonsterId, 0);
+            if (itemId > 0)
+            {
+                AddFlowCenter("+1", "Lime", HItemBook.GetHItemImage(itemId));
+                UserProfile.InfoBag.AddItem(itemId, 1);
+            }
+
+            if (UserProfile.InfoCastle.HuntHpLeft == 0)
+            {
+                UserProfile.InfoCastle.RefreshHuntMonster(false);
+                UpdateMonsterInfo();
+            }
             Invalidate();
         }
 

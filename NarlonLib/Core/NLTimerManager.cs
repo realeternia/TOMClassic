@@ -21,7 +21,6 @@ namespace NarlonLib.Core
             public OnTimer Delegate;
             public object[] UserData;
             public int Loop;
-            public int UnitId; //只有cache模式有用
 
             public double TimeOffset { get; set; }
             public string Name { get; set; }
@@ -70,14 +69,13 @@ namespace NarlonLib.Core
             return ++currentId;
         }
 
-        public INLTimer AddTimer(double seconds, OnTimer callback, int loop, int unitId, params object[] userdata)
+        public INLTimer AddTimer(double seconds, OnTimer callback, int loop, params object[] userdata)
         {
             TimerItem timer = new TimerItem(GenId())
             {
                 Delegate = callback,
                 Loop = loop,
                 UserData = userdata,
-                UnitId = unitId,
                 TimeOffset = seconds
             };
             timerDict.Add(timer.Id, timer);

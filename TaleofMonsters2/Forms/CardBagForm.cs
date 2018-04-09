@@ -24,7 +24,6 @@ namespace TaleofMonsters.Forms
         private int[] cardOpenArray;//卡牌配表id
         private ImageToolTip tooltip = SystemToolTip.Instance;
         private int[] cardPos;
-        private CoverEffect[] coverEffect;
         private int itemId; //卡包id
         private int cardCount;
 
@@ -54,7 +53,6 @@ namespace TaleofMonsters.Forms
             if (consumerConfig.RandomCardCount > 0)
                 cardCount = consumerConfig.RandomCardCount;
 
-            coverEffect = new CoverEffect[cardCount];
             cardOpenArray = new int[cardCount];
 
             cardPos = new int[cardCount * 2];
@@ -71,25 +69,6 @@ namespace TaleofMonsters.Forms
             }
 
             Width = 135* cardCount + 20;
-        }
-
-        public override void OnFrame(int tick, float timePass)
-        {
-            base.OnFrame(tick, timePass);
-
-            for (int i = 0; i < cardCount; i++)
-            {
-                var frameEffect = coverEffect[i];
-                if (frameEffect != null)
-                {
-                    if (frameEffect.Next())
-                    {
-                        int tx = cardPos[i * 2];
-                        int ty = cardPos[i * 2 + 1];
-                        Invalidate(new Rectangle(tx, ty, 120, 150));
-                    }
-                }
-            }
         }
 
         private void buttonClose_Click(object sender, EventArgs e)
@@ -116,8 +95,10 @@ namespace TaleofMonsters.Forms
                         vRegion.SetRegionDecorator(id, 1, decorator);
                     }
                     cardOpenArray[id - 1] = cardId;
-                    coverEffect[id - 1] = new CoverEffect(EffectBook.GetEffect("transmit"), new Point(cardPos[(id - 1) * 2], cardPos[(id - 1) * 2+1]), new Size(120, 150));
-                    coverEffect[id - 1].PlayOnce = true;
+             
+                    var effect = new CoverEffect(EffectBook.GetEffect("transmit"), new Point(cardPos[(id - 1) * 2], cardPos[(id - 1) * 2+1]), new Size(120, 150));
+                    effect.PlayOnce = true;
+                    AddEffect(effect);
                     Invalidate();
 
                     var pos = vRegion.GetRegionPosition(id);
@@ -151,9 +132,6 @@ namespace TaleofMonsters.Forms
                     var imgBack = PicLoader.Read("System", "CardBack.JPG");
                     e.Graphics.DrawImage(imgBack, tx, ty, 120, 150);
                 }
-
-                if (coverEffect[i] != null)
-                    coverEffect[i].Draw(e.Graphics);
             }
 
             vRegion.Draw(e.Graphics);

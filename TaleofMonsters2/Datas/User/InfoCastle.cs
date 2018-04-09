@@ -211,7 +211,7 @@ namespace TaleofMonsters.Datas.User
 
         public void RefreshHuntMonster(bool force)
         {
-            if (HuntMonsterId == 0 || force || HuntHpLeft == 0)
+            if (HuntMonsterId == 0 || force || HuntHpLeft <= 0)
             {
                 HuntMonsterId = MonsterBook.GetRandMonsterId();
                 HuntHpLeft = ConfigData.GetMonsterConfig(HuntMonsterId).Quality*5 + 5;

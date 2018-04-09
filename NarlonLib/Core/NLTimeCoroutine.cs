@@ -21,15 +21,13 @@ namespace NarlonLib.Core
         public long TimerId { get; private set; }
         private bool disposed;
         private IEnumerator enumerator;
-        private int unitId;
 
         private NLCoroutineManager _dgCoroutineManager;
 
-        public NLTimeCoroutine(NLCoroutineManager coroutineManager, IEnumerator e, int uid)
+        public NLTimeCoroutine(NLCoroutineManager coroutineManager, IEnumerator e)
         {
             enumerator = e;
             _dgCoroutineManager = coroutineManager;
-            unitId = uid;
         }
 
         public bool Start()
@@ -74,9 +72,8 @@ namespace NarlonLib.Core
 
             if (obj is NLWaitForSeconds)
             {
-                INLTimer time = _dgCoroutineManager.Timer.AddTimer((obj as NLWaitForSeconds).Seconds, WaitForSeconds, 1, unitId, this);
+                INLTimer time = _dgCoroutineManager.Timer.AddTimer((obj as NLWaitForSeconds).Seconds, WaitForSeconds, 1, this);
                 TimerId = time.Id;
-                time.Name = "unit " + unitId;
             }
             else
             {

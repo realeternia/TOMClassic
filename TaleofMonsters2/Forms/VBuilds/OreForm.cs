@@ -103,7 +103,7 @@ namespace TaleofMonsters.Forms.VBuilds
 
             var addon = GameResourceBook.InResBuildOre(resId, 60);
             UserProfile.InfoBag.AddResource((GameResourceType) resId, addon);
-            AddFlowCenter(string.Format("{0}+{1}", HSTypes.I2Resource(resId), addon), "Lime");
+            AddFlowCenter(string.Format("+{0}", addon), "Lime", HSIcons.GetIconsByEName("res"+(resId+1)));
             UserProfile.InfoCastle.OreDigEp -= 5;
             Invalidate();
         }

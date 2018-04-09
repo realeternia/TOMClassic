@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using JLM.NetSocket;
+using NarlonLib.Core;
 using NarlonLib.Log;
 using TaleofMonsters.Controler.World;
 using TaleofMonsters.Core;
@@ -14,10 +16,21 @@ namespace TaleofMonsters.Rpc
         private static S2CImplement s2cImpl = new S2CImplement();
         public static C2SSender C2SSender;
 
+        private static NLTimerManager timerManager;
+        private static NLCoroutineManager coroutineManager;
+
         private static DateTime lastHeartbeatTime = DateTime.Now;
+
+        static TalePlayer()
+        {
+            timerManager = new NLTimerManager();
+            coroutineManager = new NLCoroutineManager(timerManager);
+        }
 
         public static void Oneloop()
         {
+            timerManager.DoTimer();
+
             if (client != null)
             {
                 if (client.State == SocketState.Closed || client.State == SocketState.Closing)
@@ -55,6 +68,11 @@ namespace TaleofMonsters.Rpc
         {
             if (client != null && client.State == SocketState.Connected)
                 client.Close("Connect");
+        }
+
+        public static void Start(IEnumerator routine)
+        {
+            coroutineManager.StartCoroutine(routine);
         }
 
         public static void Save()

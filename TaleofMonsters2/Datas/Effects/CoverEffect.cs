@@ -6,8 +6,8 @@ namespace TaleofMonsters.Datas.Effects
     {
         private Effect effect;
         private int frameId;
-        private Point point;
-        private Size size;
+        public Point Point { get; private set; }
+        public Size Size { get; private set; }
 
         private int speedDownFactor;//为了可以降速播放
         private int speedRunIndex;
@@ -18,13 +18,13 @@ namespace TaleofMonsters.Datas.Effects
         }
 
         public bool PlayOnce { get; set; }
-        private bool isDie;
+        public bool IsDie { get; private set; }
 
         public CoverEffect(Effect effect, Point location, Size size)
         {
             this.effect = effect;
-            point = location;
-            this.size = size;
+            Point = location;
+            Size = size;
             frameId = -1;
             speedDownFactor = effect.SpeedDown;
         }
@@ -39,7 +39,7 @@ namespace TaleofMonsters.Datas.Effects
             if (frameId >= effect.Frames.Length)
             {
                 if (PlayOnce)
-                    isDie = true;
+                    IsDie = true;
                 else
                     frameId = 0;    
             }
@@ -48,14 +48,14 @@ namespace TaleofMonsters.Datas.Effects
 
         public void Draw(Graphics g)
         {
-            if (isDie)
+            if (IsDie)
                 return;
 
             if (frameId >= 0 && frameId < effect.Frames.Length)
             {
-                int x = point.X;
-                int y = point.Y;
-                effect.Frames[frameId].Draw(g, x, y, size.Width, size.Height);
+                int x = Point.X;
+                int y = Point.Y;
+                effect.Frames[frameId].Draw(g, x, y, Size.Width, Size.Height);
             }
         }
     }

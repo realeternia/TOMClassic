@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Tools;
 using TaleofMonsters.Core;
+using TaleofMonsters.Datas.Effects;
 using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.Forms
@@ -30,6 +32,7 @@ namespace TaleofMonsters.Forms
         private class FlowData
         {
             public string Text;
+            public Image Icon;
             public string Color;
             public int X;
             public int Y;
@@ -38,7 +41,7 @@ namespace TaleofMonsters.Forms
 
         private Panel panel1;
         private long lastMouseMoveTime;
-        private List<FlowData> flows;
+
         protected int formWidth;
         protected int formHeight;
 
@@ -46,6 +49,9 @@ namespace TaleofMonsters.Forms
 
         public bool NeedBlackForm { get; set; }
         public BasePanel ParentPanel; //黑化用
+
+        private List<FlowData> flows;
+        private List<CoverEffect> coverEffectList; //动态特效
 
         public BasePanel()
         {
@@ -66,6 +72,7 @@ namespace TaleofMonsters.Forms
             this.Name = "BasePanel";
             this.ResumeLayout(false);
 
+            coverEffectList = new List<CoverEffect>();
         }
 
         public virtual void Init(int width, int height)
@@ -84,7 +91,21 @@ namespace TaleofMonsters.Forms
 
         public virtual void OnFrame(int tick, float timePass)
         {
-            if (flows.Count>0)
+            if (coverEffectList.Count > 0)
+            {
+                for (int i = 0; i < coverEffectList.Count; i++)
+                {
+                    var frameEffect = coverEffectList[i];
+                    if (frameEffect != null)
+                    {
+                        if (frameEffect.Next())
+                            Invalidate(new Rectangle(frameEffect.Point.X, frameEffect.Point.Y, frameEffect.Size.Width, frameEffect.Size.Height));
+                    }
+                }
+                coverEffectList.RemoveAll(eff => eff.IsDie);
+            }
+
+            if (flows.Count > 0)
             {
                 FlowData[] datas = flows.ToArray();
                 foreach (var flowData in datas)
@@ -129,28 +150,41 @@ namespace TaleofMonsters.Forms
         {
         }
 
-        public void AddFlow(string text, string color, int x, int y)
+        public void AddFlow(string text, string color, Image img, int x, int y)
         {
-            FlowData fw = new FlowData
+            FlowData newFlow = new FlowData
             {
                 Text = text,
                 Color = color,
+                Icon = img,
                 X = x,
                 Y = y,
                 Time = 16 + text.Length/2
             };
-            flows.Add(fw);
+
+            foreach (var word in flows)
+            {//避让
+                if (Math.Abs(word.X - newFlow.X) < 50 && Math.Abs(word.Y - newFlow.Y) < 20)
+                    newFlow.Y = word.Y + 20;
+            }
+
+            flows.Add(newFlow);
         }
 
         public void AddFlowCenter(string text, string color)
         {
-            AddFlow(text, color, (Width - GetStringWidth(text))/2, Height/2 - 10);
+            AddFlow(text, color, null, (Width - GetStringWidth(text))/2, Height/2 - 10);
+        }
+
+        public void AddFlowCenter(string text, string color, Image img)
+        {
+            AddFlow(text, color, img, (Width - GetStringWidth(text)) / 2, Height / 2 - 10);
         }
 
         private static int GetStringWidth(string s)
         {
             double wid = 0;
-            foreach (char c in s)
+            foreach (var c in s)
             {
                 if (c >= '0' && c <= '9')
                     wid += 14.20594;
@@ -162,19 +196,28 @@ namespace TaleofMonsters.Forms
 
         private void BasePanel_Paint(object sender, PaintEventArgs e)
         {
-            if (flows.Count>0)
+            for (int i = 0; i < coverEffectList.Count; i++)
+            {
+                coverEffectList[i].Draw(e.Graphics);
+            }
+
+            if (flows.Count > 0)
             {
                 Font ft = new Font("宋体", 14*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-
-                FlowData[] datas = flows.ToArray();
-                foreach (FlowData flowData in datas)
+                foreach (var flowData in flows.ToArray())
                 {
-                    if (flowData.Time>=0)
+                    if (flowData.Time >= 0)
                     {
-                        Color cr = Color.FromName(flowData.Color);
-                        SolidBrush sb = new SolidBrush(cr); 
-                        e.Graphics.DrawString(flowData.Text, ft, (cr.R + cr.G + cr.B) > 50 ? Brushes.Black : Brushes.White, flowData.X, flowData.Y);
-                        e.Graphics.DrawString(flowData.Text,ft,sb,flowData.X-1,flowData.Y-1);
+                        int realX = flowData.X;
+                        if (flowData.Icon != null)
+                        {
+                            e.Graphics.DrawImage(flowData.Icon, flowData.X, flowData.Y, 20, 20);
+                            realX += 22;
+                        }
+                        Color color = Color.FromName(flowData.Color);
+                        SolidBrush sb = new SolidBrush(color);
+                        e.Graphics.DrawString(flowData.Text, ft, (color.R + color.G + color.B) > 50 ? Brushes.Black : Brushes.White, realX, flowData.Y);
+                        e.Graphics.DrawString(flowData.Text, ft, sb, realX - 1, flowData.Y - 1);
                         sb.Dispose();
                     }
                 }
@@ -188,7 +231,7 @@ namespace TaleofMonsters.Forms
             IsChangeBgm = true;
         }
 
-        public virtual void SetBlacken(bool val)
+        public void SetBlacken(bool val)
         {
             if (val)
             {
@@ -203,6 +246,10 @@ namespace TaleofMonsters.Forms
             }
         }
 
+        public void AddEffect(CoverEffect eff)
+        {
+            coverEffectList.Add(eff);
+        }
     }
 
 }

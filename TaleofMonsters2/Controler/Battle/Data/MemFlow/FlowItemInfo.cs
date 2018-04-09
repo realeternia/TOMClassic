@@ -10,10 +10,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemFlow
         private int id;
         public override bool NoOverlap { get { return true; } }
 
-        internal FlowItemInfo(int item_id, Point point, int offX, int offY) 
+        internal FlowItemInfo(int itemId, Point point, int offX, int offY) 
             : base("", point, -2, "White", offX, offY, 1, 3, 30)
         {
-            id = item_id;
+            id = itemId;
             HItemConfig itemConfig = ConfigData.GetHItemConfig(id);
             word = string.Format("{0}", itemConfig.Name);
             color = Color.FromName(HSTypes.I2RareColor(itemConfig.Rare));

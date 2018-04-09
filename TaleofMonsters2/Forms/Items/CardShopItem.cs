@@ -53,9 +53,7 @@ namespace TaleofMonsters.Forms.Items
             show = pro.Id != 0;
             product = pro;
             if (product.Id != 0)
-            {
                 vRegion.SetRegionKey(1, product.Cid);
-            }
 
             string effectName = "";
             var card =  CardAssistant.GetCard(product.Cid);
@@ -67,32 +65,22 @@ namespace TaleofMonsters.Forms.Items
                     int skillId = skill.Id;
                     SkillConfig skillConfig = ConfigData.GetSkillConfig(skillId);
                     if (skillConfig.Cover != null)
-                    {
                         effectName = skillConfig.Cover;
-                    }
                 }
                 if (monsterConfig.Cover != "")
-                {
                     effectName = monsterConfig.Cover;
-                }
             }
 
             string nowEffectName = "";
             if (coverEffect != null)
-            {
                 nowEffectName = coverEffect.Name;
-            }
 
             if (effectName != nowEffectName)
             {
                 if (effectName == "")
-                {
                     coverEffect = null;
-                }
                 else
-                {
                     coverEffect = new CoverEffect(EffectBook.GetEffect(effectName), new Point(x + 12, y + 14), new Size(64, 84));
-                }
             }
 
             parent.Invalidate(new Rectangle(x+12, y+14, 64, 84));
@@ -182,9 +170,7 @@ namespace TaleofMonsters.Forms.Items
                 CardAssistant.DrawBase(g, product.Cid, x + 12, y + 14, 64, 84);
                 
                 if (coverEffect != null)
-                {
                     coverEffect.Draw(g);
-                }
 
                 if ((CardProductMarkTypes)product.Mark != CardProductMarkTypes.Null)
                 {

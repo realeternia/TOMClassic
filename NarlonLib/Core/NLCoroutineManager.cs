@@ -16,14 +16,14 @@ namespace NarlonLib.Core
             Timer = timerManager;
         }
 
-        public NLTimeCoroutine StartCoroutine(IEnumerator routine, int id)
+        public NLTimeCoroutine StartCoroutine(IEnumerator routine)
         {
             if (disposed)
             {
                 return null;
             }
 
-            NLTimeCoroutine coroutine = new NLTimeCoroutine(this, routine, id);
+            NLTimeCoroutine coroutine = new NLTimeCoroutine(this, routine);
             if (coroutine.Start() && coroutine.Id > 0)
             {
                 coroutineDict.Add(coroutine.Id, coroutine);
