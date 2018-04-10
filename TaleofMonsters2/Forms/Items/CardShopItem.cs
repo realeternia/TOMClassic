@@ -10,6 +10,7 @@ using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Cards;
 using TaleofMonsters.Datas.Cards.Monsters;
 using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Effects.Facts;
 using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Datas.User.Db;
@@ -27,7 +28,7 @@ namespace TaleofMonsters.Forms.Items
 
         private int x, y, width, height;
         private BasePanel parent;
-        private CoverEffect coverEffect;
+        private StaticUIEffect coverEffect;
 
         public CardShopItem(BasePanel prt, int x, int y, int width, int height)
         {
@@ -80,7 +81,7 @@ namespace TaleofMonsters.Forms.Items
                 if (effectName == "")
                     coverEffect = null;
                 else
-                    coverEffect = new CoverEffect(EffectBook.GetEffect(effectName), new Point(x + 12, y + 14), new Size(64, 84));
+                    coverEffect = new StaticUIEffect(EffectBook.GetEffect(effectName), new Point(x + 12, y + 14), new Size(64, 84));
             }
 
             parent.Invalidate(new Rectangle(x+12, y+14, 64, 84));

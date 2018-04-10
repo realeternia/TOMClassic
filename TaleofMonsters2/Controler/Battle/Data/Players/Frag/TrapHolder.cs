@@ -4,11 +4,11 @@ using ConfigDatas;
 using NarlonLib.Log;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
-using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.MemSpell;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Effects.Facts;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 {
@@ -68,7 +68,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                     {
                         RemoveTrap(trap, trapConfig);
                         NLog.Debug("RemoveTrap UseCard id={0} cardId={1}", trap.Id, selectCard.CardId);
-                        BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(trapConfig.UnitEffect), location, false));
+                        BattleManager.Instance.EffectQueue.Add(new MonsterBindEffect(EffectBook.GetEffect(trapConfig.UnitEffect), location, false));
 
                         return true;
                     }
@@ -89,7 +89,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                     {
                         RemoveTrap(trap, trapConfig);
                         NLog.Debug("RemoveTrap Summon id={0} cardId={1}", trap.Id, mon.Id);
-                        BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(trapConfig.UnitEffect), mon as LiveMonster, false));
+                        BattleManager.Instance.EffectQueue.Add(new MonsterBindEffect(EffectBook.GetEffect(trapConfig.UnitEffect), mon as LiveMonster, false));
                         return;
                     }
                 }

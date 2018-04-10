@@ -130,8 +130,8 @@
     <Compile Include="Controler\Battle\Data\Players\Frag\SpikeManager.cs" />
     <Compile Include="Controler\Battle\Data\Players\Frag\TrapHolder.cs" />
     <Compile Include="Controler\Battle\Tool\BattleManager.cs" />
-    <Compile Include="Controler\Battle\Data\MemEffect\BaseEffect.cs" />
-    <Compile Include="Controler\Battle\Data\MemEffect\UIEffect.cs" />
+    <Compile Include="Datas\Effects\Facts\BaseEffect.cs" />
+    <Compile Include="Datas\Effects\Facts\MovingUIEffect.cs" />
     <Compile Include="Controler\Battle\Data\MemFlow\FlowExpInfo.cs" />
     <Compile Include="Controler\Battle\Data\MemFlow\FlowManaInfo.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\Component\BuffManager.cs" />
@@ -381,7 +381,7 @@
     <Compile Include="Core\GameConstants.cs" />
     <Compile Include="Core\HSErrors.cs" />
     <Compile Include="Datas\CardPieces\CardPieceRate.cs" />
-    <Compile Include="Datas\Effects\CoverEffect.cs" />
+    <Compile Include="Datas\Effects\Facts\StaticUIEffect.cs" />
     <Compile Include="Datas\Items\Consumer.cs" />
     <Compile Include="Datas\User\Db\DbFarmState.cs" />
     <Compile Include="Datas\Formulas\FormulaBook.cs" />
@@ -577,7 +577,7 @@
     <Compile Include="Forms\CreatePlayerForm.Designer.cs">
       <DependentUpon>CreatePlayerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controler\Battle\Data\MemEffect\ActiveEffect.cs" />
+    <Compile Include="Datas\Effects\Facts\MonsterBindEffect.cs" />
     <Compile Include="Controler\Battle\Components\CardList.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -1,11 +1,11 @@
 ﻿using System.Drawing;
 using NarlonLib.Math;
-using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemMissile;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
 using TaleofMonsters.Datas.Cards.Monsters;
 using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Effects.Facts;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 {
@@ -127,7 +127,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             if (self.RealRange <= GameConstants.MaxMeleeAtkRange)
             {
                 self.HitTarget(nearestEnemy, true); //近战
-                BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(self.Arrow), nearestEnemy, false));
+                BattleManager.Instance.EffectQueue.Add(new MonsterBindEffect(EffectBook.GetEffect(self.Arrow), nearestEnemy, false));
             }
             else
             {

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using NarlonLib.Math;
-using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using ConfigDatas;
@@ -9,6 +8,7 @@ using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Effects.Facts;
 using TaleofMonsters.Datas.Skills;
 
 namespace TaleofMonsters.Controler.Battle.Data
@@ -98,7 +98,7 @@ namespace TaleofMonsters.Controler.Battle.Data
                 SkillInfo.SkillConfig.OnAdd(SkillInfo, Self);
                 SendSkillIcon(0);
                 if (SkillInfo.SkillConfig.Effect != "")
-                    BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
+                    BattleManager.Instance.EffectQueue.Add(new MonsterBindEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
                 if (SkillInfo.SkillConfig.EffectArea != "")
                     SendAreaEffect(Self.Position);
             }
@@ -174,7 +174,7 @@ namespace TaleofMonsters.Controler.Battle.Data
             SkillInfo.SkillConfig.CheckSpecial(SkillInfo, Self);
             SendSkillIcon(0);
             if (SkillInfo.SkillConfig.Effect!="")
-                BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
+                BattleManager.Instance.EffectQueue.Add(new MonsterBindEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
             if (SkillInfo.SkillConfig.EffectArea != "")
                 SendAreaEffect(Self.Position);
             return true;
@@ -194,7 +194,7 @@ namespace TaleofMonsters.Controler.Battle.Data
             {
                 SendSkillIcon(0);
                 if (SkillInfo.SkillConfig.Effect != "")
-                    BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
+                    BattleManager.Instance.EffectQueue.Add(new MonsterBindEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
             }
         }
 
@@ -210,7 +210,7 @@ namespace TaleofMonsters.Controler.Battle.Data
             {
                 SendSkillIcon(0);
                 if (SkillInfo.SkillConfig.Effect != "")
-                    BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
+                    BattleManager.Instance.EffectQueue.Add(new MonsterBindEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.Effect), Self, false));
             }
         }
 
@@ -237,7 +237,7 @@ namespace TaleofMonsters.Controler.Battle.Data
                 var pointData = memMapPoint.ToPoint();
                 if (BattleLocationManager.IsPointInRegionType(rt, pos.X, pos.Y, pointData, SkillInfo.SkillConfig.Range, Self.IsLeft))
                 {
-                    var effectData = new ActiveEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.EffectArea), pointData + new Size(cardSize / 2, cardSize / 2), false);
+                    var effectData = new MonsterBindEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.EffectArea), pointData + new Size(cardSize / 2, cardSize / 2), false);
                     BattleManager.Instance.EffectQueue.Add(effectData);
                 }
             }

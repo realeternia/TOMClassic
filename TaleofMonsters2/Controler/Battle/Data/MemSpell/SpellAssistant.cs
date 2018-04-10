@@ -1,11 +1,11 @@
 ﻿using System.Drawing;
 using ConfigDatas;
-using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Datas.Cards.Spells;
 using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Effects.Facts;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemSpell
 {
@@ -24,9 +24,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemSpell
             if (!string.IsNullOrEmpty(spellConfig.UnitEffect))
             {
                 if (BattleTargetManager.PlayEffectOnMonster(spellConfig.Target))
-                    BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(spellConfig.UnitEffect), target, false));
+                    BattleManager.Instance.EffectQueue.Add(new MonsterBindEffect(EffectBook.GetEffect(spellConfig.UnitEffect), target, false));
                 if (BattleTargetManager.PlayEffectOnMouse(spellConfig.Target))
-                    BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(spellConfig.UnitEffect), mouse, false));
+                    BattleManager.Instance.EffectQueue.Add(new MonsterBindEffect(EffectBook.GetEffect(spellConfig.UnitEffect), mouse, false));
             }
         }
     }

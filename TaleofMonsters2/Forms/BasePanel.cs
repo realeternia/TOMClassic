@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using NarlonLib.Tools;
 using TaleofMonsters.Core;
 using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Effects.Facts;
 using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.Forms
@@ -51,7 +52,7 @@ namespace TaleofMonsters.Forms
         public BasePanel ParentPanel; //黑化用
 
         private List<FlowData> flows;
-        private List<CoverEffect> coverEffectList; //动态特效
+        private List<StaticUIEffect> coverEffectList; //动态特效
 
         public BasePanel()
         {
@@ -72,7 +73,7 @@ namespace TaleofMonsters.Forms
             this.Name = "BasePanel";
             this.ResumeLayout(false);
 
-            coverEffectList = new List<CoverEffect>();
+            coverEffectList = new List<StaticUIEffect>();
         }
 
         public virtual void Init(int width, int height)
@@ -102,7 +103,7 @@ namespace TaleofMonsters.Forms
                             Invalidate(new Rectangle(frameEffect.Point.X, frameEffect.Point.Y, frameEffect.Size.Width, frameEffect.Size.Height));
                     }
                 }
-                coverEffectList.RemoveAll(eff => eff.IsDie);
+                coverEffectList.RemoveAll(eff => eff.IsFinished == RunState.Zombie);
             }
 
             if (flows.Count > 0)
@@ -246,7 +247,7 @@ namespace TaleofMonsters.Forms
             }
         }
 
-        public void AddEffect(CoverEffect eff)
+        public void AddEffect(StaticUIEffect eff)
         {
             coverEffectList.Add(eff);
         }

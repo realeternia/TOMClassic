@@ -8,6 +8,7 @@ using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.CardPieces;
 using TaleofMonsters.Datas.Cards;
 using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Effects.Facts;
 using TaleofMonsters.Datas.Items;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain;
@@ -117,8 +118,8 @@ namespace TaleofMonsters.Forms.VBuilds
             if (UserProfile.InfoCastle.HuntHpLeft <= 0)
                 return;
 
-            var effect = new CoverEffect(EffectBook.GetEffect("hit1"), new Point(210+30, 100+30), new Size(100, 100));
-            effect.PlayOnce = true;
+            var effect = new StaticUIEffect(EffectBook.GetEffect("hit1"), new Point(210+30, 100+30), new Size(100, 100));
+            effect.Repeat = false;
             AddEffect(effect);
             moveMediator.FireShake(10);
 

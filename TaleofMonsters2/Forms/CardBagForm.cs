@@ -10,6 +10,7 @@ using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Cards;
 using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Effects.Facts;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Core;
@@ -96,8 +97,8 @@ namespace TaleofMonsters.Forms
                     }
                     cardOpenArray[id - 1] = cardId;
              
-                    var effect = new CoverEffect(EffectBook.GetEffect("transmit"), new Point(cardPos[(id - 1) * 2], cardPos[(id - 1) * 2+1]), new Size(120, 150));
-                    effect.PlayOnce = true;
+                    var effect = new StaticUIEffect(EffectBook.GetEffect("transmit"), new Point(cardPos[(id - 1) * 2], cardPos[(id - 1) * 2+1]), new Size(120, 150));
+                    effect.Repeat = false;
                     AddEffect(effect);
                     Invalidate();
 

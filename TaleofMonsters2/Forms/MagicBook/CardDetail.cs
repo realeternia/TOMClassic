@@ -11,6 +11,7 @@ using TaleofMonsters.Datas.Cards;
 using TaleofMonsters.Datas.Cards.Monsters;
 using TaleofMonsters.Datas.Decks;
 using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Effects.Facts;
 using TaleofMonsters.Datas.Skills;
 using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items;
@@ -31,7 +32,7 @@ namespace TaleofMonsters.Forms.MagicBook
         private ImageToolTip tooltip = SystemToolTip.Instance;
         private Card card;
         private List<MonsterSkill> skills;
-        private CoverEffect coverEffect;
+        private StaticUIEffect coverEffect;
         private VirtualRegion vRegion;
         public DeckCardRegion.InvalidateRegion Invalidate;
         public bool Enabled = true;
@@ -86,7 +87,7 @@ namespace TaleofMonsters.Forms.MagicBook
                 if (effectName == "")
                     coverEffect = null;
                 else
-                    coverEffect = new CoverEffect(EffectBook.GetEffect(effectName), new Point(X + 20, Y + 20), new Size(160, 180));
+                    coverEffect = new StaticUIEffect(EffectBook.GetEffect(effectName), new Point(X + 20, Y + 20), new Size(160, 180));
             }
 
             tooltip.Hide(parent);

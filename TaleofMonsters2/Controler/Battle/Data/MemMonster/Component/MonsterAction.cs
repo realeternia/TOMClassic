@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
-using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMissile;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
@@ -16,6 +15,7 @@ using TaleofMonsters.Datas.Cards.Monsters;
 using TaleofMonsters.Datas.Cards.Weapons;
 using TaleofMonsters.Datas.Decks;
 using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Effects.Facts;
 using TaleofMonsters.Datas.Skills;
 using TaleofMonsters.Datas.User;
 
@@ -322,7 +322,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             if (target != null)
             {
                 target.AddHpRate(rate);
-                BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect("yellowstar"), (LiveMonster)target, false));
+                BattleManager.Instance.EffectQueue.Add(new MonsterBindEffect(EffectBook.GetEffect("yellowstar"), (LiveMonster)target, false));
             }
         }
 

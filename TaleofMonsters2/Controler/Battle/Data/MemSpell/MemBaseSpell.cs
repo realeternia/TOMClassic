@@ -1,12 +1,12 @@
 ﻿using System.Drawing;
 using ConfigDatas;
-using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Cards.Spells;
 using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Effects.Facts;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemSpell
 {
@@ -49,7 +49,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemSpell
                         var pointData = memMapPoint.ToPoint();
                         if (BattleLocationManager.IsPointInRegionType(rt, mouse.X, mouse.Y, pointData, spellInfo.SpellConfig.Range, isLeft))
                         {
-                            var effectData = new ActiveEffect(EffectBook.GetEffect(spellInfo.SpellConfig.AreaEffect), pointData + new Size(cardSize / 2, cardSize / 2), false);
+                            var effectData = new MonsterBindEffect(EffectBook.GetEffect(spellInfo.SpellConfig.AreaEffect), pointData + new Size(cardSize / 2, cardSize / 2), false);
                             BattleManager.Instance.EffectQueue.Add(effectData);
                         }
                     } 

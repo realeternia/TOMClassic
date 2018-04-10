@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
-using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players.Frag;
@@ -20,6 +19,7 @@ using TaleofMonsters.Datas.Cards.Monsters;
 using TaleofMonsters.Datas.Cards.Spells;
 using TaleofMonsters.Datas.Cards.Weapons;
 using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Effects.Facts;
 using TaleofMonsters.Datas.Equips;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
@@ -445,7 +445,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 Point startPoint = new Point(BattleManager.Instance.MemMap.StageWidth / 2, BattleManager.Instance.MemMap.StageHeight / 2);
                 if (mon != null)
                     startPoint = mon.Position;
-                BattleManager.Instance.EffectQueue.Add(new UIEffect(EffectBook.GetEffect(effName), startPoint, 
+                BattleManager.Instance.EffectQueue.Add(new MovingUIEffect(EffectBook.GetEffect(effName), startPoint, 
                     new Point(BattleManager.Instance.MemMap.StageWidth / 2, BattleManager.Instance.MemMap.StageHeight), 16, true));
             }
         }
@@ -496,7 +496,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             if (noCardOutPunish)
                 return;
 
-            BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect("longly"), Tower as LiveMonster, true));
+            BattleManager.Instance.EffectQueue.Add(new MonsterBindEffect(EffectBook.GetEffect("longly"), Tower as LiveMonster, true));
             Tower.OnMagicDamage(null, Tower.MaxHp / 10, (int)CardElements.None);
             BattleManager.Instance.FlowWordQueue.Add(new FlowErrInfo(noCard ? ErrorConfig.Indexer.CardOutPunish :
                 ErrorConfig.Indexer.CardFullPunish, Tower.Position, 0, 3));

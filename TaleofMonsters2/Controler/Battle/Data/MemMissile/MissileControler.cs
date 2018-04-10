@@ -3,10 +3,10 @@ using System.Drawing;
 using ConfigDatas;
 using NarlonLib.Core;
 using NarlonLib.Math;
-using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Effects.Facts;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMissile
 {
@@ -71,7 +71,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
             if (FlyProc(target.Position,ref position, ref angle) == FlyCheckType.EndPoint)
             {
                 missile.CheckDamage(parent, target);
-                BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(config.EffName), target, false));
+                BattleManager.Instance.EffectQueue.Add(new MonsterBindEffect(EffectBook.GetEffect(config.EffName), target, false));
                 return false;
             }
             return true;
@@ -100,7 +100,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
                 if (mon != null)
                 {
                     missile.CheckDamage(parent, mon);
-                    BattleManager.Instance.EffectQueue.Add(new ActiveEffect(EffectBook.GetEffect(config.EffName), mon, false));
+                    BattleManager.Instance.EffectQueue.Add(new MonsterBindEffect(EffectBook.GetEffect(config.EffName), mon, false));
                 }
                 return false;
             }

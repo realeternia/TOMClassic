@@ -1,23 +1,24 @@
 ﻿using System.Drawing;
-using TaleofMonsters.Datas.Effects;
 
-namespace TaleofMonsters.Controler.Battle.Data.MemEffect
+namespace TaleofMonsters.Datas.Effects.Facts
 {
-    internal class UIEffect : BaseEffect
+    /// <summary>
+    /// 一边播放一边移动的特效
+    /// </summary>
+    internal class MovingUIEffect : BaseEffect
     {
         private Point start;
         private Point end;
         private int posCount;//持续多少帧
         private int posNow;
 
-        public UIEffect(Effect effect, Point startP, Point endP, int frameCount, bool isMute)
+        public MovingUIEffect(Effect effect, Point startP, Point endP, int frameCount, bool isMute)
             :base(effect, isMute)
         {
             start = startP;
             end = endP;
             posCount = frameCount;
-            frameId = -1;
-            repeat = true;
+            Repeat = true;
 
             posNow = 0;
         }
@@ -47,8 +48,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemEffect
             if (frameId >= 0 && frameId < effect.Frames.Length)
             {
                 int size = 100; //都按照100的尺寸来画
-                int x = start.X+ (  end.X - start.X)*posNow/posCount;
-                int y = start.Y + (end.Y - start.Y) * posNow / posCount;
+                int x = start.X + (end.X - start.X)*posNow/posCount;
+                int y = start.Y + (end.Y - start.Y)*posNow/posCount;
                 effect.Frames[frameId].Draw(g, x, y, size, size);
             }
         }

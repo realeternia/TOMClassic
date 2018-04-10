@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Effects.Facts;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 {
@@ -11,7 +11,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
     internal class MonsterCoverBox
     {
         private LiveMonster self;
-        private List<ActiveEffect> coverEffectList = new List<ActiveEffect>();//变身时需要重算
+        private List<MonsterBindEffect> coverEffectList = new List<MonsterBindEffect>();//变身时需要重算
 
         public MonsterCoverBox(LiveMonster lm)
         {
@@ -24,7 +24,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             string cover = self.Avatar.MonsterConfig.Cover;
             if (!string.IsNullOrEmpty(cover))
             {
-                ActiveEffect ef = new ActiveEffect(EffectBook.GetEffect(cover), self, true);
+                MonsterBindEffect ef = new MonsterBindEffect(EffectBook.GetEffect(cover), self, true);
                 ef.Repeat = true;
                 BattleManager.Instance.EffectQueue.Add(ef);
                 coverEffectList.Add(ef);

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using TaleofMonsters.Controler.Battle.Data.MemEffect;
+using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Effects.Facts;
 
 namespace TaleofMonsters.Controler.Battle.DataTent
 {

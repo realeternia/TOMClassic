@@ -1,28 +1,28 @@
 ﻿using System.Drawing;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Tool;
-using TaleofMonsters.Datas.Effects;
 
-namespace TaleofMonsters.Controler.Battle.Data.MemEffect
+namespace TaleofMonsters.Datas.Effects.Facts
 {
-    internal class ActiveEffect : BaseEffect
+    /// <summary>
+    /// 绑定怪物单位的特效，一般在有战斗中使用
+    /// </summary>
+    internal class MonsterBindEffect : BaseEffect
     {
         private LiveMonster mon;
         private Point position;
 
-        public ActiveEffect(Effect effect, LiveMonster mon, bool isMute)
+        public MonsterBindEffect(Effect effect, LiveMonster mon, bool isMute)
             :base(effect, isMute)
         {
             this.mon = mon;
-            frameId = -1;
         }
 
-        public ActiveEffect(Effect effect, Point p, bool isMute)
+        public MonsterBindEffect(Effect effect, Point p, bool isMute)
             : base(effect, isMute)
         {
             mon = null;
             position = p;
-            frameId = -1;
         }
 
         public override bool Next()
@@ -30,14 +30,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemEffect
             if (base.Next())
             {
                 frameId++;
-                if (repeat && !mon.IsAlive)
+                if (Repeat && !mon.IsAlive)
                 {
                     IsFinished = IsFinished == RunState.Run ? RunState.Finished : RunState.Zombie;
                     frameId = effect.Frames.Length - 1;
                 }
                 else if (frameId >= effect.Frames.Length)
                 {
-                    if (repeat && mon.IsAlive)
+                    if (Repeat && mon.IsAlive)
                     {
                         frameId = 0;
                     }

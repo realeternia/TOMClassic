@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using ConfigDatas;
-using TaleofMonsters.Controler.Battle.Data.MemEffect;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Cards.Monsters;
 using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Effects.Facts;
 using TaleofMonsters.Datas.Skills;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
@@ -101,13 +101,13 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             CheckSilentEffect();
         }
 
-        public void CheckCover(List<ActiveEffect> coverEffectList)
+        public void CheckCover(List<MonsterBindEffect> coverEffectList)
         {
             foreach (var skill in SkillList)//技能造成的特效
             {
                 if (skill.SkillConfig.Cover != "")
                 {
-                    ActiveEffect ef = new ActiveEffect(EffectBook.GetEffect(skill.SkillConfig.Cover), self, true);
+                    MonsterBindEffect ef = new MonsterBindEffect(EffectBook.GetEffect(skill.SkillConfig.Cover), self, true);
                     ef.Repeat = true;
                     BattleManager.Instance.EffectQueue.Add(ef);
                     coverEffectList.Add(ef);
