@@ -123,6 +123,7 @@ namespace TaleofMonsters.Forms.VBuilds
             moveMediator.FireShake(10);
 
             UserProfile.InfoCastle.HuntHpLeft--;
+            AddFlowCenter("-1", "Red"); //生命-1
             int itemId = CardPieceBook.CheckPieceDrop(UserProfile.InfoCastle.HuntMonsterId, 0);
             if (itemId > 0)
             {

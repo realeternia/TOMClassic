@@ -123,7 +123,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonHunt.Size = new System.Drawing.Size(36, 36);
             this.bitmapButtonHunt.TabIndex = 43;
             this.bitmapButtonHunt.TextOffX = 0;
-            this.bitmapButtonHunt.TipText = "查看矿场";
+            this.bitmapButtonHunt.TipText = "查看猎场";
             this.bitmapButtonHunt.UseVisualStyleBackColor = true;
             this.bitmapButtonHunt.Click += new System.EventHandler(this.bitmapButtonHunt_Click);
             // 

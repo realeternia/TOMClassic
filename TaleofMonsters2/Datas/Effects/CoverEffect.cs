@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using TaleofMonsters.Core;
 
 namespace TaleofMonsters.Datas.Effects
 {
@@ -31,6 +32,9 @@ namespace TaleofMonsters.Datas.Effects
 
         public bool Next()
         {
+            if (frameId == 0 && effect.SoundName != "null")
+                SoundManager.Play("Effect", string.Format("{0}.mp3", effect.SoundName));
+
             speedRunIndex++;
             if ((speedRunIndex % speedDownFactor) != 0)
                 return false;
