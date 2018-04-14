@@ -86,7 +86,7 @@ namespace TaleofMonsters.Forms.VBuilds
             e.Graphics.FillRectangle(b, 30, 350, 160, 20);
             var digTime = UserProfile.InfoCastle.OreDigEp/5;
             var digEp = UserProfile.InfoCastle.OreDigEp % 5;
-            e.Graphics.DrawString(string.Format("挖掘次数{0} (能量累计{1}%)", digTime, digEp*20), font, Brushes.White, 30, 353);
+            e.Graphics.DrawString(string.Format("挖掘次数{0} (能量累计{1}%)", digTime, digEp*20), font, Brushes.White, 33, 353);
             font.Dispose();
             b.Dispose();
         }

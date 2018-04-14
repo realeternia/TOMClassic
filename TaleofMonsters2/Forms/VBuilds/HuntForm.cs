@@ -49,7 +49,7 @@ namespace TaleofMonsters.Forms.VBuilds
             
             vRegion.AddRegion(new PictureAnimRegion(10, 210, 100, 160, 160, PictureRegionCellType.Card, 0));
             for (int i = 0; i < 9; i++)
-                vRegion.AddRegion(new PictureRegion(i+1, 36 + (i%3)*48, 60 + (i/ 3) * 48, 40, 40, PictureRegionCellType.Item, 0));
+                vRegion.AddRegion(new PictureRegion(i+1, 36 + (i%3)*48, 90 + (i/ 3) * 48, 40, 40, PictureRegionCellType.Item, 0));
 
             UserProfile.InfoCastle.RefreshHuntMonster(false);
             UpdateMonsterInfo();
@@ -108,19 +108,32 @@ namespace TaleofMonsters.Forms.VBuilds
             vRegion.Draw(e.Graphics);
 
             font = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            
+         
             var hpTotal = ConfigData.GetMonsterConfig(UserProfile.InfoCastle.HuntMonsterId).Quality * 5 + 5;
             var hpLeft = UserProfile.InfoCastle.HuntHpLeft;
             e.Graphics.FillRectangle(Brushes.Red, 210, 88, 160, 12);
             e.Graphics.FillRectangle(Brushes.Lime, 210, 88, 160*hpLeft/hpTotal, 12);
             e.Graphics.DrawString(string.Format("血量 {0}/{1}", hpLeft, hpTotal), font, Brushes.Brown, 210+50, 88);
+
+            Brush b = new SolidBrush(Color.FromArgb(200, Color.Black));
+            e.Graphics.FillRectangle(b, 30, 57, 70, 20);
+            e.Graphics.DrawString("掉落列表", font, Brushes.White, 33, 60);
+            e.Graphics.FillRectangle(b, 30, 350, 100, 20);
+            e.Graphics.DrawString(string.Format("可狩猎次数 {0}", UserProfile.InfoCastle.HuntPoint), font, Brushes.White, 33, 353);
             font.Dispose();
+            b.Dispose();
         }
 
         private void bitmapButtonC1_Click(object sender, EventArgs e)
         {
             if (UserProfile.InfoCastle.HuntHpLeft <= 0)
                 return;
+
+            if (UserProfile.InfoCastle.HuntPoint <= 0)
+            {
+                AddFlowCenter("狩猎次数不足", "Red");
+                return;
+            }
 
             var effect = new StaticUIEffect(EffectBook.GetEffect("hit1"), new Point(210+30, 100+30), new Size(100, 100));
             effect.Repeat = false;
@@ -141,6 +154,9 @@ namespace TaleofMonsters.Forms.VBuilds
                 moveMediator.FireFadeOut(10);
                 TalePlayer.Start(DelayRevive());
             }
+
+            UserProfile.InfoCastle.HuntPoint--;
+            Invalidate();
         }
 
         private IEnumerator DelayRevive()
@@ -154,6 +170,16 @@ namespace TaleofMonsters.Forms.VBuilds
 
         private void bitmapButtonC2_Click(object sender, EventArgs e)
         {
+            if (ControlPlus.MessageBoxEx2.Show("是否花费5点狩猎点刷新怪物？") == DialogResult.Cancel)
+            {
+                return;
+            }
+            if (UserProfile.InfoCastle.HuntPoint < 5)
+            {
+                AddFlowCenter("狩猎次数不足", "Red");
+                return;
+            }
+            UserProfile.InfoCastle.HuntPoint-=5;
             UserProfile.InfoCastle.RefreshHuntMonster(true);
             UpdateMonsterInfo();
             Invalidate();

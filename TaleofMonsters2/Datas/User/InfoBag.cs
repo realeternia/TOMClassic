@@ -72,10 +72,7 @@ namespace TaleofMonsters.Datas.User
         public bool PayDiamond(int value)
         {
             if (Diamond < value)
-            {
-                MainTipManager.AddTip(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughDimond), "Red");
                 return false;
-            }
             Diamond -= value;
             MainTipManager.AddTip(string.Format("|失去了|Cyan|{0}||钻石,账户剩余|Cyan|{1}||钻石", value, Diamond), "White");
             return true;

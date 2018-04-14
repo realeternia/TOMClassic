@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using ConfigDatas;
 using ControlPlus;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
@@ -81,6 +82,10 @@ namespace TaleofMonsters.Forms.Pops
                 UserProfile.InfoBag.AddItem(itemid, count);
                 Close();
                 ParentPanel.SetBlacken(false);
+            }
+            else
+            {
+                MainTipManager.AddTip(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughDimond), "Red");
             }
         }
 

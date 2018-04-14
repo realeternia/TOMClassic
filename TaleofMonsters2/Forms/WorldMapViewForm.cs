@@ -9,6 +9,7 @@ using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas.Scenes;
 using TaleofMonsters.Datas.User;
+using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.CMain.Scenes;
 using TaleofMonsters.Forms.Items.Core;
 
@@ -152,6 +153,10 @@ namespace TaleofMonsters.Forms
                             UserProfile.InfoBasic.Position = 0;//如果是0，后面流程会随机一个位置
                             Scene.Instance.ChangeMap(mapIconConfig.Id, true);
                             Close();
+                        }
+                        else
+                        {
+                            MainTipManager.AddTip(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughDimond), "Red");
                         }
                     }
                     return;

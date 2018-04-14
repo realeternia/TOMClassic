@@ -10,6 +10,8 @@ using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Decks;
+using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Effects.Facts;
 using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Datas.User.Db;
@@ -303,6 +305,10 @@ namespace TaleofMonsters.Forms
             card = cardRegion.GetTargetCard();
             if (card != null)
                 SetTargetCard(card);
+
+            var effect = new StaticUIEffect(EffectBook.GetEffect("yellowflash"), new Point(Width/2-50, Height/2-50), new Size(100, 100));
+            effect.Repeat = false;
+            AddEffect(effect);
 
             AddFlowCenter("升级卡牌成功", "Gold");
         }

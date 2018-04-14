@@ -20,6 +20,7 @@ namespace TaleofMonsters.Datas.User
         [FieldIndex(Index = 11)] public int OreDigEp;
         [FieldIndex(Index = 12)] public int HuntMonsterId;
         [FieldIndex(Index = 13)] public int HuntHpLeft;
+        [FieldIndex(Index = 14)] public int HuntPoint;
 
         private const int MainHouseIndex = 5;
 
@@ -165,6 +166,11 @@ namespace TaleofMonsters.Datas.User
                     if (state.Type > 0)
                         state.Ep += epAdd;
                 }
+                flag = true;
+            }
+            if (HasEquipOn(HItemBook.GetItemId("eqliechang")))
+            {
+                HuntPoint++;
                 flag = true;
             }
             return flag;

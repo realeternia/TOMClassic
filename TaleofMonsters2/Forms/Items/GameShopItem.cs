@@ -110,11 +110,17 @@ namespace TaleofMonsters.Forms.Items
             var eid = HItemBook.GetItemId(gameShopConfig.Item);
             var itmConfig = ConfigData.GetHItemConfig(eid);
             var goldPrice = GameResourceBook.OutGoldSellItem(itmConfig.Rare, itmConfig.ValueFactor)*2;
+            bool buyFin = false;
             if (gameShopConfig.UseDiamond)
             {
                 var diamondPrice = (int)Math.Max(1, goldPrice / GameConstants.DiamondToGold);
                 if (UserProfile.InfoBag.PayDiamond(diamondPrice))
+                {
                     UserProfile.InfoBag.AddItem(eid, 1);
+                    buyFin = true;
+                }
+                else
+                    MainTipManager.AddTip(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughDimond), "Red");
             }
             else
             {
@@ -122,9 +128,18 @@ namespace TaleofMonsters.Forms.Items
                 {
                     UserProfile.InfoBag.SubResource(GameResourceType.Gold, goldPrice);
                     UserProfile.InfoBag.AddItem(eid, 1);
+                    buyFin = true;
+                }
+                else
+                {
+                    MainTipManager.AddTip(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughResource), "Red");
                 }
             }
             
+            if(buyFin)
+            {
+                parent.AddFlowCenter("+1", "Lime", HItemBook.GetHItemImage(eid));
+            }
             //PopBuyProduct.Show(eid, (int)Math.Max(1, itemPrice / GameConstants.DiamondToGold));
         }
 

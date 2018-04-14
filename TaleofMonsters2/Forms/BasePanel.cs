@@ -182,17 +182,13 @@ namespace TaleofMonsters.Forms
             AddFlow(text, color, img, (Width - GetStringWidth(text)) / 2, Height / 2 - 10);
         }
 
-        private static int GetStringWidth(string s)
+        private int GetStringWidth(string s)
         {
-            double wid = 0;
-            foreach (var c in s)
+            Graphics g = CreateGraphics();
+            using (Font ft = new Font("宋体", 18 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel))
             {
-                if (c >= '0' && c <= '9')
-                    wid += 14.20594;
-                else
-                    wid += 19.98763;
+                return (int)g.MeasureString(s, ft).Width;
             }
-            return (int)wid;
         }
 
         private void BasePanel_Paint(object sender, PaintEventArgs e)
@@ -204,7 +200,7 @@ namespace TaleofMonsters.Forms
 
             if (flows.Count > 0)
             {
-                Font ft = new Font("宋体", 14*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+                Font ft = new Font("宋体", 18*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
                 foreach (var flowData in flows.ToArray())
                 {
                     if (flowData.Time >= 0)
@@ -212,8 +208,8 @@ namespace TaleofMonsters.Forms
                         int realX = flowData.X;
                         if (flowData.Icon != null)
                         {
-                            e.Graphics.DrawImage(flowData.Icon, flowData.X, flowData.Y, 20, 20);
-                            realX += 22;
+                            e.Graphics.DrawImage(flowData.Icon, flowData.X, flowData.Y-4, 32, 32);
+                            realX += 35;
                         }
                         Color color = Color.FromName(flowData.Color);
                         SolidBrush sb = new SolidBrush(color);

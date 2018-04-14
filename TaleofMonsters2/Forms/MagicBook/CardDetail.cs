@@ -25,7 +25,7 @@ namespace TaleofMonsters.Forms.MagicBook
         public int Y { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-        private UserControl parent;
+        private BasePanel parent;
 
         private int cid;
         private int level;
@@ -37,7 +37,7 @@ namespace TaleofMonsters.Forms.MagicBook
         public DeckCardRegion.InvalidateRegion Invalidate;
         public bool Enabled = true;
 
-        public CardDetail(UserControl control, int x, int y, int height)
+        public CardDetail(BasePanel control, int x, int y, int height)
         {
             card = SpecialCards.NullCard;
             parent = control;
@@ -134,8 +134,8 @@ namespace TaleofMonsters.Forms.MagicBook
         {
             if (coverEffect != null)
             {
-                if(coverEffect.Next())
-                    parent.Invalidate(new Rectangle(X+20,Y+20,160,180));
+                if (coverEffect.Next())
+                    parent.Invalidate(new Rectangle(X + 20, Y + 20, 160, 180));
             }
         }
 

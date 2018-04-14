@@ -92,7 +92,7 @@ namespace TaleofMonsters.Forms.VBuilds
             this.bitmapButtonC2.Size = new System.Drawing.Size(50, 30);
             this.bitmapButtonC2.TabIndex = 29;
             this.bitmapButtonC2.Tag = "1";
-            this.bitmapButtonC2.Text = "放弃";
+            this.bitmapButtonC2.Text = "召唤";
             this.bitmapButtonC2.TextOffX = 8;
             this.bitmapButtonC2.TipText = null;
             this.bitmapButtonC2.UseVisualStyleBackColor = true;

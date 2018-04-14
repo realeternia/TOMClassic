@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using ConfigDatas;
 using ControlPlus;
 using NarlonLib.Core;
 using NarlonLib.Tools;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Effects.Facts;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Datas.User.Db;
+using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
@@ -97,7 +101,15 @@ namespace TaleofMonsters.Forms
                 {
                     UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastCardShopTime, 0);
                     ChangeShop(shelf);
+
+                    var effect = new StaticUIEffect(EffectBook.GetEffect("redflash"), new Point(Width / 2 - 50, Height / 2 - 50), new Size(100, 100));
+                    effect.Repeat = false;
+                    AddEffect(effect);
                     AddFlowCenter("卡片商店数据刷新", "Lime");
+                }
+                else
+                {
+                    MainTipManager.AddTip(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughDimond), "Red");
                 }
             }
         }
