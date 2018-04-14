@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using TaleofMonsters.Core.Interface;
 
 namespace TaleofMonsters.Forms.Items.Regions
 {
@@ -65,18 +66,24 @@ namespace TaleofMonsters.Forms.Items.Regions
                 (region as PictureRegion).SetType(value);
         }
 
-        public void SetRegionState(int id, RegionState value)
+        public void SetRegionEffect(int id, RegionEffect value)
         {
             SubVirtualRegion region;
             if (subRegions.TryGetValue(id, out region))
-                region.SetState(value);
+                region.SetEffect(value);
         }
 
-        public void SetRegionDecorator(int id, int did, object value)
+        public void SetRegionDecorator(int id, int did, IRegionDecorator value)
         {
             SubVirtualRegion region;
             if (subRegions.TryGetValue(id, out region))
                 region.SetDecorator(did, value);
+        }
+        public void SetRegionState(int id, int did, object value)
+        {
+            SubVirtualRegion region;
+            if (subRegions.TryGetValue(id, out region))
+                region.SetState(did, value);
         }
 
         public void SetRegionVisible(int id, bool visible)

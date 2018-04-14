@@ -14,8 +14,7 @@ namespace TaleofMonsters.Forms.Items.Regions
             var pictureRegion = new ImageRegion(index, pos.X, pos.Y, size, size, type, HSIcons.GetIconsByEName(iconName));
             pictureRegion.Scale = 0.5f;
             pictureRegion.Parm = change.ToString();
-            var textControl = new RegionTextDecorator(3, size - 20, 11, change > 0 ? Color.White : Color.Red, true);
-            textControl.SetState(change.ToString());
+            var textControl = new RegionTextDecorator(3, size - 20, 11, change > 0 ? Color.White : Color.Red, true, change.ToString());
             pictureRegion.AddDecorator(textControl);
             pictureRegion.AddDecorator(new RegionBorderDecorator(borderColor));
             return pictureRegion;
@@ -27,8 +26,7 @@ namespace TaleofMonsters.Forms.Items.Regions
             Color borderColor = Color.White;
             CheckResourceType(type, ref iconName, ref borderColor);
             var pictureRegion = new ButtonRegion(index, pos.X, pos.Y, size, size, "iconbg.JPG", "");
-            var textControl = new RegionTextDecorator(3, size - 20, 11, change > 0 ? Color.White : Color.Red, true);
-            textControl.SetState(change.ToString());
+            var textControl = new RegionTextDecorator(3, size - 20, 11, change > 0 ? Color.White : Color.Red, true, change.ToString());
             pictureRegion.AddDecorator(new RegionImageDecorator(HSIcons.GetIconsByEName(iconName), size/2));
             pictureRegion.AddDecorator(textControl);
             return pictureRegion;

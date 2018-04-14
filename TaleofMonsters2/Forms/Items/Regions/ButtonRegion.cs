@@ -33,7 +33,7 @@ namespace TaleofMonsters.Forms.Items.Regions
                 else
                     g.DrawImage(drawImage, X, Y, Width, Height);
 
-                if (isIn | state != RegionState.Free)
+                if (isIn | Effect != RegionEffect.Free)
                 {
                     Brush b = new SolidBrush(Color.FromArgb(150, Color.Gray));
                     g.FillRectangle(b, X, Y, Width, Height);
@@ -54,7 +54,7 @@ namespace TaleofMonsters.Forms.Items.Regions
 
                         img.Dispose();
 
-                        if (isIn | state != RegionState.Free)
+                        if (isIn | Effect != RegionEffect.Free)
                         {
                             Brush b = new SolidBrush(Color.FromArgb(150, Color.Gray));
                             g.FillRectangle(b, X, Y, Width, Height);
@@ -64,7 +64,7 @@ namespace TaleofMonsters.Forms.Items.Regions
                 }
                 else
                 {
-                    Image img = PicLoader.Read("Button", isIn | state != RegionState.Free ? path2 : path1);
+                    Image img = PicLoader.Read("Button", isIn | Effect != RegionEffect.Free ? path2 : path1);
                     if (img != null)
                     {
                         if (isMouseDown)
@@ -84,14 +84,14 @@ namespace TaleofMonsters.Forms.Items.Regions
                     decorator.Draw(g, X, Y, Width, Height);
             }
 
-            if (state == RegionState.Rectangled)
+            if (Effect == RegionEffect.Rectangled)
             {
                 g.DrawRectangle(Pens.Firebrick, X, Y, Width, Height);
                 Brush brush = new SolidBrush(Color.FromArgb(100, Color.Red));
                 g.FillRectangle(brush, X, Y, Width, Height);
                 brush.Dispose();
             }
-            else if (state == RegionState.Blacken)
+            else if (Effect == RegionEffect.Blacken)
             {
                 Brush brush = new SolidBrush(Color.FromArgb(60, Color.Black));
                 g.FillRectangle(brush, X, Y, Width, Height);

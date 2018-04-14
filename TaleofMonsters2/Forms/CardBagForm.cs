@@ -91,8 +91,7 @@ namespace TaleofMonsters.Forms
                     {
                         IRegionDecorator decorator = new RegionCoverDecorator(Color.FromArgb(150, Color.Black));
                         vRegion.SetRegionDecorator(id, 0, decorator);
-                        decorator = new RegionTextDecorator(18, 50, 16, Color.White, true);
-                        decorator.SetState("EXP+1");
+                        decorator = new RegionTextDecorator(18, 50, 16, Color.White, true, "EXP+1");
                         vRegion.SetRegionDecorator(id, 1, decorator);
                     }
                     cardOpenArray[id - 1] = cardId;

@@ -161,8 +161,7 @@ namespace TaleofMonsters.Forms.CMain.Quests
                 var pictureRegion = new PictureRegion(index, pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25, 60, 60,
                     PictureRegionCellType.DungeonItem, itemId);
                 pictureRegion.Scale = 0.7f;
-                var textControl = new RegionTextDecorator(3, 60 - 20, 11, Color.White, true);
-                textControl.SetState(config.RewardDungeonItemCount.ToString());
+                var textControl = new RegionTextDecorator(3, 60 - 20, 11, Color.White, true, config.RewardDungeonItemCount.ToString());
                 pictureRegion.AddDecorator(textControl);
                 pictureRegion.AddDecorator(new RegionBorderDecorator(Color.White));
                 vRegion.AddRegion(pictureRegion);

@@ -13,7 +13,8 @@ namespace TaleofMonsters.Forms.Items.Regions.Decorators
         }
 
         public void SetState(object info)
-        {            
+        {
+            lineColor = (Color)info;
         }
 
         public void Draw(Graphics g, int x, int y, int width, int height)

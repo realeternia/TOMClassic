@@ -196,10 +196,10 @@ namespace TaleofMonsters.Forms.MiniGame
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    vRegion.SetRegionState(i + 1, RegionState.Free);
+                    vRegion.SetRegionEffect(i + 1, RegionEffect.Free);
                 }
                 selectQuestionId = targetQuestions[id-1];
-                vRegion.SetRegionState(id, RegionState.Rectangled);
+                vRegion.SetRegionEffect(id, RegionEffect.Rectangled);
                 Invalidate(new Rectangle(xoff, yoff, 324, 244));
             }
         }

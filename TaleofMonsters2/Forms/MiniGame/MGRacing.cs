@@ -49,19 +49,16 @@ namespace TaleofMonsters.Forms.MiniGame
             bitmapButtonC1.IconXY = new Point(4, 5);
             bitmapButtonC1.TextOffX = 8;
             vRegion = new VirtualRegion(this);
+            string[] txt = { "低速", "中速", "高速" };
             for (int i = 0; i < 3; i++)
             {
                 ButtonRegion region = new ButtonRegion(i + 1, 40 + 70 * i, 310, 50, 50, "GameBackNormal1.PNG", "GameBackNormal1On.PNG");
-                region.AddDecorator(new RegionTextDecorator(10, 20, 10));
+                region.AddDecorator(new RegionTextDecorator(10, 20, 10, txt[i]));
                 vRegion.AddRegion(region);
             }
             var region2 = new ButtonRegion(4, 40 + 55 * 4, 310, 50, 50, "GameBackNormal2.PNG", "GameBackNormal1On.PNG");
-            region2.AddDecorator(new RegionTextDecorator(10, 20, 10));
+            region2.AddDecorator(new RegionTextDecorator(10, 20, 10, "氮气"));
             vRegion.AddRegion(region2);
-            vRegion.SetRegionDecorator(1, 0, "低速");
-            vRegion.SetRegionDecorator(2, 0, "中速");
-            vRegion.SetRegionDecorator(3, 0, "高速");
-            vRegion.SetRegionDecorator(4, 0, "氮气");
             
             vRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
         }
@@ -111,9 +108,9 @@ namespace TaleofMonsters.Forms.MiniGame
             speed = id;
             for (int i = 0; i < 4; i++)
             {
-                vRegion.SetRegionState(i + 1, RegionState.Free);
+                vRegion.SetRegionEffect(i + 1, RegionEffect.Free);
             }
-            vRegion.SetRegionState(id, RegionState.Rectangled);
+            vRegion.SetRegionEffect(id, RegionEffect.Rectangled);
             Invalidate(new Rectangle(xoff, yoff, 324, 244));
         }
 

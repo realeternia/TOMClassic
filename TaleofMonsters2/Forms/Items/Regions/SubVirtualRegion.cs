@@ -21,7 +21,7 @@ namespace TaleofMonsters.Forms.Items.Regions
         protected bool isIn;
         protected bool isMouseDown;
         protected List<IRegionDecorator> decorators;
-        protected RegionState state;
+        protected RegionEffect Effect;
 
         protected VirtualRegion parent;
 
@@ -65,25 +65,32 @@ namespace TaleofMonsters.Forms.Items.Regions
             return keyId;
         }
 
-        public void SetDecorator(int idx, object value)//ÉèÖÃ×Ó×°ÊÎÆ÷×´Ì¬
+        public void SetDecorator(int idx, IRegionDecorator value)//ÉèÖÃ×Ó×°ÊÎÆ÷×´Ì¬
         {
             if (decorators.Count > idx)
             {
                 if (value != null)
-                    decorators[idx].SetState(value);
+                    decorators[idx] = value;
                 else
                     decorators.RemoveAt(idx);
             }
             else
             {
                 if (value != null)
-                    AddDecorator((IRegionDecorator)value);
+                    AddDecorator(value);
             }
         }
 
-        public void SetState(RegionState newState)
+        public void SetEffect(RegionEffect newEffect)
         {
-            state = newState;
+            Effect = newEffect;
+        }
+        public void SetState(int idx, object state)
+        {
+            if (decorators.Count > idx)
+            {
+                decorators[idx].SetState(state);
+            }
         }
 
         public virtual void Enter()
@@ -112,7 +119,7 @@ namespace TaleofMonsters.Forms.Items.Regions
         }
     }
 
-    public enum RegionState
+    public enum RegionEffect
     {
         Free = 0,
         Rectangled = 1,

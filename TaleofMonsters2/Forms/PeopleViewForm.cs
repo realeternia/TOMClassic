@@ -41,7 +41,7 @@ namespace TaleofMonsters.Forms
                 int xoff = (i%5)*cardWidth+19;
                 int yoff = (i / 5) * cardHeight+159;
                 SubVirtualRegion region = new PictureAnimRegion(i + 2, xoff, yoff, cardWidth, cardHeight, PictureRegionCellType.People, 0);
-                region.AddDecorator(new RegionTextDecorator(0, 45, 9));
+                region.AddDecorator(new RegionTextDecorator(0, 45, 9, ""));
                 vRegion.AddRegion(region);
             }
             types = GetPeopleAvailTypes();
@@ -69,7 +69,7 @@ namespace TaleofMonsters.Forms
             bitmapButtonFight.TextOffX = 8;
             if (types.Count>0)
             {
-                vRegion.SetRegionState(30, RegionState.Rectangled);
+                vRegion.SetRegionEffect(30, RegionEffect.Rectangled);
                 Bind(types[0]);
             }
 
@@ -119,7 +119,7 @@ namespace TaleofMonsters.Forms
             for (int i = 0; i < 20; i++)
             {
                 vRegion.SetRegionKey(i + 2, 0);
-                vRegion.SetRegionDecorator(i + 2, 0, "");
+                vRegion.SetRegionState(i + 2, 0, "");
             }
 
             foreach (var rivalData in UserProfile.InfoRival.Rivals.Values)
@@ -138,7 +138,7 @@ namespace TaleofMonsters.Forms
             {
                 vRegion.SetRegionKey(off, rivalData.Pid);
                 PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(rivalData.Pid);
-                vRegion.SetRegionDecorator(off, 0, peopleConfig.Name);
+                vRegion.SetRegionState(off, 0, peopleConfig.Name);
                 off++;
             }
             realTar = 0;
@@ -183,8 +183,8 @@ namespace TaleofMonsters.Forms
                 {
                     int realtype = types[id - 30];
                     for (int i = 0; i < types.Count; i++)
-                        vRegion.SetRegionState(i + 30, RegionState.Free);    
-                    vRegion.SetRegionState(id, RegionState.Rectangled);
+                        vRegion.SetRegionEffect(i + 30, RegionEffect.Free);    
+                    vRegion.SetRegionEffect(id, RegionEffect.Rectangled);
                     Bind(realtype);
                 }
             }

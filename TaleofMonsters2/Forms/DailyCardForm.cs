@@ -79,9 +79,8 @@ namespace TaleofMonsters.Forms
             {
                 var targetItem = treasureList[i];
                 var region = new PictureAnimRegion(i, points[i].X+ xOff, points[i].Y + yOff, 40, 40, PictureRegionCellType.Item, targetItem.Type);
-                region.AddDecorator(new RegionTextDecorator(5, 24, 10));
+                region.AddDecorator(new RegionTextDecorator(5, 24, 10, targetItem.Value.ToString()));
                 vRegion.AddRegion(region);
-                vRegion.SetRegionDecorator(i, 0, targetItem.Value.ToString());
 
                 if (UserProfile.InfoBag.GetItemCount(items[i]) <= 0)
                     region.AddDecorator(new RegionCoverDecorator(black));

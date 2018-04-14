@@ -29,15 +29,13 @@ namespace TaleofMonsters.Forms
             nlPageSelector1.PageChange += nlPageSelector1_PageChange;
             productIds = new List<int>();
             vRegion = new VirtualRegion(this);
+            string[] txt = { "卡包", "战斗", "道具" };
             for (int i = 0; i < 3; i++)
             {
                 SubVirtualRegion subRegion = new ButtonRegion(i + 1, 16 + 45 * i, 39, 42, 23, "ShopTag.JPG", "");
-                subRegion.AddDecorator(new RegionTextDecorator(8,7,9,Color.White, false));
+                subRegion.AddDecorator(new RegionTextDecorator(8,7,9,Color.White, false, txt[i]));
                 vRegion.AddRegion(subRegion);
             }
-            vRegion.SetRegionDecorator(1, 0, "卡包");
-            vRegion.SetRegionDecorator(2, 0, "战斗");
-            vRegion.SetRegionDecorator(3, 0, "道具");
 
             vRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClick);
         }
@@ -65,9 +63,9 @@ namespace TaleofMonsters.Forms
             if (button == MouseButtons.Left)
             {
                 for (int i = 0; i < 4; i++)
-                    vRegion.SetRegionState(i+1, RegionState.Free);
+                    vRegion.SetRegionEffect(i+1, RegionEffect.Free);
 
-                vRegion.SetRegionState(id, RegionState.Blacken);
+                vRegion.SetRegionEffect(id, RegionEffect.Blacken);
                 productIds.Clear();
                 foreach (var gameShopConfig in ConfigData.GameShopDict.Values)
                 {

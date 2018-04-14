@@ -27,16 +27,13 @@ namespace TaleofMonsters.Forms.MiniGame
             bitmapButtonC1.IconXY = new Point(4, 5);
             bitmapButtonC1.TextOffX = 8;
             vRegion = new VirtualRegion(this);
+            string[] txt = { "牛肉", "蜂蜜", "黄油", " 水" };
             for (int i = 0; i < 4; i++)
             {
                 ButtonRegion region = new ButtonRegion(i + 1, 60 + 55 * i, 310, 50, 50, "GameBackNormal1.PNG", "GameBackNormal1On.PNG");
-                region.AddDecorator(new RegionTextDecorator(10, 20, 10));
+                region.AddDecorator(new RegionTextDecorator(10, 20, 10, txt[i]));
                 vRegion.AddRegion(region);
             }
-            vRegion.SetRegionDecorator(1, 0, "牛肉");
-            vRegion.SetRegionDecorator(2, 0, "蜂蜜");
-            vRegion.SetRegionDecorator(3, 0, "黄油");
-            vRegion.SetRegionDecorator(4, 0, " 水");
 
             vRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
         }
@@ -111,9 +108,9 @@ namespace TaleofMonsters.Forms.MiniGame
             level = id - 1;
             for (int i = 0; i < 4; i++)
             {
-                vRegion.SetRegionState(i + 1, RegionState.Free);
+                vRegion.SetRegionEffect(i + 1, RegionEffect.Free);
             }
-            vRegion.SetRegionState(id, RegionState.Rectangled);
+            vRegion.SetRegionEffect(id, RegionEffect.Rectangled);
             Invalidate(new Rectangle(xoff, yoff, 324, 244));
         }
 

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus;
+using NarlonLib.Core;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.CardPieces;
@@ -14,6 +16,8 @@ using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
+using TaleofMonsters.Forms.Items.Regions.Decorators;
+using TaleofMonsters.Rpc;
 
 namespace TaleofMonsters.Forms.VBuilds
 {
@@ -134,9 +138,17 @@ namespace TaleofMonsters.Forms.VBuilds
 
             if (UserProfile.InfoCastle.HuntHpLeft == 0)
             {
-                UserProfile.InfoCastle.RefreshHuntMonster(false);
-                UpdateMonsterInfo();
+                moveMediator.FireFadeOut(10);
+                TalePlayer.Start(DelayRevive());
             }
+        }
+
+        private IEnumerator DelayRevive()
+        {
+            yield return new NLWaitForSeconds(1f);
+            UserProfile.InfoCastle.RefreshHuntMonster(false);
+            UpdateMonsterInfo();
+            vRegion.SetRegionDecorator(10, 0, null);
             Invalidate();
         }
 

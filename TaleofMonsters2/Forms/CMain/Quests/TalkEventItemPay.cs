@@ -53,9 +53,8 @@ namespace TaleofMonsters.Forms.CMain.Quests
             {
                 var region = new ButtonRegion(index, pos.X + 3 + 20 + (index - 1) % 7 * 70, pos.Y + 3 + 25 + (index - 1) / 7 * 70, 60, 60, HItemBook.GetHItemImage(items[i].Type));
                 region.SetKeyValue(items[i].Type);
-                region.AddDecorator(new RegionTextDecorator(37, 42, 12, Color.White, true));
+                region.AddDecorator(new RegionTextDecorator(37, 42, 12, Color.White, true, items[i].Value.ToString()));
                 vRegion.AddRegion(region);
-                vRegion.SetRegionDecorator(index, 0, items[i].Value.ToString());
                 index++;
             }
 

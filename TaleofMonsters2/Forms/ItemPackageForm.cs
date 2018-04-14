@@ -43,9 +43,8 @@ namespace TaleofMonsters.Forms
             for (int i = 0; i < itemIds.Length; i++)
             {
                 var region = new PictureRegion(1 + i, itemPos[i * 2], itemPos[i * 2 + 1], 50, 50, PictureRegionCellType.Item, itemIds[i]);
-                region.AddDecorator(new RegionTextDecorator(30,30,12,Color.White,true));
+                region.AddDecorator(new RegionTextDecorator(30, 30, 12, Color.White, true, count[i].ToString()));
                 vRegion.AddRegion(region);
-                vRegion.SetRegionDecorator(1 + i, 0, count[i].ToString());
             }
         }
 

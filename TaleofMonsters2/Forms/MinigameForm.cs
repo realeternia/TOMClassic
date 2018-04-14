@@ -26,8 +26,7 @@ namespace TaleofMonsters.Forms
                 var region = new ButtonRegion(minigameConfig.Id, 20 + (id%8)*65, 40 + (id/8)*65, 50, 50,
                     minigameConfig.IconPath + ".PNG",
                     minigameConfig.IconPath + "On.PNG");
-                region.AddDecorator(new RegionTextDecorator(0, 42, 8));
-                region.SetDecorator(0, minigameConfig.Name);
+                region.AddDecorator(new RegionTextDecorator(0, 42, 8, minigameConfig.Name));
                 vRegion.AddRegion(region);
                 id++;
             }

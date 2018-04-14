@@ -77,14 +77,13 @@ namespace TaleofMonsters.Forms
             InitializeComponent();
             vRegion = new VirtualRegion(this);
             SubVirtualRegion region;
+            string[] txt = { "全部卡片", " 新卡片" };
             for (int i = 0; i < 2; i++)
             {
                 region = new ButtonRegion(i + 1, 12+150+85*i, 40, 74, 24, "CommonButton1.JPG", "");
-                region.AddDecorator(new RegionTextDecorator(8, 7, 10, Color.Black));
+                region.AddDecorator(new RegionTextDecorator(8, 7, 10, Color.Black, txt[i]));
                 vRegion.AddRegion(region);
             }
-            vRegion.SetRegionDecorator(1, 0, "全部卡片");
-            vRegion.SetRegionDecorator(2, 0, " 新卡片");
 
             vRegion.RegionClicked += OnVRegionClicked;
             vRegion.RegionEntered += OnVRegionEntered;
@@ -212,8 +211,8 @@ namespace TaleofMonsters.Forms
             UpdateButtonState();
             UpdateDeckButtonState();
             for (int i = 0; i < 3; i++)
-                vRegion.SetRegionState(i + 1, RegionState.Free);
-            vRegion.SetRegionState(type, RegionState.Blacken);
+                vRegion.SetRegionEffect(i + 1, RegionEffect.Free);
+            vRegion.SetRegionEffect(type, RegionEffect.Blacken);
             Invalidate();
         }
 
