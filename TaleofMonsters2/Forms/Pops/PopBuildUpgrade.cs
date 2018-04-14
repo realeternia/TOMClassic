@@ -6,6 +6,8 @@ using ControlPlus;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Effects.Facts;
 using TaleofMonsters.Datas.Equips;
 using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Datas.User;
@@ -127,7 +129,14 @@ namespace TaleofMonsters.Forms.Pops
             }
 
             UserProfile.InfoBag.SubResource(need.ToArray());
-            UserProfile.InfoCastle.AddExp(equipId, 100);
+            if (UserProfile.InfoCastle.AddExp(equipId, 100))
+            {
+                var effect = new StaticUIEffect(EffectBook.GetEffect("redwing"), new Point(Width / 2 - 50, Height / 2 - 50), new Size(100, 100));
+                effect.Repeat = false;
+                AddEffect(effect);
+
+                AddFlowCenter("升级成功", "Gold");
+            }
             Invalidate();
         }
 

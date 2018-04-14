@@ -136,7 +136,7 @@ namespace TaleofMonsters.Datas.User
             return list;
         }
 
-        public void AddExp(int id, int exp)
+        public bool AddExp(int id, int exp)
         {
             var equip = GetEquipById(id);
             if (equip != null)
@@ -147,8 +147,10 @@ namespace TaleofMonsters.Datas.User
                 {
                     equip.Exp -= expNeed;
                     equip.Level++;
+                    return true;
                 }
             }
+            return false;
         }
 
         public bool AddEp(int epAdd)

@@ -120,7 +120,7 @@ namespace TaleofMonsters.Forms.Items
                     buyFin = true;
                 }
                 else
-                    MainTipManager.AddTip(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughDimond), "Red");
+                    parent.AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughDimond), "Red");
             }
             else
             {
@@ -132,7 +132,7 @@ namespace TaleofMonsters.Forms.Items
                 }
                 else
                 {
-                    MainTipManager.AddTip(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughResource), "Red");
+                    parent.AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughResource), "Red");
                 }
             }
             

@@ -26,15 +26,12 @@ namespace TaleofMonsters.Datas.Effects.Facts
 
         public virtual bool Next()
         {
-            if (frameId == 0 && effect.SoundName != "null" && !isMute)
+            if (speedRunIndex == 0 && effect.SoundName != "null" && !isMute)
                 SoundManager.Play("Effect", string.Format("{0}.mp3", effect.SoundName));
 
             speedRunIndex++;
             if ((speedRunIndex % speedDownFactor) != 0)
-            {
-                IsFinished = RunState.Run;
                 return false;
-            }
 
             return true;
         }

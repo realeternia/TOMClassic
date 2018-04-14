@@ -43,7 +43,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects
         {
             base.OnTick();
 
-            if (Disabled)
+            if (Disabled || (tickCount % 3) != 0)//降频，降低cpu开销
                 return;
 
             int drawWidth = 85 * Width / GameConstants.SceneTileStandardWidth;

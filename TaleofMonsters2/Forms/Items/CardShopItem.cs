@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus;
@@ -19,7 +20,7 @@ using TaleofMonsters.Forms.Items.Regions;
 
 namespace TaleofMonsters.Forms.Items
 {
-    internal class CardShopItem
+    internal class CardShopItem : IDisposable
     {
         private DbCardProduct product;
         private bool show;
@@ -29,6 +30,8 @@ namespace TaleofMonsters.Forms.Items
         private int x, y, width, height;
         private BasePanel parent;
         private StaticUIEffect coverEffect;
+        private Image backImg;
+        private int renderIndex = 0;
 
         public CardShopItem(BasePanel prt, int x, int y, int width, int height)
         {
@@ -37,6 +40,7 @@ namespace TaleofMonsters.Forms.Items
             this.y = y;
             this.width = width;
             this.height = height;
+            backImg = PicLoader.Read("System", "CardBack2.JPG");
         }
 
         public void Init()
@@ -79,9 +83,15 @@ namespace TaleofMonsters.Forms.Items
             if (effectName != nowEffectName)
             {
                 if (effectName == "")
+                {
                     coverEffect = null;
+                }
                 else
-                    coverEffect = new StaticUIEffect(EffectBook.GetEffect(effectName), new Point(x + 12, y + 14), new Size(64, 84));
+                {
+                    coverEffect = new StaticUIEffect(EffectBook.GetEffect(effectName), new Point(x + 12, y + 14),
+                        new Size(64, 84));
+                    coverEffect.Repeat = true;
+                }
             }
 
             parent.Invalidate(new Rectangle(x+12, y+14, 64, 84));
@@ -91,7 +101,8 @@ namespace TaleofMonsters.Forms.Items
         {
             if (coverEffect != null)
             {
-                if (coverEffect.Next())
+                renderIndex++;
+                if (coverEffect.Next() & (renderIndex % 3) == 0) //降频，降低cpu开销
                     parent.Invalidate(new Rectangle(x + 12, y + 14, 64, 84));
             }
         }
@@ -158,9 +169,7 @@ namespace TaleofMonsters.Forms.Items
 
         public void Draw(Graphics g)
         {
-            Image back = PicLoader.Read("System", "CardBack2.JPG");
-            g.DrawImage(back, x, y, width - 1, height - 1);
-            back.Dispose();
+            g.DrawImage(backImg, x, y, width - 1, height - 1);
 
             if (show)
             {
@@ -185,6 +194,12 @@ namespace TaleofMonsters.Forms.Items
                 g.DrawImage(HSIcons.GetIconsByEName("gem" + (int)quality), x + width/2-8, y + height-44, 16, 16);
 
             }
+        }
+
+        public void Dispose()
+        {
+            backImg.Dispose();
+            backImg = null;
         }
     }
 }

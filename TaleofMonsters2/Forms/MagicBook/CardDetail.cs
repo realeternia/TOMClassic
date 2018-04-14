@@ -85,9 +85,15 @@ namespace TaleofMonsters.Forms.MagicBook
             if (effectName != nowEffectName)
             {
                 if (effectName == "")
+                {
                     coverEffect = null;
+                }
                 else
-                    coverEffect = new StaticUIEffect(EffectBook.GetEffect(effectName), new Point(X + 20, Y + 20), new Size(160, 180));
+                {
+                    coverEffect = new StaticUIEffect(EffectBook.GetEffect(effectName), new Point(X + 20, Y + 20),
+                        new Size(160, 180));
+                    coverEffect.Repeat = true;
+                }
             }
 
             tooltip.Hide(parent);
