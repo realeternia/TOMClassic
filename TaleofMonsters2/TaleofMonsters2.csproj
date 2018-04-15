@@ -495,7 +495,7 @@
     <Compile Include="Datas\Tournaments\TournamentBook.cs" />
     <Compile Include="Datas\Cards\Weapons\Weapon.cs" />
     <Compile Include="Forms\Items\Core\BorderPainter.cs" />
-    <Compile Include="Forms\Items\ShopItem.cs">
+    <Compile Include="Forms\Items\NpcShopItem.cs">
     </Compile>
     <Compile Include="Forms\Items\ChangeCardItem.cs">
     </Compile>

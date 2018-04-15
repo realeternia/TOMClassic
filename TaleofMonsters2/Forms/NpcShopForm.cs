@@ -15,7 +15,7 @@ namespace TaleofMonsters.Forms
         private const int MaxCellCount = 12;
 
         private int[] items;
-        private ShopItem[] itemControls;
+        private NpcShopItem[] itemControls;
 
         public string ShopName { get; set; }
 
@@ -41,10 +41,10 @@ namespace TaleofMonsters.Forms
             }
             items = itemList.ToArray();
 
-            itemControls = new ShopItem[MaxCellCount];
+            itemControls = new NpcShopItem[MaxCellCount];
             for (int i = 0; i < MaxCellCount; i++)
             {
-                itemControls[i] = new ShopItem(this, 8 + (i % 3) * 142, 35 + (i / 3) * 55, 143, 56);
+                itemControls[i] = new NpcShopItem(this, 8 + (i % 3) * 142, 35 + (i / 3) * 55, 143, 56);
                 itemControls[i].Init(shopConfig.MoneyType, shopConfig.RandomPrice, shopConfig.LimitCount);
             }
             RefreshInfo();
@@ -76,7 +76,7 @@ namespace TaleofMonsters.Forms
             Close();
         }
 
-        private void ShopWindow_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
+        private void NpcShopForm_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
@@ -86,7 +86,7 @@ namespace TaleofMonsters.Forms
                 e.Graphics.DrawString("商店", font2, Brushes.White, Width / 2 - 40, 8);
                 font2.Dispose();
 
-                foreach (ShopItem ctl in itemControls)
+                foreach (var ctl in itemControls)
                     ctl.Draw(e.Graphics);
             }
         }

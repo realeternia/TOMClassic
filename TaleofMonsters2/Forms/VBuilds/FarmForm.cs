@@ -7,6 +7,7 @@ using NarlonLib.Math;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Items;
 using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Datas.User.Db;
@@ -105,6 +106,8 @@ namespace TaleofMonsters.Forms.VBuilds
                     {
                         UserProfile.InfoBag.AddItem(farmState.Type, 1);
                         UserProfile.Profile.InfoCastle.SetFarmState(newsel, new DbFarmState(0));
+
+                        AddFlowCenter("+1", "Lime", HItemBook.GetHItemImage(farmState.Type));
                     }
                     else
                     {

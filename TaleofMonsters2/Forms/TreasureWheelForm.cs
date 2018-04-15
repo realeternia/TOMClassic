@@ -119,6 +119,7 @@ namespace TaleofMonsters.Forms
                     var targetItem = treasureList[fuel % points.Length];
                     UserProfile.InfoBag.AddItem(targetItem.Type, targetItem.Value);
                     fuelAim = 0;
+                    AddFlowCenter("+"+ targetItem.Value, "Lime", HItemBook.GetHItemImage(targetItem.Type));
                 }
             }
         }

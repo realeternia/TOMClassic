@@ -49,7 +49,7 @@ namespace TaleofMonsters.Forms.Pops
             toolTip.Show(image, this, 108, 44);
         }
 
-        private void MessageBoxEx_Paint(object sender, PaintEventArgs e)
+        private void PopBuyProduct_Paint(object sender, PaintEventArgs e)
         {
             vRegion.Draw(e.Graphics);
 

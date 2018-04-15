@@ -58,7 +58,7 @@ namespace TaleofMonsters.Forms
             this.DoubleBuffered = true;
             this.Name = "NpcShopForm";
             this.Size = new System.Drawing.Size(445, 263);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.ShopWindow_Paint);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.NpcShopForm_Paint);
             this.ResumeLayout(false);
 
         }

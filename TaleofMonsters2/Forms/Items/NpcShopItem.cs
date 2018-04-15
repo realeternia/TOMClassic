@@ -16,7 +16,7 @@ using TaleofMonsters.Forms.Items.Regions.Decorators;
 
 namespace TaleofMonsters.Forms.Items
 {
-    internal class ShopItem : IDisposable
+    internal class NpcShopItem : IDisposable
     {
         private enum PriceRandTypes
         {
@@ -36,7 +36,7 @@ namespace TaleofMonsters.Forms.Items
         private BasePanel parent;
         private BitmapButton bitmapButtonBuy;
 
-        public ShopItem(BasePanel prt, int x, int y, int width, int height)
+        public NpcShopItem(BasePanel prt, int x, int y, int width, int height)
         {
             parent = prt;
             this.x = x;
@@ -130,6 +130,8 @@ namespace TaleofMonsters.Forms.Items
 
             UserProfile.InfoBag.SubResource((GameResourceType) priceType, (uint)price);
             UserProfile.InfoBag.AddItem(itemId, 1);
+
+            parent.AddFlowCenter("+1", "Lime", HItemBook.GetHItemImage(itemId));
         }
 
         public void Draw(Graphics g)

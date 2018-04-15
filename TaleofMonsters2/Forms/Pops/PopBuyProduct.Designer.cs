@@ -137,7 +137,7 @@
             this.Name = "PopBuyProduct";
             this.Text = "提示";
             this.Load += new System.EventHandler(this.PopBuyProduct_Load);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.MessageBoxEx_Paint);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.PopBuyProduct_Paint);
             this.ResumeLayout(false);
             this.PerformLayout();
 

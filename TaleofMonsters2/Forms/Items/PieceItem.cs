@@ -118,6 +118,8 @@ namespace TaleofMonsters.Forms.Items
                 (parent as BuyPieceForm).RemovePieceData(index);
 
                 RefreshData();
+
+                parent.AddFlowCenter("+1", "Lime", HItemBook.GetHItemImage(itemId));
             }
             else
             {
