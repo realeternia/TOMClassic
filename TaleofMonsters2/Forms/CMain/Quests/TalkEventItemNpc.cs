@@ -52,10 +52,6 @@ namespace TaleofMonsters.Forms.CMain.Quests
                 dungeon.DungeonId = config.DungeonId;
                 PanelManager.DealPanel(dungeon);
             }
-            else if (evt.ParamList[0] == "wheel")
-            {
-                TreasureWheelBook.Show(int.Parse(evt.ParamList[1]));
-            }
             else if (evt.ParamList[0] == "cards")
             {
                 var cards = new SelectCardForm();
