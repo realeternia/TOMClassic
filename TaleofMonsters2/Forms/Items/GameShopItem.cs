@@ -14,7 +14,7 @@ using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.Forms.Items
 {
-    internal class GameShopItem
+    internal class GameShopItem : IDisposable
     {
         private bool show;
         private ImageToolTip tooltip = SystemToolTip.Instance;
@@ -172,6 +172,9 @@ namespace TaleofMonsters.Forms.Items
 
                 vRegion.Draw(g);
             }
+        }
+        public void Dispose()
+        {
         }
     }
 }

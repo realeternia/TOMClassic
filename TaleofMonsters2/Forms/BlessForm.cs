@@ -112,6 +112,16 @@ namespace TaleofMonsters.Forms
             e.Graphics.DrawString(timeText, font, Brushes.YellowGreen, 445, 375);
             font.Dispose();
         }
+        public override void OnRemove()
+        {
+            base.OnRemove();
+
+            for (int i = 0; i < 12; i++)
+            {
+                blessControls[i].Dispose();
+                blessControls[i] = null;
+            }
+        }
     }
 
 }

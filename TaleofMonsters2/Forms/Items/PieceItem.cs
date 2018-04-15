@@ -13,7 +13,7 @@ using TaleofMonsters.Forms.Items.Regions;
 
 namespace TaleofMonsters.Forms.Items
 {
-    internal class PieceItem
+    internal class PieceItem : IDisposable
     {
         private int index;
         private int itemId;
@@ -158,6 +158,9 @@ namespace TaleofMonsters.Forms.Items
                     font.Dispose();
                 }
             }
+        }
+        public void Dispose()
+        {
         }
     }
 }

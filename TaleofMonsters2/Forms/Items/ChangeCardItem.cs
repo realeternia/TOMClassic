@@ -11,7 +11,7 @@ using TaleofMonsters.Forms.Items.Regions;
 
 namespace TaleofMonsters.Forms.Items
 {
-    internal class ChangeCardItem
+    internal class ChangeCardItem : IDisposable
     {
         private int index;
         private int card1;
@@ -149,6 +149,9 @@ namespace TaleofMonsters.Forms.Items
 
                 vRegion.Draw(g);
             }
+        }
+        public void Dispose()
+        {
         }
     }
 }

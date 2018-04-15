@@ -1,6 +1,6 @@
 ﻿using ControlPlus;
 
-namespace TaleofMonsters.Forms.Items
+namespace TaleofMonsters.Forms
 {
     partial class MiniItemView
     {
@@ -72,10 +72,10 @@ namespace TaleofMonsters.Forms.Items
             this.DoubleBuffered = true;
             this.Name = "MiniItemView";
             this.Size = new System.Drawing.Size(72, 142);
-            this.DoubleClick += new System.EventHandler(this.ItemView_DoubleClick);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ItemView_MouseMove);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.ItemView_Paint);
-            this.MouseLeave += new System.EventHandler(this.ItemView_MouseLeave);
+            this.DoubleClick += new System.EventHandler(this.MiniItemView_DoubleClick);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MiniItemView_MouseMove);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.MiniItemView_Paint);
+            this.MouseLeave += new System.EventHandler(this.MiniItemView_MouseLeave);
             this.ResumeLayout(false);
 
         }

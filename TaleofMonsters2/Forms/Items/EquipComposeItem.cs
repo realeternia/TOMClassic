@@ -14,7 +14,7 @@ using TaleofMonsters.Forms.Pops;
 
 namespace TaleofMonsters.Forms.Items
 {
-    internal class EquipComposeItem
+    internal class EquipComposeItem : IDisposable
     {
         private int index;
         private int equipId;
@@ -162,6 +162,9 @@ namespace TaleofMonsters.Forms.Items
                 }
                 ft.Dispose();
             }
+        }
+        public void Dispose()
+        {
         }
     }
 }

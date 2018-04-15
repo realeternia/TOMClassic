@@ -14,7 +14,7 @@ using TaleofMonsters.Forms.Items.Regions;
 
 namespace TaleofMonsters.Forms.Items
 {
-    internal class BlessItem
+    internal class BlessItem : IDisposable
     {
         private int index;
         private int blessId;
@@ -155,6 +155,9 @@ namespace TaleofMonsters.Forms.Items
 
                 g.DrawImage(HSIcons.GetIconsByEName("res4"), x + 90, y + 32 - 3, 18, 18);
             }
+        }
+        public void Dispose()
+        {
         }
     }
 }

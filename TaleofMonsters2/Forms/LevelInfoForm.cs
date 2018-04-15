@@ -83,5 +83,15 @@ namespace TaleofMonsters.Forms
             foreach (var ctl in infoControls)
                 ctl.Draw(e.Graphics);
         }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            for (int i = 0; i < 3; i++)
+            {
+                infoControls[i].Dispose();
+                infoControls[i] = null;
+            }
+        }
     }
 }

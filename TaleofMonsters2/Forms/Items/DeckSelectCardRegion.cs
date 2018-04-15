@@ -11,7 +11,7 @@ using TaleofMonsters.Datas.Decks;
 
 namespace TaleofMonsters.Forms.Items
 {
-    internal class DeckSelectCardRegion
+    internal class DeckSelectCardRegion : IDisposable
     {
         internal class CompareDeckCardByStar : IComparer<DeckCard>
         {
@@ -210,6 +210,9 @@ namespace TaleofMonsters.Forms.Items
             mask.Dispose();
             fontsong.Dispose();
             fontBold.Dispose();
+        }
+        public void Dispose()
+        {
         }
     }
 }

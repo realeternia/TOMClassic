@@ -31,7 +31,7 @@ namespace TaleofMonsters.Forms.VBuilds
         private void InitializeComponent()
         {
             this.bitmapButtonClose = new ControlPlus.BitmapButton();
-            this.miniItemView1 = new TaleofMonsters.Forms.Items.MiniItemView();
+            this.miniItemView1 = new MiniItemView();
             this.bitmapButtonHelp = new ControlPlus.BitmapButton();
             this.SuspendLayout();
             // 
@@ -104,7 +104,7 @@ namespace TaleofMonsters.Forms.VBuilds
         #endregion
 
         private BitmapButton bitmapButtonClose;
-        private TaleofMonsters.Forms.Items.MiniItemView miniItemView1;
+        private MiniItemView miniItemView1;
         private BitmapButton bitmapButtonHelp;
     }
 }

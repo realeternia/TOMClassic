@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas.Items;
@@ -6,7 +7,7 @@ using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Forms.Items
 {
-    internal class MiniItemViewItem
+    internal class MiniItemViewItem : IDisposable
     {
         private int x;
         private int y;
@@ -64,6 +65,9 @@ namespace TaleofMonsters.Forms.Items
 
                 font.Dispose();
             }
+        }
+        public void Dispose()
+        {
         }
     }
 }

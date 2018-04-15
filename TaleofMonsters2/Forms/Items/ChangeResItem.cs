@@ -12,7 +12,7 @@ using TaleofMonsters.Forms.Items.Regions;
 
 namespace TaleofMonsters.Forms.Items
 {
-    internal class ChangeResItem
+    internal class ChangeResItem : IDisposable
     {
         private int index;
         private int res1;
@@ -192,6 +192,9 @@ namespace TaleofMonsters.Forms.Items
 
                 vRegion.Draw(g);
             }
+        }
+        public void Dispose()
+        {
         }
     }
 }

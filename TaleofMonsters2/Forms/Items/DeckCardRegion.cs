@@ -11,7 +11,7 @@ using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Forms.Items
 {
-    internal class DeckCardRegion
+    internal class DeckCardRegion : IDisposable
     {
         internal delegate void InvalidateRegion();
 
@@ -271,6 +271,9 @@ namespace TaleofMonsters.Forms.Items
                 int y = (ri / xCount) * cardHeight + Y;
                 DrawOnDeckView(eg, dcards[tar], x, y, true, GetCardAttr(dcards[tar].BaseId));
             }
+        }
+        public void Dispose()
+        {
         }
     }
 }

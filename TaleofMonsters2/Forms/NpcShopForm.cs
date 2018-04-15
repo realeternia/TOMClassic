@@ -90,5 +90,15 @@ namespace TaleofMonsters.Forms
                     ctl.Draw(e.Graphics);
             }
         }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            for (int i = 0; i < MaxCellCount; i++)
+            {
+                itemControls[i].Dispose();
+                itemControls[i] = null;
+            }
+        }
     }
 }

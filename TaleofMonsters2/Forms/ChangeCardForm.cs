@@ -177,5 +177,16 @@ namespace TaleofMonsters.Forms
 
             return chg;
         }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+
+            for (int i = 0; i < 8; i++)
+            {
+                changeControls[i].Dispose();
+                changeControls[i] = null;
+            }
+        }
     }
 }

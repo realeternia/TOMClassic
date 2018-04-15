@@ -100,5 +100,15 @@ namespace TaleofMonsters.Forms
         {
             InitEquips(int.Parse((sender as Control).Tag.ToString()));
         }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            for (int i = 0; i < 9; i++)
+            {
+                equipControls[i].Dispose();
+                equipControls[i] = null;
+            }
+        }
     }
 }

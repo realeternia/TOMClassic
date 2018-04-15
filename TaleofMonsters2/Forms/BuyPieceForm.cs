@@ -192,5 +192,15 @@ namespace TaleofMonsters.Forms
 
             return piece;
         }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            for (int i = 0; i < 8; i++)
+            {
+                pieceControls[i].Dispose();
+                pieceControls[i] = null;
+            }
+        }
     }
 }

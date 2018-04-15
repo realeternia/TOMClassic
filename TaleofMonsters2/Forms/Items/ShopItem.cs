@@ -16,7 +16,7 @@ using TaleofMonsters.Forms.Items.Regions.Decorators;
 
 namespace TaleofMonsters.Forms.Items
 {
-    internal class ShopItem
+    internal class ShopItem : IDisposable
     {
         private enum PriceRandTypes
         {
@@ -203,6 +203,9 @@ namespace TaleofMonsters.Forms.Items
                 case PriceRandTypes.Bad3: newPrice = (int)Math.Max(price + 1, price * MathTool.GetRandom(1.5, 1.8)); break;
             }
             price = newPrice;
+        }
+        public void Dispose()
+        {
         }
     }
 }

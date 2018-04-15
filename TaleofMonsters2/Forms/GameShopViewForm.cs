@@ -109,5 +109,15 @@ namespace TaleofMonsters.Forms
             page = pg;
             RefreshInfo();
         }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            for (int i = 0; i < 9; i++)
+            {
+                itemControls[i].Dispose();
+                itemControls[i] = null;
+            }
+        }
     }
 }

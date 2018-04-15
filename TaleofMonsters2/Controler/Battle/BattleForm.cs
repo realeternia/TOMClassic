@@ -582,5 +582,12 @@ namespace TaleofMonsters.Controler.Battle
             e.Graphics.DrawString(" 模拟战斗 ", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
         }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+
+            miniItemView1.DisposeItem();
+        }
     }
 }

@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus;
 using NarlonLib.Math;
-using NarlonLib.Tools;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas;
@@ -185,6 +184,12 @@ namespace TaleofMonsters.Forms.VBuilds
         private void bitmapButtonHelp_Click(object sender, EventArgs e)
         {
             MessageBoxEx.Show("通过完成事件和战斗可以使作物成熟");
+        }
+        public override void OnRemove()
+        {
+            base.OnRemove();
+
+            miniItemView1.DisposeItem();
         }
     }
 }

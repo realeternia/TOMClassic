@@ -10,8 +10,9 @@ using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Items;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain;
+using TaleofMonsters.Forms.Items;
 
-namespace TaleofMonsters.Forms.Items
+namespace TaleofMonsters.Forms
 {
     internal partial class MiniItemView : UserControl
     {
@@ -45,9 +46,7 @@ namespace TaleofMonsters.Forms.Items
             bitmapButtonRight.NoUseDrawNine = true;
             items = new MiniItemViewItem[CellCount];
             for (int i = 0; i < CellCount; i++)
-            {
                 items[i] = new MiniItemViewItem(i+1, 30 * (i % 2), i / 2 * 35);
-            }
 
             RefreshList();
         }
@@ -61,9 +60,7 @@ namespace TaleofMonsters.Forms.Items
                 {
                     HItemConfig itemConfig = ConfigData.GetHItemConfig(UserProfile.InfoBag.Items[i].Type);
                     if (itemConfig.SubType == ItemSubType && itemConfig.IsUsable)
-                    {
                         ids.Add(i);
-                    }
                 }
             }
             page = 0;
@@ -76,13 +73,9 @@ namespace TaleofMonsters.Forms.Items
             for (int i = page * CellCount; i < page * CellCount + CellCount; i++)
             {
                 if (i < ids.Count)
-                {
                     items[i % CellCount].ItemPos = ids[i];
-                }
                 else
-                {
                     items[i % CellCount].ItemPos = -1;
-                }
             }
         }
 
@@ -110,22 +103,20 @@ namespace TaleofMonsters.Forms.Items
             Invalidate();
         }
 
-        private void ItemView_Paint(object sender, PaintEventArgs e)
+        private void MiniItemView_Paint(object sender, PaintEventArgs e)
         {
             if (!show)
                 return;
 
-            foreach (MiniItemViewItem item in items)
-            {
+            foreach (var item in items)
                 item.Draw(e.Graphics, Enabled);
-            }
         }
 
-        private void ItemView_MouseMove(object sender, MouseEventArgs e)
+        private void MiniItemView_MouseMove(object sender, MouseEventArgs e)
         {
             int temp = -1;
             int index = -1;
-            foreach (MiniItemViewItem item in items)
+            foreach (var item in items)
             {
                 if (item.IsInArea(e.X, e.Y))
                 {
@@ -142,7 +133,6 @@ namespace TaleofMonsters.Forms.Items
                 {
                     Image image = HItemBook.GetPreview(UserProfile.InfoBag.Items[tar].Type);
                     tooltip.Show(image, this, (index % 2) * 30 - image.Width + 2, (index / 2) * 35 + 3);
-
                 }
                 else
                 {
@@ -151,7 +141,7 @@ namespace TaleofMonsters.Forms.Items
             }
         }
 
-        private void ItemView_DoubleClick(object sender, EventArgs e)
+        private void MiniItemView_DoubleClick(object sender, EventArgs e)
         {
             if (!Enabled || tar == -1)
                 return;
@@ -163,14 +153,12 @@ namespace TaleofMonsters.Forms.Items
                 int count = UserProfile.InfoBag.Items[tar].Value;
                 UserProfile.InfoBag.UseItemByPos(tar, UseType);
                 if (count == 1)
-                {
                     RefreshList();
-                }
                 Invalidate();
             }
         }
 
-        private void ItemView_MouseLeave(object sender, EventArgs e)
+        private void MiniItemView_MouseLeave(object sender, EventArgs e)
         {
             tar = -1;
             tooltip.Hide(this);
@@ -196,6 +184,15 @@ namespace TaleofMonsters.Forms.Items
                 page--;
                 RefreshItems();
                 CheckButton();
+            }
+        }
+
+        public void DisposeItem()
+        {
+            for (int i = 0; i < CellCount; i++)
+            {
+                items[i].Dispose();
+                items[i] = null;
             }
         }
     }

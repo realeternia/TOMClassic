@@ -1,5 +1,5 @@
-﻿using System.Drawing;
-using System.Windows.Forms;
+﻿using System;
+using System.Drawing;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Core;
 using ConfigDatas;
@@ -8,7 +8,7 @@ using TaleofMonsters.Datas.Others;
 
 namespace TaleofMonsters.Forms.Items
 {
-    internal class LevelInfoItem
+    internal class LevelInfoItem : IDisposable
     {
         private int index;
         private int id;
@@ -60,6 +60,9 @@ namespace TaleofMonsters.Forms.Items
             g.DrawString(HSTypes.I2LevelInfoType(levelInfoConfig.Type), font, brush, x + 80, y + 30);
             brush.Dispose();
             font.Dispose();
+        }
+        public void Dispose()
+        {
         }
     }
 }

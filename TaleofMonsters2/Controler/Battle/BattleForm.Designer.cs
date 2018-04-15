@@ -1,6 +1,7 @@
 ﻿using ControlPlus;
 using TaleofMonsters.Controler.Battle.Components;
 using TaleofMonsters.Datas;
+using TaleofMonsters.Forms;
 
 namespace TaleofMonsters.Controler.Battle
 {
@@ -35,7 +36,7 @@ namespace TaleofMonsters.Controler.Battle
             this.bitmapButtonClose = new BitmapButton();
             this.panelBattle = new DoubleBuffedPanel();
             this.cardSelector1 = new TaleofMonsters.Controler.Battle.Components.CardSelector();
-            this.miniItemView1 = new TaleofMonsters.Forms.Items.MiniItemView();
+            this.miniItemView1 = new MiniItemView();
             this.cardList2 = new TaleofMonsters.Controler.Battle.Components.CardList();
             this.cardsArray1 = new TaleofMonsters.Controler.Battle.Components.CardsArray();
             this.lifeClock2 = new TaleofMonsters.Controler.Battle.Components.LifeClock();
@@ -172,7 +173,7 @@ namespace TaleofMonsters.Controler.Battle
         #endregion
 
         private BitmapButton bitmapButtonClose;
-        private TaleofMonsters.Forms.Items.MiniItemView miniItemView1;
+        private MiniItemView miniItemView1;
         private TaleofMonsters.Controler.Battle.Components.CardList cardList2;
 
         private DoubleBuffedPanel panelBattle;
