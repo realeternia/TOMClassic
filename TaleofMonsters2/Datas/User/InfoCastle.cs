@@ -21,6 +21,8 @@ namespace TaleofMonsters.Datas.User
         [FieldIndex(Index = 12)] public int HuntMonsterId;
         [FieldIndex(Index = 13)] public int HuntHpLeft;
         [FieldIndex(Index = 14)] public int HuntPoint;
+        [FieldIndex(Index = 15)] public int WealthHpLeft;
+        [FieldIndex(Index = 16)] public int WealthPoint;
 
         private const int MainHouseIndex = 5;
 
@@ -172,7 +174,12 @@ namespace TaleofMonsters.Datas.User
             }
             if (HasEquipOn(HItemBook.GetItemId("eqliechang")))
             {
-                HuntPoint++;
+                HuntPoint+= epAdd;
+                flag = true;
+            }
+            if (HasEquipOn(HItemBook.GetItemId("eqhaidaowan")))
+            {
+                WealthPoint+= epAdd;
                 flag = true;
             }
             return flag;

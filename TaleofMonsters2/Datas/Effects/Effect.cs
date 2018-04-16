@@ -13,9 +13,4 @@
             SpeedDown = 1;
         }
     }
-
-    internal class Effects
-    {
-        public static Effect None = new Effect("");
-    }
 }

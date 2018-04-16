@@ -40,6 +40,8 @@ namespace TaleofMonsters.Forms
             bitmapButtonOre.NoUseDrawNine = true;
             bitmapButtonHunt.ImageNormal = PicLoader.Read("Button.Panel", "HuntButton.JPG");
             bitmapButtonHunt.NoUseDrawNine = true;
+            bitmapButtonBay.ImageNormal = PicLoader.Read("Button.Panel", "WealthButton.JPG");
+            bitmapButtonBay.NoUseDrawNine = true;
             DoubleBuffered = true;
 
             vRegion = new VirtualRegion(this);
@@ -105,6 +107,7 @@ namespace TaleofMonsters.Forms
             bitmapButtonFarm.Enabled = UserProfile.InfoCastle.HasEquipOn(HItemBook.GetItemId("eqtian"));
             bitmapButtonOre.Enabled = UserProfile.InfoCastle.HasEquipOn(HItemBook.GetItemId("eqkuang"));
             bitmapButtonHunt.Enabled = UserProfile.InfoCastle.HasEquipOn(HItemBook.GetItemId("eqliechang"));
+            bitmapButtonBay.Enabled = UserProfile.InfoCastle.HasEquipOn(HItemBook.GetItemId("eqhaidaowan"));
             Invalidate();
         }
 
@@ -242,6 +245,11 @@ namespace TaleofMonsters.Forms
         private void bitmapButtonHunt_Click(object sender, EventArgs e)
         {
             PanelManager.DealPanel(new HuntForm());
+        }
+
+        private void bitmapButtonBay_Click(object sender, EventArgs e)
+        {
+            PanelManager.DealPanel(new WealthForm());
         }
     }
 }

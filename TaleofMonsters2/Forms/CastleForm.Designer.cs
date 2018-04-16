@@ -35,6 +35,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonFarm = new ControlPlus.BitmapButton();
             this.bitmapButtonOre = new ControlPlus.BitmapButton();
             this.bitmapButtonHunt = new ControlPlus.BitmapButton();
+            this.bitmapButtonBay = new ControlPlus.BitmapButton();
             this.SuspendLayout();
             // 
             // bitmapButtonClose
@@ -127,10 +128,29 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonHunt.UseVisualStyleBackColor = true;
             this.bitmapButtonHunt.Click += new System.EventHandler(this.bitmapButtonHunt_Click);
             // 
+            // bitmapButtonBay
+            // 
+            this.bitmapButtonBay.BorderColor = System.Drawing.Color.DarkBlue;
+            this.bitmapButtonBay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bitmapButtonBay.IconImage = null;
+            this.bitmapButtonBay.IconSize = new System.Drawing.Size(0, 0);
+            this.bitmapButtonBay.IconXY = new System.Drawing.Point(0, 0);
+            this.bitmapButtonBay.ImageNormal = null;
+            this.bitmapButtonBay.Location = new System.Drawing.Point(57, 307);
+            this.bitmapButtonBay.Name = "bitmapButtonBay";
+            this.bitmapButtonBay.NoUseDrawNine = false;
+            this.bitmapButtonBay.Size = new System.Drawing.Size(36, 36);
+            this.bitmapButtonBay.TabIndex = 44;
+            this.bitmapButtonBay.TextOffX = 0;
+            this.bitmapButtonBay.TipText = "查看海盗湾";
+            this.bitmapButtonBay.UseVisualStyleBackColor = true;
+            this.bitmapButtonBay.Click += new System.EventHandler(this.bitmapButtonBay_Click);
+            // 
             // CastleForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.bitmapButtonBay);
             this.Controls.Add(this.bitmapButtonHunt);
             this.Controls.Add(this.bitmapButtonOre);
             this.Controls.Add(this.bitmapButtonFarm);
@@ -144,6 +164,7 @@ namespace TaleofMonsters.Forms
             this.Controls.SetChildIndex(this.bitmapButtonFarm, 0);
             this.Controls.SetChildIndex(this.bitmapButtonOre, 0);
             this.Controls.SetChildIndex(this.bitmapButtonHunt, 0);
+            this.Controls.SetChildIndex(this.bitmapButtonBay, 0);
             this.ResumeLayout(false);
 
         }
@@ -154,5 +175,6 @@ namespace TaleofMonsters.Forms
         private BitmapButton bitmapButtonFarm;
         private BitmapButton bitmapButtonOre;
         private BitmapButton bitmapButtonHunt;
+        private BitmapButton bitmapButtonBay;
     }
 }
