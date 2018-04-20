@@ -50,7 +50,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
 
         public void CheckDamage(LiveMonster attacker, LiveMonster victim)
         {
-            if (attr == 0)
+            if (attr == 0 && attacker != null)
             {//物理攻击只支持一倍伤害，damage无效
                 attacker.HitTarget(victim, false);
             }

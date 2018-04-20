@@ -183,7 +183,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             pen.Dispose();
             b1.Dispose();
             b2.Dispose();
-            Font font = new Font("幼圆", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+            Font font = new Font("宋体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             float lenth = TextRenderer.MeasureText(e.Graphics, nameStr, font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
             e.Graphics.DrawString(nameStr, font, Brushes.White, IsLeft ? 72 : Width - 72 - lenth, 44);
             e.Graphics.DrawImage(HSIcons.GetIconsByEName("tsk7"), IsLeft ? Width - 75 : 30,44,18,18);//画剩余卡牌数

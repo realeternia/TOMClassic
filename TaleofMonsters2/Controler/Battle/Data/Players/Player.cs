@@ -331,6 +331,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
                 var rival = Rival as Player;
                 rival.TrapHolder.CheckTrapOnSummon(newMon, rival);
+                if (HolyBook.HasWord("holyman"))
+                    newMon.BuffManager.AddBuff(BuffConfig.Indexer.HolyShield, 1, 99);
             }
             catch (Exception e)
             {
