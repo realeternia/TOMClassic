@@ -58,11 +58,11 @@ namespace TaleofMonsters.Controler.Battle.DataTent
 
         private void Remove(int monid)
         {
-            foreach (var monster in monsters)
+            foreach (var pickMon in monsters)
             {
-                if (monster.Id == monid)
+                if (pickMon.Id == monid)
                 {
-                    Remove(monster);
+                    Remove(pickMon);
                     return;
                 }
             }
@@ -99,34 +99,34 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             LeftCount = 0;
             RightCount = 0;
             List<int> removeMids = new List<int>();            
-            foreach (var mon in monsters)
+            foreach (var pickMon in monsters)
             {
-                var rival = mon.Rival as Player;
+                var rival = pickMon.Rival as Player;
                 var directDam = rival.SpecialAttr.DirectDamage;
                 if (directDam > 0)
                 {
                     HitDamage damage = new HitDamage(directDam, directDam, 0, DamageTypes.Magic);
-                    mon.HpBar.OnDamage(damage);
+                    pickMon.HpBar.OnDamage(damage);
                 }
-                if (!mon.IsAlive)
+                if (!pickMon.IsAlive)
                 {
-                    if (!mon.IsGhost)
+                    if (!pickMon.IsGhost)
                     {
-                        mon.OnDie();
+                        pickMon.OnDie();
                     }
                     else
                     {
-                        if (mon.OwnerPlayer.SpikeManager.HasSpike("grave") || (mon.Rival as Player).SpikeManager.HasSpike("grave"))
-                            mon.GhostTime += 0.005f;
+                        if (pickMon.OwnerPlayer.SpikeManager.HasSpike("grave") || (pickMon.Rival as Player).SpikeManager.HasSpike("grave"))
+                            pickMon.GhostTime += 0.005f;
                         else
-                            mon.GhostTime += 0.01f;
-                        if (mon.GhostTime >= 1)
-                            removeMids.Add(mon.Id);
+                            pickMon.GhostTime += 0.01f;
+                        if (pickMon.GhostTime >= 1)
+                            removeMids.Add(pickMon.Id);
                     }
                 }
                 else
                 {
-                    if (!mon.IsLeft) RightCount = RightCount + 1;
+                    if (!pickMon.IsLeft) RightCount = RightCount + 1;
                     else LeftCount = LeftCount + 1;
                 }
             }
@@ -153,8 +153,8 @@ namespace TaleofMonsters.Controler.Battle.DataTent
 
         public void OnPlayerUseCard(IPlayer caster, int cardType, int lv)
         {
-            foreach (var mon in monsters)
-                mon.SkillManager.CheckUseCard(caster, cardType, lv);
+            foreach (var pickMon in monsters)
+                pickMon.SkillManager.CheckUseCard(caster, cardType, lv);
         }
 
         public void Clear()

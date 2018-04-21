@@ -232,9 +232,9 @@ namespace TaleofMonsters.Controler.Battle.Data
             //播放特效
             RegionTypes rt = BattleTargetManager.GetRegionType(SkillInfo.SkillConfig.Target[2]);
             var cardSize = BattleManager.Instance.MemMap.CardSize;
-            foreach (var memMapPoint in BattleManager.Instance.MemMap.Cells)
+            foreach (var pickCell in BattleManager.Instance.MemMap.Cells)
             {
-                var pointData = memMapPoint.ToPoint();
+                var pointData = pickCell.ToPoint();
                 if (BattleLocationManager.IsPointInRegionType(rt, pos.X, pos.Y, pointData, SkillInfo.SkillConfig.Range, Self.IsLeft))
                 {
                     var effectData = new MonsterBindEffect(EffectBook.GetEffect(SkillInfo.SkillConfig.EffectArea), pointData + new Size(cardSize / 2, cardSize / 2), false);

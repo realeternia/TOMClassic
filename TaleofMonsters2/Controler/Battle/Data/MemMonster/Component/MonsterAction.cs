@@ -103,7 +103,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 return;
             }
 
-            BattleManager.Instance.MemMap.GetMouseCell(self.Position.X, self.Position.Y).UpdateOwner(0);
+            BattleManager.Instance.MemMap.UpdateCellOwner(self.Position, 0);
             self.SkillManager.CheckRemoveEffect();
             self.Owner.Action.AddCard(self, self.CardId, self.Level, costChange);
 

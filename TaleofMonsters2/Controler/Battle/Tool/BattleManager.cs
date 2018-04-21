@@ -1,5 +1,7 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using TaleofMonsters.Controler.Battle.Data;
+using TaleofMonsters.Controler.Battle.Data.MemArticle;
 using TaleofMonsters.Controler.Battle.Data.MemMap;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.DataTent;
@@ -15,22 +17,21 @@ namespace TaleofMonsters.Controler.Battle.Tool
             get
             {
                 if (instance == null)
-                {
                     instance = new BattleManager();
-                }
                 return instance;
             }
         }
 
-        public EffectQueue EffectQueue { get; set; }
-        public FlowWordQueue FlowWordQueue { get; set; }
-        public MonsterQueue MonsterQueue { get; set; }
-        public BattleStatisticData StatisticData { get; set; }//统计数据
-        public BattleRuleData RuleData { get; set; }//规则数据
-        public PlayerManager PlayerManager { get; set; }
-        public MissileQueue MissileQueue { get; set; }
+        public EffectQueue EffectQueue { get; private set; }
+        public FlowWordQueue FlowWordQueue { get; private set; }
+        public MonsterQueue MonsterQueue { get; private set; }
+        public BattleStatisticData StatisticData { get; private set; }//统计数据
+        public BattleRuleData RuleData { get; private set; }//规则数据
+        public PlayerManager PlayerManager { get; private set; }
+        public MissileQueue MissileQueue { get; private set; }
+        public ArticleQueue ArticleQueue { get; private set; } //场景物件
         public MemRowColumnMap MemMap { get; set; }
-
+        
         public bool IsNight;
         public int RoundMark;//目前一个roundmark代表0.05s
         public float Round;//当前的回合数，超过固定值就可以抽牌
@@ -49,7 +50,16 @@ namespace TaleofMonsters.Controler.Battle.Tool
             RuleData = new BattleRuleData();
             PlayerManager = new PlayerManager();
             MissileQueue = new MissileQueue();
+            ArticleQueue = new ArticleQueue();
             IsNight = false;
+        }
+
+        public void OnMatchStart()
+        {
+            StatisticData.StartTime = DateTime.Now;
+            StatisticData.EndTime = DateTime.Now;
+
+            ArticleQueue.Add(new Article(58000001, 1005)); //test
         }
 
         public void Next()
@@ -97,6 +107,8 @@ namespace TaleofMonsters.Controler.Battle.Tool
 
             for (int i = 0; i < MissileQueue.Count; i++)
                 MissileQueue[i].Draw(g);//画导弹
+            for (int i = 0; i < ArticleQueue.Count; i++)
+                ArticleQueue[i].Draw(g, RoundMark);//画物件
 
             for (int i = 0; i < EffectQueue.Count; i++)
                 EffectQueue[i].Draw(g);//画特效

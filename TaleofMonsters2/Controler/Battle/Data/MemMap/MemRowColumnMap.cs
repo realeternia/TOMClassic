@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players;
@@ -20,15 +21,17 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         public int ColumnCount { get; private set; }
         public int RowCount { get; private set; }
         
-        public MemMapPoint[,] Cells { get; set; }
+        public MemMapPoint[,] Cells { get; private set; }
 
         private bool isDirty;
         private Image cachImage;
         private BattleMapInfo bMapInfo;
+        private BattleMapConfig mapConfig;
 
         public MemRowColumnMap(string map, int tile)
         {
             bMapInfo = BattleMapBook.GetMap(map);
+            mapConfig = BattleMapBook.GetMapConfig(map);
             CardSize = StageWidth/bMapInfo.XCount;
             RowCount = bMapInfo.YCount;
             ColumnCount = bMapInfo.XCount;
@@ -48,14 +51,13 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                     int tarTile = bMapInfo.Cells[i, j];
                     if (tarTile == 0)
                         tarTile = tile == 0 ? TileConfig.Indexer.DefaultTile : tile;
-                    Cells[i, j] = new MemMapPoint(i, i*CardSize, j*CardSize, ColumnCount, tarTile);
+                    Cells[i, j] = new MemMapPoint(i, j, i*CardSize, j*CardSize, ColumnCount, tarTile);
                 }
             }
         }
 
         public void InitUnit(Player player)
         {
-            var mapConfig = BattleMapBook.GetMapConfig(bMapInfo.Name);
             var unitsPos = player.IsLeft ? mapConfig.LeftMon : mapConfig.RightMon;
             for (int i = 0; i < unitsPos.Length; i+=3)
             {
@@ -112,9 +114,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             }
         }
 
-        private MemMapPoint GetCell(int x, int y)
+        public MemMapPoint GetCell(int id)
         {
-            return Cells[x, y];
+            foreach (var pickCell in Cells)
+            {
+                if (id == pickCell.Id) //地形和方向无关，随便填一个
+                    return pickCell;
+            }
+            return null;
         }
 
         public MemMapPoint GetMouseCell(int x, int y)
@@ -146,10 +153,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
 
         public void SetTile(Point point, int dis, int tile)
         {
-            foreach (var memMapPoint in Cells)
+            foreach (var pickCell in Cells)
             {
-                if (BattleLocationManager.IsPointInRegionType(RegionTypes.Circle, point.X, point.Y, memMapPoint.ToPoint(), dis, true))//地形和方向无关，随便填一个
-                    memMapPoint.Tile = tile;
+                if (BattleLocationManager.IsPointInRegionType(RegionTypes.Circle, point.X, point.Y, pickCell.ToPoint(), dis, true))//地形和方向无关，随便填一个
+                    pickCell.Tile = tile;
             }
             isDirty = true;
         }
@@ -284,26 +291,26 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             if (isDirty)
             {
                 isDirty = false;
-                if (cachImage!=null)
+                if (cachImage != null)
                     cachImage.Dispose();
                 cachImage = new Bitmap(StageWidth, StageHeight);
                 Graphics cg = Graphics.FromImage(cachImage);
 
-                foreach (var memMapPoint in Cells)
+                foreach (var pickCell in Cells)
                 {
-                    cg.DrawImage(TileBook.GetTileImage(memMapPoint.Tile, CardSize, CardSize), memMapPoint.X, memMapPoint.Y, CardSize, CardSize);
+                    cg.DrawImage(TileBook.GetTileImage(pickCell.Tile, CardSize, CardSize), pickCell.X, pickCell.Y, CardSize, CardSize);
 
-                    var tileConfig = ConfigData.GetTileConfig(memMapPoint.Tile);
+                    var tileConfig = ConfigData.GetTileConfig(pickCell.Tile);
                     if (tileConfig.ShowBorder)
                     {
                         Pen pen = new Pen(Brushes.DarkRed, 1);
-                        cg.DrawRectangle(pen, memMapPoint.X, memMapPoint.Y, CardSize - 1, CardSize);
+                        cg.DrawRectangle(pen, pickCell.X, pickCell.Y, CardSize - 1, CardSize);
                         pen.Dispose();
                     }
                
 #if DEBUG
                     Font font = new Font("Arial", 7*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-                    g.DrawString(memMapPoint.Owner.ToString(), font, Brushes.White, memMapPoint.X, memMapPoint.Y+10);
+                    g.DrawString(pickCell.Owner.ToString(), font, Brushes.White, pickCell.X, pickCell.Y+10);
                     font.Dispose();
 #endif
                 

@@ -170,9 +170,7 @@ namespace TaleofMonsters.Controler.Battle
         private void StartGame() //初始化游戏
         {
             AIStrategy.OnInit(BattleManager.Instance.PlayerManager.RightPlayer);
-
-            BattleManager.Instance.StatisticData.StartTime = DateTime.Now;
-            BattleManager.Instance.StatisticData.EndTime = DateTime.Now;
+            BattleManager.Instance.OnMatchStart();
 
             cardsArray1.Visible = true;
             miniItemView1.Visible = true;

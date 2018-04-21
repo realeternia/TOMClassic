@@ -263,7 +263,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             SkillManager.DeathSkill(); // 亡语
 
             GhostTime = 0.01f;//开始死亡
-            BattleManager.Instance.MemMap.GetMouseCell(Position.X,Position.Y).UpdateOwner(-Id);
+            BattleManager.Instance.MemMap.UpdateCellOwner(Position, -Id);
 
             SkillManager.CheckRemoveEffect();
             var rival = Rival as Player;
@@ -374,7 +374,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public void Revive()
         {
             GhostTime = 0;
-            BattleManager.Instance.MemMap.GetMouseCell(Position.X, Position.Y).UpdateOwner(Id);
+            BattleManager.Instance.MemMap.UpdateCellOwner(Position, Id);
             HpBar.SetHp(1);//复活给1hp
 
             SkillManager.CheckInitialEffect();

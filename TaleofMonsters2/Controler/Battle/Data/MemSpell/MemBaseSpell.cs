@@ -44,9 +44,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemSpell
                     //播放特效
                     RegionTypes rt = BattleTargetManager.GetRegionType(spellInfo.SpellConfig.Target[2]);
                     var cardSize = BattleManager.Instance.MemMap.CardSize;
-                    foreach (var memMapPoint in BattleManager.Instance.MemMap.Cells)
+                    foreach (var pickCell in BattleManager.Instance.MemMap.Cells)
                     {
-                        var pointData = memMapPoint.ToPoint();
+                        var pointData = pickCell.ToPoint();
                         if (BattleLocationManager.IsPointInRegionType(rt, mouse.X, mouse.Y, pointData, spellInfo.SpellConfig.Range, isLeft))
                         {
                             var effectData = new MonsterBindEffect(EffectBook.GetEffect(spellInfo.SpellConfig.AreaEffect), pointData + new Size(cardSize / 2, cardSize / 2), false);
