@@ -99,17 +99,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         {
             List<Spike> toRemove = null;
             if (type == CardTypes.Monster)
-            {
                 toRemove = spikeList.FindAll(a => a.RemoveOnUseMonster);
-            }
             else if (type == CardTypes.Spell)
-            {
                 toRemove = spikeList.FindAll(a => a.RemoveOnUseSpell);
-            }
             else if (type == CardTypes.Weapon)
-            {
                 toRemove = spikeList.FindAll(a => a.RemoveOnUseWeapon);
-            }
             if (toRemove != null)
             {
                 foreach (var spike in toRemove)

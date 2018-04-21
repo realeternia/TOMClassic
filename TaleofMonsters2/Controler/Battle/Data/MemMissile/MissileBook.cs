@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
+using NarlonLib.Log;
 using TaleofMonsters.Core.Loader;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMissile
@@ -17,13 +18,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
             {
                 var img = PicLoader.Read("Missile", string.Format("{0}.PNG", id));
                 if (img == null)
-                {
-                    img = PicLoader.Read("Missile", "0.PNG");
-                }
+                    img = PicLoader.Read("Missile", "10.PNG");
                 if (isYFlip)
-                {
                     img.RotateFlip(RotateFlipType.RotateNoneFlipY);
-                }
                 effectType.Add(key, img);
             }
             return effectType[key];
@@ -35,16 +32,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMissile
             {
                 cachedConfigDict = new Dictionary<string, MissileConfig>();
                 foreach (var missile in ConfigData.MissileDict.Values)
-                {
                     cachedConfigDict[missile.TypeName] = missile;
-                }
             }
 
             MissileConfig configData;
             if (cachedConfigDict.TryGetValue(name, out configData))
-            {
                 return configData;
-            }
+
+            NLog.Warn("MissileBook.GetConfig error name={0}", name);
             return cachedConfigDict["null"];
         }
     }
