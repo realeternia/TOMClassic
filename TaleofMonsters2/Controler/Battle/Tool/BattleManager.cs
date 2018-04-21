@@ -59,7 +59,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
             StatisticData.StartTime = DateTime.Now;
             StatisticData.EndTime = DateTime.Now;
 
-            ArticleQueue.Add(new Article(58000001, 1005)); //test
+            ArticleQueue.Add(new Article(58000001, 1005)); //todo test
         }
 
         public void Next()
@@ -82,12 +82,31 @@ namespace TaleofMonsters.Controler.Battle.Tool
                 if (Round >= 1)
                 {
                     Round = 0;
-                    PlayerManager.CheckRoundCard(); //1回合
+                    OnRound();
                 }
             }
             StatisticData.Round = RoundMark * 50 / GameConstants.RoundTime + 1;//50ms
             if (RoundMark % 10 == 0)
                 AIStrategy.AIProc(PlayerManager.RightPlayer);
+
+            ArticleQueue.RemoveDye();
+        }
+
+        private void OnRound()
+        {
+            PlayerManager.CheckRoundCard();
+        }
+
+        public void OnEnterCell(int cellId, int monId)
+        {
+            foreach (var article in ArticleQueue.Enumerator)
+            {
+                if (article.CellId == cellId)
+                {
+                    article.Effect(MonsterQueue.GetMonsterByUniqueId(monId));
+                    article.IsDying = true;
+                }
+            }
         }
 
         public void Draw(Graphics g, MagicRegion magicRegion, CardVisualRegion visualRegion, int mouseX, int mouseY, bool isMouseIn)
@@ -96,19 +115,19 @@ namespace TaleofMonsters.Controler.Battle.Tool
             visualRegion.Draw(g);
             if (magicRegion.Active && isMouseIn)
                 magicRegion.Draw(g, RoundMark, mouseX, mouseY);
+            for (int i = 0; i < ArticleQueue.Count; i++)
+                ArticleQueue[i].Draw(g, RoundMark);//画物件
             for (int i = 0; i < MonsterQueue.Count; i++)
             {
-                LiveMonster monster = MonsterQueue[i];
+                LiveMonster pickMon = MonsterQueue[i];
                 Color color = Color.White;
                 if (isMouseIn)
-                    color = magicRegion.GetMonsterColor(monster, mouseX, mouseY);
-                monster.DrawOnBattle(g, color);//画怪物
+                    color = magicRegion.GetMonsterColor(pickMon, mouseX, mouseY);
+                pickMon.DrawOnBattle(g, color);//画怪物
             }
 
             for (int i = 0; i < MissileQueue.Count; i++)
                 MissileQueue[i].Draw(g);//画导弹
-            for (int i = 0; i < ArticleQueue.Count; i++)
-                ArticleQueue[i].Draw(g, RoundMark);//画物件
 
             for (int i = 0; i < EffectQueue.Count; i++)
                 EffectQueue[i].Draw(g);//画特效

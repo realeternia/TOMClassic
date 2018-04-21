@@ -78,12 +78,12 @@ namespace TaleofMonsters.Controler.Battle.Data
             int size = BattleManager.Instance.MemMap.CardSize;
 
             int roundoff = ((round / 12) % 2) * 1 + 2;
-            foreach (var memMapPoint in BattleManager.Instance.MemMap.Cells)
+            foreach (var pickCell in BattleManager.Instance.MemMap.Cells)
             {
                 Color c = Color.Black;
                 foreach (var regionData in dataList)
                 {
-                    if (BattleLocationManager.IsPointInRegionType(regionData.Type, mouseX, mouseY, memMapPoint.ToPoint(),
+                    if (BattleLocationManager.IsPointInRegionType(regionData.Type, mouseX, mouseY, pickCell.ToPoint(),
                         regionData.Range, true)) //magicregionÓÀÔ¶Îªleftplayer·þÎñ
                     {
                         if (c == Color.Black)
@@ -96,8 +96,8 @@ namespace TaleofMonsters.Controler.Battle.Data
                     {
                         SolidBrush fillBrush = new SolidBrush(Color.FromArgb(50, c));
                         Pen borderPen = new Pen(c, 2);
-                        g.FillRectangle(fillBrush, memMapPoint.X + roundoff, memMapPoint.Y + roundoff, size - roundoff * 2, size - roundoff * 2);
-                        g.DrawRectangle(borderPen, memMapPoint.X + roundoff, memMapPoint.Y + roundoff, size - roundoff * 2, size - roundoff * 2);
+                        g.FillRectangle(fillBrush, pickCell.X + roundoff, pickCell.Y + roundoff, size - roundoff * 2, size - roundoff * 2);
+                        g.DrawRectangle(borderPen, pickCell.X + roundoff, pickCell.Y + roundoff, size - roundoff * 2, size - roundoff * 2);
                         borderPen.Dispose();
                         fillBrush.Dispose();
                     }

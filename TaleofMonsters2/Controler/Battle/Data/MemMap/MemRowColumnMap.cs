@@ -261,6 +261,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         {
             var cell = GetMouseCell(mouse.X, mouse.Y);
             cell.UpdateOwner(ownerId);
+            if (ownerId > 0)
+                BattleManager.Instance.OnEnterCell(cell.Id, ownerId);
         }
 
         public void RemoveTomb(Point mouse)

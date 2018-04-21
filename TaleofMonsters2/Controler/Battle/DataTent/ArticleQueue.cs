@@ -29,9 +29,10 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             queue.Add(effect);
         }
 
-        public void Remove(Article effect)
+        public void RemoveDye()
         {
-            queue.Remove(effect);
+            if (queue.Count > 0)
+                queue.RemoveAll(art => art.IsDying);
         }
 
         public void RemoveAt(int index)
@@ -44,6 +45,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             queue.Clear();
         }
         #endregion
+
 
     }
 
