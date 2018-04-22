@@ -71,14 +71,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             var savedWeapon = self.Weapon == null ? null : self.Weapon.GetCopy();
             self.DeleteWeapon();
             int lifp = self.Hp * 100 / self.Avatar.Hp;
-            self.MonsterCoverBox.RemoveAllCover();
+            self.CoverBox.RemoveAllCover();
             self.SkillManager.CheckRemoveEffect();
             self.OwnerPlayer.Modifier.CheckMonsterEvent(false, self);
             self.Avatar = new Monster(monId);
             self.Avatar.UpgradeToLevel(self.Level);
             self.OwnerPlayer.Modifier.CheckMonsterEvent(true, self);
             self.SetBasicData();
-            self.MonsterCoverBox.CheckCover();
+            self.CoverBox.CheckCover();
             self.SkillManager.CheckInitialEffect();
             if (cardId > 0)
                 self.AddWeapon(savedWeapon);
@@ -107,6 +107,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             self.SkillManager.CheckRemoveEffect();
             self.Owner.Action.AddCard(self, self.CardId, self.Level, costChange);
 
+            self.CoverBox.RemoveAllCover();
             BattleManager.Instance.MonsterQueue.RemoveDirect(self.Id);
         }
 

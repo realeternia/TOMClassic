@@ -41,7 +41,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public SkillManager SkillManager { get; private set; }
         public BuffManager BuffManager { get; private set; }
         public LiveMonsterToolTip LiveMonsterToolTip { get; private set; }
-        public MonsterCoverBox MonsterCoverBox { get; private set; }
+        public MonsterCoverBox CoverBox { get; private set; }
         public AuroManager AuroManager { get; private set; }
         
         #region 属性
@@ -201,7 +201,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             AuroManager = new AuroManager(this);
             SetBasicData();
             HpBar.SetHp(Avatar.Hp);
-            MonsterCoverBox = new MonsterCoverBox(this);
+            CoverBox = new MonsterCoverBox(this);
             Action = new MonsterAction(this);
             IsPrepare = true;
             PrepareAtsNeed = GameConstants.PrepareAts;
