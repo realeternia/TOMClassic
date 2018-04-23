@@ -9,9 +9,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
 {
     internal class ActiveCard
     {
-        public DeckCard Card { get; private set; }
         internal static ActiveCard NoneCard = new ActiveCard();
 
+        public DeckCard Card { get; private set; }
+        
         public int Mp
         {
             get
@@ -19,7 +20,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
                 var lpCost = Card.Lp == 0 ? 0 : Math.Max(0, Card.Lp + LpCostChange + CostModify);
                 if (Lp2Mp && lpCost > 0)
                     return lpCost;
-                return Card.Mp==0?0: Math.Max(0, Card.Mp + MpCostChange+ CostModify);
+                return Card.Mp == 0 ? 0 : Math.Max(0, Card.Mp + MpCostChange + CostModify);
             }
         }
         public int Lp
@@ -27,7 +28,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
             get
             {
                 if (Lp2Mp) return 0;
-                return Card.Lp == 0 ? 0 : Math.Max(0,Card.Lp + LpCostChange+ CostModify);
+                return Card.Lp == 0 ? 0 : Math.Max(0, Card.Lp + LpCostChange + CostModify);
             }
         }
         public int Pp
@@ -65,7 +66,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
 
         public ActiveCard(DeckCard card)
         {
-            this.Card = card;
+            Card = card;
             Level = card.Level;
         }
 
@@ -88,11 +89,13 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         
         public ActiveCard GetCopy()
         {
-            var ac = new ActiveCard(new DeckCard(Card.BaseId, Card.Level, Card.Exp));
-            ac.MpCostChange = MpCostChange;
-            ac.LpCostChange = LpCostChange;
-            ac.PpCostChange = PpCostChange;
-            ac.Lp2Mp = Lp2Mp;
+            var ac = new ActiveCard(new DeckCard(Card.BaseId, Card.Level, Card.Exp))
+            {
+                MpCostChange = MpCostChange,
+                LpCostChange = LpCostChange,
+                PpCostChange = PpCostChange,
+                Lp2Mp = Lp2Mp
+            };
             return ac;
         }
 

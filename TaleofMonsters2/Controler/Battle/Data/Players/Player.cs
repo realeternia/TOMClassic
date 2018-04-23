@@ -303,6 +303,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             else
             {
                 HandCards.DeleteCardAt(SelectId); //可能会造成意外的情况
+                OffCards.AddGrave(selectCard); //放入坟场
             }
         }
 

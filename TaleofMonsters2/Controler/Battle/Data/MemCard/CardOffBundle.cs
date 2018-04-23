@@ -13,53 +13,56 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
     internal class CardOffBundle
     {
         private int index;
-        private List<ActiveCard> cards;
-        
+        private List<ActiveCard> waitList; //等待中
+        private List<ActiveCard> graveList; //坟场
+
         public int LeftCount
         {
-            get { return Math.Max(0, cards.Count - index); }
+            get { return Math.Max(0, waitList.Count - index); }
         }
 
         private CardOffBundle()
         {
             index = 0;
+            waitList = new List<ActiveCard>();
+            graveList = new List<ActiveCard>();
         }
 
         public CardOffBundle(DeckCard[] itsCards)
         {
-            cards = new List<ActiveCard>();
+            waitList = new List<ActiveCard>();
             for (int i = 0; i < itsCards.Length; i++)
-                cards.Add(new ActiveCard(itsCards[i]));
-            ArraysUtils.RandomShuffle(cards);
+                waitList.Add(new ActiveCard(itsCards[i]));
+            ArraysUtils.RandomShuffle(waitList);
+            graveList = new List<ActiveCard>();
             index = 0;
         }
 
         public CardOffBundle GetCopy()
         {
             CardOffBundle cloneDeck = new CardOffBundle();
-            cloneDeck.cards = new List<ActiveCard>();
-            foreach (var checkCard in cards)
-                cloneDeck.cards.Add(new ActiveCard(checkCard.CardId, checkCard.Level, 0));
+            foreach (var checkCard in waitList)
+                cloneDeck.waitList.Add(new ActiveCard(checkCard.CardId, checkCard.Level, 0));
             return cloneDeck;
         }
 
         public ActiveCard GetNextCard()
         {
-            if (cards.Count == 0)
+            if (waitList.Count == 0)
                 return ActiveCard.NoneCard;
 
             int rt = index;
-            if (rt >= cards.Count)
+            if (rt >= waitList.Count)
                 return ActiveCard.NoneCard;
             index++;
 
-            if (CardConfigManager.GetCardConfig(cards[rt].CardId).Id == 0)
+            if (CardConfigManager.GetCardConfig(waitList[rt].CardId).Id == 0)
             {//卡牌配置可能已经过期，用下一个卡
-                NarlonLib.Log.NLog.Warn("GetNextCard card is outofdate id={0}", cards[rt].CardId);
+                NarlonLib.Log.NLog.Warn("GetNextCard card is outofdate id={0}", waitList[rt].CardId);
                 return GetNextCard();
             }
 
-            return cards[rt];
+            return waitList[rt];
         }
 
         public ActiveCard ReplaceCard(ActiveCard card)
@@ -68,9 +71,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
                 return ActiveCard.NoneCard;
 
             var targetIndex = index + MathTool.GetRandom(LeftCount);
-            var target = cards[targetIndex];
-            cards[targetIndex] = card;
+            var target = waitList[targetIndex];
+            waitList[targetIndex] = card;
             return target;
+        }
+
+        public void AddGrave(ActiveCard card)
+        {
+            graveList.Add(card);
         }
     }
 }
