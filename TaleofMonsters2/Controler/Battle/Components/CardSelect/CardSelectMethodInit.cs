@@ -40,7 +40,7 @@ namespace TaleofMonsters.Controler.Battle.Components.CardSelect
                 for (int i = GameConstants.BattleInitialCardCount - 1; i >= 0; i--)
                 {
                     if (!keepCard[i])
-                        player.CardManager.RedrawCardAt(i + 1);
+                        player.HandCards.RedrawCardAt(i + 1);
                 }
                 isButtonFirstClick = false;
 

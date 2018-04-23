@@ -80,7 +80,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                 PpCost += spikeConfig.PpCostChange;
                 MpCost += spikeConfig.MpCostChange;
             }
-            self.CardManager.UpdateCardCost();
+            self.HandCards.UpdateCardCost();
         }
 
         public void OnRound(float pastRound)

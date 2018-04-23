@@ -10,6 +10,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
     internal class ActiveCard
     {
         public DeckCard Card { get; private set; }
+        internal static ActiveCard NoneCard = new ActiveCard();
 
         public int Mp
         {

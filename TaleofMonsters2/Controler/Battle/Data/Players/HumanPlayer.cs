@@ -20,7 +20,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             Level = UserProfile.InfoBasic.Level;
             Job = UserProfile.InfoBasic.Job;
 
-            DeckCards = new ActiveCards(cardInitial);
+            OffCards = new CardOffBundle(cardInitial);
 
             int[] energyRate = {0, 0, 0};
             CalculateEquipAndSkill(UserProfile.InfoCastle.GetValidEquipsList(), energyRate);
@@ -45,7 +45,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 #if DEBUG
             //int[] cardToGive = new[] { 51000255 };
             //foreach (var cardId in cardToGive)
-            //    CardManager.AddCard(new ActiveCard(cardId, 1, 0));
+            //    HandCards.AddCard(new ActiveCard(cardId, 1, 0));
 #endif
         }
 

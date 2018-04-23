@@ -14,7 +14,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             get
             {
-                if (OwnerPlayer.DeckCards.LeftCount <= 0) //如果手牌没了，可以御驾亲征
+                if (OwnerPlayer.OffCards.LeftCount <= 0) //如果手牌没了，可以御驾亲征
                     return true;
                 return base.CanMove;
             }

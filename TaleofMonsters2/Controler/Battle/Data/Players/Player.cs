@@ -45,7 +45,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public EnergyGenerator EnergyGenerator { get; set; }
         public SpikeManager SpikeManager { get; set; }
-        public CardManager CardManager { get; private set; }
+        public CardHandBundle HandCards { get; private set; }//手牌
+        public CardOffBundle OffCards { get; protected set; }//牌库的牌
         public TrapHolder TrapHolder { get; private set; }
         public EquipModifier Modifier { get; protected set; }
         public IPlayerAction Action { get; private set; }
@@ -88,10 +89,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public int SelectId { get { return CardsDesk.GetSelectId(); } }
 
         public int PeopleId { get; set; }
-
-        public ActiveCards DeckCards { get; protected set; }//牌库的牌
-
-        public int CardNumber { get { return CardManager.GetCardNumber(); } } //手牌数量
+        
+        public int CardNumber { get { return HandCards.GetCardNumber(); } } //手牌数量
 
         public HolyBook HolyBook { get; private set; }
 
@@ -104,7 +103,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             IsLeft = isLeft;
             IsAlive = true;
             isPlayerControl = playerControl;
-            CardManager = new CardManager(this);
+            HandCards = new CardHandBundle(this);
             EnergyGenerator = new EnergyGenerator();
             SpikeManager = new SpikeManager(this);
             TrapHolder = new TrapHolder(this);
@@ -175,12 +174,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             if (comboTime <= 0)
             {
                 comboTime = 0;
-                CardManager.UpdateCardView();
+                HandCards.UpdateCardView();
             }
-            if (CardManager.HeroSkillCd > 0)
+            if (HandCards.HeroSkillCd > 0)
             {
-                CardManager.HeroSkillCd -= pastRound;
-                if (HeroSkillChanged != null && CardManager.HeroSkillCd <= 0)
+                HandCards.HeroSkillCd -= pastRound;
+                if (HeroSkillChanged != null && HandCards.HeroSkillCd <= 0)
                     HeroSkillChanged(true);
             }
         }
@@ -264,7 +263,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             if (Pp < selectCard.Pp)
                 return ErrorConfig.Indexer.BattleLackPp;
 
-            if (selectCard.IsHeroSkill && CardManager.HeroSkillCd > 0)
+            if (selectCard.IsHeroSkill && HandCards.HeroSkillCd > 0)
                 return ErrorConfig.Indexer.BattleHeroSkillInCd;
 
             return ErrorConfig.Indexer.OK;
@@ -293,13 +292,17 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             var oldComboTime = comboTime;
             comboTime = 1;
             if (oldComboTime <= 0)
-                CardManager.UpdateCardView();
+                HandCards.UpdateCardView();
 
             if (selectCard.IsHeroSkill) //成功使用英雄技能
             {
-                CardManager.HeroSkillCd = 1;
+                HandCards.HeroSkillCd = 1;
                 if (HeroSkillChanged != null)
                     HeroSkillChanged(false);
+            }
+            else
+            {
+                HandCards.DeleteCardAt(SelectId); //可能会造成意外的情况
             }
         }
 
@@ -341,7 +344,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 return;
             }
             AfterUseCard(card);
-            CardManager.DeleteCardAt(SelectId);
         }
 
         public void UseWeapon(LiveMonster lm, ActiveCard card)
@@ -366,7 +368,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 return;
             }
             AfterUseCard(card);
-            CardManager.DeleteCardAt(SelectId);
         }
 
         public void UseSideKick(LiveMonster lm, ActiveCard card)
@@ -391,7 +392,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 return;
             }
             AfterUseCard(card);
-            CardManager.DeleteCardAt(SelectId);
         }
 
         public void DoSpell(LiveMonster target, ActiveCard card, Point location)
@@ -419,9 +419,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 return;
             }
             lastSpellId = card.CardId;
-            CardManager.UpdateCardView();
+            HandCards.UpdateCardView();
             AfterUseCard(card);
-            CardManager.DeleteCardAt(SelectId);
         }
 
         public void AddCardReason(IMonster mon, AddCardReasons reason)
@@ -454,13 +453,13 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void DrawNextNCard(IMonster mon, int n, AddCardReasons reason)
         {
-            var cardCount = DeckCards.LeftCount;
+            var cardCount = OffCards.LeftCount;
             for (int i = 0; i < n; i++)
-                CardManager.GetNextCard();
+                HandCards.GetNextCard();
 
             AddCardReason(mon, reason);
 
-            if (CardLeftChanged != null && cardCount != DeckCards.LeftCount)
+            if (CardLeftChanged != null && cardCount != OffCards.LeftCount)
                 CardLeftChanged();
         }
         public void DiscoverCard(IMonster mon, int[] cardId, int lv, DiscoverCardActionType type)
@@ -481,8 +480,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         {
             switch (type)
             {
-                case DiscoverCardActionType.AddCard: CardManager.AddCard(cardId, level, 0); break;
-                case DiscoverCardActionType.Add2Cards: CardManager.AddCard(cardId, level, 0); CardManager.AddCard(cardId, level, 0); break;
+                case DiscoverCardActionType.AddCard: HandCards.AddCard(cardId, level, 0); break;
+                case DiscoverCardActionType.Add2Cards: HandCards.AddCard(cardId, level, 0); HandCards.AddCard(cardId, level, 0); break;
             }
             AddCardReason(mon, AddCardReasons.Discover);
         }

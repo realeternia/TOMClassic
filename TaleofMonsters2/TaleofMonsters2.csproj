@@ -148,7 +148,7 @@
     <Compile Include="Controler\Battle\Data\MemMap\MemRowColumnMap.cs" />
     <Compile Include="Controler\Battle\Data\MemSpell\MemBaseSpell.cs" />
     <Compile Include="Controler\Battle\Data\Players\Frag\EnergyGenerator.cs" />
-    <Compile Include="Controler\Battle\Data\Players\Frag\CardManager.cs" />
+    <Compile Include="Controler\Battle\Data\MemCard\CardHandBundle.cs" />
     <Compile Include="Controler\Battle\Data\Players\MirrorPlayer.cs" />
     <Compile Include="Controler\Battle\Data\Players\IdlePlayer.cs" />
     <Compile Include="Controler\Battle\CardFastBattle.cs">
@@ -577,7 +577,7 @@
     <Compile Include="Forms\CardShopViewForm.Designer.cs">
       <DependentUpon>CardShopViewForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controler\Battle\Data\MemCard\ActiveCards.cs" />
+    <Compile Include="Controler\Battle\Data\MemCard\CardOffBundle.cs" />
     <Compile Include="Datas\Cards\CardAssistant.cs" />
     <Compile Include="Datas\Cards\Spells\SpellCard.cs" />
     <Compile Include="Forms\CreatePlayerForm.cs">

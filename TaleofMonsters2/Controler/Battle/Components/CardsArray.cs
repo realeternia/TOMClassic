@@ -40,7 +40,7 @@ namespace TaleofMonsters.Controler.Battle.Components
                 cardSlot1.Location = new System.Drawing.Point(120 * i - 120, 0);
                 cardSlot1.Size = new System.Drawing.Size(120, 150);
 
-                cardSlot1.SetSlotCard(ActiveCards.NoneCard);
+                cardSlot1.SetSlotCard(ActiveCard.NoneCard);
                 cards[i - 1] = cardSlot1;
             }
         }

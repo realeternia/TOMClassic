@@ -3,33 +3,33 @@ using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Math;
 using NarlonLib.Tools;
-using TaleofMonsters.Controler.Battle.Data.MemCard;
+using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Datas;
 
-namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
+namespace TaleofMonsters.Controler.Battle.Data.MemCard
 {
-    internal class CardManager
+    internal class CardHandBundle
     {
         private Player self;
         private ActiveCard[] cards = new ActiveCard[GameConstants.CardSlotMaxCount];
 
         public float HeroSkillCd { get; set; }
 
-        public CardManager(Player p)
+        public CardHandBundle(Player p)
         {
             self = p;
             for (int i = 0; i < GameConstants.CardSlotMaxCount; i++)
-                cards[i] = ActiveCards.NoneCard;
+                cards[i] = ActiveCard.NoneCard;
         }
 
         public void GetNextCard()
         {
             if (GetCardNumber() < GameConstants.CardSlotMaxCount)
             {
-                ActiveCard next = self.DeckCards.GetNextCard();
-                if (next != ActiveCards.NoneCard)
+                ActiveCard next = self.OffCards.GetNextCard();
+                if (next != ActiveCard.NoneCard)
                     AddCard(next);
                 else
                     self.OnGetCardFail(true); //卡组抽完有惩罚
@@ -87,7 +87,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         public ActiveCard GetDeckCardAt(int index)
         {
             if (index > GameConstants.CardSlotMaxCount || index <= 0)
-                return ActiveCards.NoneCard;
+                return ActiveCard.NoneCard;
 
             return cards[index - 1];
         }
@@ -99,7 +99,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                 return;
             }
 
-            cards[index - 1] = ActiveCards.NoneCard;
+            cards[index - 1] = ActiveCard.NoneCard;
             for (int i = 0; i < GameConstants.CardSlotMaxCount - 1; i++)
             {
                 if (cards[i].CardId == 0 && cards[i + 1].CardId > 0)
@@ -119,8 +119,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         /// <param name="index">偏移</param>
         public void RedrawCardAt(int index)
         {
-            var newCard = self.DeckCards.ReplaceCard(cards[index - 1]);
-            if (newCard == ActiveCards.NoneCard)
+            var newCard = self.OffCards.ReplaceCard(cards[index - 1]);
+            if (newCard == ActiveCard.NoneCard)
                 return;
 
             cards[index - 1] = newCard;
@@ -139,7 +139,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                 card.ChangeLevel((byte)(card.Level + levelChange));
                 Player player = p as Player;
                 if (player != null)
-                    player.CardManager.AddCard(card);
+                    player.HandCards.AddCard(card);
             }
         }
 
@@ -153,7 +153,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                 card.ChangeLevel((byte)(card.Level + levelChange));
                 Player player = p as Player;
                 if (player != null)
-                    player.CardManager.AddCard(card);
+                    player.HandCards.AddCard(card);
             }
         }
 
@@ -180,7 +180,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         public void DeleteAllCard()
         {
             for (int i = 0; i < GameConstants.CardSlotMaxCount; i++)
-                cards[i] = ActiveCards.NoneCard;
+                cards[i] = ActiveCard.NoneCard;
 
             if (self.CardsDesk != null)
                 self.CardsDesk.UpdateSlot(cards);
@@ -212,16 +212,16 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 
         public void CardLevelUp(int n, int type)
         {
-            foreach (ActiveCard activeCard in cards)
+            foreach (ActiveCard pickCard in cards)
             {
-                if (type != 0 && ConfigIdManager.GetCardType(activeCard.CardId) != (CardTypes)type)
+                if (type != 0 && ConfigIdManager.GetCardType(pickCard.CardId) != (CardTypes)type)
                     continue;
 
-                activeCard.Level = (byte)(activeCard.Level + n);
-                if (activeCard.Level < 1)
-                    activeCard.Level = 1;
-                else if (activeCard.Level > GameConstants.CardMaxLevel)
-                    activeCard.Level = GameConstants.CardMaxLevel;
+                pickCard.Level = (byte)(pickCard.Level + n);
+                if (pickCard.Level < 1)
+                    pickCard.Level = 1;
+                else if (pickCard.Level > GameConstants.CardMaxLevel)
+                    pickCard.Level = GameConstants.CardMaxLevel;
             }
 
             if (self.CardsDesk != null)

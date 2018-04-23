@@ -29,7 +29,7 @@ namespace TaleofMonsters.Controler.Battle.Components
                 maxCards = value;
                 cards = new ActiveCard[maxCards];
                 for (int i = 0; i < maxCards; i++)
-                    cards[i] = ActiveCards.NoneCard;
+                    cards[i] = ActiveCard.NoneCard;
             }
         }
 
@@ -53,9 +53,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             int heg = Height;
             int wid = (Width-margin*9)/10;
             for (int i = 0; i < maxCards; i++)
-            {
                 e.Graphics.DrawImage(CardAssistant.GetCardImage(cards[i].CardId, 60, 60), (wid + margin)*i, 0, wid, heg);
-            }
         }
 
         #region ICardList接口
@@ -67,13 +65,9 @@ namespace TaleofMonsters.Controler.Battle.Components
         public void UpdateSlot(ActiveCard[] pCards)
         {
             for (int i = 0; i < cards.Length; i++)
-            {
-                cards[i] = ActiveCards.NoneCard;
-            }
+                cards[i] = ActiveCard.NoneCard;
             for (int i = 0; i < Math.Min(pCards.Length, cards.Length); i++)
-            {
                 cards[i] = pCards[i];
-            }
             Invalidate();
         }
 
@@ -103,9 +97,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             foreach (var cardSlot in cards)
             {
                 if (cardSlot.CardId > 0)
-                {
                     rcards.Add(cardSlot);
-                }
             }
             return rcards.ToArray();
         }

@@ -28,7 +28,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 noCardOutPunish = true;
                 cds = ArraysUtils.GetSubArray(cds, 0, GameConstants.DeckCardCount - peopleConfig.CardReduce);
             }
-            DeckCards = new ActiveCards(cds);
+            OffCards = new CardOffBundle(cds);
 
             int[] energyRate = { 0, 0, 0 };
             CalculateEquipAndSkill(new List<Equip>(), energyRate); //todo

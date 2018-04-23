@@ -189,7 +189,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             e.Graphics.DrawImage(HSIcons.GetIconsByEName("tsk7"), IsLeft ? Width - 75 : 30,44,18,18);//画剩余卡牌数
             if (self != null)
             { 
-                e.Graphics.DrawString(self.DeckCards.LeftCount.ToString(), font, Brushes.White, IsLeft ? Width-52 : 53, 44);
+                e.Graphics.DrawString(self.OffCards.LeftCount.ToString(), font, Brushes.White, IsLeft ? Width-52 : 53, 44);
                 if (self.TrapHolder.Count > 0)
                 {
                     var icon = HSIcons.GetIconsByEName("tsk6");
@@ -297,7 +297,7 @@ namespace TaleofMonsters.Controler.Battle.Components
                 tipData.AddTextNewLine("手牌", "White");
                 for (int i = 0; i < 10; i++)
                 {
-                    var card = self.CardManager.GetDeckCardAt(i);
+                    var card = self.HandCards.GetDeckCardAt(i);
                     if (card.CardId > 0)
                     {
                         var cardConfig = CardConfigManager.GetCardConfig(card.CardId);

@@ -74,22 +74,22 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 
         public void DeleteRandomCardFor(IPlayer p, int levelChange)
         {
-            self.CardManager.DeleteRandomCardFor(p, levelChange);
+            self.HandCards.DeleteRandomCardFor(p, levelChange);
         }
 
         public void CopyRandomCardFor(IPlayer p, int levelChange)
         {
-            self.CardManager.CopyRandomCardFor(p, levelChange);
+            self.HandCards.CopyRandomCardFor(p, levelChange);
         }
 
         public void AddCard(IMonster mon, int cardId, int level)
         {
-            self.CardManager.AddCard(cardId, level, 0);
+            self.HandCards.AddCard(cardId, level, 0);
             self.AddCardReason(mon, AddCardReasons.GetCertainCard);
         }
         public void AddCard(IMonster mon, int cardId, int level, int modify)
         {
-            self.CardManager.AddCard(cardId, level, modify);
+            self.HandCards.AddCard(cardId, level, modify);
             self.AddCardReason(mon, AddCardReasons.GetCertainCard);
         }
 
@@ -101,23 +101,23 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 
         public void CopyRandomNCard(int n, int spellid)
         {
-            self.CardManager.CopyRandomNCard(n, spellid);
+            self.HandCards.CopyRandomNCard(n, spellid);
         }
 
         public void DeleteAllCard()
         {
-            self.CardManager.DeleteAllCard();
+            self.HandCards.DeleteAllCard();
         }
 
         public void DeleteSelectCard()
         {
-            self.CardManager.DeleteCardAt(self.SelectId);
+            self.HandCards.DeleteCardAt(self.SelectId);
             self.CardsDesk.DisSelectCard();
         }
 
         public void RecostSelectCard()
         {
-            var selectCard = self.CardManager.GetDeckCardAt(self.SelectId);
+            var selectCard = self.HandCards.GetDeckCardAt(self.SelectId);
             if (selectCard == null)
             {
                 NLog.Error("RecostSelectCard id={0} not Found", self.SelectId);
@@ -129,12 +129,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         }
         public void ConvertCard(int count, int cardId, int levelChange)
         {
-            self.CardManager.ConvertCard(count, cardId, levelChange);
+            self.HandCards.ConvertCard(count, cardId, levelChange);
         }
 
         public void CardLevelUp(int n, int type)
         {
-            self.CardManager.CardLevelUp(n, type);
+            self.HandCards.CardLevelUp(n, type);
         }
 
         public void AddRandomCard(IMonster mon, int type, int lv)
@@ -142,7 +142,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             int cardId = CardConfigManager.GetRandomTypeCard(type);
             if (cardId != 0)
             {
-                self.CardManager.AddCard(cardId, lv, 0);
+                self.HandCards.AddCard(cardId, lv, 0);
                 self.AddCardReason(mon, AddCardReasons.RandomCard);
             }
         }
@@ -152,7 +152,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             var cardId = CardConfigManager.GetRandomJobCard(job);
             if (cardId != 0)
             {
-                self.CardManager.AddCard(cardId, lv, 0);
+                self.HandCards.AddCard(cardId, lv, 0);
                 self.AddCardReason(mon, AddCardReasons.RandomCard);
             }
         }
@@ -162,7 +162,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             var cardId = CardConfigManager.GetRandomRaceCard(race);
             if (cardId != 0)
             {
-                self.CardManager.AddCard(cardId, lv, 0);
+                self.HandCards.AddCard(cardId, lv, 0);
                 self.AddCardReason(mon, AddCardReasons.RandomCard);
             }
         }

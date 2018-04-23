@@ -144,7 +144,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             if (self.Weapon is TrueWeapon)
             {
                 ActiveCard card = new ActiveCard(new DeckCard(self.Weapon.CardId, (byte)self.Weapon.Level, 0));
-                self.OwnerPlayer.CardManager.AddCard(card);
+                self.OwnerPlayer.HandCards.AddCard(card);
                 self.DeleteWeapon();
             }
         }

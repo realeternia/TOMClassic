@@ -18,14 +18,14 @@ namespace TaleofMonsters.Controler.Battle
             {
                 var card = cds[i];
                 if (card.Card.Star > 3) //把3费以上卡都换掉
-                    player.CardManager.RedrawCardAt(i + 1);
+                    player.HandCards.RedrawCardAt(i + 1);
             }
 
 #if DEBUG
             //int[] cardToGive = new[] { 53000019 };
             //foreach (var cardId in cardToGive)
             //{
-            //    player.CardManager.AddCard(new ActiveCard(cardId, 1, 0));
+            //    player.HandCards.AddCard(new ActiveCard(cardId, 1, 0));
             //}
 #endif
         }

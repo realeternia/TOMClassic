@@ -31,7 +31,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             {
                 case "common": RightPlayer = new HumanPlayer(false, leftCards); RightPlayer.PeopleId = right; break;
                 case "actrand": RightPlayer = new RandomPlayer(right, false, false); break;
-                case "actmirror": RightPlayer = new MirrorPlayer(right, LeftPlayer.DeckCards, false); break;
+                case "actmirror": RightPlayer = new MirrorPlayer(right, LeftPlayer.OffCards, false); break;
                 default: RightPlayer = new AIPlayer(right, peopleConfig.Emethod, false, rlevel, false); break;
             }
         }

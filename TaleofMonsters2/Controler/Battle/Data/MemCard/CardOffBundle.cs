@@ -7,23 +7,25 @@ using TaleofMonsters.Datas.Decks;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemCard
 {
-    internal class ActiveCards
+    /// <summary>
+    /// ÅÆ¿âµÄÅÆ
+    /// </summary>
+    internal class CardOffBundle
     {
         private int index;
         private List<ActiveCard> cards;
-        internal static ActiveCard NoneCard = new ActiveCard();
-
+        
         public int LeftCount
         {
             get { return Math.Max(0, cards.Count - index); }
         }
 
-        private ActiveCards()
+        private CardOffBundle()
         {
             index = 0;
         }
 
-        public ActiveCards(DeckCard[] itsCards)
+        public CardOffBundle(DeckCard[] itsCards)
         {
             cards = new List<ActiveCard>();
             for (int i = 0; i < itsCards.Length; i++)
@@ -32,9 +34,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
             index = 0;
         }
 
-        public ActiveCards GetCopy()
+        public CardOffBundle GetCopy()
         {
-            ActiveCards cloneDeck = new ActiveCards();
+            CardOffBundle cloneDeck = new CardOffBundle();
             cloneDeck.cards = new List<ActiveCard>();
             foreach (var checkCard in cards)
                 cloneDeck.cards.Add(new ActiveCard(checkCard.CardId, checkCard.Level, 0));
@@ -44,11 +46,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         public ActiveCard GetNextCard()
         {
             if (cards.Count == 0)
-                return NoneCard;
+                return ActiveCard.NoneCard;
 
             int rt = index;
             if (rt >= cards.Count)
-                return NoneCard;
+                return ActiveCard.NoneCard;
             index++;
 
             if (CardConfigManager.GetCardConfig(cards[rt].CardId).Id == 0)
@@ -63,7 +65,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         public ActiveCard ReplaceCard(ActiveCard card)
         {
             if (LeftCount <= 0)
-                return NoneCard;
+                return ActiveCard.NoneCard;
 
             var targetIndex = index + MathTool.GetRandom(LeftCount);
             var target = cards[targetIndex];
