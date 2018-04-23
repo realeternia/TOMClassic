@@ -1,5 +1,7 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using ConfigDatas;
+using NarlonLib.Math;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Tools;
 
@@ -17,6 +19,17 @@ namespace TaleofMonsters.Datas.Others
                 ImageManager.AddImage(fname, image);
             }
             return ImageManager.GetImage(fname);
+        }
+
+        public static int GetRandomArticleId(int group)
+        {
+            var articleList = new List<int>();
+            foreach (var articleConfig in ConfigData.ArticleDict.Values)
+            {
+                if (articleConfig.Group == group)
+                    articleList.Add(articleConfig.Id);
+            }
+            return articleList[MathTool.GetRandom(articleList.Count)];
         }
     }
 }

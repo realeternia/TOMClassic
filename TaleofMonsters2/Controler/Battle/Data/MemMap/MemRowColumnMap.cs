@@ -129,26 +129,27 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             return Cells[x / CardSize, y / CardSize];
         }
 
-        public int GetEnemyId(int mid, bool isLeft, int y, bool isShooter) //pos方位
+        public int GetRandomCellMiddle() //返回一个中心列的随机格子
         {
-            int[] xOrder;
-            int rowid = y/CardSize;
-            if (isLeft)
-                xOrder = isShooter ? new int[] {10, 9, 8, 7, 6} : new int[] {6, 7, 8, 9, 10};
-            else
-                xOrder = isShooter ? new int[] {0, 1, 2, 3, 4} : new int[] {4, 3, 2, 1, 0};
-
-            for (int j = rowid; j >= 0; j--)
+            var cellIdList = new List<int>();
+            foreach (var pickCell in Cells)
             {
-                foreach (var i in xOrder)
-                {
-                    var cell = Cells[i, j];
-                    if (cell.Owner > 0 && cell.Owner != mid)
-                        return cell.Owner;
-                }
+                if (Array.IndexOf(mapConfig.ColumnMiddle, pickCell.Xid) >= 0)
+                    cellIdList.Add(pickCell.Id);
             }
 
-            return 0;
+            return cellIdList[MathTool.GetRandom(cellIdList.Count)];
+        }
+        public int GetRandomCellCompete() //返回一个竞争列的随机格子
+        {
+            var cellIdList = new List<int>();
+            foreach (var pickCell in Cells)
+            {
+                if (Array.IndexOf(mapConfig.ColumnCompete, pickCell.Xid) >= 0)
+                    cellIdList.Add(pickCell.Id);
+            }
+
+            return cellIdList[MathTool.GetRandom(cellIdList.Count)];
         }
 
         public void SetTile(Point point, int dis, int tile)

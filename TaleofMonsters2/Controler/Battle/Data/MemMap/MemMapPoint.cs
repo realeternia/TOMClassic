@@ -6,7 +6,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
     internal class MemMapPoint
     {
         public int Id { get; private set; }
-        private int xid;
+        public int Xid { get; private set; }
         public int X { get; private set; }
         public int Y { get; private set; }
         public int Tile { get; set; }
@@ -21,7 +21,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
 
         public MemMapPoint(int xid, int yid, int x, int y, int total, int tile)
         {
-            this.xid = xid;
+            Xid = xid;
             Id = xid + yid * 1000;
             IsLeft = xid <= total/2;
             X = x;

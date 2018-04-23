@@ -6,6 +6,7 @@ using TaleofMonsters.Controler.Battle.Data.MemMap;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.DataTent;
 using TaleofMonsters.Core;
+using TaleofMonsters.Datas.Others;
 
 namespace TaleofMonsters.Controler.Battle.Tool
 {
@@ -59,7 +60,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
             StatisticData.StartTime = DateTime.Now;
             StatisticData.EndTime = DateTime.Now;
 
-            ArticleQueue.Add(new Article(58000001, 1005)); //todo test
+            ArticleQueue.Add(new Article(ArticleBook.GetRandomArticleId(1), MemMap.GetRandomCellMiddle()));
         }
 
         public void Next()
@@ -82,19 +83,22 @@ namespace TaleofMonsters.Controler.Battle.Tool
                 if (Round >= 1)
                 {
                     Round = 0;
-                    OnRound();
+                    StatisticData.Round++;
+                    OnRound(StatisticData.Round);
                 }
             }
-            StatisticData.Round = RoundMark * 50 / GameConstants.RoundTime + 1;//50ms
+         
             if (RoundMark % 10 == 0)
                 AIStrategy.AIProc(PlayerManager.RightPlayer);
 
             ArticleQueue.RemoveDye();
         }
 
-        private void OnRound()
+        private void OnRound(int roundId)
         {
             PlayerManager.CheckRoundCard();
+            if(roundId % 2 == 0 && ArticleQueue.Count < 2)
+                ArticleQueue.Add(new Article(ArticleBook.GetRandomArticleId(2), MemMap.GetRandomCellCompete()));
         }
 
         public void OnEnterCell(int cellId, int monId)
