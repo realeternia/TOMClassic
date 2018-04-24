@@ -34,6 +34,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             mon.UpgradeToLevel(level);
             LiveMonster newMon = new LiveMonster(level, mon, truePos, self.IsLeft);
             BattleManager.Instance.MonsterQueue.Add(newMon);
+            NLog.Debug("AddMonster pid={0} cid={1}", self.PeopleId, cardId);
         }
 
         public void ExchangeMonster(IMonster target, int lv)

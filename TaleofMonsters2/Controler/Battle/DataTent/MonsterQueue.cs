@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ConfigDatas;
+using NarlonLib.Log;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
@@ -146,8 +147,11 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 roundMonster.Next(pastRound, match);
             }
 
-            foreach (var lm in toAdd)//添加延时怪
-                Add(lm);
+            foreach (var delayMid in toAdd) //添加延时怪
+            {
+                Add(delayMid);
+                NLog.Debug("NextAction AddMon pid={0} cid={1}", delayMid.OwnerPlayer.PeopleId, delayMid.CardId);
+            }
             toAdd.Clear();
         }
 

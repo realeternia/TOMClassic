@@ -293,7 +293,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             comboTime = 1;
             if (oldComboTime <= 0)
                 HandCards.UpdateCardView();
-
+            NLog.Debug("AfterUseCard pid={0} cid={1}", PeopleId, selectCard.CardId);
             if (selectCard.IsHeroSkill) //成功使用英雄技能
             {
                 HandCards.HeroSkillCd = 1;
@@ -332,6 +332,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
                 LiveMonster newMon = new LiveMonster(card.Level, mon, location, IsLeft);
                 BattleManager.Instance.MonsterQueue.Add(newMon);
+                NLog.Debug("UseMonster pid={0} cid={1}", PeopleId, card.CardId);
 
                 var rival = Rival as Player;
                 rival.TrapHolder.CheckTrapOnSummon(newMon, rival);
