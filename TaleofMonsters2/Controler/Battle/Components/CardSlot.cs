@@ -1,5 +1,7 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
+using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
@@ -113,7 +115,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             brush.Dispose();
 
             int index = 0;
-            foreach (var manaType in ACard.CostList)
+            foreach (var manaType in GetCostList(ACard))
             {
                 var imgIcon = HSIcons.GetIconsByEName("mix" + (int)manaType);
                 g.DrawImage(imgIcon, x + index * 10, y + 1, 16, 16);
@@ -128,5 +130,16 @@ namespace TaleofMonsters.Controler.Battle.Components
 
         }
 
+        private IEnumerable<PlayerManaTypes> GetCostList(ActiveCard card)
+        {
+            List<PlayerManaTypes> l = new List<PlayerManaTypes>();
+            for (int i = 0; i < card.Lp; i++)
+                l.Add(PlayerManaTypes.Lp);
+            for (int i = 0; i < card.Mp; i++)
+                l.Add(PlayerManaTypes.Mp);
+            for (int i = 0; i < card.Pp; i++)
+                l.Add(PlayerManaTypes.Pp);
+            return l;
+        }
     }
 }

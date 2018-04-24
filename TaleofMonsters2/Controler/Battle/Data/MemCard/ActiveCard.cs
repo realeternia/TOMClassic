@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using ConfigDatas;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Decks;
@@ -36,20 +34,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
             get { return Card.Pp == 0 ? 0 : Math.Max(0, Card.Pp + PpCostChange+ CostModify); }
         }
 
-        public IEnumerable<PlayerManaTypes> CostList
-        {
-            get
-            {
-                List<PlayerManaTypes> l = new List<PlayerManaTypes>();
-                for (int i = 0; i < Lp; i++)
-                    l.Add(PlayerManaTypes.Lp);
-                for (int i = 0; i < Mp; i++)
-                    l.Add(PlayerManaTypes.Mp);
-                for (int i = 0; i < Pp; i++)
-                    l.Add(PlayerManaTypes.Pp);
-                return l;
-            }
-        }
         public int MpCostChange { get; set; }//可以被技能修改
         public int LpCostChange { get; set; }//可以被技能修改
         public int PpCostChange { get; set; }//可以被技能修改
@@ -60,7 +44,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
 
         public ActiveCard()
         {
-            Card = new DeckCard(0,0,0);
+            Card = new DeckCard(0, 0, 0);
         }
 
         public ActiveCard(DeckCard card)
