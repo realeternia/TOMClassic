@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NarlonLib.Math;
 using NarlonLib.Tools;
 using TaleofMonsters.Core.Config;
+using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Decks;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemCard
@@ -14,7 +15,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
     {
         private int index;
         private List<ActiveCard> waitList; //等待中
-        private List<ActiveCard> graveList; //坟场
+        private List<int> graveList; //坟场
 
         public int LeftCount
         {
@@ -25,7 +26,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         {
             index = 0;
             waitList = new List<ActiveCard>();
-            graveList = new List<ActiveCard>();
+            graveList = new List<int>();
         }
 
         public CardOffBundle(DeckCard[] itsCards)
@@ -34,7 +35,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
             for (int i = 0; i < itsCards.Length; i++)
                 waitList.Add(new ActiveCard(itsCards[i]));
             ArraysUtils.RandomShuffle(waitList);
-            graveList = new List<ActiveCard>();
+            graveList = new List<int>();
             index = 0;
         }
 
@@ -78,7 +79,22 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
 
         public void AddGrave(ActiveCard card)
         {
-            graveList.Add(card);
+            graveList.Add(card.CardId);
+        }
+        public int GetRandomMonsterFromGrave()
+        {
+            var graveMonsters = new List<int>();
+            foreach (var cardId in graveList)
+            {
+                if(CardConfigManager.GetCardConfig(cardId).Type == CardTypes.Monster)
+                    graveMonsters.Add(cardId);
+            }
+            if(graveMonsters.Count == 0)
+                return 0;
+
+            var targetMon = graveMonsters[MathTool.GetRandom(graveMonsters.Count)];
+            graveList.Remove(targetMon);
+            return targetMon;
         }
     }
 }

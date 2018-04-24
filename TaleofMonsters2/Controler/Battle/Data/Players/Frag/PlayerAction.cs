@@ -97,7 +97,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         {
             self.DrawNextNCard(mon, n, AddCardReasons.DrawCardBySkillOrSpell);
         }
-
+        
+        public int GetGraveMonsterId()
+        {
+            return self.OffCards.GetRandomMonsterFromGrave();
+        }
 
         public void CopyRandomNCard(int n, int spellid)
         {

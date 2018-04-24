@@ -13,6 +13,7 @@
         void DeleteAllCard();
         void DeleteSelectCard();
         void RecostSelectCard();
+        int GetGraveMonsterId();
 
         void CopyRandomNCard(int n, int spellid);
         void CardLevelUp(int n, int type);

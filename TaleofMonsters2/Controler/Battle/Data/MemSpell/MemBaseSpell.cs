@@ -14,7 +14,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemSpell
     {
         private int spellId;
         private Spell spellInfo;
-        public string HintWord { get; private set; }
         public int Level { get; set; }
 
         public MemBaseSpell(Spell spl)
@@ -22,7 +21,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemSpell
             spellId = spl.Id;
             Level = spl.Level;
             spellInfo = spl;
-            HintWord = "";
         }
         
         public SpellConfig SpellConfig
