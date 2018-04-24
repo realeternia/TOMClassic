@@ -225,16 +225,16 @@ namespace TaleofMonsters.Controler.Battle
                 e.Graphics.DrawString(rightPeople.Name, font, Brushes.White, 370, 45);
 
                 BattleStatisticData battleStatisticData = BattleManager.Instance.StatisticData;
-                e.Graphics.DrawString(string.Format("{0,2:D}", battleStatisticData.Left.MonsterAdd), font2, Brushes.White, 159, 103);
-                e.Graphics.DrawString(string.Format("{0,2:D}", battleStatisticData.Left.SpellAdd), font2, Brushes.White, 159, 123);
+                e.Graphics.DrawString(string.Format("{0,2:D}", battleStatisticData.Left.MonsterUsed), font2, Brushes.White, 159, 103);
+                e.Graphics.DrawString(string.Format("{0,2:D}", battleStatisticData.Left.SpellUsed), font2, Brushes.White, 159, 123);
                 e.Graphics.DrawString(string.Format("{0,2:D}", battleStatisticData.Left.Kill), font2, Brushes.White, 259, 103);
-                e.Graphics.DrawString(string.Format("{0,2:D}", battleStatisticData.Left.WeaponAdd), font2, Brushes.White, 259, 123);
+                e.Graphics.DrawString(string.Format("{0,2:D}", battleStatisticData.Left.WeaponUsed), font2, Brushes.White, 259, 123);
                 e.Graphics.DrawString(GetDamageStr(battleStatisticData.Left.DamageTotal) , font2, Brushes.White, 159, 143);
 
-                e.Graphics.DrawString(string.Format("{0,2:D}", battleStatisticData.Right.MonsterAdd), font2, Brushes.White, 373, 103);
-                e.Graphics.DrawString(string.Format("{0,2:D}", battleStatisticData.Right.SpellAdd), font2, Brushes.White, 373, 123);
+                e.Graphics.DrawString(string.Format("{0,2:D}", battleStatisticData.Right.MonsterUsed), font2, Brushes.White, 373, 103);
+                e.Graphics.DrawString(string.Format("{0,2:D}", battleStatisticData.Right.SpellUsed), font2, Brushes.White, 373, 123);
                 e.Graphics.DrawString(string.Format("{0,2:D}", battleStatisticData.Right.Kill), font2, Brushes.White, 473, 103);
-                e.Graphics.DrawString(string.Format("{0,2:D}", battleStatisticData.Right.WeaponAdd), font2, Brushes.White, 473, 123);
+                e.Graphics.DrawString(string.Format("{0,2:D}", battleStatisticData.Right.WeaponUsed), font2, Brushes.White, 473, 123);
                 e.Graphics.DrawString(GetDamageStr(battleStatisticData.Right.DamageTotal), font2, Brushes.White, 373, 143);
 
                 TimeSpan span = battleStatisticData.EndTime - battleStatisticData.StartTime;

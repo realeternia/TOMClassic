@@ -57,7 +57,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         public byte Level { get; set; }
 
         public int CostModify { get; set; }
-        public bool IsHeroSkill { get; set; }
 
         public ActiveCard()
         {
@@ -89,14 +88,13 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         
         public ActiveCard GetCopy()
         {
-            var ac = new ActiveCard(new DeckCard(Card.BaseId, Card.Level, Card.Exp))
+            return new ActiveCard(new DeckCard(Card.BaseId, Card.Level, Card.Exp))
             {
                 MpCostChange = MpCostChange,
                 LpCostChange = LpCostChange,
                 PpCostChange = PpCostChange,
                 Lp2Mp = Lp2Mp
             };
-            return ac;
         }
 
         public void ChangeLevel(byte level)

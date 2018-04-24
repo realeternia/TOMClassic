@@ -312,7 +312,7 @@ namespace TaleofMonsters.Controler.Battle
                     LiveMonster lm = BattleLocationManager.GetPlaceMonster(mouseX, mouseY);
                     if (myCursor.Name == "summon" && lm == null)
                     {
-                        race = cardData.TypeSub;
+                        race = (int)cardData.TypeSub;
                         var pos = new Point(mouseX/cardSize*cardSize, mouseY/cardSize*cardSize);
                         BattleManager.Instance.PlayerManager.LeftPlayer.UseMonster(leftSelectCard, pos);
                     }
@@ -322,7 +322,7 @@ namespace TaleofMonsters.Controler.Battle
                     }
                     else if (myCursor.Name == "sidekick" && lm != null)
                     {
-                        race = cardData.TypeSub;
+                        race = (int)cardData.TypeSub;
                         BattleManager.Instance.PlayerManager.LeftPlayer.UseSideKick(lm, leftSelectCard);
                     }
                     else if (myCursor.Name == "cast")
@@ -502,7 +502,6 @@ namespace TaleofMonsters.Controler.Battle
                 HeroPowerConfig heroSkillConfig = ConfigData.GetHeroPowerConfig(key);
                 LevelExpConfig levelConfig = ConfigData.GetLevelExpConfig(UserProfile.Profile.InfoBasic.Level);
                 leftSelectCard = new ActiveCard(heroSkillConfig.CardId, (byte)levelConfig.TowerLevel, 0);
-                leftSelectCard.IsHeroSkill = true;
                 OnSelectCardChange();
             }
         }

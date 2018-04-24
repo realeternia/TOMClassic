@@ -7,9 +7,9 @@ namespace TaleofMonsters.Controler.Battle.DataTent
     {
         internal class BattleStatisticDataPlayer
         {
-            public int MonsterAdd { get; set; }
-            public int WeaponAdd { get; set; }
-            public int SpellAdd { get; set; }
+            public int MonsterUsed { get; set; }
+            public int WeaponUsed { get; set; }
+            public int SpellUsed { get; set; }
             public int Kill { get; set; }
             public int DamageTotal { get; set; }
         }
@@ -44,12 +44,12 @@ namespace TaleofMonsters.Controler.Battle.DataTent
 
         public int OnlyMagic
         {
-            get { return (!PlayerWin || Round == 0 || Left.MonsterAdd > 0 || Left.WeaponAdd > 0) ? 0 : 1; }
+            get { return (!PlayerWin || Round == 0 || Left.MonsterUsed > 0 || Left.WeaponUsed > 0) ? 0 : 1; }
         }
 
         public int OnlySummon
         {
-            get { return (!PlayerWin || Round == 0 || Left.MonsterAdd > 0 || Left.SpellAdd > 0) ? 0 : 1; }
+            get { return (!PlayerWin || Round == 0 || Left.MonsterUsed > 0 || Left.SpellUsed > 0) ? 0 : 1; }
         }
 
         public int AlmostLost

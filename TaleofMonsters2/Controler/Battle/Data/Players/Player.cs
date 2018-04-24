@@ -14,6 +14,7 @@ using TaleofMonsters.Controler.Battle.Data.MemSpell;
 using NarlonLib.Log;
 using TaleofMonsters.Controler.Battle.Components.CardSelect;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
+using TaleofMonsters.Core.Config;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Cards.Monsters;
 using TaleofMonsters.Datas.Cards.Spells;
@@ -263,7 +264,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             if (Pp < selectCard.Pp)
                 return ErrorConfig.Indexer.BattleLackPp;
 
-            if (selectCard.IsHeroSkill && HandCards.HeroSkillCd > 0)
+            if (CardConfigManager.GetCardConfig(selectCard.CardId).IsHeroCard && HandCards.HeroSkillCd > 0)
                 return ErrorConfig.Indexer.BattleHeroSkillInCd;
 
             return ErrorConfig.Indexer.OK;
@@ -294,7 +295,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             if (oldComboTime <= 0)
                 HandCards.UpdateCardView();
             NLog.Debug("AfterUseCard pid={0} cid={1}", PeopleId, selectCard.CardId);
-            if (selectCard.IsHeroSkill) //成功使用英雄技能
+            var cardConfig = CardConfigManager.GetCardConfig(selectCard.CardId);
+            if (cardConfig.IsHeroCard) //成功使用英雄技能
             {
                 HandCards.HeroSkillCd = 1;
                 if (HeroSkillChanged != null)
@@ -302,6 +304,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
             else
             {
+                if(cardConfig.Type == CardTypes.Monster)
+                    BattleManager.Instance.StatisticData.GetPlayer(IsLeft).MonsterUsed++;
+                else if (cardConfig.Type == CardTypes.Weapon)
+                    BattleManager.Instance.StatisticData.GetPlayer(IsLeft).WeaponUsed++;
+                else if (cardConfig.Type == CardTypes.Spell)
+                    BattleManager.Instance.StatisticData.GetPlayer(IsLeft).SpellUsed++;
                 HandCards.DeleteCardAt(SelectId); //可能会造成意外的情况
                 OffCards.AddGrave(selectCard); //放入坟场
             }
@@ -327,9 +335,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             {
                 var mon = new Monster(card.CardId);
                 mon.UpgradeToLevel(card.Level);
-                if (!card.IsHeroSkill)
-                    BattleManager.Instance.StatisticData.GetPlayer(IsLeft).MonsterAdd++;
-
                 LiveMonster newMon = new LiveMonster(card.Level, mon, location, IsLeft);
                 BattleManager.Instance.MonsterQueue.Add(newMon);
                 NLog.Debug("UseMonster pid={0} cid={1}", PeopleId, card.CardId);
@@ -357,8 +362,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             {
                 Weapon wpn = new Weapon(card.CardId);
                 wpn.UpgradeToLevel(card.Level);
-                if (!card.IsHeroSkill)
-                    BattleManager.Instance.StatisticData.GetPlayer(IsLeft).WeaponAdd++;
 
                 var tWeapon = new TrueWeapon(lm, card.Level, wpn);
                 lm.AddWeapon(tWeapon);
@@ -381,8 +384,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             {
                 Monster mon = new Monster(card.CardId);
                 mon.UpgradeToLevel(card.Level);
-                if (!card.IsHeroSkill)
-                    BattleManager.Instance.StatisticData.GetPlayer(IsLeft).MonsterAdd++;
 
                 var tWeapon = new SideKickWeapon(lm, card.Level, mon);
                 lm.AddWeapon(tWeapon);
@@ -406,8 +407,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 Spell spell = new Spell(card.CardId);
                 spell.Addon = SpecialAttr.SpellEffectAddon;
                 spell.UpgradeToLevel(card.Level);
-                if (!card.IsHeroSkill)
-                    BattleManager.Instance.StatisticData.GetPlayer(IsLeft).SpellAdd++;
 
                 SpellAssistant.CheckSpellEffect(spell, IsLeft, target, location);
 

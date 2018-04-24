@@ -9,7 +9,7 @@ namespace TaleofMonsters.Core.Config
     internal struct CardConfigData
     {
         public int Id { get; set; }
-        public int TypeSub { get; set; }
+        public CardTypeSub TypeSub { get; set; }
         public CardTypes Type { get; set; }
         public int Attr { get; set; }
         public int Cost { get; set; }
@@ -18,6 +18,7 @@ namespace TaleofMonsters.Core.Config
         public CardQualityTypes Quality { get; set; }
         public int JobId { get; set; }
         public bool IsSpecial { get; set; }
+        public bool IsHeroCard { get; set; } //英雄技能
         public string Remark { get; set; }
 
         public override string ToString()
@@ -129,7 +130,7 @@ namespace TaleofMonsters.Core.Config
                 {
                     Id = monsterConfig.Id,
                     Type = CardTypes.Monster,
-                    TypeSub = monsterConfig.Type,
+                    TypeSub = (CardTypeSub)monsterConfig.Type,
                     Attr = monsterConfig.Attr,
                     Cost = monsterConfig.Cost,
                     Star = monsterConfig.Star,
@@ -137,6 +138,7 @@ namespace TaleofMonsters.Core.Config
                     Quality = (CardQualityTypes)monsterConfig.Quality,
                     JobId = monsterConfig.JobId,
                     IsSpecial = monsterConfig.IsSpecial == 1,
+                    IsHeroCard = monsterConfig.IsHeroCard == 1,
                     Remark = monsterConfig.Remark
                 };
                 cardConfigDataDict.Add(monsterConfig.Id, card);
@@ -153,7 +155,7 @@ namespace TaleofMonsters.Core.Config
                 {
                     Id = weaponConfig.Id,
                     Type = CardTypes.Weapon,
-                    TypeSub = weaponConfig.Type,
+                    TypeSub = (CardTypeSub)weaponConfig.Type,
                     Attr = weaponConfig.Attr,
                     Cost = weaponConfig.Cost,
                     Star = weaponConfig.Star,
@@ -161,6 +163,7 @@ namespace TaleofMonsters.Core.Config
                     Quality = (CardQualityTypes)weaponConfig.Quality,
                     JobId = weaponConfig.JobId,
                     IsSpecial = weaponConfig.IsSpecial == 1,
+                    IsHeroCard = weaponConfig.IsHeroCard == 1,
                     Remark = weaponConfig.Remark
                 };
                 cardConfigDataDict.Add(weaponConfig.Id, card);
@@ -177,7 +180,7 @@ namespace TaleofMonsters.Core.Config
                 {
                     Id = spellConfig.Id,
                     Type = CardTypes.Spell,
-                    TypeSub = spellConfig.Type,
+                    TypeSub = (CardTypeSub)spellConfig.Type,
                     Attr = spellConfig.Attr,
                     Cost = spellConfig.Cost,
                     Star = spellConfig.Star,
@@ -185,6 +188,7 @@ namespace TaleofMonsters.Core.Config
                     Quality = (CardQualityTypes)spellConfig.Quality,
                     JobId = spellConfig.JobId,
                     IsSpecial = spellConfig.IsSpecial == 1,
+                    IsHeroCard = spellConfig.IsHeroCard == 1,
                     Remark = spellConfig.Remark
                 };
                 cardConfigDataDict.Add(spellConfig.Id, card);
@@ -260,7 +264,7 @@ namespace TaleofMonsters.Core.Config
             foreach (var cardConfigData in cardConfigDataDict.Values)
             {
                 if (!cardConfigData.IsSpecial && cardConfigData.JobId == 0)
-                    raceCardDict[cardConfigData.TypeSub].Add(cardConfigData.Id, cardConfigData.Quality);
+                    raceCardDict[(int)cardConfigData.TypeSub].Add(cardConfigData.Id, cardConfigData.Quality);
             }
 
             for (int i = 0; i < 17; i++)
