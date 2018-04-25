@@ -97,11 +97,11 @@ namespace TaleofMonsters.Controler.Battle.Components
 
 
             if (Card.GetCardType() == CardTypes.Monster)
-                g.DrawImage(HSIcons.GetIconsByEName("rac" + cardData.TypeSub), x+ Size.Width/2-18, y+90, 16, 16);
+                g.DrawImage(HSIcons.GetIconsByEName("rac" + (int)cardData.TypeSub), x+ Size.Width/2-18, y+90, 16, 16);
             else if (Card.GetCardType() == CardTypes.Weapon)
-                g.DrawImage(HSIcons.GetIconsByEName("wep" + (cardData.TypeSub-100+1)), x + Size.Width / 2 - 18, y + 90, 16, 16);
+                g.DrawImage(HSIcons.GetIconsByEName("wep" + (int)(cardData.TypeSub-100+1)), x + Size.Width / 2 - 18, y + 90, 16, 16);
             else if (Card.GetCardType() == CardTypes.Spell)
-                g.DrawImage(HSIcons.GetIconsByEName("spl" + (cardData.TypeSub-200+1)), x + Size.Width / 2 - 18, y + 90, 16, 16);
+                g.DrawImage(HSIcons.GetIconsByEName("spl" + (int)(cardData.TypeSub-200+1)), x + Size.Width / 2 - 18, y + 90, 16, 16);
             g.DrawImage(HSIcons.GetIconsByEName("atr" + cardData.Attr), x + Size.Width / 2 + 2, y + 90, 16, 16);
 
             font = new Font("宋体", 9*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);

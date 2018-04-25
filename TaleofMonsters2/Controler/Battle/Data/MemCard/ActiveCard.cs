@@ -11,33 +11,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
 
         public DeckCard Card { get; private set; }
         
-        public int Mp
-        {
-            get
-            {
-                var lpCost = Card.Lp == 0 ? 0 : Math.Max(0, Card.Lp + LpCostChange + CostModify);
-                if (Lp2Mp && lpCost > 0)
-                    return lpCost;
-                return Card.Mp == 0 ? 0 : Math.Max(0, Card.Mp + MpCostChange + CostModify);
-            }
-        }
-        public int Lp
-        {
-            get
-            {
-                if (Lp2Mp) return 0;
-                return Card.Lp == 0 ? 0 : Math.Max(0, Card.Lp + LpCostChange + CostModify);
-            }
-        }
-        public int Pp
-        {
-            get { return Card.Pp == 0 ? 0 : Math.Max(0, Card.Pp + PpCostChange+ CostModify); }
-        }
+        public int Mp { get; set; }
+        public int Lp { get; set; }
+        public int Pp { get; set; }
 
-        public int MpCostChange { get; set; }//可以被技能修改
-        public int LpCostChange { get; set; }//可以被技能修改
-        public int PpCostChange { get; set; }//可以被技能修改
-        public bool Lp2Mp { get; set; } //可以被技能修改
         public byte Level { get; set; }
 
         public int CostModify { get; set; }
@@ -72,13 +49,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         
         public ActiveCard GetCopy()
         {
-            return new ActiveCard(new DeckCard(Card.BaseId, Card.Level, Card.Exp))
-            {
-                MpCostChange = MpCostChange,
-                LpCostChange = LpCostChange,
-                PpCostChange = PpCostChange,
-                Lp2Mp = Lp2Mp
-            };
+            return new ActiveCard(new DeckCard(Card.BaseId, Card.Level, Card.Exp));
         }
 
         public void ChangeLevel(byte level)

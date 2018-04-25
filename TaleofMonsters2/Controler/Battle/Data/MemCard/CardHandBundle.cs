@@ -51,10 +51,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         public void AddCard(ActiveCard card)
         {
             var spikeManager = self.SpikeManager;
-            card.MpCostChange = spikeManager.MpCost;
-            card.LpCostChange = spikeManager.LpCost;
-            card.PpCostChange = spikeManager.PpCost;
-            card.Lp2Mp = spikeManager.HasSpike("lp2mp");
+            spikeManager.CheckCardCost(card);
             int count = GetCardNumber();
             if (count < GameConstants.CardSlotMaxCount)
                 cards[count] = card;
@@ -67,13 +64,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         public void UpdateCardCost()
         {
             var spikeManager = self.SpikeManager;
-            foreach (var activeCard in cards)
-            {
-                activeCard.LpCostChange = spikeManager.LpCost;
-                activeCard.MpCostChange = spikeManager.MpCost;
-                activeCard.PpCostChange = spikeManager.PpCost;
-                activeCard.Lp2Mp = spikeManager.HasSpike("lp2mp");
-            }
+            spikeManager.CheckCardCost(cards);
             if (self.CardsDesk != null)
                 self.CardsDesk.UpdateSlot(cards);
         }

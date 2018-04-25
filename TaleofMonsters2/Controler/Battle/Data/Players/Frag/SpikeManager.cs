@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ConfigDatas;
+using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Cards;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 {
@@ -32,14 +35,17 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 
         public void AddSpike(int id)
         {
-            Spike spike = new Spike();
-            spike.Id = id;
             var configData = ConfigData.GetSpikeConfig(id);
-            spike.RemoveOnUseMonster = configData.RemoveOnUseMonster;
-            spike.RemoveOnUseSpell = configData.RemoveOnUseSpell;
-            spike.RemoveOnUseWeapon = configData.RemoveOnUseWeapon;
-            spike.RoundLeft = configData.Round;
-            spike.CanTimeOut = configData.Round > 0;
+            Spike spike = new Spike
+            {
+                Id = id,
+                RemoveOnUseMonster = configData.RemoveOnUseMonster,
+                RemoveOnUseSpell = configData.RemoveOnUseSpell,
+                RemoveOnUseWeapon = configData.RemoveOnUseWeapon,
+                RoundLeft = configData.Round,
+                CanTimeOut = configData.Round > 0
+            };
+
             spikeList.Add(spike);
             ReCheckSpike();
         }
@@ -109,6 +115,24 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                 foreach (var spike in toRemove)
                     RemoveSpike(spike.Id);
             }
+        }
+
+        public void CheckCardCost(ActiveCard card)
+        {
+            card.Mp = card.Card.Mp == 0 ? 0 : Math.Max(0, card.Card.Mp + MpCost + card.CostModify);
+            card.Lp = card.Card.Lp == 0 ? 0 : Math.Max(0, card.Card.Lp + LpCost + card.CostModify);
+            card.Pp = card.Card.Pp == 0 ? 0 : Math.Max(0, card.Card.Pp + PpCost + card.CostModify);
+            if (HasSpike("lp2mp"))
+            {
+                card.Mp = card.Lp;
+                card.Lp = 0;
+            }
+        }
+
+        public void CheckCardCost(ActiveCard[] cards)
+        {
+            foreach (var activeCard in cards)
+                CheckCardCost(activeCard);
         }
     }
 }
