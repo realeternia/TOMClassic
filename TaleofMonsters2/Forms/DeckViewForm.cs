@@ -32,26 +32,26 @@ namespace TaleofMonsters.Forms
 
             public int Compare(DeckCard cx, DeckCard cy)
             {
-                if (cx.BaseId == cy.BaseId && cy.BaseId == 0)
+                if (cx.CardId == cy.CardId && cy.CardId == 0)
                 {
                     return 0;
                 }
-                if (cy.BaseId == 0)
+                if (cy.CardId == 0)
                 {
                     return -1;
                 }
-                if (cx.BaseId == 0)
+                if (cx.CardId == 0)
                 {
                     return 1;
                 }
-                int typex = CardConfigManager.GetCardConfig(cx.BaseId).Attr;
-                int typey = CardConfigManager.GetCardConfig(cy.BaseId).Attr;
+                int typex = CardConfigManager.GetCardConfig(cx.CardId).Attr;
+                int typey = CardConfigManager.GetCardConfig(cy.CardId).Attr;
                 if (typex != typey)
                 {
                     return typex.CompareTo(typey);
                 }
 
-                return cx.BaseId.CompareTo(cy.BaseId);
+                return cx.CardId.CompareTo(cy.CardId);
             }
 
             #endregion
@@ -250,7 +250,7 @@ namespace TaleofMonsters.Forms
                 if (cardFromRegion)
                 {
                     var levelExpConfig = ConfigData.GetLevelExpConfig(targetCard.Level);
-                    var cardConfig = CardConfigManager.GetCardConfig(targetCard.BaseId);
+                    var cardConfig = CardConfigManager.GetCardConfig(targetCard.CardId);
                     var itemPrice = GameResourceBook.OutGemCardBuy((int)cardConfig.Quality)*5;//溢出价格
                     popMenuDeck.AddItem("activate", "添加到卡组");
                     popMenuDeck.AddItem("levelup", string.Format("升级({0})", levelExpConfig.CardExp), targetCard.Exp >= levelExpConfig.CardExp ? "white" : "gray", "oth10");

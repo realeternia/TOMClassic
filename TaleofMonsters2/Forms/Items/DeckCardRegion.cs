@@ -99,7 +99,7 @@ namespace TaleofMonsters.Forms.Items
         {
             foreach (var deckCard in dcards)
             {
-                if (deckCard.BaseId == cardId)
+                if (deckCard.CardId == cardId)
                     return deckCard;
             }
             return null;
@@ -145,7 +145,7 @@ namespace TaleofMonsters.Forms.Items
 
         private void DrawOnDeckView(Graphics g, DeckCard card, int x, int y, bool isSelected, string attr)
         {
-            CardAssistant.DrawBase(g, card.BaseId, x, y, cardWidth, cardHeight);
+            CardAssistant.DrawBase(g, card.CardId, x, y, cardWidth, cardHeight);
             if (isSelected)
             {
                 var brushes = new SolidBrush(Color.FromArgb(130, Color.Yellow));
@@ -153,10 +153,10 @@ namespace TaleofMonsters.Forms.Items
                 brushes.Dispose();
             }
 
-            if (card.BaseId <= 0)
+            if (card.CardId <= 0)
                 return;
 
-            var cardConfigData = CardConfigManager.GetCardConfig(card.BaseId);
+            var cardConfigData = CardConfigManager.GetCardConfig(card.CardId);
             Font font = new Font("宋体", 5*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             g.DrawString(("★★★★★★★★★★").Substring(10 - cardConfigData.Star), font, Brushes.Yellow, x + 3, y + 3);
             font.Dispose();
@@ -257,7 +257,7 @@ namespace TaleofMonsters.Forms.Items
                     int ri = i % (xCount * yCount);
                     int x = (ri % xCount) * cardWidth;
                     int y = (ri / xCount) * cardHeight;
-                    DrawOnDeckView(g, dcards[i], x, y, false, GetCardAttr(dcards[i].BaseId));
+                    DrawOnDeckView(g, dcards[i], x, y, false, GetCardAttr(dcards[i].CardId));
                 }
                 g.Dispose();
 
@@ -269,7 +269,7 @@ namespace TaleofMonsters.Forms.Items
                 int ri = tar % (xCount * yCount);
                 int x = (ri % xCount) * cardWidth + X;
                 int y = (ri / xCount) * cardHeight + Y;
-                DrawOnDeckView(eg, dcards[tar], x, y, true, GetCardAttr(dcards[tar].BaseId));
+                DrawOnDeckView(eg, dcards[tar], x, y, true, GetCardAttr(dcards[tar].CardId));
             }
         }
         public void Dispose()

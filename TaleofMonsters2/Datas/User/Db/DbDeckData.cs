@@ -59,7 +59,7 @@ namespace TaleofMonsters.Datas.User.Db
         {
             int firstBlank = -1;
             int count = 0;
-            var cardConfig = CardConfigManager.GetCardConfig(card.BaseId);
+            var cardConfig = CardConfigManager.GetCardConfig(card.CardId);
             int newCardJob = cardConfig.JobId;
             for (int i = 0; i < GameConstants.DeckCardCount; i++)
             {
@@ -71,7 +71,7 @@ namespace TaleofMonsters.Datas.User.Db
                 else if (dcard != -1)
                 {
                     var tCard = UserProfile.InfoCard.GetDeckCardById(dcard);
-                    if (tCard.BaseId == card.BaseId)
+                    if (tCard.BaseId == card.CardId)
                         count++;
 
                     int cardJob = CardConfigManager.GetCardConfig(tCard.BaseId).JobId;
@@ -84,7 +84,7 @@ namespace TaleofMonsters.Datas.User.Db
                 return ErrorConfig.Indexer.DeckCardTypeLimit;
             if (firstBlank == -1)
                 return ErrorConfig.Indexer.DeckIsFull;
-            SetCardAt(firstBlank, card.BaseId);
+            SetCardAt(firstBlank, card.CardId);
 
             return ErrorConfig.Indexer.OK;
         }

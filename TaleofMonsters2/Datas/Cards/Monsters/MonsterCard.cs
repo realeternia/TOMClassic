@@ -14,7 +14,7 @@ namespace TaleofMonsters.Datas.Cards.Monsters
     internal sealed class MonsterCard : Card
     {
         private readonly Monster monster;
-        private DeckCard card;
+        private IMemCardData card;
 
         public MonsterCard(Monster monster)
         {
@@ -67,7 +67,7 @@ namespace TaleofMonsters.Datas.Cards.Monsters
             return CardTypes.Monster;
         }
 
-        public override void SetData(DeckCard card1)
+        public override void SetData(IMemCardData card1)
         {
             card = card1;
             if (card1.Level > 1)

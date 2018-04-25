@@ -5,6 +5,7 @@ using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
+using TaleofMonsters.Core.Config;
 using TaleofMonsters.Datas;
 
 namespace TaleofMonsters.Controler.Battle
@@ -17,7 +18,7 @@ namespace TaleofMonsters.Controler.Battle
             for (int i = 0; i < cds.Length; i++)
             {
                 var card = cds[i];
-                if (card.Card.Star > 3) //把3费以上卡都换掉
+                if (CardConfigManager.GetCardConfig(card.CardId).Star > 3) //把3费以上卡都换掉
                     player.HandCards.RedrawCardAt(i + 1);
             }
 

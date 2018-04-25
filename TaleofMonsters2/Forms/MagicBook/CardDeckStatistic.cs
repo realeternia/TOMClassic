@@ -38,11 +38,11 @@ namespace TaleofMonsters.Forms.MagicBook
             int[] typeCount = new[] { 2, 2, 2, 2, 2, 2 };
             foreach (var deckCard in dcards)
             {
-                if (deckCard.BaseId == 0)
+                if (deckCard.CardId == 0)
                     continue;
                 starCount[deckCard.Star-1]++;
 
-                var cardData = CardConfigManager.GetCardConfig(deckCard.BaseId);
+                var cardData = CardConfigManager.GetCardConfig(deckCard.CardId);
                 if (cardData.Remark.Contains("直伤")) typeCount[0] += 10;
                 if (cardData.Remark.Contains("范围")) typeCount[1] += 10;
                 if (cardData.Remark.Contains("状态")) typeCount[2] += 10;

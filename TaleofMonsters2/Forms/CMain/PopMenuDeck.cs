@@ -30,25 +30,25 @@ namespace TaleofMonsters.Forms.CMain
             }
             else if (target.Type == "remove")
             {
-                UserProfile.InfoCard.SelectedDeck.RemoveCardById(TargetCard.BaseId);
+                UserProfile.InfoCard.SelectedDeck.RemoveCardById(TargetCard.CardId);
                 Form.ActivateCard();
             }
             else if (target.Type == "levelup")
             {
-                if (!UserProfile.InfoCard.CanLevelUp(TargetCard.BaseId))
+                if (!UserProfile.InfoCard.CanLevelUp(TargetCard.CardId))
                 {
                     Form.AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.CardExpNotEnough2), "Red");
                 }
                 else
                 {
-                    var cardResult = UserProfile.InfoCard.CardLevelUp(TargetCard.BaseId);
-                    Form.OnCardLevelUp(TargetCard.BaseId, cardResult.Level, cardResult.Exp);
+                    var cardResult = UserProfile.InfoCard.CardLevelUp(TargetCard.CardId);
+                    Form.OnCardLevelUp(TargetCard.CardId, cardResult.Level, cardResult.Exp);
                 }
             }
             else if (target.Type == "levelup2")
             {
                 var levelExpConfig = ConfigData.GetLevelExpConfig(TargetCard.Level);
-                var cardConfig = CardConfigManager.GetCardConfig(TargetCard.BaseId);
+                var cardConfig = CardConfigManager.GetCardConfig(TargetCard.CardId);
                 var itemPrice = GameResourceBook.OutGemCardBuy((int)cardConfig.Quality) * 5;//溢出价格
                 itemPrice *= (uint) levelExpConfig.CardExp;
                 GameResourceType resType = GameResourceType.Gold;
@@ -66,8 +66,8 @@ namespace TaleofMonsters.Forms.CMain
                 else
                 {
                     UserProfile.InfoBag.SubResource(resType, itemPrice);
-                    var cardResult = UserProfile.InfoCard.CardLevelUpRes(TargetCard.BaseId);
-                    Form.OnCardLevelUp(TargetCard.BaseId, cardResult.Level, cardResult.Exp);
+                    var cardResult = UserProfile.InfoCard.CardLevelUpRes(TargetCard.CardId);
+                    Form.OnCardLevelUp(TargetCard.CardId, cardResult.Level, cardResult.Exp);
                 }
             }
             else

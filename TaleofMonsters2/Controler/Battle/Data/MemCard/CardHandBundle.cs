@@ -127,7 +127,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
                 ActiveCard card = cards[id];
                 DeleteCardAt(id + 1);
 
-                card.ChangeLevel((byte)(card.Level + levelChange));
+                card.SetLevel((byte)(card.Level + levelChange));
                 Player player = p as Player;
                 if (player != null)
                     player.HandCards.AddCard(card);
@@ -141,7 +141,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
                 int id = MathTool.GetRandom(GetCardNumber());
                 ActiveCard card = cards[id].GetCopy();
 
-                card.ChangeLevel((byte)(card.Level + levelChange));
+                card.SetLevel((byte)(card.Level + levelChange));
                 Player player = p as Player;
                 if (player != null)
                     player.HandCards.AddCard(card);
@@ -150,7 +150,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
 
         public void AddCard(int cardId, int level, int modify)
         {
-            ActiveCard card = new ActiveCard(cardId, (byte)level, 0);
+            ActiveCard card = new ActiveCard(cardId, (byte)level);
             card.CostModify = modify;
             AddCard(card);
         }
@@ -197,22 +197,18 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
                 if (num <= i) continue;
 
                 var oldLevel = cards[id].Level;
-                SetCard((id + i) % num, new ActiveCard(cardId, (byte)Math.Max(1, oldLevel + levelChange), 0));
+                SetCard((id + i) % num, new ActiveCard(cardId, (byte)Math.Max(1, oldLevel + levelChange)));
             }
         }
 
         public void CardLevelUp(int n, int type)
         {
-            foreach (ActiveCard pickCard in cards)
+            foreach (var pickCard in cards)
             {
                 if (type != 0 && ConfigIdManager.GetCardType(pickCard.CardId) != (CardTypes)type)
                     continue;
 
-                pickCard.Level = (byte)(pickCard.Level + n);
-                if (pickCard.Level < 1)
-                    pickCard.Level = 1;
-                else if (pickCard.Level > GameConstants.CardMaxLevel)
-                    pickCard.Level = GameConstants.CardMaxLevel;
+                pickCard.SetLevel((byte)(pickCard.Level + n));
             }
 
             if (self.CardsDesk != null)

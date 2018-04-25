@@ -14,7 +14,7 @@ namespace TaleofMonsters.Datas.Cards.Weapons
     internal sealed class WeaponCard : Card
     {
         private readonly Weapon weapon;
-        private DeckCard card;
+        private IMemCardData card;
 
         public WeaponCard(Weapon weapon)
         {
@@ -61,7 +61,7 @@ namespace TaleofMonsters.Datas.Cards.Weapons
             return CardTypes.Weapon;
         }
 
-        public override void SetData(DeckCard card1)
+        public override void SetData(IMemCardData card1)
         {
             card = card1; 
             if (card1.Level > 1)

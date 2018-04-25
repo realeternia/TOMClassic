@@ -57,7 +57,7 @@ namespace TaleofMonsters.Forms.MagicBook
 
         public void SetInfo(DeckCard dcard)
         {
-            cid = dcard.BaseId;
+            cid = dcard.CardId;
             level = dcard.Level;
             skills = new List<MonsterSkill>();
             string effectName = "";

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
+using TaleofMonsters.Core.Config;
 using TaleofMonsters.Datas;
-using TaleofMonsters.Datas.Cards;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 {
@@ -18,6 +18,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             public bool CanTimeOut { get; set; }
             public float RoundLeft { get; set; }
         }
+
+        private Player self;
         private List<Spike> spikeList = new List<Spike>();
 
         public int LpCost { get; private set; }
@@ -25,9 +27,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         public int MpCost { get; private set; }
 
         public int PpCost { get; private set; }
-
-        private Player self;
-
+        
         public SpikeManager(Player player)
         {
             self = player;
@@ -119,9 +119,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 
         public void CheckCardCost(ActiveCard card)
         {
-            card.Mp = card.Card.Mp == 0 ? 0 : Math.Max(0, card.Card.Mp + MpCost + card.CostModify);
-            card.Lp = card.Card.Lp == 0 ? 0 : Math.Max(0, card.Card.Lp + LpCost + card.CostModify);
-            card.Pp = card.Card.Pp == 0 ? 0 : Math.Max(0, card.Card.Pp + PpCost + card.CostModify);
+            var cardType = ConfigIdManager.GetCardType(card.CardId);
+            var cardCost = CardConfigManager.GetCardConfig(card.CardId).Cost;
+            card.Mp = cardType != CardTypes.Spell ? 0 : Math.Max(0, cardCost + MpCost + card.CostModify);
+            card.Lp = cardType != CardTypes.Monster ? 0 : Math.Max(0, cardCost + LpCost + card.CostModify);
+            card.Pp = cardType != CardTypes.Weapon ? 0 : Math.Max(0, cardCost + PpCost + card.CostModify);
             if (HasSpike("lp2mp"))
             {
                 card.Mp = card.Lp;

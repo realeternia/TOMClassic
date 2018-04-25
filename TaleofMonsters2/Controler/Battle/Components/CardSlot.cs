@@ -9,6 +9,7 @@ using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Cards;
+using TaleofMonsters.Datas.Decks;
 
 namespace TaleofMonsters.Controler.Battle.Components
 {
@@ -17,7 +18,7 @@ namespace TaleofMonsters.Controler.Battle.Components
         public bool MouseOn { get; set; }
 
         public ActiveCard ACard { get; private set; }
-        private Card Card { get; set; }
+        private Card card;
 
         public Point Location;
         public Size Size;
@@ -34,13 +35,13 @@ namespace TaleofMonsters.Controler.Battle.Components
         public void SetSlotCard(ActiveCard tcard)
         {
             ACard = tcard;
-            Card = CardAssistant.GetCard(tcard.CardId);
-            Card.SetData(ACard.Card);
+            card = CardAssistant.GetCard(tcard.CardId);
+            card.SetData(tcard);
         }
 
         public void CardSlot_Paint( PaintEventArgs e)
         {
-            if (Card != null)
+            if (card != null)
             {
                 CardMouseState state = !Enabled ? CardMouseState.Disable : (MouseOn ? CardMouseState.MouseOn : CardMouseState.Normal);
                 Draw(e.Graphics, state);
@@ -49,7 +50,7 @@ namespace TaleofMonsters.Controler.Battle.Components
 
         private void Draw(Graphics g, CardMouseState mouse)
         {
-            if (Card is SpecialCard)
+            if (card is SpecialCard)
             {
              //   Image img2 = Card.GetCardImage(120, 120);
              //   g.DrawImage(img2, new Rectangle(Location.X, 10, 120, 120), 0, 0, img2.Width, img2.YCount, GraphicsUnit.Pixel);
@@ -64,7 +65,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             sb.Dispose();
             if (mouse != CardMouseState.MouseOn)
                 y += 10;
-            CardAssistant.DrawBase(g, Card.CardId, x, y, Size.Width, 120);
+            CardAssistant.DrawBase(g, card.CardId, x, y, Size.Width, 120);
 
             if (mouse == CardMouseState.Disable)
             {
@@ -73,7 +74,7 @@ namespace TaleofMonsters.Controler.Battle.Components
                 sbrush.Dispose();
             }
 
-            var cardData = CardConfigManager.GetCardConfig(Card.CardId);
+            var cardData = CardConfigManager.GetCardConfig(card.CardId);
             if (BattleManager.Instance.PlayerManager.LeftPlayer.Combo && cardData.Remark.Contains("连击"))
             {
                 Image img = PicLoader.Read("System", "CardEff1.PNG");
@@ -88,7 +89,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             }
 
             Font font = new Font("Arial", 7*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            for (int i = 0; i < Card.Star; i++)
+            for (int i = 0; i < card.Star; i++)
             {
                 g.DrawString("★", font, Brushes.Black, x + Size.Width - 16, y+2+i*10);
                 g.DrawString("★", font, Brushes.Yellow, x + Size.Width - 15, y + 1 + i * 10);
@@ -96,17 +97,17 @@ namespace TaleofMonsters.Controler.Battle.Components
             font.Dispose();
 
 
-            if (Card.GetCardType() == CardTypes.Monster)
+            if (card.GetCardType() == CardTypes.Monster)
                 g.DrawImage(HSIcons.GetIconsByEName("rac" + (int)cardData.TypeSub), x+ Size.Width/2-18, y+90, 16, 16);
-            else if (Card.GetCardType() == CardTypes.Weapon)
+            else if (card.GetCardType() == CardTypes.Weapon)
                 g.DrawImage(HSIcons.GetIconsByEName("wep" + (int)(cardData.TypeSub-100+1)), x + Size.Width / 2 - 18, y + 90, 16, 16);
-            else if (Card.GetCardType() == CardTypes.Spell)
+            else if (card.GetCardType() == CardTypes.Spell)
                 g.DrawImage(HSIcons.GetIconsByEName("spl" + (int)(cardData.TypeSub-200+1)), x + Size.Width / 2 - 18, y + 90, 16, 16);
             g.DrawImage(HSIcons.GetIconsByEName("atr" + cardData.Attr), x + Size.Width / 2 + 2, y + 90, 16, 16);
 
             font = new Font("宋体", 9*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            var cardName = string.Format("{0}Lv{1}", Card.Name, ACard.Level);
-            var cardQual = CardConfigManager.GetCardConfig(Card.CardId).Quality;
+            var cardName = string.Format("{0}Lv{1}", card.Name, ACard.Level);
+            var cardQual = CardConfigManager.GetCardConfig(card.CardId).Quality;
             var cardColor = Color.FromName(HSTypes.I2QualityColor((int)cardQual));
             var brush = new SolidBrush(cardColor);
             g.DrawString(cardName, font, Brushes.Black, x + 1, mouse != CardMouseState.MouseOn ? y + 107 : y+ 112);
@@ -130,14 +131,14 @@ namespace TaleofMonsters.Controler.Battle.Components
 
         }
 
-        private IEnumerable<PlayerManaTypes> GetCostList(ActiveCard card)
+        private IEnumerable<PlayerManaTypes> GetCostList(ActiveCard card1)
         {
             List<PlayerManaTypes> l = new List<PlayerManaTypes>();
-            for (int i = 0; i < card.Lp; i++)
+            for (int i = 0; i < card1.Lp; i++)
                 l.Add(PlayerManaTypes.Lp);
-            for (int i = 0; i < card.Mp; i++)
+            for (int i = 0; i < card1.Mp; i++)
                 l.Add(PlayerManaTypes.Mp);
-            for (int i = 0; i < card.Pp; i++)
+            for (int i = 0; i < card1.Pp; i++)
                 l.Add(PlayerManaTypes.Pp);
             return l;
         }

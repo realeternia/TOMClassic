@@ -1,63 +1,60 @@
 using System;
+using NarlonLib.Math;
+using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Decks;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemCard
 {
-    internal class ActiveCard
+    internal class ActiveCard : IMemCardData
     {
         internal static ActiveCard NoneCard = new ActiveCard();
 
-        public DeckCard Card { get; private set; }
-        
+        public int CardId { get; set; }
+
         public int Mp { get; set; }
         public int Lp { get; set; }
         public int Pp { get; set; }
 
-        public byte Level { get; set; }
+        public int CostModify { get; set; } //单卡消耗调整，可能会被技能修改
 
-        public int CostModify { get; set; }
-
+        public byte Level { get; private set; }//卡牌等级，可能会被技能修改
+        public ushort Exp { get { return 0; } }
+        
         public ActiveCard()
         {
-            Card = new DeckCard(0, 0, 0);
+           
         }
 
         public ActiveCard(DeckCard card)
         {
-            Card = card;
+            CardId = card.CardId;
             Level = card.Level;
         }
 
-        public ActiveCard(int baseid, byte level, ushort exp)
+        public ActiveCard(int baseid, byte level)
         {
-            Card = new DeckCard(baseid, level, exp);
-            Level = Card.Level;
-        }
-        
-
-        public int CardId //卡片配置的id
-        {
-            get { return Card.BaseId; }
+            CardId = baseid;
+            Level = level;
         }
 
         public CardTypes CardType
         {
-            get { return ConfigIdManager.GetCardType(Card.BaseId); }
+            get { return ConfigIdManager.GetCardType(CardId); }
         }
-        
+
+        public void SetLevel(byte level)
+        {
+            level = (byte)MathTool.Clamp(level, 1, GameConstants.CardMaxLevel);
+            Level = level;
+        }
+
         public ActiveCard GetCopy()
         {
-            return new ActiveCard(new DeckCard(Card.BaseId, Card.Level, Card.Exp));
+            return new ActiveCard(new DeckCard(CardId, Level, 0));
         }
-
-        public void ChangeLevel(byte level)
-        {
-            Level = level;
-            Card.Level = level;
-        }
-
+        
         public static bool operator ==(ActiveCard rec1, ActiveCard rec2)
         {
             return Equals(rec1, rec2);
@@ -70,7 +67,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
 
         public override int GetHashCode()
         {
-            return Card.GetHashCode();
+            return CardId + Level;
         }
 
         public override bool Equals(object obj)
@@ -80,8 +77,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
             if (GetType() != obj.GetType())
                 return false;
             ActiveCard rec = (ActiveCard) obj;
-            if (rec.Card == Card)
-                return true;
             if (rec.CardId != CardId) 
                 return false;
             if (rec.Level != Level) //todo 还有其他可能性，暂时只有这个

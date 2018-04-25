@@ -19,7 +19,7 @@ namespace TaleofMonsters.Controler.Battle.Components.CardSelect
             cardLevel = lv;
             for (int i = 0; i < discoverCard.Length; i++)
             {
-                discoverCard[i] = new ActiveCard(cardId[i], (byte)cardLevel, 0);
+                discoverCard[i] = new ActiveCard(cardId[i], (byte)cardLevel);
             }
             discoverType = type;
         }

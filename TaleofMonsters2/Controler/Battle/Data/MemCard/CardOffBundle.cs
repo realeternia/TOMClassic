@@ -43,7 +43,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         {
             CardOffBundle cloneDeck = new CardOffBundle();
             foreach (var checkCard in waitList)
-                cloneDeck.waitList.Add(new ActiveCard(checkCard.CardId, checkCard.Level, 0));
+                cloneDeck.waitList.Add(new ActiveCard(checkCard.CardId, checkCard.Level));
             return cloneDeck;
         }
 

@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using TaleofMonsters.Datas.Decks;
 
 namespace TaleofMonsters.Datas.Cards
 {
@@ -14,7 +15,7 @@ namespace TaleofMonsters.Datas.Cards
         public abstract void DrawOnCardDetail(Graphics g, int offX, int offY);
         public abstract Image GetPreview(CardPreviewType type, uint[] parms);
         public abstract CardTypes GetCardType();
-        public abstract void SetData(Decks.DeckCard dc);
+        public abstract void SetData(IMemCardData dc);
     }
 
 }

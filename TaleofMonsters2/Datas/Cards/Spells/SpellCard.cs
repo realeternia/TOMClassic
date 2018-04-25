@@ -12,7 +12,7 @@ namespace TaleofMonsters.Datas.Cards.Spells
     internal sealed class SpellCard : Card
     {
         private readonly Spell spell;
-        private DeckCard card;
+        private IMemCardData card;
 
         public SpellCard(Spell spell)
         {
@@ -60,7 +60,7 @@ namespace TaleofMonsters.Datas.Cards.Spells
             return CardTypes.Spell;
         }
 
-        public override void SetData(DeckCard card1)
+        public override void SetData(IMemCardData card1)
         {
             card = card1;
             if (card1.Level > 1)

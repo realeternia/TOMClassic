@@ -95,9 +95,9 @@ namespace TaleofMonsters.Forms
             int index = 0;
             foreach (var checkCard in rookieDeck)
             {
-                if (CardConfigManager.GetCardConfig(checkCard.BaseId).Id == 0)
+                if (CardConfigManager.GetCardConfig(checkCard.CardId).Id == 0)
                     continue;
-                var dcard = UserProfile.InfoCard.AddCard(checkCard.BaseId);
+                var dcard = UserProfile.InfoCard.AddCard(checkCard.CardId);
                 UserProfile.InfoCard.SelectedDeck.SetCardAt(index++, dcard.BaseId);
             }
             #region 把所有基础卡牌都给玩家

@@ -19,21 +19,21 @@ namespace TaleofMonsters.Forms.Items
 
             public int Compare(DeckCard cx, DeckCard cy)
             {
-                if (cx.BaseId <= 0 && cy.BaseId <= 0)
+                if (cx.CardId <= 0 && cy.CardId <= 0)
                 {
                     return 0;
                 }
-                if (cx.BaseId <= 0)
+                if (cx.CardId <= 0)
                 {
                     return 1;
                 }
-                if (cy.BaseId <= 0)
+                if (cy.CardId <= 0)
                 {
                     return -1;
                 }
 
-                var cardX = CardConfigManager.GetCardConfig(cx.BaseId);
-                var cardY = CardConfigManager.GetCardConfig(cy.BaseId);
+                var cardX = CardConfigManager.GetCardConfig(cx.CardId);
+                var cardY = CardConfigManager.GetCardConfig(cy.CardId);
                 if (cardX.Type != cardY.Type)
                 {
                     return cardX.Type.CompareTo(cardY.Type);
@@ -48,7 +48,7 @@ namespace TaleofMonsters.Forms.Items
                     return cardX.Quality.CompareTo(cardY.Quality);
                 }
 
-                return (cx.BaseId.CompareTo(cy.BaseId));
+                return (cx.CardId.CompareTo(cy.CardId));
             }
 
             #endregion
@@ -83,7 +83,7 @@ namespace TaleofMonsters.Forms.Items
             monsterCount = weaponCount = spellCount = 0;
             foreach (var deckCard in decks)
             {
-                var cardX = CardConfigManager.GetCardConfig(deckCard.BaseId);
+                var cardX = CardConfigManager.GetCardConfig(deckCard.CardId);
                 if (cardX.Type == CardTypes.Monster)
                     monsterCount++;
                 if (cardX.Type == CardTypes.Weapon)
@@ -104,7 +104,7 @@ namespace TaleofMonsters.Forms.Items
         {
             foreach (var deckCard in dcards)
             {
-                if (deckCard.BaseId == cardId)
+                if (deckCard.CardId == cardId)
                     return deckCard;
             }
             return null;
@@ -149,14 +149,14 @@ namespace TaleofMonsters.Forms.Items
             for (int i = 0; i < dcards.Length; i++)
             {
                 int yoff = i * cellHeight;
-                if (dcards[i].BaseId <= 0)
+                if (dcards[i].CardId <= 0)
                 {//如果没有卡
                     g.DrawRectangle(Pens.DimGray, X, Y + yoff, Width, cellHeight);
                     continue;
                 }
 
-                var cardConfigData = CardConfigManager.GetCardConfig(dcards[i].BaseId);
-                var cardImg = CardAssistant.GetCardImage(dcards[i].BaseId, 80, 80);
+                var cardConfigData = CardConfigManager.GetCardConfig(dcards[i].CardId);
+                var cardImg = CardAssistant.GetCardImage(dcards[i].CardId, 80, 80);
                 g.DrawImage(border, X, Y + yoff, Width-25, cellHeight);
                 g.DrawImage(cardImg, new Rectangle(X+Width-50, Y + yoff, 50, cellHeight), 0, 6, 80, 30, GraphicsUnit.Pixel);
                 g.DrawImage(mask, X + Width - 50, Y + yoff, 50, cellHeight);

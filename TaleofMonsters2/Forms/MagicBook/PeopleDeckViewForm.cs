@@ -141,11 +141,11 @@ namespace TaleofMonsters.Forms.MagicBook
                 nlClickLabel1.ClearLabel();
                 foreach (DeckCard card in cards)
                 {
-                    CardConfigData pickCard = CardConfigManager.GetCardConfig(card.BaseId);
+                    CardConfigData pickCard = CardConfigManager.GetCardConfig(card.CardId);
                     if (pickCard.Id == 0)
                         continue;
 
-                    var cardConfig = CardConfigManager.GetCardConfig(card.BaseId);
+                    var cardConfig = CardConfigManager.GetCardConfig(card.CardId);
                     var colorName = HSTypes.I2QualityColor((int)cardConfig.Quality);
                     if (colorName == "White")
                         colorName = "DarkGray";

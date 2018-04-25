@@ -59,7 +59,7 @@ namespace TaleofMonsters.Datas.Cards
             return CardTypes.Null;
         }
 
-        public override void SetData(DeckCard card1)
+        public override void SetData(IMemCardData card1)
         {
         }
 

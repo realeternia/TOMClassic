@@ -47,7 +47,7 @@ namespace TaleofMonsters.Datas.Decks
             var deckTpCopy = deckCacheDict[name];
             var cards = new DeckCard[30];
             for (int i = 0; i < cards.Length; i++)
-                cards[i] = new DeckCard(deckTpCopy[i].BaseId, deckTpCopy[i].Level, deckTpCopy[i].Exp);
+                cards[i] = new DeckCard(deckTpCopy[i].CardId, deckTpCopy[i].Level, deckTpCopy[i].Exp);
 
             return cards;
         }
@@ -64,7 +64,7 @@ namespace TaleofMonsters.Datas.Decks
             AutoDictionary<string, int> statDict = new AutoDictionary<string, int>();
             foreach (var cardData in deckTpCopy)
             {
-                var cardConfig = CardConfigManager.GetCardConfig(cardData.BaseId);
+                var cardConfig = CardConfigManager.GetCardConfig(cardData.CardId);
                 if (cardConfig.Type == CardTypes.Monster)
                 {
                     statDict["atr" + cardConfig.Attr] ++;

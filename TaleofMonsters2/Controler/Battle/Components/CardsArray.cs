@@ -146,7 +146,7 @@ namespace TaleofMonsters.Controler.Battle.Components
                 {
                     var targetCard = cards[mouseIndex - 1];
                     var card = CardAssistant.GetCard(targetCard.ACard.CardId);
-                    card.SetData(targetCard.ACard.Card);
+                    card.SetData(targetCard.ACard);
                     var image = card.GetPreview(CardPreviewType.Normal, new uint[0]);
                     tooltip.Show(image, this, targetCard.Location.X, targetCard.Location.Y - image.Height - 5);
                 }
