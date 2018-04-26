@@ -69,7 +69,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
             int cardId = self.Weapon == null ? 0 : self.Weapon.CardId;
             var savedWeapon = self.Weapon == null ? null : self.Weapon.GetCopy();
-            self.DeleteWeapon();
+            self.DeleteWeapon(false);
             int lifp = self.Hp * 100 / self.Avatar.Hp;
             self.CoverBox.RemoveAllCover();
             self.SkillManager.CheckRemoveEffect();
@@ -136,16 +136,16 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         public void BreakWeapon()
         {
             if (self.Weapon != null)
-                self.DeleteWeapon();
+                self.DeleteWeapon(true);
         }
 
         public void WeaponReturn()
         {
             if (self.Weapon is TrueWeapon)
             {
-                ActiveCard card = new ActiveCard(new DeckCard(self.Weapon.CardId, (byte)self.Weapon.Level, 0));
+                ActiveCard card = new ActiveCard(self.Weapon.CardId, (byte)self.Weapon.Level);
                 self.OwnerPlayer.HandCards.AddCard(card);
-                self.DeleteWeapon();
+                self.DeleteWeapon(false);
             }
         }
 

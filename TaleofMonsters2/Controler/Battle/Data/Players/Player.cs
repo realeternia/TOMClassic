@@ -56,6 +56,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         private bool isPlayerControl; //是否玩家控制
 
         public List<int> HeroSkillList = new List<int>();
+        private float heroSkillCd;
         public bool IsAlive { get; set; }//是否活着
 
         private float comboTime;//>0表示在combo状态
@@ -177,10 +178,10 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 comboTime = 0;
                 HandCards.UpdateCardView();
             }
-            if (HandCards.HeroSkillCd > 0)
+            if (heroSkillCd > 0)
             {
-                HandCards.HeroSkillCd -= pastRound;
-                if (HeroSkillChanged != null && HandCards.HeroSkillCd <= 0)
+                heroSkillCd -= pastRound;
+                if (HeroSkillChanged != null && heroSkillCd <= 0)
                     HeroSkillChanged(true);
             }
         }
@@ -264,7 +265,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             if (Pp < selectCard.Pp)
                 return ErrorConfig.Indexer.BattleLackPp;
 
-            if (CardConfigManager.GetCardConfig(selectCard.CardId).IsHeroCard && HandCards.HeroSkillCd > 0)
+            if (CardConfigManager.GetCardConfig(selectCard.CardId).IsHeroCard && heroSkillCd > 0)
                 return ErrorConfig.Indexer.BattleHeroSkillInCd;
 
             return ErrorConfig.Indexer.OK;
@@ -298,7 +299,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             var cardConfig = CardConfigManager.GetCardConfig(selectCard.CardId);
             if (cardConfig.IsHeroCard) //成功使用英雄技能
             {
-                HandCards.HeroSkillCd = 1;
+                heroSkillCd = 1;
                 if (HeroSkillChanged != null)
                     HeroSkillChanged(false);
             }
@@ -309,14 +310,23 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 else if (cardConfig.Type == CardTypes.Weapon)
                     BattleManager.Instance.StatisticData.GetPlayer(IsLeft).WeaponUsed++;
                 else if (cardConfig.Type == CardTypes.Spell)
+                {
                     BattleManager.Instance.StatisticData.GetPlayer(IsLeft).SpellUsed++;
+                    if (!CardConfigManager.GetCardConfig(selectCard.CardId).IsSpecial)
+                        OffCards.AddGrave(selectCard); //放入坟场
+                }
                 HandCards.DeleteCardAt(SelectId); //可能会造成意外的情况
-                OffCards.AddGrave(selectCard); //放入坟场
             }
         }
 
         public virtual void AddResource(GameResourceType type, int number)
         {
+        }
+
+        public void OnMonsterDie(int monsterId, byte monsterLevel, bool isSummoned)
+        {
+            if (!isSummoned && !CardConfigManager.GetCardConfig(monsterId).IsSpecial)
+                OffCards.AddGrave(new ActiveCard(monsterId, monsterLevel)); //放入坟场
         }
 
         public virtual void OnKillMonster(int id, int dieLevel, int dieStar, Point position, int luck)

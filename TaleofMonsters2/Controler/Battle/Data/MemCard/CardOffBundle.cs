@@ -33,7 +33,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         {
             waitList = new List<ActiveCard>();
             for (int i = 0; i < itsCards.Length; i++)
-                waitList.Add(new ActiveCard(itsCards[i]));
+                waitList.Add(new ActiveCard(itsCards[i].CardId, itsCards[i].Level));
             ArraysUtils.RandomShuffle(waitList);
             graveList = new List<int>();
             index = 0;
@@ -81,6 +81,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         {
             graveList.Add(card.CardId);
         }
+
         public int GetRandomMonsterFromGrave()
         {
             var graveMonsters = new List<int>();

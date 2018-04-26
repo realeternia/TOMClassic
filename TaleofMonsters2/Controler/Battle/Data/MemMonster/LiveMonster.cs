@@ -4,12 +4,14 @@ using System.Drawing;
 using ConfigDatas;
 using NarlonLib.Log;
 using NarlonLib.Math;
+using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Data.MemFlow;
 using TaleofMonsters.Controler.Battle.Data.MemMonster.Component;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
+using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Cards.Monsters;
@@ -266,6 +268,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             BattleManager.Instance.MemMap.UpdateCellOwner(Position, -Id);
 
             SkillManager.CheckRemoveEffect();
+            DeleteWeapon(true);
+            
+            OwnerPlayer.OnMonsterDie(CardId, (byte)Level, IsSummoned);
             var rival = Rival as Player;
             rival.OnKillMonster(Avatar.Id, Level, Avatar.Star, Position, peakDamagerLuk);
 
@@ -346,12 +351,15 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             Weapon.CheckWeaponEffect(this, true);
         }
 
-        public void DeleteWeapon()
+        public void DeleteWeapon(bool toGrave)
         {
             if (Weapon != null)
             {
                 Weapon.CheckWeaponEffect(this, false);
                 Weapon = null;
+
+                if (toGrave && !CardConfigManager.GetCardConfig(CardId).IsSpecial)
+                    OwnerPlayer.OffCards.AddGrave(new ActiveCard(CardId, (byte)Level));
             }
         }
 

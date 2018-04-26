@@ -27,12 +27,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
            
         }
 
-        public ActiveCard(DeckCard card)
-        {
-            CardId = card.CardId;
-            Level = card.Level;
-        }
-
         public ActiveCard(int baseid, byte level)
         {
             CardId = baseid;
@@ -44,15 +38,15 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
             get { return ConfigIdManager.GetCardType(CardId); }
         }
 
-        public void SetLevel(byte level)
+        public void ChangeLevel(int levelChange)
         {
-            level = (byte)MathTool.Clamp(level, 1, GameConstants.CardMaxLevel);
+            var level = (byte)MathTool.Clamp(Level + levelChange, 1, GameConstants.CardMaxLevel);
             Level = level;
         }
 
         public ActiveCard GetCopy()
         {
-            return new ActiveCard(new DeckCard(CardId, Level, 0));
+            return new ActiveCard(CardId, Level);
         }
         
         public static bool operator ==(ActiveCard rec1, ActiveCard rec2)

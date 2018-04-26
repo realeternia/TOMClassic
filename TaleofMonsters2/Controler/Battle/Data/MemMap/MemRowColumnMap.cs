@@ -245,7 +245,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         {
             LiveMonster lm = mon as LiveMonster;
             lm.Revive();
-            lm.DeleteWeapon();
             lm.AddHp(addHp);
             if (lm.Owner != player)//复活了对方的怪，就招过来了
                 lm.Action.Rebel();

@@ -14,9 +14,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
     {
         private Player self;
         private ActiveCard[] cards = new ActiveCard[GameConstants.CardSlotMaxCount];
-
-        public float HeroSkillCd { get; set; }
-
+        
         public CardHandBundle(Player p)
         {
             self = p;
@@ -127,7 +125,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
                 ActiveCard card = cards[id];
                 DeleteCardAt(id + 1);
 
-                card.SetLevel((byte)(card.Level + levelChange));
+                card.ChangeLevel(levelChange);
                 Player player = p as Player;
                 if (player != null)
                     player.HandCards.AddCard(card);
@@ -141,7 +139,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
                 int id = MathTool.GetRandom(GetCardNumber());
                 ActiveCard card = cards[id].GetCopy();
 
-                card.SetLevel((byte)(card.Level + levelChange));
+                card.ChangeLevel(levelChange);
                 Player player = p as Player;
                 if (player != null)
                     player.HandCards.AddCard(card);
@@ -208,7 +206,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
                 if (type != 0 && ConfigIdManager.GetCardType(pickCard.CardId) != (CardTypes)type)
                     continue;
 
-                pickCard.SetLevel((byte)(pickCard.Level + n));
+                pickCard.ChangeLevel(n);
             }
 
             if (self.CardsDesk != null)
