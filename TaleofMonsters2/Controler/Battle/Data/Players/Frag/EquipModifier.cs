@@ -59,7 +59,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                 return;
 
             int type = 1;
-            if (mon.Type != (int)CardTypeSub.KingTower && mon.Type != (int) CardTypeSub.NormalTower)
+            if (!(mon is TowerMonster))
                 type = 2;
 
             foreach (var equipModifyState in addonList)

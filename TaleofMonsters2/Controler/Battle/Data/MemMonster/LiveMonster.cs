@@ -388,111 +388,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             SkillManager.CheckInitialEffect();
         }
 
-        private void MakeSound(bool onSummon)
-        {
-            if (Avatar.MonsterConfig.Sound == "")
-                return;
-
-            var soundPath = string.Format(onSummon ? "{0}_Play_01.mp3" : "{0}_Death_03.mp3", Avatar.MonsterConfig.Sound);
-            SoundManager.Play("Unit", soundPath);
-        }
-
-        protected virtual void DrawImg(Graphics g)
-        {
-            var img = MonsterBook.GetMonsterImage(Avatar.Id, 100, 100);
-            if (img != null)
-                g.DrawImage(img, 0, 0, 100, 100);
-        }
-
-        public void DrawOnBattle(Graphics g2, Color uponColor)
-        {
-            Bitmap image = new Bitmap(100, 100);
-            Graphics g = Graphics.FromImage(image);
-
-            if (!IsGhost)
-            {
-                DrawImg(g);
-
-                if (IsPrepare)
-                {//绘制召唤遮罩
-                    var prepareRate = Math.Min(1, 0.2 + 0.3*actPoint/PrepareAtsNeed);
-                    SolidBrush brush = new SolidBrush(Color.FromArgb(Math.Max(0,(int)(255 - 255* prepareRate)), Color.Black));
-                    g.FillRectangle(brush, 0, 0, 100, 100);
-                    brush.Dispose();
-                }
-              
-                if (uponColor != Color.White)
-                {
-                    SolidBrush brush = new SolidBrush(Color.FromArgb(150, uponColor));
-                    g.FillRectangle(brush, 0, 0, 100, 100);
-                    brush.Dispose();
-                }
-
-                var pen = new Pen(!IsLeft ? Brushes.Blue : Brushes.Red, 3);
-                g.DrawRectangle(pen, 1, 1, 98, 98);
-                pen.Dispose();
-
-                HpBar.Draw(g);
-                if (!IsPrepare)
-                {
-                    g.FillPie(Brushes.Gray, 65, 65, 30, 30, 0, 360);
-                    var skillPercent = SkillManager.GetRoundSkillPercent();
-                    var atsRate = (float) actPoint / GameConstants.LimitAts;
-                    if (skillPercent > 0)
-                    {
-                        //画集气槽
-                        g.FillPie(Brushes.Purple, 65, 65, 30, 30, 0, skillPercent*360/100);
-                        //画行动槽
-                        g.FillPie(CanAttack ? Brushes.Yellow : Brushes.LightGray, 70, 70, 20, 20, 0, atsRate*360);
-                    }
-                    else
-                    {
-                        //画行动槽
-                        g.FillPie(CanAttack ? Brushes.Yellow : Brushes.LightGray, 65, 65, 30, 30, 0, atsRate*360);
-                    }
-
-                    var starIcon = HSIcons.GetIconsByEName("sysstar");
-                    for (int i = 0; i < Avatar.Star; i++)
-                        g.DrawImage(starIcon, i*12, 8, 16, 16);
-
-                    Font fontLevel = new Font("Arial", 20 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-                    g.DrawString(Level.ToString(), fontLevel, Brushes.Wheat, Level < 10 ? 71 : 67, 68);
-                    g.DrawString(Level.ToString(), fontLevel, Brushes.DarkBlue, Level < 10 ? 70 : 66, 67);
-                    fontLevel.Dispose();
-                }
-                else
-                {
-                    var prepareRate = Math.Min(1, (float)actPoint / PrepareAtsNeed);
-                    g.FillPie(Brushes.DodgerBlue, 30, 30, 40, 40, 0, prepareRate * 360);
-                }
-
-                if (Weapon != null)
-                {
-                    g.DrawImage(Weapon.GetImage(32, 32), 5, 60, 32, 32);
-                    g.DrawRectangle(Pens.Lime, 5, 60, 32, 32);
-                }
-                BuffManager.DrawBuff(g, roundPast / 20);
-            }
-            else
-            {
-                Image img = PicLoader.Read("System", "Rip.PNG");
-                g.DrawImage(img, 19, 11, 63, 78);
-                img.Dispose();
-
-                var pen = new Pen(!IsLeft ? Brushes.Blue : Brushes.Red, 3);
-                g.DrawRectangle(pen, 1, 1, 98, 98);
-                pen.Dispose();
-
-                g.FillRectangle(Brushes.Red, 0, 2, 100, 5);
-                g.FillRectangle(Brushes.Cyan, 0, 2, Math.Min(GhostTime * 100, 100), 5);
-            }
-
-            g.Dispose();
-            int size = BattleManager.Instance.MemMap.CardSize;
-            g2.DrawImage(image, new Rectangle(Position.X, Position.Y, size, size), 0, 0, 100, 100, GraphicsUnit.Pixel);
-            image.Dispose();
-        }
-
         public void AddHp(double addon)
         {
             if (Type == (int) CardTypeSub.Machine || Type == (int) CardTypeSub.KingTower || Type == (int) CardTypeSub.NormalTower)
@@ -575,8 +470,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             aiController.ClearTarget();
         }
 
-        public void AddAttrModify(int tp, int itemId, int attr, int val)
-        {//看下是否需要合并
+        public virtual void AddAttrModify(int tp, int itemId, int attr, int val)
+        {
             if (val == 0)
                 return;
 
@@ -642,6 +537,111 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             if (aiController != null)
                 aiController.AIMode = mode;
+        }
+
+        private void MakeSound(bool onSummon)
+        {
+            if (Avatar.MonsterConfig.Sound == "")
+                return;
+
+            var soundPath = string.Format(onSummon ? "{0}_Play_01.mp3" : "{0}_Death_03.mp3", Avatar.MonsterConfig.Sound);
+            SoundManager.Play("Unit", soundPath);
+        }
+
+        protected virtual void DrawImg(Graphics g)
+        {
+            var img = MonsterBook.GetMonsterImage(Avatar.Id, 100, 100);
+            if (img != null)
+                g.DrawImage(img, 0, 0, 100, 100);
+        }
+
+        public void DrawOnBattle(Graphics g2, Color uponColor)
+        {
+            Bitmap image = new Bitmap(100, 100);
+            Graphics g = Graphics.FromImage(image);
+
+            if (!IsGhost)
+            {
+                DrawImg(g);
+
+                if (IsPrepare)
+                {//绘制召唤遮罩
+                    var prepareRate = Math.Min(1, 0.2 + 0.3 * actPoint / PrepareAtsNeed);
+                    SolidBrush brush = new SolidBrush(Color.FromArgb(Math.Max(0, (int)(255 - 255 * prepareRate)), Color.Black));
+                    g.FillRectangle(brush, 0, 0, 100, 100);
+                    brush.Dispose();
+                }
+
+                if (uponColor != Color.White)
+                {
+                    SolidBrush brush = new SolidBrush(Color.FromArgb(150, uponColor));
+                    g.FillRectangle(brush, 0, 0, 100, 100);
+                    brush.Dispose();
+                }
+
+                var pen = new Pen(!IsLeft ? Brushes.Blue : Brushes.Red, 3);
+                g.DrawRectangle(pen, 1, 1, 98, 98);
+                pen.Dispose();
+
+                HpBar.Draw(g);
+                if (!IsPrepare)
+                {
+                    g.FillPie(Brushes.Gray, 65, 65, 30, 30, 0, 360);
+                    var skillPercent = SkillManager.GetRoundSkillPercent();
+                    var atsRate = (float)actPoint / GameConstants.LimitAts;
+                    if (skillPercent > 0)
+                    {
+                        //画集气槽
+                        g.FillPie(Brushes.Purple, 65, 65, 30, 30, 0, skillPercent * 360 / 100);
+                        //画行动槽
+                        g.FillPie(CanAttack ? Brushes.Yellow : Brushes.LightGray, 70, 70, 20, 20, 0, atsRate * 360);
+                    }
+                    else
+                    {
+                        //画行动槽
+                        g.FillPie(CanAttack ? Brushes.Yellow : Brushes.LightGray, 65, 65, 30, 30, 0, atsRate * 360);
+                    }
+
+                    var starIcon = HSIcons.GetIconsByEName("sysstar");
+                    for (int i = 0; i < Avatar.Star; i++)
+                        g.DrawImage(starIcon, i * 12, 8, 16, 16);
+
+                    Font fontLevel = new Font("Arial", 20 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+                    g.DrawString(Level.ToString(), fontLevel, Brushes.Wheat, Level < 10 ? 71 : 67, 68);
+                    g.DrawString(Level.ToString(), fontLevel, Brushes.DarkBlue, Level < 10 ? 70 : 66, 67);
+                    fontLevel.Dispose();
+                }
+                else
+                {
+                    var prepareRate = Math.Min(1, (float)actPoint / PrepareAtsNeed);
+                    g.FillPie(Brushes.DodgerBlue, 30, 30, 40, 40, 0, prepareRate * 360);
+                }
+
+                if (Weapon != null)
+                {
+                    g.DrawImage(Weapon.GetImage(32, 32), 5, 60, 32, 32);
+                    g.DrawRectangle(Pens.Lime, 5, 60, 32, 32);
+                }
+                BuffManager.DrawBuff(g, roundPast / 20);
+            }
+            else
+            {
+                Image img = PicLoader.Read("System", "Rip.PNG");
+                g.DrawImage(img, 19, 11, 63, 78);
+                img.Dispose();
+
+                var pen = new Pen(!IsLeft ? Brushes.Blue : Brushes.Red, 3);
+                g.DrawRectangle(pen, 1, 1, 98, 98);
+                pen.Dispose();
+
+                g.FillRectangle(Brushes.Red, 0, 2, 100, 5);
+                g.FillRectangle(Brushes.Cyan, 0, 2, Math.Min(GhostTime * 100, 100), 5);
+            }
+
+            g.Dispose();
+            int size = BattleManager.Instance.MemMap.CardSize;
+            g2.DrawImage(image, new Rectangle(Position.X, Position.Y, size, size), 0, 0, 100, 100, GraphicsUnit.Pixel);
+            image.Dispose();
         }
     }
 }

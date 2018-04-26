@@ -113,5 +113,17 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             if(IsKing)
                 OwnerPlayer.IsAlive = false;
         }
+
+        public override void AddAttrModify(int tp, int itemId, int attr, int val)
+        {
+            if(val == 0)
+                return;
+            var finalVal = val/3;
+            if (val > 0 && finalVal == 0)
+                finalVal = 1;
+            if (val < 0 && finalVal == 0)
+                finalVal = -1;
+            base.AddAttrModify(tp, itemId, attr, finalVal);
+        }
     }
 }
