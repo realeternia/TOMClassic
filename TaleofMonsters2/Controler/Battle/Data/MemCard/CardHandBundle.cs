@@ -13,13 +13,13 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
     internal class CardHandBundle
     {
         private Player self;
-        private ActiveCard[] cards = new ActiveCard[GameConstants.CardSlotMaxCount];
+        private ActiveCard[] cardArray = new ActiveCard[GameConstants.CardSlotMaxCount];
         
         public CardHandBundle(Player p)
         {
             self = p;
             for (int i = 0; i < GameConstants.CardSlotMaxCount; i++)
-                cards[i] = ActiveCard.NoneCard;
+                cardArray[i] = ActiveCard.NoneCard;
         }
 
         public void GetNextCard()
@@ -41,9 +41,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         {
             int count = GetCardNumber();
             if (id < count)
-                cards[id] = card;
-            if (self.CardsDesk != null)
-                self.CardsDesk.UpdateSlot(cards);
+                cardArray[id] = card;
+            UpdateCardView();
         }
 
         public void AddCard(ActiveCard card)
@@ -52,33 +51,42 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
             spikeManager.CheckCardCost(card);
             int count = GetCardNumber();
             if (count < GameConstants.CardSlotMaxCount)
-                cards[count] = card;
+                cardArray[count] = card;
             if (spikeManager.HasSpike("copycard") && count < GameConstants.CardSlotMaxCount - 1)
-                cards[count + 1] = card.GetCopy();
-            if (self.CardsDesk != null)
-                self.CardsDesk.UpdateSlot(cards);
+                cardArray[count + 1] = card.GetCopy();
+            UpdateCardView();
         }
 
         public void UpdateCardCost()
         {
             var spikeManager = self.SpikeManager;
-            spikeManager.CheckCardCost(cards);
-            if (self.CardsDesk != null)
-                self.CardsDesk.UpdateSlot(cards);
+            spikeManager.CheckCardCost(cardArray);
+            UpdateCardView();
         }
 
         public void UpdateCardView()
         {
             if (self.CardsDesk != null)
-                self.CardsDesk.UpdateSlot(cards);
+                self.CardsDesk.UpdateSlot(cardArray);
         }
 
-        public ActiveCard GetDeckCardAt(int index)
+        public ActiveCard GetCardAt(int index)
         {
             if (index > GameConstants.CardSlotMaxCount || index <= 0)
                 return ActiveCard.NoneCard;
 
-            return cards[index - 1];
+            return cardArray[index - 1];
+        }
+
+        public int GetCardNumber()
+        {
+            int count = 0;
+            for (int i = 0; i < GameConstants.CardSlotMaxCount; i++)
+            {
+                if (cardArray[i].CardId != 0)
+                    count++;
+            }
+            return count;
         }
 
         public void DeleteCardAt(int index)
@@ -88,18 +96,17 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
                 return;
             }
 
-            cards[index - 1] = ActiveCard.NoneCard;
+            cardArray[index - 1] = ActiveCard.NoneCard;
             for (int i = 0; i < GameConstants.CardSlotMaxCount - 1; i++)
             {
-                if (cards[i].CardId == 0 && cards[i + 1].CardId > 0)
+                if (cardArray[i].CardId == 0 && cardArray[i + 1].CardId > 0)
                 {
-                    ActiveCard tempCard = cards[i];
-                    cards[i] = cards[i + 1];
-                    cards[i + 1] = tempCard;
+                    ActiveCard tempCard = cardArray[i];
+                    cardArray[i] = cardArray[i + 1];
+                    cardArray[i + 1] = tempCard;
                 }
             }
-            if (self.CardsDesk != null)
-                self.CardsDesk.UpdateSlot(cards);
+            UpdateCardView();
         }
 
         /// <summary>
@@ -108,13 +115,12 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         /// <param name="index">偏移</param>
         public void RedrawCardAt(int index)
         {
-            var newCard = self.OffCards.ReplaceCard(cards[index - 1]);
+            var newCard = self.OffCards.ReplaceCard(cardArray[index - 1]);
             if (newCard == ActiveCard.NoneCard)
                 return;
 
-            cards[index - 1] = newCard;
-            if (self.CardsDesk != null)
-                self.CardsDesk.UpdateSlot(cards);
+            cardArray[index - 1] = newCard;
+            UpdateCardView();
         }
 
         public void DeleteRandomCardFor(IPlayer p, int levelChange)
@@ -122,7 +128,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
             if (GetCardNumber() > 0)
             {
                 int id = MathTool.GetRandom(GetCardNumber());
-                ActiveCard card = cards[id];
+                ActiveCard card = cardArray[id];
                 DeleteCardAt(id + 1);
 
                 card.ChangeLevel(levelChange);
@@ -137,7 +143,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
             if (GetCardNumber() > 0)
             {
                 int id = MathTool.GetRandom(GetCardNumber());
-                ActiveCard card = cards[id].GetCopy();
+                ActiveCard card = cardArray[id].GetCopy();
 
                 card.ChangeLevel(levelChange);
                 Player player = p as Player;
@@ -153,38 +159,27 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
             AddCard(card);
         }
 
-        public void CopyRandomNCard(int n, int spellid)
+        public void CopyRandomNCard(int n, int spellId)
         {
             List<int> indexs = new List<int>();
             for (int i = 0; i < GameConstants.CardSlotMaxCount; i++)
             {
-                if (cards[i].CardId != 0 && (cards[i].CardId != spellid || cards[i].CardType != CardTypes.Spell))
+                if (cardArray[i].CardId != 0 && (cardArray[i].CardId != spellId || cardArray[i].CardType != CardTypes.Spell))
                     indexs.Add(i);
             }
             ArraysUtils.RandomShuffle(indexs);
             for (int i = 0; i < Math.Min(n, indexs.Count); i++)
-                AddCard(cards[indexs[i]].GetCopy());
+                AddCard(cardArray[indexs[i]].GetCopy());
         }
 
         public void DeleteAllCard()
         {
             for (int i = 0; i < GameConstants.CardSlotMaxCount; i++)
-                cards[i] = ActiveCard.NoneCard;
+                cardArray[i] = ActiveCard.NoneCard;
 
-            if (self.CardsDesk != null)
-                self.CardsDesk.UpdateSlot(cards);
+            UpdateCardView();
         }
 
-        public int GetCardNumber()
-        {
-            int count = 0;
-            for (int i = 0; i < GameConstants.CardSlotMaxCount; i++)
-            {
-                if (cards[i].CardId != 0)
-                    count++;
-            }
-            return count;
-        }
 
         public void ConvertCard(int count, int cardId, int levelChange)
         {
@@ -194,14 +189,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
             {
                 if (num <= i) continue;
 
-                var oldLevel = cards[id].Level;
+                var oldLevel = cardArray[id].Level;
                 SetCard((id + i) % num, new ActiveCard(cardId, (byte)Math.Max(1, oldLevel + levelChange)));
             }
         }
 
         public void CardLevelUp(int n, int type)
         {
-            foreach (var pickCard in cards)
+            foreach (var pickCard in cardArray)
             {
                 if (type != 0 && ConfigIdManager.GetCardType(pickCard.CardId) != (CardTypes)type)
                     continue;
@@ -209,8 +204,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
                 pickCard.ChangeLevel(n);
             }
 
-            if (self.CardsDesk != null)
-                self.CardsDesk.UpdateSlot(cards);
+            UpdateCardView();
         }
     }
 }

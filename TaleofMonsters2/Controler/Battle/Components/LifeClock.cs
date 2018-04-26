@@ -297,7 +297,7 @@ namespace TaleofMonsters.Controler.Battle.Components
                 tipData.AddTextNewLine("手牌", "White");
                 for (int i = 0; i < 10; i++)
                 {
-                    var card = self.HandCards.GetDeckCardAt(i);
+                    var card = self.HandCards.GetCardAt(i);
                     if (card.CardId > 0)
                     {
                         var cardConfig = CardConfigManager.GetCardConfig(card.CardId);

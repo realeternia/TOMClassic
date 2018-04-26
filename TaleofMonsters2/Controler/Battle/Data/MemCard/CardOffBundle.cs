@@ -97,5 +97,16 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
             graveList.Remove(targetMon);
             return targetMon;
         }
+
+        public void CardLevelUp(int n, int type)
+        {
+            foreach (var pickCard in waitList)
+            {
+                if (type != 0 && ConfigIdManager.GetCardType(pickCard.CardId) != (CardTypes)type)
+                    continue;
+
+                pickCard.ChangeLevel(n);
+            }
+        }
     }
 }

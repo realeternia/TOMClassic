@@ -94,9 +94,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             self.AddCardReason(mon, AddCardReasons.GetCertainCard);
         }
 
-        public void GetNextNCard(IMonster mon, int n)
+        public void GetNextNCard(IMonster mon, int count)
         {
-            self.DrawNextNCard(mon, n, AddCardReasons.DrawCardBySkillOrSpell);
+            self.DrawNextNCard(mon, count, AddCardReasons.DrawCardBySkillOrSpell);
         }
         
         public int GetGraveMonsterId()
@@ -104,9 +104,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             return self.OffCards.GetRandomMonsterFromGrave();
         }
 
-        public void CopyRandomNCard(int n, int spellid)
+        public void CopyRandomNCard(int count, int spellid)
         {
-            self.HandCards.CopyRandomNCard(n, spellid);
+            self.HandCards.CopyRandomNCard(count, spellid);
         }
 
         public void DeleteAllCard()
@@ -122,7 +122,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 
         public void RecostSelectCard()
         {
-            var selectCard = self.HandCards.GetDeckCardAt(self.SelectId);
+            var selectCard = self.HandCards.GetCardAt(self.SelectId);
             if (selectCard == null)
             {
                 NLog.Error("RecostSelectCard id={0} not Found", self.SelectId);
@@ -137,9 +137,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             self.HandCards.ConvertCard(count, cardId, levelChange);
         }
 
-        public void CardLevelUp(int n, int type)
+        public void CardLevelUp(int count, int type, bool includeOff)
         {
-            self.HandCards.CardLevelUp(n, type);
+            self.HandCards.CardLevelUp(count, type);
+            if(includeOff)
+                self.OffCards.CardLevelUp(count, type);
         }
 
         public void AddRandomCard(IMonster mon, int type, int lv)
