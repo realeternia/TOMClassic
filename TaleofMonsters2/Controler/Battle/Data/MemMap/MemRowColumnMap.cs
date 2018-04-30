@@ -162,21 +162,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             isDirty = true;
         }
 
-        public void SetRowUnitPosition(int y, bool isLeft, string type)
-        {
-            for (int i = 1; i < ColumnCount-1; i++)
-            {
-                LiveMonster pickMon = BattleLocationManager.GetPlaceMonster(i * CardSize, y);
-                if (pickMon == null)
-                    continue;
-
-                if (pickMon.IsGhost || isLeft && pickMon.IsLeft)
-                    continue;
-
-                pickMon.Action.SetToPosition(type, 1);
-            }
-        }
-        
         public bool IsPlaceCanMove(int tx, int ty)
         {
             if (tx < 0 || ty < 0 || tx >= StageWidth || ty >= StageHeight)

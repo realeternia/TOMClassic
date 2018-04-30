@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using NarlonLib.Log;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Tool;
 
@@ -60,30 +61,34 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 posLis.Add(new Point(pos.X, pos.Y - size));
                 posLis.Add(new Point(pos.X, pos.Y + size));
             }
-            if (type == "back") //击退
+            else if (type == "back") //击退
             {
                 if (!isLeft)
                     posLis.Add(new Point(pos.X + size, pos.Y));
                 else
                     posLis.Add(new Point(pos.X - size, pos.Y));
             }
-            if (type == "come") //拉过来
+            else if (type == "come") //拉过来
             {
                 if (!isLeft)
                     posLis.Add(new Point(pos.X - size, pos.Y));
                 else
                     posLis.Add(new Point(pos.X + size, pos.Y));
             }
-            if (type == "around") //随机
+            else if (type == "around") //随机
             {
                 posLis.Add(new Point(pos.X, pos.Y - size));
                 posLis.Add(new Point(pos.X, pos.Y + size));
                 posLis.Add(new Point(pos.X - size, pos.Y));
                 posLis.Add(new Point(pos.X + size, pos.Y));
             }
-            if (type == "rand") //随机
+            else if (type == "rand") //随机
             {
                 posLis.Add(BattleManager.Instance.MemMap.GetRandomPoint());
+            }
+            else
+            {
+                NLog.Error("GetPointInner error type={0}", type);
             }
             return posLis;
         }

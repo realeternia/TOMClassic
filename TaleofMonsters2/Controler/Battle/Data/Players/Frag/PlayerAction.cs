@@ -28,11 +28,16 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 
         public void AddMonster(int cardId, int level, Point location)
         {
-            int size = BattleManager.Instance.MemMap.CardSize;
-            var truePos = new Point(location.X / size * size, location.Y / size * size);
+            var targetCell = BattleManager.Instance.MemMap.GetMouseCell(location.X, location.Y);
+            if (targetCell.Owner != 0)
+            {
+                NLog.Debug("AddMonster failed pid={0} cid={1}", self.PeopleId, cardId);
+                return;
+            }
             var mon = new Monster(cardId);
             mon.UpgradeToLevel(level);
-            LiveMonster newMon = new LiveMonster(level, mon, truePos, self.IsLeft);
+            LiveMonster newMon = new LiveMonster(level, mon, targetCell.ToPoint(), self.IsLeft);
+            newMon.IsSummoned = true;
             BattleManager.Instance.MonsterQueue.Add(newMon);
             NLog.Debug("AddMonster pid={0} cid={1}", self.PeopleId, cardId);
         }
@@ -41,6 +46,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         {
             target.Action.Transform(MonsterBook.GetRandMonsterId());
         }
+
         public void AddTrap(int id, int spellId, int lv, double rate, int damage, double help)
         {
             self.TrapHolder.AddTrap(id, spellId, lv, rate, damage, help);
