@@ -141,11 +141,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void WeaponReturn()
         {
-            if (self.Weapon is TrueWeapon)
+            if (self.Weapon != null && self.Weapon is TrueWeapon)
             {
                 ActiveCard card = new ActiveCard(self.Weapon.CardId, (byte)self.Weapon.Level);
                 self.OwnerPlayer.HandCards.AddCard(card);
-                self.DeleteWeapon(false);
+             //   self.DeleteWeapon(false);
             }
         }
 
