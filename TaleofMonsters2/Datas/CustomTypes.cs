@@ -64,8 +64,6 @@
         Excel = 2,
         Epic = 3,
         Legend = 4,
-        God = 5, //不可能出现，只是做一个bound
-        Trash = 6, //不可能出现，只是做一个bound
     }
 
     internal enum EquipQualityTypes
