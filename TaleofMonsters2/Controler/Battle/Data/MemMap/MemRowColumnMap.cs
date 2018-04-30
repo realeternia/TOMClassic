@@ -250,6 +250,18 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                 BattleManager.Instance.OnEnterCell(cell.Id, ownerId);
         }
 
+        public List<Point> GetRangePoint(string shape, int range, Point mouse)
+        {
+            List<Point> points = new List<Point>();
+            RegionTypes rt = BattleTargetManager.GetRegionType(shape[0]);
+            foreach (var pickCell in Cells)
+            {
+                if (BattleLocationManager.IsPointInRegionType(rt, mouse.X, mouse.Y, pickCell.ToPoint(), range, true))//地形和方向无关，随便填一个
+                    points.Add(pickCell.ToPoint());
+            }
+            return points;
+        }
+
         public void RemoveTomb(Point mouse)
         {
             int oid = GetMouseCell(mouse.X, mouse.Y).Owner;

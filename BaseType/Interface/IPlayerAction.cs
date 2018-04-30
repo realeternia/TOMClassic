@@ -1,4 +1,6 @@
-﻿namespace ConfigDatas
+﻿using System.Drawing;
+
+namespace ConfigDatas
 {
     public interface IPlayerAction
     {
@@ -25,6 +27,8 @@
         void DiscoverCardRace(IMonster mon, int race, int lv, string dtype);
 
         void AddMonster(int cardId, int level, System.Drawing.Point location);
+        void AddRandomMonster(int star, int level, Point location);
+
         void ExchangeMonster(IMonster target, int lv);
         void AddResource(int type, int number);
         void AddTrap(int id, int spellId, int lv, double rate, int dam, double help);

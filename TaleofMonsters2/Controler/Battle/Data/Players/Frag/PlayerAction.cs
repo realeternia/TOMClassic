@@ -42,6 +42,13 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             NLog.Debug("AddMonster pid={0} cid={1}", self.PeopleId, cardId);
         }
 
+        public void AddRandomMonster(int star, int level, Point location)
+        {
+            var cardId = CardConfigManager.GetRandomTypeStarCard((int)CardTypes.Monster, star);
+            if (cardId > 0)
+                AddMonster(cardId, level, location);
+        }
+
         public void ExchangeMonster(IMonster target, int lv)
         {
             target.Action.Transform(MonsterBook.GetRandMonsterId());

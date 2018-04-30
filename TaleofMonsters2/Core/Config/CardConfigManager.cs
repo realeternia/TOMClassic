@@ -82,8 +82,11 @@ namespace TaleofMonsters.Core.Config
                 if (star <= 0)
                     return dataList[MathTool.GetRandom(dataList.Count)].Type;
                 var itemList = new List<int>();
-                foreach (var itemId in dataList)
-                    itemList.Add(itemId.Type);
+                foreach (var checkItem in dataList)
+                {
+                    if (CardConfigManager.GetCardConfig(checkItem.Type).Star == star)
+                        itemList.Add(checkItem.Type);
+                }
                 return itemList[MathTool.GetRandom(0, itemList.Count)];
             }
 
@@ -356,8 +359,15 @@ namespace TaleofMonsters.Core.Config
                 return rtData.GetRandom(quality);
             return 0;
         }
+        internal static int GetRandomTypeStarCard(int typeId, int star = -1)
+        {
+            CardInfoList rtData;
+            if (typeCardDict.TryGetValue(typeId, out rtData))
+                return rtData.GetRandomByStar(star);
+            return 0;
+        }
 
-#endregion
+        #endregion
 
         private static int GetRateCard(int[] rate, RandomCardSelectorDelegate del, int funcInfo)
         {
