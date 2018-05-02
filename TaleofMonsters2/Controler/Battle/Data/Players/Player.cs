@@ -464,6 +464,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void DrawNextNCard(IMonster mon, int n, AddCardReasons reason)
         {
+            if(n <= 0)
+                return;
+
             var cardCount = OffCards.LeftCount;
             for (int i = 0; i < n; i++)
                 HandCards.GetNextCard();
