@@ -60,7 +60,7 @@ namespace TaleofMonsters.Forms
             return 0;
         }
 
-        private void RefreshInfo()
+        public override void RefreshInfo()
         {
             for (int i = 0; i < MaxCellCount; i++)
             {

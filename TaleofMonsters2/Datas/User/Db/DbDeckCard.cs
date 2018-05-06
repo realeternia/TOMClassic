@@ -19,6 +19,7 @@ namespace TaleofMonsters.Datas.User.Db
             Level = level;
             Exp = exp;
         }
+
         public void AddExp(int addon)
         {
             if (Level >= ExpTree.MaxLevel)

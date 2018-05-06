@@ -34,7 +34,7 @@ namespace TaleofMonsters.Forms
             SoundManager.Play("System", "LevelUp.mp3");
         }
 
-        private void RefreshInfo()
+        public override void RefreshInfo()
         {
             OldLevel++;
             var items = LevelInfoBook.GetLevelInfosByLevel(OldLevel);

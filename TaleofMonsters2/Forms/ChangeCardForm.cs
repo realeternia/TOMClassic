@@ -19,7 +19,7 @@ namespace TaleofMonsters.Forms
 {
     internal sealed partial class ChangeCardForm : BasePanel
     {
-        internal class MemChangeCardData
+        internal class ChangeCardData
         {
             public int Id1;
             public int Type1;
@@ -33,7 +33,7 @@ namespace TaleofMonsters.Forms
             }
         }
 
-        private List<MemChangeCardData> changes;
+        private List<ChangeCardData> changes;
         private ChangeCardItem[] changeControls;
         private ColorWordRegion colorWord;
 
@@ -52,10 +52,10 @@ namespace TaleofMonsters.Forms
             OnFrame(0, 0);
         }
 
-        private void RefreshInfo()
+        public override void RefreshInfo()
         {
             for (int i = 0; i < 8; i++)
-                changeControls[i].RefreshData();
+                changeControls[i].RefreshData(changes.Count > i ? changes[i] : new ChangeCardData());
             bitmapButtonRefresh.Visible = changes.Count < 8;
         }
 
@@ -126,9 +126,9 @@ namespace TaleofMonsters.Forms
                 ctl.Draw(e.Graphics);
         }
 
-        public List<MemChangeCardData> GetChangeCardData()
+        public List<ChangeCardData> GetChangeCardData()
         {
-            changes = new List<MemChangeCardData>();
+            changes = new List<ChangeCardData>();
             for (int i = 0; i < 5; i++)
                 changes.Add(CreateMethod(i));
             return changes;
@@ -140,19 +140,6 @@ namespace TaleofMonsters.Forms
                 changes.Add(CreateMethod(changes.Count));
         }
 
-        public MemChangeCardData GetChangeCardData(int index)
-        {
-            if (changes.Count > index)
-                return changes[index];
-            return new MemChangeCardData();
-        }
-
-        public void RemoveChangeCardData(int index)
-        {
-            if (changes.Count > index)
-                changes[index].Used = true;
-        }
-
         private void RefreshAllChangeCardData()
         {
             int count = changes.Count;
@@ -161,9 +148,9 @@ namespace TaleofMonsters.Forms
                 changes.Add(CreateMethod(i));
         }
         
-        private MemChangeCardData CreateMethod(int index)
+        private ChangeCardData CreateMethod(int index)
         {
-            MemChangeCardData chg = new MemChangeCardData();
+            ChangeCardData chg = new ChangeCardData();
             int level = MathTool.GetRandom(Math.Max(index / 2, 1), index / 2 + 3);
             chg.Id1 = MonsterBook.GetRandStarMid(level);
             while (true)

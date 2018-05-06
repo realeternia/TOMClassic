@@ -58,7 +58,7 @@ namespace TaleofMonsters.Forms
             OnFrame(0, 0);
         }
 
-        private void RefreshInfo()
+        public override void RefreshInfo()
         {
             itemCounts = new int[8];
             mergeInfos = UserProfile.InfoWorld.GetAllMergeData();

@@ -131,9 +131,7 @@ namespace TaleofMonsters.Forms.Items
                     UserProfile.InfoCard.AddCard(product.Cid);
                     UserProfile.InfoBag.SubResource(res.ToArray());
                     UserProfile.InfoWorld.RemoveCardProduct(product.Cid);
-                    CardShopViewForm cardShopViewForm = parent as CardShopViewForm;
-                    if (cardShopViewForm != null)
-                        cardShopViewForm.ChangeShop();
+                    parent.RefreshInfo();
                 }
                 else
                 {

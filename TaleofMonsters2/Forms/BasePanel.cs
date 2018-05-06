@@ -147,7 +147,12 @@ namespace TaleofMonsters.Forms
         public virtual void OnHsKeyUp(KeyEventArgs e)
         {
         }
+
         public virtual void OnHsKeyDown(KeyEventArgs e)
+        {
+        }
+
+        public virtual void RefreshInfo()
         {
         }
 

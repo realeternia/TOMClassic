@@ -18,7 +18,7 @@ namespace TaleofMonsters.Forms
 {
     internal sealed partial class ChangeResForm : BasePanel
     {
-        internal class MemChangeResData
+        internal class ChangeResData
         {
             public int Id1;
             public uint Count1;
@@ -32,7 +32,7 @@ namespace TaleofMonsters.Forms
             }
         }
 
-        private List<MemChangeResData> changes;
+        private List<ChangeResData> changes;
         private ChangeResItem[] changeControls;
         private ColorWordRegion colorWord;
 
@@ -51,10 +51,10 @@ namespace TaleofMonsters.Forms
             OnFrame(0, 0);
         }
 
-        private void RefreshInfo()
+        public override void RefreshInfo()
         {
             for (int i = 0; i < 8; i++)
-                changeControls[i].RefreshData();
+                changeControls[i].RefreshData(changes.Count > i ? changes[i] : new ChangeResData());
             bitmapButtonRefresh.Visible = changes.Count < 8;
         }
 
@@ -125,9 +125,9 @@ namespace TaleofMonsters.Forms
                 ctl.Draw(e.Graphics);
         }
 
-        public List<MemChangeResData> GetChangeResData()
+        public List<ChangeResData> GetChangeResData()
         {
-            changes = new List<MemChangeResData>();
+            changes = new List<ChangeResData>();
             for (int i = 0; i < 5; i++)
                 changes.Add(CreateMethod(i));
             return changes;
@@ -139,19 +139,6 @@ namespace TaleofMonsters.Forms
                 changes.Add(CreateMethod(changes.Count));
         }
 
-        public MemChangeResData GetChangeResData(int index)
-        {
-            if (changes.Count > index)
-                return changes[index];
-            return new MemChangeResData();
-        }
-
-        public void RemoveChangeResData(int index)
-        {
-            if (changes.Count > index)
-                changes[index].Used = true;
-        }
-
         private void RefreshAllChangeResData()
         {
             int count = changes.Count;
@@ -160,9 +147,9 @@ namespace TaleofMonsters.Forms
                 changes.Add(CreateMethod(i));
         }
         
-        private MemChangeResData CreateMethod(int index)
+        private ChangeResData CreateMethod(int index)
         {
-            MemChangeResData chg = new MemChangeResData();
+            ChangeResData chg = new ChangeResData();
             int floor = index / 2;
             float cutOff = 1;
             if (floor == 0)

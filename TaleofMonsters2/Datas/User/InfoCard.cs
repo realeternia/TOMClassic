@@ -55,6 +55,7 @@ namespace TaleofMonsters.Datas.User
             {
                 var myCard = GetDeckCardById(cid);
                 myCard.AddExp(1);//多余的卡转化为经验值
+                MainTipManager.AddTip(string.Format("|卡片|{0}|{1}||经验+1", HSTypes.I2QualityColor((int)cardData.Quality), cardData.Name), "White");
                 return myCard;//每种卡牌只能拥有1张
             }
 

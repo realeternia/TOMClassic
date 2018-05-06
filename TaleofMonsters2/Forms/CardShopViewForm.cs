@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus;
-using NarlonLib.Core;
 using NarlonLib.Tools;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
@@ -66,8 +65,11 @@ namespace TaleofMonsters.Forms
             OnFrame(0, 0);
         }
 
-        private void RefreshInfo()
+        public override void RefreshInfo()
         {
+            products = UserProfile.InfoWorld.GetCardProductsByType((CardTypes)shelf);
+            Array.Sort(products, new CompareByMark());
+            nlPageSelector1.TotalPage = (products.Length - 1) / 18 + 1;
             for (int i = 0; i < 18; i++)
                 itemControls[i].RefreshData((page * 18 + i < products.Length) ? products[page * 18 + i] : new DbCardProduct());
             Invalidate();
@@ -77,15 +79,7 @@ namespace TaleofMonsters.Forms
         {
             page = 0;
             shelf = type;
-            products = UserProfile.InfoWorld.GetCardProductsByType((CardTypes)shelf);
-            nlPageSelector1.TotalPage = (products.Length - 1)/18 + 1;
-            Array.Sort(products, new CompareByMark());
             RefreshInfo();
-        }
-
-        public void ChangeShop()
-        {
-            ChangeShop(shelf);
         }
 
         private void buttonClose_Click(object sender, EventArgs e)

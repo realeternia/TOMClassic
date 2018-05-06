@@ -67,7 +67,7 @@ namespace TaleofMonsters.Forms
             RefreshInfo();
         }
 
-        private void RefreshInfo()
+        public override void RefreshInfo()
         {
             for (int i = 0; i < 9; i++)
                 equipControls[i].RefreshData((page*9 + i < equipIdList.Count) ? equipIdList[page*9 + i] : 0);

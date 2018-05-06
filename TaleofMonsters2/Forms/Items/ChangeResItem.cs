@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
 using ControlPlus;
 using ControlPlus.Drawing;
 using TaleofMonsters.Core;
@@ -15,20 +14,17 @@ namespace TaleofMonsters.Forms.Items
     internal class ChangeResItem : IDisposable
     {
         private int index;
-        private int res1;
-        private uint resCount1;
-        private int res2;
-        private uint resCount2;
+        private ChangeResForm.ChangeResData changeInfo;
         private bool show;
         private ImageToolTip tooltip = SystemToolTip.Instance;
         private VirtualRegion vRegion;
 
         private int x, y, width, height;
-        private Control parent;
+        private BasePanel parent;
         private BitmapButton bitmapButtonBuy;
         private Color backColor;
 
-        public ChangeResItem(UserControl prt, int x, int y, int width, int height)
+        public ChangeResItem(BasePanel prt, int x, int y, int width, int height)
         {
             parent = prt;
             this.x = x;
@@ -69,31 +65,27 @@ namespace TaleofMonsters.Forms.Items
             vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
 
-        public void RefreshData()
+        public void RefreshData(ChangeResForm.ChangeResData change)
         {
-            var change = (parent as ChangeResForm).GetChangeResData(index);
             if (!change.IsEmpty())
             {
-                res1 = change.Id1;
-                resCount1 = change.Count1;
-                res2 = change.Id2;
-                resCount2 = change.Count2;
+                changeInfo = change;
                 bitmapButtonBuy.Visible = !change.Used;
-                bitmapButtonBuy.Enabled = UserProfile.InfoBag.HasResource((GameResourceType)res1, resCount1);
+                bitmapButtonBuy.Enabled = UserProfile.InfoBag.HasResource((GameResourceType)changeInfo.Id1, changeInfo.Count1);
 
                 vRegion.ClearRegion();
-                var region = ComplexRegion.GetResShowRegion(1, new Point(x + 5, y + 8), 40, GetRegionType(res1), (int)resCount1);
+                var region = ComplexRegion.GetResShowRegion(1, new Point(x + 5, y + 8), 40, GetRegionType(changeInfo.Id1), (int)changeInfo.Count1);
                 vRegion.AddRegion(region);
-                region = ComplexRegion.GetResShowRegion(2, new Point(x + 97, y + 8), 40, GetRegionType(res2), (int)resCount2);
+                region = ComplexRegion.GetResShowRegion(2, new Point(x + 97, y + 8), 40, GetRegionType(changeInfo.Id2), (int)changeInfo.Count2);
                 vRegion.AddRegion(region);
                 show = true;
             }
             else
             {
-                res1 = 0;
-                resCount1 = 0;
-                res2 = 0;
-                resCount2 = 0;
+                changeInfo.Id1 = 0;
+                changeInfo.Count1 = 0;
+                changeInfo.Id2 = 0;
+                changeInfo.Count2 = 0;
                 vRegion.ClearRegion();
                 bitmapButtonBuy.Visible = false;
                 show = false;
@@ -135,13 +127,13 @@ namespace TaleofMonsters.Forms.Items
 
         private void virtualRegion_RegionEntered(int info, int mx, int my, int key)
         {
-            if (info == 1 && res1 >= 0)
+            if (info == 1 && changeInfo.Id1 >= 0)
             {
-                ShowResTip(mx, my, res1, resCount1);
+                ShowResTip(mx, my, changeInfo.Id1, changeInfo.Count1);
             }
-            else if (info == 2 && res2 >= 0)
+            else if (info == 2 && changeInfo.Id2 >= 0)
             {
-                ShowResTip(mx, my, res2, resCount2);
+                ShowResTip(mx, my, changeInfo.Id2, changeInfo.Count2);
             }
         }
 
@@ -152,14 +144,14 @@ namespace TaleofMonsters.Forms.Items
 
         private void pictureBoxBuy_Click(object sender, EventArgs e)
         {
-            if (!UserProfile.InfoBag.HasResource((GameResourceType)res1, resCount1))
+            if (!UserProfile.InfoBag.HasResource((GameResourceType)changeInfo.Id1, changeInfo.Count1))
                 return;
 
-            UserProfile.InfoBag.SubResource((GameResourceType)res1, resCount1);
-            UserProfile.InfoBag.SubResource((GameResourceType)res2, resCount2);
-            (parent as ChangeResForm).RemoveChangeResData(index);
+            UserProfile.InfoBag.SubResource((GameResourceType)changeInfo.Id1, changeInfo.Count1);
+            UserProfile.InfoBag.SubResource((GameResourceType)changeInfo.Id2, changeInfo.Count2);
+            changeInfo.Used = true;
 
-            RefreshData();
+            parent.RefreshInfo();
         }
 
         private void ShowResTip(int mx, int my, int res, uint amount)

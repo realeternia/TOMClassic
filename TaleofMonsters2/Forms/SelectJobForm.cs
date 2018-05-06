@@ -85,7 +85,7 @@ namespace TaleofMonsters.Forms
             RefreshInfo();
         }
 
-        private void RefreshInfo()
+        public override void RefreshInfo()
         {
             var datas = new List<int>();
             for (int i = baseid; i < Math.Min(baseid + 10, jobIdList.Count); i++)

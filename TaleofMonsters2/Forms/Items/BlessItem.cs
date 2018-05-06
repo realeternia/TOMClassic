@@ -106,8 +106,7 @@ namespace TaleofMonsters.Forms.Items
         private void pictureBoxBuy_Click(object sender, EventArgs e)
         {
             var config = ConfigData.GetBlessConfig(blessId);
-            uint cost = 0;
-            cost = GameResourceBook.OutMercuryBlessBuy(config.Level);
+            uint cost = GameResourceBook.OutMercuryBlessBuy(config.Level);
 
             if (!UserProfile.InfoBag.HasResource(GameResourceType.Mercury, cost))
             {
@@ -128,8 +127,7 @@ namespace TaleofMonsters.Forms.Items
                 parent.AddFlowCenter("移除成功", "Lime");
             }
 
-            (parent as BlessForm).RefreshPage();
-            parent.Invalidate();
+            (parent as BlessForm).RefreshInfo();
         }
 
         public void Draw(Graphics g)

@@ -70,7 +70,7 @@ namespace TaleofMonsters.Forms
             RefreshInfo();
         }
 
-        private void RefreshInfo()
+        public override void RefreshInfo()
         {
             var datas = new List<int>();
             for (int i = 1; i <= 3; i++)

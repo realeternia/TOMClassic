@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using TaleofMonsters.Forms.Items;
 using TaleofMonsters.Forms.Items.Core;
-using NarlonLib.Core;
 using NarlonLib.Tools;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
@@ -42,7 +41,7 @@ namespace TaleofMonsters.Forms
             ChangeType(1);
         }
 
-        delegate void RefreshCallback();
+        delegate void RefreshCallback(int type);
         public override void OnFrame(int tick, float timePass)
         {
             base.OnFrame(tick, timePass);
@@ -57,34 +56,26 @@ namespace TaleofMonsters.Forms
                 else
                 {
                     showType = 1;
-                    BeginInvoke(new RefreshCallback(RefreshPage));
+                    BeginInvoke(new RefreshCallback(ChangeType));
                 }
             }
         }
 
-        private void RefreshInfo()
+        public override void RefreshInfo()
         {
+            if (showType == 1)
+                blesses = UserProfile.InfoWorld.GetBlessShopData();
+            else
+                blesses = BlessManager.GetNegtiveBless();
             for (int i = 0; i < 12; i++)
-            {
                 blessControls[i].RefreshData((i < blesses.Count) ? blesses[i] : 0);
-            }
+            Invalidate(new Rectangle(9, 35, 66, 30 * 5));
         }
 
         private void ChangeType(int type)
         {
             showType = type;
-            if (type == 1)
-                blesses = UserProfile.InfoWorld.GetBlessShopData();
-            else
-                blesses = BlessManager.GetNegtiveBless();
-
             RefreshInfo();
-            Invalidate(new Rectangle(9, 35, 66, 30*5));
-        }
-
-        public void RefreshPage()
-        {
-            ChangeType(showType);
         }
 
         private void bitmapButton1_Click(object sender, EventArgs e)

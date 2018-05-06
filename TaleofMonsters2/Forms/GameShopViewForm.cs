@@ -52,7 +52,7 @@ namespace TaleofMonsters.Forms
             virtualRegion_RegionClick(1, 0, 0, MouseButtons.Left);
         }
 
-        private void RefreshInfo()
+        public override void RefreshInfo()
         {
             for (int i = 0; i < 9; i++)
                 itemControls[i].RefreshData((page * 9 + i < productIds.Count) ? productIds[page * 9 + i] : 0);

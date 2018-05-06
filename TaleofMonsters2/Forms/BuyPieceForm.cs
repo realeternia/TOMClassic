@@ -19,18 +19,19 @@ namespace TaleofMonsters.Forms
 {
     internal sealed partial class BuyPieceForm : BasePanel
     {
-        internal class NpcPieceData
+        internal class BuyPieceData
         {
             public int Id;
             public int Count;
             public bool Used;
+
             public bool IsEmpty()
             {
                 return Id == 0;
             }
         }
 
-        private List<NpcPieceData> changes;
+        private List<BuyPieceData> changes;
         private PieceItem[] pieceControls;
         private ColorWordRegion colorWord;
 
@@ -64,13 +65,12 @@ namespace TaleofMonsters.Forms
             OnFrame(0, 0);
         }
 
-        private void RefreshInfo()
+        public override void RefreshInfo()
         {
             for (int i = 0; i < 8; i++)
-                pieceControls[i].RefreshData();
+                pieceControls[i].RefreshData(changes.Count > i ? changes[i] : new BuyPieceData());
             bitmapButtonRefresh.Visible = changes.Count < 8;
         }
-
 
         private void pictureBoxCancel_Click(object sender, EventArgs e)
         {
@@ -145,7 +145,7 @@ namespace TaleofMonsters.Forms
 
         private void RemakePieceData()
         {
-            changes = new List<NpcPieceData>();
+            changes = new List<BuyPieceData>();
             for (int i = 0; i < 5; i++)
                 changes.Add(CreatePieceMethod(i));
         }
@@ -154,19 +154,6 @@ namespace TaleofMonsters.Forms
         {
             if (changes.Count < 8)
                 changes.Add(CreatePieceMethod(changes.Count));
-        }
-
-        public NpcPieceData GetPieceData(int index)
-        {
-            if (changes.Count > index)
-                return changes[index];
-            return new NpcPieceData();
-        }
-
-        public void RemovePieceData(int index)
-        {
-            if (changes.Count > index)
-                changes[index].Used = true;
         }
 
         private void RefreshAllPieceData()
@@ -183,9 +170,9 @@ namespace TaleofMonsters.Forms
                 memNpcPieceData.Count *= 2;
         }
 
-        private NpcPieceData CreatePieceMethod(int index)
+        private BuyPieceData CreatePieceMethod(int index)
         {
-            NpcPieceData piece = new NpcPieceData();
+            BuyPieceData piece = new BuyPieceData();
             int rare = MathTool.GetRandom(Math.Max(index / 2, 1), index / 2 + 3);
             piece.Id = HItemBook.GetRandRareItemIdWithGroup(HItemRandomGroups.Fight, rare);
             piece.Count = MathTool.GetRandom((8 - rare) / 2, 8 - rare);

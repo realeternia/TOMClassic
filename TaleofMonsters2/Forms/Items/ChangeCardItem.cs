@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
 using ControlPlus;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas;
@@ -14,18 +13,17 @@ namespace TaleofMonsters.Forms.Items
     internal class ChangeCardItem : IDisposable
     {
         private int index;
-        private int card1;
-        private int card2;
+        private ChangeCardForm.ChangeCardData changeInfo;
         private bool show;
         private ImageToolTip tooltip = SystemToolTip.Instance;
         private VirtualRegion vRegion;
 
         private int x, y, width, height;
-        private Control parent;
+        private BasePanel parent;
         private BitmapButton bitmapButtonBuy;
         private Color backColor;
 
-        public ChangeCardItem(UserControl prt, int x, int y, int width, int height)
+        public ChangeCardItem(BasePanel prt, int x, int y, int width, int height)
         {
             parent = prt;
             this.x = x;
@@ -68,24 +66,21 @@ namespace TaleofMonsters.Forms.Items
             vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
 
-        public void RefreshData()
+        public void RefreshData(ChangeCardForm.ChangeCardData change)
         {
-            var change = (parent as ChangeCardForm).GetChangeCardData(index);
             if (!change.IsEmpty())
             {
-                card1 = change.Id1;
-                card2 = change.Id2;
+                changeInfo = change;
                 bitmapButtonBuy.Visible = !change.Used;
-                bitmapButtonBuy.Enabled = UserProfile.InfoCard.GetCardExp(card1) > 0;
+                bitmapButtonBuy.Enabled = UserProfile.InfoCard.GetCardExp(changeInfo.Id1) > 0;
 
-                vRegion.SetRegionKey(1, card1);
-                vRegion.SetRegionKey(2, card2);
+                vRegion.SetRegionKey(1, changeInfo.Id1);
+                vRegion.SetRegionKey(2, changeInfo.Id2);
                 show = true;
             }
             else
             {
-                card1 = -1;
-                card2 = -1;
+                changeInfo = new ChangeCardForm.ChangeCardData();
                 vRegion.SetRegionKey(1, 0);
                 vRegion.SetRegionKey(2, 0);
                 bitmapButtonBuy.Visible = false;
@@ -94,19 +89,18 @@ namespace TaleofMonsters.Forms.Items
 
             parent.Invalidate(new Rectangle(x, y, width, height));
         }
-
-
+        
         private void virtualRegion_RegionEntered(int info, int mx, int my, int key)
         {
-            if (info == 1 && card1 != -1)
+            if (info == 1 && changeInfo.Id1 != 0)
             {
-                Image image = CardAssistant.GetCard(card1).GetPreview(CardPreviewType.Normal, new uint[] { });
-                tooltip.Show(image, parent, mx, my, card1);
+                Image image = CardAssistant.GetCard(changeInfo.Id1).GetPreview(CardPreviewType.Normal, new uint[] { });
+                tooltip.Show(image, parent, mx, my, changeInfo.Id1);
             }
-            else if (info == 2 && card2 != -1)
+            else if (info == 2 && changeInfo.Id2 != 0)
             {
-                Image image = CardAssistant.GetCard(card2).GetPreview(CardPreviewType.Normal, new uint[] { });
-                tooltip.Show(image, parent, mx, my, card2);
+                Image image = CardAssistant.GetCard(changeInfo.Id2).GetPreview(CardPreviewType.Normal, new uint[] { });
+                tooltip.Show(image, parent, mx, my, changeInfo.Id2);
             }
         }
 
@@ -117,14 +111,14 @@ namespace TaleofMonsters.Forms.Items
 
         private void pictureBoxBuy_Click(object sender, EventArgs e)
         {
-            if (UserProfile.InfoCard.GetCardExp(card1) <= 0)
+            if (UserProfile.InfoCard.GetCardExp(changeInfo.Id1) <= 0)
                 return;
 
-            UserProfile.InfoCard.RemoveCardPiece(card1);
-            UserProfile.InfoCard.AddCard(card2);
-            (parent as ChangeCardForm).RemoveChangeCardData(index);
+            UserProfile.InfoCard.RemoveCardPiece(changeInfo.Id1);
+            UserProfile.InfoCard.AddCard(changeInfo.Id2);
 
-            RefreshData();
+            changeInfo.Used = true;
+            parent.RefreshInfo();
         }
 
         public void Draw(Graphics g)

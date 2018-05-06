@@ -16,8 +16,7 @@ namespace TaleofMonsters.Forms.Items
     internal class PieceItem : IDisposable
     {
         private int index;
-        private int itemId;
-        private int itemCount;
+        private BuyPieceForm.BuyPieceData pieceData;
         private int price;
         private bool show;
         private ImageToolTip tooltip = SystemToolTip.Instance;
@@ -70,22 +69,20 @@ namespace TaleofMonsters.Forms.Items
             vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
 
-        public void RefreshData()
+        public void RefreshData(BuyPieceForm.BuyPieceData pieceD)
         {
-            var piece = (parent as BuyPieceForm).GetPieceData(index);
-            if (!piece.IsEmpty())
+            pieceData = pieceD;
+            if (!pieceD.IsEmpty())
             {
-                itemId = piece.Id;
-                itemCount = piece.Count;
-                bitmapButtonBuy.Visible = !piece.Used;
-                vRegion.SetRegionKey(1, itemId);
-                var itmConfig = ConfigData.GetHItemConfig(itemId);
-                price = (int)GameResourceBook.OutGoldSellItem(itmConfig.Rare, itmConfig.ValueFactor) * piece.Count * 2;//素材价格x2
+                bitmapButtonBuy.Visible = !pieceData.Used;
+                vRegion.SetRegionKey(1, pieceData.Id);
+                var itmConfig = ConfigData.GetHItemConfig(pieceData.Id);
+                price = (int)GameResourceBook.OutGoldSellItem(itmConfig.Rare, itmConfig.ValueFactor) * pieceData.Count * 2;//素材价格x2
                 show = true;
             }
             else
             {
-                itemId = 0;
+                pieceData.Id = 0;
                 vRegion.SetRegionKey(1, 0);
                 bitmapButtonBuy.Visible = false;
                 show = false;
@@ -97,29 +94,28 @@ namespace TaleofMonsters.Forms.Items
 
         private void virtualRegion_RegionEntered(int info, int mx, int my, int key)
         {
-            if (itemId > 0)
+            if (pieceData.Id > 0)
             {
-                Image image = HItemBook.GetPreview(itemId);
-                tooltip.Show(image, parent, mx, my, itemId);
+                Image image = HItemBook.GetPreview(pieceData.Id);
+                tooltip.Show(image, parent, mx, my, pieceData.Id);
             }
         }
 
         private void virtualRegion_RegionLeft()
         {
-            tooltip.Hide(parent, itemId);
+            tooltip.Hide(parent, pieceData.Id);
         }
 
         private void pictureBoxBuy_Click(object sender, EventArgs e)
         {
             if (UserProfile.InfoBag.Resource.Gold >= price)
             {
-                UserProfile.InfoBag.Resource.Gold = (uint)(UserProfile.InfoBag.Resource.Gold- price);
-                UserProfile.InfoBag.AddItem(itemId, itemCount);
-                (parent as BuyPieceForm).RemovePieceData(index);
+                UserProfile.InfoBag.Resource.Gold = (uint) (UserProfile.InfoBag.Resource.Gold - price);
+                UserProfile.InfoBag.AddItem(pieceData.Id, pieceData.Count);
+                pieceData.Used = true;
+                parent.RefreshInfo();
 
-                RefreshData();
-
-                parent.AddFlowCenter("+1", "Lime", HItemBook.GetHItemImage(itemId));
+                parent.AddFlowCenter("+1", "Lime", HItemBook.GetHItemImage(pieceData.Id));
             }
             else
             {
@@ -136,7 +132,7 @@ namespace TaleofMonsters.Forms.Items
 
             if (show)
             {
-                HItemConfig itemConfig = ConfigData.GetHItemConfig(itemId);
+                HItemConfig itemConfig = ConfigData.GetHItemConfig(pieceData.Id);
 
                 Font font = new Font("微软雅黑", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
                 Brush brush = new SolidBrush(Color.FromName(HSTypes.I2RareColor(itemConfig.Rare)));
@@ -148,8 +144,8 @@ namespace TaleofMonsters.Forms.Items
                 g.DrawImage(HSIcons.GetIconsByEName("res1"), wid + 57+x, y+32, 16, 16);
 
                 vRegion.Draw(g);
-                g.DrawString(itemCount.ToString(), font, Brushes.Black, x+30, y+29);
-                g.DrawString(itemCount.ToString(), font, Brushes.White, x+29, y+28);
+                g.DrawString(pieceData.Count.ToString(), font, Brushes.Black, x+30, y+29);
+                g.DrawString(pieceData.Count.ToString(), font, Brushes.White, x+29, y+28);
 
                 font.Dispose();
 
