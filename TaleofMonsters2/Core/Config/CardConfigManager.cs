@@ -418,7 +418,7 @@ namespace TaleofMonsters.Core.Config
                 }
                 else
                 {
-                    dropRate = new[] {0, 720, 250, 30, 10};//默认卡包的概率
+                    dropRate = new[] {420, 310, 240, 20, 10};//默认卡包的概率
                 }
             }
 

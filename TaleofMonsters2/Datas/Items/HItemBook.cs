@@ -194,9 +194,9 @@ namespace TaleofMonsters.Datas.Items
                 tipData.AddTextNewLine("抽卡概率", "White");
                 tipData.AddTextNewLine("", "White");
                 tipData.AddImage(HSIcons.GetIconsByEName("gem5"));
-                tipData.AddText(string.Format("{0:0}%  ", (float)consumerConfig.RandomCardRate[3]*100/ totalRate), "White");
+                tipData.AddText(string.Format("{0:0}%  ", (float)consumerConfig.RandomCardRate[4]*100/ totalRate), "White");
                 tipData.AddImage(HSIcons.GetIconsByEName("gem4"));
-                tipData.AddText(string.Format("{0:0}%  ", (float)consumerConfig.RandomCardRate[2] * 100 / totalRate), "White");
+                tipData.AddText(string.Format("{0:0}%  ", (float)consumerConfig.RandomCardRate[3] * 100 / totalRate), "White");
                 tipData.AddLine();
             }
             if (hItemConfig.ShowCollectTip)
