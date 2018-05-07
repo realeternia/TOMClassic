@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus;
-using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Items;
@@ -22,7 +21,6 @@ namespace TaleofMonsters.Forms
         private int tar; //背包里的格子偏移
         private int page;
         private ImageToolTip tooltip = SystemToolTip.Instance;
-        private HSCursor myCursor;
         private List<int> ids;
         private MiniItemViewItem[] items;
 
@@ -33,13 +31,11 @@ namespace TaleofMonsters.Forms
         {
             InitializeComponent();
             tar = -1;
-            myCursor = new HSCursor(this);
         }
         
         public void Init()
         {
             show = true;
-            myCursor.ChangeCursor("default");
             this.bitmapButtonLeft.ImageNormal = PicLoader.Read("Button.Panel", "PreButton.JPG");
             bitmapButtonLeft.NoUseDrawNine = true;
             this.bitmapButtonRight.ImageNormal = PicLoader.Read("Button.Panel", "NextButton.JPG");

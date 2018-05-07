@@ -140,7 +140,7 @@ namespace TaleofMonsters.Forms.Items
             }
         }
         
-        public GameResource GetPrice()
+        private GameResource GetPrice()
         {
             var cardData = CardConfigManager.GetCardConfig(product.Cid);
 

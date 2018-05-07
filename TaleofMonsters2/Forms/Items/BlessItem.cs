@@ -127,7 +127,7 @@ namespace TaleofMonsters.Forms.Items
                 parent.AddFlowCenter("移除成功", "Lime");
             }
 
-            (parent as BlessForm).RefreshInfo();
+            parent.RefreshInfo();
         }
 
         public void Draw(Graphics g)
