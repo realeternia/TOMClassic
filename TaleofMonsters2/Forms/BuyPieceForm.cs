@@ -32,7 +32,7 @@ namespace TaleofMonsters.Forms
         }
 
         private List<BuyPieceData> changes;
-        private PieceItem[] pieceControls;
+        private CellItemBox itemBox;
         private ColorWordRegion colorWord;
 
         public BuyPieceForm()
@@ -48,17 +48,19 @@ namespace TaleofMonsters.Forms
             bitmapButtonDouble.NoUseDrawNine = true;
             colorWord = new ColorWordRegion(12, 38, 384, new Font("微软雅黑", 11 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel), Color.White);
             colorWord.UpdateText("|所有素材随机出现，素材的|Lime|背景颜色||决定素材的最高品质。");
+
+            itemBox = new CellItemBox(8, 111, 193 * 2, 56 * 4);
         }
 
         public override void Init(int width, int height)
         {
             base.Init(width, height);
 
-            pieceControls = new PieceItem[8];
             for (int i = 0; i < 8; i++)
             {
-                pieceControls[i] = new PieceItem(this, 8 + (i % 2) * 192, 111 + (i / 2) * 55, 193, 56);
-                pieceControls[i].Init(i);
+                var item = new PieceItem(this);
+                itemBox.AddItem(item);
+                item.Init(i);
             }
             RemakePieceData();
             RefreshInfo();
@@ -68,7 +70,7 @@ namespace TaleofMonsters.Forms
         public override void RefreshInfo()
         {
             for (int i = 0; i < 8; i++)
-                pieceControls[i].RefreshData(changes.Count > i ? changes[i] : new BuyPieceData());
+                itemBox.Refresh(i, changes.Count > i ? changes[i] : new BuyPieceData());
             bitmapButtonRefresh.Visible = changes.Count < 8;
         }
 
@@ -139,8 +141,7 @@ namespace TaleofMonsters.Forms
             font.Dispose();
 
             colorWord.Draw(e.Graphics);
-            foreach (var ctl in pieceControls)
-                ctl.Draw(e.Graphics);
+            itemBox.Draw(e.Graphics);
         }
 
         private void RemakePieceData()
@@ -183,11 +184,7 @@ namespace TaleofMonsters.Forms
         public override void OnRemove()
         {
             base.OnRemove();
-            for (int i = 0; i < 8; i++)
-            {
-                pieceControls[i].Dispose();
-                pieceControls[i] = null;
-            }
+            itemBox.Dispose();
         }
     }
 }

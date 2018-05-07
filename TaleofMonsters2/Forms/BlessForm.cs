@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using ControlPlus;
 using TaleofMonsters.Forms.Items;
 using TaleofMonsters.Forms.Items.Core;
 using NarlonLib.Tools;
@@ -15,7 +16,7 @@ namespace TaleofMonsters.Forms
 {
     internal sealed partial class BlessForm : BasePanel
     {
-        private BlessItem[] blessControls;
+        private CellItemBox itemBox;
         private List<int> blesses;
         private string timeText;
         private int showType;
@@ -27,16 +28,18 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
             this.bitmapButton1.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack1.PNG");
             this.bitmapButton2.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack3.PNG");
+
+            itemBox = new CellItemBox(9, 60, 180*3, 77*4);
         }
 
         public override void Init(int width, int height)
         {
             base.Init(width, height);
-            blessControls = new BlessItem[12];
             for (int i = 0; i < 12; i++)
             {
-                blessControls[i] = new BlessItem(this, 9 + (i % 3) * 180, 60 + (i / 3) * 77, 180, 77);
-                blessControls[i].Init(i);
+                var item = new BlessItem(this);
+                itemBox.AddItem(item);
+                item.Init(i);
             }
             ChangeType(1);
         }
@@ -68,7 +71,7 @@ namespace TaleofMonsters.Forms
             else
                 blesses = BlessManager.GetNegtiveBless();
             for (int i = 0; i < 12; i++)
-                blessControls[i].RefreshData((i < blesses.Count) ? blesses[i] : 0);
+                itemBox.Refresh(i, (i < blesses.Count) ? blesses[i] : 0);
             Invalidate(new Rectangle(9, 35, 66, 30 * 5));
         }
 
@@ -96,8 +99,7 @@ namespace TaleofMonsters.Forms
             e.Graphics.DrawString(" 祝福 ", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
 
-            foreach (var ctl in blessControls)
-                ctl.Draw(e.Graphics);
+            itemBox.Draw(e.Graphics);
 
             font = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             e.Graphics.DrawString(timeText, font, Brushes.YellowGreen, 445, 375);
@@ -107,11 +109,7 @@ namespace TaleofMonsters.Forms
         {
             base.OnRemove();
 
-            for (int i = 0; i < 12; i++)
-            {
-                blessControls[i].Dispose();
-                blessControls[i] = null;
-            }
+            itemBox.Dispose();
         }
     }
 

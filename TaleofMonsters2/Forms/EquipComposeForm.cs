@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
+using ControlPlus;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.Items;
@@ -12,7 +13,7 @@ namespace TaleofMonsters.Forms
 {
     internal sealed partial class EquipComposeForm : BasePanel
     {
-        private EquipComposeItem[] equipControls;
+        private CellItemBox itemBox;
         private int page;
         private List<int> equipIdList;
         private ControlPlus.NLPageSelector nlPageSelector1;
@@ -29,16 +30,19 @@ namespace TaleofMonsters.Forms
 
             this.nlPageSelector1 = new ControlPlus.NLPageSelector(this, 398, 310, 150);
             nlPageSelector1.PageChange += nlPageSelector1_PageChange;
+
+            itemBox = new CellItemBox(10, 63, 180 * 3, 82 * 3);
         }
 
         public override void Init(int width, int height)
         {
             base.Init(width, height);
-            equipControls = new EquipComposeItem[9];
-            for (int i = 0; i < 9; i++)
+
+            for (int i = 0; i < 8; i++)
             {
-                equipControls[i] = new EquipComposeItem(this, 10 + (i % 3) * 180, 63 + (i / 3) * 82, 180, 82);
-                equipControls[i].Init(i);
+                var item = new EquipComposeItem(this);
+                itemBox.AddItem(item);
+                item.Init(i);
             }
             InitEquips(1);
         }
@@ -70,7 +74,7 @@ namespace TaleofMonsters.Forms
         public override void RefreshInfo()
         {
             for (int i = 0; i < 9; i++)
-                equipControls[i].RefreshData((page*9 + i < equipIdList.Count) ? equipIdList[page*9 + i] : 0);
+                itemBox.Refresh(i, (page*9 + i < equipIdList.Count) ? equipIdList[page*9 + i] : 0);
         }
 
         private void buttonClose_Click(object sender, EventArgs e)
@@ -86,8 +90,7 @@ namespace TaleofMonsters.Forms
             e.Graphics.DrawString(" 建造 ", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
 
-            foreach (var ctl in equipControls)
-                ctl.Draw(e.Graphics);
+            itemBox.Draw(e.Graphics);
         }
 
         private void nlPageSelector1_PageChange(int pg)
@@ -104,11 +107,7 @@ namespace TaleofMonsters.Forms
         public override void OnRemove()
         {
             base.OnRemove();
-            for (int i = 0; i < 9; i++)
-            {
-                equipControls[i].Dispose();
-                equipControls[i] = null;
-            }
+            itemBox.Dispose();
         }
     }
 }

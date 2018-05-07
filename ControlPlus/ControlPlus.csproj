@@ -81,6 +81,7 @@
     <Compile Include="BitmapButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="CellItemBox.cs" />
     <Compile Include="ColorLabel.cs">
       <SubType>Component</SubType>
     </Compile>

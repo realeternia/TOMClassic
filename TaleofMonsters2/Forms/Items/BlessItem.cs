@@ -14,27 +14,38 @@ using TaleofMonsters.Forms.Items.Regions;
 
 namespace TaleofMonsters.Forms.Items
 {
-    internal class BlessItem : IDisposable
+    internal class BlessItem : ICellItem
     {
+        private BasePanel parent;
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Width { get { return 180; } }
+        public int Height { get { return 77; } }
+
         private int index;
         private int blessId;
         private bool show;
         private ImageToolTip tooltip = SystemToolTip.Instance;
         private VirtualRegion vRegion;
 
-        private int x, y, width, height;
-        private BasePanel parent;
         private BitmapButton bitmapButtonBuy;
 
-        public BlessItem(BasePanel prt, int x, int y, int width, int height)
+        public BlessItem(BasePanel prt)
         {
             parent = prt;
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
+        }
+
+        public void Init(int idx)
+        {
+            index = idx;
+
+            vRegion = new VirtualRegion(parent);
+            vRegion.AddRegion(new PictureRegion(1, X + 3, Y + 3, 76, 75, PictureRegionCellType.Bless, 0));
+            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
+            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+
             this.bitmapButtonBuy = new BitmapButton();
-            bitmapButtonBuy.Location = new Point(x + 125, y + 53);
+            bitmapButtonBuy.Location = new Point(X + 125, Y + 53);
             bitmapButtonBuy.Size = new Size(50, 24);
             this.bitmapButtonBuy.Click += new System.EventHandler(this.pictureBoxBuy_Click);
             this.bitmapButtonBuy.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
@@ -48,18 +59,9 @@ namespace TaleofMonsters.Forms.Items
             parent.Controls.Add(bitmapButtonBuy);
         }
 
-        public void Init(int idx)
+        public void RefreshData(object data)
         {
-            index = idx;
-
-            vRegion = new VirtualRegion(parent);
-            vRegion.AddRegion(new PictureRegion(1, x + 3, y + 3, 76, 75, PictureRegionCellType.Bless, 0));
-            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
-            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
-        }
-
-        public void RefreshData(int eid)
-        {
+            int eid = (int) data;
             blessId = eid;
             if (eid > 0)
             {
@@ -86,7 +88,7 @@ namespace TaleofMonsters.Forms.Items
                 this.bitmapButtonBuy.Text = @"移除";
             }
 
-            parent.Invalidate(new Rectangle(x, y, width, height));
+            parent.Invalidate(new Rectangle(X, Y, Width, Height));
         }
 
         private void virtualRegion_RegionEntered(int info, int mx, int my, int key)
@@ -133,9 +135,9 @@ namespace TaleofMonsters.Forms.Items
         public void Draw(Graphics g)
         {
             SolidBrush sb = new SolidBrush(Color.FromArgb(20, 20, 20));
-            g.FillRectangle(sb, x + 2, y + 2, width - 4, height - 4);
+            g.FillRectangle(sb, X + 2, Y + 2, Width - 4, Height - 4);
             sb.Dispose();
-            g.DrawRectangle(Pens.Teal, x + 2, y + 2, width - 4, height - 4);
+            g.DrawRectangle(Pens.Teal, X + 2, Y + 2, Width - 4, Height - 4);
 
             if (show)
             {
@@ -146,14 +148,19 @@ namespace TaleofMonsters.Forms.Items
                 var cost = GameResourceBook.OutMercuryBlessBuy(blessConfig.Level);
                 Font ft = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
                 Brush b = new SolidBrush(Color.FromName(HSTypes.I2QualityColor(blessConfig.Level)));
-                g.DrawString(blessConfig.Name, ft, b, x + 90, y + 10);
+                g.DrawString(blessConfig.Name, ft, b, X + 90, Y + 10);
                 b.Dispose();
-                g.DrawString(string.Format("{0}", cost), ft, Brushes.White, x + 90 + 20, y + 32);
+                g.DrawString(string.Format("{0}", cost), ft, Brushes.White, X + 90 + 20, Y + 32);
                 ft.Dispose();
 
-                g.DrawImage(HSIcons.GetIconsByEName("res4"), x + 90, y + 32 - 3, 18, 18);
+                g.DrawImage(HSIcons.GetIconsByEName("res4"), X + 90, Y + 32 - 3, 18, 18);
             }
         }
+
+        public void OnFrame()
+        {
+        }
+
         public void Dispose()
         {
         }

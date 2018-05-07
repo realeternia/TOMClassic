@@ -20,41 +20,42 @@ using TaleofMonsters.Forms.Items.Regions;
 
 namespace TaleofMonsters.Forms.Items
 {
-    internal class CardShopItem : IDisposable
+    internal class CardShopItem : ICellItem
     {
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Width { get { return 85; } }
+        public int Height { get { return 125; } }
+
         private DbCardProduct product;
         private bool show;
         private ImageToolTip tooltip = SystemToolTip.Instance;
         private VirtualRegion vRegion;
 
-        private int x, y, width, height;
         private BasePanel parent;
         private StaticUIEffect coverEffect;
         private Image backImg;
         private int renderIndex = 0;
 
-        public CardShopItem(BasePanel prt, int x, int y, int width, int height)
+        public CardShopItem(BasePanel prt)
         {
             parent = prt;
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
             backImg = PicLoader.Read("System", "CardBack2.JPG");
         }
 
-        public void Init()
+        public void Init(int idx)
         {
             vRegion = new VirtualRegion(parent);
-            vRegion.AddRegion(new SubVirtualRegion(1, x + 12, y + 14, 64, 84));
-            vRegion.AddRegion(new ButtonRegion(2, x + 55, y + 102, 17, 17, "BuyIcon.PNG", "BuyIconOn.PNG"));
+            vRegion.AddRegion(new SubVirtualRegion(1, X + 12, Y + 14, 64, 84));
+            vRegion.AddRegion(new ButtonRegion(2, X + 55, Y + 102, 17, 17, "BuyIcon.PNG", "BuyIconOn.PNG"));
             vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
             vRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
         }
 
-        public void RefreshData(DbCardProduct pro)
+        public void RefreshData(object data)
         {
+            var pro = (DbCardProduct)data;
             show = pro.Id != 0;
             product = pro;
             if (product.Id != 0)
@@ -88,13 +89,13 @@ namespace TaleofMonsters.Forms.Items
                 }
                 else
                 {
-                    coverEffect = new StaticUIEffect(EffectBook.GetEffect(effectName), new Point(x + 12, y + 14),
+                    coverEffect = new StaticUIEffect(EffectBook.GetEffect(effectName), new Point(X + 12, Y + 14),
                         new Size(64, 84));
                     coverEffect.Repeat = true;
                 }
             }
 
-            parent.Invalidate(new Rectangle(x+12, y+14, 64, 84));
+            parent.Invalidate(new Rectangle(X + 12, Y + 14, 64, 84));
         }
         
         public void OnFrame()
@@ -103,7 +104,7 @@ namespace TaleofMonsters.Forms.Items
             {
                 renderIndex++;
                 if (coverEffect.Next() & (renderIndex % 3) == 0) //降频，降低cpu开销
-                    parent.Invalidate(new Rectangle(x + 12, y + 14, 64, 84));
+                    parent.Invalidate(new Rectangle(X + 12, Y + 14, 64, 84));
             }
         }
 
@@ -167,7 +168,7 @@ namespace TaleofMonsters.Forms.Items
 
         public void Draw(Graphics g)
         {
-            g.DrawImage(backImg, x, y, width - 1, height - 1);
+            g.DrawImage(backImg, X, Y, Width - 1, Height - 1);
 
             if (show)
             {
@@ -175,7 +176,7 @@ namespace TaleofMonsters.Forms.Items
 
                 vRegion.Draw(g);
 
-                CardAssistant.DrawBase(g, product.Cid, x + 12, y + 14, 64, 84);
+                CardAssistant.DrawBase(g, product.Cid, X + 12, Y + 14, 64, 84);
                 
                 if (coverEffect != null)
                     coverEffect.Draw(g);
@@ -183,13 +184,13 @@ namespace TaleofMonsters.Forms.Items
                 if ((CardProductMarkTypes)product.Mark != CardProductMarkTypes.Null)
                 {
                     Image marker = PicLoader.Read("System", string.Format("Mark{0}.PNG", (int)product.Mark));
-                    g.DrawImage(marker, x + 28, y+12, 50, 51);
+                    g.DrawImage(marker, X + 28, Y+12, 50, 51);
                     marker.Dispose();
                 }
 
                 var cardConfigData = CardConfigManager.GetCardConfig(product.Cid);
                 var quality = cardConfigData.Quality + 1;
-                g.DrawImage(HSIcons.GetIconsByEName("gem" + (int)quality), x + width/2-8, y + height-44, 16, 16);
+                g.DrawImage(HSIcons.GetIconsByEName("gem" + (int) quality), X + Width/2 - 8, Y + Height - 44, 16, 16);
 
             }
         }

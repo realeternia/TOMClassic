@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using TaleofMonsters.Forms.Items;
 using ConfigDatas;
+using ControlPlus;
 using NarlonLib.Math;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas.Items;
@@ -12,10 +13,14 @@ namespace TaleofMonsters.Forms
 {
     internal sealed partial class NpcShopForm : BasePanel
     {
-        private const int MaxCellCount = 12;
+        internal class NpcShopData
+        {
+            public int ShopId;
+            public int ItemId;
+        }
 
         private int[] items;
-        private NpcShopItem[] itemControls;
+        private CellItemBox itemBox;
 
         public string ShopName { get; set; }
 
@@ -23,6 +28,8 @@ namespace TaleofMonsters.Forms
         {
             InitializeComponent();
             this.bitmapButtonClose.ImageNormal = PicLoader.Read("Button.Panel", "CloseButton1.JPG");
+
+            itemBox = new CellItemBox(8, 35, 143 * 3, 56 * 4);
         }
 
         public override void Init(int width, int height)
@@ -41,11 +48,11 @@ namespace TaleofMonsters.Forms
             }
             items = itemList.ToArray();
 
-            itemControls = new NpcShopItem[MaxCellCount];
-            for (int i = 0; i < MaxCellCount; i++)
+            for (int i = 0; i < 12; i++)
             {
-                itemControls[i] = new NpcShopItem(this, 8 + (i % 3) * 142, 35 + (i / 3) * 55, 143, 56);
-                itemControls[i].Init(shopConfig.MoneyType, shopConfig.RandomPrice, shopConfig.LimitCount);
+                var item = new NpcShopItem(this);
+                itemBox.AddItem(item);
+                item.Init(i);
             }
             RefreshInfo();
         }
@@ -62,12 +69,12 @@ namespace TaleofMonsters.Forms
 
         public override void RefreshInfo()
         {
-            for (int i = 0; i < MaxCellCount; i++)
+            for (int i = 0; i < 12; i++)
             {
                 if (i < items.Length)
-                    itemControls[i].RefreshData(items[i]);
+                    itemBox.Refresh(i, items[i]);
                 else
-                    itemControls[i].RefreshData(0);
+                    itemBox.Refresh(i, 0);
             }
         }
 
@@ -86,19 +93,14 @@ namespace TaleofMonsters.Forms
                 e.Graphics.DrawString("商店", font2, Brushes.White, Width / 2 - 40, 8);
                 font2.Dispose();
 
-                foreach (var ctl in itemControls)
-                    ctl.Draw(e.Graphics);
+                itemBox.Draw(e.Graphics);
             }
         }
 
         public override void OnRemove()
         {
             base.OnRemove();
-            for (int i = 0; i < MaxCellCount; i++)
-            {
-                itemControls[i].Dispose();
-                itemControls[i] = null;
-            }
+            itemBox.Dispose();
         }
     }
 }

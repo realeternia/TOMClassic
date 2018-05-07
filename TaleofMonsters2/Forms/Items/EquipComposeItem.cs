@@ -14,8 +14,13 @@ using TaleofMonsters.Forms.Pops;
 
 namespace TaleofMonsters.Forms.Items
 {
-    internal class EquipComposeItem : IDisposable
+    internal class EquipComposeItem : ICellItem
     {
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Width { get { return 180; } }
+        public int Height { get { return 82; } }
+
         private int index;
         private int equipId;
         private bool hasEquip; //是否已经拥有
@@ -23,30 +28,12 @@ namespace TaleofMonsters.Forms.Items
         private ImageToolTip tooltip = SystemToolTip.Instance;
         private VirtualRegion vRegion;
 
-        private int x, y, width, height;
         private BasePanel parent;
         private BitmapButton bitmapButtonBuy;
 
-        public EquipComposeItem(BasePanel prt, int x, int y, int width, int height)
+        public EquipComposeItem(BasePanel prt)
         {
             parent = prt;
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
-            this.bitmapButtonBuy = new BitmapButton();
-            bitmapButtonBuy.Location = new Point(x + 122, y + 50);
-            bitmapButtonBuy.Size = new Size(50, 24);
-            this.bitmapButtonBuy.Click += new System.EventHandler(this.pictureBoxBuy_Click);
-            this.bitmapButtonBuy.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
-            bitmapButtonBuy.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            bitmapButtonBuy.ForeColor = Color.White;
-            bitmapButtonBuy.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("hatt2");
-            bitmapButtonBuy.IconSize = new Size(16,16);
-            bitmapButtonBuy.IconXY = new Point(4,4);
-            bitmapButtonBuy.TextOffX = 8;
-            this.bitmapButtonBuy.Text = @"改造";
-            parent.Controls.Add(bitmapButtonBuy);
         }
 
         public void Init(int idx)
@@ -54,13 +41,28 @@ namespace TaleofMonsters.Forms.Items
             index = idx;
 
             vRegion = new VirtualRegion(parent);
-            vRegion.AddRegion(new PictureRegion(1, x + 3 + 6, y + 3 + 6,  76 - 12, 75 - 12, PictureRegionCellType.Equip, 0));
+            vRegion.AddRegion(new PictureRegion(1, X + 3 + 6, Y + 3 + 6,  76 - 12, 75 - 12, PictureRegionCellType.Equip, 0));
             vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+
+            this.bitmapButtonBuy = new BitmapButton();
+            bitmapButtonBuy.Location = new Point(X + 122, Y + 50);
+            bitmapButtonBuy.Size = new Size(50, 24);
+            this.bitmapButtonBuy.Click += new System.EventHandler(this.pictureBoxBuy_Click);
+            this.bitmapButtonBuy.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
+            bitmapButtonBuy.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            bitmapButtonBuy.ForeColor = Color.White;
+            bitmapButtonBuy.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("hatt2");
+            bitmapButtonBuy.IconSize = new Size(16, 16);
+            bitmapButtonBuy.IconXY = new Point(4, 4);
+            bitmapButtonBuy.TextOffX = 8;
+            this.bitmapButtonBuy.Text = @"改造";
+            parent.Controls.Add(bitmapButtonBuy);
         }
 
-        public void RefreshData(int eid)
+        public void RefreshData(object data)
         {
+            var eid = (int)data;
             equipId = eid;
             hasEquip = UserProfile.InfoCastle.HasEquip(eid);
             if (eid > 0)
@@ -92,7 +94,7 @@ namespace TaleofMonsters.Forms.Items
                 show = false;
             }
 
-            parent.Invalidate(new Rectangle(x, y, width, height));
+            parent.Invalidate(new Rectangle(X, Y, Width, Height));
         }
 
         private void virtualRegion_RegionEntered(int info, int mx, int my, int key)
@@ -122,14 +124,14 @@ namespace TaleofMonsters.Forms.Items
         public void Draw(Graphics g)
         {
             SolidBrush sb = new SolidBrush(Color.FromArgb(20, 20, 20));
-            g.FillRectangle(sb, x + 2, y + 2, width - 4, height - 4);
+            g.FillRectangle(sb, X + 2, Y + 2, Width - 4, Height - 4);
             sb.Dispose();
-            g.DrawRectangle(Pens.Teal, x + 2, y + 2, width - 4, height - 4);
+            g.DrawRectangle(Pens.Teal, X + 2, Y + 2, Width - 4, Height - 4);
 
             if (show)
             {
                 var back = PicLoader.Read("System", "MapBack.JPG");
-                g.DrawImage(back, x + 2, y + 2, width - 4, height - 4);
+                g.DrawImage(back, X + 2, Y + 2, Width - 4, Height - 4);
                 back.Dispose();
 
                 vRegion.Draw(g);
@@ -137,7 +139,7 @@ namespace TaleofMonsters.Forms.Items
                 var equipConfig = ConfigData.GetEquipConfig(equipId);
 
                 var textBack = PicLoader.Read("System", "TipBack.PNG");
-                g.DrawImage(textBack, x + 82, y + 8, 90, 16);
+                g.DrawImage(textBack, X + 82, Y + 8, 90, 16);
                 textBack.Dispose();
                 Font ft = new Font("宋体", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
 
@@ -145,24 +147,29 @@ namespace TaleofMonsters.Forms.Items
                 {
                     var equipInfo = UserProfile.InfoCastle.GetEquipById(equipId);
                     Brush b = new SolidBrush(Color.FromName(HSTypes.I2QualityColor(equipConfig.Quality)));
-                    g.DrawString(string.Format("{0}v{1}", equipConfig.Name, equipInfo.Level), ft, b, x + 82, y + 10);
+                    g.DrawString(string.Format("{0}v{1}", equipConfig.Name, equipInfo.Level), ft, b, X + 82, Y + 10);
                     b.Dispose();
 
                     if (equipInfo.Level < equipConfig.MaxLevel)
                     {
                         string expstr = string.Format("{0}/{1}", equipInfo.Exp, ExpTree.GetNextRequiredEquip(equipInfo.Level));
-                        g.DrawString(expstr, ft, Brushes.AliceBlue, x + 102, y + 27);
-                        g.FillRectangle(Brushes.DimGray, x + 82, y + 42, 80, 4);
-                        g.FillRectangle(Brushes.DodgerBlue, x + 82, y + 42, Math.Min(equipInfo.Exp*79/ExpTree.GetNextRequiredEquip(equipInfo.Level) + 1, 80), 2);
+                        g.DrawString(expstr, ft, Brushes.AliceBlue, X + 102, Y + 27);
+                        g.FillRectangle(Brushes.DimGray, X + 82, Y + 42, 80, 4);
+                        g.FillRectangle(Brushes.DodgerBlue, X + 82, Y + 42, Math.Min(equipInfo.Exp*79/ExpTree.GetNextRequiredEquip(equipInfo.Level) + 1, 80), 2);
                     }
                 }
                 else
                 {
-                    g.DrawString(equipConfig.Name, ft, Brushes.Gray, x + 82, y + 10);
+                    g.DrawString(equipConfig.Name, ft, Brushes.Gray, X + 82, Y + 10);
                 }
                 ft.Dispose();
             }
         }
+
+        public void OnFrame()
+        {
+        }
+
         public void Dispose()
         {
         }

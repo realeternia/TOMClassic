@@ -21,7 +21,7 @@ namespace TaleofMonsters.Forms
 {
     internal sealed partial class CardShopViewForm : BasePanel
     {
-        private CardShopItem[] itemControls;
+        private CellItemBox itemBox;
         private NLPageSelector nlPageSelector1;
         private int page;
         private int shelf;
@@ -48,16 +48,18 @@ namespace TaleofMonsters.Forms
                 vRegion.AddRegion(subRegion);
             }
             vRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClick);
+
+            itemBox = new CellItemBox(12, 62, 85 * 6, 125 * 3);
         }
 
         public override void Init(int width, int height)
         {
             base.Init(width, height);
-            itemControls = new CardShopItem[18];
             for (int i = 0; i < 18; i++)
             {
-                itemControls[i] = new CardShopItem(this, 12 + (i % 6) * 85, 62 + (i / 6) * 125, 85, 125);
-                itemControls[i].Init();
+                var item = new CardShopItem(this);
+                itemBox.AddItem(item);
+                item.Init(i);
             }
             virtualRegion_RegionClick(1,0,0, MouseButtons.Left);
 
@@ -71,7 +73,7 @@ namespace TaleofMonsters.Forms
             Array.Sort(products, new CompareByMark());
             nlPageSelector1.TotalPage = (products.Length - 1) / 18 + 1;
             for (int i = 0; i < 18; i++)
-                itemControls[i].RefreshData((page * 18 + i < products.Length) ? products[page * 18 + i] : new DbCardProduct());
+                itemBox.Refresh(i, (page * 18 + i < products.Length) ? products[page * 18 + i] : new DbCardProduct());
             Invalidate();
         }
 
@@ -126,8 +128,7 @@ namespace TaleofMonsters.Forms
         public override void OnFrame(int tick, float timePass)
         {
             base.OnFrame(tick, timePass);
-            foreach (var cardShopItem in itemControls)
-                cardShopItem.OnFrame();
+            itemBox.OnFrame();
 
             if ((tick % 6) == 0)
             {
@@ -153,8 +154,7 @@ namespace TaleofMonsters.Forms
             font.Dispose();
 
             vRegion.Draw(e.Graphics);
-            foreach (var ctl in itemControls)
-                ctl.Draw(e.Graphics);
+            itemBox.Draw(e.Graphics);
             font = new Font("宋体", 9*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             e.Graphics.DrawString(timeText, font, Brushes.YellowGreen, 18, 447);
             font.Dispose();
@@ -170,11 +170,7 @@ namespace TaleofMonsters.Forms
         {
             base.OnRemove();
 
-            for (int i = 0; i < 18; i++)
-            {
-                itemControls[i].Dispose();
-                itemControls[i] = null;
-            }
+            itemBox.Dispose();
         }
     }
 }

@@ -33,30 +33,8 @@ namespace TaleofMonsters.Forms
         }
 
         private List<ChangeResData> changes;
-        private ChangeResItem[] changeControls;
+        private CellItemBox itemBox;
         private ColorWordRegion colorWord;
-
-        public override void Init(int width, int height)
-        {
-            base.Init(width, height);
-
-            changeControls =new ChangeResItem[8];
-            for (int i = 0; i < 8; i++)
-            {
-                changeControls[i] = new ChangeResItem(this, 8 + (i % 2) * 192, 111 + (i / 2) * 55, 193, 56);
-                changeControls[i].Init(i);
-            }
-            GetChangeResData();
-            RefreshInfo();
-            OnFrame(0, 0);
-        }
-
-        public override void RefreshInfo()
-        {
-            for (int i = 0; i < 8; i++)
-                changeControls[i].RefreshData(changes.Count > i ? changes[i] : new ChangeResData());
-            bitmapButtonRefresh.Visible = changes.Count < 8;
-        }
 
         public ChangeResForm()
         {
@@ -69,6 +47,31 @@ namespace TaleofMonsters.Forms
             bitmapButtonFresh.NoUseDrawNine = true;
             colorWord = new ColorWordRegion(12, 38, 384, new Font("微软雅黑", 11 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel), Color.White);
             colorWord.UpdateText("|交易公式随机出现，交易公式的|Lime|背景颜色||决定交易公式的品质。品质越高交换性价比越高。");
+
+            itemBox = new CellItemBox(8, 111, 193 * 2, 56 * 4);
+        }
+
+
+        public override void Init(int width, int height)
+        {
+            base.Init(width, height);
+
+            for (int i = 0; i < 8; i++)
+            {
+                var item = new ChangeResItem(this);
+                itemBox.AddItem(item);
+                item.Init(i);
+            }
+            GetChangeResData();
+            RefreshInfo();
+            OnFrame(0, 0);
+        }
+
+        public override void RefreshInfo()
+        {
+            for (int i = 0; i < 8; i++)
+                itemBox.Refresh(i, changes.Count > i ? changes[i] : new ChangeResData());
+            bitmapButtonRefresh.Visible = changes.Count < 8;
         }
 
         private void pictureBoxCancel_Click(object sender, EventArgs e)
@@ -121,8 +124,7 @@ namespace TaleofMonsters.Forms
             font.Dispose();
 
             colorWord.Draw(e.Graphics);
-            foreach (var ctl in changeControls)
-                ctl.Draw(e.Graphics);
+            itemBox.Draw(e.Graphics);
         }
 
         public List<ChangeResData> GetChangeResData()

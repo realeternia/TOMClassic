@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
+using ControlPlus;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas.User;
@@ -15,7 +16,7 @@ namespace TaleofMonsters.Forms
 {
     internal partial class GameShopViewForm : BasePanel
     {
-        private GameShopItem[] itemControls;
+        private CellItemBox itemBox;
         private int page;
         private List<int> productIds;
         private ControlPlus.NLPageSelector nlPageSelector1;
@@ -38,16 +39,18 @@ namespace TaleofMonsters.Forms
             }
 
             vRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClick);
+
+            itemBox = new CellItemBox(11, 61, 170 * 3, 101 * 3);
         }
 
         public override void Init(int width, int height)
         {
             base.Init(width, height);
-            itemControls = new GameShopItem[9];
             for (int i = 0; i < 9; i++)
             {
-                itemControls[i] = new GameShopItem(this, 11 + (i % 3) * 170, 61 + (i / 3) * 101, 170, 101);
-                itemControls[i].Init();
+                var item = new GameShopItem(this);
+                itemBox.AddItem(item);
+                item.Init(i);
             }
             virtualRegion_RegionClick(1, 0, 0, MouseButtons.Left);
         }
@@ -55,7 +58,7 @@ namespace TaleofMonsters.Forms
         public override void RefreshInfo()
         {
             for (int i = 0; i < 9; i++)
-                itemControls[i].RefreshData((page * 9 + i < productIds.Count) ? productIds[page * 9 + i] : 0);
+                itemBox.Refresh(i, (page * 9 + i < productIds.Count) ? productIds[page * 9 + i] : 0);
         }
 
         private void virtualRegion_RegionClick(int id, int x, int y, MouseButtons button)
@@ -93,8 +96,7 @@ namespace TaleofMonsters.Forms
             font.Dispose();
 
             vRegion.Draw(e.Graphics);
-            foreach (var checkItem in itemControls)
-                checkItem.Draw(e.Graphics);
+            itemBox.Draw(e.Graphics);
 
             font = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             string str = string.Format("我的钻石:  {0} ", UserProfile.InfoBag.Diamond);
@@ -113,11 +115,7 @@ namespace TaleofMonsters.Forms
         public override void OnRemove()
         {
             base.OnRemove();
-            for (int i = 0; i < 9; i++)
-            {
-                itemControls[i].Dispose();
-                itemControls[i] = null;
-            }
+            itemBox.Dispose();
         }
     }
 }

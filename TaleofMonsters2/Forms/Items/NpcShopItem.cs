@@ -16,12 +16,16 @@ using TaleofMonsters.Forms.Items.Regions.Decorators;
 
 namespace TaleofMonsters.Forms.Items
 {
-    internal class NpcShopItem : IDisposable
+    internal class NpcShopItem : ICellItem
     {
         private enum PriceRandTypes
         {
             None, Good1, Good2, Good3, Bad1, Bad2, Bad3
         }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Width { get { return 143; } }
+        public int Height { get { return 56; } }
 
         private int itemId;
         private int priceType;//货币类型
@@ -32,19 +36,23 @@ namespace TaleofMonsters.Forms.Items
         private ImageToolTip tooltip = SystemToolTip.Instance;
         private VirtualRegion vRegion;
 
-        private int x, y, width, height;
         private BasePanel parent;
         private BitmapButton bitmapButtonBuy;
-
-        public NpcShopItem(BasePanel prt, int x, int y, int width, int height)
+        
+        public NpcShopItem(BasePanel prt)
         {
             parent = prt;
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
+        }
+
+        public void Init(int idx)
+        {
+            vRegion = new VirtualRegion(parent);
+            vRegion.AddRegion(new PictureAnimRegion(1, X + 5, Y + 8, 40, 40, PictureRegionCellType.Item, 0));
+            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
+            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+
             this.bitmapButtonBuy = new BitmapButton();
-            bitmapButtonBuy.Location = new Point(x + 102, y + 30);
+            bitmapButtonBuy.Location = new Point(X + 102, Y + 30);
             bitmapButtonBuy.Size = new Size(35, 20);
             this.bitmapButtonBuy.Click += new System.EventHandler(this.pictureBoxBuy_Click);
             this.bitmapButtonBuy.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
@@ -56,39 +64,29 @@ namespace TaleofMonsters.Forms.Items
             parent.Controls.Add(bitmapButtonBuy);
         }
 
-        public void Init(int type, bool isRandom, int limit)
+        public void RefreshData(object data)
         {
-            priceType = type;
-            if (isRandom)
-                randomType = GetTypes();
-            limitCount = limit;
-            vRegion = new VirtualRegion(parent);
-            vRegion.AddRegion(new PictureAnimRegion(1, x + 5, y + 8, 40, 40, PictureRegionCellType.Item, 0));
-            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
-            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
-        }
-
-        public void RefreshData(int id)
-        {
-            bitmapButtonBuy.Visible = id != 0;
-            show = id != 0;
-            itemId = id;
-            if (id != 0)
+            var shopItem = (NpcShopForm.NpcShopData) data;
+            var shopConfig = ConfigData.GetNpcShopConfig(shopItem.ShopId);
+            priceType = shopConfig.MoneyType;
+            if (shopConfig.RandomPrice)
+                randomType = GetItemTypes();
+            limitCount = shopConfig.LimitCount;
+            bitmapButtonBuy.Visible = shopItem.ItemId != 0;
+            show = shopItem.ItemId != 0;
+            itemId = shopItem.ItemId;
+            if (shopItem.ItemId != 0)
             {
-                vRegion.SetRegionKey(1, id);
+                vRegion.SetRegionKey(1, shopItem.ItemId);
                 var itmConfig = ConfigData.GetHItemConfig(itemId);
                 price = (int)GameResourceBook.OutGoldSellItem(itmConfig.Rare, itmConfig.ValueFactor);
                 RecheckPrice();
             }
 
             if (priceType > 0) //非金币购买
-            {
                 price = price / 10 + 1;
-            }
-
-            parent.Invalidate(new Rectangle(x, y, width, height));
+            parent.Invalidate(new Rectangle(X, Y, Width, Height));
         }
-
 
         private void virtualRegion_RegionEntered(int info, int mx, int my, int key)
         {
@@ -136,7 +134,7 @@ namespace TaleofMonsters.Forms.Items
 
         public void Draw(Graphics g)
         {
-            g.DrawRectangle(Pens.White, x, y, width - 1, height - 1);
+            g.DrawRectangle(Pens.White, X, Y, Width - 1, Height - 1);
 
             if (show)
             {
@@ -147,12 +145,12 @@ namespace TaleofMonsters.Forms.Items
                 if (limitCount < 10)
                     sellName = string.Format("{0} (余{1})", itemConfig.Name, limitCount);
                 Brush brush = new SolidBrush(Color.FromName(HSTypes.I2RareColor(itemConfig.Rare)));
-                g.DrawString(sellName, font, brush, x + 50, y + 7);
+                g.DrawString(sellName, font, brush, X + 50, Y + 7);
                 brush.Dispose();
 
-                g.DrawString(price.ToString(), font, Brushes.Gold,x+ 50,y+ 30);
+                g.DrawString(price.ToString(), font, Brushes.Gold, X + 50, Y + 30);
                 var wid = TextRenderer.MeasureText(g, price.ToString(), font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
-                g.DrawImage(HSIcons.GetIconsByEName("res"+(priceType+1)), wid + 50+x, 32+y, 16, 16);
+                g.DrawImage(HSIcons.GetIconsByEName("res" + (priceType + 1)), wid + 50 + X, 32 + Y, 16, 16);
                 font.Dispose();
 
                 vRegion.Draw(g);
@@ -170,11 +168,15 @@ namespace TaleofMonsters.Forms.Items
                 }
 
                 for (int i = 0; i < repeat; i++)
-                    g.DrawImage(HSIcons.GetIconsByEName(iconType), x + 5 + 5 + 7 * i, y + 8 + 20, 16, 16);
+                    g.DrawImage(HSIcons.GetIconsByEName(iconType), X + 5 + 5 + 7 * i, Y + 8 + 20, 16, 16);
             }
         }
 
-        private PriceRandTypes GetTypes()
+        public void OnFrame()
+        {
+        }
+
+        private PriceRandTypes GetItemTypes()
         {
             var roll = MathTool.GetRandom(100);
             if (roll <= 40)

@@ -14,26 +14,36 @@ using TaleofMonsters.Forms.CMain;
 
 namespace TaleofMonsters.Forms.Items
 {
-    internal class GameShopItem : IDisposable
+    internal class GameShopItem : ICellItem
     {
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Width { get { return 170; } }
+        public int Height { get { return 101; } }
+
         private bool show;
         private ImageToolTip tooltip = SystemToolTip.Instance;
         private VirtualRegion vRegion;
 
         private int productId;
-        private int x, y, width, height;
         private BasePanel parent;
         private BitmapButton bitmapButtonBuy;
 
-        public GameShopItem(BasePanel prt, int x, int y, int width, int height)
+
+        public GameShopItem(BasePanel prt)
         {
             parent = prt;
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
+        }
+
+        public void Init(int idx)
+        {
+            vRegion = new VirtualRegion(parent);
+            vRegion.AddRegion(new PictureAnimRegion(1, X + 11, Y + 19, 56, 56, PictureRegionCellType.Item, 0));
+            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
+            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+
             this.bitmapButtonBuy = new BitmapButton();
-            bitmapButtonBuy.Location = new Point(x + 125, y + 70);
+            bitmapButtonBuy.Location = new Point(X + 125, Y + 70);
             bitmapButtonBuy.Size = new Size(35, 20);
             this.bitmapButtonBuy.Click += new System.EventHandler(this.pictureBoxBuy_Click);
             this.bitmapButtonBuy.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
@@ -45,16 +55,9 @@ namespace TaleofMonsters.Forms.Items
             parent.Controls.Add(bitmapButtonBuy);
         }
 
-        public void Init()
+        public void RefreshData(object data)//商品id
         {
-            vRegion = new VirtualRegion(parent);
-            vRegion.AddRegion(new PictureAnimRegion(1, x + 11, y + 19, 56, 56, PictureRegionCellType.Item, 0));
-            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
-            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
-        }
-
-        public void RefreshData(int id)//商品id
-        {
+            var id = (int)data;
             productId = id;
             GameShopConfig gameShopConfig = ConfigData.GetGameShopConfig(id);
             bitmapButtonBuy.Visible = id != 0;
@@ -68,7 +71,7 @@ namespace TaleofMonsters.Forms.Items
                 vRegion.SetRegionType(1, !isEquip ? PictureRegionCellType.Item : PictureRegionCellType.Equip);
             }
 
-            parent.Invalidate(new Rectangle(x, y, width, height));
+            parent.Invalidate(new Rectangle(X, Y, Width, Height));
         }
 
 
@@ -146,7 +149,7 @@ namespace TaleofMonsters.Forms.Items
         public void Draw(Graphics g)
         {
             Image back = PicLoader.Read("System", "ShopItemBack.JPG");
-            g.DrawImage(back, x, y, width - 1, height - 1);
+            g.DrawImage(back, X, Y, Width - 1, Height - 1);
             back.Dispose();
 
             if (show)
@@ -161,18 +164,23 @@ namespace TaleofMonsters.Forms.Items
                     price = Math.Max(1, price/GameConstants.DiamondToGold);
                 Font fontsong = new Font("宋体", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
                 Brush brush = new SolidBrush(Color.FromName(fontcolor));
-                g.DrawString(name, fontsong, brush, x + 76, y + 9);
+                g.DrawString(name, fontsong, brush, X + 76, Y + 9);
                 brush.Dispose();
-                g.DrawString(string.Format("{0,3:D}", price), fontsong, Brushes.PaleTurquoise, x + 80, y + 37);
+                g.DrawString(string.Format("{0,3:D}", price), fontsong, Brushes.PaleTurquoise, X + 80, Y + 37);
                 fontsong.Dispose();
                 if (gameShopConfig.UseDiamond)
-                    g.DrawImage(HSIcons.GetIconsByEName("res8"), x + 110, y + 35, 16, 16);
+                    g.DrawImage(HSIcons.GetIconsByEName("res8"), X + 110, Y + 35, 16, 16);
                 else
-                    g.DrawImage(HSIcons.GetIconsByEName("res1"), x + 110, y + 35, 16, 16);
+                    g.DrawImage(HSIcons.GetIconsByEName("res1"), X + 110, Y + 35, 16, 16);
 
                 vRegion.Draw(g);
             }
         }
+
+        public void OnFrame()
+        {
+        }
+
         public void Dispose()
         {
         }

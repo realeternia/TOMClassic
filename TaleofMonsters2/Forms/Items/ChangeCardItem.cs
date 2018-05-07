@@ -10,37 +10,26 @@ using TaleofMonsters.Forms.Items.Regions;
 
 namespace TaleofMonsters.Forms.Items
 {
-    internal class ChangeCardItem : IDisposable
+    internal class ChangeCardItem : ICellItem
     {
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Width { get { return 193; } }
+        public int Height { get { return 56; } }
+
         private int index;
         private ChangeCardForm.ChangeCardData changeInfo;
         private bool show;
         private ImageToolTip tooltip = SystemToolTip.Instance;
         private VirtualRegion vRegion;
 
-        private int x, y, width, height;
         private BasePanel parent;
         private BitmapButton bitmapButtonBuy;
         private Color backColor;
 
-        public ChangeCardItem(BasePanel prt, int x, int y, int width, int height)
+        public ChangeCardItem(BasePanel prt)
         {
             parent = prt;
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
-            this.bitmapButtonBuy = new BitmapButton();
-            bitmapButtonBuy.Location = new Point(x + 152, y + 30);
-            bitmapButtonBuy.Size = new Size(35, 20);
-            this.bitmapButtonBuy.Click += new System.EventHandler(this.pictureBoxBuy_Click);
-            this.bitmapButtonBuy.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
-            bitmapButtonBuy.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            bitmapButtonBuy.ForeColor = Color.White;
-            bitmapButtonBuy.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("tsk7");
-            bitmapButtonBuy.IconSize = new Size(16, 16);
-            bitmapButtonBuy.IconXY = new Point(10, 4);
-            parent.Controls.Add(bitmapButtonBuy);
         }
 
         public void Init(int idx)
@@ -60,14 +49,27 @@ namespace TaleofMonsters.Forms.Items
             }
 
             vRegion = new VirtualRegion(parent);
-            vRegion.AddRegion(new PictureAnimRegion(1, x + 5, y + 8, 40, 40, PictureRegionCellType.Card, 0));
-            vRegion.AddRegion(new PictureAnimRegion(2, x + 97, y + 8, 40, 40, PictureRegionCellType.Card, 0));
+            vRegion.AddRegion(new PictureAnimRegion(1, X + 5, Y + 8, 40, 40, PictureRegionCellType.Card, 0));
+            vRegion.AddRegion(new PictureAnimRegion(2, X + 97, Y + 8, 40, 40, PictureRegionCellType.Card, 0));
             vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+
+            this.bitmapButtonBuy = new BitmapButton();
+            bitmapButtonBuy.Location = new Point(X + 152, Y + 30);
+            bitmapButtonBuy.Size = new Size(35, 20);
+            this.bitmapButtonBuy.Click += new System.EventHandler(this.pictureBoxBuy_Click);
+            this.bitmapButtonBuy.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack2.PNG");
+            bitmapButtonBuy.Font = new Font("宋体", 8 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            bitmapButtonBuy.ForeColor = Color.White;
+            bitmapButtonBuy.IconImage = TaleofMonsters.Core.HSIcons.GetIconsByEName("tsk7");
+            bitmapButtonBuy.IconSize = new Size(16, 16);
+            bitmapButtonBuy.IconXY = new Point(10, 4);
+            parent.Controls.Add(bitmapButtonBuy);
         }
 
-        public void RefreshData(ChangeCardForm.ChangeCardData change)
+        public void RefreshData(object data)
         {
+            var change = (ChangeCardForm.ChangeCardData) data;
             if (!change.IsEmpty())
             {
                 changeInfo = change;
@@ -87,7 +89,7 @@ namespace TaleofMonsters.Forms.Items
                 show = false;
             }
 
-            parent.Invalidate(new Rectangle(x, y, width, height));
+            parent.Invalidate(new Rectangle(X, Y, Width, Height));
         }
         
         private void virtualRegion_RegionEntered(int info, int mx, int my, int key)
@@ -124,26 +126,31 @@ namespace TaleofMonsters.Forms.Items
         public void Draw(Graphics g)
         {
             SolidBrush sb= new SolidBrush(backColor);
-            g.FillRectangle(sb, x, y, width, height);
+            g.FillRectangle(sb, X, Y, Width, Height);
             sb.Dispose();
-            g.DrawRectangle(Pens.White, x, y, width - 1,height - 1);
+            g.DrawRectangle(Pens.White, X, Y, Width - 1, Height - 1);
 
             if (show)
             {
                 Image img = PicLoader.Read("System", "ArrowS.PNG");
-                g.DrawImage(img, x + 54,y+19, 35, 20);
+                g.DrawImage(img, X + 54, Y + 19, 35, 20);
                 img.Dispose();
 
                 if (!bitmapButtonBuy.Visible)
                 {
                     Font font = new Font("微软雅黑", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-                    g.DrawString("完成", font, Brushes.LightGreen, x + 152, y + 30);
+                    g.DrawString("完成", font, Brushes.LightGreen, X + 152, Y + 30);
                     font.Dispose();
                 }
 
                 vRegion.Draw(g);
             }
         }
+
+        public void OnFrame()
+        {
+        }
+
         public void Dispose()
         {
         }
