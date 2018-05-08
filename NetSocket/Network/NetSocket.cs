@@ -241,7 +241,7 @@ namespace JLM.NetSocket
 			}
 			catch (Exception ex)
             {
-                LogHandlerRegister.Log("Close Cleanup" + ex);
+                LogHandlerRegister.Log("Close Cleanup " + ex);
 			}
 		}
 		#endregion

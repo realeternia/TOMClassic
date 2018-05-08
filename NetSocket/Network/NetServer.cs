@@ -73,12 +73,12 @@ namespace JLM.NetSocket
             }
             catch (SocketException ex)
             {
-                this.Close("Listen Socket Exception");
+                this.Close("Listen Socket Exception ");
                 LogHandlerRegister.Log("Listen Socket " + ex);
             }
             catch (Exception ex)
             {
-                LogHandlerRegister.Log("Listen Socket " + ex);
+                LogHandlerRegister.Log("Listen Socket2 " + ex);
             }
         }
         #endregion

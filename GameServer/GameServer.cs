@@ -67,8 +67,11 @@ namespace GameServer
 
         private void server_ConnectionRequested(object sender, NetSockConnectionRequestEventArgs e)
         {
-            Logger.Log("Connection Requested: " + ((System.Net.IPEndPoint)e.Client.RemoteEndPoint).Address.ToString());
-            this.server.Accept(e.Client);
+            if (e.Client.Connected)
+            {
+                Logger.Log("Connection Requested: " + ((System.Net.IPEndPoint) e.Client.RemoteEndPoint).Address.ToString());
+                this.server.Accept(e.Client);
+            }
         }
 
         private void server_Connected(object sender, NetSocketConnectedEventArgs e)
