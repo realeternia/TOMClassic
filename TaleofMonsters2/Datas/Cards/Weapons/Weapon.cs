@@ -57,11 +57,11 @@ namespace TaleofMonsters.Datas.Cards.Weapons
         {
             CardProductMarkTypes mark = CardProductMarkTypes.Null;
             var cardData = CardConfigManager.GetCardConfig(WeaponConfig.Id);
-            if (cardData.Quality == CardQualityTypes.Legend)
+            if (cardData.Quality == QualityTypes.Legend)
             {
                 mark = CardProductMarkTypes.Only;
             }
-            else if (cardData.Quality < CardQualityTypes.Excel && MathTool.GetRandom(10) > 7)
+            else if (cardData.Quality < QualityTypes.Excel && MathTool.GetRandom(10) > 7)
             {
                 mark = CardProductMarkTypes.Sale;
             }
@@ -85,7 +85,7 @@ namespace TaleofMonsters.Datas.Cards.Weapons
         {
             Level = level;
 
-            var standardValue = CardAssistant.GetCardModify(WeaponConfig.Star, level, (CardQualityTypes)WeaponConfig.Quality, WeaponConfig.Modify);
+            var standardValue = CardAssistant.GetCardModify(WeaponConfig.Star, level, (QualityTypes)WeaponConfig.Quality, WeaponConfig.Modify);
             standardValue = (int)((float)standardValue * 4 / WeaponConfig.Dura * (1 + (WeaponConfig.Dura - 4) * 0.1));//耐久低的武器总值削减
             Atk = standardValue * (WeaponConfig.AtkP) / 100;
             PArmor = standardValue * (WeaponConfig.PArmor) / 100*5;

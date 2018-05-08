@@ -42,7 +42,7 @@ namespace TaleofMonsters.Datas.Equips
             level = lv;
 
             EquipConfig equipConfig = ConfigData.GetEquipConfig(TemplateId);
-            var standardValue = CardAssistant.GetCardModify(3, level, (CardQualityTypes)equipConfig.Quality, 0);
+            var standardValue = CardAssistant.GetCardModify(3, level, (QualityTypes)equipConfig.Quality, 0);
             atk = (int)(standardValue * (0 + equipConfig.AtkP*0.6) / 100); //200
             hp = (int)(standardValue * (0 + equipConfig.VitP*2.4)*5 / 100); //200
             attr = (int)(standardValue * (0 + equipConfig.Attr * 5) / 100); //200

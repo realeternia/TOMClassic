@@ -57,7 +57,7 @@
         Terrain = 203,
     }
 
-    internal enum CardQualityTypes
+    internal enum QualityTypes
     {
         Common = 0,
         Good = 1,
@@ -66,14 +66,6 @@
         Legend = 4,
     }
 
-    internal enum EquipQualityTypes
-    {
-        Common = 0,
-        Good = 1,
-        Excel = 2,
-        Epic = 3,
-        Legend = 4,
-    }
     internal enum HItemTypes
     {
         Common = 1, //用于type

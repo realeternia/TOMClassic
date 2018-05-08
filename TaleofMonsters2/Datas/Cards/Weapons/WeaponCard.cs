@@ -81,14 +81,10 @@ namespace TaleofMonsters.Datas.Cards.Weapons
             Brush lineBack = new SolidBrush(Color.FromArgb(215, 210, 200));
             g.FillRectangle(headerBack, offX + 10, basel, 180, 20);
             for (int i = 0; i < 1; i++)
-            {
                 g.FillRectangle(lineBack, offX + 10, basel + 20 + i * 30, 180, 15);
-            }
             g.FillRectangle(headerBack, offX + 10, basel + 40, 180, 20);
             for (int i = 0; i < 4; i++)
-            {
                 g.FillRectangle(lineBack, offX + 10, basel + 75 + i * 30, 180, 15);
-            }
             g.FillRectangle(headerBack, offX + 10, basel + 198, 180, 20);
             headerBack.Dispose();
             lineBack.Dispose();
@@ -103,7 +99,7 @@ namespace TaleofMonsters.Datas.Cards.Weapons
             g.DrawString(string.Format("Lv{0:00}", card.Level), fontsong, Brushes.Indigo, 13 + offX, basel + 22);
             g.DrawImage(HSIcons.GetIconsByEName("oth10"), 56 + offX, basel + 22, 14, 14);
             g.DrawString(string.Format("({0}/{1})", card.Exp, ExpTree.GetNextRequiredCard(card.Level)), fontsong, Brushes.RoyalBlue, 70 + offX, basel + 22);
-            var strPoint = string.Format("强度 {0}", CardAssistant.GetCardModify(Star, weapon.Level, (CardQualityTypes)weapon.WeaponConfig.Quality, weapon.WeaponConfig.Modify));
+            var strPoint = string.Format("强度 {0}", CardAssistant.GetCardModify(Star, weapon.Level, (QualityTypes)weapon.WeaponConfig.Quality, weapon.WeaponConfig.Modify));
             g.DrawString(strPoint, fontblack, Brushes.White, offX + 10, basel + 42);
             Adder add = new Adder(basel + 61, 15);
             g.DrawString(string.Format("耐久{0,4:D}", weapon.Dura), fontsong, sb, 10 + offX, add.Next);
@@ -175,15 +171,25 @@ namespace TaleofMonsters.Datas.Cards.Weapons
             g.DrawString("技能", fontblack, Brushes.White, offX + 10, basel + 200);
             if (weapon.WeaponConfig.SkillId != 0)
             {
+                var quality = SkillBook.GetSkillQuality(weapon.WeaponConfig.SkillId, weapon.WeaponConfig.Percent);
                 var skillConfig = ConfigData.GetSkillConfig(weapon.WeaponConfig.SkillId);
                 g.DrawImage(SkillBook.GetSkillImage(weapon.WeaponConfig.SkillId), offX + 10, basel + 221, 40, 40);
 
+                var pen = new Pen(Color.FromName(HSTypes.I2QualityColor(quality)), 4);
+                g.DrawRectangle(pen, offX + 10, basel + 221, 40, 40);
+                pen.Dispose();
+
                 Skill skillData = new Skill(weapon.WeaponConfig.SkillId);
                 skillData.UpgradeToLevel(card.Level);
-                var des = string.Format("{0}:{1}", skillConfig.Name, skillData.Descript);
+                var des = skillConfig.Name;
                 if (weapon.WeaponConfig.Percent < 100)
-                    des = string.Format("{0}-{1}%:{2}", skillConfig.Name, weapon.WeaponConfig.Percent, skillData.Descript);
-                PaintTool.DrawStringMultiLine(g, fontsong2, sb, offX + 10 + 43, basel + 221, 14, 12, des);
+                    des = string.Format("{0}-{1}%", skillConfig.Name, weapon.WeaponConfig.Percent);
+                
+                var skillQBrush = new SolidBrush(Color.FromName(HSTypes.I2QualityColor(quality)));
+                g.DrawString(des, fontsong2, skillQBrush, offX + 10 + 43, basel + 221);
+                skillQBrush.Dispose();
+                
+                PaintTool.DrawStringMultiLine(g, fontsong2, sb, offX + 10 + 43, basel + 221 + 14, 14, 12, skillData.Descript);
             }
             fontblack.Dispose();
             fontsong.Dispose();
@@ -244,13 +250,17 @@ namespace TaleofMonsters.Datas.Cards.Weapons
                 tipData.AddLine();
                 tipData.AddTextNewLine("", "Red");
                 var skillId = weapon.WeaponConfig.SkillId;
-                tipData.AddImage(SkillBook.GetSkillImage(skillId));
-
                 var skillConfig = ConfigData.GetSkillConfig(skillId);
+
+                tipData.AddImage(SkillBook.GetSkillImage(skillId));
+                var quality = SkillBook.GetSkillQuality(skillId, weapon.WeaponConfig.Percent);
+                string tp = string.Format("{0}:{1}", skillConfig.Name, weapon.WeaponConfig.Percent == 100 ? "" : string.Format("({0}%)", weapon.WeaponConfig.Percent));
+                tipData.AddText(tp, HSTypes.I2QualityColor(quality));
+                
                 string des = skillConfig.GetDescript(card.Level);
                 if (skillConfig.DescriptBuffId > 0)
                     des += ConfigData.GetBuffConfig(skillConfig.DescriptBuffId).GetDescript(card.Level);
-                tipData.AddTextLines(des,"Cyan",15,false);
+                tipData.AddTextLines(des, "White", 15, false);
             }
             if (type == CardPreviewType.Shop)
             {

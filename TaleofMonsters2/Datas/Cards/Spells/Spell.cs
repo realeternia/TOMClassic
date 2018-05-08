@@ -58,11 +58,11 @@ namespace TaleofMonsters.Datas.Cards.Spells
         {
             CardProductMarkTypes mark = CardProductMarkTypes.Null;
             var cardData = CardConfigManager.GetCardConfig(SpellConfig.Id);
-            if (cardData.Quality == CardQualityTypes.Legend)
+            if (cardData.Quality == QualityTypes.Legend)
             {
                 mark = CardProductMarkTypes.Only;
             }
-            else if (cardData.Quality < CardQualityTypes.Excel && MathTool.GetRandom(10) > 7)
+            else if (cardData.Quality < QualityTypes.Excel && MathTool.GetRandom(10) > 7)
             {
                 mark = CardProductMarkTypes.Sale;
             }
@@ -86,7 +86,7 @@ namespace TaleofMonsters.Datas.Cards.Spells
         {
             Level = level;
 
-            var standardValue = CardAssistant.GetCardModify(SpellConfig.Star, level, (CardQualityTypes)SpellConfig.Quality, SpellConfig.Modify);
+            var standardValue = CardAssistant.GetCardModify(SpellConfig.Star, level, (QualityTypes)SpellConfig.Quality, SpellConfig.Modify);
             Damage = standardValue * (SpellConfig.Damage) / 100 * 5;
             Cure = standardValue * (SpellConfig.Cure) / 100 * 5;
             Atk = standardValue * (SpellConfig.Atk) / 100;//和monster的攻击一样

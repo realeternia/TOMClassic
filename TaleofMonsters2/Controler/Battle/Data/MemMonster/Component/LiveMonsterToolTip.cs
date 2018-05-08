@@ -55,57 +55,60 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 AddText(tipData, "物甲", self.HpBar.PArmor, self.HpBar.PArmor, "LightGray", true);
             if (self.HpBar.MArmor > 0)
                 AddText(tipData, "魔甲", self.HpBar.MArmor, self.HpBar.MArmor, "DodgerBlue", true);
-            AddText(tipData, "攻击", (int)self.Atk, self.RealAtk, self.CanAttack ? "White" : "DarkGray", true);
+            AddText(tipData, "攻击", self.Atk, self.RealAtk, self.CanAttack ? "White" : "DarkGray", true);
             AddText(tipData, "移动", self.ReadMov, self.ReadMov, "White", false);
             AddText(tipData, "射程", self.RealRange, self.RealRange, "White", true);
             bool isLeft = false;
             if (self.RealDef != 0)
             {
-                AddText(tipData, "防御", (int)self.Def, self.RealDef, "White", isLeft);
+                AddText(tipData, "防御", self.Def, self.RealDef, "White", isLeft);
                 isLeft = !isLeft;
             }
             if (self.RealMag > 0)
             {
-                AddText(tipData, "魔力", (int)self.Mag, self.RealMag, "White", isLeft);
+                AddText(tipData, "魔力", self.Mag, self.RealMag, "White", isLeft);
                 isLeft = !isLeft;
             }
             if (self.RealSpd != 0)
             {
-                AddText(tipData, "攻速", (int)self.Spd, self.RealSpd, "White", isLeft);
+                AddText(tipData, "攻速", self.Spd, self.RealSpd, "White", isLeft);
                 isLeft = !isLeft;
             }
             if (self.RealHit != 0)
             {
-                AddText(tipData, "命中", (int)self.Hit, self.RealHit, "White", isLeft);
+                AddText(tipData, "命中", self.Hit, self.RealHit, "White", isLeft);
                 isLeft = !isLeft;
             }
             if (self.RealDHit != 0)
             {
-                AddText(tipData, "回避", (int)self.Dhit, self.RealDHit, "White", isLeft);
+                AddText(tipData, "回避", self.Dhit, self.RealDHit, "White", isLeft);
                 isLeft = !isLeft;
             }
             if (self.RealCrt != 0)
             {
-                AddText(tipData, "暴击", (int)self.Crt, self.RealCrt, "White", isLeft);
+                AddText(tipData, "暴击", self.Crt, self.RealCrt, "White", isLeft);
                 isLeft = !isLeft;
             }
             if (self.RealLuk != 0)
             {
-                AddText(tipData, "幸运", (int)self.Luk, self.RealLuk, "White", isLeft);
+                AddText(tipData, "幸运", self.Luk, self.RealLuk, "White", isLeft);
                 isLeft = !isLeft;
             }
 
-            foreach (var memBaseSkill in self.SkillManager.SkillList)
+            foreach (var pickSkill in self.SkillManager.SkillList)
             {
-                tipData.AddImageNewLine(SkillBook.GetSkillImage(memBaseSkill.SkillId));
+                tipData.AddImageNewLine(SkillBook.GetSkillImage(pickSkill.SkillId));
 
-                if (self.SkillManager.IsSilent && memBaseSkill.Type != SkillSourceTypes.Weapon)
+                if (self.SkillManager.IsSilent && pickSkill.Type != SkillSourceTypes.Weapon)
                 {
-                    tipData.AddText(string.Format("{0} X", memBaseSkill.SkillInfo.Name), "Red");
+                    tipData.AddText(string.Format("{0} X", pickSkill.SkillInfo.Name), "Red");
                     continue;
                 }
-                string tp = string.Format("{0}:{1}{2}", memBaseSkill.SkillInfo.Name, memBaseSkill.SkillInfo.Descript, memBaseSkill.Percent == 100 ? "" : string.Format("({0}%)", memBaseSkill.Percent));
-                tipData.AddTextLines(tp, "White", 20, false);
+
+                var quality = SkillBook.GetSkillQuality(pickSkill.SkillId, pickSkill.Percent);
+                string tp = string.Format("{0}:{1}", pickSkill.SkillInfo.Name, pickSkill.Percent == 100 ? "" : string.Format("({0}%)", pickSkill.Percent));
+                tipData.AddText(tp, HSTypes.I2QualityColor(quality));
+                tipData.AddTextLines(pickSkill.SkillInfo.Descript, "White", 15, false);
             }
             if (self.Weapon != null)
             {

@@ -56,11 +56,11 @@ namespace TaleofMonsters.Datas.Cards.Monsters
         {
             CardProductMarkTypes mark = CardProductMarkTypes.Null;
             var cardData = CardConfigManager.GetCardConfig(MonsterConfig.Id);
-            if (cardData.Quality == CardQualityTypes.Legend)
+            if (cardData.Quality == QualityTypes.Legend)
             {
                 mark = CardProductMarkTypes.Only;
             }
-            else if (cardData.Quality < CardQualityTypes.Excel && MathTool.GetRandom(10) > 7)
+            else if (cardData.Quality < QualityTypes.Excel && MathTool.GetRandom(10) > 7)
             {
                 mark = CardProductMarkTypes.Sale;
             }
@@ -84,7 +84,7 @@ namespace TaleofMonsters.Datas.Cards.Monsters
         {
             Level = level;
 
-            var standardValue = CardAssistant.GetCardModify(Star, level, (CardQualityTypes)MonsterConfig.Quality, MonsterConfig.Modify);
+            var standardValue = CardAssistant.GetCardModify(Star, level, (QualityTypes)MonsterConfig.Quality, MonsterConfig.Modify);
             Atk = standardValue * (100 + AtkP) / 100; //200
             Hp = standardValue * (100 + VitP) / 100 * 5; //200
             Cure = standardValue;

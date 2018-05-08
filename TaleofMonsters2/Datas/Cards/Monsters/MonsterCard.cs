@@ -86,16 +86,12 @@ namespace TaleofMonsters.Datas.Cards.Monsters
             basel += offY;
             Brush headerBack = new SolidBrush(Color.FromArgb(190, 175, 160));
             Brush lineBack = new SolidBrush(Color.FromArgb(215, 210, 200));
-            g.FillRectangle(headerBack, offX+10, basel, 180, 20);
+            g.FillRectangle(headerBack, offX + 10, basel, 180, 20);
             for (int i = 0; i < 1; i++)
-            {
                 g.FillRectangle(lineBack, 10 + offX, basel + 20 + i * 30, 180, 15);
-            }
             g.FillRectangle(headerBack, 10 + offX, basel + 40, 180, 20);
             for (int i = 0; i < 4; i++)
-            {
                 g.FillRectangle(lineBack, 10 + offX, basel + 75 + i * 30, 180, 15);
-            }
             g.FillRectangle(headerBack, 10 + offX, basel + 198, 180, 20);
             headerBack.Dispose();
             lineBack.Dispose();
@@ -109,7 +105,7 @@ namespace TaleofMonsters.Datas.Cards.Monsters
             g.DrawString(string.Format("Lv{0:00}", card.Level), fontsong, Brushes.Indigo, 13 + offX, basel + 22);
             g.DrawImage(HSIcons.GetIconsByEName("oth10"), 56 + offX, basel + 22, 14, 14);
             g.DrawString(string.Format("({0}/{1})", card.Exp, ExpTree.GetNextRequiredCard(card.Level)), fontsong, Brushes.RoyalBlue, 70 + offX, basel + 22);
-            var strPoint = string.Format("强度 {0}", CardAssistant.GetCardModify(Star, monster.Level, (CardQualityTypes)monster.MonsterConfig.Quality, monster.MonsterConfig.Modify));
+            var strPoint = string.Format("强度 {0}", CardAssistant.GetCardModify(Star, monster.Level, (QualityTypes)monster.MonsterConfig.Quality, monster.MonsterConfig.Modify));
             g.DrawString(strPoint, fontblack, Brushes.White, 10 + offX, basel + 42);
             Adder add = new Adder(basel + 61, 15);
             SolidBrush sb = new SolidBrush(Color.FromArgb(100, 50, 0));
@@ -164,15 +160,25 @@ namespace TaleofMonsters.Datas.Cards.Monsters
             foreach (var skill in MonsterBook.GetSkillList(monster.Id))
             {
                 int skillId = skill.Id;
+                var quality = SkillBook.GetSkillQuality(skillId, skill.Value);
                 var skillConfig = ConfigData.GetSkillConfig(skillId);
                 g.DrawImage(SkillBook.GetSkillImage(skillId), 10 + offX, basel + 221 + 45 * skillindex, 40, 40);
 
+                var pen = new Pen(Color.FromName(HSTypes.I2QualityColor(quality)), 4);
+                g.DrawRectangle(pen, offX + 10, basel + 221, 40, 40);
+                pen.Dispose();
+
                 Skill skillData = new Skill(skillId);
                 skillData.UpgradeToLevel(card.Level);
-                var des = string.Format("{0}:{1}", skillConfig.Name, skillData.Descript);
+                var des = skillConfig.Name;
                 if (skill.Value < 100)
-                    des = string.Format("{0}-{1}%:{2}", skillConfig.Name, skill.Value, skillData.Descript);
-                PaintTool.DrawStringMultiLine(g, fontsong2, sb, offX + 10 + 43, basel + 221 + 45 * skillindex, 14, 12, des);
+                    des = string.Format("{0}-{1}%", skillConfig.Name, skill.Value);
+                
+                var skillQBrush = new SolidBrush(Color.FromName(HSTypes.I2QualityColor(quality)));
+                g.DrawString(des, fontsong2, skillQBrush, offX + 10 + 43, basel + 221 + 45 * skillindex);
+                skillQBrush.Dispose();
+
+                PaintTool.DrawStringMultiLine(g, fontsong2, sb, offX + 10 + 43, basel + 221 + 45 * skillindex + 14, 14, 12, skillData.Descript);
                 skillindex++;
             }
 
@@ -228,14 +234,17 @@ namespace TaleofMonsters.Datas.Cards.Monsters
                 foreach (var skill in skillList)
                 {
                     int skillId = skill.Id;
+                    var skillConfig = ConfigData.GetSkillConfig(skillId);
                     tipData.AddTextNewLine("", "Red");
                     tipData.AddImage(SkillBook.GetSkillImage(skillId));
+                    var quality = SkillBook.GetSkillQuality(skillId, skill.Value);
+                    string tp = string.Format("{0}:{1}", skillConfig.Name, skill.Value == 100 ? "" : string.Format("({0}%)", skill.Value));
+                    tipData.AddText(tp, HSTypes.I2QualityColor(quality));
 
-                    var skillConfig = ConfigData.GetSkillConfig(skillId);
                     string des = skillConfig.GetDescript(card.Level);
                     if (skillConfig.DescriptBuffId > 0)
                         des += ConfigData.GetBuffConfig(skillConfig.DescriptBuffId).GetDescript(card.Level);
-                    tipData.AddTextLines(des, "Cyan", 15, false);
+                    tipData.AddTextLines(des, "White", 15, false);
                 }
             }
            

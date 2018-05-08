@@ -39,9 +39,29 @@ namespace TaleofMonsters.Datas.Skills
             return "";
         }
 
+        private static float GetSkillMark(int id, float rate)
+        {
+            SkillConfig skillConfig = ConfigData.GetSkillConfig(id);
+            return skillConfig.Mark*rate;
+        }
+
+        public static int GetSkillQuality(int id, float rate)
+        {
+            var mark = GetSkillMark(id, rate/100);
+            if (mark <= 2)
+                return (int)QualityTypes.Common;
+            if (mark <= 8)
+                return (int)QualityTypes.Good;
+            if (mark <= 16)
+                return (int)QualityTypes.Excel;
+            if (mark <= 30)
+                return (int)QualityTypes.Epic;
+            return (int)QualityTypes.Legend;
+        }
+
         public static Image GetSkillImage(int id)
         {
-            return GetSkillImage(id,64,64);
+            return GetSkillImage(id, 64, 64);
         }
 
         public static Image GetSkillImage(int id, int width, int height)

@@ -106,7 +106,7 @@ namespace TaleofMonsters.Datas.Cards.Spells
             g.DrawString(string.Format("Lv{0:00}", card.Level), fontsong, Brushes.Indigo, 13 + offX, basel + 22);
             g.DrawImage(HSIcons.GetIconsByEName("oth10"), 56 + offX, basel + 22, 14, 14);
             g.DrawString(string.Format("({0}/{1})", card.Exp, ExpTree.GetNextRequiredCard(card.Level)), fontsong, Brushes.RoyalBlue, 70 + offX, basel + 22);
-            var strPoint = string.Format("强度 {0}", CardAssistant.GetCardModify(Star, spell.Level, (CardQualityTypes)spell.SpellConfig.Quality, spell.SpellConfig.Modify));
+            var strPoint = string.Format("强度 {0}", CardAssistant.GetCardModify(Star, spell.Level, (QualityTypes)spell.SpellConfig.Quality, spell.SpellConfig.Modify));
             g.DrawString(strPoint, fontblack, Brushes.White, offX + 10, basel + 42);
             Adder add = new Adder(basel + 61, 15);
             g.DrawString(string.Format("伤害{0,4:D}", spell.Damage), fontsong, sb, offX + 10, add.Next);

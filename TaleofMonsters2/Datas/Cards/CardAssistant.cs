@@ -37,7 +37,7 @@ namespace TaleofMonsters.Datas.Cards
             else
                 cardBorder = "border6.PNG";
 
-            if (card.Quality == CardQualityTypes.Legend)//传说卡
+            if (card.Quality == QualityTypes.Legend)//传说卡
                 cardBorder = "border2.PNG";
             return cardBorder;
         }
@@ -76,17 +76,17 @@ namespace TaleofMonsters.Datas.Cards
             return movPunish[mov / 5];
         }
 
-        public static int GetCardModify(int star, int level, CardQualityTypes quality, int modify)
+        public static int GetCardModify(int star, int level, QualityTypes quality, int modify)
         {
             float standardValue = (int)(30 * (1 + (star - 1) * GameConstants.CardStrengthStar) * (1 + (level - 1) * GameConstants.CardStrengthLevel));
             var baseRate = 1 + (float)modify/200;
-            if (quality == CardQualityTypes.Legend)
+            if (quality == QualityTypes.Legend)
                 standardValue*=(baseRate + 0.4f);
-            else if (quality == CardQualityTypes.Epic)
+            else if (quality == QualityTypes.Epic)
                 standardValue *= (baseRate + 0.25f);
-            else if (quality == CardQualityTypes.Excel)
+            else if (quality == QualityTypes.Excel)
                 standardValue *= (baseRate + 0.15f);
-            else if (quality == CardQualityTypes.Good)
+            else if (quality == QualityTypes.Good)
                 standardValue *= (baseRate + 0.05f);
             else
                 standardValue *= baseRate;

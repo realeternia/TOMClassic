@@ -15,7 +15,7 @@ namespace TaleofMonsters.Core.Config
         public int Cost { get; set; }
         public int Star { get; set; }
         public string Name { get; set; }
-        public CardQualityTypes Quality { get; set; }
+        public QualityTypes Quality { get; set; }
         public int JobId { get; set; }
         public bool IsSpecial { get; set; }
         public bool IsHeroCard { get; set; } //英雄技能
@@ -39,7 +39,7 @@ namespace TaleofMonsters.Core.Config
                 dataList = new List<IntPair>();
             }
 
-            public void Add(int cardId, CardQualityTypes quality)
+            public void Add(int cardId, QualityTypes quality)
             {
                 IntPair data = new IntPair
                 {
@@ -138,7 +138,7 @@ namespace TaleofMonsters.Core.Config
                     Cost = monsterConfig.Cost,
                     Star = monsterConfig.Star,
                     Name = monsterConfig.Name,
-                    Quality = (CardQualityTypes)monsterConfig.Quality,
+                    Quality = (QualityTypes)monsterConfig.Quality,
                     JobId = monsterConfig.JobId,
                     IsSpecial = monsterConfig.IsSpecial == 1,
                     IsHeroCard = monsterConfig.IsHeroCard == 1,
@@ -163,7 +163,7 @@ namespace TaleofMonsters.Core.Config
                     Cost = weaponConfig.Cost,
                     Star = weaponConfig.Star,
                     Name = weaponConfig.Name,
-                    Quality = (CardQualityTypes)weaponConfig.Quality,
+                    Quality = (QualityTypes)weaponConfig.Quality,
                     JobId = weaponConfig.JobId,
                     IsSpecial = weaponConfig.IsSpecial == 1,
                     IsHeroCard = weaponConfig.IsHeroCard == 1,
@@ -188,7 +188,7 @@ namespace TaleofMonsters.Core.Config
                     Cost = spellConfig.Cost,
                     Star = spellConfig.Star,
                     Name = spellConfig.Name,
-                    Quality = (CardQualityTypes)spellConfig.Quality,
+                    Quality = (QualityTypes)spellConfig.Quality,
                     JobId = spellConfig.JobId,
                     IsSpecial = spellConfig.IsSpecial == 1,
                     IsHeroCard = spellConfig.IsHeroCard == 1,

@@ -48,26 +48,21 @@ namespace TaleofMonsters.Tools
 
         public static void AddImage(string path, Image img)
         {
-            ImageItem item = new ImageItem();
-            item.Image = img;
-            item.Time = TimeTool.DateTimeToUnixTime(DateTime.Now);
-            if (images.ContainsKey(path))
+            ImageItem item = new ImageItem
             {
-                images[path] = item;
-            }
-            else
-            {
-                images.Add(path, item);     
-            }
+                Image = img,
+                Time = TimeTool.DateTimeToUnixTime(DateTime.Now)
+            };
+            images[path] = item;
             count++;
         }
 
         public static void Compress()
         {
             int now = TimeTool.DateTimeToUnixTime(DateTime.Now);
-            foreach (ImageItem item in images.Values)
+            foreach (var item in images.Values)
             {
-                if (item.Image!=null)
+                if (item.Image != null)
                 {
                     int size = item.Image.Width*item.Image.Height;
                     int time = 60*10000/size;
