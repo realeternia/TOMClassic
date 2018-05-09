@@ -86,12 +86,9 @@ namespace TaleofMonsters.Forms.Items.Regions
                     preAction = () =>
                     {
                         var peopleConfig = ConfigData.GetPeopleConfig(nid);
-                        if (peopleConfig.Quality > 0)
-                        {
-                            var brush = new SolidBrush(Color.FromName(HSTypes.I2QualityColor(peopleConfig.Quality)));
-                            g.FillRectangle(brush, X + 3, Y + 3, Width - 6, Height - 6);
-                            brush.Dispose();
-                        }
+                        var brush = new SolidBrush(Color.FromName(HSTypes.I2QualityColorD(peopleConfig.Quality)));
+                        g.FillRectangle(brush, X + 3, Y + 3, Width - 6, Height - 6);
+                        brush.Dispose();
                     };
                 }
                 else if (type == PictureRegionCellType.HeroSkill)

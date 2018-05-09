@@ -164,8 +164,8 @@ namespace TaleofMonsters.Datas.Cards.Monsters
                 var skillConfig = ConfigData.GetSkillConfig(skillId);
                 g.DrawImage(SkillBook.GetSkillImage(skillId), 10 + offX, basel + 221 + 45 * skillindex, 40, 40);
 
-                var pen = new Pen(Color.FromName(HSTypes.I2QualityColor(quality)), 4);
-                g.DrawRectangle(pen, offX + 10, basel + 221, 40, 40);
+                var pen = new Pen(Color.FromName(HSTypes.I2QualityColorD(quality)), 4); //使用暗色
+                g.DrawRectangle(pen, offX + 10, basel + 221 + 45 * skillindex, 40, 40);
                 pen.Dispose();
 
                 Skill skillData = new Skill(skillId);
@@ -174,7 +174,7 @@ namespace TaleofMonsters.Datas.Cards.Monsters
                 if (skill.Value < 100)
                     des = string.Format("{0}-{1}%", skillConfig.Name, skill.Value);
                 
-                var skillQBrush = new SolidBrush(Color.FromName(HSTypes.I2QualityColor(quality)));
+                var skillQBrush = new SolidBrush(Color.FromName(HSTypes.I2QualityColorD(quality)));//使用暗色
                 g.DrawString(des, fontsong2, skillQBrush, offX + 10 + 43, basel + 221 + 45 * skillindex);
                 skillQBrush.Dispose();
 

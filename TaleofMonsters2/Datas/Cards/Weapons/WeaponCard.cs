@@ -175,7 +175,7 @@ namespace TaleofMonsters.Datas.Cards.Weapons
                 var skillConfig = ConfigData.GetSkillConfig(weapon.WeaponConfig.SkillId);
                 g.DrawImage(SkillBook.GetSkillImage(weapon.WeaponConfig.SkillId), offX + 10, basel + 221, 40, 40);
 
-                var pen = new Pen(Color.FromName(HSTypes.I2QualityColor(quality)), 4);
+                var pen = new Pen(Color.FromName(HSTypes.I2QualityColorD(quality)), 4);//使用暗色
                 g.DrawRectangle(pen, offX + 10, basel + 221, 40, 40);
                 pen.Dispose();
 
@@ -185,7 +185,7 @@ namespace TaleofMonsters.Datas.Cards.Weapons
                 if (weapon.WeaponConfig.Percent < 100)
                     des = string.Format("{0}-{1}%", skillConfig.Name, weapon.WeaponConfig.Percent);
                 
-                var skillQBrush = new SolidBrush(Color.FromName(HSTypes.I2QualityColor(quality)));
+                var skillQBrush = new SolidBrush(Color.FromName(HSTypes.I2QualityColorD(quality)));//使用暗色
                 g.DrawString(des, fontsong2, skillQBrush, offX + 10 + 43, basel + 221);
                 skillQBrush.Dispose();
                 

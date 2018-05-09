@@ -1,4 +1,5 @@
-﻿using ConfigDatas;
+﻿using System.Drawing;
+using ConfigDatas;
 
 namespace TaleofMonsters.Core
 {
@@ -74,7 +75,13 @@ namespace TaleofMonsters.Core
 
         public static string I2QualityColor(int id)
         {
-            string[] rt = { "White", "Green", "DodgerBlue", "Violet", "Orange", "Gray", "Gray", "", "", "Yellow" };
+            string[] rt = { "White", "Green", "DodgerBlue", "Violet", "Orange", "Gray", "Gray", "", "", "" };
+            return rt[id];
+        }
+
+        public static string I2QualityColorD(int id)
+        {
+            string[] rt = { "DimGray", "DarkGreen", "MediumBlue", "DarkViolet", "OrangeRed", "Gray", "Gray", "", "", "" };
             return rt[id];
         }
 

@@ -56,9 +56,7 @@ namespace TaleofMonsters.Forms.MagicBook
             foreach (PeopleConfig peopleConfig in ConfigData.PeopleDict.Values)
             {
                 if (PeopleBook.IsPeople(peopleConfig.Id) && peopleConfig.Emethod != "")
-                {
                     people.Add(peopleConfig.Id);
-                }
             }
             totalCount = people.Count;
             UpdateButtonState();
@@ -159,7 +157,14 @@ namespace TaleofMonsters.Forms.MagicBook
         private void SelectPanel_DrawCell(Graphics g, int info, int xOff, int yOff, bool inMouseOn, bool isTarget, bool onlyBorder)
         {
             if (!onlyBorder)
+            {
+                var peopleConfig = ConfigData.GetPeopleConfig(info);
+                var brush = new SolidBrush(Color.FromName(HSTypes.I2QualityColorD(peopleConfig.Quality)));
+                g.FillRectangle(brush, xOff + 3, yOff + 3, cardWidth - 6, cardHeight - 6);
+                brush.Dispose();
+
                 g.DrawImage(PeopleBook.GetPersonImage(info), xOff, yOff, cardWidth, cardHeight);
+            }
 
             if (inMouseOn || isTarget)
             {
@@ -168,8 +173,8 @@ namespace TaleofMonsters.Forms.MagicBook
                 g.FillRectangle(yellowbrush, xOff, yOff, cardWidth, cardHeight);
                 yellowbrush.Dispose();
 
-                Pen yellowpen = new Pen(borderColor, 3);
-                g.DrawRectangle(yellowpen, xOff, yOff, cardWidth - 3, cardHeight - 3);
+                Pen yellowpen = new Pen(borderColor, 2);
+                g.DrawRectangle(yellowpen, xOff+1, yOff+1, cardWidth - 2, cardHeight - 2);
                 yellowpen.Dispose();
             }
         }
