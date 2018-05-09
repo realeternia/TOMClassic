@@ -20,6 +20,7 @@ namespace TaleofMonsters.Rpc
         private static NLCoroutineManager coroutineManager;
 
         private static DateTime lastHeartbeatTime = DateTime.Now;
+        private static bool hasConnect;
 
         static TalePlayer()
         {
@@ -31,7 +32,7 @@ namespace TaleofMonsters.Rpc
         {
             timerManager.DoTimer();
 
-            if (client != null)
+            if (hasConnect && client != null)
             {
                 if (client.State == SocketState.Closed || client.State == SocketState.Closing)
                 {
@@ -61,11 +62,20 @@ namespace TaleofMonsters.Rpc
             C2SSender = new C2SSender(client);
             client.Connected += new EventHandler<NetSocketConnectedEventArgs>(client_Connected);
             client.DataArrived += DataArrived;
-            client.Connect(end);
+            if (!client.Connect(end))
+                MainForm.Instance.ShowDisconnectSafe("无法连接到服务器");
+        }
+
+        private static void client_Connected(object sender, NetSocketConnectedEventArgs e)
+        {
+            NLog.Debug("Connected: " + e.SourceIP);
+            C2SSender.Login(UserProfile.ProfileName);
+            hasConnect = true;
         }
 
         public static void Close()
         {
+            hasConnect = false;
             if (client != null && client.State == SocketState.Connected)
                 client.Close("Connect");
         }
@@ -96,10 +106,5 @@ namespace TaleofMonsters.Rpc
             }
         }
 
-        private static void client_Connected(object sender, NetSocketConnectedEventArgs e)
-        {
-            NLog.Debug("Connected: " + e.SourceIP);
-            C2SSender.Login(UserProfile.ProfileName);
-        }
     }
 }

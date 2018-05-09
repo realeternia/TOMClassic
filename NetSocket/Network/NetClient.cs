@@ -29,10 +29,10 @@ namespace JLM.NetSocket
 
         #region Connect
         /// <summary>Connect to the computer specified by Host and Port</summary>
-        public void Connect(IPEndPoint endPoint)
+        public bool Connect(IPEndPoint endPoint)
         {
             if (this.state == SocketState.Connected)
-                return; // already connecting to something
+                return true; // already connecting to something
 
             try
             {
@@ -44,13 +44,24 @@ namespace JLM.NetSocket
                 if (this.socket == null)
                     this.socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-                this.socket.BeginConnect(endPoint, new AsyncCallback(this.ConnectCallback), this.socket);
+                IAsyncResult connResult = this.socket.BeginConnect(endPoint, new AsyncCallback(this.ConnectCallback), this.socket);
+                connResult.AsyncWaitHandle.WaitOne(500, true);  //µÈ´ý500mÃë
+
+                if (!connResult.IsCompleted)
+                {
+                    this.Close("Connect Exception");
+                }
+                else
+                {
+                    return true;
+                }
             }
             catch (Exception ex)
             {
                 LogHandlerRegister.Log("Connect " + ex);
                 this.Close("Connect Exception");
             }
+            return false;
         }
 
         /// <summary>Callback for BeginConnect</summary>
