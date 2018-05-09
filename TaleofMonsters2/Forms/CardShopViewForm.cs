@@ -61,17 +61,14 @@ namespace TaleofMonsters.Forms
                 itemBox.AddItem(item);
                 item.Init(i);
             }
-            virtualRegion_RegionClick(1,0,0, MouseButtons.Left);
+            virtualRegion_RegionClick(1, 0, 0, MouseButtons.Left);
 
             SetBgm("TOM003.mp3");
             OnFrame(0, 0);
         }
 
         public override void RefreshInfo()
-        {
-            products = UserProfile.InfoWorld.GetCardProductsByType((CardTypes)shelf);
-            Array.Sort(products, new CompareByMark());
-            nlPageSelector1.TotalPage = (products.Length - 1) / 18 + 1;
+        {        
             for (int i = 0; i < 18; i++)
                 itemBox.Refresh(i, (page * 18 + i < products.Length) ? products[page * 18 + i] : new DbCardProduct());
             Invalidate();
@@ -81,6 +78,9 @@ namespace TaleofMonsters.Forms
         {
             page = 0;
             shelf = type;
+            products = UserProfile.InfoWorld.GetCardProductsByType((CardTypes)shelf);
+            Array.Sort(products, new CompareByMark());
+            nlPageSelector1.TotalPage = (products.Length - 1) / 18 + 1;
             RefreshInfo();
         }
 

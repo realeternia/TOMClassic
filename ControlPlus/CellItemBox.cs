@@ -23,7 +23,6 @@ namespace ControlPlus
 
         public void AddItem(ICellItem cell)
         {
-            itemList.Add(cell);
             if (itemList.Count == 0)
             {
                 cell.X = X;
@@ -40,6 +39,7 @@ namespace ControlPlus
                     cell.Y += lastCell.Height;
                 }
             }
+            itemList.Add(cell);
         }
 
         public void Refresh(int index, object data)
@@ -66,6 +66,7 @@ namespace ControlPlus
                 itemList[i].Dispose();
                 itemList[i] = null;
             }
+            itemList.Clear();
         }
     }
 
