@@ -331,4 +331,11 @@
         SceneQuestRandPeopleId = 1101,
         DungeonQuestOffside = 1102,
     }
+
+    internal enum AiSpellCastTypes
+    {
+        AtWill = 0,
+        Enemy = 100,
+        Friend = 200,
+    }
 }

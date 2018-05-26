@@ -110,15 +110,21 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 SpellConfig spellConfig = ConfigData.GetSpellConfig(card.CardId);
                 Point targetPos = Point.Empty;
                 LiveMonster targetMonster = null;
-                if (BattleTargetManager.IsSpellNullTarget(spellConfig.Target))
+                var aiGuideType = (AiSpellCastTypes) spellConfig.AIGuide;
+                if (aiGuideType == AiSpellCastTypes.Enemy)
+                {
+                    targetMonster = GetSpellUnitTarget(true);
+                    targetPos = targetMonster.CenterPosition;
+                }
+                else if (aiGuideType == AiSpellCastTypes.Friend)
+                {
+                    targetMonster = GetSpellUnitTarget(false);
+                    targetPos = targetMonster.CenterPosition;
+                }
+                else if (aiGuideType == AiSpellCastTypes.AtWill)
                 {
                     targetPos = new Point(self.IsLeft ? MathTool.GetRandom(200, 300) : MathTool.GetRandom(600, 700),
                         MathTool.GetRandom(size * 3 / 10, row * size - size * 3 / 10));
-                }
-                else if (BattleTargetManager.IsSpellUnitTarget(spellConfig.Target))
-                {
-                    targetMonster = GetSpellUnitTarget(spellConfig);
-                    targetPos = targetMonster.CenterPosition;
                 }
 
                 self.DoSpell(targetMonster, card, targetPos);
@@ -127,7 +133,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             return false;
         }
 
-        private LiveMonster GetSpellUnitTarget(SpellConfig spellConfig)
+        private LiveMonster GetSpellUnitTarget(bool getEnemy)
         {
             var targetStar = -1;
             int tar = -1;
@@ -138,8 +144,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 LiveMonster pickMon = BattleManager.Instance.MonsterQueue[i];
                 if (pickMon.IsGhost)
                     continue;
-                if ((pickMon.IsLeft != self.IsLeft && spellConfig.Target[1] != 'F') ||
-                    (pickMon.IsLeft == self.IsLeft && spellConfig.Target[1] != 'E'))
+                if ((pickMon.IsLeft != self.IsLeft && getEnemy) ||
+                    (pickMon.IsLeft == self.IsLeft && !getEnemy))
                 {
                     if (tar == -1 || pickMon.Avatar.Star > targetStar)
                     {
@@ -159,9 +165,10 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             for (int i = 0; i < BattleManager.Instance.MonsterQueue.Count; i++)
             {
                 LiveMonster pickMon = BattleManager.Instance.MonsterQueue[i];
-                if (!pickMon.IsGhost && pickMon.IsLeft == self.IsLeft && pickMon.Weapon == null &&
-                    pickMon.Hp > pickMon.RealMaxHp/2)
+                if (!pickMon.IsGhost && pickMon.IsLeft == self.IsLeft && pickMon.Weapon == null)
                 {
+                    if (pickMon.HpRate < 0.5)
+                        continue;
                     if (!pickMon.CanAddWeapon()) //建筑无法使用武器
                         continue;
 
@@ -185,7 +192,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 int y = MathTool.GetRandom(0, BattleManager.Instance.MemMap.RowCount);
                 x *= size;
                 y *= size;
-                if (BattleLocationManager.IsPlaceCanSummon(mid,x, y,false))
+                if (BattleLocationManager.IsPlaceCanSummon(mid, x, y, false))
                     return new Point(x, y);
             }
         }
