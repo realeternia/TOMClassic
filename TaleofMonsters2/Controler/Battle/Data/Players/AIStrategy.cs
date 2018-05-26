@@ -81,68 +81,33 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                     if (self.CheckUseCard(card, self, rival) != ErrorConfig.Indexer.OK)
                         continue;
 
-                    TryUseCard(card, size, row);
+                    if(TryUseCard(card, size, row)) //一回合只使用一张卡
+                        break;
                 }
             }
        
         }
 
-        private void TryUseCard(ActiveCard card, int size, int row)
+        private bool TryUseCard(ActiveCard card, int size, int row)
         {
-            int tar = -1;
             if (card.CardType == CardTypes.Monster)
             {
-                Point monPos = GetMonsterPoint(card.CardId, false);
+                Point monPos = GetSummonPoint(card.CardId, false);
                 self.UseMonster(card, monPos);
+                return true;
             }
             else if (card.CardType == CardTypes.Weapon)
             {
-                for (int i = 0; i < BattleManager.Instance.MonsterQueue.Count; i++)
+                LiveMonster target = GetWeaponTarget();
+                if (target != null)
                 {
-                    LiveMonster monster = BattleManager.Instance.MonsterQueue[i];
-                    if (!monster.IsGhost && monster.IsLeft == self.IsLeft && monster.Weapon == null &&
-                        monster.Hp > monster.RealMaxHp/2)
-                    {
-                        if (!monster.CanAddWeapon()) //建筑无法使用武器
-                            continue;
-
-                        if (tar == -1 || monster.Avatar.Star > BattleManager.Instance.MonsterQueue[tar].Avatar.Star)
-                            tar = i;
-                    }
+                    self.UseWeapon(target, card);
+                    return true;
                 }
-                if (tar == -1)
-                    return;
-
-                var lm = BattleManager.Instance.MonsterQueue[tar];
-                self.UseWeapon(lm, card);
             }
             else if (card.CardType == CardTypes.Spell)
             {
                 SpellConfig spellConfig = ConfigData.GetSpellConfig(card.CardId);
-                if (BattleTargetManager.IsSpellUnitTarget(spellConfig.Target))
-                {
-                    var targetStar = -1;
-                    if (tar >= 0)
-                        targetStar = BattleManager.Instance.MonsterQueue[tar].Avatar.Star;
-                    for (int i = 0; i < BattleManager.Instance.MonsterQueue.Count; i++)
-                    {
-                        LiveMonster monster = BattleManager.Instance.MonsterQueue[i];
-                        if (monster.IsGhost)
-                            continue;
-                        if ((monster.IsLeft != self.IsLeft && spellConfig.Target[1] != 'F') ||
-                            (monster.IsLeft == self.IsLeft && spellConfig.Target[1] != 'E'))
-                        {
-                            if (tar == -1 || monster.Avatar.Star > targetStar)
-                            {
-                                tar = i;
-                                targetStar = monster.Avatar.Star;
-                            }
-                        }
-                    }
-                    if (tar == -1)
-                        return;
-                }
-
                 Point targetPos = Point.Empty;
                 LiveMonster targetMonster = null;
                 if (BattleTargetManager.IsSpellNullTarget(spellConfig.Target))
@@ -152,15 +117,65 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 }
                 else if (BattleTargetManager.IsSpellUnitTarget(spellConfig.Target))
                 {
-                    targetMonster = BattleManager.Instance.MonsterQueue[tar];
+                    targetMonster = GetSpellUnitTarget(spellConfig);
                     targetPos = targetMonster.CenterPosition;
                 }
 
                 self.DoSpell(targetMonster, card, targetPos);
+                return true;
             }
+            return false;
         }
 
-        private Point GetMonsterPoint(int mid, bool isLeft)
+        private LiveMonster GetSpellUnitTarget(SpellConfig spellConfig)
+        {
+            var targetStar = -1;
+            int tar = -1;
+            if (tar >= 0)
+                targetStar = BattleManager.Instance.MonsterQueue[tar].Avatar.Star;
+            for (int i = 0; i < BattleManager.Instance.MonsterQueue.Count; i++)
+            {
+                LiveMonster pickMon = BattleManager.Instance.MonsterQueue[i];
+                if (pickMon.IsGhost)
+                    continue;
+                if ((pickMon.IsLeft != self.IsLeft && spellConfig.Target[1] != 'F') ||
+                    (pickMon.IsLeft == self.IsLeft && spellConfig.Target[1] != 'E'))
+                {
+                    if (tar == -1 || pickMon.Avatar.Star > targetStar)
+                    {
+                        tar = i;
+                        targetStar = pickMon.Avatar.Star;
+                    }
+                }
+            }
+            if (tar == -1)
+                return null;
+            return BattleManager.Instance.MonsterQueue[tar];
+        }
+
+        private LiveMonster GetWeaponTarget()
+        {
+            int tar = -1;
+            for (int i = 0; i < BattleManager.Instance.MonsterQueue.Count; i++)
+            {
+                LiveMonster pickMon = BattleManager.Instance.MonsterQueue[i];
+                if (!pickMon.IsGhost && pickMon.IsLeft == self.IsLeft && pickMon.Weapon == null &&
+                    pickMon.Hp > pickMon.RealMaxHp/2)
+                {
+                    if (!pickMon.CanAddWeapon()) //建筑无法使用武器
+                        continue;
+
+                    if (tar == -1 || pickMon.Avatar.Star > BattleManager.Instance.MonsterQueue[tar].Avatar.Star)
+                        tar = i;
+                }
+            }
+            if (tar == -1)
+                return null;
+
+            return BattleManager.Instance.MonsterQueue[tar];
+        }
+
+        private Point GetSummonPoint(int mid, bool isLeft)
         {
             int size = BattleManager.Instance.MemMap.CardSize;
             var sideCell = BattleManager.Instance.MemMap.ColumnCount / 2;
