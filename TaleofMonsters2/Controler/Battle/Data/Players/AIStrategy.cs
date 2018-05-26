@@ -1,14 +1,13 @@
 ﻿using System.Drawing;
 using ConfigDatas;
 using NarlonLib.Math;
-using TaleofMonsters.Controler.Battle.Data.MemMonster;
-using TaleofMonsters.Controler.Battle.Data.Players;
-using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
+using TaleofMonsters.Controler.Battle.Data.MemMonster;
+using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Datas;
 
-namespace TaleofMonsters.Controler.Battle
+namespace TaleofMonsters.Controler.Battle.Data.Players
 {
     internal static class AIStrategy
     {

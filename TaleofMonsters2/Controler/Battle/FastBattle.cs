@@ -1,6 +1,7 @@
 ﻿using System;
 using TaleofMonsters.Controler.Battle.Components;
 using TaleofMonsters.Controler.Battle.Data.MemMap;
+using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
 

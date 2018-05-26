@@ -93,7 +93,7 @@
     <Compile Include="Controler\Battle\Data\MemArticle\Article.cs" />
     <Compile Include="Core\Config\Config.cs" />
     <Compile Include="Core\Config\ConfigIdManager.cs" />
-    <Compile Include="Controler\Battle\AIStrategy.cs">
+    <Compile Include="Controler\Battle\Data\Players\AIStrategy.cs">
     </Compile>
     <Compile Include="Controler\Battle\Components\CardFlow.cs">
       <SubType>UserControl</SubType>
