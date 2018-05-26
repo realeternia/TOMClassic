@@ -23,6 +23,7 @@ namespace TaleofMonsters.Forms
         private CellItemBox itemBox;
 
         public string ShopName { get; set; }
+        private int shopId;
 
         public NpcShopForm()
         {
@@ -36,7 +37,8 @@ namespace TaleofMonsters.Forms
         {
             base.Init(width, height);
 
-            var shopConfig = ConfigData.GetNpcShopConfig(GetShopId());
+            shopId = GetShopId();
+            var shopConfig = ConfigData.GetNpcShopConfig(shopId);
             var itemList = new List<int>();
             for (int i = 0; i < shopConfig.SellTable.Length; i++)
                 itemList.Add(HItemBook.GetItemId(shopConfig.SellTable[i]));
@@ -72,9 +74,9 @@ namespace TaleofMonsters.Forms
             for (int i = 0; i < 12; i++)
             {
                 if (i < items.Length)
-                    itemBox.Refresh(i, items[i]);
+                    itemBox.Refresh(i, new NpcShopData { ItemId = items[i], ShopId = shopId });
                 else
-                    itemBox.Refresh(i, 0);
+                    itemBox.Refresh(i, new NpcShopData());
             }
         }
 

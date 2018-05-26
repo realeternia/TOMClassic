@@ -21,6 +21,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(id);
             Job = peopleConfig.Job;
             
+            AIModule = new AIStrategy(this);
             DeckCard[] cds = DeckBook.GetDeckByName(deck, Level);
             ArraysUtils.RandomShuffle(cds);
             if (peopleConfig.CardReduce > 0) //有的野怪卡会比较少

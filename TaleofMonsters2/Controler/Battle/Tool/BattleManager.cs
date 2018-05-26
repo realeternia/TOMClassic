@@ -90,7 +90,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
             }
          
             if (RoundMark % 10 == 0)
-                AIStrategy.AIProc(PlayerManager.RightPlayer);
+                PlayerManager.RightPlayer.AIModule.AIProc();
 
             ArticleQueue.RemoveDye();
         }

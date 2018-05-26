@@ -9,30 +9,59 @@ using TaleofMonsters.Datas;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
 {
-    internal static class AIStrategy
+    internal interface IAIStrategy
     {
-        internal static void OnInit(Player player)
+        void OnInit();
+        void AIProc();
+        void Discover(IMonster m, int[] cardId, int lv, DiscoverCardActionType type);
+    }
+
+    internal class AIStrategyTrivial : IAIStrategy
+    {
+        public void OnInit()
         {
-            var cds = player.CardsDesk.GetAllCard();
+        }
+
+        public void AIProc()
+        {
+        }
+
+        public void Discover(IMonster m, int[] cardId, int lv, DiscoverCardActionType type)
+        {
+        }
+    }
+
+    internal class AIStrategy : IAIStrategy
+    {
+        private Player self;
+
+        public AIStrategy(Player player)
+        {
+            self = player;
+        }
+
+        public void OnInit()
+        {
+            var cds = self.CardsDesk.GetAllCard();
             for (int i = 0; i < cds.Length; i++)
             {
                 var card = cds[i];
                 if (CardConfigManager.GetCardConfig(card.CardId).Star > 3) //把3费以上卡都换掉
-                    player.HandCards.RedrawCardAt(i + 1);
+                    self.HandCards.RedrawCardAt(i + 1);
             }
 
 #if DEBUG
             //int[] cardToGive = new[] { 53000019 };
             //foreach (var cardId in cardToGive)
             //{
-            //    player.HandCards.AddCard(new ActiveCard(cardId, 1, 0));
+            //    self.HandCards.AddCard(new ActiveCard(cardId, 1, 0));
             //}
 #endif
         }
 
-        internal static void AIProc(Player player)
+        public void AIProc()
         {            
-            if (player.CardNumber <= 0)
+            if (self.CardNumber <= 0)
                 return;
 
             if (MathTool.GetRandom(4) != 0)
@@ -40,15 +69,15 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
             int row = BattleManager.Instance.MemMap.RowCount;
             int size = BattleManager.Instance.MemMap.CardSize;
-            bool isLeft = player.IsLeft;
-            var rival = player == BattleManager.Instance.PlayerManager.LeftPlayer ? 
+            bool isLeft = self.IsLeft;
+            var rival = self == BattleManager.Instance.PlayerManager.LeftPlayer ? 
                 BattleManager.Instance.PlayerManager.RightPlayer : BattleManager.Instance.PlayerManager.LeftPlayer;
             
-            player.CardsDesk.SetSelectId(MathTool.GetRandom(player.CardNumber) + 1);
-            if (player.SelectCardId != 0)
+            self.CardsDesk.SetSelectId(MathTool.GetRandom(self.CardNumber) + 1);
+            if (self.SelectCardId != 0)
             {
-                ActiveCard card = player.CardsDesk.GetSelectCard();
-                if (player.CheckUseCard(card, player, rival) != ErrorConfig.Indexer.OK)
+                ActiveCard card = self.CardsDesk.GetSelectCard();
+                if (self.CheckUseCard(card, self, rival) != ErrorConfig.Indexer.OK)
                     return;
 
                 int tar = -1;
@@ -99,12 +128,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 if (card.CardType == CardTypes.Monster)
                 {
                     Point monPos = GetMonsterPoint(card.CardId, false);
-                    player.UseMonster(card, monPos);
+                    self.UseMonster(card, monPos);
                 }
                 else if (card.CardType == CardTypes.Weapon)
                 {
                     var lm =BattleManager.Instance.MonsterQueue[tar];
-                    player.UseWeapon(lm, card);
+                    self.UseWeapon(lm, card);
                 }
                 else if (card.CardType == CardTypes.Spell)
                 {
@@ -121,12 +150,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                         targetPos = targetMonster.CenterPosition;
                     }
 
-                    player.DoSpell(targetMonster, card, targetPos);
+                    self.DoSpell(targetMonster, card, targetPos);
                 }
             }
         }
 
-        private static Point GetMonsterPoint(int mid, bool isLeft)
+        private Point GetMonsterPoint(int mid, bool isLeft)
         {
             int size = BattleManager.Instance.MemMap.CardSize;
             var sideCell = BattleManager.Instance.MemMap.ColumnCount / 2;
@@ -141,10 +170,10 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
         }
 
-        public static void Discover(Player p, IMonster m, int[] cardId, int lv, DiscoverCardActionType type)
+        public void Discover(IMonster m, int[] cardId, int lv, DiscoverCardActionType type)
         {
             var targetCardId = cardId[MathTool.GetRandom(cardId.Length)]; //随机拿一张
-            p.AddDiscoverCard(m, targetCardId, lv, type);
+            self.AddDiscoverCard(m, targetCardId, lv, type);
         }
     }
 }

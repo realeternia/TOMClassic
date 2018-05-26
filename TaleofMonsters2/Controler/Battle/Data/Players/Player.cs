@@ -52,6 +52,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public EquipModifier Modifier { get; protected set; }
         public IPlayerAction Action { get; private set; }
         public PlayerSpecialAttr SpecialAttr { get; private set; }
+        public IAIStrategy AIModule { get; protected set; }
 
         private bool isPlayerControl; //是否玩家控制
 
@@ -476,6 +477,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             if (CardLeftChanged != null && cardCount != OffCards.LeftCount)
                 CardLeftChanged();
         }
+
         public void DiscoverCard(IMonster mon, int[] cardId, int lv, DiscoverCardActionType type)
         {
             if (isPlayerControl)
@@ -486,7 +488,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
             else
             {
-                AIStrategy.Discover(this, mon, cardId, lv, type);
+                AIModule.Discover(mon, cardId, lv, type);
             }
         }
 

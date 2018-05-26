@@ -11,6 +11,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             Level = 1;
             Job = ConfigDatas.JobConfig.Indexer.NewBie;
 
+            AIModule = new AIStrategy(this);
             DeckCard[] cds = DeckBook.GetDeckByName("test", Level);
             OffCards = new CardOffBundle(cds);
             EnergyGenerator.Next(0);

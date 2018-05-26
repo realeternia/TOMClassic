@@ -20,6 +20,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             Level = UserProfile.InfoBasic.Level;
             Job = UserProfile.InfoBasic.Job;
 
+            AIModule = new AIStrategyTrivial();
             OffCards = new CardOffBundle(cardInitial);
 
             int[] energyRate = {0, 0, 0};
