@@ -20,6 +20,9 @@ namespace TaleofMonsters.Core
         private static Channel _channelBGM = null;//在子线程使用
         private static List<SoundItem> taskList = new List<SoundItem>();//在子线程使用
 
+        private static string lastSoundPath = "";
+        private static DateTime lastSoundTime;
+
         struct SoundItem
         {
             public bool IsBGM;
@@ -50,6 +53,11 @@ namespace TaleofMonsters.Core
             if (!WorldInfoManager.SoundEnable)
                 return;
 
+            if (lastSoundPath == filePath && (DateTime.Now-lastSoundTime).TotalSeconds < 0.05)
+                return;
+
+            lastSoundPath = filePath;
+            lastSoundTime = DateTime.Now;
             Play(filePath, false);
         }
 
