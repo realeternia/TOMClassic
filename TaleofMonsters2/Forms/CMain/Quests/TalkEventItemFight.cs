@@ -23,7 +23,6 @@ namespace TaleofMonsters.Forms.CMain.Quests
 
         public override void Init()
         {
-            int enemyId = PeopleBook.GetPeopleId(config.EnemyName);
             HsActionCallback winCallback = OnWin;
             HsActionCallback failCallback = OnFail;
             var parm = new PeopleFightParm();
@@ -33,8 +32,11 @@ namespace TaleofMonsters.Forms.CMain.Quests
                 parm.RuleAddon = (PeopleFightRuleAddon)Enum.Parse(typeof(PeopleFightRuleAddon), evt.ParamList[0]);
                 parm.RuleLevel = int.Parse(evt.ParamList[1]);
             }
-            if (enemyId == 1)//特殊处理标记
+            int enemyId = 0;
+            if (config.EnemyName == "check")//特殊处理标记
                 enemyId = UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.SceneQuestRandPeopleId);
+            else
+                enemyId = PeopleBook.GetPeopleId(config.EnemyName);
             int fightLevel = Math.Max(1, level + hardness + BlessManager.FightLevelChange);
             var peopleConfig = ConfigData.GetPeopleConfig(enemyId);
 
