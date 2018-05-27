@@ -72,6 +72,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             var rival = self == BattleManager.Instance.PlayerManager.LeftPlayer ? 
                 BattleManager.Instance.PlayerManager.RightPlayer : BattleManager.Instance.PlayerManager.LeftPlayer;
 
+            int totalMpNeed = 0;
             for (int i = 0; i < self.CardNumber; i++)
             {
                 self.CardsDesk.SetSelectId(i + 1); //逐个判断是否可以使用卡牌
@@ -83,9 +84,28 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
                     if(TryUseCard(card, size, row)) //一回合只使用一张卡
                         break;
+
+                    totalMpNeed += card.Mp;
                 }
             }
-       
+
+            if (self.Mp > totalMpNeed*0.5)
+            {//尝试使用英雄技能
+                LevelExpConfig levelConfig = ConfigData.GetLevelExpConfig(self.Level);
+
+                for (int i = 0; i < self.HeroSkillList.Count; i++)
+                {
+                    var skillId = self.HeroSkillList[i];
+                    HeroPowerConfig heroSkillConfig = ConfigData.GetHeroPowerConfig(skillId);
+                    ActiveCard card = new ActiveCard(heroSkillConfig.CardId, (byte)levelConfig.TowerLevel);
+                    card.Mp = ConfigData.GetSpellConfig(heroSkillConfig.CardId).Cost;
+                    if (self.CheckUseCard(card, self, rival) != ErrorConfig.Indexer.OK)
+                        continue;
+
+                    if (TryUseCard(card, size, row)) //一回合只使用一个英雄技能
+                        break;
+                }
+            }
         }
 
         private bool TryUseCard(ActiveCard card, int size, int row)

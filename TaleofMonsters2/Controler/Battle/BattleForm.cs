@@ -502,6 +502,7 @@ namespace TaleofMonsters.Controler.Battle
                 HeroPowerConfig heroSkillConfig = ConfigData.GetHeroPowerConfig(key);
                 LevelExpConfig levelConfig = ConfigData.GetLevelExpConfig(UserProfile.Profile.InfoBasic.Level);
                 leftSelectCard = new ActiveCard(heroSkillConfig.CardId, (byte)levelConfig.TowerLevel);
+                leftSelectCard.Mp = ConfigData.GetSpellConfig(heroSkillConfig.CardId).Cost;
                 OnSelectCardChange();
             }
         }
