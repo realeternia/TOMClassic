@@ -18,22 +18,24 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 switch (peopleConfig.Method)
                 {
                     case "common": LeftPlayer = new HumanPlayer(true, leftCards); break;
-                    case "actrand": LeftPlayer = new RandomPlayer(right, true, true); break;
-                    default: LeftPlayer = new AIPlayer(right, peopleConfig.Method, true, rlevel, true); break;
+                    case "actrand": LeftPlayer = new RandomPlayer(right,true); break;
+                    default: LeftPlayer = new AIPlayer(right, peopleConfig.Method, true, rlevel); break;
                 }
             }
             else //观看比赛
             {
-                LeftPlayer = new AIPlayer(left, ConfigData.GetPeopleConfig(left).Emethod, true, rlevel, false);
+                LeftPlayer = new AIPlayer(left, ConfigData.GetPeopleConfig(left).Emethod, true, rlevel);
+                LeftPlayer.AIModule = new AIStrategy(LeftPlayer);
             }
 
             switch (peopleConfig.Emethod)
             {
                 case "common": RightPlayer = new HumanPlayer(false, leftCards); RightPlayer.PeopleId = right; break;
-                case "actrand": RightPlayer = new RandomPlayer(right, false, false); break;
+                case "actrand": RightPlayer = new RandomPlayer(right, false); break;
                 case "actmirror": RightPlayer = new MirrorPlayer(right, LeftPlayer.OffCards, false); break;
-                default: RightPlayer = new AIPlayer(right, peopleConfig.Emethod, false, rlevel, false); break;
+                default: RightPlayer = new AIPlayer(right, peopleConfig.Emethod, false, rlevel); break;
             }
+            RightPlayer.AIModule = new AIStrategy(RightPlayer);
         }
 
         public void Clear()

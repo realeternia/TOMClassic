@@ -51,11 +51,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
 
 #if DEBUG
-            //int[] cardToGive = new[] { 53000019 };
-            //foreach (var cardId in cardToGive)
-            //{
-            //    self.HandCards.AddCard(new ActiveCard(cardId, 1, 0));
-            //}
+            int[] cardToGive = new[] { 53000139 };
+            foreach (var cardId in cardToGive)
+            {
+                self.HandCards.AddCard(new ActiveCard(cardId, 1));
+            }
 #endif
         }
 
@@ -114,11 +114,15 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 if (aiGuideType == AiSpellCastTypes.Enemy)
                 {
                     targetMonster = GetSpellUnitTarget(true);
+                    if (targetMonster == null)
+                        return false;
                     targetPos = targetMonster.CenterPosition;
                 }
                 else if (aiGuideType == AiSpellCastTypes.Friend)
                 {
                     targetMonster = GetSpellUnitTarget(false);
+                    if (targetMonster == null)
+                        return false;
                     targetPos = targetMonster.CenterPosition;
                 }
                 else if (aiGuideType == AiSpellCastTypes.AtWill)

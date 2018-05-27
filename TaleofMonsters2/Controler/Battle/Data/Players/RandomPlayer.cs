@@ -9,8 +9,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 {
     internal class RandomPlayer : Player
     {
-        public RandomPlayer(int id, bool isLeft, bool isplayerControl)
-            : base(isplayerControl, isLeft)
+        public RandomPlayer(int id, bool isLeft)
+            : base(isLeft)
         {
             PeopleId = id;
 
@@ -18,7 +18,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             Level = peopleConfig.Level;
             Job = UserProfile.InfoBasic.Job;
 
-            AIModule = new AIStrategy(this);
             EnergyGenerator.SetRateNpc(new[] { 0, 0, 0 }, peopleConfig);
 
             DeckCard[] cd = new DeckCard[GameConstants.DeckCardCount];

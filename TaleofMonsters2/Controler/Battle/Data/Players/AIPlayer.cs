@@ -12,8 +12,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 {
     internal class AIPlayer : Player
     {
-        public AIPlayer(int id, string deck, bool isLeft, int rlevel, bool isPlayerControl)
-            : base(isPlayerControl, isLeft)
+        public AIPlayer(int id, string deck, bool isLeft, int rlevel)
+            : base(isLeft)
         {
             PeopleId = id;
 
@@ -21,7 +21,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(id);
             Job = peopleConfig.Job;
             
-            AIModule = new AIStrategy(this);
             DeckCard[] cds = DeckBook.GetDeckByName(deck, Level);
             ArraysUtils.RandomShuffle(cds);
             if (peopleConfig.CardReduce > 0) //有的野怪卡会比较少
@@ -46,12 +45,13 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public override List<int> GetInitialMonster()
         {
+            if (IsLeft)
+                return new List<int>();
+
             var list = new List<int>();
             PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(PeopleId);
             if (peopleConfig.RightMon != null && peopleConfig.RightMon.Length>0)
-            {
                 list.AddRange(peopleConfig.RightMon);
-            }
             BattleManager.Instance.RuleData.CheckInitialMonster(this, list, peopleConfig.PetMon);//会修改player.InitialMonster
             return list;
         }

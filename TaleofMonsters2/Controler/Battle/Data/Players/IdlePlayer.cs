@@ -6,12 +6,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
     internal class IdlePlayer : Player
     {
         public IdlePlayer(bool isLeft)
-            :base(false, isLeft)
+            :base(isLeft)
         {
             Level = 1;
             Job = ConfigDatas.JobConfig.Indexer.NewBie;
 
-            AIModule = new AIStrategy(this);
             DeckCard[] cds = DeckBook.GetDeckByName("test", Level);
             OffCards = new CardOffBundle(cds);
             EnergyGenerator.Next(0);

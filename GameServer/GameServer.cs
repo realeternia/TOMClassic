@@ -69,7 +69,14 @@ namespace GameServer
         {
             if (e.Client.Connected)
             {
-                Logger.Log("Connection Requested: " + ((System.Net.IPEndPoint) e.Client.RemoteEndPoint).Address.ToString());
+                try
+                {//取ip可能会报错
+                    Logger.Log("Connection Requested: " + ((System.Net.IPEndPoint)e.Client.RemoteEndPoint).Address.ToString());
+                }
+                catch (Exception)
+                {
+                }
+                
                 this.server.Accept(e.Client);
             }
         }

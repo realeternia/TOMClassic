@@ -52,9 +52,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public EquipModifier Modifier { get; protected set; }
         public IPlayerAction Action { get; private set; }
         public PlayerSpecialAttr SpecialAttr { get; private set; }
-        public IAIStrategy AIModule { get; protected set; }
-
-        private bool isPlayerControl; //是否玩家控制
+        public IAIStrategy AIModule { get; set; }
 
         public List<int> HeroSkillList = new List<int>();
         private float heroSkillCd;
@@ -101,11 +99,10 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         #endregion
 
-        public Player(bool playerControl, bool isLeft)
+        public Player(bool isLeft)
         {
             IsLeft = isLeft;
             IsAlive = true;
-            isPlayerControl = playerControl;
             HandCards = new CardHandBundle(this);
             EnergyGenerator = new EnergyGenerator();
             SpikeManager = new SpikeManager(this);
@@ -480,7 +477,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void DiscoverCard(IMonster mon, int[] cardId, int lv, DiscoverCardActionType type)
         {
-            if (isPlayerControl)
+            if (AIModule == null)
             {
                 CardSelectMethodDiscover discover = new CardSelectMethodDiscover(cardId, lv, type);
                 if (OnShowCardSelector != null)

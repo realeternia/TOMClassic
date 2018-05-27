@@ -7,7 +7,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
     internal class MirrorPlayer : Player
     {
         public MirrorPlayer(int id, CardOffBundle cpcards, bool isLeft)
-            : base(false, isLeft)
+            : base(isLeft)
         {
             PeopleId = id;
 
@@ -15,7 +15,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             Level = peopleConfig.Level;
             Job = UserProfile.InfoBasic.Job;
 
-            AIModule = new AIStrategy(this);
             EnergyGenerator.SetRateNpc(new [] { 0, 0, 0 },peopleConfig);
 
             OffCards = cpcards.GetCopy();

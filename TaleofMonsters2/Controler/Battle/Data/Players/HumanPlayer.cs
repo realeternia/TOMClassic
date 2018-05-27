@@ -14,13 +14,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
     internal class HumanPlayer : Player
     {
         public HumanPlayer(bool isLeft, DeckCard[] cardInitial)
-            : base(true, isLeft)
+            : base(isLeft)
         {
             PeopleId = 0;
             Level = UserProfile.InfoBasic.Level;
             Job = UserProfile.InfoBasic.Job;
 
-            AIModule = new AIStrategyTrivial();
             OffCards = new CardOffBundle(cardInitial);
 
             int[] energyRate = {0, 0, 0};
