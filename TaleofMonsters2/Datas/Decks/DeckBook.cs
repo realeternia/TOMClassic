@@ -68,17 +68,17 @@ namespace TaleofMonsters.Datas.Decks
                 if (cardConfig.Type == CardTypes.Monster)
                 {
                     statDict["atr" + cardConfig.Attr] ++;
-                    statDict["rac" + cardConfig.TypeSub]++;
+                    statDict["rac" + (int)cardConfig.TypeSub]++;
                 }
                 else if (cardConfig.Type == CardTypes.Weapon)
                 {
-                    statDict["wep" + (cardConfig.TypeSub - 99)]++;
+                    statDict["wep" + ((int)cardConfig.TypeSub - 99)]++;
                     if (cardConfig.Attr > 0)
                         statDict["atr" + cardConfig.Attr]++;
                 }
                 else if (cardConfig.Type == CardTypes.Spell)
                 {
-                    statDict["spl" + (cardConfig.TypeSub - 199)]++;
+                    statDict["spl" + ((int)cardConfig.TypeSub - 199)]++;
                     if (cardConfig.Attr > 0)
                         statDict["atr" + cardConfig.Attr]++;
                 }

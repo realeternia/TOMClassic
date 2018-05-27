@@ -6,10 +6,12 @@ using ControlPlus;
 using ControlPlus.Drawing;
 using NarlonLib.Tools;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Config;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Cards;
 using TaleofMonsters.Datas.Cards.Spells;
 using TaleofMonsters.Datas.Decks;
+using TaleofMonsters.Datas.HeroPowers;
 
 namespace TaleofMonsters.Controler.Battle.Components
 {
@@ -65,9 +67,20 @@ namespace TaleofMonsters.Controler.Battle.Components
 
             public virtual void Draw(Graphics g)
             {
-                var img = CardAssistant.GetCardImage(CardId, ItemWidth, ItemWidth);
-                if (img != null)
-                    g.DrawImage(img, X, 2, ItemWidth, ItemWidth);
+                if (CardConfigManager.GetCardConfig(CardId).IsHeroCard) //神力
+                {
+                    var heroPowerId = HeroPowerBook.GetHeroPowerIdBySpellId(CardId);
+                    var img = HeroPowerBook.GetImage(heroPowerId);
+                    if (img != null)
+                        g.DrawImage(img, X, 2, ItemWidth, ItemWidth);
+                }
+                else
+                {
+                    var img = CardAssistant.GetCardImage(CardId, ItemWidth, ItemWidth);
+                    if (img != null)
+                        g.DrawImage(img, X, 2, ItemWidth, ItemWidth);
+                }
+
                 Pen p = new Pen(IsLeft ? Brushes.Red : Brushes.Blue, 1);
                 g.DrawRectangle(p, X, 2, ItemWidth, ItemWidth);
                 p.Dispose();

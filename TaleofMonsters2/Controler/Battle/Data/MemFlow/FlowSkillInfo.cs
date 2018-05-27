@@ -14,13 +14,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemFlow
             skillId = sId;
             string skillName = ConfigDatas.ConfigData.SkillDict[skillId].Name;
             if (addon == "")
-            {
                 word = skillName;
-            }
             else
-            {
                 word = string.Format("{0}({1})", skillName, addon);
-            }
         }
 
         public override void Draw(Graphics g)

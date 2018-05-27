@@ -11,6 +11,16 @@ namespace TaleofMonsters.Datas.HeroPowers
     /// </summary>
     internal static class HeroPowerBook
     {
+        public static int GetHeroPowerIdBySpellId(int spellId)
+        {
+            foreach (var heroPowerData in ConfigData.HeroPowerDict.Values)
+            {
+                if (heroPowerData.CardId == spellId)
+                    return heroPowerData.Id;
+            }
+            return 0;
+        }
+
         public static Image GetImage(int id)
         {
             var powerConfig = ConfigData.GetHeroPowerConfig(id);
