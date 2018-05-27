@@ -16,7 +16,7 @@ namespace JLM.NetSocket
 {
     public class MessagePump
     {
-        private const int MaxPacketSize = 10*1024;
+        private const int MaxPacketSize = 50*1024;
 
         private NetBase client;
         private ByteQueue receiveData;

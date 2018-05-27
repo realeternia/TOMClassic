@@ -175,6 +175,8 @@ namespace TaleofMonsters
             {
                 UserProfile.Profile.OnLogout();
                 TalePlayer.Save();
+                TalePlayer.Oneloop(); //保证存档可以成功
+                Thread.Sleep(300);
             }
         }
 
