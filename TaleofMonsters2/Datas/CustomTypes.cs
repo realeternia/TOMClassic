@@ -338,10 +338,13 @@
         EnemySingle = 100,
         EnemySingleWeak = 101, //补刀
         EnemyTwo = 102,
+        EnemyTomb = 105,
         FriendSingle = 200, //祝福
         FriendWeak = 201, //治疗
         FriendTwo = 202,
         FriendTwoCure = 203,
-        Summon = 300,
+        FriendTomb = 205,
+        CellBlank = 300,
+
     }
 }

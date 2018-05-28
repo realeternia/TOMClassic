@@ -118,7 +118,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 Point targetPos = Point.Empty;
                 LiveMonster targetMonster = null;
                 var aiGuideType = (AiSpellCastTypes) spellConfig.AIGuide;
-                if (aiGuideType == AiSpellCastTypes.Summon)
+                if (aiGuideType == AiSpellCastTypes.CellBlank)
                 {
                     targetPos = GetSummonPoint(false, true);
                 }
@@ -140,6 +140,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                         case AiSpellCastTypes.EnemyTwo:
                             targetMonster = GetSpellUnitTargetCount(selectCard.CardId, 2, true, false);
                             break;
+                        case AiSpellCastTypes.EnemyTomb:
+                            targetMonster = GetSpellUnitTargetTomb(true);
+                            break;
                         case AiSpellCastTypes.FriendSingle:
                             targetMonster = GetSpellUnitTarget(false, false);
                             break;
@@ -151,6 +154,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                             break;
                         case AiSpellCastTypes.FriendTwoCure:
                             targetMonster = GetSpellUnitTargetCount(selectCard.CardId, 2, false, true);
+                            break;
+                        case AiSpellCastTypes.FriendTomb:
+                            targetMonster = GetSpellUnitTargetTomb(false);
                             break;
                     }
                     if (targetMonster == null)//剩下的都是单位目标了，取到空就说明没有合适目标
@@ -168,10 +174,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         private LiveMonster GetSpellUnitTarget(bool getEnemy, bool getWeak)
         {
-            var targetStar = -1;
             int tar = -1;
-            if (tar >= 0)
-                targetStar = BattleManager.Instance.MonsterQueue[tar].Avatar.Star;
             for (int i = 0; i < BattleManager.Instance.MonsterQueue.Count; i++)
             {
                 LiveMonster pickMon = BattleManager.Instance.MonsterQueue[i];
@@ -183,11 +186,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                     continue;
                 if (pickMon.HpRate > 0.4 && getWeak) 
                     continue;
-                if (tar == -1 || pickMon.Avatar.Star > targetStar)
-                {
+                if (tar == -1 || pickMon.Avatar.Star > BattleManager.Instance.MonsterQueue[tar].Avatar.Star)
                     tar = i;
-                    targetStar = pickMon.Avatar.Star;
-                }
             }
             if (tar == -1)
                 return null;
@@ -217,22 +217,41 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             return null;
         }
 
+        private LiveMonster GetSpellUnitTargetTomb(bool getEnemy)
+        {
+            int tar = -1;
+            for (int i = 0; i < BattleManager.Instance.MonsterQueue.Count; i++)
+            {
+                LiveMonster pickMon = BattleManager.Instance.MonsterQueue[i];
+                if (!pickMon.IsGhost)
+                    continue;
+                if ((pickMon.IsLeft != self.IsLeft && !getEnemy) || (pickMon.IsLeft == self.IsLeft && getEnemy))
+                    continue;
+                if (tar == -1 || pickMon.Avatar.Star > BattleManager.Instance.MonsterQueue[tar].Avatar.Star)
+                    tar = i;
+            }
+            if (tar == -1)
+                return null;
+            return BattleManager.Instance.MonsterQueue[tar];
+        }
+
         private LiveMonster GetWeaponTarget()
         {
             int tar = -1;
             for (int i = 0; i < BattleManager.Instance.MonsterQueue.Count; i++)
             {
                 LiveMonster pickMon = BattleManager.Instance.MonsterQueue[i];
-                if (!pickMon.IsGhost && pickMon.IsLeft == self.IsLeft && pickMon.Weapon == null)
-                {
-                    if (pickMon.HpRate < 0.5)
-                        continue;
-                    if (!pickMon.CanAddWeapon()) //建筑无法使用武器
-                        continue;
+                if (pickMon.IsGhost || pickMon.IsLeft != self.IsLeft)
+                    continue;
+                if (pickMon.Weapon != null) //重复装备太奢侈了
+                    continue;
+                if (pickMon.HpRate < 0.5)
+                    continue;
+                if (!pickMon.CanAddWeapon()) //建筑无法使用武器
+                    continue;
 
-                    if (tar == -1 || pickMon.Avatar.Star > BattleManager.Instance.MonsterQueue[tar].Avatar.Star)
-                        tar = i;
-                }
+                if (tar == -1 || pickMon.Avatar.Star > BattleManager.Instance.MonsterQueue[tar].Avatar.Star)
+                    tar = i;
             }
             if (tar == -1)
                 return null;
