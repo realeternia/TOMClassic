@@ -6,6 +6,7 @@ using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Cards.Monsters;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players
 {
@@ -97,7 +98,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         {
             if (selectCard.CardType == CardTypes.Monster)
             {
-                Point monPos = GetSummonPoint(selectCard.CardId, false);
+                var canRush = MonsterBook.HasTag(selectCard.CardId, "rush");
+                Point monPos = GetSummonPoint(false, canRush);
                 self.UseMonster(selectCard, monPos);
                 return true;
             }
@@ -129,6 +131,10 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                     if (targetMonster == null)
                         return false;
                     targetPos = targetMonster.CenterPosition;
+                }
+                else if (aiGuideType == AiSpellCastTypes.Summon)
+                {
+                    targetPos = GetSummonPoint(false, true);
                 }
                 else if (aiGuideType == AiSpellCastTypes.AtWill)
                 {
@@ -192,7 +198,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             return BattleManager.Instance.MonsterQueue[tar];
         }
 
-        private Point GetSummonPoint(int mid, bool isLeft)
+        private Point GetSummonPoint(bool isLeft, bool canRush)
         {
             int size = BattleManager.Instance.MemMap.CardSize;
             var sideCell = BattleManager.Instance.MemMap.ColumnCount / 2;
@@ -202,7 +208,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 int y = MathTool.GetRandom(0, BattleManager.Instance.MemMap.RowCount);
                 x *= size;
                 y *= size;
-                if (BattleLocationManager.IsPlaceCanSummon(mid, x, y, false))
+                if (BattleLocationManager.IsPlaceCanSummon(x, y, false, canRush))
                     return new Point(x, y);
             }
         }

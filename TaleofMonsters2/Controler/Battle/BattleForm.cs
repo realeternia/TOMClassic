@@ -374,7 +374,8 @@ namespace TaleofMonsters.Controler.Battle
             {
                 if (leftSelectCard.CardType == CardTypes.Monster)
                 {
-                    if (BattleLocationManager.IsPlaceCanSummon(leftSelectCard.CardId, mouseX, mouseY, true))
+                    var canRush = MonsterBook.HasTag(leftSelectCard.CardId, "rush");
+                    if (BattleLocationManager.IsPlaceCanSummon(mouseX, mouseY, true, canRush))
                     {
                         cursorname = "summon";
                         magicRegion.Active = true;

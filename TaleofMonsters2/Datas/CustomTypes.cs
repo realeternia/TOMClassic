@@ -337,5 +337,6 @@
         AtWill = 0,
         Enemy = 100,
         Friend = 200,
+        Summon = 300,
     }
 }

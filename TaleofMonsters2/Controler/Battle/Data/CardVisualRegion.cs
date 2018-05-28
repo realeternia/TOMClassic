@@ -1,6 +1,7 @@
 using System.Drawing;
 using TaleofMonsters.Controler.Battle.Data.MemMap;
 using TaleofMonsters.Controler.Battle.Tool;
+using TaleofMonsters.Datas.Cards.Monsters;
 
 namespace TaleofMonsters.Controler.Battle.Data
 {
@@ -20,10 +21,11 @@ namespace TaleofMonsters.Controler.Battle.Data
 
             int size = BattleManager.Instance.MemMap.CardSize;
             SolidBrush fillBrush = new SolidBrush(Color.FromArgb(60, Color.Red));
-            foreach (var memMapPoint in BattleManager.Instance.MemMap.Cells)
+            var canRush = MonsterBook.HasTag(cardId, "rush");
+            foreach (var pickCell in BattleManager.Instance.MemMap.Cells)
             {
-                if (!BattleLocationManager.IsPlaceCanSummon(cardId, memMapPoint.X, memMapPoint.Y, true))
-                    g.FillRectangle(fillBrush, memMapPoint.X, memMapPoint.Y, size, size);
+                if (!BattleLocationManager.IsPlaceCanSummon(pickCell.X, pickCell.Y, true, canRush))
+                    g.FillRectangle(fillBrush, pickCell.X, pickCell.Y, size, size);
             }
             fillBrush.Dispose();
         }

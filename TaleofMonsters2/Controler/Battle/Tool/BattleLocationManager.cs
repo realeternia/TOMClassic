@@ -40,7 +40,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
             return point.Owner == 0;
         }
 
-        public static bool IsPlaceCanSummon(int mid, int tx, int ty, bool isLeft)
+        public static bool IsPlaceCanSummon(int tx, int ty, bool isLeft, bool canRush)
         {
             if (tx < 0 || ty < 0 || tx >= BattleManager.Instance.MemMap.StageWidth || ty >= BattleManager.Instance.MemMap.StageHeight)
                 return false;
@@ -49,7 +49,6 @@ namespace TaleofMonsters.Controler.Battle.Tool
                 return false;
 
             MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
-            var canRush = MonsterBook.HasTag(mid, "rush");
             if (canRush)
             {
                 return point.CanMove;
