@@ -147,7 +147,6 @@
     <Compile Include="Controler\Battle\Data\MemFlow\FlowErrInfo.cs" />
     <Compile Include="Controler\Battle\Data\MemMap\MemMapPoint.cs" />
     <Compile Include="Controler\Battle\Data\MemMap\MemRowColumnMap.cs" />
-    <Compile Include="Controler\Battle\Data\MemSpell\MemBaseSpell.cs" />
     <Compile Include="Controler\Battle\Data\Players\Frag\EnergyGenerator.cs" />
     <Compile Include="Controler\Battle\Data\MemCard\CardHandBundle.cs" />
     <Compile Include="Controler\Battle\Data\Players\MirrorPlayer.cs" />

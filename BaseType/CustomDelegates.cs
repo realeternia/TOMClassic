@@ -11,7 +11,8 @@ namespace ConfigDatas
     public delegate void SkillTimelyEffectDelegate(ISkill skl, IMonster src);
     public delegate void SkillUseCardHandleDelegate(ISkill skl, IMonster src, IPlayer p, int cardType, int cardLevel, ref bool success);
 
-    public delegate void SpellEffectDelegate(ISpell spell,IMap map, IPlayer player, IPlayer rival, IMonster target, System.Drawing.Point mouse);
+    public delegate bool SpellCheckDelegate(ISpell spell, IMonster target);
+    public delegate void SpellEffectDelegate(ISpell spell, IMap map, IPlayer player, IPlayer rival, IMonster target, System.Drawing.Point mouse);
 
     public delegate bool SpellTrapAddCardDelegate(IPlayer player, IPlayer rival, ITrap trap, int cardId, int cardType);
     public delegate bool SpellTrapSummonDelegate(IPlayer player, IPlayer rival, ITrap trap, IMonster mon, int level);

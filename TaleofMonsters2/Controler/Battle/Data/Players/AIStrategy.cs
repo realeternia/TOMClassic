@@ -16,21 +16,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         void Discover(IMonster m, int[] cardId, int lv, DiscoverCardActionType type);
     }
 
-    internal class AIStrategyTrivial : IAIStrategy
-    {
-        public void OnInit()
-        {
-        }
-
-        public void AIProc()
-        {
-        }
-
-        public void Discover(IMonster m, int[] cardId, int lv, DiscoverCardActionType type)
-        {
-        }
-    }
-
     internal class AIStrategy : IAIStrategy
     {
         private Player self;
@@ -108,26 +93,26 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
         }
 
-        private bool TryUseCard(ActiveCard card, int size, int row)
+        private bool TryUseCard(ActiveCard selectCard, int cellSize, int row)
         {
-            if (card.CardType == CardTypes.Monster)
+            if (selectCard.CardType == CardTypes.Monster)
             {
-                Point monPos = GetSummonPoint(card.CardId, false);
-                self.UseMonster(card, monPos);
+                Point monPos = GetSummonPoint(selectCard.CardId, false);
+                self.UseMonster(selectCard, monPos);
                 return true;
             }
-            else if (card.CardType == CardTypes.Weapon)
+            else if (selectCard.CardType == CardTypes.Weapon)
             {
                 LiveMonster target = GetWeaponTarget();
                 if (target != null)
                 {
-                    self.UseWeapon(target, card);
+                    self.UseWeapon(target, selectCard);
                     return true;
                 }
             }
-            else if (card.CardType == CardTypes.Spell)
+            else if (selectCard.CardType == CardTypes.Spell)
             {
-                SpellConfig spellConfig = ConfigData.GetSpellConfig(card.CardId);
+                SpellConfig spellConfig = ConfigData.GetSpellConfig(selectCard.CardId);
                 Point targetPos = Point.Empty;
                 LiveMonster targetMonster = null;
                 var aiGuideType = (AiSpellCastTypes) spellConfig.AIGuide;
@@ -148,10 +133,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 else if (aiGuideType == AiSpellCastTypes.AtWill)
                 {
                     targetPos = new Point(self.IsLeft ? MathTool.GetRandom(200, 300) : MathTool.GetRandom(600, 700),
-                        MathTool.GetRandom(size * 3 / 10, row * size - size * 3 / 10));
+                        MathTool.GetRandom(cellSize * 3 / 10, row * cellSize - cellSize * 3 / 10));
                 }
-
-                self.DoSpell(targetMonster, card, targetPos);
+                if (!self.CanSpell(targetMonster, selectCard))
+                    return false;
+                self.DoSpell(targetMonster, selectCard, targetPos);
                 return true;
             }
             return false;

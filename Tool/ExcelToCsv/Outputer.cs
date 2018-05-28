@@ -209,6 +209,12 @@ namespace ExcelToCsv
                                   ? "null"
                                   : string.Format("delegate(ISpell spl, IMap m, IPlayer p, IPlayer r, IMonster t,System.Drawing.Point mouse){{{0}}}", datas[i]);
                 }
+                else if (typeStr == "SpellCheckDelegate")
+                {
+                    result = datas[i].ToString() == ""
+                                  ? "null"
+                                  : string.Format("delegate(ISpell spl, IMonster t){{if({0})return true;return false;}}", datas[i]);
+                }
                 else if (typeStr == "SpellTrapAddCardDelegate")
                 {
                     result = datas[i].ToString() == ""

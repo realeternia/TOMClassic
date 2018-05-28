@@ -405,6 +405,14 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             AfterUseCard(card);
         }
 
+        public bool CanSpell(LiveMonster target, ActiveCard card)
+        {
+            Spell spell = new Spell(card.CardId);
+            spell.Addon = SpecialAttr.SpellEffectAddon;
+            spell.UpgradeToLevel(card.Level);
+            return SpellAssistant.CanCast(spell, target);
+        }
+
         public void DoSpell(LiveMonster target, ActiveCard card, Point location)
         {
             if (!BeforeUseCard(card, location))
@@ -416,7 +424,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 spell.Addon = SpecialAttr.SpellEffectAddon;
                 spell.UpgradeToLevel(card.Level);
 
-                SpellAssistant.CheckSpellEffect(spell, IsLeft, target, location);
+                SpellAssistant.Cast(spell, IsLeft, target, location);
 
                 if (SpikeManager.HasSpike("mirrorspell"))
                     Rival.Action.AddCard(null, card.CardId, card.Level);

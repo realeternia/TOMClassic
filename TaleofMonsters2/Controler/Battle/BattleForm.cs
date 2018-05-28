@@ -295,13 +295,14 @@ namespace TaleofMonsters.Controler.Battle
             if (isGamePaused)
                 return;
 
+            var pickPlayer = BattleManager.Instance.PlayerManager.LeftPlayer;
             int cardSize = BattleManager.Instance.MemMap.CardSize;
             if (e.Button == MouseButtons.Left)
             {
                 if (leftSelectCard != null && (myCursor.Name == "summon" || myCursor.Name == "equip" || myCursor.Name == "cast" || myCursor.Name == "sidekick"))
                 {
                     int result;
-                    if ((result = BattleManager.Instance.PlayerManager.LeftPlayer.CheckUseCard(leftSelectCard, BattleManager.Instance.PlayerManager.LeftPlayer, BattleManager.Instance.PlayerManager.RightPlayer)) != ErrorConfig.Indexer.OK)
+                    if ((result = pickPlayer.CheckUseCard(leftSelectCard, BattleManager.Instance.PlayerManager.LeftPlayer, BattleManager.Instance.PlayerManager.RightPlayer)) != ErrorConfig.Indexer.OK)
                     {
                         BattleManager.Instance.FlowWordQueue.Add(new FlowErrInfo(result, new Point(mouseX, mouseY), 0, 0));
                         return;
@@ -314,20 +315,22 @@ namespace TaleofMonsters.Controler.Battle
                     {
                         race = (int)cardData.TypeSub;
                         var pos = new Point(mouseX/cardSize*cardSize, mouseY/cardSize*cardSize);
-                        BattleManager.Instance.PlayerManager.LeftPlayer.UseMonster(leftSelectCard, pos);
+                        pickPlayer.UseMonster(leftSelectCard, pos);
                     }
                     else if (myCursor.Name == "equip" && lm != null)
                     {
-                        BattleManager.Instance.PlayerManager.LeftPlayer.UseWeapon(lm, leftSelectCard);
+                        pickPlayer.UseWeapon(lm, leftSelectCard);
                     }
                     else if (myCursor.Name == "sidekick" && lm != null)
                     {
                         race = (int)cardData.TypeSub;
-                        BattleManager.Instance.PlayerManager.LeftPlayer.UseSideKick(lm, leftSelectCard);
+                        pickPlayer.UseSideKick(lm, leftSelectCard);
                     }
                     else if (myCursor.Name == "cast")
                     {
-                        BattleManager.Instance.PlayerManager.LeftPlayer.DoSpell(lm, leftSelectCard, e.Location);
+                        if (!pickPlayer.CanSpell(lm, leftSelectCard))
+                            return;
+                        pickPlayer.DoSpell(lm, leftSelectCard, e.Location);
                     }
 
                     UserProfile.Profile.OnUseCard(cardData.Type, cardData.Star, race, cardData.Attr);
