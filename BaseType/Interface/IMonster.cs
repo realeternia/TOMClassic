@@ -21,6 +21,7 @@ namespace ConfigDatas
         IMap Map { get; }
         IMonsterAction Action { get; }
         bool IsLeft { get; }
+        bool IsGhost { get; }
 
         int Atk { get; }
         int MaxHp { get; }

@@ -14,11 +14,6 @@ namespace TaleofMonsters.Controler.Battle.Tool
             return target[0] == 'D';
         }
 
-        public static bool IsSpellTombTarget(string target)
-        {
-            return target[0] == 'T';
-        }
-
         public static bool IsSpellNullTarget(string target)
         {
             return target[0] == 'N';

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace ConfigDatas
 {
@@ -7,10 +6,9 @@ namespace ConfigDatas
     {
         void SetTile(System.Drawing.Point point, int dis, int tile);
         void UpdateCellOwner(System.Drawing.Point mouse, int ownerId);
-        List<Point> GetRangePoint(string shape, int range, Point mouse);
+        List<System.Drawing.Point> GetRangePoint(string shape, int range, System.Drawing.Point mouse);
 
-        void RemoveTomb(System.Drawing.Point mouse);
-        void ReviveUnit(IPlayer player, System.Drawing.Point mouse, int addHp);
+        void RemoveTomb(IMonster m);
         void ReviveUnit(IPlayer player, IMonster mon, int addHp);
         System.Drawing.Point GetRandomPoint();
 

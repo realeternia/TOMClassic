@@ -235,13 +235,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                 lm.Action.Rebel();
         }
 
-        public void ReviveUnit(IPlayer player, Point mouse, int addHp)
-        {
-            int oid = GetMouseCell(mouse.X, mouse.Y).Owner;
-            if (oid < 0)
-                ReviveUnit(player, BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(-oid), addHp);
-        }
-
         public void UpdateCellOwner(Point mouse, int ownerId)
         {
             var cell = GetMouseCell(mouse.X, mouse.Y);
@@ -262,13 +255,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             return points;
         }
 
-        public void RemoveTomb(Point mouse)
+        public void RemoveTomb(IMonster m)
         {
-            int oid = GetMouseCell(mouse.X, mouse.Y).Owner;
-            if (oid < 0)
+            if (m.IsGhost)
             {
-                var mon = BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(-oid);
-                mon.Action.Disappear();
+                m.Action.Disappear();
             }
         }
 

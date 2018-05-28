@@ -40,12 +40,6 @@ namespace TaleofMonsters.Controler.Battle.Tool
             return point.Owner == 0;
         }
 
-        public static bool IsPlaceTomb(int tx, int ty)
-        {
-            MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
-            return point.Owner < 0;
-        }
-
         public static bool IsPlaceCanSummon(int mid, int tx, int ty, bool isLeft)
         {
             if (tx < 0 || ty < 0 || tx >= BattleManager.Instance.MemMap.StageWidth || ty >= BattleManager.Instance.MemMap.StageHeight)
@@ -78,17 +72,6 @@ namespace TaleofMonsters.Controler.Battle.Tool
             LiveMonster deskMon = GetPlaceMonster(tx, ty);
             if (deskMon != null)
             {
-                if (BattleTargetManager.IsSpellTombTarget(target))
-                {
-                    if (!IsPlaceTomb(tx, ty) || !deskMon.IsGhost)
-                        return false;
-                }
-                else if (BattleTargetManager.IsSpellUnitTarget(target))
-                {
-                    if (deskMon.IsGhost)
-                        return false;
-                }
-
                 if (deskMon.IsLeft && BattleTargetManager.IsPlaceFriendMonster(target))
                     return true;
 
