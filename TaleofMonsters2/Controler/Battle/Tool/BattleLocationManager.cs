@@ -85,6 +85,8 @@ namespace TaleofMonsters.Controler.Battle.Tool
         {
             if (type == RegionTypes.None)
                 return false;
+            if (type == RegionTypes.All)
+                return true;
 
             int size = BattleManager.Instance.MemMap.CardSize;
             int targetX = pos.X + size / 2;

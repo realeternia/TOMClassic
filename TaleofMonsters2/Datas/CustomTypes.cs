@@ -335,8 +335,13 @@
     internal enum AiSpellCastTypes
     {
         AtWill = 0,
-        Enemy = 100,
-        Friend = 200,
+        EnemySingle = 100,
+        EnemySingleWeak = 101, //补刀
+        EnemyTwo = 102,
+        FriendSingle = 200, //祝福
+        FriendWeak = 201, //治疗
+        FriendTwo = 202,
+        FriendTwoCure = 203,
         Summon = 300,
     }
 }

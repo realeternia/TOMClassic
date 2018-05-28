@@ -118,21 +118,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 Point targetPos = Point.Empty;
                 LiveMonster targetMonster = null;
                 var aiGuideType = (AiSpellCastTypes) spellConfig.AIGuide;
-                if (aiGuideType == AiSpellCastTypes.Enemy)
-                {
-                    targetMonster = GetSpellUnitTarget(true);
-                    if (targetMonster == null)
-                        return false;
-                    targetPos = targetMonster.CenterPosition;
-                }
-                else if (aiGuideType == AiSpellCastTypes.Friend)
-                {
-                    targetMonster = GetSpellUnitTarget(false);
-                    if (targetMonster == null)
-                        return false;
-                    targetPos = targetMonster.CenterPosition;
-                }
-                else if (aiGuideType == AiSpellCastTypes.Summon)
+                if (aiGuideType == AiSpellCastTypes.Summon)
                 {
                     targetPos = GetSummonPoint(false, true);
                 }
@@ -141,15 +127,46 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                     targetPos = new Point(self.IsLeft ? MathTool.GetRandom(200, 300) : MathTool.GetRandom(600, 700),
                         MathTool.GetRandom(cellSize * 3 / 10, row * cellSize - cellSize * 3 / 10));
                 }
+                else
+                {
+                    switch (aiGuideType)
+                    {
+                        case AiSpellCastTypes.EnemySingle:
+                            targetMonster = GetSpellUnitTarget(true, false);
+                            break;
+                        case AiSpellCastTypes.EnemySingleWeak:
+                            targetMonster = GetSpellUnitTarget(true, true);
+                            break;
+                        case AiSpellCastTypes.EnemyTwo:
+                            targetMonster = GetSpellUnitTargetCount(selectCard.CardId, 2, true, false);
+                            break;
+                        case AiSpellCastTypes.FriendSingle:
+                            targetMonster = GetSpellUnitTarget(false, false);
+                            break;
+                        case AiSpellCastTypes.FriendWeak:
+                            targetMonster = GetSpellUnitTarget(false, true);
+                            break;
+                        case AiSpellCastTypes.FriendTwo:
+                            targetMonster = GetSpellUnitTargetCount(selectCard.CardId, 2, false, false);
+                            break;
+                        case AiSpellCastTypes.FriendTwoCure:
+                            targetMonster = GetSpellUnitTargetCount(selectCard.CardId, 2, false, true);
+                            break;
+                    }
+                    if (targetMonster == null)//剩下的都是单位目标了，取到空就说明没有合适目标
+                        return false;
+                }
                 if (!self.CanSpell(targetMonster, selectCard))
                     return false;
+                if(targetMonster != null)
+                    targetPos = targetMonster.CenterPosition;
                 self.DoSpell(targetMonster, selectCard, targetPos);
                 return true;
             }
             return false;
         }
 
-        private LiveMonster GetSpellUnitTarget(bool getEnemy)
+        private LiveMonster GetSpellUnitTarget(bool getEnemy, bool getWeak)
         {
             var targetStar = -1;
             int tar = -1;
@@ -158,21 +175,46 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             for (int i = 0; i < BattleManager.Instance.MonsterQueue.Count; i++)
             {
                 LiveMonster pickMon = BattleManager.Instance.MonsterQueue[i];
-                if (pickMon.IsGhost)
+                if (pickMon.IsGhost || pickMon is TowerMonster) //不打塔
                     continue;
-                if ((pickMon.IsLeft != self.IsLeft && getEnemy) ||
-                    (pickMon.IsLeft == self.IsLeft && !getEnemy))
+                if ((pickMon.IsLeft != self.IsLeft && !getEnemy) || (pickMon.IsLeft == self.IsLeft && getEnemy))
+                    continue;
+                if (pickMon.HpRate < 0.4 && !getWeak) //快死的不要
+                    continue;
+                if (pickMon.HpRate > 0.4 && getWeak) 
+                    continue;
+                if (tar == -1 || pickMon.Avatar.Star > targetStar)
                 {
-                    if (tar == -1 || pickMon.Avatar.Star > targetStar)
-                    {
-                        tar = i;
-                        targetStar = pickMon.Avatar.Star;
-                    }
+                    tar = i;
+                    targetStar = pickMon.Avatar.Star;
                 }
             }
             if (tar == -1)
                 return null;
             return BattleManager.Instance.MonsterQueue[tar];
+        }
+
+        /// <summary>
+        /// 找到>=count个目标
+        /// </summary>
+        private LiveMonster GetSpellUnitTargetCount(int spellId, int count, bool getEnemy, bool needHpLow)
+        {
+            var spellConfig = ConfigData.GetSpellConfig(spellId);
+            for (int i = 0; i < BattleManager.Instance.MonsterQueue.Count; i++)
+            {
+                LiveMonster pickMon = BattleManager.Instance.MonsterQueue[i];
+                if (pickMon is TowerMonster)
+                    continue;
+                if ((pickMon.IsLeft != self.IsLeft && !getEnemy) || (pickMon.IsLeft == self.IsLeft && getEnemy))
+                    continue;
+                if (pickMon.HpRate > 0.8 && needHpLow)
+                    continue;
+                var count1 = pickMon.Map.GetRangeMonster(self.IsLeft, spellConfig.Target.Substring(1, 1),
+                    spellConfig.Target.Substring(2, 1), spellConfig.Range, pickMon.CenterPosition).Count;
+                if (count1 >= count)
+                    return BattleManager.Instance.MonsterQueue[i];
+            }
+            return null;
         }
 
         private LiveMonster GetWeaponTarget()

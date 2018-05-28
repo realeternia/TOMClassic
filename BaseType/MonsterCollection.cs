@@ -32,6 +32,11 @@ namespace ConfigDatas
             location = p;
         }
 
+        public int Count
+        {
+            get { return monsterList.Count; }
+        }
+
         public MonsterCollection FilterId(int id)
         {
             monsterList.RemoveAll(mon => mon.Id == id);
