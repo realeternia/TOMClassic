@@ -338,6 +338,8 @@
         CardLess = 1,
         CardMore = 2,
         CardRivalMore = 3,
+        MonsterAdv = 4, //场面优势
+        MonsterDisadv = 5, //场面劣势
         EnemySingle = 100,
         EnemySingleWeak = 101, //补刀
         EnemyTwo = 102,

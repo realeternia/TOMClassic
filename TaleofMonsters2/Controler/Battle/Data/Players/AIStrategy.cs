@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using ConfigDatas;
+using NarlonLib.Log;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
@@ -53,6 +54,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             if (MathTool.GetRandom(4) != 0)
                 return;
 
+            var threat = GetThreat(self.IsLeft);
             var rival = self.Rival as Player;
             int totalMpNeed = 0;
             for (int i = 0; i < self.CardNumber; i++)
@@ -64,7 +66,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                     if (self.CheckUseCard(card, self, rival) != ErrorConfig.Indexer.OK)
                         continue;
 
-                    if(TryUseCard(card)) //一回合只使用一张卡
+                    if(TryUseCard(card, threat)) //一回合只使用一张卡
                         break;
 
                     totalMpNeed += card.Mp;
@@ -84,13 +86,13 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                     if (self.CheckUseCard(card, self, rival) != ErrorConfig.Indexer.OK)
                         continue;
 
-                    if (TryUseCard(card)) //一回合只使用一个英雄技能
+                    if (TryUseCard(card, threat)) //一回合只使用一个英雄技能
                         break;
                 }
             }
         }
 
-        private bool TryUseCard(ActiveCard selectCard)
+        private bool TryUseCard(ActiveCard selectCard, float threat)
         {
             if (selectCard.CardType == CardTypes.Monster)
             {
@@ -130,6 +132,12 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                             break;
                         case AiSpellCastTypes.CardRivalMore:
                             if (self.Rival.CardNumber < 2) return false;
+                            break;
+                        case AiSpellCastTypes.MonsterAdv:
+                            if (threat > -100) return false;
+                            break;
+                        case AiSpellCastTypes.MonsterDisadv:
+                            if (threat < 100) return false;
                             break;
                     }
                     targetPos = BattleManager.Instance.MemMap.GetRandomPoint(self.IsLeft, true, false);
@@ -279,6 +287,32 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 if (BattleLocationManager.IsPlaceCanSummon(x, y, false, canRush))
                     return new Point(x, y);
             }
+        }
+
+        /// <summary>
+        /// 计算当前的威胁值
+        /// </summary>
+        private float GetThreat(bool isLeft)
+        {
+            var widthStage = BattleManager.Instance.MemMap.StageWidth;
+            float threat = 0;
+            for (int i = 0; i < BattleManager.Instance.MonsterQueue.Count; i++)
+            {
+                LiveMonster pickMon = BattleManager.Instance.MonsterQueue[i];
+                if (pickMon.IsGhost || pickMon.IsDefence)
+                    continue;
+
+                var pickThreat = (float) (pickMon.Atk* (1 + (pickMon.RealDef + pickMon.RealSpd + pickMon.RealHit +
+                    pickMon.RealDHit + pickMon.RealCrt)* 0.05));
+                var cellMoved = pickMon.IsLeft ? pickMon.Position.X : widthStage - pickMon.Position.X;
+                if (isLeft == pickMon.IsLeft)
+                    pickThreat = -pickThreat * (1 + 2 * (widthStage - (float)cellMoved) / widthStage); //1-3倍距离产生的压力
+                else
+                    pickThreat = pickThreat * (1 + 2 * (float)cellMoved / widthStage); //1-3倍距离产生的压力
+                pickThreat = pickThreat*(float)pickMon.HpRate/100;
+                threat += pickThreat;
+            }
+            return threat;
         }
 
         public void Discover(IMonster m, int[] cardId, int lv, DiscoverCardActionType type)
