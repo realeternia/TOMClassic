@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
-using TaleofMonsters.Core.Loader;
+using TaleofMonsters.Datas.Cards;
 
 namespace TaleofMonsters.Controler.Battle.Components
 {
@@ -11,9 +11,7 @@ namespace TaleofMonsters.Controler.Battle.Components
     {
         private float time;//当前的虚拟时间
         private float round;//当前的回合数，超过固定值就可以抽牌
-  //      private int weather;
         private int daytime;
-   //     private int special;
         private bool isShow;
 
         internal TimeViewer()
@@ -43,13 +41,6 @@ namespace TaleofMonsters.Controler.Battle.Components
             {
                 SoundManager.Play("Time", "DuskWolf.mp3");
             }
-            //if (time % 12 == 0)
-            //{
-            //    if (MathTool.GetRandom(2) == 0)
-            //        weather = MathTool.GetRandom(9);
-            //    if (MathTool.GetRandom(4) == 0)
-            //        special = MathTool.GetRandom(2);
-            //}
 
             round = roundT;
             Invalidate();
@@ -65,20 +56,27 @@ namespace TaleofMonsters.Controler.Battle.Components
             e.Graphics.DrawString(string.Format("{0:00}:{1:00}", time / 4, (time % 4) * 15), font, Brushes.White, 22, 0);
             font.Dispose();
 
-            if(isShow)
+            if (!isShow)
+                return;
+
+            for (int i = 0; i < BattleManager.Instance.TrapHolder.TrapList.Count; i++)
             {
-                string url = string.Format("d{0}.JPG", daytime);
-                Image img = PicLoader.Read("Weather", url);
-                e.Graphics.DrawImage(img, 6, 35, 30, 30);
-                img.Dispose();
-        //        url = string.Format("w{0}.JPG", weather);
-        //        img = PicLoader.Read("Weather", url);
-        //        e.Graphics.DrawImage(img, 41, 35, 30, 30);
-        //        img.Dispose();
-          //      url = string.Format("s{0}.JPG", special);
-        //        img = PicLoader.Read("Weather", url);
-       //         e.Graphics.DrawImage(img, 76, 35, 30, 30);
-       //         img.Dispose();
+                var trapInfo = BattleManager.Instance.TrapHolder.TrapList[i];
+                var rect = new Rectangle(6 + 35 * i, 35, 30, 30);
+                if (trapInfo.Owner.IsLeft)
+                {
+                    Pen colorPen = new Pen(Color.Red, 3);
+                    e.Graphics.DrawImage(CardAssistant.GetCardImage(trapInfo.SpellId, 30, 30), rect);
+                    e.Graphics.DrawRectangle(colorPen, rect);
+                    colorPen.Dispose();
+                }
+                else
+                {
+                    Pen colorPen = new Pen(Color.Blue, 3);
+                    e.Graphics.DrawImage(HSIcons.GetIconsByEName("rot9"), rect);
+                    e.Graphics.DrawRectangle(colorPen, rect);
+                    colorPen.Dispose();
+                }
             }
         }
     }

@@ -29,8 +29,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
     {
         public delegate void PlayerPointEventHandler();
         public event PlayerPointEventHandler ManaChanged;
-        public event PlayerPointEventHandler CardLeftChanged;
-        public event PlayerPointEventHandler TrapStateChanged;
+        public PlayerPointEventHandler CardLeftChanged;
+        public PlayerPointEventHandler HandCardChanged;
 
         public delegate void PlayerHeroSkillStateEventHandler(bool active);
         public event PlayerHeroSkillStateEventHandler HeroSkillChanged;
@@ -48,7 +48,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public SpikeManager SpikeManager { get; set; }
         public CardHandBundle HandCards { get; private set; }//手牌
         public CardOffBundle OffCards { get; protected set; }//牌库的牌
-        public TrapHolder TrapHolder { get; private set; }
         public EquipModifier Modifier { get; protected set; }
         public IPlayerAction Action { get; private set; }
         public PlayerSpecialAttr SpecialAttr { get; private set; }
@@ -106,7 +105,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             HandCards = new CardHandBundle(this);
             EnergyGenerator = new EnergyGenerator();
             SpikeManager = new SpikeManager(this);
-            TrapHolder = new TrapHolder(this);
             Modifier = new EquipModifier();
             Action = new PlayerAction(this);
             SpecialAttr = new PlayerSpecialAttr();
@@ -276,7 +274,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             AddPp(-selectCard.Pp);
 
             var rival = Rival as Player;
-            if (rival.TrapHolder.CheckTrapOnUseCard(selectCard, location, rival))
+            if (BattleManager.Instance.TrapHolder.CheckTrapOnUseCard(selectCard, location, rival))
                 return false;
 
             SpikeManager.OnUseCard(selectCard.CardType);
@@ -348,7 +346,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 NLog.Debug("UseMonster pid={0} cid={1}", PeopleId, card.CardId);
 
                 var rival = Rival as Player;
-                rival.TrapHolder.CheckTrapOnSummon(newMon, rival);
+                BattleManager.Instance.TrapHolder.CheckTrapOnSummon(newMon, rival);
                 if (HolyBook.HasWord("holyman"))
                     newMon.BuffManager.AddBuff(BuffConfig.Indexer.HolyShield, 1, 99);
             }
@@ -527,12 +525,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public virtual List<int> GetInitialMonster()
         {
             return new List<int>();
-        }
-
-        public void OnTrapChange()
-        {
-            if (TrapStateChanged != null)
-                TrapStateChanged();
         }
     }
 }

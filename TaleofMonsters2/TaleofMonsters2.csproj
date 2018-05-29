@@ -130,7 +130,7 @@
     <Compile Include="Controler\Battle\Data\Players\Frag\PlayerAction.cs" />
     <Compile Include="Controler\Battle\Data\Players\Frag\PlayerSpecialAttr.cs" />
     <Compile Include="Controler\Battle\Data\Players\Frag\SpikeManager.cs" />
-    <Compile Include="Controler\Battle\Data\Players\Frag\TrapHolder.cs" />
+    <Compile Include="Controler\Battle\DataTent\TrapHolder.cs" />
     <Compile Include="Controler\Battle\Tool\BattleManager.cs" />
     <Compile Include="Datas\Decks\IMemCardData.cs" />
     <Compile Include="Datas\Effects\Facts\BaseEffect.cs" />

@@ -5,6 +5,7 @@ using TaleofMonsters.Controler.Battle.Data.MemArticle;
 using TaleofMonsters.Controler.Battle.Data.MemMap;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players;
+using TaleofMonsters.Controler.Battle.Data.Players.Frag;
 using TaleofMonsters.Controler.Battle.DataTent;
 using TaleofMonsters.Core;
 using TaleofMonsters.Datas.Others;
@@ -33,7 +34,8 @@ namespace TaleofMonsters.Controler.Battle.Tool
         public MissileQueue MissileQueue { get; private set; }
         public ArticleQueue ArticleQueue { get; private set; } //场景物件
         public MemRowColumnMap MemMap { get; set; }
-        
+        public TrapHolder TrapHolder { get; private set; }
+
         public bool IsNight;
         public int RoundMark;//目前一个roundmark代表0.05s
         public float Round;//当前的回合数，超过固定值就可以抽牌
@@ -53,6 +55,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
             PlayerManager = new PlayerManager();
             MissileQueue = new MissileQueue();
             ArticleQueue = new ArticleQueue();
+            TrapHolder = new TrapHolder();
             IsNight = false;
         }
 

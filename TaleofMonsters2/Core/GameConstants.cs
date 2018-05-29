@@ -40,6 +40,7 @@ namespace TaleofMonsters.Core
         public const int RoundAts = 30;//这个高了，怪的hp也要调高，spell的伤害和武器的耐久调整
         public const int LimitAts = 600; //超过这个值就会进行攻击，LimitAts/RoundAts/5=攻击间隔时间
         public const int PrepareAts = 600; //准备时消耗的时间
+        public const int MaxTrapCount = 3; //最大陷阱数
 
         public const float CardStrengthStar = 0.3f;
         public const float CardStrengthLevel = 0.12f;

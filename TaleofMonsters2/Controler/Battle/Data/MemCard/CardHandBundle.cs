@@ -66,6 +66,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
 
         public void UpdateCardView()
         {
+            if (self.HandCardChanged != null)
+                self.HandCardChanged();
             if (self.CardsDesk != null)
                 self.CardsDesk.UpdateSlot(cardArray);
         }

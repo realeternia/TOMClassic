@@ -49,7 +49,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             self = p;
             self.ManaChanged += new Player.PlayerPointEventHandler(player_ManaChanged);
             self.CardLeftChanged += new Player.PlayerPointEventHandler(player_CardLeftChanged);
-            self.TrapStateChanged += new Player.PlayerPointEventHandler(player_TrapChanged);
+            self.HandCardChanged += new Player.PlayerPointEventHandler(player_HandCardChanged);
             Invalidate();
         }
 
@@ -66,7 +66,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             self = p;
             self.ManaChanged += new Player.PlayerPointEventHandler(player_ManaChanged);
             self.CardLeftChanged += new Player.PlayerPointEventHandler(player_CardLeftChanged);
-            self.TrapStateChanged += new Player.PlayerPointEventHandler(player_TrapChanged);
+            self.HandCardChanged += new Player.PlayerPointEventHandler(player_HandCardChanged);
             Invalidate();
         }
 
@@ -78,9 +78,9 @@ namespace TaleofMonsters.Controler.Battle.Components
         {
             Invalidate(new Rectangle(IsLeft ? Width - 52 : 53, 44, 20, 20));
         }
-        private void player_TrapChanged()
+        private void player_HandCardChanged()
         {
-            Invalidate(new Rectangle(IsLeft ? Width - 120 : 80, 44, 50, 20));
+            Invalidate(new Rectangle(IsLeft ? Width - 102 : 103, 44, 20, 20));
         }
 
         private void LifeClock_Paint(object sender, PaintEventArgs e)
@@ -186,16 +186,12 @@ namespace TaleofMonsters.Controler.Battle.Components
             Font font = new Font("宋体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
             float lenth = TextRenderer.MeasureText(e.Graphics, nameStr, font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
             e.Graphics.DrawString(nameStr, font, Brushes.White, IsLeft ? 72 : Width - 72 - lenth, 44);
-            e.Graphics.DrawImage(HSIcons.GetIconsByEName("tsk7"), IsLeft ? Width - 75 : 30,44,18,18);//画剩余卡牌数
+            e.Graphics.DrawImage(HSIcons.GetIconsByEName("abl3"), IsLeft ? Width - 75 : 30, 44, 18, 18);//画剩余卡牌数
+            e.Graphics.DrawImage(HSIcons.GetIconsByEName("tsk7"), IsLeft ? Width - 125 : 80, 44, 18, 18);//画手牌数
             if (self != null)
             { 
-                e.Graphics.DrawString(self.OffCards.LeftCount.ToString(), font, Brushes.White, IsLeft ? Width-52 : 53, 44);
-                if (self.TrapHolder.Count > 0)
-                {
-                    var icon = HSIcons.GetIconsByEName("tsk6");
-                    for (int i = 0; i < self.TrapHolder.Count; i++)
-                        e.Graphics.DrawImage(icon, (IsLeft ? Width - 120 : 80)+i*8, 44, 18, 18);
-                }
+                e.Graphics.DrawString(self.OffCards.LeftCount.ToString(), font, Brushes.White, IsLeft ? Width - 52 : 53, 44);
+                e.Graphics.DrawString(self.HandCards.GetCardNumber().ToString(), font, Brushes.White, IsLeft ? Width - 102 : 103, 44);
             }
             font.Dispose();
         }
@@ -280,6 +276,7 @@ namespace TaleofMonsters.Controler.Battle.Components
         {
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine(string.Format("Lv{0}", self.Level), "LightBlue", 20);
+            tipData.AddTextNewLine(string.Format("卡牌 {0}({1})", self.HandCards.GetCardNumber(), self.OffCards.LeftCount), "White");
             tipData.AddTextNewLine("能量回复比率", "White");
             tipData.AddTextNewLine(string.Format("LP {0}", self.EnergyGenerator.RateLp.ToString().PadLeft(3, ' ')), "Gold");
             tipData.AddBar(100, self.EnergyGenerator.RateLp, Color.Yellow, Color.Gold);
@@ -287,8 +284,6 @@ namespace TaleofMonsters.Controler.Battle.Components
             tipData.AddBar(100, self.EnergyGenerator.RatePp, Color.Pink, Color.Red);
             tipData.AddTextNewLine(string.Format("MP {0}", self.EnergyGenerator.RateMp.ToString().PadLeft(3, ' ')), "Blue");
             tipData.AddBar(100, self.EnergyGenerator.RateMp, Color.Cyan, Color.Blue);
-
-            self.TrapHolder.GenerateImage(tipData, self is HumanPlayer);
 
             var rival = self.Rival as Player;
             if (rival.HolyBook.HasWord("witcheye"))
