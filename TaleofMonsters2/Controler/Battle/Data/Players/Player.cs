@@ -431,7 +431,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
             catch (Exception e)
             {
-                NLog.Warn(e);
+                NLog.Warn(card.CardId + " " + e.ToString());
                 BattleManager.Instance.FlowWordQueue.Add(new FlowWord("未知错误", location, 0, "Red", 26, 0, 0, 2, 15));
                 return;
             }

@@ -89,6 +89,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             {
                 if (skill.SkillId == sid)
                 {
+                    skill.CheckRemoveEffect();
                     SkillList.Remove(skill);
                     break;
                 }

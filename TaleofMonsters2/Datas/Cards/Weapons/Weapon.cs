@@ -44,15 +44,6 @@ namespace TaleofMonsters.Datas.Cards.Weapons
             UpgradeToLevel1();
         }
 
-        public void AddStrengthLevel(int value)
-        {
-            int basedata = value*MathTool.GetSqrtMulti10(WeaponConfig.Star);
-            if (WeaponConfig.Type == (int)CardTypeSub.Weapon || WeaponConfig.Type == (int)CardTypeSub.Scroll)
-                Atk += 2*basedata/10;
-            else if (WeaponConfig.Type == (int)CardTypeSub.Armor)
-                Def += 1*basedata/10;
-        }
-
         public CardProductMarkTypes GetSellMark()
         {
             CardProductMarkTypes mark = CardProductMarkTypes.Null;
