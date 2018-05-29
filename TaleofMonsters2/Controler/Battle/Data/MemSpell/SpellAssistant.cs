@@ -13,11 +13,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemSpell
 {
     internal static class SpellAssistant
     {
-        public static bool CanCast(Spell spell, LiveMonster target)
+        public static bool CanCast(Player caster, Spell spell, LiveMonster target)
         {
             if (spell.SpellConfig.CanCast == null)
                 return true;
-            return spell.SpellConfig.CanCast(spell, target);
+            return spell.SpellConfig.CanCast(spell, caster, target);
         }
 
         public static void Cast(Spell spell, bool isLeft, LiveMonster target, Point mouse)

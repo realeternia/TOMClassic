@@ -213,7 +213,7 @@ namespace ExcelToCsv
                 {
                     result = datas[i].ToString() == ""
                                   ? "null"
-                                  : string.Format("delegate(ISpell spl, IMonster t){{if({0})return true;return false;}}", datas[i]);
+                                  : string.Format("delegate(ISpell spl, IPlayer p, IMonster t){{if({0})return true;return false;}}", datas[i]);
                 }
                 else if (typeStr == "SpellTrapAddCardDelegate")
                 {

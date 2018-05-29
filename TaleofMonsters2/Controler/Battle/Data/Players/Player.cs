@@ -408,7 +408,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             Spell spell = new Spell(card.CardId);
             spell.Addon = SpecialAttr.SpellEffectAddon;
             spell.UpgradeToLevel(card.Level);
-            return SpellAssistant.CanCast(spell, target);
+            return SpellAssistant.CanCast(this, spell, target);
         }
 
         public void DoSpell(LiveMonster target, ActiveCard card, Point location)
