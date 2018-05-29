@@ -44,7 +44,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
 
         public void RemoveRandomTrap(Player target)
         {
-            var myTrapList = TrapList.FindAll(trap => trap.Owner == target);
+            var myTrapList = TrapList.FindAll(trap => trap.Owner.IsLeft == target.IsLeft);
             if (myTrapList.Count > 0)
             {
                 var trap = myTrapList[MathTool.GetRandom(myTrapList.Count)];
@@ -67,7 +67,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
         {
             foreach (var trap in TrapList)
             {
-                if (trap.Owner == targetPlayer)
+                if (trap.Owner.IsLeft == targetPlayer.IsLeft)
                     continue;
 
                 var trapConfig = ConfigData.GetSpellTrapConfig(trap.Id);
@@ -94,7 +94,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
         {
             foreach (var trap in TrapList)
             {
-                if (trap.Owner == targetPlayer)
+                if (trap.Owner.IsLeft == targetPlayer.IsLeft)
                     continue;
 
                 var trapConfig = ConfigData.GetSpellTrapConfig(trap.Id);

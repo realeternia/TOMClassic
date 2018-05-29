@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas.Cards;
 
 namespace TaleofMonsters.Controler.Battle.Components
@@ -58,7 +59,7 @@ namespace TaleofMonsters.Controler.Battle.Components
 
             if (!isShow)
                 return;
-
+            
             for (int i = 0; i < BattleManager.Instance.TrapHolder.TrapList.Count; i++)
             {
                 var trapInfo = BattleManager.Instance.TrapHolder.TrapList[i];
@@ -78,6 +79,14 @@ namespace TaleofMonsters.Controler.Battle.Components
                     colorPen.Dispose();
                 }
             }
+
+            var bgImg = PicLoader.Read("System", "w0.JPG");
+            for (int i = BattleManager.Instance.TrapHolder.TrapList.Count; i < GameConstants.MaxTrapCount; i++)
+            {
+                var rect = new Rectangle(6 + 35 * i, 35, 30, 30);
+                e.Graphics.DrawImage(bgImg, rect);
+            }
+            bgImg.Dispose();
         }
     }
 }
