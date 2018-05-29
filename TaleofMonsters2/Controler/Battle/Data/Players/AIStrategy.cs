@@ -53,11 +53,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             if (MathTool.GetRandom(4) != 0)
                 return;
 
-            int row = BattleManager.Instance.MemMap.RowCount;
-            int size = BattleManager.Instance.MemMap.CardSize;
-            var rival = self == BattleManager.Instance.PlayerManager.LeftPlayer ? 
-                BattleManager.Instance.PlayerManager.RightPlayer : BattleManager.Instance.PlayerManager.LeftPlayer;
-
+            var rival = self.Rival as Player;
             int totalMpNeed = 0;
             for (int i = 0; i < self.CardNumber; i++)
             {
@@ -68,7 +64,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                     if (self.CheckUseCard(card, self, rival) != ErrorConfig.Indexer.OK)
                         continue;
 
-                    if(TryUseCard(card, size, row)) //一回合只使用一张卡
+                    if(TryUseCard(card)) //一回合只使用一张卡
                         break;
 
                     totalMpNeed += card.Mp;
@@ -88,13 +84,13 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                     if (self.CheckUseCard(card, self, rival) != ErrorConfig.Indexer.OK)
                         continue;
 
-                    if (TryUseCard(card, size, row)) //一回合只使用一个英雄技能
+                    if (TryUseCard(card)) //一回合只使用一个英雄技能
                         break;
                 }
             }
         }
 
-        private bool TryUseCard(ActiveCard selectCard, int cellSize, int row)
+        private bool TryUseCard(ActiveCard selectCard)
         {
             if (selectCard.CardType == CardTypes.Monster)
             {
@@ -122,10 +118,21 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 {
                     targetPos = GetSummonPoint(false, true);
                 }
-                else if (aiGuideType == AiSpellCastTypes.AtWill)
+                else if (aiGuideType >= AiSpellCastTypes.AtWill && aiGuideType < AiSpellCastTypes.EnemySingle)
                 {
-                    targetPos = new Point(self.IsLeft ? MathTool.GetRandom(200, 300) : MathTool.GetRandom(600, 700),
-                        MathTool.GetRandom(cellSize * 3 / 10, row * cellSize - cellSize * 3 / 10));
+                    switch (aiGuideType)
+                    {
+                        case AiSpellCastTypes.CardLess:
+                            if (self.CardNumber > 3) return false;
+                            break;
+                        case AiSpellCastTypes.CardMore:
+                            if (self.CardNumber < 4) return false;
+                            break;
+                        case AiSpellCastTypes.CardRivalMore:
+                            if (self.Rival.CardNumber < 2) return false;
+                            break;
+                    }
+                    targetPos = BattleManager.Instance.MemMap.GetRandomPoint(self.IsLeft, true, false);
                 }
                 else
                 {

@@ -10,7 +10,7 @@ namespace ConfigDatas
 
         void RemoveTomb(IMonster m);
         void ReviveUnit(IPlayer player, IMonster mon, int addHp);
-        System.Drawing.Point GetRandomPoint();
+        System.Drawing.Point GetRandomPoint(bool isLeft, bool backR, bool forwardR);
 
         MonsterCollection GetAllMonster(System.Drawing.Point mouse);
         MonsterCollection GetRangeMonster(bool isLeft, string target, string shape, int range, System.Drawing.Point mouse);

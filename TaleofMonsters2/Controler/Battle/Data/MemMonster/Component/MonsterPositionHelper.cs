@@ -84,7 +84,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             }
             else if (type == "rand") //随机
             {
-                posLis.Add(BattleManager.Instance.MemMap.GetRandomPoint());
+                posLis.Add(BattleManager.Instance.MemMap.GetRandomPoint(isLeft, true, true));
             }
             else
             {

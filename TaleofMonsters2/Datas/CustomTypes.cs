@@ -335,6 +335,9 @@
     internal enum AiSpellCastTypes
     {
         AtWill = 0,
+        CardLess = 1,
+        CardMore = 2,
+        CardRivalMore = 3,
         EnemySingle = 100,
         EnemySingleWeak = 101, //补刀
         EnemyTwo = 102,

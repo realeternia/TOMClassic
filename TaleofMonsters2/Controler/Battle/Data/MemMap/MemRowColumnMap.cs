@@ -263,14 +263,19 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             }
         }
 
-        public Point GetRandomPoint()
+        public Point GetRandomPoint(bool isLeft, bool backR, bool forwardR)
         {
             bool paavail = false;
             Point pa = new Point(0);
+            var cellLength = Cells.GetLength(0);
+            var cellHeight = Cells.GetLength(1);
             while (!paavail)
             {
-                pa.X = MathTool.GetRandom(Cells.GetLength(0)) * CardSize;
-                pa.Y = MathTool.GetRandom(Cells.GetLength(1)) * CardSize;
+                if (isLeft)
+                    pa.X = MathTool.GetRandom(backR ? 0 : cellLength / 2, forwardR ? cellLength : cellLength / 2 + 1) * CardSize;
+                else
+                    pa.X = MathTool.GetRandom(forwardR ? 0 : cellLength / 2, backR ? cellLength : cellLength / 2 + 1) * CardSize;
+                pa.Y = MathTool.GetRandom(cellHeight) * CardSize;
                 paavail = IsPlaceCanMove(pa.X, pa.Y);
             }
             return pa;
