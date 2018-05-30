@@ -81,7 +81,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             self.CoverBox.CheckCover();
             self.SkillManager.CheckInitialEffect();
             if (cardId > 0)
-                self.AddWeapon(savedWeapon);
+                self.AddWeapon(savedWeapon, false);
             self.HpBar.SetHp(self.Avatar.Hp * lifp / 100);
         }
 
@@ -119,7 +119,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             Weapon wpn = new Weapon(weaponId);
             wpn.UpgradeToLevel(lv);
             var tWeapon = new TrueWeapon(self, lv, wpn);
-            self.AddWeapon(tWeapon);
+            self.AddWeapon(tWeapon, true);
         }
 
         public void StealWeapon(IMonster target)
@@ -128,7 +128,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             if (monster != null)
             {
                 var weapon = monster.Weapon;
-                self.AddWeapon(weapon);
+                self.AddWeapon(weapon, false);
                 target.Action.BreakWeapon();
             }
         }

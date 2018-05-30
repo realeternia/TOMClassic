@@ -15,6 +15,8 @@ using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Cards.Monsters;
+using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Effects.Facts;
 using TaleofMonsters.Datas.Formulas;
 using TaleofMonsters.Datas.Skills;
 
@@ -337,7 +339,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             return !Avatar.MonsterConfig.IsBuilding && !IsGhost;
         }
         
-        public void AddWeapon(IBattleWeapon tw)
+        public void AddWeapon(IBattleWeapon weapon, bool isAdd)
         {
             if (!CanAddWeapon())
             {
@@ -347,8 +349,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
             if (Weapon != null)
                 Weapon.CheckWeaponEffect(this, false);
-            Weapon = tw;
+            Weapon = weapon;
             Weapon.CheckWeaponEffect(this, true);
+
+            if (isAdd)
+                BattleManager.Instance.EffectQueue.Add(new MonsterBindEffect(EffectBook.GetEffect("equip"), this, true));
         }
 
         public void DeleteWeapon(bool toGrave)

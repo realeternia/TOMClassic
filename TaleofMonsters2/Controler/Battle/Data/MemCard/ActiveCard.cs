@@ -31,6 +31,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         {
             CardId = baseid;
             Level = level;
+
+            SetCost();
         }
 
         public CardTypes CardType
@@ -42,6 +44,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemCard
         {
             var level = (byte)MathTool.Clamp(Level + levelChange, 1, GameConstants.CardMaxLevel);
             Level = level;
+        }
+
+        private void SetCost()
+        {
+            var cardConfig = CardConfigManager.GetCardConfig(CardId);
+            Mp = cardConfig.Type != CardTypes.Spell ? 0 : cardConfig.Cost;
+            Lp = cardConfig.Type != CardTypes.Monster ? 0 : cardConfig.Cost;
+            Pp = cardConfig.Type != CardTypes.Weapon ? 0 : cardConfig.Cost;
         }
 
         public ActiveCard GetCopy()

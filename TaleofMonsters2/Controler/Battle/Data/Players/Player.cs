@@ -370,7 +370,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 wpn.UpgradeToLevel(card.Level);
 
                 var tWeapon = new TrueWeapon(lm, card.Level, wpn);
-                lm.AddWeapon(tWeapon);
+                lm.AddWeapon(tWeapon, true);
             }
             catch (Exception e)
             {
@@ -392,7 +392,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 mon.UpgradeToLevel(card.Level);
 
                 var tWeapon = new SideKickWeapon(lm, card.Level, mon);
-                lm.AddWeapon(tWeapon);
+                lm.AddWeapon(tWeapon, false);
             }
             catch (Exception e)
             {
