@@ -213,7 +213,7 @@ namespace TaleofMonsters.Controler.Battle
                 {
                     CheckCursor();
                     miniItemView1.OnFrame();
-                    timeViewer1.OnFrame(BattleManager.Instance.Round);
+                    timeViewer1.OnFrame();
 
                     BattleManager.Instance.Next();
                 }

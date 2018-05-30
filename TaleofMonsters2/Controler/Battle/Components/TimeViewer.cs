@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using TaleofMonsters.Controler.Battle.Tool;
@@ -12,38 +13,33 @@ namespace TaleofMonsters.Controler.Battle.Components
     {
         private float time;//当前的虚拟时间
         private float round;//当前的回合数，超过固定值就可以抽牌
-        private int daytime;
         private bool isShow;
 
-        internal TimeViewer()
+        public TimeViewer()
         {
             InitializeComponent();
         }
 
         internal void Init()
         {
-            time = 32;
-            daytime = 1;
             isShow = true;
         }
 
-        internal void OnFrame(float roundT)
+        internal void OnFrame()
         {
-            float oldTime = time;
-            //time += pastTime*10;//todo
-            //if (time > 96) time = 0;
-            BattleManager.Instance.IsNight = (time < 24 || time >= 72);
-            daytime = BattleManager.Instance.IsNight ? 2 : 1;
-            if (oldTime < 24 && time>=24)
-            {
-                SoundManager.Play("Time", "DaybreakRooster.mp3");
-            }
-            else if (oldTime < 72 && time >= 72)
-            {
-                SoundManager.Play("Time", "DuskWolf.mp3");
-            }
+            var roundMark = BattleManager.Instance.RoundMark;
+            var roundTotal = (float)roundMark*50/GameConstants.RoundTime;//回合数
+            var roundTime = roundTotal*2; //一个回合两小时
+            var oldTime = time;
+            time = (roundTime + 8)%24; //开始是8点
 
-            round = roundT;
+            BattleManager.Instance.IsNight = (time < 6 || time > 18);
+            if (oldTime < 6 && time>=6)
+                SoundManager.Play("Time", "DaybreakRooster.mp3");
+            else if (oldTime < 18 && time >= 18)
+                SoundManager.Play("Time", "DuskWolf.mp3");
+
+            round = BattleManager.Instance.Round;
             Invalidate();
         }
 
@@ -54,7 +50,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             b1.Dispose();
 
             Font font = new Font("Arial", 20*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            e.Graphics.DrawString(string.Format("{0:00}:{1:00}", time / 4, (time % 4) * 15), font, Brushes.White, 22, 0);
+            e.Graphics.DrawString(string.Format("{0:00}:{1:00}", (int)time, (int)((time - (int)time) * 4) * 15), font, Brushes.White, 22, 0);
             font.Dispose();
 
             if (!isShow)
