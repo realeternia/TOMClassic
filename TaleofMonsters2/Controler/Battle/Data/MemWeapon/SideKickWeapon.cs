@@ -66,7 +66,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
                 src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.WeaponSide, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Dhit, avatar.Dhit);
                 src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.WeaponSide, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Spd, avatar.Spd);
                 src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.WeaponSide, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Crt, avatar.Crt);
-                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.WeaponSide, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Luk, avatar.Luk);
 
                 if (avatar.Hp > 0)//加buff时候
                     src.AddHp(avatar.Hp);//顺便把hp也加上

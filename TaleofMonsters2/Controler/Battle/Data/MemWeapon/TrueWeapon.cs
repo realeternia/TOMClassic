@@ -89,7 +89,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
                 src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Dhit, avatar.Dhit);
                 src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Spd, avatar.Spd);
                 src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Crt, avatar.Crt);
-                src.AddAttrModify((int)LiveMonster.AttrModifyInfo.AttrModifyTypes.Weapon, CardId, (int)LiveMonster.AttrModifyInfo.AttrTypes.Luk, avatar.Luk);
 
                 if (avatar.PArmor > 0)
                     src.HpBar.AddPArmor(avatar.PArmor);

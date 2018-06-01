@@ -89,11 +89,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 AddText(tipData, "暴击", self.Crt, self.RealCrt, "White", isLeft);
                 isLeft = !isLeft;
             }
-            if (self.RealLuk != 0)
-            {
-                AddText(tipData, "幸运", self.Luk, self.RealLuk, "White", isLeft);
-                isLeft = !isLeft;
-            }
 
             foreach (var pickSkill in self.SkillManager.SkillList)
             {

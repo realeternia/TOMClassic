@@ -48,7 +48,7 @@ namespace TaleofMonsters.Datas.Equips
             attr = (int)(standardValue * (0 + equipConfig.Attr * 5) / 100); //200
         }
 
-        internal List<EquipModifier.EquipModifyState> GetEquipAddons()
+        internal List<EquipModifier.EquipModifyState> GetEquipAddons(bool getLuck)
         {
             EquipConfig equipConfig = ConfigData.GetEquipConfig(TemplateId);
             var addons = new List<EquipModifier.EquipModifyState>();
@@ -68,7 +68,7 @@ namespace TaleofMonsters.Datas.Equips
                 addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.Dhit), Value = equipConfig.Dhit });
             if (equipConfig.Crt > 0)
                 addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.Crt), Value = equipConfig.Crt });
-            if (equipConfig.Luk > 0)
+            if (equipConfig.Luk > 0 && getLuck)
                 addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.Luk), Value = equipConfig.Luk });
             if (equipConfig.Range > 0)
                 addons.Add(new EquipModifier.EquipModifyState { Id = (int)(EquipAttrs.Range), Value = equipConfig.Range });
@@ -90,7 +90,7 @@ namespace TaleofMonsters.Datas.Equips
             tipData.AddTextNewLine(string.Format("       位置:{0}", HSTypes.I2EquipSlotType(equipConfig.Position)), "White");
             tipData.AddTextNewLine("", "White");
 
-            foreach (var equipAddon in GetEquipAddons())
+            foreach (var equipAddon in GetEquipAddons(true))
             {
                 EquipAddonConfig eAddon = ConfigData.GetEquipAddonConfig(equipAddon.Id);
                 tipData.AddTextNewLine(string.Format(eAddon.Format, equipAddon.Value), HSTypes.I2EaddonColor(eAddon.Rare));

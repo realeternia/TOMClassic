@@ -50,7 +50,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         
         #region 属性
         private int lastDamagerId; //最后一击的怪物id
-        private int peakDamagerLuk; //最高攻击者的幸运值
         
         private int[] antiMagic;//魔法抗性
         private int roundPast; //经过的调用数，每次调用大约200ms
@@ -127,8 +126,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         public int RealDHit { get; private set; }
 
         public int RealCrt { get; private set; }
-
-        public int RealLuk { get; private set; }
 
         public virtual string Arrow
         {
@@ -228,7 +225,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             RealHit = Hit = Avatar.Hit;
             RealDHit = Dhit = Avatar.Dhit;
             RealCrt = Crt = Avatar.Crt;
-            RealLuk = Luk = Avatar.Luk;
         }
 
         public void OnInit()
@@ -255,7 +251,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 {
                     BuffManager.CheckRecoverOnHit();
                     lastDamagerId = src.Id;
-                    peakDamagerLuk = Math.Max(peakDamagerLuk, src.RealLuk);
                 }
                 return true;
             }
@@ -274,7 +269,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             
             OwnerPlayer.OnMonsterDie(CardId, (byte)Level, IsSummoned);
             var rival = Rival as Player;
-            rival.OnKillMonster(Avatar.Id, Level, Avatar.Star, Position, peakDamagerLuk);
+            rival.OnKillMonster(Avatar.Id, Level, Avatar.Star, Position);
 
             MakeSound(false);
         }
@@ -513,7 +508,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             RealHit = Hit;
             RealDHit = Dhit;
             RealCrt = Crt;
-            RealLuk = Luk;
             RealMaxHp = MaxHp;
             foreach (var attrModifyInfo in ModifyList)
             {
@@ -527,7 +521,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                     case AttrModifyInfo.AttrTypes.Hit: RealHit += attrModifyInfo.Val; break;
                     case AttrModifyInfo.AttrTypes.Dhit: RealDHit += attrModifyInfo.Val; break;
                     case AttrModifyInfo.AttrTypes.Crt: RealCrt += attrModifyInfo.Val; break;
-                    case AttrModifyInfo.AttrTypes.Luk: RealLuk += attrModifyInfo.Val; break;
                 }
             }
         }

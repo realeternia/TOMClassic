@@ -64,7 +64,7 @@ namespace TaleofMonsters.Controler.Battle.Data
         
         private bool CheckRate()
         {
-            return MathTool.GetRandom(10000 + Self.RealLuk * GameConstants.LukToRoll) > (100 - Percent) * 100;
+            return MathTool.GetRandom(10000) > (100 - Percent) * 100;
         }
 
         public bool CheckBurst(LiveMonster src, LiveMonster dest, bool isMelee, bool needSave)

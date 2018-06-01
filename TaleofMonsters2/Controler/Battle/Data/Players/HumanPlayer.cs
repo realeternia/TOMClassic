@@ -43,21 +43,21 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             base.InitialCards();
 
 #if DEBUG
-            int[] cardToGive = new[] { 53000056 };
+            int[] cardToGive = new[] { 51000125 };
             foreach (var cardId in cardToGive)
                 HandCards.AddCard(new ActiveCard(cardId, 1));
 #endif
         }
 
-        public override void OnKillMonster(int id, int dieLevel, int dieStar, Point position, int luck)
+        public override void OnKillMonster(int id, int dieLevel, int dieStar, Point position)
         {
-            base.OnKillMonster(id, dieLevel, dieStar, position, luck);
+            base.OnKillMonster(id, dieLevel, dieStar, position);
 
             if (IsLeft)
             {
                 if (BattleManager.Instance.StatisticData.Items.Count < GameConstants.MaxDropItemGetOnBattle)
                 {
-                    int itemId = CardPieceBook.CheckPieceDrop(id, luck);
+                    int itemId = CardPieceBook.CheckPieceDrop(id, Luk);
                     if (itemId > 0)
                     {
                         BattleManager.Instance.StatisticData.AddItemGet(itemId);

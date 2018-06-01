@@ -76,6 +76,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public float Lp { get; set; }
 
         public float Pp { get; set; }
+        public int Luk { get; set; } //玩家的幸运值
 
         public int Level { get; protected set; }
 
@@ -120,6 +121,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             if (jobConfig.SkillId > 0)
                 HeroSkillList.Add(jobConfig.SkillId);//添加职业技能
 
+            int lukChange = 0;
             foreach (var equip in equipList)
             {
                 EquipConfig equipConfig = ConfigData.GetEquipConfig(equip.TemplateId);
@@ -144,10 +146,14 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                     else
                         Modifier.Weapon2Id = equipConfig.Id;
                 }
+
+                lukChange += equipConfig.Luk;
             }
+            if (lukChange != 0)
+                AddLuk(null, lukChange);
 
             foreach (var equip in equipList)
-                Modifier.UpdateInfo(equip.GetEquipAddons(), equip.CommonSkillList);
+                Modifier.UpdateInfo(equip.GetEquipAddons(false), equip.CommonSkillList);
 
             if (HeroSkillList.Count > 3)
                 HeroSkillList = HeroSkillList.GetRange(HeroSkillList.Count - 3, 3); //最多保留3个技能
@@ -235,6 +241,15 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public void AddPp(double addon)
         {
             AddManaData(PlayerManaTypes.Pp, (int)addon);
+        }
+
+        public void AddLuk(IMonster mon, int addon)
+        {//可能是负数
+            Luk += addon;
+            if (mon != null)
+            {
+                BattleManager.Instance.FlowWordQueue.Add(new FlowLukInfo(addon, mon.Position, 20, 50));
+            }
         }
 
         private void AddManaData(PlayerManaTypes type, int num)
@@ -325,7 +340,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 OffCards.AddGrave(new ActiveCard(monsterId, monsterLevel)); //放入坟场
         }
 
-        public virtual void OnKillMonster(int id, int dieLevel, int dieStar, Point position, int luck)
+        public virtual void OnKillMonster(int id, int dieLevel, int dieStar, Point position)
         {
             BattleManager.Instance.StatisticData.GetPlayer(IsLeft).Kill++;
             if (OnKillEnemy != null)
@@ -349,6 +364,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 BattleManager.Instance.TrapHolder.CheckTrapOnSummon(newMon, rival);
                 if (HolyBook.HasWord("holyman"))
                     newMon.BuffManager.AddBuff(BuffConfig.Indexer.HolyShield, 1, 99);
+                if (mon.Luk != 0)
+                    AddLuk(newMon, mon.Luk);
             }
             catch (Exception e)
             {
@@ -371,6 +388,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
                 var tWeapon = new TrueWeapon(lm, card.Level, wpn);
                 lm.AddWeapon(tWeapon, true);
+
+                if (wpn.Luk != 0)
+                    AddLuk(lm, wpn.Luk);
             }
             catch (Exception e)
             {

@@ -277,12 +277,13 @@ namespace TaleofMonsters.Controler.Battle.Components
             ControlPlus.TipImage tipData = new ControlPlus.TipImage();
             tipData.AddTextNewLine(string.Format("Lv{0}", self.Level), "LightBlue", 20);
             tipData.AddTextNewLine(string.Format("卡牌 {0}({1})", self.HandCards.GetCardNumber(), self.OffCards.LeftCount), "White");
+            tipData.AddTextNewLine(string.Format("幸运 {0}", self.Luk), "White");
             tipData.AddTextNewLine("能量回复比率", "White");
-            tipData.AddTextNewLine(string.Format("LP {0}", self.EnergyGenerator.RateLp.ToString().PadLeft(3, ' ')), "Gold");
+            tipData.AddTextNewLine(string.Format("LP {0} ", self.EnergyGenerator.RateLp.ToString().PadLeft(3, ' ')), "Gold");
             tipData.AddBar(100, self.EnergyGenerator.RateLp, Color.Yellow, Color.Gold);
-            tipData.AddTextNewLine(string.Format("PP {0}", self.EnergyGenerator.RatePp.ToString().PadLeft(3, ' ')), "Red");
+            tipData.AddTextNewLine(string.Format("PP {0} ", self.EnergyGenerator.RatePp.ToString().PadLeft(3, ' ')), "Red");
             tipData.AddBar(100, self.EnergyGenerator.RatePp, Color.Pink, Color.Red);
-            tipData.AddTextNewLine(string.Format("MP {0}", self.EnergyGenerator.RateMp.ToString().PadLeft(3, ' ')), "Blue");
+            tipData.AddTextNewLine(string.Format("MP {0} ", self.EnergyGenerator.RateMp.ToString().PadLeft(3, ' ')), "Blue");
             tipData.AddBar(100, self.EnergyGenerator.RateMp, Color.Cyan, Color.Blue);
 
             var rival = self.Rival as Player;

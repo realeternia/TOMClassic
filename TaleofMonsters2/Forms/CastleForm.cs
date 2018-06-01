@@ -186,7 +186,7 @@ namespace TaleofMonsters.Forms
             var modifier = new EquipModifier();
             var equipDataList = UserProfile.InfoCastle.GetValidEquipsList();
             foreach (var equip in equipDataList)
-                modifier.UpdateInfo(equip.GetEquipAddons(), equip.CommonSkillList);
+                modifier.UpdateInfo(equip.GetEquipAddons(true), equip.CommonSkillList);
 
             Font font3 = new Font("宋体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             e.Graphics.DrawString(string.Format("攻击 {0:###}", heroData.Atk), font3, Brushes.White, 15, 40);
