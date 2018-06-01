@@ -4,7 +4,6 @@ using NarlonLib.Log;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core.Config;
-using TaleofMonsters.Datas.Decks;
 using TaleofMonsters.Datas.Drops;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms;
@@ -82,15 +81,21 @@ namespace TaleofMonsters.Datas.Items
                 player.AddPp(itemConfig.GainPp);
             if (itemConfig.GainMp > 0)
                 player.AddMp(itemConfig.GainMp);
-            if (itemConfig.DirectDamage > 0)
-                player.SpecialAttr.DirectDamage += itemConfig.DirectDamage;
             if (itemConfig.FightRandomCardType > 0)
             {
                 int cardId = CardConfigManager.GetRandomTypeCard(itemConfig.FightRandomCardType);
                 player.HandCards.AddCard(new ActiveCard(cardId, 1));
             }
             if (!string.IsNullOrEmpty(itemConfig.HolyWord))
-                player.HolyBook.AddWord(itemConfig.HolyWord);
+            {
+                switch (itemConfig.HolyWord)
+                {//瞬发
+                    case "dambig": player.SpecialAttr.DirectDamage += 9999; break;
+                    case "damsmall": player.SpecialAttr.DirectDamage += 100; break;
+                    case "refreshep": player.EnergyGenerator.Refresh(); break;
+                    default: player.HolyBook.AddWord(itemConfig.HolyWord); break; //持续
+                }
+            }
             if (itemConfig.AddTowerHp > 0)
                 player.AddTowerHp(itemConfig.AddTowerHp);
             return true;

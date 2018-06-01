@@ -73,24 +73,33 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                     continue;
                 }
 
-                var roll = MathTool.GetRandom(100);
-                if (roll < RateMp)
-                {
-                    manaList.Add(PlayerManaTypes.Mp);
-                    continue;
-                }
-                if (roll < RateMp + RatePp)
-                {
-                    manaList.Add(PlayerManaTypes.Pp);
-                    continue;
-                }
-                manaList.Add(PlayerManaTypes.Lp);
+                manaList.Add(GetNextManaType());
             }
+        }
+
+        private PlayerManaTypes GetNextManaType()
+        {
+            var roll = MathTool.GetRandom(100);
+            if (roll < RateMp)
+                return PlayerManaTypes.Mp;
+            if (roll < RateMp + RatePp)
+                return PlayerManaTypes.Pp;
+            return PlayerManaTypes.Lp;
         }
 
         public void UseMana()
         {
             manaList.RemoveAt(0);
+        }
+
+        public void Refresh()
+        {
+            var manaCount = manaList.Count;
+            manaList.Clear();
+            for (int i = 0; i < manaCount; i++)
+            {
+                manaList.Add(GetNextManaType());
+            }
         }
     }
 }
