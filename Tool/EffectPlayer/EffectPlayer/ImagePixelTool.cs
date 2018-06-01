@@ -5,6 +5,29 @@ namespace EffectPlayer
 {
     public class ImagePixelTool
     {
+        public enum ImagePixelEffects
+        {
+            Lightness = 10,
+            Darkness = 11,
+            Gray = 12,
+            Redden = 13,
+            Greenen = 14,
+            Bluen = 15,
+            Invisible = 16,
+            Reverse = 20,
+            Statue = 21,
+            RandomSwitch = 30,
+            RandomRowMove = 31,
+            RandomColumnMove = 32,
+            RandomPoint = 33,
+        }
+        private static readonly Random r;
+        static ImagePixelTool()
+        {
+            var seed = (int)DateTime.Now.Ticks;
+            r = new Random(seed);
+        }
+
         public static void Effect(Bitmap source, ImagePixelEffects effect, int level)
         {
             int imageWidth = source.Width;
@@ -26,6 +49,7 @@ namespace EffectPlayer
                 case ImagePixelEffects.Redden: Redden(pixelValues, imageWidth, imageHeight, level); break;
                 case ImagePixelEffects.Bluen: Bluen(pixelValues, imageWidth, imageHeight, level); break;
                 case ImagePixelEffects.Greenen: Greenen(pixelValues, imageWidth, imageHeight, level); break;
+                case ImagePixelEffects.Invisible: Invisible(pixelValues, imageWidth, imageHeight, level); break;
                 case ImagePixelEffects.Reverse: Reverse(pixelValues, imageWidth, imageHeight, level); break;
                 case ImagePixelEffects.RandomSwitch: RandomSwitch(pixelValues, imageWidth, imageHeight, level); break;
                 case ImagePixelEffects.RandomRowMove: RandomRowMove(pixelValues, imageWidth, imageHeight, level); break;
@@ -151,6 +175,20 @@ namespace EffectPlayer
             }
         }
 
+        private static void Invisible(byte[] pixelValues, int imageWidth, int imageHeight, int level)
+        {
+            int index = 0;
+            for (int i = 0; i < imageHeight; i++)
+            {
+                for (int j = 0; j < imageWidth; j++)
+                {
+                    index += 3;
+                    pixelValues[index] = pixelValues[index] == 0 ? (byte)0 : (byte)(level * 40); //B
+                    index++; //A
+                }
+            }
+        }
+
         private static void Bluen(byte[] pixelValues, int imageWidth, int imageHeight, int level)
         {
             int index = 0;
@@ -176,12 +214,12 @@ namespace EffectPlayer
             {
                 for (int j = 0; j < imageWidth; j++)
                 {
-                    int yoff = i + MathTool.GetRandom(level * 3);
+                    int yoff = i + r.Next(level * 3);
                     if (yoff >= imageHeight)
                     {
                         yoff = imageHeight - 1;
                     }
-                    int xoff = j + MathTool.GetRandom(level * 3);
+                    int xoff = j + r.Next(level * 3);
                     if (xoff >= imageWidth)
                     {
                         xoff = imageWidth - 1;
@@ -204,8 +242,8 @@ namespace EffectPlayer
         {
             for (int i = 0; i < imageHeight; i++)
             {
-                int direct = MathTool.GetRandom(2);
-                int len = MathTool.GetRandom(level * 3);
+                int direct = r.Next(2);
+                int len = r.Next(level * 3);
                 if (direct == 0) //右移
                 {
                     for (int j = imageWidth - 1; j >= 0; j--)
@@ -247,8 +285,8 @@ namespace EffectPlayer
         {
             for (int i = 0; i < imageWidth; i++)
             {
-                int direct = MathTool.GetRandom(2);
-                int len = MathTool.GetRandom(level * 3);
+                int direct = r.Next(2);
+                int len = r.Next(level * 3);
                 if (direct == 0)
                 {
                     for (int j = imageHeight - 1; j >= 0; j--)
@@ -293,12 +331,12 @@ namespace EffectPlayer
             {
                 for (int j = 0; j < imageWidth; j++)
                 {
-                    if (MathTool.GetRandom(100) > level * 10)
+                    if (r.Next(100) > level * 10)
                     {
                         index += 4;
                         continue;
                     }
-                    int pv = MathTool.GetRandom(255);
+                    int pv = r.Next(255);
                     pixelValues[index] = (byte)pv; //B
                     index++;
                     pixelValues[index] = (byte)pv; //G

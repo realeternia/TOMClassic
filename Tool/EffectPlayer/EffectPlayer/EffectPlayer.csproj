@@ -70,7 +70,6 @@
     </Compile>
     <Compile Include="Frame.cs" />
     <Compile Include="FrameUnit.cs" />
-    <Compile Include="ImagePixelEffects.cs" />
     <Compile Include="ImagePixelTool.cs" />
     <Compile Include="MathTool.cs" />
     <Compile Include="Program.cs" />

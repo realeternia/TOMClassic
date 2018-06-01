@@ -19,7 +19,7 @@ namespace EffectPlayer
         delegate void SetSelectCallback();
         List<Frame> frames = new List<Frame>();
         System.Threading.Timer t;
-        String path = "";
+        string path = "";
 
         List<SelectItem> items = new List<SelectItem>();
         private int drawSize = 60;
@@ -56,7 +56,7 @@ namespace EffectPlayer
                     FrameUnit fu = frames[listBox1.SelectedIndex].Units[i];
                     try
                     {
-                        Image image = Image.FromFile(String.Format(@"../../PicResource/Effect/{0}.PNG", fu.frameid));
+                        Image image = Image.FromFile(string.Format(@"../../PicResource/Effect/{0}.PNG", fu.frameid));
                         if(fu.parm!=0)
                         {
                             switch (fu.parm)
@@ -68,7 +68,7 @@ namespace EffectPlayer
                                 case 5: image.RotateFlip(RotateFlipType.Rotate90FlipX); break;
                                 case 6: image.RotateFlip(RotateFlipType.Rotate180FlipX); break;
                                 case 7: image.RotateFlip(RotateFlipType.Rotate270FlipX); break;
-                                default: ImagePixelTool.Effect((Bitmap)image, (ImagePixelEffects)(fu.parm / 10), fu.parm % 10); break;
+                                default: ImagePixelTool.Effect((Bitmap)image, (ImagePixelTool.ImagePixelEffects)(fu.parm / 10), fu.parm % 10); break;
                             }
 
                         }
