@@ -13,7 +13,6 @@ using TaleofMonsters.Core.Config;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Cards.Monsters;
 using TaleofMonsters.Datas.Cards.Weapons;
-using TaleofMonsters.Datas.Decks;
 using TaleofMonsters.Datas.Effects;
 using TaleofMonsters.Datas.Effects.Facts;
 using TaleofMonsters.Datas.Skills;
@@ -111,6 +110,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             BattleManager.Instance.MonsterQueue.RemoveDirect(self.Id);
         }
 
+        public bool HasWeapon()
+        {
+            return self.Weapon != null && self.Weapon is TrueWeapon;
+        }
+
         public void AddWeapon(int weaponId, int lv)
         {
             if (!self.CanAddWeapon())
@@ -151,7 +155,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         public void LevelUpWeapon(int lv)
         {
-            if (self.Weapon != null)
+            if (self.Weapon != null && self.Weapon is TrueWeapon)
             {
                 var weaponId = self.Weapon.CardId;
                 var weaponLevel = self.Weapon.Level;

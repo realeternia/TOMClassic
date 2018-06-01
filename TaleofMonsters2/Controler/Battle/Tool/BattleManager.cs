@@ -4,8 +4,6 @@ using TaleofMonsters.Controler.Battle.Data;
 using TaleofMonsters.Controler.Battle.Data.MemArticle;
 using TaleofMonsters.Controler.Battle.Data.MemMap;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
-using TaleofMonsters.Controler.Battle.Data.Players;
-using TaleofMonsters.Controler.Battle.Data.Players.Frag;
 using TaleofMonsters.Controler.Battle.DataTent;
 using TaleofMonsters.Core;
 using TaleofMonsters.Datas.Others;

@@ -15,6 +15,8 @@
         void SetPrepareTime(float rate);
 
         void Return(int costChange);
+
+        bool HasWeapon();
         void AddWeapon(int weaponId, int lv);
         void StealWeapon(IMonster target);
         void BreakWeapon();
