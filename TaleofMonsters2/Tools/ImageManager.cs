@@ -12,6 +12,7 @@ namespace TaleofMonsters.Tools
         {
             public Image Image;
             public int Time;
+            public bool Persist;
 
             public override string ToString()
             {
@@ -46,12 +47,13 @@ namespace TaleofMonsters.Tools
             return images[path].Image ?? nullImage;
         }
 
-        public static void AddImage(string path, Image img)
+        public static void AddImage(string path, Image img, bool isPersist = false)
         {
             ImageItem item = new ImageItem
             {
                 Image = img,
-                Time = TimeTool.DateTimeToUnixTime(DateTime.Now)
+                Time = TimeTool.DateTimeToUnixTime(DateTime.Now),
+                Persist = isPersist
             };
             images[path] = item;
             count++;
@@ -60,18 +62,18 @@ namespace TaleofMonsters.Tools
         public static void Compress()
         {
             int now = TimeTool.DateTimeToUnixTime(DateTime.Now);
-            foreach (var item in images.Values)
+            foreach (var pickImg in images.Values)
             {
-                if (item.Image != null)
+                if (pickImg.Image == null || pickImg.Persist)
+                    continue;
+
+                int size = pickImg.Image.Width*pickImg.Image.Height;
+                int time = 60*10000/size;
+                if (pickImg.Time < now - time)
                 {
-                    int size = item.Image.Width*item.Image.Height;
-                    int time = 60*10000/size;
-                    if (item.Time < now - time)
-                    {
-                        item.Image.Dispose();
-                        item.Image = null;
-                        count--;
-                    }
+                    pickImg.Image.Dispose();
+                    pickImg.Image = null;
+                    count--;
                 }
             }
         }

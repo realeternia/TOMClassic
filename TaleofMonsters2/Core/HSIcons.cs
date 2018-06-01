@@ -12,7 +12,7 @@ namespace TaleofMonsters.Core
             if (!ImageManager.HasImage(fname))
             {
                 Image image = PicLoader.Read("Icon", string.Format("{0}.PNG", name));
-                ImageManager.AddImage(fname, image);
+                ImageManager.AddImage(fname, image, true);
             }
             return ImageManager.GetImage(fname);
         }
