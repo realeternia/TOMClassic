@@ -4,19 +4,17 @@ using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using System.Drawing;
 using TaleofMonsters.Controler.Battle.Data.MemMap;
 using TaleofMonsters.Datas;
-using TaleofMonsters.Datas.Cards.Monsters;
 
 namespace TaleofMonsters.Controler.Battle.Tool
 {
     internal static class BattleLocationManager
     {
-        public static LiveMonster GetPlaceMonster(int x, int y)
+        public static LiveMonster GetPlaceMonster(int tx, int ty)
         {
-            if (x < 0 || y < 0 || x >= BattleManager.Instance.MemMap.StageWidth || y >= BattleManager.Instance.MemMap.StageHeight)
+            if (tx < 0 || ty < 0 || tx >= BattleManager.Instance.MemMap.StageWidth || ty >= BattleManager.Instance.MemMap.StageHeight)
                 return null;
 
-            MemMapPoint mp = BattleManager.Instance.MemMap.GetMouseCell(x, y);
-
+            MemMapPoint mp = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
             return BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(mp.Owner);
         }
 
@@ -36,6 +34,9 @@ namespace TaleofMonsters.Controler.Battle.Tool
 
         public static bool IsPlaceBlank(int tx, int ty)
         {
+            if (tx < 0 || ty < 0 || tx >= BattleManager.Instance.MemMap.StageWidth || ty >= BattleManager.Instance.MemMap.StageHeight)
+                return false;
+
             MemMapPoint point = BattleManager.Instance.MemMap.GetMouseCell(tx, ty);
             return point.Owner == 0;
         }
