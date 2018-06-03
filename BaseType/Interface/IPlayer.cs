@@ -19,6 +19,6 @@ namespace ConfigDatas
         void AddPp(double addon);
         void AddMana(IMonster mon, int type, double addon);//skill π”√
         int CardNumber { get; }
-
+        int Luk { get; }
     }
 }
