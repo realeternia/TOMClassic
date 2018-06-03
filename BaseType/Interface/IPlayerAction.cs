@@ -40,5 +40,7 @@ namespace ConfigDatas
 
         void AddSpellEffect(double rate);
         void AddSpellVibrate(double rate);
+
+        void RefreshEp();
     }
 }

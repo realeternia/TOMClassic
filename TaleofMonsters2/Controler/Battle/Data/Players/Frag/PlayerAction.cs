@@ -225,6 +225,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             self.SpecialAttr.SpellVibrate += rate;
         }
 
+        public void RefreshEp()
+        {
+            self.EnergyGenerator.Refresh();
+        }
+
         public void AddSpike(int id)
         {
             self.SpikeManager.AddSpike(id);
