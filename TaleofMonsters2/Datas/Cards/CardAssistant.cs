@@ -1,4 +1,6 @@
 ﻿using System.Drawing;
+using ConfigDatas;
+using NarlonLib.Math;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
@@ -62,6 +64,14 @@ namespace TaleofMonsters.Datas.Cards
                 case CardTypes.Spell: return new SpellCard(new Spell(cid));
             }
             return SpecialCards.NullCard;
+        }
+
+        public static int GetCardIdByGroup(int groupId)
+        {
+            var cardGroup = ConfigData.GetCardGroupConfig(groupId);
+            if (cardGroup != null)
+                return cardGroup.CardIds[MathTool.GetRandom(cardGroup.CardIds.Length)];
+            return 0;
         }
 
         private static float[] rangePunish = new float[] { 1.3f, 1, 0.75f, 0.68f, 0.62f, 0.56f, 0.52f, 0.48f, 0.44f, 0.42f, 0.4f, 0.38f, 0.36f };

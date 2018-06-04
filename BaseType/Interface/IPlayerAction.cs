@@ -12,6 +12,7 @@ namespace ConfigDatas
         void ConvertCard(int count, int cardId, int levelChange);
         void AddCard(IMonster mon, int cardId, int level);
         void AddCard(IMonster mon, int cardId, int level, int modify);
+        void AddGroupCard(IMonster mon, int groupId, int level);
         void DeleteAllCard();
         void DeleteSelectCard();
         void RecostSelectCard();

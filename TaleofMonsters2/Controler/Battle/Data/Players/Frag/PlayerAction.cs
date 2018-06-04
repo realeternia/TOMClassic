@@ -9,6 +9,7 @@ using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Cards;
 using TaleofMonsters.Datas.Cards.Monsters;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
@@ -112,6 +113,13 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
         {
             self.HandCards.AddCard(cardId, level, modify);
             self.AddCardReason(mon, AddCardReasons.GetCertainCard);
+        }
+
+        public void AddGroupCard(IMonster mon, int groupId, int level)
+        {
+            var cardId = CardAssistant.GetCardIdByGroup(groupId);
+            self.HandCards.AddCard(cardId, level, 0);
+            self.AddCardReason(mon, AddCardReasons.RandomCard);
         }
 
         public void GetNextNCard(IMonster mon, int count)
