@@ -121,7 +121,7 @@ namespace TaleofMonsters.Forms.Items
             }
             else
             {
-                parent.AddFlowCenter("金钱不足", "Red");
+                parent.AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughGold), "Red");
             }
         }
 

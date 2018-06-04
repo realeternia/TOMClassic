@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using ConfigDatas;
+using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Datas.Quests;
@@ -116,13 +117,13 @@ namespace TaleofMonsters.Forms
         {
             if (UserProfile.Profile.InfoBasic.Level < 5)
             {
-                AddFlowCenter("等级5开启转职系统","Red");
+                AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.JobLevelLow),"Red");
                 return;
             }
 
             if (!QuestBook.HasQuest("selectjob"))
             {
-                AddFlowCenter("完成任务【开始】开启转职系统", "Red");
+                AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.JobQuestNotFin), "Red");
                 return;
             }
 

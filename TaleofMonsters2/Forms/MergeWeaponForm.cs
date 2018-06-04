@@ -128,13 +128,13 @@ namespace TaleofMonsters.Forms
             {
                 if (UserProfile.InfoBag.GetItemCount(pairValue.Type) < pairValue.Value)
                 {
-                    AddFlowCenter("材料不足", "Red");
+                    AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughItems), "Red");
                     return;
                 }
             }
             if (UserProfile.InfoBag.HasResource( GameResourceType.Gold, GameResourceBook.OutGoldMerge(equipConfig.Quality+1)))
             {
-                AddFlowCenter("金钱不足", "Red");
+                AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughGold), "Red");
                 return;
             }
 
