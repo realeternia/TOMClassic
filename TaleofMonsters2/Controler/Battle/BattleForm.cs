@@ -168,7 +168,7 @@ namespace TaleofMonsters.Controler.Battle
 
         private void StartGame() //初始化游戏
         {
-            BattleManager.Instance.PlayerManager.RightPlayer.AIModule.OnInit();
+            BattleManager.Instance.PlayerManager.RightPlayer.AIContext.OnInit();
             BattleManager.Instance.OnMatchStart();
 
             cardsArray1.Visible = true;

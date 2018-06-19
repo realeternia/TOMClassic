@@ -92,9 +92,12 @@
     <Compile Include="Controler\Battle\DataTent\ArticleQueue.cs" />
     <Compile Include="Controler\Battle\Data\MemArticle\Article.cs" />
     <Compile Include="Controler\Battle\Data\MemFlow\FlowLukInfo.cs" />
+    <Compile Include="Controler\Battle\Data\Players\AIs\AIStateImpl.cs" />
+    <Compile Include="Controler\Battle\Data\Players\AIs\AIStates.cs" />
+    <Compile Include="Controler\Battle\Data\Players\AIs\IAIState.cs" />
     <Compile Include="Core\Config\Config.cs" />
     <Compile Include="Core\Config\ConfigIdManager.cs" />
-    <Compile Include="Controler\Battle\Data\Players\AIStrategy.cs">
+    <Compile Include="Controler\Battle\Data\Players\AIs\AIStrategyContext.cs">
     </Compile>
     <Compile Include="Controler\Battle\Components\CardFlow.cs">
       <SubType>UserControl</SubType>

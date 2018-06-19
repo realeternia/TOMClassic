@@ -252,6 +252,11 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                     BuffManager.CheckRecoverOnHit();
                     lastDamagerId = src.Id;
                 }
+
+                if (OwnerPlayer.Tower == this)
+                {
+                    OwnerPlayer.OnTowerHited(HpRate);
+                }
                 return true;
             }
             return false;

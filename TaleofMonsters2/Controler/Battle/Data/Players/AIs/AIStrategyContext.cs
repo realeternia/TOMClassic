@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using ConfigDatas;
-using NarlonLib.Log;
 using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
@@ -9,86 +8,101 @@ using TaleofMonsters.Core.Config;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Cards.Monsters;
 
-namespace TaleofMonsters.Controler.Battle.Data.Players
+namespace TaleofMonsters.Controler.Battle.Data.Players.AIs
 {
-    internal interface IAIStrategy
+    internal class AIStrategyContext
     {
-        void OnInit();
-        void AIProc();
-        void Discover(IMonster m, int[] cardId, int lv, DiscoverCardActionType type);
-    }
+        public Player Self { get; private set; }
+        private IAIState nowState;
 
-    internal class AIStrategy : IAIStrategy
-    {
-        private Player self;
-
-        public AIStrategy(Player player)
+        public AIStrategyContext(Player player)
         {
-            self = player;
+            Self = player;
+        }
+
+        public void ChangeState(AIStates s)
+        {
+            if (nowState != null)
+                nowState.OnExit();
+            switch (s)
+            {
+                case AIStates.Wander: nowState = new AIStateWander(this); break;
+                case AIStates.Attack: nowState = new AIStateAttack(this); break;
+                case AIStates.Defend: nowState = new AIStateDefend(this); break;
+            }
+            if (nowState != null)
+                nowState.OnEnter();
         }
 
         public void OnInit()
         {
-            var cds = self.CardsDesk.GetAllCard();
+            var cds = Self.CardsDesk.GetAllCard();
             for (int i = 0; i < cds.Length; i++)
             {
                 var card = cds[i];
                 if (CardConfigManager.GetCardConfig(card.CardId).Star > 3) //把3费以上卡都换掉
-                    self.HandCards.RedrawCardAt(i + 1);
+                    Self.HandCards.RedrawCardAt(i + 1);
             }
-
+            ChangeState(AIStates.Wander);
 #if DEBUG
             int[] cardToGive = new[] { 53000139 };
             foreach (var cardId in cardToGive)
             {
-                self.HandCards.AddCard(new ActiveCard(cardId, 1));
+                Self.HandCards.AddCard(new ActiveCard(cardId, 1));
             }
 #endif
         }
 
-        public void AIProc()
-        {            
-            if (self.CardNumber <= 0)
-                return;
+        public void OnTimePast()
+        {
+            nowState.OnTimePast(0.2f);
+        }
 
-            if (MathTool.GetRandom(4) != 0)
-                return;
+        public void OnTowerHited(double towerHpRate)
+        {
+            nowState.OnTowerHited(towerHpRate);
+        }
 
-            var threat = GetThreat(self.IsLeft);
-            var rival = self.Rival as Player;
-            int totalMpNeed = 0;
-            for (int i = 0; i < self.CardNumber; i++)
+        /// <summary>
+        /// 尝试使用所有的手牌
+        /// </summary>
+        public void TryAllHandCards(float threat, ref int totalMpNeed)
+        {
+            for (int i = 0; i < Self.CardNumber; i++)
             {
-                self.CardsDesk.SetSelectId(i + 1); //逐个判断是否可以使用卡牌
-                if (self.SelectCardId != 0)
+                Self.CardsDesk.SetSelectId(i + 1); //逐个判断是否可以使用卡牌
+                if (Self.SelectCardId != 0)
                 {
-                    ActiveCard card = self.CardsDesk.GetSelectCard();
-                    if (self.CheckUseCard(card, self, rival) != ErrorConfig.Indexer.OK)
+                    ActiveCard card = Self.CardsDesk.GetSelectCard();
+                    if (Self.CheckUseCard(card, Self, Self.Rival as Player) != ErrorConfig.Indexer.OK)
                         continue;
 
-                    if(TryUseCard(card, threat)) //一回合只使用一张卡
+                    if (TryUseCard(card, threat)) //一回合只使用一张卡
                         break;
 
                     totalMpNeed += card.Mp;
                 }
             }
+        }
 
-            if (self.Mp > totalMpNeed*0.5)
-            {//尝试使用英雄技能
-                LevelExpConfig levelConfig = ConfigData.GetLevelExpConfig(self.Level);
+        /// <summary>
+        /// 尝试使用英雄技能
+        /// </summary>
+        public void TryHeroPower(float threat)
+        {
+            LevelExpConfig levelConfig = ConfigData.GetLevelExpConfig(Self.Level);
 
-                for (int i = 0; i < self.HeroSkillList.Count; i++)
-                {
-                    var skillId = self.HeroSkillList[i];
-                    HeroPowerConfig heroSkillConfig = ConfigData.GetHeroPowerConfig(skillId);
-                    ActiveCard card = new ActiveCard(heroSkillConfig.CardId, (byte)levelConfig.TowerLevel);
-                    card.Mp = ConfigData.GetSpellConfig(heroSkillConfig.CardId).Cost;
-                    if (self.CheckUseCard(card, self, rival) != ErrorConfig.Indexer.OK)
-                        continue;
+            for (int i = 0; i < Self.HeroSkillList.Count; i++)
+            {
+                var skillId = Self.HeroSkillList[i];
+                HeroPowerConfig heroSkillConfig = ConfigData.GetHeroPowerConfig(skillId);
+                ActiveCard card = new ActiveCard(heroSkillConfig.CardId, (byte)levelConfig.TowerLevel);
+                card.Mp = ConfigData.GetSpellConfig(heroSkillConfig.CardId).Cost;
+                if (Self.CheckUseCard(card, Self, Self.Rival as Player) != ErrorConfig.Indexer.OK)
+                    continue;
 
-                    if (TryUseCard(card, threat)) //一回合只使用一个英雄技能
-                        break;
-                }
+                if (TryUseCard(card, threat)) //一回合只使用一个英雄技能
+                    break;
             }
         }
 
@@ -98,7 +112,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             {
                 var canRush = MonsterBook.HasTag(selectCard.CardId, "rush");
                 Point monPos = GetSummonPoint(false, canRush);
-                self.UseMonster(selectCard, monPos);
+                Self.UseMonster(selectCard, monPos);
                 return true;
             }
             else if (selectCard.CardType == CardTypes.Weapon)
@@ -106,7 +120,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 LiveMonster target = GetWeaponTarget();
                 if (target != null)
                 {
-                    self.UseWeapon(target, selectCard);
+                    Self.UseWeapon(target, selectCard);
                     return true;
                 }
             }
@@ -125,13 +139,13 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                     switch (aiGuideType)
                     {
                         case AiSpellCastTypes.CardLess:
-                            if (self.CardNumber > 3) return false;
+                            if (Self.CardNumber > 3) return false;
                             break;
                         case AiSpellCastTypes.CardMore:
-                            if (self.CardNumber < 4) return false;
+                            if (Self.CardNumber < 4) return false;
                             break;
                         case AiSpellCastTypes.CardRivalMore:
-                            if (self.Rival.CardNumber < 2) return false;
+                            if (Self.Rival.CardNumber < 2) return false;
                             break;
                         case AiSpellCastTypes.MonsterAdv:
                             if (threat > -100) return false;
@@ -140,7 +154,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                             if (threat < 100) return false;
                             break;
                     }
-                    targetPos = BattleManager.Instance.MemMap.GetRandomPoint(self.IsLeft, true, false);
+                    targetPos = BattleManager.Instance.MemMap.GetRandomPoint(Self.IsLeft, true, false);
                 }
                 else
                 {
@@ -177,11 +191,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                     if (targetMonster == null)//剩下的都是单位目标了，取到空就说明没有合适目标
                         return false;
                 }
-                if (!self.CanSpell(targetMonster, selectCard))
+                if (!Self.CanSpell(targetMonster, selectCard))
                     return false;
                 if(targetMonster != null)
                     targetPos = targetMonster.CenterPosition;
-                self.DoSpell(targetMonster, selectCard, targetPos);
+                Self.DoSpell(targetMonster, selectCard, targetPos);
                 return true;
             }
             return false;
@@ -195,11 +209,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 LiveMonster pickMon = BattleManager.Instance.MonsterQueue[i];
                 if (pickMon.IsGhost || pickMon is TowerMonster) //不打塔
                     continue;
-                if ((pickMon.IsLeft != self.IsLeft && !getEnemy) || (pickMon.IsLeft == self.IsLeft && getEnemy))
+                if ((pickMon.IsLeft != Self.IsLeft && !getEnemy) || (pickMon.IsLeft == Self.IsLeft && getEnemy))
                     continue;
-                if (pickMon.HpRate < 0.4 && !getWeak) //快死的不要
+                if (pickMon.HpRate < 40 && !getWeak) //快死的不要
                     continue;
-                if (pickMon.HpRate > 0.4 && getWeak) 
+                if (pickMon.HpRate > 40 && getWeak) 
                     continue;
                 if (tar == -1 || pickMon.Avatar.Star > BattleManager.Instance.MonsterQueue[tar].Avatar.Star)
                     tar = i;
@@ -220,11 +234,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 LiveMonster pickMon = BattleManager.Instance.MonsterQueue[i];
                 if (pickMon is TowerMonster)
                     continue;
-                if ((pickMon.IsLeft != self.IsLeft && !getEnemy) || (pickMon.IsLeft == self.IsLeft && getEnemy))
+                if ((pickMon.IsLeft != Self.IsLeft && !getEnemy) || (pickMon.IsLeft == Self.IsLeft && getEnemy))
                     continue;
-                if (pickMon.HpRate > 0.8 && needHpLow)
+                if (pickMon.HpRate > 80 && needHpLow)
                     continue;
-                var count1 = pickMon.Map.GetRangeMonster(self.IsLeft, spellConfig.Target.Substring(1, 1),
+                var count1 = pickMon.Map.GetRangeMonster(Self.IsLeft, spellConfig.Target.Substring(1, 1),
                     spellConfig.Target.Substring(2, 1), spellConfig.Range, pickMon.CenterPosition).Count;
                 if (count1 >= count)
                     return BattleManager.Instance.MonsterQueue[i];
@@ -240,7 +254,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 LiveMonster pickMon = BattleManager.Instance.MonsterQueue[i];
                 if (!pickMon.IsGhost)
                     continue;
-                if ((pickMon.IsLeft != self.IsLeft && !getEnemy) || (pickMon.IsLeft == self.IsLeft && getEnemy))
+                if ((pickMon.IsLeft != Self.IsLeft && !getEnemy) || (pickMon.IsLeft == Self.IsLeft && getEnemy))
                     continue;
                 if (tar == -1 || pickMon.Avatar.Star > BattleManager.Instance.MonsterQueue[tar].Avatar.Star)
                     tar = i;
@@ -256,11 +270,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             for (int i = 0; i < BattleManager.Instance.MonsterQueue.Count; i++)
             {
                 LiveMonster pickMon = BattleManager.Instance.MonsterQueue[i];
-                if (pickMon.IsGhost || pickMon.IsLeft != self.IsLeft)
+                if (pickMon.IsGhost || pickMon.IsLeft != Self.IsLeft)
                     continue;
                 if (pickMon.Weapon != null) //重复装备太奢侈了
                     continue;
-                if (pickMon.HpRate < 0.5)
+                if (pickMon.HpRate < 50)
                     continue;
                 if (!pickMon.CanAddWeapon()) //建筑无法使用武器
                     continue;
@@ -292,7 +306,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         /// <summary>
         /// 计算当前的威胁值
         /// </summary>
-        private float GetThreat(bool isLeft)
+        public float GetThreat(bool isLeft)
         {
             var widthStage = BattleManager.Instance.MemMap.StageWidth;
             float threat = 0;
@@ -318,7 +332,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public void Discover(IMonster m, int[] cardId, int lv, DiscoverCardActionType type)
         {
             var targetCardId = cardId[MathTool.GetRandom(cardId.Length)]; //随机拿一张
-            self.AddDiscoverCard(m, targetCardId, lv, type);
+            Self.AddDiscoverCard(m, targetCardId, lv, type);
         }
     }
 }

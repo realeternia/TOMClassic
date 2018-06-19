@@ -89,9 +89,6 @@ namespace TaleofMonsters.Controler.Battle.Tool
                     OnRound(StatisticData.Round);
                 }
             }
-         
-            if (RoundMark % 10 == 0)
-                PlayerManager.RightPlayer.AIModule.AIProc();
 
             ArticleQueue.RemoveDye();
         }

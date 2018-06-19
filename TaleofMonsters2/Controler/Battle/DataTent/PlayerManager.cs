@@ -1,5 +1,6 @@
 ﻿using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.Players;
+using TaleofMonsters.Controler.Battle.Data.Players.AIs;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Decks;
 
@@ -25,7 +26,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             else //观看比赛
             {
                 LeftPlayer = new AIPlayer(left, ConfigData.GetPeopleConfig(left).Emethod, true, rlevel);
-                LeftPlayer.AIModule = new AIStrategy(LeftPlayer);
+                LeftPlayer.AIContext = new AIStrategyContext(LeftPlayer);
             }
 
             switch (peopleConfig.Emethod)
@@ -35,7 +36,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 case "actmirror": RightPlayer = new MirrorPlayer(right, LeftPlayer.OffCards, false); break;
                 default: RightPlayer = new AIPlayer(right, peopleConfig.Emethod, false, rlevel); break;
             }
-            RightPlayer.AIModule = new AIStrategy(RightPlayer);
+            RightPlayer.AIContext = new AIStrategyContext(RightPlayer);
         }
 
         public void Clear()

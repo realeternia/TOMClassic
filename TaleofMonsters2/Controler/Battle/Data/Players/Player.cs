@@ -14,6 +14,7 @@ using TaleofMonsters.Controler.Battle.Data.MemSpell;
 using NarlonLib.Log;
 using TaleofMonsters.Controler.Battle.Components.CardSelect;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
+using TaleofMonsters.Controler.Battle.Data.Players.AIs;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Cards.Monsters;
@@ -51,7 +52,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public EquipModifier Modifier { get; protected set; }
         public IPlayerAction Action { get; private set; }
         public PlayerSpecialAttr SpecialAttr { get; private set; }
-        public IAIStrategy AIModule { get; set; }
+        public AIStrategyContext AIContext { get; set; }
 
         public List<int> HeroSkillList = new List<int>();
         private float heroSkillCd;
@@ -185,6 +186,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 heroSkillCd -= pastRound;
                 if (HeroSkillChanged != null && heroSkillCd <= 0)
                     HeroSkillChanged(true);
+            }
+
+            if (AIContext != null)
+            {
+                AIContext.OnTimePast();
             }
         }
 
@@ -332,6 +338,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public virtual void AddResource(GameResourceType type, int number)
         {
+        }
+
+        public void OnTowerHited(double towerHpRate)
+        {
+            AIContext.OnTowerHited(towerHpRate);
         }
 
         public void OnMonsterDie(int monsterId, byte monsterLevel, bool isSummoned)
@@ -503,7 +514,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void DiscoverCard(IMonster mon, int[] cardId, int lv, DiscoverCardActionType type)
         {
-            if (AIModule == null)
+            if (AIContext == null)
             {
                 CardSelectMethodDiscover discover = new CardSelectMethodDiscover(cardId, lv, type);
                 if (OnShowCardSelector != null)
@@ -511,7 +522,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             }
             else
             {
-                AIModule.Discover(mon, cardId, lv, type);
+                AIContext.Discover(mon, cardId, lv, type);
             }
         }
 
