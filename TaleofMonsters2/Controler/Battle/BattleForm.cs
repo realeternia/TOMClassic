@@ -281,7 +281,9 @@ namespace TaleofMonsters.Controler.Battle
             {
                 int fps = (int)Math.Round((fpsList.Count - 1) * 1000 / fpsList[fpsList.Count - 1].Subtract(fpsList[0]).TotalMilliseconds);
                 Font fontFps = new Font("黑体", 9 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-                e.Graphics.DrawString(string.Format("fps {0}", fps), fontFps, Brushes.White, 3, 3);
+                e.Graphics.DrawString(string.Format("fps={0}", fps), fontFps, Brushes.White, 3, 3);
+                if (BattleManager.Instance.PlayerManager.RightPlayer.AIContext != null)
+                    e.Graphics.DrawString(string.Format("ai={0}", BattleManager.Instance.PlayerManager.RightPlayer.AIContext.GetState()), fontFps, Brushes.White, 60, 3);
                 fontFps.Dispose();
             }
         }

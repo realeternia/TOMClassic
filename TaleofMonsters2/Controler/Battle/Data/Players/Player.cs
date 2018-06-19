@@ -77,6 +77,10 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
         public float Lp { get; set; }
 
         public float Pp { get; set; }
+        public float EnergyRate {
+            get { return 100*(Mp + Lp + Pp)/(EnergyGenerator.LimitLp + EnergyGenerator.LimitMp + EnergyGenerator.LimitPp);}
+        }
+
         public int Luk { get; set; } //玩家的幸运值
 
         public int Level { get; protected set; }

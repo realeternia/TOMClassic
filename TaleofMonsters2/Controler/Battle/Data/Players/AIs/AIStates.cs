@@ -2,6 +2,7 @@
 {
     public enum AIStates
     {
+        None,
         Wander,
         Attack,
         Defend

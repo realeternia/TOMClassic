@@ -66,22 +66,25 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.AIs
         /// <summary>
         /// 尝试使用所有的手牌
         /// </summary>
-        public void TryAllHandCards(float threat, ref int totalMpNeed)
+        public void TryAllHandCards(bool monsterOnly, float threat, ref int totalMpNeed)
         {
             for (int i = 0; i < Self.CardNumber; i++)
             {
                 Self.CardsDesk.SetSelectId(i + 1); //逐个判断是否可以使用卡牌
-                if (Self.SelectCardId != 0)
-                {
-                    ActiveCard card = Self.CardsDesk.GetSelectCard();
-                    if (Self.CheckUseCard(card, Self, Self.Rival as Player) != ErrorConfig.Indexer.OK)
-                        continue;
+                if (Self.SelectCardId == 0)
+                    continue;
 
-                    if (TryUseCard(card, threat)) //一回合只使用一张卡
-                        break;
+                ActiveCard card = Self.CardsDesk.GetSelectCard();
+                if(monsterOnly && card.CardType != CardTypes.Monster)
+                    continue;
 
-                    totalMpNeed += card.Mp;
-                }
+                if (Self.CheckUseCard(card, Self, Self.Rival as Player) != ErrorConfig.Indexer.OK)
+                    continue;
+
+                if (TryUseCard(card, threat)) //一回合只使用一张卡
+                    break;
+
+                totalMpNeed += card.Mp;
             }
         }
 
@@ -304,7 +307,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.AIs
         }
 
         /// <summary>
-        /// 计算当前的威胁值
+        /// 计算当前的威胁值，-100认为有优势，100认为有劣势
         /// </summary>
         public float GetThreat(bool isLeft)
         {
@@ -327,6 +330,13 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.AIs
                 threat += pickThreat;
             }
             return threat;
+        }
+
+        public AIStates GetState()
+        {
+            if(nowState == null)
+                return AIStates.None;
+            return nowState.State;
         }
 
         public void Discover(IMonster m, int[] cardId, int lv, DiscoverCardActionType type)

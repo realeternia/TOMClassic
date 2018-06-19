@@ -7,5 +7,7 @@
 
         void OnTimePast(float time);
         void OnTowerHited(double towerHpRate);
+
+        AIStates State { get; }
     }
 }
