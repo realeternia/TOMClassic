@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Drawing;
+using TaleofMonsters.Core;
 
 namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
 {
@@ -9,29 +10,50 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
 
         public ChessManager()
         {
-            ChessList.Add(new ChessItem()); //玩家自己
+            ChessList.Add(new ChessItemPlayer()); //玩家自己
+            ChessList.Add(new ChessItem { PeopleId = 1, CellId = Scene.Instance.SceneInfo.GetRandom(0, false)}); //把一个机器人放到随机位置
         }
 
         public bool IsChessMoving()
         {
             foreach (var chessItem in ChessList) //只要有一个旗子在动
-                if (chessItem.Time > 0) return true;
+                if (chessItem.IsMoving)
+                    return true;
             return false;
         }
 
-        public void SetChessState(int peopleId, Point src, Point dest, int destId)
+        internal void SetChessState(int peopleId, SceneObject src, SceneObject dest)
         {
+            int drawWidth = 57 * src.Width / GameConstants.SceneTileStandardWidth;
+            int drawHeight = 139 * src.Height / GameConstants.SceneTileStandardHeight;
+            var srcP = new Point(src.X - drawWidth/2 + src.Width/8, src.Y - drawHeight + src.Height/3);
+            var destP = new Point(dest.X - drawWidth/2 + dest.Width/8, dest.Y - drawHeight + dest.Height/3);
+
             var myChess = ChessList.Find(cs => cs.PeopleId == peopleId);
             if (myChess != null)
             {
                 myChess.Time = ChessItem.ChessMoveAnimTime;
-                myChess.Source = src;
-                myChess.Dest = dest;
-                myChess.DestId = destId;
+                myChess.Source = srcP;
+                myChess.Dest = destP;
+                myChess.DestId = dest.Id;
             }
             else
             {
-                ChessList.Add(new ChessItem {PeopleId = peopleId, Source = src, Dest = dest, DestId = destId, Time = ChessItem.ChessMoveAnimTime });
+                ChessList.Add(new ChessItem {PeopleId = peopleId, Source = srcP, Dest = destP, DestId = dest.Id, Time = ChessItem.ChessMoveAnimTime });
+            }
+        }
+
+        public void OnChessPlayerMoved()
+        {
+            int index = 1;
+            foreach (var chessItem in ChessList)
+            {
+                if (chessItem.PeopleId == 0)
+                    continue;
+
+
+
+                index++;
             }
         }
 

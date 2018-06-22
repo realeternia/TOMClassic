@@ -220,15 +220,14 @@ namespace TaleofMonsters.Forms.CMain.Scenes
                 bool needUpdate;
                 if (chessItem.TimeGo(timePast, out needUpdate))
                 {
-                    foreach (var sceneObject in SceneInfo.Items)
+                    var targetCell = SceneInfo.GetCell(chessItem.DestId);
+                    if (chessItem.PeopleId == 0) // is player
                     {
-                        if (sceneObject.Id == chessItem.DestId)
-                        {
-                            MoveTo(sceneObject.Id);
-                            TimelyCheck(sceneObject);
-                            parent.Invalidate();
-                        }
+                        MoveTo(targetCell.Id);
+                        TimelyCheck(targetCell);
+                        chessManager.OnChessPlayerMoved();
                     }
+               //     parent.Invalidate();
                 }
                 if (needUpdate)
                 {
@@ -342,10 +341,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes
 
             if (dest != null && dest.OnClick())
             {
-                int drawWidth = 57*src.Width/GameConstants.SceneTileStandardWidth;
-                int drawHeight = 139*src.Height/GameConstants.SceneTileStandardHeight;
-                chessManager.SetChessState(0, new Point(src.X - drawWidth/2 + src.Width/8, src.Y - drawHeight + src.Height/3),
-                    new Point(dest.X - drawWidth/2 + dest.Width/8, dest.Y - drawHeight + dest.Height/3), dest.Id);
+                chessManager.SetChessState(0, src, dest);
                 parent.Invalidate();
             }
         }

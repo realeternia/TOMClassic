@@ -16,12 +16,26 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
         public Point Source { get; set; } //移动源
         public Point Dest { get; set; } //移动目标
 
-      //  public int CellId { get; set; } //当前所在的id
+        public virtual int CellId { get; set; } //当前所在的id
         public int DestId { get; set; }
+
+        public float MoveDelay { get; set; } //移动延迟，主要是npc需要
+
+        public virtual bool IsMoving
+        {
+            get { return Time + MoveDelay > 0; }
+        }
 
         public bool TimeGo(float timePast, out bool needUpdate)
         {
             needUpdate = false;
+            if (MoveDelay > 0)
+            {
+                MoveDelay = Math.Max(0, MoveDelay - timePast);
+                if (MoveDelay > 0)
+                    return false;
+            }
+           
             if (Time > 0)
             {
                 Time = Math.Max(0, Time - timePast);
@@ -30,6 +44,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
                 if (Time <= 0)
                 {
                     Time = 0;
+                    CellId = DestId;
                     return true;
                 }
             }
@@ -38,7 +53,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
 
         public void Draw(Graphics g)
         {
-            var possessCell = Scene.Instance.SceneInfo.GetCell(UserProfile.Profile.InfoBasic.Position);
+            var possessCell = Scene.Instance.SceneInfo.GetCell(CellId);
             if (possessCell != null)
             {
                 Image token = PicLoader.Read("Player.Token", "ring.PNG");
@@ -66,13 +81,34 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
                     realY -= possessCell.Height / 3;
                 }
 
-                Image head = PicLoader.Read("Player.Token", string.Format("{0}.PNG", UserProfile.InfoBasic.Head));
-                var rect = new RectangleF(realX + drawWidth * 0.06f, realY + drawHeight * 0.1f, drawWidth * 0.8f, drawHeight * 0.8f);
-                g.DrawImage(head, rect);
-                head.Dispose();
+                DrawIcon(g, realX, realY, drawWidth, drawHeight);
                 g.DrawImage(token, realX, realY, drawWidth, drawHeight);
                 token.Dispose();
             }
+        }
+
+        protected virtual void DrawIcon(Graphics g, int realX, int realY, int drawWidth, int drawHeight)
+        {
+            Image head = PicLoader.Read("Player.Token", string.Format("{0}.PNG", 10));
+            var rect = new RectangleF(realX + drawWidth*0.06f, realY + drawHeight*0.1f, drawWidth*0.8f, drawHeight*0.8f);
+            g.DrawImage(head, rect);
+            head.Dispose();
+        }
+    }
+
+    public class ChessItemPlayer : ChessItem
+    {
+        public override int CellId
+        {
+            get { return UserProfile.Profile.InfoBasic.Position; }
+        }
+
+        protected override void DrawIcon(Graphics g, int realX, int realY, int drawWidth, int drawHeight)
+        {
+            Image head = PicLoader.Read("Player.Token", string.Format("{0}.PNG", UserProfile.InfoBasic.Head));
+            var rect = new RectangleF(realX + drawWidth * 0.06f, realY + drawHeight * 0.1f, drawWidth * 0.8f, drawHeight * 0.8f);
+            g.DrawImage(head, rect);
+            head.Dispose();
         }
     }
 }
