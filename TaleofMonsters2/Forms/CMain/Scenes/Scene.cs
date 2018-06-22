@@ -17,6 +17,7 @@ using TaleofMonsters.Datas.Scenes;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain.Blesses;
 using TaleofMonsters.Forms.CMain.Scenes.SceneObjects;
+using TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving;
 using TaleofMonsters.Forms.CMain.Scenes.SceneRules;
 using TaleofMonsters.Forms.Items.Regions;
 
@@ -41,13 +42,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes
 
         public delegate void SwitchMapAction();
         #endregion
-        private class MovingData
-        {
-            public float Time { get; set; }
-            public Point Source { get; set; }
-            public Point Dest { get; set; }
-            public int DestId { get; set; }
-        }
+
         public static Scene Instance { get; set; }
 
         private Image mainBottom;
@@ -69,9 +64,8 @@ namespace TaleofMonsters.Forms.CMain.Scenes
 
         private VirtualRegion vRegion;
         private ImageToolTip tooltip = SystemToolTip.Instance;
-        private MovingData movingData = new MovingData();
+        private ChessManager chessManager = new ChessManager();
 
-        private const float ChessMoveAnimTime =0.5f;//旗子跳跃的动画时间
 
         private bool allEventFinished; //所有的事件都完成了
 
@@ -221,26 +215,26 @@ namespace TaleofMonsters.Forms.CMain.Scenes
             foreach (var sceneObject in SceneInfo.Items)
                 sceneObject.OnTick();
 
-            if (movingData.Time > 0)
+            foreach (var chessItem in chessManager.ChessList)
             {
-                movingData.Time = Math.Max(0, movingData.Time - timePast);
-                var x = movingData.Source.X/2 + movingData.Dest.X/2;
-                var y = movingData.Source.Y/2 + movingData.Dest.Y/2;
-                parent.Invalidate(new Rectangle(x - 200, y - 200, 400, 400));
-
-                if (movingData.Time <= 0)
+                bool needUpdate;
+                if (chessItem.TimeGo(timePast, out needUpdate))
                 {
-                    movingData.Time = 0;
-
                     foreach (var sceneObject in SceneInfo.Items)
                     {
-                        if (sceneObject.Id == movingData.DestId)
+                        if (sceneObject.Id == chessItem.DestId)
                         {
                             MoveTo(sceneObject.Id);
                             TimelyCheck(sceneObject);
                             parent.Invalidate();
                         }
                     }
+                }
+                if (needUpdate)
+                {
+                    var x = chessItem.Source.X / 2 + chessItem.Dest.X / 2;
+                    var y = chessItem.Source.Y / 2 + chessItem.Dest.Y / 2;
+                    parent.Invalidate(new Rectangle(x - 200, y - 200, 400, 400));
                 }
             }
 
@@ -314,7 +308,9 @@ namespace TaleofMonsters.Forms.CMain.Scenes
         
         public void CheckMouseMove(int x, int y)
         {
-            if (movingData.Time > 0) return;
+            if(chessManager.IsChessMoving())
+                return;
+
             int nTemp = -1;
             foreach (var sceneObject in SceneInfo.Items)
             {
@@ -331,7 +327,9 @@ namespace TaleofMonsters.Forms.CMain.Scenes
         public void CheckMouseClick()
         {
             if (cellTar == -1) return;
-            if (movingData.Time > 0) return;
+            if (chessManager.IsChessMoving())
+                return;
+
             SceneObject src = null;
             SceneObject dest = null;
             foreach (var sceneObject in SceneInfo.Items)
@@ -342,14 +340,12 @@ namespace TaleofMonsters.Forms.CMain.Scenes
                     src = sceneObject;
             }
 
-            if (dest!=null && dest.OnClick())
+            if (dest != null && dest.OnClick())
             {
-                int drawWidth = 57 * src.Width / GameConstants.SceneTileStandardWidth;
-                int drawHeight = 139 * src.Height / GameConstants.SceneTileStandardHeight;
-                movingData.Source = new Point(src.X - drawWidth / 2 + src.Width / 8, src.Y - drawHeight + src.Height / 3);
-                movingData.DestId = dest.Id;
-                movingData.Dest = new Point(dest.X - drawWidth / 2 + dest.Width / 8, dest.Y - drawHeight + dest.Height / 3);
-                movingData.Time = ChessMoveAnimTime;
+                int drawWidth = 57*src.Width/GameConstants.SceneTileStandardWidth;
+                int drawHeight = 139*src.Height/GameConstants.SceneTileStandardHeight;
+                chessManager.SetChessState(0, new Point(src.X - drawWidth/2 + src.Width/8, src.Y - drawHeight + src.Height/3),
+                    new Point(dest.X - drawWidth/2 + dest.Width/8, dest.Y - drawHeight + dest.Height/3), dest.Id);
                 parent.Invalidate();
             }
         }
@@ -555,10 +551,8 @@ namespace TaleofMonsters.Forms.CMain.Scenes
             font2.Dispose();
         }
 
-
         private void DrawCellAndToken(Graphics g)
         {
-            SceneObject possessCell = null;
             SceneObject selectTarget = null;
             foreach (var sceneObject in SceneInfo.Items)
             {
@@ -566,48 +560,12 @@ namespace TaleofMonsters.Forms.CMain.Scenes
                     selectTarget = sceneObject;
                 else
                     sceneObject.Draw(g, false);//先绘制非目标
-                
-                if (sceneObject.Id == UserProfile.Profile.InfoBasic.Position)
-                    possessCell = sceneObject;
             }
 
             if (selectTarget != null)
                 selectTarget.Draw(g, true);
 
-            if (possessCell != null)
-            {
-                Image token = PicLoader.Read("Player.Token", "ring.PNG");
-                int drawWidth = token.Width*possessCell.Width/GameConstants.SceneTileStandardWidth;
-                int drawHeight = token.Height*possessCell.Height/GameConstants.SceneTileStandardHeight;
-                int realX = 0;
-                int realY = 0;
-                if (movingData.Time <= 0)
-                {
-                    realX = possessCell.X - drawWidth/2 + possessCell.Width/8;
-                    realY = possessCell.Y - drawHeight + possessCell.Height/3;
-                }
-                else
-                {
-                    realX = (int)(movingData.Source.X*(movingData.Time)/ChessMoveAnimTime +
-                             movingData.Dest.X*(ChessMoveAnimTime - movingData.Time)/ChessMoveAnimTime);
-                    int yOff = 0;
-                    if(movingData.Source.X != movingData.Dest.X)
-                       yOff = (int) (Math.Pow(realX - (movingData.Source.X + movingData.Dest.X)/2, 2)*(4*80)/Math.Pow(movingData.Source.X - movingData.Dest.X, 2) - 80);
-                    else
-                        yOff = (int)(Math.Pow(movingData.Time/ ChessMoveAnimTime - 1f / 2, 2) * (4 * 80) - 40);
-                    realY = yOff +(int)(movingData.Source.Y*(movingData.Time)/ChessMoveAnimTime + movingData.Dest.Y*(ChessMoveAnimTime - movingData.Time)/ChessMoveAnimTime);
-
-                    realX -= possessCell.Width/5;//todo 玄学调整
-                    realY -= possessCell.Height/3;
-                }
-
-                Image head = PicLoader.Read("Player.Token", string.Format("{0}.PNG", UserProfile.InfoBasic.Head));
-                var rect = new RectangleF(realX + drawWidth * 0.06f, realY + drawHeight * 0.1f, drawWidth * 0.8f, drawHeight * 0.8f);
-                g.DrawImage(head, rect);
-                head.Dispose();
-                g.DrawImage(token, realX, realY, drawWidth, drawHeight);
-                token.Dispose();
-            }
+            chessManager.Draw(g);
         }
 
         public int GetDisableEventCount(int eid)

@@ -1,0 +1,78 @@
+﻿using System;
+using System.Drawing;
+using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
+using TaleofMonsters.Datas.User;
+
+namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
+{
+    public class ChessItem
+    {
+        public const float ChessMoveAnimTime = 0.5f;//旗子跳跃的动画时间
+
+        public int PeopleId { get; set; } //0表示玩家
+
+        public float Time { get; set; } //经过时间
+        public Point Source { get; set; } //移动源
+        public Point Dest { get; set; } //移动目标
+
+      //  public int CellId { get; set; } //当前所在的id
+        public int DestId { get; set; }
+
+        public bool TimeGo(float timePast, out bool needUpdate)
+        {
+            needUpdate = false;
+            if (Time > 0)
+            {
+                Time = Math.Max(0, Time - timePast);
+                needUpdate = true;
+
+                if (Time <= 0)
+                {
+                    Time = 0;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void Draw(Graphics g)
+        {
+            var possessCell = Scene.Instance.SceneInfo.GetCell(UserProfile.Profile.InfoBasic.Position);
+            if (possessCell != null)
+            {
+                Image token = PicLoader.Read("Player.Token", "ring.PNG");
+                int drawWidth = token.Width * possessCell.Width / GameConstants.SceneTileStandardWidth;
+                int drawHeight = token.Height * possessCell.Height / GameConstants.SceneTileStandardHeight;
+                int realX = 0;
+                int realY = 0;
+                if (Time <= 0)
+                {
+                    realX = possessCell.X - drawWidth / 2 + possessCell.Width / 8;
+                    realY = possessCell.Y - drawHeight + possessCell.Height / 3;
+                }
+                else
+                {
+                    realX = (int)(Source.X * (Time) / ChessMoveAnimTime +
+                             Dest.X * (ChessMoveAnimTime - Time) / ChessMoveAnimTime);
+                    int yOff = 0;
+                    if (Source.X != Dest.X)
+                        yOff = (int)(Math.Pow(realX - (Source.X + Dest.X) / 2, 2) * (4 * 80) / Math.Pow(Source.X - Dest.X, 2) - 80);
+                    else
+                        yOff = (int)(Math.Pow(Time / ChessMoveAnimTime - 1f / 2, 2) * (4 * 80) - 40);
+                    realY = yOff + (int)(Source.Y * (Time) / ChessMoveAnimTime + Dest.Y * (ChessMoveAnimTime - Time) / ChessMoveAnimTime);
+
+                    realX -= possessCell.Width / 5;//todo 玄学调整
+                    realY -= possessCell.Height / 3;
+                }
+
+                Image head = PicLoader.Read("Player.Token", string.Format("{0}.PNG", UserProfile.InfoBasic.Head));
+                var rect = new RectangleF(realX + drawWidth * 0.06f, realY + drawHeight * 0.1f, drawWidth * 0.8f, drawHeight * 0.8f);
+                g.DrawImage(head, rect);
+                head.Dispose();
+                g.DrawImage(token, realX, realY, drawWidth, drawHeight);
+                token.Dispose();
+            }
+        }
+    }
+}

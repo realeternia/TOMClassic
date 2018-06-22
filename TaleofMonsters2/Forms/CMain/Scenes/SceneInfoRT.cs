@@ -114,6 +114,16 @@ namespace TaleofMonsters.Forms.CMain.Scenes
             }
         }
 
+        public SceneObject GetCell(int id)
+        {
+            foreach (var sceneObject in Items)
+            {
+                if (sceneObject.Id == id)
+                    return sceneObject;
+            }
+            return null;
+        }
+
         public int FindCell(int fromId, string qname)
         {
             foreach (var sceneObject in Items)

@@ -171,6 +171,8 @@
     <Compile Include="Controler\GM\GmScript.cs" />
     <Compile Include="Datas\Others\ArticleBook.cs" />
     <Compile Include="Datas\User\Db\DbEquipComposeData.cs" />
+    <Compile Include="Forms\CMain\Scenes\SceneObjects\Moving\ChessItem.cs" />
+    <Compile Include="Forms\CMain\Scenes\SceneObjects\Moving\ChessManager.cs" />
     <Compile Include="Forms\Items\Regions\VirtualRegionMoveMediator.cs" />
     <Compile Include="Forms\Pops\PopBuildUpgrade.cs">
       <SubType>UserControl</SubType>
