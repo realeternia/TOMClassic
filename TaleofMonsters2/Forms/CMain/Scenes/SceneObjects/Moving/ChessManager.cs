@@ -11,7 +11,13 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
         public ChessManager()
         {
             ChessList.Add(new ChessItemPlayer()); //玩家自己
-            ChessList.Add(new ChessItem { PeopleId = 1, CellId = Scene.Instance.SceneInfo.GetRandom(0, false)}); //把一个机器人放到随机位置
+        }
+
+        public void OnChangeMap()
+        {
+            if (ChessList.Count > 1)
+                ChessList.RemoveAt(1);
+            ChessList.Add(new ChessItem { PeopleId = 1, CellId = Scene.Instance.SceneInfo.GetRandom(0, false) }); //把一个机器人放到随机位置
         }
 
         public bool IsChessMoving()
@@ -22,8 +28,11 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
             return false;
         }
 
-        internal void SetChessState(int peopleId, SceneObject src, SceneObject dest)
+        internal void SetChessState(int peopleId, int start, int end)
         {
+            SceneObject src = Scene.Instance.SceneInfo.GetCell(start);
+            SceneObject dest = Scene.Instance.SceneInfo.GetCell(end);
+
             int drawWidth = 57 * src.Width / GameConstants.SceneTileStandardWidth;
             int drawHeight = 139 * src.Height / GameConstants.SceneTileStandardHeight;
             var srcP = new Point(src.X - drawWidth/2 + src.Width/8, src.Y - drawHeight + src.Height/3);
@@ -51,7 +60,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
                 if (chessItem.PeopleId == 0)
                     continue;
 
-
+                SetChessState(chessItem.PeopleId, chessItem.CellId, Scene.Instance.SceneInfo.GetRandom(0, false));
 
                 index++;
             }

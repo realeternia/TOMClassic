@@ -110,10 +110,10 @@ namespace TaleofMonsters.Forms.CMain.Scenes
             return posList;
         }
 
-        public static bool CanPlayerMove(int id1, int id2)
+        public static bool CanPlayerMove(int id1, int id2, int moveDis)
         {
             var dis = GetDistance(id1, id2);
-            return dis >= 0 && dis <= 1 + BlessManager.MoveDistance;
+            return dis >= 0 && dis <= moveDis;
         }
 
         public static int GetDistance(int id1, int id2)

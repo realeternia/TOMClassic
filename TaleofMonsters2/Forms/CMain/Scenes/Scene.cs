@@ -142,6 +142,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes
             TimeMinutes = (int)DateTime.Now.TimeOfDay.TotalMinutes;
             Rule.Init(mapid, TimeMinutes);
             SceneInfo = SceneManager.RefreshSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, isWarp ? SceneFreshReason.Warp : SceneFreshReason.Load);
+            chessManager.OnChangeMap();
 
             if (UserProfile.InfoBasic.Position == 0 && SceneInfo.Items.Count > 0)//兜底处理
                 UserProfile.InfoBasic.Position = SceneInfo.Items[0].Id;
@@ -231,9 +232,8 @@ namespace TaleofMonsters.Forms.CMain.Scenes
                 }
                 if (needUpdate)
                 {
-                    var x = chessItem.Source.X / 2 + chessItem.Dest.X / 2;
-                    var y = chessItem.Source.Y / 2 + chessItem.Dest.Y / 2;
-                    parent.Invalidate(new Rectangle(x - 200, y - 200, 400, 400));
+                    var targetPos = chessItem.GetPosPredict();
+                    parent.Invalidate(new Rectangle(targetPos.X - 200, targetPos.Y - 200, 400, 400));
                 }
             }
 
@@ -329,19 +329,10 @@ namespace TaleofMonsters.Forms.CMain.Scenes
             if (chessManager.IsChessMoving())
                 return;
 
-            SceneObject src = null;
-            SceneObject dest = null;
-            foreach (var sceneObject in SceneInfo.Items)
-            {
-                if (sceneObject.Id == cellTar)
-                    dest = sceneObject;
-                if (sceneObject.Id == UserProfile.InfoBasic.Position)
-                    src = sceneObject;
-            }
-
+            SceneObject dest = SceneInfo.GetCell(cellTar);
             if (dest != null && dest.OnClick())
             {
-                chessManager.SetChessState(0, src, dest);
+                chessManager.SetChessState(0, UserProfile.InfoBasic.Position, cellTar);
                 parent.Invalidate();
             }
         }

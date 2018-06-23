@@ -50,39 +50,46 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
             }
             return false;
         }
+        public Point GetPosPredict()
+        {
+            var possessCell = Scene.Instance.SceneInfo.GetCell(CellId);
+
+            int drawWidth = 100 * possessCell.Width / GameConstants.SceneTileStandardWidth;
+            int drawHeight = 100 * possessCell.Height / GameConstants.SceneTileStandardHeight;
+            int realX = 0;
+            int realY = 0;
+            if (Time <= 0)
+            {
+                realX = possessCell.X - drawWidth / 2 + possessCell.Width / 8;
+                realY = possessCell.Y - drawHeight + possessCell.Height / 3;
+            }
+            else
+            {
+                realX = (int)(Source.X * (Time) / ChessMoveAnimTime +
+                               Dest.X * (ChessMoveAnimTime - Time) / ChessMoveAnimTime);
+                int yOff = 0;
+                if (Source.X != Dest.X)
+                    yOff = (int)(Math.Pow(realX - (Source.X + Dest.X) / 2, 2) * (4 * 80) / Math.Pow(Source.X - Dest.X, 2) - 80);
+                else
+                    yOff = (int)(Math.Pow(Time / ChessMoveAnimTime - 1f / 2, 2) * (4 * 80) - 40);
+                realY = yOff +
+                        (int)(Source.Y * (Time) / ChessMoveAnimTime + Dest.Y * (ChessMoveAnimTime - Time) / ChessMoveAnimTime);
+
+                realX -= possessCell.Width / 5; //todo 玄学调整
+                realY -= possessCell.Height / 3;
+            }
+            return new Point(realX, realY);
+        }
 
         public void Draw(Graphics g)
         {
             var possessCell = Scene.Instance.SceneInfo.GetCell(CellId);
             if (possessCell != null)
             {
+                var pos = GetPosPredict();
+                DrawIcon(g, pos.X, pos.Y, 100, 100);
                 Image token = PicLoader.Read("Player.Token", "ring.PNG");
-                int drawWidth = token.Width * possessCell.Width / GameConstants.SceneTileStandardWidth;
-                int drawHeight = token.Height * possessCell.Height / GameConstants.SceneTileStandardHeight;
-                int realX = 0;
-                int realY = 0;
-                if (Time <= 0)
-                {
-                    realX = possessCell.X - drawWidth / 2 + possessCell.Width / 8;
-                    realY = possessCell.Y - drawHeight + possessCell.Height / 3;
-                }
-                else
-                {
-                    realX = (int)(Source.X * (Time) / ChessMoveAnimTime +
-                             Dest.X * (ChessMoveAnimTime - Time) / ChessMoveAnimTime);
-                    int yOff = 0;
-                    if (Source.X != Dest.X)
-                        yOff = (int)(Math.Pow(realX - (Source.X + Dest.X) / 2, 2) * (4 * 80) / Math.Pow(Source.X - Dest.X, 2) - 80);
-                    else
-                        yOff = (int)(Math.Pow(Time / ChessMoveAnimTime - 1f / 2, 2) * (4 * 80) - 40);
-                    realY = yOff + (int)(Source.Y * (Time) / ChessMoveAnimTime + Dest.Y * (ChessMoveAnimTime - Time) / ChessMoveAnimTime);
-
-                    realX -= possessCell.Width / 5;//todo 玄学调整
-                    realY -= possessCell.Height / 3;
-                }
-
-                DrawIcon(g, realX, realY, drawWidth, drawHeight);
-                g.DrawImage(token, realX, realY, drawWidth, drawHeight);
+                g.DrawImage(token, pos.X, pos.Y, 100, 100);
                 token.Dispose();
             }
         }

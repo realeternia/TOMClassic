@@ -74,7 +74,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects
 
         public virtual bool OnClick()
         {
-            if (!SceneManager.CanPlayerMove(Id, UserProfile.Profile.InfoBasic.Position))
+            if (!SceneManager.CanPlayerMove(Id, UserProfile.Profile.InfoBasic.Position, 1 + BlessManager.MoveDistance))
                 return false;
 
             if (Id == UserProfile.Profile.InfoBasic.Position) //可以直接点击本格
@@ -138,7 +138,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects
 
             if (isTarget)
             {
-                if (SceneManager.CanPlayerMove(Id, UserProfile.Profile.InfoBasic.Position))
+                if (SceneManager.CanPlayerMove(Id, UserProfile.Profile.InfoBasic.Position, 1 + BlessManager.MoveDistance))
                 {
                     tileColor = Color.Yellow;
                     lineColor = Color.Orange;
