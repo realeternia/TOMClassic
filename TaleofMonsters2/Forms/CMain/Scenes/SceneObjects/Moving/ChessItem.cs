@@ -20,10 +20,16 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
         public int DestId { get; set; }
 
         public float MoveDelay { get; set; } //移动延迟，主要是npc需要
+        protected float jumpHeight;
 
         public virtual bool IsMoving
         {
             get { return Time + MoveDelay > 0; }
+        }
+
+        public ChessItem()
+        {
+            jumpHeight = 30;
         }
 
         public bool TimeGo(float timePast, out bool needUpdate)
@@ -69,11 +75,10 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
                                Dest.X * (ChessMoveAnimTime - Time) / ChessMoveAnimTime);
                 int yOff = 0;
                 if (Source.X != Dest.X)
-                    yOff = (int)(Math.Pow(realX - (Source.X + Dest.X) / 2, 2) * (4 * 80) / Math.Pow(Source.X - Dest.X, 2) - 80);
+                    yOff = (int)(Math.Pow(realX - (Source.X + Dest.X) / 2, 2) * (4 * jumpHeight) / Math.Pow(Source.X - Dest.X, 2) - jumpHeight);
                 else
-                    yOff = (int)(Math.Pow(Time / ChessMoveAnimTime - 1f / 2, 2) * (4 * 80) - 40);
-                realY = yOff +
-                        (int)(Source.Y * (Time) / ChessMoveAnimTime + Dest.Y * (ChessMoveAnimTime - Time) / ChessMoveAnimTime);
+                    yOff = (int)(Math.Pow(Time / ChessMoveAnimTime - 1f / 2, 2) * (4 * jumpHeight) - jumpHeight/2);
+                realY = yOff + (int)(Source.Y * (Time) / ChessMoveAnimTime + Dest.Y * (ChessMoveAnimTime - Time) / ChessMoveAnimTime);
 
                 realX -= possessCell.Width / 5; //todo 玄学调整
                 realY -= possessCell.Height / 3;
@@ -88,18 +93,21 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
             {
                 var pos = GetPosPredict();
                 DrawIcon(g, pos.X, pos.Y, 100, 100);
-                Image token = PicLoader.Read("Player.Token", "ring.PNG");
-                g.DrawImage(token, pos.X, pos.Y, 100, 100);
-                token.Dispose();
+
             }
         }
 
         protected virtual void DrawIcon(Graphics g, int realX, int realY, int drawWidth, int drawHeight)
         {
-            Image head = PicLoader.Read("Player.Token", string.Format("{0}.PNG", 10));
-            var rect = new RectangleF(realX + drawWidth*0.06f, realY + drawHeight*0.1f, drawWidth*0.8f, drawHeight*0.8f);
+            Image head = PicLoader.Read("People", string.Format("{0}.PNG", "humartrom"));
+            var rect = new RectangleF(realX + drawWidth * 0.16f, realY + drawHeight * 0.3f, drawWidth * 0.6f, drawHeight * 0.6f);
+            g.FillRectangle(Brushes.Black, rect);
             g.DrawImage(head, rect);
             head.Dispose();
+
+            Image token = PicLoader.Read("Border", "npcbg.PNG");
+            g.DrawImage(token, rect);
+            token.Dispose();
         }
     }
 
@@ -110,12 +118,21 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
             get { return UserProfile.Profile.InfoBasic.Position; }
         }
 
+        public ChessItemPlayer()
+        {
+            jumpHeight = 80;
+        }
+
         protected override void DrawIcon(Graphics g, int realX, int realY, int drawWidth, int drawHeight)
         {
             Image head = PicLoader.Read("Player.Token", string.Format("{0}.PNG", UserProfile.InfoBasic.Head));
             var rect = new RectangleF(realX + drawWidth * 0.06f, realY + drawHeight * 0.1f, drawWidth * 0.8f, drawHeight * 0.8f);
             g.DrawImage(head, rect);
             head.Dispose();
+
+            Image token = PicLoader.Read("Player.Token", "ring.PNG");
+            g.DrawImage(token, realX, realY, 100, 100);
+            token.Dispose();
         }
     }
 }

@@ -20,6 +20,20 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
             ChessList.Add(new ChessItem { PeopleId = 1, CellId = Scene.Instance.SceneInfo.GetRandom(0, false) }); //把一个机器人放到随机位置
         }
 
+        public void OnChessPlayerMoved()
+        {
+            int index = 1;
+            foreach (var chessItem in ChessList)
+            {
+                if (chessItem.PeopleId == 0)
+                    continue;
+
+                SetChessState(chessItem.PeopleId, chessItem.CellId, Scene.Instance.SceneInfo.GetRandom(0, false));
+
+                index++;
+            }
+        }
+
         public bool IsChessMoving()
         {
             foreach (var chessItem in ChessList) //只要有一个旗子在动
@@ -51,21 +65,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
                 ChessList.Add(new ChessItem {PeopleId = peopleId, Source = srcP, Dest = destP, DestId = dest.Id, Time = ChessItem.ChessMoveAnimTime });
             }
         }
-
-        public void OnChessPlayerMoved()
-        {
-            int index = 1;
-            foreach (var chessItem in ChessList)
-            {
-                if (chessItem.PeopleId == 0)
-                    continue;
-
-                SetChessState(chessItem.PeopleId, chessItem.CellId, Scene.Instance.SceneInfo.GetRandom(0, false));
-
-                index++;
-            }
-        }
-
+        
         public void Draw(Graphics g)
         {
             foreach (var chessItem in ChessList)
