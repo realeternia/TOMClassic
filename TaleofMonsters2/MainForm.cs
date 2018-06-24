@@ -255,13 +255,17 @@ namespace TaleofMonsters
             {
                 TalePlayer.Oneloop();
 
-                if (page == 1)
+                timeTick++;
+                if (timeTick > 1000)
+                    timeTick -= 1000;
+                if (page == 0)
+                {
+                    tabPageLogin.Invalidate();
+                }
+                else if (page == 1)
                 {
                     try
                     {
-                        timeTick++;
-                        if (timeTick > 1000)
-                            timeTick -= 1000;
                         foreach (var control in tabPageGame.Controls)
                         {
                             if (control is BasePanel)
@@ -295,9 +299,9 @@ namespace TaleofMonsters
 
         private void tabPageLogin_Paint(object sender, PaintEventArgs e)
         {
-            var loginBg = PicLoader.Read("System", "LoginBg.PNG");
-            e.Graphics.DrawImage(loginBg,Width/2-413/2,310,413,242);
-            loginBg.Dispose();
+            Brush b = new SolidBrush(Color.FromArgb(40+(int)(Math.Sin((double)timeTick/8)*20), Color.Black));
+            e.Graphics.FillRectangle(b, 0,0, tabPageLogin.Width, tabPageLogin.Height);
+            b.Dispose();
 
             e.Graphics.DrawImage(HSIcons.GetIconsByEName("rac5"), 10, tabPageLogin.Height - 160, 20, 20);
             e.Graphics.DrawImage(HSIcons.GetIconsByEName("hatt1"), 10, tabPageLogin.Height - 135, 20, 20);
