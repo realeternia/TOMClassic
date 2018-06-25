@@ -122,6 +122,11 @@ namespace TaleofMonsters.Forms
                 }
                 Invalidate();
             }
+
+            if (colorWord != null)
+            {
+                colorWord.OnFrame(tick);
+            }
         }
 
         private void NpcTalkForm_MouseClick(object sender, MouseEventArgs e)
