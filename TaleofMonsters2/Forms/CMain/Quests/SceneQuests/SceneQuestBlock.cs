@@ -35,13 +35,10 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
             return Script;
         }
 
-        public virtual void Draw(Graphics g, int yOff, int width, bool isTarget)
+        public virtual void Draw(Graphics g, int xOff, int yOff, int width)
         {
-            if (isTarget)
-                g.FillRectangle(Brushes.DarkBlue, 10, yOff, width - 20, 20);
-
             Font font = new Font("宋体", 11 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            g.DrawString(Script, font, Brushes.Wheat, 20, yOff + 2);
+            g.DrawString(Script, font, Brushes.Wheat, xOff + 10, yOff + 2);
             font.Dispose();
         }
     }

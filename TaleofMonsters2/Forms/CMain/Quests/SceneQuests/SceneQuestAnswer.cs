@@ -197,12 +197,9 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
             return "未知";
         }
 
-        public override void Draw(Graphics g, int yOff, int width, bool isTarget)
+        public override void Draw(Graphics g, int xOff, int yOff, int width)
         {
-            if (isTarget)
-                g.FillRectangle(Brushes.DarkBlue, 10, yOff, width - 20, 20);
-
-            int textOff = 20;
+            int textOff = xOff + 10;
             if (!string.IsNullOrEmpty(Prefix))
             {
                 var icon = GetItemIcon(this);

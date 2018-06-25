@@ -44,7 +44,7 @@ namespace TaleofMonsters.Forms
         {
             InitializeComponent();
             NeedBlackForm = true;
-            colorWord = new ColorWordRegion(160, 38, Width-170, new Font("宋体", 14 * 1.33f, GraphicsUnit.Pixel), Color.White);
+            colorWord = new ColorWordRegion(340, 38, Width-350, new Font("宋体", 14 * 1.33f, GraphicsUnit.Pixel), Color.White);
             vRegion = new VirtualRegion(this);
             vRegion.RegionEntered += VRegion_RegionEntered;
             vRegion.RegionLeft += VRegion_RegionLeft;
@@ -160,7 +160,7 @@ namespace TaleofMonsters.Forms
                     var evt = interactBlock.Children[0] as SceneQuestEvent;
                     if (evt.Type == "npc")
                         tar = -1; //为了修一个显示bug
-                    var region = new Rectangle(10, Height - 10 - 5*20 - 160, Width - 20, 160);
+                    var region = new Rectangle(340, Height - 10 - 4*30 - 160, Width - 350, 160);
                     evtItem = TalkEventItem.CreateEventItem(CellId, EventId, eventLevel, this, region, evt);
                     evtItem.Init();
                 }
@@ -258,9 +258,9 @@ namespace TaleofMonsters.Forms
         {
             if (evtItem == null || evtItem.RunningState != TalkEventItem.TalkEventState.Running) //evtItem运行期间无法选择
             {
-                if (e.Y > Height - 10 - answerList.Count * 20 && e.Y < Height - 10)
+                if (e.Y > Height - 10 - answerList.Count * 30 && e.Y < Height - 10 && e.X > 360 && e.X < 360 + 400)
                 {
-                    int val = (e.Y - (Height - 10) + answerList.Count * 20) / 20;
+                    int val = (e.Y - (Height - 10) + answerList.Count * 30) / 30;
                     if (val != tar)
                     {
                         tar = val;
@@ -297,21 +297,21 @@ namespace TaleofMonsters.Forms
                 e.Graphics.DrawString(string.Format("{0}(Lv{1})",config.Name, eventLevel), font2, Brushes.White, Width / 2 - 40, 8);
                 font2.Dispose();
 
-                e.Graphics.DrawImage(SceneQuestBook.GetSceneQuestImage(config.Id), 15, 40, 140, 140);
+                e.Graphics.DrawImage(SceneQuestBook.GetSceneQuestImage(config.Id), 20, 60, 300, 300);
                 if (config.TriggerRate > 0 && config.TriggerRate <= 30)
                 {
                     Image rareImg = PicLoader.Read("System", "sqrare2.PNG");
-                    e.Graphics.DrawImage(rareImg, 15 + 70, 40 + 100, 64, 32);
+                    e.Graphics.DrawImage(rareImg, 20 + 70, 40 + 100, 64, 32);
                     rareImg.Dispose();
                 }
                 else if (config.TriggerRate > 0 && config.TriggerRate <= 60)
                 {
                     Image rareImg = PicLoader.Read("System", "sqrare1.PNG");
-                    e.Graphics.DrawImage(rareImg, 15 + 70, 40 + 100, 64, 32);
+                    e.Graphics.DrawImage(rareImg, 20 + 70, 40 + 100, 64, 32);
                     rareImg.Dispose();
                 }
                 Image border = PicLoader.Read("Border", "questb1.PNG"); //边框
-                e.Graphics.DrawImage(border, 15, 40, 140, 140);
+                e.Graphics.DrawImage(border, 20, 60, 300, 300);
                 border.Dispose();
 
                 if (evtItem != null)
@@ -324,11 +324,22 @@ namespace TaleofMonsters.Forms
                 if (answerList != null && (evtItem == null || evtItem.RunningState != TalkEventItem.TalkEventState.Running))
                 {
                     int id = 0;
+                    var bgTarget = PicLoader.Read("System", "WordBack1.PNG");
+                    var bgCommon = PicLoader.Read("System", "WordBack2.PNG");
                     foreach (var word in answerList)
                     {
-                        word.Draw(e.Graphics, id * 20 + Height - 10 - answerList.Count * 20, Width, id == tar);
+                        var yoff = id*30 + Height - 10 - answerList.Count*30;
+
+                        if (id == tar)
+                            e.Graphics.DrawImage(bgTarget, 360, yoff, 400 - 20, 24);
+                        else
+                            e.Graphics.DrawImage(bgCommon, 360, yoff, 400 - 20, 24);
+
+                        word.Draw(e.Graphics, 360+16, yoff, 400);
                         id++;
                     }
+                    bgTarget.Dispose();
+                    bgCommon.Dispose();
                 }
             }
         }
