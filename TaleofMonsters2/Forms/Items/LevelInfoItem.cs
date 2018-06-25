@@ -16,13 +16,15 @@ namespace TaleofMonsters.Forms.Items
         public int Width { get { return 400; } }
         public int Height { get { return 80; } }
 
+        private BasePanel parent;
         private int index;
         private int id;
         private ColorWordRegion colorWord;
         private bool show;
 
-        public LevelInfoItem()
+        public LevelInfoItem(BasePanel p)
         {
+            parent = p;
         }
 
         public void Init(int idx)
@@ -38,7 +40,11 @@ namespace TaleofMonsters.Forms.Items
             id = info.Id;
             show = id > 0;
             if (id > 0)
-                colorWord.UpdateText(info.Des);
+            {
+                var g = parent.CreateGraphics();
+                colorWord.UpdateText(info.Des, g);
+                g.Dispose();
+            }
         }
 
         public void Draw(Graphics g)

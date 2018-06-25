@@ -98,7 +98,9 @@ namespace TaleofMonsters.Forms
         {
             selectJobId = jobIdList[baseid + selectPanel.SelectIndex];
             JobConfig jobConfig = ConfigData.GetJobConfig(selectJobId);
-            jobDes.UpdateText(jobConfig.Des);
+            Graphics g = this.CreateGraphics();
+            jobDes.UpdateText(jobConfig.Des, g);
+            g.Dispose();
             vRegion.SetRegionKey(1, jobConfig.SkillId);
             for (int i = 2; i < 5; i++)//把后面的物件都清除下
             {

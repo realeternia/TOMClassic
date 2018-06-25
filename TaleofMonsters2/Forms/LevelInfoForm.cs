@@ -42,7 +42,7 @@ namespace TaleofMonsters.Forms
 
             for (int i = 0; i < 3; i++)
             {
-                var item = new LevelInfoItem();
+                var item = new LevelInfoItem(this);
                 itemBox.AddItem(item);
                 item.Init(i);
             }

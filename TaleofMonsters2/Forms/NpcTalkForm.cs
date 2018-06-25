@@ -125,7 +125,7 @@ namespace TaleofMonsters.Forms
 
             if (colorWord != null)
             {
-                colorWord.OnFrame(tick);
+                colorWord.OnFrame(tick, this);
             }
         }
 
@@ -182,7 +182,9 @@ namespace TaleofMonsters.Forms
 
         private void SetupQuestItem()
         {
-            colorWord.UpdateText(interactBlock.Script);
+            Graphics g = this.CreateGraphics();
+            colorWord.UpdateText(interactBlock.Script, g);
+            g.Dispose();
             answerList.Clear();
             foreach (var sceneQuestBlock in interactBlock.Children)
             {
