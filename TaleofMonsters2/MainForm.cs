@@ -79,12 +79,11 @@ namespace TaleofMonsters
         private int timeTick;
         private long lastMouseMoveTime;
         private MainFlowController flowController;
+        private string passport;
 
         public MainForm()
         {
             InitializeComponent();
-            bitmapButtonLogin.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack1.PNG");
-            bitmapButtonExit.ImageNormal = PicLoader.Read("Button.Panel", "ButtonBack1.PNG");
             myCursor = new HSCursor(this);
             flowController = new MainFlowController(tabPageGame);
 
@@ -114,7 +113,8 @@ namespace TaleofMonsters
             }
 
             tabPageLogin.BackgroundImage = PicLoader.Read("System", "LogBack.JPG");
-            textBoxName.Text = WorldInfoManager.LastAccountName;
+            passport = WorldInfoManager.LastAccountName;
+            labelAccount.Text = string.Format("账户 {0}", passport);
             ChangePage(0);
             myCursor.ChangeCursor("default");
             Scene.Instance.Init();
@@ -128,14 +128,13 @@ namespace TaleofMonsters
         {
             if (pg == 0)
             {
-                textBoxPasswd.Text = "";
                 SoundManager.PlayBGMScene("SCN000.mp3");
                 page = pg;
                 viewStack1.SelectedIndex = page;
             }
             else if (pg == 1)
             {
-                UserProfile.ProfileName = textBoxName.Text;
+                UserProfile.ProfileName = passport;
                 TalePlayer.Connect();
             }
 
@@ -147,26 +146,6 @@ namespace TaleofMonsters
             {
                 flowController.Add(msg, icon, color, pos);
             }
-        }
-
-        private void buttonLogin_Click(object sender, EventArgs e)
-        {
-            var resultD = NameChecker.CheckNameEng(textBoxName.Text, GameConstants.ProfileNameLengthMin, GameConstants.ProfileNameLengthMax);
-            if (resultD != NameChecker.NameCheckResult.Ok)
-            {
-                if (resultD == NameChecker.NameCheckResult.NameEmpty)
-                    MessageBoxEx.Show("账号名不能为空");
-                else if (resultD == NameChecker.NameCheckResult.NameLengthError)
-                    MessageBoxEx.Show("账号名需要在3-12个字之内");
-                else if (resultD == NameChecker.NameCheckResult.PunctuationOnly)
-                    MessageBoxEx.Show("不能仅包含标点符号");
-                else if (resultD == NameChecker.NameCheckResult.EngOnly)
-                    MessageBoxEx.Show("仅能使用英文和数字");
-                return;
-            }
-
-            WorldInfoManager.LastAccountName = textBoxName.Text;
-            ChangePage(1);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -211,11 +190,6 @@ namespace TaleofMonsters
         {
             if (viewStack1.SelectedIndex == 1)
                 PanelManager.CheckHotKey(e, false);
-        }
-
-        private void buttonExit_Click(object sender, EventArgs e)
-        {
-            Close();
         }
 
         public void RefreshView()
@@ -303,14 +277,20 @@ namespace TaleofMonsters
             e.Graphics.FillRectangle(b, 0,0, tabPageLogin.Width, tabPageLogin.Height);
             b.Dispose();
 
-            e.Graphics.DrawImage(HSIcons.GetIconsByEName("rac5"), 10, tabPageLogin.Height - 160, 20, 20);
-            e.Graphics.DrawImage(HSIcons.GetIconsByEName("hatt1"), 10, tabPageLogin.Height - 135, 20, 20);
-            e.Graphics.DrawImage(HSIcons.GetIconsByEName("spl2"), 10, tabPageLogin.Height - 110, 20, 20);
+            var logoImg = PicLoader.Read("System", "logo.PNG");
+            var logX = (tabPageLogin.Width - logoImg.Width)/2;
+            var logY = (tabPageLogin.Height - logoImg.Height) / 2;
+            e.Graphics.DrawImage(logoImg, logX, logY, logoImg.Width, logoImg.Height);
+            logoImg.Dispose();
+
+            e.Graphics.DrawImage(HSIcons.GetIconsByEName("rac5"), 10, 30, 20, 20);
+            e.Graphics.DrawImage(HSIcons.GetIconsByEName("hatt1"), 10, 55, 20, 20);
+            e.Graphics.DrawImage(HSIcons.GetIconsByEName("spl2"), 10, 80, 20, 20);
 
             Font font = new Font("微软雅黑", 12 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            e.Graphics.DrawString(string.Format("{0} / {1}", CardConfigManager.MonsterAvail, CardConfigManager.MonsterTotal), font, Brushes.White, 35, tabPageLogin.Height - 160);
-            e.Graphics.DrawString(string.Format("{0} / {1}", CardConfigManager.WeaponAvail, CardConfigManager.WeaponTotal), font, Brushes.White, 35, tabPageLogin.Height - 135);
-            e.Graphics.DrawString(string.Format("{0} / {1}", CardConfigManager.SpellAvail, CardConfigManager.SpellTotal), font, Brushes.White, 35, tabPageLogin.Height - 110);
+            e.Graphics.DrawString(string.Format("{0} / {1}", CardConfigManager.MonsterAvail, CardConfigManager.MonsterTotal), font, Brushes.White, 35, 30);
+            e.Graphics.DrawString(string.Format("{0} / {1}", CardConfigManager.WeaponAvail, CardConfigManager.WeaponTotal), font, Brushes.White, 35, 55);
+            e.Graphics.DrawString(string.Format("{0} / {1}", CardConfigManager.SpellAvail, CardConfigManager.SpellTotal), font, Brushes.White, 35, 80);
             font.Dispose();
         }
 
@@ -333,5 +313,41 @@ namespace TaleofMonsters
             }
         }
 
+        private void label1_MouseEnter(object sender, EventArgs e)
+        {
+            var lbl = sender as Label;
+            lbl.ForeColor = Color.LightSkyBlue;
+        }
+
+        private void label1_MouseLeave(object sender, EventArgs e)
+        {
+            var lbl = sender as Label;
+            lbl.ForeColor = Color.White;
+        }
+
+        private void labelEnter_Click(object sender, EventArgs e)
+        {
+            var resultD = NameChecker.CheckNameEng(passport, GameConstants.ProfileNameLengthMin, GameConstants.ProfileNameLengthMax);
+            if (resultD != NameChecker.NameCheckResult.Ok)
+            {
+                if (resultD == NameChecker.NameCheckResult.NameEmpty)
+                    MessageBoxEx.Show("账号名不能为空");
+                else if (resultD == NameChecker.NameCheckResult.NameLengthError)
+                    MessageBoxEx.Show("账号名需要在3-12个字之内");
+                else if (resultD == NameChecker.NameCheckResult.PunctuationOnly)
+                    MessageBoxEx.Show("不能仅包含标点符号");
+                else if (resultD == NameChecker.NameCheckResult.EngOnly)
+                    MessageBoxEx.Show("仅能使用英文和数字");
+                return;
+            }
+
+            WorldInfoManager.LastAccountName = passport;
+            ChangePage(1);
+        }
+
+        private void labelDeskTop_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

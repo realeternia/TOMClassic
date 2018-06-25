@@ -31,17 +31,12 @@ namespace TaleofMonsters
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.viewStack1 = new ViewStack();
-            this.tabPageLogin = new DoubleBufferedTabPage();
-            this.bitmapButtonExit = new BitmapButton();
-            this.bitmapButtonLogin = new BitmapButton();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.buttonConnect = new System.Windows.Forms.Button();
-            this.buttonRegister = new System.Windows.Forms.Button();
-            this.textBoxPasswd = new System.Windows.Forms.TextBox();
-            this.textBoxName = new System.Windows.Forms.TextBox();
-            this.tabPageGame = new DoubleBufferedTabPage();
+            this.viewStack1 = new ControlPlus.ViewStack();
+            this.tabPageLogin = new ControlPlus.DoubleBufferedTabPage();
+            this.labelDeskTop = new System.Windows.Forms.Label();
+            this.labelEnter = new System.Windows.Forms.Label();
+            this.labelAccount = new System.Windows.Forms.Label();
+            this.tabPageGame = new ControlPlus.DoubleBufferedTabPage();
             this.viewStack1.SuspendLayout();
             this.tabPageLogin.SuspendLayout();
             this.SuspendLayout();
@@ -60,14 +55,9 @@ namespace TaleofMonsters
             // tabPageLogin
             // 
             this.tabPageLogin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.tabPageLogin.Controls.Add(this.bitmapButtonExit);
-            this.tabPageLogin.Controls.Add(this.bitmapButtonLogin);
-            this.tabPageLogin.Controls.Add(this.label2);
-            this.tabPageLogin.Controls.Add(this.label1);
-            this.tabPageLogin.Controls.Add(this.buttonConnect);
-            this.tabPageLogin.Controls.Add(this.buttonRegister);
-            this.tabPageLogin.Controls.Add(this.textBoxPasswd);
-            this.tabPageLogin.Controls.Add(this.textBoxName);
+            this.tabPageLogin.Controls.Add(this.labelDeskTop);
+            this.tabPageLogin.Controls.Add(this.labelEnter);
+            this.tabPageLogin.Controls.Add(this.labelAccount);
             this.tabPageLogin.Location = new System.Drawing.Point(4, 22);
             this.tabPageLogin.Name = "tabPageLogin";
             this.tabPageLogin.Padding = new System.Windows.Forms.Padding(3);
@@ -77,125 +67,49 @@ namespace TaleofMonsters
             this.tabPageLogin.UseVisualStyleBackColor = true;
             this.tabPageLogin.Paint += new System.Windows.Forms.PaintEventHandler(this.tabPageLogin_Paint);
             // 
-            // bitmapButtonExit
+            // labelDeskTop
             // 
-            this.bitmapButtonExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bitmapButtonExit.BorderColor = System.Drawing.Color.Black;
-            this.bitmapButtonExit.Font = new System.Drawing.Font("Microsoft YaHei", 13.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.bitmapButtonExit.ForeColor = System.Drawing.Color.White;
-            this.bitmapButtonExit.IconImage = null;
-            this.bitmapButtonExit.IconSize = new System.Drawing.Size(0, 0);
-            this.bitmapButtonExit.IconXY = new System.Drawing.Point(0, 0);
-            this.bitmapButtonExit.ImageNormal = null;
-            this.bitmapButtonExit.Location = new System.Drawing.Point(864, 621);
-            this.bitmapButtonExit.Name = "bitmapButtonExit";
-            this.bitmapButtonExit.NoUseDrawNine = false;
-            this.bitmapButtonExit.Size = new System.Drawing.Size(111, 29);
-            this.bitmapButtonExit.TabIndex = 16;
-            this.bitmapButtonExit.Text = "离开游戏";
-            this.bitmapButtonExit.TextOffX = 0;
-            this.bitmapButtonExit.UseVisualStyleBackColor = true;
-            this.bitmapButtonExit.Click += new System.EventHandler(this.buttonExit_Click);
+            this.labelDeskTop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelDeskTop.AutoSize = true;
+            this.labelDeskTop.Font = new System.Drawing.Font("Microsoft YaHei", 14F, System.Drawing.FontStyle.Bold);
+            this.labelDeskTop.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.labelDeskTop.Location = new System.Drawing.Point(70, 568);
+            this.labelDeskTop.Name = "labelDeskTop";
+            this.labelDeskTop.Size = new System.Drawing.Size(88, 26);
+            this.labelDeskTop.TabIndex = 18;
+            this.labelDeskTop.Text = "返回桌面";
+            this.labelDeskTop.Click += new System.EventHandler(this.labelDeskTop_Click);
+            this.labelDeskTop.MouseEnter += new System.EventHandler(this.label1_MouseEnter);
+            this.labelDeskTop.MouseLeave += new System.EventHandler(this.label1_MouseLeave);
             // 
-            // bitmapButtonLogin
+            // labelEnter
             // 
-            this.bitmapButtonLogin.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.bitmapButtonLogin.BorderColor = System.Drawing.Color.Black;
-            this.bitmapButtonLogin.Font = new System.Drawing.Font("Microsoft YaHei", 13.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.bitmapButtonLogin.ForeColor = System.Drawing.Color.White;
-            this.bitmapButtonLogin.IconImage = null;
-            this.bitmapButtonLogin.IconSize = new System.Drawing.Size(0, 0);
-            this.bitmapButtonLogin.IconXY = new System.Drawing.Point(0, 0);
-            this.bitmapButtonLogin.ImageNormal = null;
-            this.bitmapButtonLogin.Location = new System.Drawing.Point(460, 491);
-            this.bitmapButtonLogin.Name = "bitmapButtonLogin";
-            this.bitmapButtonLogin.NoUseDrawNine = false;
-            this.bitmapButtonLogin.Size = new System.Drawing.Size(111, 29);
-            this.bitmapButtonLogin.TabIndex = 15;
-            this.bitmapButtonLogin.Text = "进入游戏";
-            this.bitmapButtonLogin.TextOffX = 0;
-            this.bitmapButtonLogin.UseVisualStyleBackColor = true;
-            this.bitmapButtonLogin.Click += new System.EventHandler(this.buttonLogin_Click);
+            this.labelEnter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelEnter.AutoSize = true;
+            this.labelEnter.Font = new System.Drawing.Font("Microsoft YaHei", 14F, System.Drawing.FontStyle.Bold);
+            this.labelEnter.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.labelEnter.Location = new System.Drawing.Point(70, 491);
+            this.labelEnter.Name = "labelEnter";
+            this.labelEnter.Size = new System.Drawing.Size(88, 26);
+            this.labelEnter.TabIndex = 17;
+            this.labelEnter.Text = "进入游戏";
+            this.labelEnter.Click += new System.EventHandler(this.labelEnter_Click);
+            this.labelEnter.MouseEnter += new System.EventHandler(this.label1_MouseEnter);
+            this.labelEnter.MouseLeave += new System.EventHandler(this.label1_MouseLeave);
             // 
-            // label2
+            // labelAccount
             // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
-            this.label2.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label2.Location = new System.Drawing.Point(373, 456);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 15);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "登录密码";
-            // 
-            // label1
-            // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
-            this.label1.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label1.Location = new System.Drawing.Point(373, 410);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 15);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "游戏账号";
-            // 
-            // buttonConnect
-            // 
-            this.buttonConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonConnect.BackColor = System.Drawing.Color.DarkBlue;
-            this.buttonConnect.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonConnect.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonConnect.Font = new System.Drawing.Font("Microsoft YaHei", 13.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
-            this.buttonConnect.ForeColor = System.Drawing.Color.White;
-            this.buttonConnect.Location = new System.Drawing.Point(864, 543);
-            this.buttonConnect.Name = "buttonConnect";
-            this.buttonConnect.Size = new System.Drawing.Size(111, 29);
-            this.buttonConnect.TabIndex = 11;
-            this.buttonConnect.Text = "给我意见";
-            this.buttonConnect.UseVisualStyleBackColor = false;
-            this.buttonConnect.Visible = false;
-            // 
-            // buttonRegister
-            // 
-            this.buttonRegister.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonRegister.BackColor = System.Drawing.Color.DarkBlue;
-            this.buttonRegister.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonRegister.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonRegister.Font = new System.Drawing.Font("Microsoft YaHei", 13.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
-            this.buttonRegister.ForeColor = System.Drawing.Color.White;
-            this.buttonRegister.Location = new System.Drawing.Point(864, 508);
-            this.buttonRegister.Name = "buttonRegister";
-            this.buttonRegister.Size = new System.Drawing.Size(111, 29);
-            this.buttonRegister.TabIndex = 10;
-            this.buttonRegister.Text = "注册账号";
-            this.buttonRegister.UseVisualStyleBackColor = false;
-            this.buttonRegister.Visible = false;
-            // 
-            // textBoxPasswd
-            // 
-            this.textBoxPasswd.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.textBoxPasswd.BackColor = System.Drawing.Color.Silver;
-            this.textBoxPasswd.Enabled = false;
-            this.textBoxPasswd.Font = new System.Drawing.Font("SimSun", 10F);
-            this.textBoxPasswd.Location = new System.Drawing.Point(460, 451);
-            this.textBoxPasswd.MaxLength = 16;
-            this.textBoxPasswd.Name = "textBoxPasswd";
-            this.textBoxPasswd.Size = new System.Drawing.Size(161, 23);
-            this.textBoxPasswd.TabIndex = 8;
-            this.textBoxPasswd.UseSystemPasswordChar = true;
-            // 
-            // textBoxName
-            // 
-            this.textBoxName.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.textBoxName.BackColor = System.Drawing.Color.PowderBlue;
-            this.textBoxName.Font = new System.Drawing.Font("SimSun", 10F);
-            this.textBoxName.Location = new System.Drawing.Point(460, 405);
-            this.textBoxName.MaxLength = 12;
-            this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(161, 23);
-            this.textBoxName.TabIndex = 7;
+            this.labelAccount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelAccount.AutoSize = true;
+            this.labelAccount.Font = new System.Drawing.Font("Microsoft YaHei", 14F, System.Drawing.FontStyle.Bold);
+            this.labelAccount.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.labelAccount.Location = new System.Drawing.Point(70, 455);
+            this.labelAccount.Name = "labelAccount";
+            this.labelAccount.Size = new System.Drawing.Size(88, 26);
+            this.labelAccount.TabIndex = 13;
+            this.labelAccount.Text = "游戏账号";
+            this.labelAccount.MouseEnter += new System.EventHandler(this.label1_MouseEnter);
+            this.labelAccount.MouseLeave += new System.EventHandler(this.label1_MouseLeave);
             // 
             // tabPageGame
             // 
@@ -239,14 +153,8 @@ namespace TaleofMonsters
         private ViewStack viewStack1;
         private DoubleBufferedTabPage tabPageLogin;
         private DoubleBufferedTabPage tabPageGame;
-        private System.Windows.Forms.Button buttonConnect;
-        private System.Windows.Forms.Button buttonRegister;
-        private System.Windows.Forms.TextBox textBoxPasswd;
-        private System.Windows.Forms.TextBox textBoxName;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private BitmapButton bitmapButtonLogin;
-        private BitmapButton bitmapButtonExit;
-
+        private System.Windows.Forms.Label labelAccount;
+        private System.Windows.Forms.Label labelEnter;
+        private System.Windows.Forms.Label labelDeskTop;
     }
 }
