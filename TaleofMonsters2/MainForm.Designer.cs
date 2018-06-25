@@ -108,6 +108,7 @@ namespace TaleofMonsters
             this.labelAccount.Size = new System.Drawing.Size(88, 26);
             this.labelAccount.TabIndex = 13;
             this.labelAccount.Text = "游戏账号";
+            this.labelAccount.Click += new System.EventHandler(this.labelAccount_Click);
             this.labelAccount.MouseEnter += new System.EventHandler(this.label1_MouseEnter);
             this.labelAccount.MouseLeave += new System.EventHandler(this.label1_MouseLeave);
             // 

@@ -278,20 +278,22 @@ namespace TaleofMonsters
             b.Dispose();
 
             var logoImg = PicLoader.Read("System", "logo.PNG");
-            var logX = (tabPageLogin.Width - logoImg.Width)/2;
-            var logY = (tabPageLogin.Height - logoImg.Height) / 2;
-            e.Graphics.DrawImage(logoImg, logX, logY, logoImg.Width, logoImg.Height);
+            var logWid = tabPageLogin.Width/4;
+            var logHeight = tabPageLogin.Height / 5;
+            var logX = (tabPageLogin.Width - logWid) /2;
+            var logY = (tabPageLogin.Height - logHeight) / 2 + Math.Sin((double)timeTick / 15)*6;
+            e.Graphics.DrawImage(logoImg, logX, (int)logY, logWid, logHeight);
             logoImg.Dispose();
 
-            e.Graphics.DrawImage(HSIcons.GetIconsByEName("rac5"), 10, 30, 20, 20);
-            e.Graphics.DrawImage(HSIcons.GetIconsByEName("hatt1"), 10, 55, 20, 20);
-            e.Graphics.DrawImage(HSIcons.GetIconsByEName("spl2"), 10, 80, 20, 20);
+            //e.Graphics.DrawImage(HSIcons.GetIconsByEName("rac5"), 10, 30, 20, 20);
+            //e.Graphics.DrawImage(HSIcons.GetIconsByEName("hatt1"), 10, 55, 20, 20);
+            //e.Graphics.DrawImage(HSIcons.GetIconsByEName("spl2"), 10, 80, 20, 20);
 
-            Font font = new Font("微软雅黑", 12 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            e.Graphics.DrawString(string.Format("{0} / {1}", CardConfigManager.MonsterAvail, CardConfigManager.MonsterTotal), font, Brushes.White, 35, 30);
-            e.Graphics.DrawString(string.Format("{0} / {1}", CardConfigManager.WeaponAvail, CardConfigManager.WeaponTotal), font, Brushes.White, 35, 55);
-            e.Graphics.DrawString(string.Format("{0} / {1}", CardConfigManager.SpellAvail, CardConfigManager.SpellTotal), font, Brushes.White, 35, 80);
-            font.Dispose();
+            //Font font = new Font("微软雅黑", 12 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            //e.Graphics.DrawString(string.Format("{0} / {1}", CardConfigManager.MonsterAvail, CardConfigManager.MonsterTotal), font, Brushes.White, 35, 30);
+            //e.Graphics.DrawString(string.Format("{0} / {1}", CardConfigManager.WeaponAvail, CardConfigManager.WeaponTotal), font, Brushes.White, 35, 55);
+            //e.Graphics.DrawString(string.Format("{0} / {1}", CardConfigManager.SpellAvail, CardConfigManager.SpellTotal), font, Brushes.White, 35, 80);
+            //font.Dispose();
         }
 
         private void tabPageGame_Paint(object sender, PaintEventArgs e)
@@ -348,6 +350,16 @@ namespace TaleofMonsters
         private void labelDeskTop_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void labelAccount_Click(object sender, EventArgs e)
+        {
+            ChangeAccountForm cpf = new ChangeAccountForm();
+            cpf.Passort = passport;
+            cpf.BringToFront();
+            cpf.ShowDialog();
+            passport = cpf.Passort;
+            labelAccount.Text = string.Format("账户 {0}", passport);
         }
     }
 }
