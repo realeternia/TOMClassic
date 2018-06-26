@@ -8,8 +8,16 @@ namespace ControlPlus
 {
     public class TipImage
     {
+        public delegate Color GetTalkColorDelegegate(string cname);
+
         private List<LineInfo> datas = new List<LineInfo>();
         private List<ImageInfo> imgs = new List<ImageInfo>();
+        public GetTalkColorDelegegate ColorMethod;
+
+        public TipImage(GetTalkColorDelegegate cm)
+        {
+            ColorMethod = cm;
+        }
 
         public void AddTextNewLine(string data, string color, int height)
         {
@@ -66,9 +74,14 @@ namespace ControlPlus
                         if ((i % 2) == 0)
                         {
                             if (infos[i] == "")
+                            {
                                 color = Color.FromName(cr);
+                            }
                             else
-                                color = GetTalkColor(infos[i]);
+                            {
+                                if (ColorMethod != null)
+                                    color = ColorMethod(infos[i]);
+                            }
                         }
                         else
                             AddLineText(infos[i], ref wordLeft, wordPerLine, color.Name);
@@ -103,22 +116,6 @@ namespace ControlPlus
                 if (len != perLine)
                     wordLeft -= len;
             }
-        }
-        public static Color GetTalkColor(string cname)
-        {
-            if (cname.Length == 1) //简写
-            {
-                switch (cname)
-                {
-                    case "R": return Color.Red;  //怪物
-                    case "G": return Color.Green; //人物，npc
-                    case "B": return Color.RoyalBlue; //场景
-                    case "P": return Color.MediumPurple; //幻兽，选择
-                    case "Y": return Color.Yellow; //道具
-                    case "O": return Color.DarkGoldenrod; //事件
-                }
-            }
-            return Color.FromName(cname);
         }
 
         public void AddTextOff(string data, string color, int off)

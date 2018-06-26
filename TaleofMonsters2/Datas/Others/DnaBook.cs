@@ -50,7 +50,7 @@ namespace TaleofMonsters.Datas.Others
             if (dnaConfig.Id <= 0)
                 return DrawTool.GetImageByString("unknown", 100);
 
-            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+            ControlPlus.TipImage tipData = new ControlPlus.TipImage(PaintTool.GetTalkColor);
             tipData.AddTextNewLine(dnaConfig.Name, "White");
             tipData.AddTextNewLine(dnaConfig.Des, "Gray");
 

@@ -20,6 +20,7 @@ using TaleofMonsters.Forms.CMain.Scenes.SceneObjects;
 using TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving;
 using TaleofMonsters.Forms.CMain.Scenes.SceneRules;
 using TaleofMonsters.Forms.Items.Regions;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.Forms.CMain.Scenes
 {
@@ -622,7 +623,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes
 
         private Image GetPlayerImage()
         {
-            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+            ControlPlus.TipImage tipData = new ControlPlus.TipImage(PaintTool.GetTalkColor);
             tipData.AddTextNewLine(string.Format("{0}(Lv{1})", UserProfile.Profile.Name, UserProfile.InfoBasic.Level), "LightBlue", 20);
             tipData.AddLine(2);
             tipData.AddTextNewLine(string.Format("生命:{0}",UserProfile.InfoBasic.HealthPoint), "Red");

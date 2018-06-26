@@ -16,6 +16,7 @@ using TaleofMonsters.Datas.Skills;
 using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items;
 using TaleofMonsters.Forms.Items.Regions;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.Forms.MagicBook
 {
@@ -147,7 +148,7 @@ namespace TaleofMonsters.Forms.MagicBook
 
         private Image GetAttrImage(int monType, double[] attrDef, double[] buffDef)
         {
-            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+            ControlPlus.TipImage tipData = new ControlPlus.TipImage(PaintTool.GetTalkColor);
             tipData.AddTextNewLine("属性：" + HSTypes.I2Attr(monType), "White", 20);
             int line = 0;
             for (int i = 0; i <= 6; i++)
@@ -173,7 +174,7 @@ namespace TaleofMonsters.Forms.MagicBook
 
         private Image GetRaceImage(int raceId)
         {
-            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+            ControlPlus.TipImage tipData = new ControlPlus.TipImage(PaintTool.GetTalkColor);
             tipData.AddTextNewLine("种族：" + HSTypes.I2CardTypeSub(raceId), "White", 20);
             int line = 0;
             foreach (var item in HSTypes.I2CardTypeDesSub(raceId).Split('$'))

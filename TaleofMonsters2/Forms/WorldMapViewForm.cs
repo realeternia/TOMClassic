@@ -12,6 +12,7 @@ using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.CMain.Scenes;
 using TaleofMonsters.Forms.Items.Core;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.Forms
 {
@@ -227,7 +228,7 @@ namespace TaleofMonsters.Forms
         {
             SceneConfig sceneConfig = ConfigData.GetSceneConfig(id);
 
-            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+            ControlPlus.TipImage tipData = new ControlPlus.TipImage(PaintTool.GetTalkColor);
             tipData.AddTextNewLine(sceneConfig.Name, "Lime", 20);
             tipData.AddTextNewLine(string.Format("地图等级: {0}", sceneConfig.Level), sceneConfig.Level>UserProfile.InfoBasic.Level?"Red": "White");
             tipData.AddTextNewLine(string.Format("区域: {0}", ConfigData.GetSceneRegionConfig(sceneConfig.RegionId).Name), "White", 20);

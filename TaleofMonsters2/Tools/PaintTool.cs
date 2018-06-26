@@ -4,7 +4,7 @@ using ControlPlus.Drawing;
 
 namespace TaleofMonsters.Tools
 {
-    static class PaintTool
+    internal static class PaintTool
     {
         public static Brush GetBrushByAttribute(int attr)
         {
@@ -63,7 +63,24 @@ namespace TaleofMonsters.Tools
             }
             return Brushes.White;
         }
-        
+
+        public static Color GetTalkColor(string cname)
+        {
+            if (cname.StartsWith("#")) //简写
+            {
+                switch (cname)
+                {
+                    case "#enemy": return Color.Red;  //怪物
+                    case "#npc": return Color.Green; //人物，npc
+                    case "#scene": return Color.RoyalBlue; //场景
+                    case "#mon": return Color.MediumPurple; //幻兽，选择
+                    case "#item": return Color.Yellow; //道具
+                    case "#event": return Color.DarkGoldenrod; //事件
+                }
+            }
+            return Color.FromName(cname);
+        }
+
         public static void DrawValueLine(Graphics g, int value, int x, int y, int width, int height)
         {
             Color colorStart;

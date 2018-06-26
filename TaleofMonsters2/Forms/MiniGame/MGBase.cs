@@ -6,6 +6,7 @@ using NarlonLib.Math;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Core;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.Forms.MiniGame
 {
@@ -171,7 +172,7 @@ namespace TaleofMonsters.Forms.MiniGame
         {
             var gameConfig = ConfigData.GetMinigameConfig(id);
 
-            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+            ControlPlus.TipImage tipData = new ControlPlus.TipImage(PaintTool.GetTalkColor);
             tipData.AddTextNewLine("评分", "White");
             tipData.AddTextNewLine("S级达成要求: ", "White");
             tipData.AddText(GetFinalMark(gameConfig.LvS).ToString(), "Gold");

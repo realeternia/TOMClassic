@@ -8,6 +8,7 @@ using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain.Scenes;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.Datas.Scenes
 {
@@ -119,7 +120,7 @@ namespace TaleofMonsters.Datas.Scenes
         public static Image GetScenePreview(Scene scene)
         {
             var config = ConfigData.GetSceneConfig(UserProfile.InfoBasic.MapId);
-            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+            ControlPlus.TipImage tipData = new ControlPlus.TipImage(PaintTool.GetTalkColor);
             tipData.AddTextNewLine(string.Format("{0}(Lv{1})", config.Name, config.Level), "LightBlue", 20);
             tipData.AddLine(2);
             tipData.AddTextNewLine(string.Format(" 温度:{0}", HSTypes.I2TemperatureName(config.Temperature)), "Red");

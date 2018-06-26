@@ -274,7 +274,7 @@ namespace TaleofMonsters.Controler.Battle.Components
 
         private Image GetPlayerImage()
         {
-            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+            ControlPlus.TipImage tipData = new ControlPlus.TipImage(PaintTool.GetTalkColor);
             tipData.AddTextNewLine(string.Format("Lv{0}", self.Level), "LightBlue", 20);
             tipData.AddTextNewLine(string.Format("卡牌 {0}({1})", self.HandCards.GetCardNumber(), self.OffCards.LeftCount), "White");
             tipData.AddTextNewLine(string.Format("幸运 {0}", self.Luk), "White");

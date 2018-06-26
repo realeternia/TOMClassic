@@ -51,7 +51,7 @@ namespace TaleofMonsters.Datas.Peoples
         {
             PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(id);
 
-            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+            ControlPlus.TipImage tipData = new ControlPlus.TipImage(PaintTool.GetTalkColor);
             tipData.AddTextNewLine(peopleConfig.Name, "White", 20);
             tipData.AddTextNewLine(string.Format("{0}级{1}", peopleConfig.Level, ConfigData.GetJobConfig(peopleConfig.Job).Name), "White");
             tipData.AddLine();

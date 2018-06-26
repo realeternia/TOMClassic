@@ -153,7 +153,7 @@ namespace TaleofMonsters.Datas.Items
             if (hItemConfig.Id <= 0)
                 return DrawTool.GetImageByString("unknown", 100);
 
-            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+            ControlPlus.TipImage tipData = new ControlPlus.TipImage(PaintTool.GetTalkColor);
             tipData.AddTextNewLine(hItemConfig.Name, HSTypes.I2RareColor(hItemConfig.Rare), 20);
             if (hItemConfig.IsUsable)
             {

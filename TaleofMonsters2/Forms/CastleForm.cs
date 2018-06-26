@@ -15,6 +15,7 @@ using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.VBuilds;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.Forms
 {
@@ -81,7 +82,7 @@ namespace TaleofMonsters.Forms
             else
             {
                 EquipSlotConfig slotConfig = ConfigData.GetEquipSlotConfig(id);
-                ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+                ControlPlus.TipImage tipData = new ControlPlus.TipImage(PaintTool.GetTalkColor);
                 tipData.AddTextNewLine(slotConfig.Name, "Lime");
                 tipData.AddTextNewLine(slotConfig.Des, "White");
                 image = tipData.Image;

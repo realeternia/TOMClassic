@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ControlPlus;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.Forms.Items.Core
 {
@@ -212,12 +213,12 @@ namespace TaleofMonsters.Forms.Items.Core
                     if (infos[0] == "")
                         color = fcolor;
                     else
-                        color = TipImage.GetTalkColor(infos[0]);
+                        color = PaintTool.GetTalkColor(infos[0]);
                     type = GetTextDance(infos[1]);
                 }
                 else //没有.必然是颜色
                 {
-                    color = TipImage.GetTalkColor(info);
+                    color = PaintTool.GetTalkColor(info);
                 }
             }
             return color;

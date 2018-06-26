@@ -69,7 +69,7 @@ namespace TaleofMonsters.Datas.Scenes
         public static Image GetPreview(int key)
         {
             var config = ConfigData.GetDungeonGismoConfig(key);
-            TipImage tipData = new TipImage();
+            TipImage tipData = new TipImage(PaintTool.GetTalkColor);
 
             var hasGismo = UserProfile.InfoGismo.GetGismo(key);
             if (hasGismo)

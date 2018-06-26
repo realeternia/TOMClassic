@@ -7,6 +7,7 @@ using TaleofMonsters.Core;
 using TaleofMonsters.Datas.Cards;
 using TaleofMonsters.Datas.HeroPowers;
 using TaleofMonsters.Datas.Skills;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.Datas.Equips
 {
@@ -85,7 +86,7 @@ namespace TaleofMonsters.Datas.Equips
         {
             EquipConfig equipConfig = ConfigData.GetEquipConfig(TemplateId);
 
-            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+            ControlPlus.TipImage tipData = new ControlPlus.TipImage(PaintTool.GetTalkColor);
             tipData.AddTextNewLine(string.Format("{0} Lv{1}", equipConfig.Name, level), HSTypes.I2QualityColor(equipConfig.Quality), 20);
             tipData.AddTextNewLine(string.Format("       位置:{0}", HSTypes.I2EquipSlotType(equipConfig.Position)), "White");
             tipData.AddTextNewLine("", "White");

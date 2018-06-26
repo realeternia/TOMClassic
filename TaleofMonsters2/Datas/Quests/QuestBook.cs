@@ -3,6 +3,7 @@ using ConfigDatas;
 using TaleofMonsters.Datas.Items;
 using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Datas.User;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.Datas.Quests
 {
@@ -99,7 +100,7 @@ namespace TaleofMonsters.Datas.Quests
         public static Image GetPreview(int id)
         {
             QuestConfig questConfig = ConfigData.GetQuestConfig(id);
-            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+            ControlPlus.TipImage tipData = new ControlPlus.TipImage(PaintTool.GetTalkColor);
             string nameStr = string.Format("【{0}】{1}", questConfig.TypeR == 0 ? "主线": "支线", questConfig.Name);
             bool isFinish = UserProfile.InfoQuest.IsQuestFinish(id);
             bool isRecv = UserProfile.InfoQuest.IsQuestCanReceive(id);

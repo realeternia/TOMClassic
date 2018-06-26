@@ -63,7 +63,7 @@ namespace TaleofMonsters.Datas.Blesses
         {
             var config = ConfigData.GetBlessConfig(key);
             var lastTime = UserProfile.InfoWorld.GetBlessTime(key);
-            TipImage tipData = new TipImage();
+            TipImage tipData = new TipImage(PaintTool.GetTalkColor);
             var color = "Gold";
             if (config.Type == (int) BlessTypes.Active)
                 color = "Green";

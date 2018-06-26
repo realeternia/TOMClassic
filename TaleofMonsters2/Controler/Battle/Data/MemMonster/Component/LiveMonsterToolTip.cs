@@ -9,6 +9,7 @@ using TaleofMonsters.Datas.Cards.Monsters;
 using TaleofMonsters.Datas.Cards.Spells;
 using TaleofMonsters.Datas.Cards.Weapons;
 using TaleofMonsters.Datas.Skills;
+using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 {
@@ -42,7 +43,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 
         private Image GetMonsterImage()
         {
-            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+            ControlPlus.TipImage tipData = new ControlPlus.TipImage(PaintTool.GetTalkColor);
             var cardQual = CardConfigManager.GetCardConfig(self.CardId).Quality;
             var name = string.Format("{0}(Lv{1})", self.Avatar.Name, self.Level);
             tipData.AddTextNewLine(name, HSTypes.I2QualityColor((int)cardQual), 20);

@@ -37,7 +37,7 @@ namespace TaleofMonsters.Datas.HeroPowers
         public static Image GetPreview(int id)
         {
             var powerConfig = ConfigData.GetHeroPowerConfig(id);
-            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+            ControlPlus.TipImage tipData = new ControlPlus.TipImage(PaintTool.GetTalkColor);
             tipData.AddTextNewLine(powerConfig.Name, "White", 20);
             tipData.AddLine();
             tipData.AddTextNewLine("英雄技能", "Red");

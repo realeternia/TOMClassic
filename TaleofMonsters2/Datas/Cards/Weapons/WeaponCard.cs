@@ -205,7 +205,7 @@ namespace TaleofMonsters.Datas.Cards.Weapons
         public override Image GetPreview(CardPreviewType type, uint[] parms)
         {
             const string stars = "★★★★★★★★★★";
-            ControlPlus.TipImage tipData = new ControlPlus.TipImage();
+            ControlPlus.TipImage tipData = new ControlPlus.TipImage(PaintTool.GetTalkColor);
             var cardQual = CardConfigManager.GetCardConfig(CardId).Quality;
             tipData.AddTextNewLine(weapon.WeaponConfig.Name, HSTypes.I2QualityColor((int)cardQual), 20);
             tipData.AddText(string.Format("Lv{0}({1})", card.Level, weapon.WeaponConfig.Ename), "MediumAquamarine");
