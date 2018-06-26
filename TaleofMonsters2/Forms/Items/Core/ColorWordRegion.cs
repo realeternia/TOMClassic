@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using ControlPlus;
+using NarlonLib.Math;
 using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.Forms.Items.Core
@@ -11,7 +11,7 @@ namespace TaleofMonsters.Forms.Items.Core
     {
         public enum TextDanceTypes
         {
-            Normal, Jump, Shake, Circle, Lovely
+            Normal, Jump, Shake, Circle, Lovely, Random, Stripe, UpDown, Row
         }
 
         internal class ColorTextCompt
@@ -79,11 +79,23 @@ namespace TaleofMonsters.Forms.Items.Core
                                 g.DrawString(drawInfo, font, sb, x + offX, y + (int)(Math.Sin((double)(tick + i * 2) / 2) * 5),
           StringFormat.GenericTypographic); break;
                             case TextDanceTypes.Shake:
-                                g.DrawString(drawInfo, font, sb, x + offX + (int)(Math.Sin((double)(tick + i)) * 5), y,
+                                g.DrawString(drawInfo, font, sb, x + offX + (int)(Math.Sin((double)(tick + i)) * 5), y + (float)(MathTool.GetRandom(0f, 1) * 2),
          StringFormat.GenericTypographic); break;
                             case TextDanceTypes.Lovely:
                                 g.DrawString(drawInfo, font, sb, x + offX, y + (int)(Math.Sin(Math.Tan((double)(tick + i * 2) / 2)) * 3),
         StringFormat.GenericTypographic); break;
+                            case TextDanceTypes.Random:
+                                g.DrawString(drawInfo, font, sb, x + offX, y + (float)(MathTool.GetRandom(-2, 3)),
+        StringFormat.GenericTypographic); break;
+                            case TextDanceTypes.Stripe:
+                                g.DrawString(drawInfo, font, sb, x + offX + (int)(Math.Sin((double)(tick + i * 2) / 2) * 5), y + (int)(Math.Sin((double)(tick + i * 2) / 2) * 5),
+        StringFormat.GenericTypographic); break;
+                            case TextDanceTypes.UpDown:
+                                g.DrawString(drawInfo, font, sb, x + offX, y + (int)(Math.Sin((double)(tick) / 3 + i * Math.PI) * 5),
+        StringFormat.GenericTypographic); break;
+                            case TextDanceTypes.Row:
+                                g.DrawString(drawInfo, font, sb, x + offX, y + (int)(Math.Sin((double)(tick) / 3) * 5),
+           StringFormat.GenericTypographic); break;
                         }
                         offX += TextRenderer.MeasureText(g, drawInfo, font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
                     }
@@ -232,6 +244,10 @@ namespace TaleofMonsters.Forms.Items.Core
                 case "sh": return TextDanceTypes.Shake;
                 case "cl": return TextDanceTypes.Circle;
                 case "lv": return TextDanceTypes.Lovely;
+                case "rd": return TextDanceTypes.Random;
+                case "st": return TextDanceTypes.Stripe;
+                case "ud": return TextDanceTypes.UpDown;
+                case "rw": return TextDanceTypes.Row;
                 default: return TextDanceTypes.Normal;
             }
         }
