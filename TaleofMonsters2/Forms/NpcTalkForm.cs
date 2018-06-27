@@ -44,7 +44,7 @@ namespace TaleofMonsters.Forms
         {
             InitializeComponent();
             NeedBlackForm = true;
-            colorWord = new ColorWordRegion(340, 38, Width-350, new Font("宋体", 14 * 1.33f, GraphicsUnit.Pixel), Color.White);
+            colorWord = new ColorWordRegion(340, 38+10, Width-350, new Font("微软雅黑", 13 * 1.33f, GraphicsUnit.Pixel), Color.White);
             vRegion = new VirtualRegion(this);
             vRegion.RegionEntered += VRegion_RegionEntered;
             vRegion.RegionLeft += VRegion_RegionLeft;
@@ -305,21 +305,22 @@ namespace TaleofMonsters.Forms
                 font2.Dispose();
 
                 e.Graphics.DrawImage(SceneQuestBook.GetSceneQuestImage(config.Id), 20, 60, 300, 300);
+                Image border = PicLoader.Read("Border", "scenequestbg.PNG"); //边框
+                e.Graphics.DrawImage(border, 20, 60, 300, 300);
+                border.Dispose();
+
                 if (config.TriggerRate > 0 && config.TriggerRate <= 30)
-                {
+                {//稀有
                     Image rareImg = PicLoader.Read("System", "sqrare2.PNG");
-                    e.Graphics.DrawImage(rareImg, 20 + 70, 40 + 100, 64, 32);
+                    e.Graphics.DrawImage(rareImg, 20+16, 60+16, 64, 32);
                     rareImg.Dispose();
                 }
                 else if (config.TriggerRate > 0 && config.TriggerRate <= 60)
-                {
+                {//罕见
                     Image rareImg = PicLoader.Read("System", "sqrare1.PNG");
-                    e.Graphics.DrawImage(rareImg, 20 + 70, 40 + 100, 64, 32);
+                    e.Graphics.DrawImage(rareImg, 20 + 16, 60 + 16, 64, 32);
                     rareImg.Dispose();
                 }
-                Image border = PicLoader.Read("Border", "questb1.PNG"); //边框
-                e.Graphics.DrawImage(border, 20, 60, 300, 300);
-                border.Dispose();
 
                 if (evtItem != null)
                     evtItem.Draw(e.Graphics);
