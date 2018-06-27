@@ -343,7 +343,7 @@ namespace TaleofMonsters.Forms
                         else
                             e.Graphics.DrawImage(bgCommon, 360, yoff, 400 - 20, 24);
 
-                        word.Draw(e.Graphics, 360+16, yoff, 400);
+                        word.Draw(e.Graphics, 360+10, yoff+3, 400);
                         id++;
                     }
                     bgTarget.Dispose();

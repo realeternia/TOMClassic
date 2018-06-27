@@ -37,7 +37,7 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
 
         public virtual void Draw(Graphics g, int xOff, int yOff, int width)
         {
-            Font font = new Font("宋体", 11 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            Font font = new Font("微软雅黑", 11 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             g.DrawString(Script, font, Brushes.Wheat, xOff + 10, yOff + 2);
             font.Dispose();
         }
