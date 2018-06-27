@@ -265,19 +265,15 @@ namespace TaleofMonsters.Forms
         {
             if (evtItem == null || evtItem.RunningState != TalkEventItem.TalkEventState.Running) //evtItem运行期间无法选择
             {
+                int val = -1;
                 if (e.Y > Height - 10 - answerList.Count * 30 && e.Y < Height - 10 && e.X > 360 && e.X < 360 + 400)
                 {
-                    int val = (e.Y - (Height - 10) + answerList.Count * 30) / 30;
-                    if (val != tar)
-                    {
-                        tar = val;
-                        Invalidate();
-                        return;
-                    }
+                    val = (e.Y - (Height - 10) + answerList.Count * 30) / 30;
                 }
-                else
+                if (val != tar)
                 {
-                    tar = -1;
+                    tar = val;
+                    Invalidate();
                 }
             }
         }

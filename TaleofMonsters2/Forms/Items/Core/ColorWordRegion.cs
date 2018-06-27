@@ -35,9 +35,9 @@ namespace TaleofMonsters.Forms.Items.Core
                 this.danceType = danceType;
             }
 
-            public bool LookSame(Color c, TextDanceTypes t)
+            public bool LookSame(Color c, TextDanceTypes t, int yOff)
             {
-                return fcolor == c && danceType == t;
+                return fcolor == c && danceType == t && yOff == y;
             }
             public void Addpend(string s, float wd)
             {
@@ -172,7 +172,7 @@ StringFormat.GenericTypographic); break;
                 }
                 else
                 {
-                    if (textList.Count == 0 || !textList[textList.Count - 1].LookSame(color, danceType))
+                    if (textList.Count == 0 || !textList[textList.Count - 1].LookSame(color, danceType, line * itemHeight + y))
                     {
                         textList.Add(new ColorTextCompt((int)linewid + 2 + x, line * itemHeight + y, textwid, itemHeight, schr, font, color, danceType));
                     }
