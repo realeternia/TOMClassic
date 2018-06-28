@@ -165,7 +165,7 @@ namespace TaleofMonsters.Forms
                     var evt = interactBlock.Children[0] as SceneQuestEvent;
                     if (evt.Type == "npc")
                         tar = -1; //为了修一个显示bug
-                    var region = new Rectangle(340, Height - 10 - 4*30 - 160, Width - 350, 160);
+                    var region = new Rectangle(340, Height - 10 - 3*30 - 150, Width - 350, 150);
                     evtItem = TalkEventItem.CreateEventItem(CellId, EventId, eventLevel, this, region, evt);
                     evtItem.Init();
                 }
@@ -339,7 +339,7 @@ namespace TaleofMonsters.Forms
                         else
                             e.Graphics.DrawImage(bgCommon, 360, yoff, 400 - 20, 24);
 
-                        word.Draw(e.Graphics, 360+10, yoff+3, 400);
+                        word.Draw(e.Graphics, 360+10, yoff, 400);
                         id++;
                     }
                     bgTarget.Dispose();

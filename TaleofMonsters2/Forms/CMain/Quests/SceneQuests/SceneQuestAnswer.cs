@@ -210,7 +210,7 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
                 }
             }
 
-            Font font = new Font("宋体", 11 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
+            Font font = new Font("微软雅黑", 11 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             g.DrawString(Script, font, Brushes.Wheat, textOff, yOff + 2);
             font.Dispose();
         }
