@@ -5,6 +5,7 @@ using TaleofMonsters.Controler.Battle;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Datas.Peoples;
+using TaleofMonsters.Datas.Scenes;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain.Blesses;
 using TaleofMonsters.Forms.CMain.Quests.SceneQuests;
@@ -35,6 +36,8 @@ namespace TaleofMonsters.Forms.CMain.Quests
             int enemyId = 0;
             if (config.EnemyName == "check")//特殊处理标记
                 enemyId = UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.SceneQuestRandPeopleId);
+            else if (config.EnemyName == "fight")//特殊处理标记
+                enemyId = SceneBook.GetRandomEnemy(UserProfile.InfoBasic.MapId);
             else
                 enemyId = PeopleBook.GetPeopleId(config.EnemyName);
             int fightLevel = Math.Max(1, level + hardness + BlessManager.FightLevelChange);

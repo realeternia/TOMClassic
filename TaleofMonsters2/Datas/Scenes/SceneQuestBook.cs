@@ -128,8 +128,10 @@ namespace TaleofMonsters.Datas.Scenes
                 datas.Add(new RLIdValue { Id = 42000012, Value = 1 });
             if (config.QItemMushroom > 0 && MathTool.GetRandom(0d, 1) > config.QItemMushroom)//蘑菇
                 datas.Add(new RLIdValue { Id = 42000013, Value = 1 });
-            if (config.QItemWood > 0 && MathTool.GetRandom(0d, 1) > config.QItemWood)//蘑菇
+            if (config.QItemWood > 0 && MathTool.GetRandom(0d, 1) > config.QItemWood)//木材
                 datas.Add(new RLIdValue { Id = 42000014, Value = 1 });
+            if (config.QEnemy > 0) //普通敌人
+                datas.Add(new RLIdValue {Id = 42000015, Value = config.QEnemy});
 
             if (!string.IsNullOrEmpty(config.Quest))
             {
@@ -185,6 +187,8 @@ namespace TaleofMonsters.Datas.Scenes
                 questCount += (float)config.QItemMushroom;
             if (config.QItemWood > 0)//枯树
                 questCount += (float)config.QItemWood;
+            if (config.QEnemy > 0)//敌人
+                questCount += (float)config.QEnemy;
 
             if (!string.IsNullOrEmpty(config.Quest))
             {

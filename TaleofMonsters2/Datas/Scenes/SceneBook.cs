@@ -14,6 +14,11 @@ namespace TaleofMonsters.Datas.Scenes
 {
     internal static class SceneBook
     {
+        public static int GetRandomEnemy(int sceneId)
+        {
+            var sceneConfig = ConfigData.GetSceneConfig(sceneId);
+            return sceneConfig.EnemyIds[MathTool.GetRandom(sceneConfig.EnemyIds.Length)];
+        }
         public static SceneInfo LoadSceneFile(int id, int mapWidth, int mapHeight, Random r)
         {
             var filePath = ConfigData.GetSceneConfig(id).TilePath;

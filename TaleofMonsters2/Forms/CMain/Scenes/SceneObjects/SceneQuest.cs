@@ -49,8 +49,12 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects
 
             if (Disabled && EventId == 0)
                 return;
-
-            Image markQuest = PicLoader.Read("Map", MapSetting ? "SymEvent.PNG": "SymQuest.PNG");
+            string iconName = MapSetting ? "SymEvent.PNG" : "SymQuest.PNG";
+            if (EventId == 42000015)//todo 需要一个更好的判定方式
+            {
+                iconName = "SymFight.PNG";
+            }
+            Image markQuest = PicLoader.Read("Map", iconName);
             int drawWidth = markQuest.Width * Width / GameConstants.SceneTileStandardWidth;
             int drawHeight = markQuest.Height * Height / GameConstants.SceneTileStandardHeight;
             var destRect = new Rectangle(X - drawWidth / 2 + Width / 8, Y - drawHeight / 2, drawWidth, drawHeight);
