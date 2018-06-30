@@ -268,7 +268,7 @@ namespace TaleofMonsters.Forms
                 int val = -1;
                 if (e.Y > Height - 10 - answerList.Count * 30 && e.Y < Height - 10 && e.X > 360 && e.X < 360 + 400)
                 {
-                    val = (e.Y - (Height - 10) + answerList.Count * 30) / 30;
+                    val = Math.Min(answerList.Count-1, (e.Y - (Height - 10) + answerList.Count * 30) / 30);
                 }
                 if (val != tar)
                 {
@@ -297,7 +297,7 @@ namespace TaleofMonsters.Forms
             if (showImage)
             {
                 Font font2 = new Font("黑体", 12 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-                e.Graphics.DrawString(string.Format("{0}(Lv{1})",config.Name, eventLevel), font2, Brushes.White, Width / 2 - 40, 8);
+                e.Graphics.DrawString(string.Format("{0}(Lv{1})({2})",config.Name, eventLevel, config.Script), font2, Brushes.White, Width / 2 - 40, 8);
                 font2.Dispose();
 
                 e.Graphics.DrawImage(SceneQuestBook.GetSceneQuestImage(config.Id), 20, 60, 300, 300);

@@ -217,18 +217,14 @@ namespace TaleofMonsters.Forms.CMain.Scenes
             foreach (var sceneObject in SceneInfo.Items)
                 sceneObject.OnTick();
 
+            ChessItem playerChecss = null;
             foreach (var chessItem in chessManager.ChessList)
             {
                 bool needUpdate;
                 if (chessItem.TimeGo(timePast, out needUpdate))
                 {
-                    var targetCell = SceneInfo.GetCell(chessItem.DestId);
                     if (chessItem.PeopleId == 0) // is player
-                    {
-                        MoveTo(targetCell.Id);
-                        TimelyCheck(targetCell);
-                        chessManager.OnChessPlayerMoved();
-                    }
+                        playerChecss = chessItem;
                //     parent.Invalidate();
                 }
                 if (needUpdate)
@@ -236,6 +232,14 @@ namespace TaleofMonsters.Forms.CMain.Scenes
                     var targetPos = chessItem.GetPosPredict();
                     parent.Invalidate(new Rectangle(targetPos.X - 200, targetPos.Y - 200, 400, 400));
                 }
+            }
+
+            if (playerChecss != null)
+            {
+                var targetCell = SceneInfo.GetCell(playerChecss.DestId);
+                MoveTo(targetCell.Id);
+                TimelyCheck(targetCell);
+                chessManager.OnChessPlayerMoved();
             }
 
             if (UserProfile.Profile != null)
