@@ -234,7 +234,11 @@ namespace TaleofMonsters
                     timeTick -= 1000;
                 if (page == 0)
                 {
-                    tabPageLogin.Invalidate();
+                    var logWid = tabPageLogin.Width / 4;
+                    var logHeight = tabPageLogin.Height / 5;
+                    var logX = (tabPageLogin.Width - logWid) / 2;
+                    var logY = (tabPageLogin.Height - logHeight) / 2 + Math.Sin((double)timeTick / 12) * 6;
+                    tabPageLogin.Invalidate(new Rectangle(logX, (int)logY - 6, logWid, logHeight + 12)); //logo区域
                 }
                 else if (page == 1)
                 {
@@ -273,15 +277,15 @@ namespace TaleofMonsters
 
         private void tabPageLogin_Paint(object sender, PaintEventArgs e)
         {
-            Brush b = new SolidBrush(Color.FromArgb(40+(int)(Math.Sin((double)timeTick/8)*20), Color.Black));
-            e.Graphics.FillRectangle(b, 0,0, tabPageLogin.Width, tabPageLogin.Height);
-            b.Dispose();
+            //Brush b = new SolidBrush(Color.FromArgb(40+(int)(Math.Sin((double)timeTick/8)*20), Color.Black));
+            //e.Graphics.FillRectangle(b, 0,0, tabPageLogin.Width, tabPageLogin.Height);
+            //b.Dispose();
 
             var logoImg = PicLoader.Read("System", "logo.PNG");
             var logWid = tabPageLogin.Width/4;
             var logHeight = tabPageLogin.Height / 5;
             var logX = (tabPageLogin.Width - logWid) /2;
-            var logY = (tabPageLogin.Height - logHeight) / 2 + Math.Sin((double)timeTick / 15)*6;
+            var logY = (tabPageLogin.Height - logHeight) / 2 + Math.Sin((double)timeTick / 12)*6;
             e.Graphics.DrawImage(logoImg, logX, (int)logY, logWid, logHeight);
             logoImg.Dispose();
 
