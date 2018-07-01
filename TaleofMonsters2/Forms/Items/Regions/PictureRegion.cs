@@ -206,7 +206,7 @@ namespace TaleofMonsters.Forms.Items.Regions
             else if (regionType == PictureRegionCellType.DungeonItem)
             {
                 var itemConfig = ConfigData.GetDungeonItemConfig(nid);
-                Image image = DrawTool.GetImageByString(itemConfig.Name, 100);
+                Image image = DrawTool.GetImageByString(itemConfig.Name + "$" + itemConfig.Des, 160);
                 tooltip.Show(image, form, x, y);
             }
         }
