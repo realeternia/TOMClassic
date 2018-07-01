@@ -49,19 +49,21 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects
 
             if (Disabled && EventId == 0)
                 return;
-            string iconName = MapSetting ? "SymEvent.PNG" : "SymQuest.PNG";
-            if (EventId == 42000015)//todo 需要一个更好的判定方式
+            string iconName = "SymQuest";
+            SceneQuestConfig config = null;
+            if (EventId > 0)
             {
-                iconName = "SymFight.PNG";
+                config = ConfigData.GetSceneQuestConfig(EventId);
+                if (config.MapIcon != "")
+                    iconName = config.MapIcon;
             }
-            Image markQuest = PicLoader.Read("Map", iconName);
+            Image markQuest = PicLoader.Read("Map", iconName + ".PNG");
             int drawWidth = markQuest.Width * Width / GameConstants.SceneTileStandardWidth;
             int drawHeight = markQuest.Height * Height / GameConstants.SceneTileStandardHeight;
             var destRect = new Rectangle(X - drawWidth / 2 + Width / 8, Y - drawHeight / 2, drawWidth, drawHeight);
             if (Disabled)
             {
                 g.DrawImage(markQuest, destRect, 0, 0, markQuest.Width, markQuest.Height, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
-                var config = ConfigData.GetSceneQuestConfig(EventId);
                 g.DrawImage(SceneQuestBook.GetSceneQuestImage(config.Id), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
             }
             else
@@ -69,8 +71,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects
                 g.DrawImage(markQuest, destRect, 0, 0, markQuest.Width, markQuest.Height, GraphicsUnit.Pixel);
                 if (EventId > 0)
                 {
-                    var config = ConfigData.GetSceneQuestConfig(EventId);
-                    if (MapSetting || config.Visible || HasFlag(ScenePosFlagType.Detected))
+                    if (MapSetting || HasFlag(ScenePosFlagType.Detected))
                     {
                         g.DrawImage(SceneQuestBook.GetSceneQuestImage(EventId), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel);
 
