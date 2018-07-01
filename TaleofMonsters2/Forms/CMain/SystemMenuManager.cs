@@ -191,6 +191,9 @@ namespace TaleofMonsters.Forms.CMain
                 case SystemMenuIds.StoryForm:
                     PanelManager.DealPanel(new StoryForm());
                     break;
+                case SystemMenuIds.BlackStoneForm:
+                    PanelManager.DealPanel(new BlackStoneForm());
+                    break;
             }
         }
 
@@ -242,6 +245,7 @@ namespace TaleofMonsters.Forms.CMain
         QuestionForm = 41,
         MinigameForm = 42,
         StoryForm = 43,
+        BlackStoneForm = 44,
         GameUpToNumber = 1100,
         GameIconsCatch = 1101,
         GameBattleRobot = 1102,

@@ -144,7 +144,7 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
             else if (parms[0] == "hasditem")
             {
                 var itemId = DungeonBook.GetDungeonItemId(config.NeedDungeonItemId);
-                Disabled = !UserProfile.InfoDungeon.HasDungeonItem(itemId, config.NeedDungeonItemCount);
+                Disabled = UserProfile.InfoDungeon.GetDungeonItemCount(itemId) < config.NeedDungeonItemCount;
             }
             else if (parms[0] == "hasdna")
             {

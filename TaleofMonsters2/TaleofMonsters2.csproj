@@ -179,6 +179,12 @@
     <Compile Include="Forms\ChangeAccountForm.Designer.cs">
       <DependentUpon>ChangeAccountForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\BlackStoneForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\BlackStoneForm.Designer.cs">
+      <DependentUpon>BlackStoneForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Items\Regions\VirtualRegionMoveMediator.cs" />
     <Compile Include="Forms\Pops\PopBuildUpgrade.cs">
       <SubType>UserControl</SubType>
@@ -812,6 +818,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChangeAccountForm.resx">
       <DependentUpon>ChangeAccountForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BlackStoneForm.resx">
+      <DependentUpon>BlackStoneForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DeckDungeonViewForm.resx">

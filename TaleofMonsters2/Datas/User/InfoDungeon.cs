@@ -245,17 +245,17 @@ namespace TaleofMonsters.Datas.User
             return 1;
         }
 
-        public bool HasDungeonItem(int itemId, int count)
+        public int GetDungeonItemCount(int itemId)
         {
             if (DungeonId <= 0)
-                return false;
+                return 0;
 
             foreach (var pickItem in Items)
             {
                 if (pickItem.Type == itemId)
-                    return pickItem.Value >= count;
+                    return pickItem.Value;
             }
-            return false;
+            return 0;
         }
 
         public void AddDungeonItem(int itemId, int count)

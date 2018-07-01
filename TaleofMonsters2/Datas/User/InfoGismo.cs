@@ -114,7 +114,7 @@ namespace TaleofMonsters.Datas.User
                         return;
 
                     if (!string.IsNullOrEmpty(gismoConfig.NeedDungeonItemId) 
-                        && UserProfile.InfoDungeon.HasDungeonItem(DungeonBook.GetDungeonItemId(gismoConfig.NeedDungeonItemId), gismoConfig.NeedDungeonItemCount))
+                        && UserProfile.InfoDungeon.GetDungeonItemCount(DungeonBook.GetDungeonItemId(gismoConfig.NeedDungeonItemId)) >= gismoConfig.NeedDungeonItemCount)
                         AddGismo(gismoId);
                 }
             }
