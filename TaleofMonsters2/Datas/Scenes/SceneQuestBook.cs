@@ -120,15 +120,15 @@ namespace TaleofMonsters.Datas.Scenes
                 datas.Add(new RLIdValue { Id = 42000006, Value = config.QAngel });
             if (config.QRes > 0)//期货
                 datas.Add(new RLIdValue { Id = 42000009, Value = config.QRes });
-            if (config.QItemDrug > 0 && MathTool.GetRandom(0d,1) > config.QItemDrug)//草药
+            if (config.QItemDrug > 0 && MathTool.GetRandom(0d,1) < config.QItemDrug)//草药
                 datas.Add(new RLIdValue { Id = 42000010, Value = 1 });
-            if (config.QItemFish > 0 && MathTool.GetRandom(0d, 1) > config.QItemFish)//鱼
+            if (config.QItemFish > 0 && MathTool.GetRandom(0d, 1) < config.QItemFish)//鱼
                 datas.Add(new RLIdValue { Id = 42000011, Value = 1 });
-            if (config.QItemOre > 0 && MathTool.GetRandom(0d, 1) > config.QItemOre)//矿石
+            if (config.QItemOre > 0 && MathTool.GetRandom(0d, 1) < config.QItemOre)//矿石
                 datas.Add(new RLIdValue { Id = 42000012, Value = 1 });
-            if (config.QItemMushroom > 0 && MathTool.GetRandom(0d, 1) > config.QItemMushroom)//蘑菇
+            if (config.QItemMushroom > 0 && MathTool.GetRandom(0d, 1) < config.QItemMushroom)//蘑菇
                 datas.Add(new RLIdValue { Id = 42000013, Value = 1 });
-            if (config.QItemWood > 0 && MathTool.GetRandom(0d, 1) > config.QItemWood)//木材
+            if (config.QItemWood > 0 && MathTool.GetRandom(0d, 1) < config.QItemWood)//木材
                 datas.Add(new RLIdValue { Id = 42000014, Value = 1 });
             if (config.QEnemy > 0) //普通敌人
                 datas.Add(new RLIdValue {Id = 42000015, Value = config.QEnemy});

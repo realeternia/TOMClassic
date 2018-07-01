@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using NarlonLib.Math;
+using TaleofMonsters.Core;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Scenes;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Datas.User.Db;
-using TaleofMonsters.Forms.CMain.Blesses;
+using TaleofMonsters.Forms.CMain.Scenes.SceneObjects;
 
 namespace TaleofMonsters.Forms.CMain.Scenes
 {
@@ -104,6 +105,8 @@ namespace TaleofMonsters.Forms.CMain.Scenes
                     specialData.Info = 0; //兜底一次，放置事件在副本内可以反复触发
                 mapMemorySpecialData[specialData.Id] = specialData;
 
+                if (MathTool.GetRandom(0d, 1) < GameConstants.SceneQuestHiddenIconRate) //隐藏一定比例的图标
+                    specialData.Flag |= (uint)SceneObject.ScenePosFlagType.SymHidden;
                 posList.Add(specialData);
             }
 

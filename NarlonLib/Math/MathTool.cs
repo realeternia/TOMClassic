@@ -47,7 +47,8 @@ namespace NarlonLib.Math
         {
             if (System.Math.Abs(max - min) < 0.001)
                 return min;
-            return r.NextDouble()*(max - min) + min;
+            var val = r.NextDouble()*(max - min) + min;
+            return val;
         }
 
         public static int GetSqrtMulti10(int value)

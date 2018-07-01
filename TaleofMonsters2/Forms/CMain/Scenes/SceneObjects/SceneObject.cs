@@ -13,6 +13,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects
         {
             Detected = 1, //可以看到所有格子
             Hidden = 1 << 1,  //显示的隐藏房间
+            SymHidden = 1 << 2,  //隐藏图标显示
         }
 
         public readonly int Id;

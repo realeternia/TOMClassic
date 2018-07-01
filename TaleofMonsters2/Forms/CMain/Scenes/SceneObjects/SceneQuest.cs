@@ -51,12 +51,13 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects
                 return;
             string iconName = "SymQuest";
             SceneQuestConfig config = null;
-            if (EventId > 0)
+            if (EventId > 0 && !HasFlag(ScenePosFlagType.SymHidden))
             {
                 config = ConfigData.GetSceneQuestConfig(EventId);
                 if (config.MapIcon != "")
                     iconName = config.MapIcon;
             }
+
             Image markQuest = PicLoader.Read("Map", iconName + ".PNG");
             int drawWidth = markQuest.Width * Width / GameConstants.SceneTileStandardWidth;
             int drawHeight = markQuest.Height * Height / GameConstants.SceneTileStandardHeight;
