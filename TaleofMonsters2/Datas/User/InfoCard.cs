@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using ConfigDatas;
 using NarlonLib.Tools;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
+using TaleofMonsters.Datas.Decks;
 using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Datas.User.Db;
 using TaleofMonsters.Forms.CMain;
@@ -146,17 +148,18 @@ namespace TaleofMonsters.Datas.User
             return card;
         }
 
-        public void SelectDungeonDeck(int deckId)
+        public void SelectDungeonDeck(int dungeonId)
         {
             DungeonDeck = new List<DbDeckCard>();
-            for (int i = 0; i < GameConstants.DeckCardCount; i++)
+            var myDeck = DeckBook.GetDeckByName(ConfigData.GetDungeonConfig(dungeonId).CardDeck, 1);
+            for (int i = 0; i < myDeck.Length; i++)
             {
-                int id = UserProfile.InfoCard.SelectedDeck.GetCardAt(i);
-                DungeonDeck.Add(UserProfile.InfoCard.GetDeckCardById(id));
+                var cardData = myDeck[i];
+                var myCard = GetDeckCardById(cardData.CardId);
+                if (myCard.Level > 0)
+                    cardData.Level = myCard.Level; //用自己的卡牌等级取代之
+                DungeonDeck.Add(new DbDeckCard {BaseId = cardData.CardId, Level = cardData.Level});
             }
-            ArraysUtils.RandomShuffle(DungeonDeck);//洗牌
-            var halfCount = DungeonDeck.Count/2;
-            DungeonDeck.RemoveRange(halfCount, halfCount); //随机丢弃一半的卡牌
         }
 
         public void AddDungeonCard(int cardId)
@@ -169,8 +172,10 @@ namespace TaleofMonsters.Datas.User
             {
                 BaseId = cardId,
                 Level = 1,
-                Exp = 99
             };
+            var myCard = GetDeckCardById(cardId);
+            if (myCard.Level > 0)
+                newCard.Level = myCard.Level; //用自己的卡牌等级取代之
             DungeonDeck.Add(newCard);
             var cardData = CardConfigManager.GetCardConfig(cardId);
             MainTipManager.AddTip(string.Format("|获得副本卡片-|{0}|{1}", HSTypes.I2QualityColor((int)cardData.Quality), cardData.Name), "White");

@@ -4,9 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus;
-using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
-using TaleofMonsters.Datas.Cards;
 using TaleofMonsters.Datas.Scenes;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain;
@@ -25,9 +23,6 @@ namespace TaleofMonsters.Forms
         private int gismoGet;
         private string title = "";
 
-        private NLPageSelector pageSelector;
-        private int selectPage = 0;
-
         public int DungeonId { get; set; }
 
         public DungeonForm()
@@ -42,10 +37,6 @@ namespace TaleofMonsters.Forms
             bitmapButtonC1.IconXY = new Point(4, 5);
             bitmapButtonC1.TextOffX = 8;
             DoubleBuffered = true;
-
-            pageSelector = new NLPageSelector(this, 150, 360, 180);
-            pageSelector.TotalPage = 9;
-            pageSelector.PageChange += new NLPageSelector.ChangePageEventHandler(pageSelector_PageChange);
         }
 
         public override void Init(int width, int height)
@@ -85,24 +76,7 @@ namespace TaleofMonsters.Forms
 
         private void bitmapButtonC1_Click(object sender, EventArgs e)
         {
-            var deck = UserProfile.InfoCard.Decks[selectPage];
-            if (deck.Count < GameConstants.DeckCardCount)
-            {
-                MessageBoxEx.Show("卡组内卡片数不足");
-                return;
-            }
-
-            foreach (var cardId in deck.CardIds)
-            {
-                var card = CardAssistant.GetCard(cardId);
-                if (card.JobId > 0 && card.JobId != UserProfile.InfoBasic.Job)
-                {
-                    MessageBoxEx.Show("部分卡牌职业不匹配");
-                    return;
-                }
-            }
-
-            UserProfile.InfoCard.SelectDungeonDeck(selectPage);
+            UserProfile.InfoCard.SelectDungeonDeck(DungeonId);
             Scene.Instance.EnterDungeon(DungeonId);
             Close();
         }
@@ -133,17 +107,9 @@ namespace TaleofMonsters.Forms
 
             font = new Font("黑体", 12 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
             e.Graphics.DrawString(string.Format("进度：{0}/{1}",gismoGet,gismoList.Count), font, Brushes.White, xOff + 200, yOff + 220);
-            var selectDeck = UserProfile.InfoCard.Decks[selectPage];
-            e.Graphics.DrawString(selectDeck.Name, font, Brushes.White, xOff + 15, yOff + 258);
             font.Dispose();
 
             vRegion.Draw(e.Graphics);
-        }
-
-        void pageSelector_PageChange(int pg)
-        {
-            selectPage = pg;
-            Invalidate();
         }
 
         private void bitmapButtonClose_Click(object sender, EventArgs e)

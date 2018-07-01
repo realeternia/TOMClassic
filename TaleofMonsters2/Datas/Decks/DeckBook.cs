@@ -4,7 +4,6 @@ using System.IO;
 using ConfigDatas;
 using NarlonLib.Core;
 using NarlonLib.Math;
-using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
 
@@ -45,7 +44,7 @@ namespace TaleofMonsters.Datas.Decks
                 MakeLoad(name, level);
 
             var deckTpCopy = deckCacheDict[name];
-            var cards = new DeckCard[30];
+            var cards = new DeckCard[deckTpCopy.Length];
             for (int i = 0; i < cards.Length; i++)
                 cards[i] = new DeckCard(deckTpCopy[i].CardId, deckTpCopy[i].Level, deckTpCopy[i].Exp);
 
@@ -105,7 +104,7 @@ namespace TaleofMonsters.Datas.Decks
             StreamReader sr = new StreamReader(DataLoader.Read("Deck", string.Format("{0}.txt", name)));
 
             int[] starCount = {0, 0, 0, 0, 0, 0, 0, 0}; //1-7
-            for (int i = 0; i < GameConstants.DeckCardCount; i++)
+            for (int i = 0; i < 99; i++)
             {
                 var line = sr.ReadLine();
                 if (line == null)

@@ -203,7 +203,7 @@ namespace TaleofMonsters.Forms.Items
                     mark.Dispose();
                 }
             }
-            else if (IsDungeonMode && card.Exp == 99) //特殊处理
+            else if (IsDungeonMode && UserProfile.InfoCard.GetCardCount(card.CardId) <= 0)
             {
                 Image mark = PicLoader.Read("System", "MarkDun.PNG");
                 g.DrawImage(mark, x + cardWidth - 33, y+1, 30, 30);
