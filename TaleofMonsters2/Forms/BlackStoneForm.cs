@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using ConfigDatas;
 using ControlPlus;
+using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas.Scenes;
 using TaleofMonsters.Datas.User;
@@ -51,8 +53,19 @@ namespace TaleofMonsters.Forms
 
         private void bitmapButtonC1_Click(object sender, EventArgs e)
         {
+            var stoneId = DungeonBook.GetDungeonItemId("diheiyao");
+            var itemCount = UserProfile.InfoDungeon.GetDungeonItemCount(stoneId);
+            if (itemCount <= 0)
+            {
+                AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.BagNotEnoughItems), "Red");
+                return;
+            }
 
-            AddFlowCenter("合成成功", "Lime");
+            var cards = new SelectDungeonCard2Form();
+            cards.Parent = this;
+            PanelManager.DealPanel(cards);
+
+            UserProfile.InfoDungeon.RemoveDungeonItem(stoneId, 1);
         }
 
         private void virtualRegion_RegionEntered(int id, int x, int y, int key)

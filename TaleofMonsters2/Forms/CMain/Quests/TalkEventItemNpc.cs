@@ -54,7 +54,7 @@ namespace TaleofMonsters.Forms.CMain.Quests
             }
             else if (evt.ParamList[0] == "cards")
             {
-                var cards = new SelectCardForm();
+                var cards = new SelectDungeonCardForm();
                 cards.SceneQuestId = config.Id;
                 PanelManager.DealPanel(cards);
             }

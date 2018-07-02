@@ -204,6 +204,12 @@
     <Compile Include="Forms\CastleForm.Designer.cs">
       <DependentUpon>CastleForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SelectDungeonCard2Form.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\SelectDungeonCard2Form.Designer.cs">
+      <DependentUpon>SelectDungeonCard2Form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\VBuilds\WealthForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -340,11 +346,11 @@
     <Compile Include="Forms\DailyCardForm.Designer.cs">
       <DependentUpon>DailyCardForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SelectCardForm.cs">
+    <Compile Include="Forms\SelectDungeonCardForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\SelectCardForm.Designer.cs">
-      <DependentUpon>SelectCardForm.cs</DependentUpon>
+    <Compile Include="Forms\SelectDungeonCardForm.Designer.cs">
+      <DependentUpon>SelectDungeonCardForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\PlayerHistoryForm.cs">
       <SubType>UserControl</SubType>
@@ -976,8 +982,12 @@
       <DependentUpon>PopBuyProduct.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SelectCardForm.resx">
-      <DependentUpon>SelectCardForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\SelectDungeonCard2Form.resx">
+      <DependentUpon>SelectDungeonCard2Form.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SelectDungeonCardForm.resx">
+      <DependentUpon>SelectDungeonCardForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RankForm.resx">

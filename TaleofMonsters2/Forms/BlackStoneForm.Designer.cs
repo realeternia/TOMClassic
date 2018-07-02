@@ -30,9 +30,9 @@ namespace TaleofMonsters.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.colorLabel1 = new ColorLabel();
-            this.bitmapButtonC1 = new BitmapButton();
-            this.bitmapButtonClose = new BitmapButton();
+            this.colorLabel1 = new ControlPlus.ColorLabel();
+            this.bitmapButtonC1 = new ControlPlus.BitmapButton();
+            this.bitmapButtonClose = new ControlPlus.BitmapButton();
             this.SuspendLayout();
             // 
             // colorLabel1
@@ -43,7 +43,8 @@ namespace TaleofMonsters.Forms
             this.colorLabel1.Name = "colorLabel1";
             this.colorLabel1.Size = new System.Drawing.Size(326, 61);
             this.colorLabel1.TabIndex = 37;
-            this.colorLabel1.Text = "|只要收集齐以下材料，就可以兑换一张指定的|#0033cc|卡牌||。每天0点，公式重置，当天内可以无限次兑换。|#ff0000|祝你顺利!";
+            this.colorLabel1.Text = "|通过副本战斗胜利可以获得|#ff6600|黑曜石||。可以使用|#ff6600|黑曜石||兑换副本中的临时卡牌，增强自己的实力。每次离开副本，|#ff6600|" +
+    "黑曜石||数量将被清零。";
             // 
             // bitmapButtonC1
             // 
@@ -61,6 +62,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonC1.Tag = "1";
             this.bitmapButtonC1.Text = "合成";
             this.bitmapButtonC1.TextOffX = 0;
+            this.bitmapButtonC1.TipText = null;
             this.bitmapButtonC1.UseVisualStyleBackColor = true;
             this.bitmapButtonC1.Click += new System.EventHandler(this.bitmapButtonC1_Click);
             // 
@@ -78,19 +80,23 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
             this.bitmapButtonClose.TabIndex = 39;
             this.bitmapButtonClose.TextOffX = 0;
+            this.bitmapButtonClose.TipText = null;
             this.bitmapButtonClose.UseVisualStyleBackColor = true;
             this.bitmapButtonClose.Click += new System.EventHandler(this.bitmapButtonClose_Click);
             // 
-            // DailyCardForm
+            // BlackStoneForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.bitmapButtonClose);
             this.Controls.Add(this.colorLabel1);
             this.Controls.Add(this.bitmapButtonC1);
-            this.Name = "DailyCardForm";
+            this.Name = "BlackStoneForm";
             this.Size = new System.Drawing.Size(350, 408);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.BlackStoneForm_Paint);
+            this.Controls.SetChildIndex(this.bitmapButtonC1, 0);
+            this.Controls.SetChildIndex(this.colorLabel1, 0);
+            this.Controls.SetChildIndex(this.bitmapButtonClose, 0);
             this.ResumeLayout(false);
 
         }

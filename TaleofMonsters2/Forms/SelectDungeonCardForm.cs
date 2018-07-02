@@ -13,14 +13,14 @@ using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Forms
 {
-    internal sealed partial class SelectCardForm : BasePanel
+    internal sealed partial class SelectDungeonCardForm : BasePanel
     {
         private NLSelectPanel selectPanel;
         private List<int> cardIdList;
         private int selectDeckIndex; //1,2,3
         public int SceneQuestId { get; set; }
 
-        public SelectCardForm()
+        public SelectDungeonCardForm()
         {
             InitializeComponent();
 

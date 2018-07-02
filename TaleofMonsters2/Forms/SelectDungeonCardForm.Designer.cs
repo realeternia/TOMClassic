@@ -2,7 +2,7 @@
 
 namespace TaleofMonsters.Forms
 {
-    sealed partial class SelectCardForm
+    sealed partial class SelectDungeonCardForm
     {
         /// <summary>
         /// 必需的设计器变量。
