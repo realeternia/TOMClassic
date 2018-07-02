@@ -346,12 +346,6 @@
     <Compile Include="Forms\DailyCardForm.Designer.cs">
       <DependentUpon>DailyCardForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SelectDungeonCardForm.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Forms\SelectDungeonCardForm.Designer.cs">
-      <DependentUpon>SelectDungeonCardForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\PlayerHistoryForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -984,10 +978,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SelectDungeonCard2Form.resx">
       <DependentUpon>SelectDungeonCard2Form.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SelectDungeonCardForm.resx">
-      <DependentUpon>SelectDungeonCardForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RankForm.resx">

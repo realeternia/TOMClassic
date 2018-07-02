@@ -11,6 +11,6 @@
 						edisable
 							s这里有一些远古的卡牌，似乎可以给你很大的帮助
 								a恩，很好
-									enpc|cards
+									ereward
 	a暂时没有时间折腾这个
 		end
