@@ -6,6 +6,7 @@ using TaleofMonsters.Controler.GM;
 using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain.Scenes;
+using TaleofMonsters.Forms.Items;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.MagicBook;
 
@@ -189,7 +190,10 @@ namespace TaleofMonsters.Forms.CMain
                     PanelManager.DealPanel(new MinigameForm());
                     break;
                 case SystemMenuIds.StoryForm:
-                    PanelManager.DealPanel(new StoryForm());
+                    var tp = new DungeonCardSelectViewForm();
+                    tp.Mode = DungeonCardItem.CardCopeMode.Upgrade;
+                    PanelManager.DealPanel(tp);
+                    //   PanelManager.DealPanel(new StoryForm());
                     break;
                 case SystemMenuIds.BlackStoneForm:
                     PanelManager.DealPanel(new BlackStoneForm());

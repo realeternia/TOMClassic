@@ -47,7 +47,7 @@ namespace TaleofMonsters.Forms.Items
         {
             vRegion = new VirtualRegion(parent);
             vRegion.AddRegion(new SubVirtualRegion(1, X + 12, Y + 14, 64, 84));
-            vRegion.AddRegion(new ButtonRegion(2, X + 55, Y + 102, 17, 17, "BuyIcon.PNG", "BuyIconOn.PNG"));
+            vRegion.AddRegion(new ButtonRegion(2, X + 55, Y + 102, 17, 17, "SBuyIcon.PNG", "SBuyIconOn.PNG"));
             vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
             vRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
