@@ -50,6 +50,10 @@ namespace NarlonLib.Math
             var val = r.NextDouble()*(max - min) + min;
             return val;
         }
+        public static bool IsRandomInRange01(float num)
+        {
+            return GetRandom(0f, 1f) < num;
+        }
 
         public static int GetSqrtMulti10(int value)
         {

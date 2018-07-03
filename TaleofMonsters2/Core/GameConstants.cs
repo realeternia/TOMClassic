@@ -7,7 +7,7 @@ namespace TaleofMonsters.Core
         public const int RoleNameLengthMin = 2;
         public const int RoleNameLengthMax = 6;
 
-        public const int CardMaxLevel = 99;
+        public const int CardMaxLevel = 19;
         public const int CardSlotMaxCount = 10;
         public const int DeckCardCount = 30;//一套牌有几张
         public const int CardLimit = 1;//同种卡牌拥有的上限

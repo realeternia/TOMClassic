@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ControlPlus;
+using NarlonLib.Core;
+using NarlonLib.Math;
+using TaleofMonsters.Core;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
@@ -18,7 +21,7 @@ namespace TaleofMonsters.Forms
     {
         private ImageToolTip tooltip = SystemToolTip.Instance;
         private VirtualRegion vRegion;
-        private List<int> cardIdList;
+        private List<NLPair<int, int>> cardIdList; //id,level
 
         public BasePanel Parent { get; set; }
 
@@ -63,15 +66,15 @@ namespace TaleofMonsters.Forms
         public override void Init(int width, int height)
         {
             base.Init(width, height);
-            cardIdList = new List<int>();
-            cardIdList.Add(CardConfigManager.GetRandomCard(0));
-            cardIdList.Add(CardConfigManager.GetRandomCard(0));
-            cardIdList.Add(CardConfigManager.GetRandomCard(0));
+            cardIdList = new List<NLPair<int, int>>();
+            for (int i = 0; i < 3; i++)
+                cardIdList.Add(new NLPair<int, int>(CardConfigManager.GetRandomCard(0),
+                    MathTool.IsRandomInRange01(0.2f) ? 2 : 0));
 
             vRegion = new VirtualRegion(this);
             for (int i = 0; i < 3; i++)
             {
-                vRegion.AddRegion(new PictureAnimRegion(10+i, 20, 40 + i * 100, 80, 80, PictureRegionCellType.Card, cardIdList[i]));
+                vRegion.AddRegion(new PictureAnimRegion(10+i, 20, 40 + i * 100, 80, 80, PictureRegionCellType.Card, cardIdList[i].Value1));
             }
         
             vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
@@ -107,30 +110,44 @@ namespace TaleofMonsters.Forms
 
             if(vRegion != null)
                 vRegion.Draw(e.Graphics);
+
+            Font fontTx = new Font("宋体", 11 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+            for (int i = 0; i < cardIdList.Count; i++)
+            {
+                var cardConfig = CardConfigManager.GetCardConfig(cardIdList[i].Value1);
+                var brush = new SolidBrush(Color.FromName(HSTypes.I2QualityColor((int)cardConfig.Quality)));
+                var lvStr = cardConfig.Name;
+                if (cardIdList[i].Value2 > 0)
+                    lvStr = string.Format("{0} Lv+{1}", cardConfig.Name, cardIdList[i].Value2);
+                e.Graphics.DrawString(lvStr, fontTx, brush, 117, 52 + 100*i);
+                brush.Dispose();
+            }
+            fontTx.Dispose();
         }
 
         private void bitmapButtonSelect_Click(object sender, EventArgs e)
         {
-            AddDCard(cardIdList[0]);
+            AddDCard(0);
             Close();
         }
 
-        private void AddDCard(int cardId)
+        private void AddDCard(int index)
         {
-            UserProfile.InfoCard.AddDungeonCard(cardId);
+            var cardId = cardIdList[index].Value1;
+            UserProfile.InfoCard.AddDungeonCard(cardId, cardIdList[index].Value2);
             if (Parent != null)
                 Parent.AddFlowCenter("获得卡牌", "Lime", CardAssistant.GetCardImage(cardId, 40, 40));
         }
 
         private void bitmapButtonSelect2_Click(object sender, EventArgs e)
         {
-            AddDCard(cardIdList[1]);
+            AddDCard(1);
             Close();
         }
 
         private void bitmapButtonSelect3_Click(object sender, EventArgs e)
         {
-            AddDCard(cardIdList[2]);
+            AddDCard(2);
             Close();
         }
 

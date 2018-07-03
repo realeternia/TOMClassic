@@ -341,7 +341,7 @@ namespace TaleofMonsters.Datas.User
 
             var storyConfig = ConfigData.GetDungeonStoryConfig(StoryId);
             if (storyConfig.CardId > 0)
-                UserProfile.InfoCard.AddDungeonCard(storyConfig.CardId);
+                UserProfile.InfoCard.AddDungeonCard(storyConfig.CardId, 0);
             if(!string.IsNullOrEmpty(storyConfig.BlessId))
                 BlessManager.AddBless(BlessBook.GetBlessByName(storyConfig.BlessId), 999);
         }

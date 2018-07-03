@@ -227,6 +227,7 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
             else if (word.Prefix.StartsWith("cantest")) icon = "oth1";
             else if (word.Prefix.StartsWith("bribe")) icon = "res5";
             else if (word.Prefix.StartsWith("fight")) icon = "abl1";
+            else if (word.Prefix.StartsWith("roll")) icon = "oth15";
             else if (word.Prefix.StartsWith("hasditem")) icon = "rac2";
             else if (word.Prefix.StartsWith("hasdna")) icon = "oth14";
             return icon;

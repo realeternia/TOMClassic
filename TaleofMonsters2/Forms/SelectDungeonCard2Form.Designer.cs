@@ -44,7 +44,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonSelect.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonSelect.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonSelect.ImageNormal = null;
-            this.bitmapButtonSelect.Location = new System.Drawing.Point(232, 62);
+            this.bitmapButtonSelect.Location = new System.Drawing.Point(232, 79);
             this.bitmapButtonSelect.Name = "bitmapButtonSelect";
             this.bitmapButtonSelect.NoUseDrawNine = false;
             this.bitmapButtonSelect.Size = new System.Drawing.Size(56, 30);
@@ -64,7 +64,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonSelect2.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonSelect2.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonSelect2.ImageNormal = null;
-            this.bitmapButtonSelect2.Location = new System.Drawing.Point(232, 162);
+            this.bitmapButtonSelect2.Location = new System.Drawing.Point(232, 179);
             this.bitmapButtonSelect2.Name = "bitmapButtonSelect2";
             this.bitmapButtonSelect2.NoUseDrawNine = false;
             this.bitmapButtonSelect2.Size = new System.Drawing.Size(56, 30);
@@ -84,7 +84,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonSelect3.IconSize = new System.Drawing.Size(0, 0);
             this.bitmapButtonSelect3.IconXY = new System.Drawing.Point(0, 0);
             this.bitmapButtonSelect3.ImageNormal = null;
-            this.bitmapButtonSelect3.Location = new System.Drawing.Point(232, 262);
+            this.bitmapButtonSelect3.Location = new System.Drawing.Point(232, 279);
             this.bitmapButtonSelect3.Name = "bitmapButtonSelect3";
             this.bitmapButtonSelect3.NoUseDrawNine = false;
             this.bitmapButtonSelect3.Size = new System.Drawing.Size(56, 30);

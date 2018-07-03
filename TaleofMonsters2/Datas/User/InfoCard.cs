@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Tools;
 using TaleofMonsters.Core;
@@ -162,7 +163,7 @@ namespace TaleofMonsters.Datas.User
             }
         }
 
-        public void AddDungeonCard(int cardId)
+        public void AddDungeonCard(int cardId, int levelDiffer)
         {
             if (DungeonDeck == null) //不在副本中，可能是空
                 return;
@@ -176,6 +177,8 @@ namespace TaleofMonsters.Datas.User
             var myCard = GetDeckCardById(cardId);
             if (myCard.Level > 0)
                 newCard.Level = myCard.Level; //用自己的卡牌等级取代之
+            if (levelDiffer > 0)
+                newCard.Level = (byte)Math.Min(newCard.Level + levelDiffer, GameConstants.CardMaxLevel);
             DungeonDeck.Add(newCard);
             var cardData = CardConfigManager.GetCardConfig(cardId);
             MainTipManager.AddTip(string.Format("|获得副本卡片-|{0}|{1}", HSTypes.I2QualityColor((int)cardData.Quality), cardData.Name), "White");
