@@ -2,4 +2,10 @@
 	a当然
 		s你感觉自己变得更强壮了。
 			a很好
-				ereward
+				ereward|str
+		s你感觉自己变得更强壮了。
+			a很好
+				ereward|agi
+		s你感觉自己变得更强壮了。
+			a很好
+				ereward|endu

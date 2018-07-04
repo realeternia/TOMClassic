@@ -43,7 +43,11 @@ namespace TaleofMonsters.Forms.CMain.Quests
             DoReward(ref index, "health", GetMulti() + BlessManager.RewardHealthMulti, RewardHealth);
             DoReward(ref index, "mental", GetMulti() + BlessManager.RewardMentalMulti, RewardMental);
             DoReward(ref index, "exp", GetMulti() + BlessManager.RewardExpMulti, RewardExp);
-            DoReward(ref index, "attr", 1, RewardAttr);
+            DoReward(ref index, "str", 1, RewardStr);
+            DoReward(ref index, "agi", 1, RewardAgi);
+            DoReward(ref index, "intl", 1, RewardIntl);
+            DoReward(ref index, "perc", 1, RewardPerc);
+            DoReward(ref index, "endu", 1, RewardEndu);
             DoReward(ref index, "rival", 1, RewardRival);
             DoReward(ref index, "bless", 1, RewardBless);
             DoReward(ref index, "item", 1, RewardItem);
@@ -297,48 +301,59 @@ namespace TaleofMonsters.Forms.CMain.Quests
             }
         }
 
-        private void RewardAttr(ref int index)
+        private void RewardStr(ref int index)
         {
             var strGet = config.RewardStr;
             if (strGet > 0 && UserProfile.InfoDungeon.Str >= 0)
             {
                 UserProfile.InfoDungeon.ChangeAttr(strGet, 0, 0, 0, 0);
-                var pictureRegion = ComplexRegion.GetResShowRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25),
-                                                                     60, ImageRegionCellType.Str, strGet);
+                var pictureRegion = ComplexRegion.GetResShowRegion(index, new Point(pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25),
+                    60, ImageRegionCellType.Str, strGet);
                 vRegion.AddRegion(pictureRegion);
                 index++;
             }
+        }
 
+        private void RewardAgi(ref int index)
+        {
             var agiGet = config.RewardAgi;
             if (agiGet > 0 && UserProfile.InfoDungeon.Agi >= 0)
             {
                 UserProfile.InfoDungeon.ChangeAttr(0, agiGet, 0, 0, 0);
-                var pictureRegion = ComplexRegion.GetResShowRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25),
-                                                                     60, ImageRegionCellType.Agi, agiGet);
+                var pictureRegion = ComplexRegion.GetResShowRegion(index, new Point(pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25),
+                    60, ImageRegionCellType.Agi, agiGet);
                 vRegion.AddRegion(pictureRegion);
                 index++;
             }
+        }
 
+        private void RewardIntl(ref int index)
+        {
             var intlGet = config.RewardIntl;
             if (intlGet > 0 && UserProfile.InfoDungeon.Intl >= 0)
             {
                 UserProfile.InfoDungeon.ChangeAttr(0, 0, intlGet, 0, 0);
-                var pictureRegion = ComplexRegion.GetResShowRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25),
-                                                                     60, ImageRegionCellType.Intl, intlGet);
+                var pictureRegion = ComplexRegion.GetResShowRegion(index, new Point(pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25),
+                    60, ImageRegionCellType.Intl, intlGet);
                 vRegion.AddRegion(pictureRegion);
                 index++;
             }
+        }
 
+        private void RewardPerc(ref int index)
+        {
             var percGet = config.RewardPerc;
             if (percGet > 0 && UserProfile.InfoDungeon.Perc >= 0)
             {
                 UserProfile.InfoDungeon.ChangeAttr(0, 0, 0, percGet, 0);
-                var pictureRegion = ComplexRegion.GetResShowRegion(index, new Point(pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25),
-                                                                     60, ImageRegionCellType.Perc, percGet);
+                var pictureRegion = ComplexRegion.GetResShowRegion(index, new Point(pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25),
+                    60, ImageRegionCellType.Perc, percGet);
                 vRegion.AddRegion(pictureRegion);
                 index++;
             }
-
+        }
+        private void RewardEndu(ref int index)
+        {
             var enduGet = config.RewardEndu;
             if (enduGet > 0 && UserProfile.InfoDungeon.Endu >= 0)
             {

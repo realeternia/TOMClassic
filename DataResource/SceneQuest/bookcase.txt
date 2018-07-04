@@ -2,4 +2,6 @@
 	a当然
 		s你感觉自己变得更有智慧了。
 			a很好
-				ereward
+				ereward|intl
+			a很好
+				ereward|perc
