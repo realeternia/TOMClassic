@@ -41,10 +41,13 @@ namespace TaleofMonsters.Forms.CMain.Quests
         private void DoTrade()
         {
             int multi = int.Parse(evt.ParamList[0]);
+            string type = "all";
+            if (evt.ParamList.Count >= 2)
+                type = evt.ParamList[1];
             double multiNeed = multi * MathTool.Clamp(1 + BlessManager.TradeNeedRate, 0.2f, 5);
             double multiGet = multi * MathTool.Clamp(1 + BlessManager.TradeAddRate, 0.2f, 5);
             int index = 1;
-            if (config.TradeGold > 0)
+            if (config.TradeGold > 0 && (type == "all" || type == "gold"))
             {
                 var goldGet = GameResourceBook.InGoldSceneQuest(level, (int)(config.TradeGold * multiGet), true);
                 if (goldGet > 0)
@@ -66,7 +69,7 @@ namespace TaleofMonsters.Forms.CMain.Quests
                     index++;
                 }
             }
-            if (config.TradeFood > 0)
+            if (config.TradeFood > 0 && (type == "all" || type == "food"))
             {
                 var foodGet = Math.Min(100, GameResourceBook.InFoodSceneQuest((int)(config.TradeFood * multiGet), true));
                 if (foodGet > 0)
@@ -88,7 +91,7 @@ namespace TaleofMonsters.Forms.CMain.Quests
                     index++;
                 }
             }
-            if (config.TradeHealth > 0)
+            if (config.TradeHealth > 0 && (type == "all" || type == "health"))
             {
                 var healthGet = Math.Min(100, GameResourceBook.InHealthSceneQuest((int)(config.TradeHealth * multiGet), true));
                 if (healthGet > 0)
@@ -110,7 +113,7 @@ namespace TaleofMonsters.Forms.CMain.Quests
                     index++;
                 }
             }
-            if (config.TradeMental > 0)
+            if (config.TradeMental > 0 && (type == "all" || type == "mental"))
             {
                 var mentalGet = Math.Min(100, GameResourceBook.InMentalSceneQuest((int)(config.TradeMental * multiGet), true));
                 if (mentalGet > 0)

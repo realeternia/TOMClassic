@@ -112,8 +112,6 @@ namespace TaleofMonsters.Datas.Scenes
                 datas.Add(new RLIdValue { Id = 42000003, Value = config.QCardChange });
             if (config.QPiece > 0)//素材商人
                 datas.Add(new RLIdValue { Id = 42000004, Value = config.QPiece });
-            if (config.QMerchant > 0)//商人
-                datas.Add(new RLIdValue { Id = 42000007, Value = config.QMerchant });
             if (config.QDoctor > 0)//医生
                 datas.Add(new RLIdValue { Id = 42000005, Value = config.QDoctor });
             if (config.QAngel > 0)//天使
@@ -169,8 +167,6 @@ namespace TaleofMonsters.Datas.Scenes
                 questCount += config.QCardChange;
             if (config.QPiece > 0)//素材商人
                 questCount += config.QPiece;
-            if (config.QMerchant > 0)//商人
-                questCount += config.QMerchant;
             if (config.QDoctor > 0)//医生
                 questCount += config.QDoctor;
             if (config.QAngel > 0)//天使

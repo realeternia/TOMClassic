@@ -54,8 +54,6 @@ namespace TaleofMonsters.Forms
             show = true;
 
             InstallDeckCard();
-
-            SetBgm("TOM003.mp3");
         }
 
         public override void OnFrame(int tick, float timePass)
