@@ -65,6 +65,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects
             if (Disabled)
             {
                 g.DrawImage(markQuest, destRect, 0, 0, markQuest.Width, markQuest.Height, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
+                if(config != null)
                 g.DrawImage(SceneQuestBook.GetSceneQuestImage(config.Id), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
             }
             else
@@ -76,10 +77,13 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects
                     {
                         g.DrawImage(SceneQuestBook.GetSceneQuestImage(EventId), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel);
 
-                        Font font = new Font("宋体", 11 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-                        g.DrawString(config.Name, font, Brushes.Black, X - drawWidth / 2 + Width / 8 + 2, Y - drawHeight / 2 + 1);
-                        g.DrawString(config.Name, font, Brushes.Wheat, X - drawWidth / 2 + Width / 8, Y - drawHeight / 2);
-                        font.Dispose();
+                        if (config != null)
+                        {
+                            Font font = new Font("宋体", 11*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+                            g.DrawString(config.Name, font, Brushes.Black, X - drawWidth/2 + Width/8 + 2, Y - drawHeight/2 + 1);
+                            g.DrawString(config.Name, font, Brushes.Wheat, X - drawWidth/2 + Width/8, Y - drawHeight/2);
+                            font.Dispose();
+                        }
                     }
                 }
             }

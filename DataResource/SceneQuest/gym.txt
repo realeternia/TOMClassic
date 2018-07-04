@@ -1,11 +1,7 @@
-﻿s你来到了一间放置着很多健身器材的房间，是否锻炼一下。
-	a当然
-		s你感觉自己变得更强壮了。
-			a很好
-				ereward|str
-		s你感觉自己变得更强壮了。
-			a很好
-				ereward|agi
-		s你感觉自己变得更强壮了。
-			a很好
-				ereward|endu
+﻿s你来到了一间放置着很多健身器材的房间，是否锻炼一下。$red|杠铃||可以提升力量$lime|沙袋||可以提升敏捷$yellow|跑步||可以提升耐力。
+	a练习杠铃
+		ereward|str
+	a练习沙袋
+		ereward|agi
+	a练习跑步
+		ereward|endu
