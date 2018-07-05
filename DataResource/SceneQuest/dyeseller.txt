@@ -1,5 +1,5 @@
 ﻿s来看看，我这里有各种染料哦
-	a|shop|我来看看
+	a我来看看
 		enpc|shop
 	a不需要
 		end

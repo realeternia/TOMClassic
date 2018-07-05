@@ -192,20 +192,32 @@ namespace TaleofMonsters.Forms
                     continue;
                 answerList.Add(sceneQuestBlock);
 
-                if (sceneQuestBlock.Children != null && sceneQuestBlock.Children[0].Script.StartsWith("fight"))
+                if (sceneQuestBlock.Children != null)
                 {
-                    sceneQuestBlock.Prefix = "fight";
-                    if (config.CanBribe)//判断战斗贿赂
+                    var childScript = sceneQuestBlock.Children[0].Script;
+                    if (childScript.StartsWith("fight") && string.IsNullOrEmpty(sceneQuestBlock.Prefix)) //如果是战斗
                     {
-                        int fightLevel = Math.Max(1, eventLevel + BlessManager.FightLevelChange);
-                        var cost = GameResourceBook.OutCarbuncleBribe(UserProfile.InfoBasic.Level, fightLevel);
-                        if (UserProfile.InfoBag.HasResource(GameResourceType.Carbuncle, cost))
+                        sceneQuestBlock.Prefix = "fight";
+                        if (config.CanBribe)//判断战斗贿赂
                         {
-                            var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockbribe");
-                            questBlock.Prefix = "bribe";
-                            questBlock.Children[0].Children[0].Children[0] = sceneQuestBlock.Children[0].Children[1].Children[0].Children[0];//找到成功的结果
-                            answerList.Add(questBlock);
+                            int fightLevel = Math.Max(1, eventLevel + BlessManager.FightLevelChange);
+                            var cost = GameResourceBook.OutCarbuncleBribe(UserProfile.InfoBasic.Level, fightLevel);
+                            if (UserProfile.InfoBag.HasResource(GameResourceType.Carbuncle, cost))
+                            {
+                                var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockbribe");
+                                questBlock.Prefix = "bribe";
+                                questBlock.Children[0].Children[0].Children[0] = sceneQuestBlock.Children[0].Children[1].Children[0].Children[0];//找到成功的结果
+                                answerList.Add(questBlock);
+                            }
                         }
+                    }
+                    else if (childScript.StartsWith("roll") && string.IsNullOrEmpty(sceneQuestBlock.Prefix))
+                    {
+                        sceneQuestBlock.Prefix = "roll";
+                    }
+                    else if (childScript.StartsWith("npc") && string.IsNullOrEmpty(sceneQuestBlock.Prefix))
+                    {
+                        sceneQuestBlock.Prefix = "npc";
                     }
                 }
 

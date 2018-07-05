@@ -224,15 +224,18 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
             if (word.Prefix.StartsWith("questfin")) icon = "npc3";
             else if (word.Prefix.StartsWith("quest")) icon = "npc1";
             else if (word.Prefix.StartsWith("rival")) icon = "tsk1";
-            else if (word.Prefix.StartsWith("shop")) icon = "oth7";
+            else if (word.Prefix.StartsWith("npc")) icon = "abl5";
             else if (word.Prefix.StartsWith("addon")) icon = "tsk5";
-            else if (word.Prefix.StartsWith("cantrade")) icon = "tsk3";
             else if (word.Prefix.StartsWith("cantest")) icon = "oth1";
             else if (word.Prefix.StartsWith("bribe")) icon = "res5";
             else if (word.Prefix.StartsWith("fight")) icon = "abl1";
             else if (word.Prefix.StartsWith("roll")) icon = "oth15";
             else if (word.Prefix.StartsWith("hasditem")) icon = "rac2";
             else if (word.Prefix.StartsWith("hasdna")) icon = "oth14";
+            else if (word.Prefix.EndsWith("food")) icon = "oth7";
+            else if (word.Prefix.EndsWith("health")) icon = "buf0";
+            else if (word.Prefix.EndsWith("mental")) icon = "buf1";
+            else if (word.Prefix.StartsWith("cantrade")) icon = "tsk3";
             return icon;
         }
     }
