@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Forms.CMain.Quests.SceneQuests;
+using TaleofMonsters.Forms.Items;
 
 namespace TaleofMonsters.Forms.CMain.Quests
 {
@@ -48,9 +49,21 @@ namespace TaleofMonsters.Forms.CMain.Quests
             }
             else if (evt.ParamList[0] == "dungeon")
             {
-                var dungeon = new DungeonForm();
-                dungeon.DungeonId = config.DungeonId;
-                PanelManager.DealPanel(dungeon);
+                var dungeonForm = new DungeonForm();
+                dungeonForm.DungeonId = config.DungeonId;
+                PanelManager.DealPanel(dungeonForm);
+            }
+            else if (evt.ParamList[0] == "dcardremove")
+            {
+                var dungeonForm = new DungeonCardSelectViewForm();
+                dungeonForm.Mode = DungeonCardItem.CardCopeMode.Remove;
+                PanelManager.DealPanel(dungeonForm);
+            }
+            else if (evt.ParamList[0] == "dcardup")
+            {
+                var dungeonForm = new DungeonCardSelectViewForm();
+                dungeonForm.Mode = DungeonCardItem.CardCopeMode.Upgrade;
+                PanelManager.DealPanel(dungeonForm);
             }
 
             inited = true;

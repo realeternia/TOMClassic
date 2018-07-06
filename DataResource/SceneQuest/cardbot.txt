@@ -1,0 +1,5 @@
+﻿s|你需要帮助吗。我可以帮你打造出|red.shk|最强||的卡组。我可以帮助你|lime|移除||一张较弱卡牌，或者|yellow|升级||一张卡牌。
+	a移除一张卡牌
+		enpc|dcardremove
+	a升级一张卡牌
+		enpc|dcardup
