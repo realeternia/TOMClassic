@@ -59,7 +59,7 @@ namespace TaleofMonsters.Forms
             this.DoubleBuffered = true;
             this.Name = "DungeonCardSelectViewForm";
             this.Size = new System.Drawing.Size(533, 475);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.CardShopViewForm_Paint);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.DungeonCardSelectViewForm_Paint);
             this.Controls.SetChildIndex(this.bitmapButtonClose, 0);
             this.ResumeLayout(false);
 

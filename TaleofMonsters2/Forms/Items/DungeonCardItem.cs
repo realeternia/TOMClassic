@@ -88,29 +88,7 @@ namespace TaleofMonsters.Forms.Items
         {
             if (info == 2 && card.BaseId > 0)
             {
-                if (Mode == CardCopeMode.Remove)
-                {
-                    foreach (var pickCard in UserProfile.InfoCard.DungeonDeck)
-                    {
-                        if (card.BaseId == pickCard.BaseId && card.Level == pickCard.Level)
-                        {
-                            UserProfile.InfoCard.DungeonDeck.Remove(card);
-                            break;
-                        }
-                    }
-                }
-                else if (Mode == CardCopeMode.Upgrade)
-                {
-                    foreach (var pickCard in UserProfile.InfoCard.DungeonDeck)
-                    {
-                        if (card.BaseId == pickCard.BaseId && card.Level == pickCard.Level)
-                        {
-                            card.Level = (byte)Math.Min(card.Level + 2, GameConstants.CardMaxLevel);
-                            break;
-                        }
-                    }
-                }
-                parent.Close();
+                (parent as DungeonCardSelectViewForm).OnSelect(card);
             }
         }
         

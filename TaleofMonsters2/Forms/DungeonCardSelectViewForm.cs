@@ -1,14 +1,20 @@
 ﻿using System;
+using System.Collections;
 using System.Drawing;
 using System.Windows.Forms;
 using ControlPlus;
+using NarlonLib.Core;
+using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
+using TaleofMonsters.Datas.Effects;
+using TaleofMonsters.Datas.Effects.Facts;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Datas.User.Db;
 using TaleofMonsters.Forms.Items;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Forms.Items.Regions;
 using TaleofMonsters.Forms.Items.Regions.Decorators;
+using TaleofMonsters.Rpc;
 
 namespace TaleofMonsters.Forms
 {
@@ -21,6 +27,8 @@ namespace TaleofMonsters.Forms
 
         private VirtualRegion vRegion;
         public DungeonCardItem.CardCopeMode Mode { get; set; }
+        private VirtualRegionMoveMediator moveMediator;
+        private int cardDealCount = 1;
 
         public DungeonCardSelectViewForm()
         {
@@ -35,7 +43,9 @@ namespace TaleofMonsters.Forms
                 subRegion.AddDecorator(new RegionTextDecorator(8, 7, 9, Color.White, false, "卡牌"));
                 vRegion.AddRegion(subRegion);
             }
-
+            vRegion.AddRegion(new PictureRegion(10, (Width-120)/2, (Height-120)/2,120,120, PictureRegionCellType.Card, 0));
+            vRegion.SetRegionVisible(10, false);
+            moveMediator = new VirtualRegionMoveMediator(vRegion);
             itemBox = new CellItemBox(12, 62, 85 * 6, 125 * 3);
         }
 
@@ -61,6 +71,13 @@ namespace TaleofMonsters.Forms
             Invalidate();
         }
 
+        protected override void BasePanelMessageWork(int token)
+        {
+            vRegion.SetRegionVisible(10, false); //通过线程安全方式调用
+            canClose = true;
+            Close();
+        }
+
         private void ChangeShop()
         {
             page = 0;
@@ -81,7 +98,7 @@ namespace TaleofMonsters.Forms
             itemBox.OnFrame();
         }
 
-        private void CardShopViewForm_Paint(object sender, PaintEventArgs e)
+        private void DungeonCardSelectViewForm_Paint(object sender, PaintEventArgs e)
         {
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
@@ -93,15 +110,84 @@ namespace TaleofMonsters.Forms
                 headName = "选择升级一张卡片";
             e.Graphics.DrawString(headName, font, Brushes.White, Width / 2 - 60, 8);
             font.Dispose();
-
-            vRegion.Draw(e.Graphics);
+            
             itemBox.Draw(e.Graphics);
+            vRegion.Draw(e.Graphics);
         }
 
         private void nlPageSelector1_PageChange(int pg)
         {
             page = pg;
             RefreshInfo();
+        }
+
+        public void OnSelect(DbDeckCard card)
+        {
+            if(cardDealCount <= 0)
+                return;
+            cardDealCount--;
+
+            if (Mode == DungeonCardItem.CardCopeMode.Remove)
+            {
+                foreach (var pickCard in UserProfile.InfoCard.DungeonDeck)
+                {
+                    if (card.BaseId == pickCard.BaseId && card.Level == pickCard.Level)
+                    {
+                        UserProfile.InfoCard.DungeonDeck.Remove(card);
+                        break;
+                    }
+                }
+            }
+            else if (Mode == DungeonCardItem.CardCopeMode.Upgrade)
+            {
+                foreach (var pickCard in UserProfile.InfoCard.DungeonDeck)
+                {
+                    if (card.BaseId == pickCard.BaseId && card.Level == pickCard.Level)
+                    {
+                        card.Level = (byte)Math.Min(card.Level + 2, GameConstants.CardMaxLevel);
+                        break;
+                    }
+                }
+            }
+
+            vRegion.SetRegionKey(10, card.BaseId);
+            vRegion.SetRegionVisible(10, true);
+          
+            canClose = false;
+
+            if (Mode == DungeonCardItem.CardCopeMode.Upgrade)
+            {
+                TalePlayer.Start(DelayUp());
+            }
+            else
+            {
+                moveMediator.FireFadeOut(10);
+                TalePlayer.Start(DelayHide());
+            }
+            Invalidate(); //为了让卡牌显示出来
+        }
+        private IEnumerator DelayUp()
+        {
+            AddEffect(20, 20);
+            yield return new NLWaitForSeconds(0.2f);
+            AddEffect(50, 0);
+            yield return new NLWaitForSeconds(0.3f);
+            AddEffect(0, 30);
+            yield return new NLWaitForSeconds(1.2f);
+            BasePanelMessageSafe(1);
+        }
+
+        private IEnumerator DelayHide()
+        {
+            yield return new NLWaitForSeconds(1.7f);
+            BasePanelMessageSafe(1);
+        }
+
+        private void AddEffect(int x, int y)
+        {
+            var effect = new StaticUIEffect(EffectBook.GetEffect("yellowsplash"), new Point(x + (Width - 120) / 2, y + (Height - 120) / 2), new Size(80, 80));
+            effect.Repeat = false;
+            AddEffect(effect);
         }
 
         public override void OnRemove()

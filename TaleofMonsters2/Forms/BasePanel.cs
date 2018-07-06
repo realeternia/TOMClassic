@@ -53,6 +53,7 @@ namespace TaleofMonsters.Forms
 
         private List<FlowData> flows;
         private List<StaticUIEffect> coverEffectList; //动态特效
+        protected bool canClose = true;
 
         public BasePanel()
         {
@@ -132,7 +133,8 @@ namespace TaleofMonsters.Forms
 
         public void Close()
         {
-            PanelManager.RemovePanel(this);
+            if (canClose)
+                PanelManager.RemovePanel(this);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
