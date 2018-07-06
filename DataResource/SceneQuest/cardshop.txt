@@ -1,0 +1,3 @@
+﻿s|我这里有许多卡牌，他们非常|blue.upu|稀有||而且|red.shk|强大无比||，价格也十分公道。
+	a查看详情
+		enpc|dcardshop

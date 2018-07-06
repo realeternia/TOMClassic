@@ -43,7 +43,7 @@ namespace TaleofMonsters.Forms
                 subRegion.AddDecorator(new RegionTextDecorator(8, 7, 9, Color.White, false, "卡牌"));
                 vRegion.AddRegion(subRegion);
             }
-            vRegion.AddRegion(new PictureRegion(10, (Width-120)/2, (Height-120)/2,120,120, PictureRegionCellType.Card, 0));
+            vRegion.AddRegion(new PictureRegion(10, (Width-160)/2, (Height-160)/2,160,160, PictureRegionCellType.Card, 0));
             vRegion.SetRegionVisible(10, false);
             moveMediator = new VirtualRegionMoveMediator(vRegion);
             itemBox = new CellItemBox(12, 62, 85 * 6, 125 * 3);
@@ -110,8 +110,14 @@ namespace TaleofMonsters.Forms
                 headName = "选择升级一张卡片";
             e.Graphics.DrawString(headName, font, Brushes.White, Width / 2 - 60, 8);
             font.Dispose();
-            
+
             itemBox.Draw(e.Graphics);
+            if (!canClose)
+            {
+                var brush = new SolidBrush(Color.FromArgb(150, Color.Black));
+                e.Graphics.FillRectangle(brush, 0, 0, Width, Height);
+                brush.Dispose();
+            }
             vRegion.Draw(e.Graphics);
         }
 
@@ -166,26 +172,28 @@ namespace TaleofMonsters.Forms
             }
             Invalidate(); //为了让卡牌显示出来
         }
+
         private IEnumerator DelayUp()
         {
-            AddEffect(20, 20);
+            AddEffect("yellowsplash",20, 20);
             yield return new NLWaitForSeconds(0.2f);
-            AddEffect(50, 0);
+            AddEffect("yellowsplash", 60, 0);
             yield return new NLWaitForSeconds(0.3f);
-            AddEffect(0, 30);
+            AddEffect("yellowsplash", 0, 30);
             yield return new NLWaitForSeconds(1.2f);
             BasePanelMessageSafe(1);
         }
 
         private IEnumerator DelayHide()
         {
+            AddEffect("hit1", 20, 20);
             yield return new NLWaitForSeconds(1.7f);
             BasePanelMessageSafe(1);
         }
 
-        private void AddEffect(int x, int y)
+        private void AddEffect(string eName, int x, int y)
         {
-            var effect = new StaticUIEffect(EffectBook.GetEffect("yellowsplash"), new Point(x + (Width - 120) / 2, y + (Height - 120) / 2), new Size(80, 80));
+            var effect = new StaticUIEffect(EffectBook.GetEffect(eName), new Point(x + (Width - 160) / 2, y + (Height - 160) / 2), new Size(100, 100));
             effect.Repeat = false;
             AddEffect(effect);
         }

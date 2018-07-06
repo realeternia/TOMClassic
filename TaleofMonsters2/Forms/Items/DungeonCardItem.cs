@@ -7,7 +7,6 @@ using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Cards;
-using TaleofMonsters.Datas.User;
 using TaleofMonsters.Datas.User.Db;
 using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items.Regions;
@@ -39,7 +38,7 @@ namespace TaleofMonsters.Forms.Items
         public DungeonCardItem(BasePanel prt)
         {
             parent = prt;
-            backImg = PicLoader.Read("System", "CardBack2.JPG");
+            backImg = PicLoader.Read("System", "CardBack3.JPG");
         }
 
         public void Init(int idx)

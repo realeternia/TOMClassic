@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Forms.CMain.Quests.SceneQuests;
 using TaleofMonsters.Forms.Items;
 
@@ -63,6 +62,11 @@ namespace TaleofMonsters.Forms.CMain.Quests
             {
                 var dungeonForm = new DungeonCardSelectViewForm();
                 dungeonForm.Mode = DungeonCardItem.CardCopeMode.Upgrade;
+                PanelManager.DealPanel(dungeonForm);
+            }
+            else if (evt.ParamList[0] == "dcardshop")
+            {
+                var dungeonForm = new CardShopDungeonViewForm();
                 PanelManager.DealPanel(dungeonForm);
             }
 

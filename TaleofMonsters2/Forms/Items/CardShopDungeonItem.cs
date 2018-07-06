@@ -9,9 +9,6 @@ using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Cards;
-using TaleofMonsters.Datas.Cards.Monsters;
-using TaleofMonsters.Datas.Effects;
-using TaleofMonsters.Datas.Effects.Facts;
 using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Datas.User.Db;
@@ -20,7 +17,7 @@ using TaleofMonsters.Forms.Items.Regions;
 
 namespace TaleofMonsters.Forms.Items
 {
-    internal class CardShopItem : ICellItem
+    internal class CardShopDungeonItem : ICellItem
     {
         public int X { get; set; }
         public int Y { get; set; }
@@ -33,14 +30,12 @@ namespace TaleofMonsters.Forms.Items
         private VirtualRegion vRegion;
 
         private BasePanel parent;
-        private StaticUIEffect coverEffect;
         private Image backImg;
-        private int renderIndex = 0;
 
-        public CardShopItem(BasePanel prt)
+        public CardShopDungeonItem(BasePanel prt)
         {
             parent = prt;
-            backImg = PicLoader.Read("System", "CardBack2.JPG");
+            backImg = PicLoader.Read("System", "CardBack3.JPG");
         }
 
         public void Init(int idx)
@@ -61,50 +56,11 @@ namespace TaleofMonsters.Forms.Items
             if (product.Id != 0)
                 vRegion.SetRegionKey(1, product.Cid);
 
-            string effectName = "";
-            var card =  CardAssistant.GetCard(product.Cid);
-            if (card.GetCardType() == CardTypes.Monster)
-            {
-                MonsterConfig monsterConfig = ConfigData.GetMonsterConfig(product.Cid);
-                foreach (var skill in MonsterBook.GetSkillList(monsterConfig.Id))
-                {
-                    int skillId = skill.Id;
-                    SkillConfig skillConfig = ConfigData.GetSkillConfig(skillId);
-                    if (skillConfig.Cover != null)
-                        effectName = skillConfig.Cover;
-                }
-                if (monsterConfig.Cover != "")
-                    effectName = monsterConfig.Cover;
-            }
-
-            string nowEffectName = "";
-            if (coverEffect != null)
-                nowEffectName = coverEffect.Name;
-
-            if (effectName != nowEffectName)
-            {
-                if (effectName == "")
-                {
-                    coverEffect = null;
-                }
-                else
-                {
-                    coverEffect = new StaticUIEffect(EffectBook.GetEffect(effectName), new Point(X + 12, Y + 14), new Size(64, 84));
-                    coverEffect.Repeat = true;
-                }
-            }
-
             parent.Invalidate(new Rectangle(X + 12, Y + 14, 64, 84));
         }
         
         public void OnFrame()
         {
-            if (coverEffect != null)
-            {
-                renderIndex++;
-                if (coverEffect.Next() & (renderIndex % 3) == 0) //降频，降低cpu开销
-                    parent.Invalidate(new Rectangle(X + 12, Y + 14, 64, 84));
-            }
         }
 
         private void virtualRegion_RegionEntered(int info, int mx, int my, int key)
@@ -129,7 +85,7 @@ namespace TaleofMonsters.Forms.Items
                 if (UserProfile.InfoBag.CheckResource(res.ToArray()))
                 {
                     UserProfile.InfoBag.SubResource(res.ToArray());
-                    (parent as CardShopViewForm).OnSelect(product);
+                    (parent as CardShopDungeonViewForm).OnSelect(product);
                 }
                 else
                 {
@@ -143,23 +99,14 @@ namespace TaleofMonsters.Forms.Items
             var cardData = CardConfigManager.GetCardConfig(product.Cid);
 
             GameResource res = new GameResource();
-            res.Gold = (uint)cardData.Star * 30;
-            var markType = (CardProductMarkTypes)product.Mark;
+            res.Gold = (uint)cardData.Star * 20;
+            if (cardData.Quality == QualityTypes.Legend)
+                res.Gold *= 2;
+            if (cardData.Quality == QualityTypes.Epic)
+                res.Gold = res.Gold*6/5;
+            var markType = (CardProductMarkTypes) product.Mark;
             if (markType == CardProductMarkTypes.Sale)
-                res.Gold = (uint)MathTool.GetRound((int)res.Gold, 20);
-            else if (markType == CardProductMarkTypes.Gold)
-                res.Gold = res.Gold * 12 / 10;
-            else if (markType == CardProductMarkTypes.Hot)
-                res.Gold = res.Gold * 8 / 10;
-            else if (markType == CardProductMarkTypes.Only)
-                res.Gold = 300;
-
-            if (cardData.Type == CardTypes.Monster)
-                res.Add(GameResourceType.Carbuncle, GameResourceBook.OutCarbuncleCardBuy((int)cardData.Quality));
-            else if (cardData.Type == CardTypes.Weapon)
-                res.Add(GameResourceType.Gem, GameResourceBook.OutGemCardBuy((int)cardData.Quality));
-            else if (cardData.Type == CardTypes.Spell)
-                res.Add(GameResourceType.Mercury, GameResourceBook.OutMercuryCardBuy((int)cardData.Quality));
+                res.Gold /= 2;
             return res;
         }
 
@@ -174,9 +121,6 @@ namespace TaleofMonsters.Forms.Items
                 vRegion.Draw(g);
 
                 CardAssistant.DrawBase(g, product.Cid, X + 12, Y + 14, 64, 84);
-                
-                if (coverEffect != null)
-                    coverEffect.Draw(g);
 
                 if ((CardProductMarkTypes)product.Mark != CardProductMarkTypes.Null)
                 {

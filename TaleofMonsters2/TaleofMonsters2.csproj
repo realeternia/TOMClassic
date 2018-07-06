@@ -171,6 +171,12 @@
     <Compile Include="Controler\GM\GmScript.cs" />
     <Compile Include="Datas\Others\ArticleBook.cs" />
     <Compile Include="Datas\User\Db\DbEquipComposeData.cs" />
+    <Compile Include="Forms\CardShopDungeonViewForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\CardShopDungeonViewForm.Designer.cs">
+      <DependentUpon>CardShopDungeonViewForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\DungeonCardSelectViewForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -191,6 +197,7 @@
     <Compile Include="Forms\BlackStoneForm.Designer.cs">
       <DependentUpon>BlackStoneForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Items\CardShopDungeonItem.cs" />
     <Compile Include="Forms\Items\DungeonCardItem.cs" />
     <Compile Include="Forms\Items\Regions\VirtualRegionMoveMediator.cs" />
     <Compile Include="Forms\Pops\PopBuildUpgrade.cs">
@@ -818,6 +825,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controler\Battle\Components\CardSelector.resx">
       <DependentUpon>CardSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CardShopDungeonViewForm.resx">
+      <DependentUpon>CardShopDungeonViewForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DungeonCardSelectViewForm.resx">
       <DependentUpon>DungeonCardSelectViewForm.cs</DependentUpon>

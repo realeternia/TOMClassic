@@ -145,6 +145,13 @@ namespace TaleofMonsters.Forms
             }
         }
 
+        public void OnSelect(DbCardProduct card)
+        {
+            UserProfile.InfoCard.AddCard(card.Cid);
+            UserProfile.InfoWorld.RemoveCardProduct(card.Cid);
+            RefreshInfo();
+        }
+
         private void CardShopViewForm_Paint(object sender, PaintEventArgs e)
         {
             BorderPainter.Draw(e.Graphics, "", Width, Height);
