@@ -150,6 +150,8 @@ namespace TaleofMonsters.Forms
             UserProfile.InfoCard.AddCard(card.Cid);
             UserProfile.InfoWorld.RemoveCardProduct(card.Cid);
             RefreshInfo();
+
+            SoundManager.Play("System", "CoinDrop.mp3");
         }
 
         private void CardShopViewForm_Paint(object sender, PaintEventArgs e)

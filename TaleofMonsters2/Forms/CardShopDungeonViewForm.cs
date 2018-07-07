@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using ControlPlus;
 using NarlonLib.Math;
+using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas;
@@ -86,6 +87,8 @@ namespace TaleofMonsters.Forms
             UserProfile.InfoCard.AddDungeonCard(card.Cid, 0);
             products.Remove(card);
             RefreshInfo();
+
+            SoundManager.Play("System", "CoinDrop.mp3");
         }
 
         private void CardShopDungeonViewForm_Paint(object sender, PaintEventArgs e)
@@ -93,7 +96,7 @@ namespace TaleofMonsters.Forms
             BorderPainter.Draw(e.Graphics, "", Width, Height);
 
             Font font = new Font("黑体", 12*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            e.Graphics.DrawString("卡片商店", font, Brushes.White, Width / 2 - 40, 8);
+            e.Graphics.DrawString("购买卡牌", font, Brushes.White, Width / 2 - 40, 8);
             font.Dispose();
 
             vRegion.Draw(e.Graphics);
