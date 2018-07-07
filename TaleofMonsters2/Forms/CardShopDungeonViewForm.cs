@@ -63,7 +63,11 @@ namespace TaleofMonsters.Forms
             products = new List<DbCardProduct>();
             for (int i = 0; i < 12; i++)
             {
-                var rdCard = CardConfigManager.GetRandomCard(0);
+                var rdCard = 0;
+                if (MathTool.IsRandomInRange01(0.2f))
+                    rdCard = CardConfigManager.GetRandomJobCard(UserProfile.InfoDungeon.JobId);
+                else
+                    rdCard = CardConfigManager.GetRandomJobCard(0);
                 products.Add(new DbCardProduct(i + 1, rdCard, MathTool.IsRandomInRange01(0.2f) 
                     ? (int)CardProductMarkTypes.Sale:(int)CardProductMarkTypes.Null));
             }

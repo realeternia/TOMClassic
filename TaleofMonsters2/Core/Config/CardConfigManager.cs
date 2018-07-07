@@ -241,16 +241,17 @@ namespace TaleofMonsters.Core.Config
         private static void InitJobCard()
         {
             jobCardDict = new Dictionary<int, CardInfoList>();
+            jobCardDict[0] = new CardInfoList();
             foreach (var jobId in ConfigData.JobDict.Keys)
-                jobCardDict.Add(jobId, new CardInfoList());
+                jobCardDict[jobId] = new CardInfoList();
 
             foreach (var cardConfigData in cardConfigDataDict.Values)
             {
-                if (!cardConfigData.IsSpecial && cardConfigData.JobId > 0)
+                if (!cardConfigData.IsSpecial)
                     jobCardDict[cardConfigData.JobId].Add(cardConfigData.Id, cardConfigData.Quality);
             }
 
-            foreach (var jobId in ConfigData.JobDict.Keys)
+            foreach (var jobId in jobCardDict.Keys)
                 jobCardDict[jobId].EndInit();
         }
 
@@ -310,7 +311,7 @@ namespace TaleofMonsters.Core.Config
 
         internal static int GetRandomJobCard(int jobId, int quality=-1)
         {
-            CardInfoList rtData;
+            CardInfoList rtData;//job=0表示返回中立卡
             if (jobCardDict.TryGetValue(jobId, out rtData))
             {
                 if(rtData == null)//special job

@@ -23,6 +23,7 @@ namespace TaleofMonsters.Datas.User
 
         [FieldIndex(Index = 7)] public List<DbGismoState> EventList; //完成的任务列表，如果0，表示任务失败
         [FieldIndex(Index = 8)] public int StoryId; //故事id
+        [FieldIndex(Index = 9)] public int JobId; //故事id
 
         [FieldIndex(Index = 11)] public int FightWin;
         [FieldIndex(Index = 12)] public int FightLoss;

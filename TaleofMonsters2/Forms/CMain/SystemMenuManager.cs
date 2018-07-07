@@ -190,10 +190,7 @@ namespace TaleofMonsters.Forms.CMain
                     PanelManager.DealPanel(new MinigameForm());
                     break;
                 case SystemMenuIds.StoryForm:
-                    var tp = new DungeonCardSelectViewForm();
-                    tp.Mode = DungeonCardItem.CardCopeMode.Upgrade;
-                    PanelManager.DealPanel(tp);
-                    //   PanelManager.DealPanel(new StoryForm());
+                    PanelManager.DealPanel(new StoryForm());
                     break;
                 case SystemMenuIds.BlackStoneForm:
                     PanelManager.DealPanel(new BlackStoneForm());

@@ -20,11 +20,14 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             Level = UserProfile.InfoBasic.Level;
             Job = UserProfile.InfoBasic.Job;
 
+            if (UserProfile.InfoDungeon.DungeonId > 0)
+                Job = UserProfile.InfoDungeon.JobId;
+
             OffCards = new CardOffBundle(cardInitial);
 
             int[] energyRate = {0, 0, 0};
             CalculateEquipAndSkill(UserProfile.InfoCastle.GetValidEquipsList(), energyRate);
-            EnergyGenerator.SetRate(energyRate, UserProfile.InfoBasic.Job);
+            EnergyGenerator.SetRate(energyRate, Job);
             EnergyGenerator.Next(0);
             
             BattleManager.Instance.RuleData.CheckPlayerData(this);

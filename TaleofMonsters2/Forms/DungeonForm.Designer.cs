@@ -32,8 +32,11 @@ namespace TaleofMonsters.Forms
         private void InitializeComponent()
         {
             this.colorLabel1 = new System.Windows.Forms.Label();
-            this.bitmapButtonC1 = new BitmapButton();
-            this.bitmapButtonClose = new BitmapButton();
+            this.bitmapButtonC1 = new ControlPlus.BitmapButton();
+            this.bitmapButtonClose = new ControlPlus.BitmapButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // colorLabel1
@@ -62,6 +65,7 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonC1.Tag = "1";
             this.bitmapButtonC1.Text = "进入";
             this.bitmapButtonC1.TextOffX = 0;
+            this.bitmapButtonC1.TipText = null;
             this.bitmapButtonC1.UseVisualStyleBackColor = true;
             this.bitmapButtonC1.Click += new System.EventHandler(this.bitmapButtonC1_Click);
             // 
@@ -79,20 +83,69 @@ namespace TaleofMonsters.Forms
             this.bitmapButtonClose.Size = new System.Drawing.Size(24, 24);
             this.bitmapButtonClose.TabIndex = 39;
             this.bitmapButtonClose.TextOffX = 0;
+            this.bitmapButtonClose.TipText = null;
             this.bitmapButtonClose.UseVisualStyleBackColor = true;
             this.bitmapButtonClose.Click += new System.EventHandler(this.bitmapButtonClose_Click);
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
+            this.radioButton1.Font = new System.Drawing.Font("SimSun", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.radioButton1.ForeColor = System.Drawing.Color.White;
+            this.radioButton1.Location = new System.Drawing.Point(32, 361);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(39, 18);
+            this.radioButton1.TabIndex = 40;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "a1";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Font = new System.Drawing.Font("SimSun", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.radioButton2.ForeColor = System.Drawing.Color.White;
+            this.radioButton2.Location = new System.Drawing.Point(125, 361);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(39, 18);
+            this.radioButton2.TabIndex = 41;
+            this.radioButton2.Text = "a1";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Font = new System.Drawing.Font("SimSun", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.radioButton3.ForeColor = System.Drawing.Color.White;
+            this.radioButton3.Location = new System.Drawing.Point(225, 361);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(39, 18);
+            this.radioButton3.TabIndex = 42;
+            this.radioButton3.Text = "a1";
+            this.radioButton3.UseVisualStyleBackColor = true;
             // 
             // DungeonForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.radioButton3);
+            this.Controls.Add(this.radioButton2);
+            this.Controls.Add(this.radioButton1);
             this.Controls.Add(this.bitmapButtonClose);
             this.Controls.Add(this.colorLabel1);
             this.Controls.Add(this.bitmapButtonC1);
             this.Name = "DungeonForm";
             this.Size = new System.Drawing.Size(350, 438);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.DungeonForm_Paint);
+            this.Controls.SetChildIndex(this.bitmapButtonC1, 0);
+            this.Controls.SetChildIndex(this.colorLabel1, 0);
+            this.Controls.SetChildIndex(this.bitmapButtonClose, 0);
+            this.Controls.SetChildIndex(this.radioButton1, 0);
+            this.Controls.SetChildIndex(this.radioButton2, 0);
+            this.Controls.SetChildIndex(this.radioButton3, 0);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -100,5 +153,8 @@ namespace TaleofMonsters.Forms
         private BitmapButton bitmapButtonC1;
         private Label colorLabel1;
         private BitmapButton bitmapButtonClose;
+        private RadioButton radioButton1;
+        private RadioButton radioButton2;
+        private RadioButton radioButton3;
     }
 }

@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using TaleofMonsters.Forms.Items.Core;
-using TaleofMonsters.Forms.Items.Regions;
 using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
@@ -16,7 +15,6 @@ namespace TaleofMonsters.Forms
     internal sealed partial class RoleForm : BasePanel
     {
         private bool show;
-        private VirtualRegion vRegion;
 
         public RoleForm()
         {
@@ -26,11 +24,6 @@ namespace TaleofMonsters.Forms
             bitmapButtonJob.NoUseDrawNine = true;
             bitmapButtonHistory.ImageNormal = PicLoader.Read("Button.Panel", "InfoButton.JPG");
             bitmapButtonHistory.NoUseDrawNine = true;
-
-            vRegion = new VirtualRegion(this);
-            vRegion.RegionClicked += new VirtualRegion.VRegionClickEventHandler(virtualRegion_RegionClicked);
-            vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
-            vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
 
         public override void Init(int width, int height)
@@ -38,24 +31,17 @@ namespace TaleofMonsters.Forms
             base.Init(width, height);
             Location = new Point(Location.X - 303/2, Location.Y); //空出右边historyform
             show = true;
+
+            if (UserProfile.InfoDungeon.DungeonId > 0)
+            {
+                bitmapButtonJob.Visible = false;
+                bitmapButtonHistory.Visible = false;
+            }
         }
 
         private void pictureBoxClose_Click(object sender, EventArgs e)
         {
             Close();
-        }
-
-        private void virtualRegion_RegionEntered(int id, int x, int y, int key)
-        {
-
-        }
-
-        private void virtualRegion_RegionLeft()
-        {
-        }
-
-        private void virtualRegion_RegionClicked(int id, int x, int y, MouseButtons button)
-        {
         }
 
         private void RoleForm_Paint(object sender, PaintEventArgs e)
@@ -69,13 +55,14 @@ namespace TaleofMonsters.Forms
             if (!show)
                 return;
 
-            JobConfig jobConfig = ConfigDatas.ConfigData.GetJobConfig(UserProfile.InfoBasic.Job);
+            var job = UserProfile.InfoBasic.Job;
+            if (UserProfile.InfoDungeon.DungeonId > 0)
+                job = UserProfile.InfoDungeon.JobId;
+
+            JobConfig jobConfig = ConfigDatas.ConfigData.GetJobConfig(job);
             Image body = PicLoader.Read("Hero", string.Format("{0}.JPG", jobConfig.JobIndex));
             e.Graphics.DrawImage(body, 12, 40, 305, 405);
             body.Dispose();
-
-            if (vRegion != null)
-                vRegion.Draw(e.Graphics);
 
             e.Graphics.FillRectangle(Brushes.LightSlateGray, 25-1, 55-1, 52, 52);
             Image head = PicLoader.Read("Player", string.Format("{0}.PNG", UserProfile.InfoBasic.Head));

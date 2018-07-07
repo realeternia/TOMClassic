@@ -68,8 +68,14 @@ namespace TaleofMonsters.Forms
             base.Init(width, height);
             cardIdList = new List<NLPair<int, int>>();
             for (int i = 0; i < 3; i++)
-                cardIdList.Add(new NLPair<int, int>(CardConfigManager.GetRandomCard(0),
-                    MathTool.IsRandomInRange01(0.2f) ? 2 : 0));
+            {
+                var rdCard = 0;
+                if (MathTool.IsRandomInRange01(0.25f))
+                    rdCard = CardConfigManager.GetRandomJobCard(UserProfile.InfoDungeon.JobId);
+                else
+                    rdCard = CardConfigManager.GetRandomJobCard(0);
+                cardIdList.Add(new NLPair<int, int>(rdCard, MathTool.IsRandomInRange01(0.2f) ? 2 : 0));
+            }
 
             vRegion = new VirtualRegion(this);
             for (int i = 0; i < 3; i++)

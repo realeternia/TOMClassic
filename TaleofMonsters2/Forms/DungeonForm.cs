@@ -47,6 +47,9 @@ namespace TaleofMonsters.Forms
             title = dungeonConfig.Name;
             colorLabel1.Text = dungeonConfig.Des;
             gismoList = DungeonBook.GetGismoListByDungeon(DungeonId);
+            radioButton1.Text = ConfigData.GetJobConfig(dungeonConfig.Jobs[0]).Name;
+            radioButton2.Text = ConfigData.GetJobConfig(dungeonConfig.Jobs[1]).Name;
+            radioButton3.Text = ConfigData.GetJobConfig(dungeonConfig.Jobs[2]).Name;
 
             vRegion = new VirtualRegion(this);
 
@@ -77,6 +80,13 @@ namespace TaleofMonsters.Forms
         private void bitmapButtonC1_Click(object sender, EventArgs e)
         {
             UserProfile.InfoCard.SelectDungeonDeck(DungeonId);
+            var dungeonConfig = ConfigData.GetDungeonConfig(DungeonId);
+            if (radioButton1.Checked)
+                UserProfile.InfoDungeon.JobId = dungeonConfig.Jobs[0];
+            else if (radioButton2.Checked)
+                UserProfile.InfoDungeon.JobId = dungeonConfig.Jobs[1];
+            else if (radioButton3.Checked)
+                UserProfile.InfoDungeon.JobId = dungeonConfig.Jobs[2];
             Scene.Instance.EnterDungeon(DungeonId);
             Close();
         }
