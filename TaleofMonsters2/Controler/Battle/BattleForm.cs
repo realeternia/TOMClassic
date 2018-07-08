@@ -329,6 +329,9 @@ namespace TaleofMonsters.Controler.Battle
                     }
                     else if (myCursor.Name == "cast")
                     {
+                        var spellConfig = ConfigData.GetSpellConfig(leftSelectCard.CardId);
+                        if (!BattleLocationManager.IsPlaceCanCast(e.Location.X, e.Location.Y, spellConfig.Target))
+                            return;//做一次保证性检测
                         if (!pickPlayer.CanSpell(lm, leftSelectCard))
                             return;
                         pickPlayer.DoSpell(lm, leftSelectCard, e.Location);

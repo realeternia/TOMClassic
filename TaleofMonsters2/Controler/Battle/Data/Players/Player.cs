@@ -346,7 +346,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void OnTowerHited(double towerHpRate)
         {
-            AIContext.OnTowerHited(towerHpRate);
+            if (AIContext != null)
+                AIContext.OnTowerHited(towerHpRate);
         }
 
         public void OnMonsterDie(int monsterId, byte monsterLevel, bool isSummoned)
