@@ -80,8 +80,8 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects
                         if (config != null)
                         {
                             Font font = new Font("宋体", 11*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-                            g.DrawString(config.Name, font, Brushes.Black, X - drawWidth/2 + Width/8 + 2, Y - drawHeight/2 + 1);
-                            g.DrawString(config.Name, font, Brushes.Wheat, X - drawWidth/2 + Width/8, Y - drawHeight/2);
+                            g.DrawString(config.Name, font, Brushes.Black, X - drawWidth/2 + Width/8 + 10, Y - drawHeight/2 + 1);
+                            g.DrawString(config.Name, font, Brushes.Wheat, X - drawWidth/2 + Width/8 + 8, Y - drawHeight/2);
                             font.Dispose();
                         }
                     }

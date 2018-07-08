@@ -19,10 +19,10 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects
             base.Draw(g, isTarget);
 
 #if DEBUG
-            Font font = new Font("微软雅黑", 12 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            g.DrawString(Id.ToString(), font, Brushes.Black, X + 1, Y + 1);
-            g.DrawString(Id.ToString(), font, Brushes.White, X, Y);
-            font.Dispose();
+            //Font font = new Font("微软雅黑", 12 * 1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+            //g.DrawString(Id.ToString(), font, Brushes.Black, X + 1, Y + 1);
+            //g.DrawString(Id.ToString(), font, Brushes.White, X, Y);
+            //font.Dispose();
 #endif
         }
     }

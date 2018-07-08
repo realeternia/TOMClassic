@@ -74,8 +74,8 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects
 
             var targetName = ConfigData.GetSceneConfig(TargetMap).Name;
             Font fontName = new Font("宋体", 11*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
-            g.DrawString(targetName, fontName, Brushes.Black, X - drawWidth / 2 + Width / 8 + 1, Y - drawHeight / 2 + 1);
-            g.DrawString(targetName, fontName, Disabled ? Brushes.Gray : Brushes.Wheat, X - drawWidth / 2 + Width / 8, Y - drawHeight / 2);
+            g.DrawString(targetName, fontName, Brushes.Black, X - drawWidth / 2 + Width / 8 + 10, Y - drawHeight / 2 + 1);
+            g.DrawString(targetName, fontName, Disabled ? Brushes.Gray : Brushes.Wheat, X - drawWidth / 2 + Width / 8 + 8, Y - drawHeight / 2);
             fontName.Dispose();
             markQuest.Dispose();
         }
