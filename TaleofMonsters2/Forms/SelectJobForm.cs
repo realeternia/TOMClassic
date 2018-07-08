@@ -268,7 +268,11 @@ namespace TaleofMonsters.Forms
                 UserProfile.InfoBasic.Job = selectJobId;
                 SendJobReward();
             }
-
+            var roleForm = PanelManager.FindPanel(typeof (RoleForm));
+            if (roleForm != null)
+            {
+                roleForm.BasePanelMessageSafe(1); //刷新下图片
+            }
             Close();
         }
 

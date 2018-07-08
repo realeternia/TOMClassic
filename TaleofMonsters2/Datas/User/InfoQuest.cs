@@ -181,7 +181,7 @@ namespace TaleofMonsters.Datas.User
           //  ResetQuest();
         }
 
-        private void ResetQuest()
+        public void ResetQuest()
         {
             var resetList = new List<int>();
             foreach (var dbQuestData in QuestRunning)

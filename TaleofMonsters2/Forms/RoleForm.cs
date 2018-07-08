@@ -5,6 +5,7 @@ using TaleofMonsters.Forms.Items.Core;
 using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
+using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Datas.Quests;
 using TaleofMonsters.Datas.User;
@@ -37,6 +38,12 @@ namespace TaleofMonsters.Forms
                 bitmapButtonJob.Visible = false;
                 bitmapButtonHistory.Visible = false;
             }
+        }
+
+        protected override void BasePanelMessageWork(int token)
+        {
+            if (token == 1)
+                Invalidate();
         }
 
         private void pictureBoxClose_Click(object sender, EventArgs e)
@@ -102,15 +109,15 @@ namespace TaleofMonsters.Forms
 
         private void bitmapButtonJob_Click(object sender, EventArgs e)
         {
-            if (UserProfile.Profile.InfoBasic.Level < 5)
-            {
-                AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.JobLevelLow),"Red");
-                return;
-            }
-
             if (!QuestBook.HasQuest("selectjob"))
             {
                 AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.JobQuestNotFin), "Red");
+                return;
+            }
+
+            if (ConfigData.GetSceneConfig(UserProfile.Profile.InfoBasic.MapId).Type != (int)SceneTypes.Town)
+            {
+                AddFlowCenter(HSErrors.GetDescript(ErrorConfig.Indexer.JobNotInTown), "Red");
                 return;
             }
 

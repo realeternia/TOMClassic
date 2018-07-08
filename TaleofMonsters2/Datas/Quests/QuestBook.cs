@@ -67,12 +67,12 @@ namespace TaleofMonsters.Datas.Quests
             if (questConfig.RewardGold > 0)
             {
                 var goldGet = GameResourceBook.InGoldSceneQuest(level, questConfig.RewardGold);
-                rt += string.Format( "|Y|{0}金币|| ", goldGet);
+                rt += string.Format( "|Orange|{0}金币|| ", goldGet);
             }
             if (questConfig.RewardExp > 0)
             {
                 var expGet = GameResourceBook.InExpSceneQuest(level, questConfig.RewardExp);
-                rt += string.Format("|P|{0}EXP|| ", expGet);
+                rt += string.Format("|Purple|{0}EXP|| ", expGet);
             }
             if (!string.IsNullOrEmpty(questConfig.RewardItem1))
             {

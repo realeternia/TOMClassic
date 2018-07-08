@@ -639,6 +639,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes
         public void ResetScene()
         {
             SceneInfo = SceneManager.RefreshSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, SceneFreshReason.Reset);
+            UserProfile.InfoQuest.ResetQuest();
             parent.Invalidate();
         }
 
