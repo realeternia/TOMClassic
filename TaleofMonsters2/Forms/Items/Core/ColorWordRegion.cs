@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using NarlonLib.Log;
 using NarlonLib.Math;
 using TaleofMonsters.Tools;
 
@@ -199,10 +200,16 @@ StringFormat.GenericTypographic); break;
 
         public void Draw(Graphics g)
         {
-            foreach (var colorTextCompt in textList)
+            try
             {
-                colorTextCompt.Draw(g, tickTime);
+                foreach (var colorTextCompt in textList)
+                    colorTextCompt.Draw(g, tickTime);
             }
+            catch (Exception e)
+            {//遇到过枚举器被修改的异常
+                NLog.Debug(e.ToString());
+            }
+           
         }
 
         private Color GetLineInfo(string info, out TextDanceTypes type)

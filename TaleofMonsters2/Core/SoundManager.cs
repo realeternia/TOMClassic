@@ -13,8 +13,8 @@ namespace TaleofMonsters.Core
         private static string sceneBGM;
 
         private static ThirdParty.System _fmod = null;
-        private const float BGMVolume = 0.002f; //背景音乐音量
-        private const float EffectVolume = 0.01f; //特效音乐音量
+        private const float BGMVolume = 0.008f; //背景音乐音量
+        private const float EffectVolume = 0.02f; //特效音乐音量
 
         private static Thread soundThread;
         private static Channel _channelBGM = null;//在子线程使用

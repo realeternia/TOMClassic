@@ -90,16 +90,15 @@ namespace TaleofMonsters.Forms
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
             this.radioButton1.Font = new System.Drawing.Font("SimSun", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.radioButton1.ForeColor = System.Drawing.Color.White;
             this.radioButton1.Location = new System.Drawing.Point(32, 361);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(39, 18);
             this.radioButton1.TabIndex = 40;
-            this.radioButton1.TabStop = true;
             this.radioButton1.Text = "a1";
             this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // radioButton2
             // 
@@ -112,6 +111,7 @@ namespace TaleofMonsters.Forms
             this.radioButton2.TabIndex = 41;
             this.radioButton2.Text = "a1";
             this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // radioButton3
             // 
@@ -124,6 +124,7 @@ namespace TaleofMonsters.Forms
             this.radioButton3.TabIndex = 42;
             this.radioButton3.Text = "a1";
             this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // DungeonForm
             // 
@@ -136,7 +137,7 @@ namespace TaleofMonsters.Forms
             this.Controls.Add(this.colorLabel1);
             this.Controls.Add(this.bitmapButtonC1);
             this.Name = "DungeonForm";
-            this.Size = new System.Drawing.Size(350, 438);
+            this.Size = new System.Drawing.Size(450, 438);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.DungeonForm_Paint);
             this.Controls.SetChildIndex(this.bitmapButtonC1, 0);
             this.Controls.SetChildIndex(this.colorLabel1, 0);

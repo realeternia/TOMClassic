@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus;
+using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas.Scenes;
 using TaleofMonsters.Datas.User;
@@ -22,6 +23,7 @@ namespace TaleofMonsters.Forms
         private List<int> gismoList;
         private int gismoGet;
         private string title = "";
+        private int jobId = 0;
 
         public int DungeonId { get; set; }
 
@@ -70,6 +72,8 @@ namespace TaleofMonsters.Forms
             backImage = PicLoader.Read("Dungeon", string.Format("{0}.JPG", dungeonConfig.BgImage));
             vRegion.RegionEntered += new VirtualRegion.VRegionEnteredEventHandler(virtualRegion_RegionEntered);
             vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
+
+            radioButton1.Checked = true;
         }
 
         public override void OnFrame(int tick, float timePass)
@@ -80,13 +84,7 @@ namespace TaleofMonsters.Forms
         private void bitmapButtonC1_Click(object sender, EventArgs e)
         {
             UserProfile.InfoCard.SelectDungeonDeck(DungeonId);
-            var dungeonConfig = ConfigData.GetDungeonConfig(DungeonId);
-            if (radioButton1.Checked)
-                UserProfile.InfoDungeon.JobId = dungeonConfig.Jobs[0];
-            else if (radioButton2.Checked)
-                UserProfile.InfoDungeon.JobId = dungeonConfig.Jobs[1];
-            else if (radioButton3.Checked)
-                UserProfile.InfoDungeon.JobId = dungeonConfig.Jobs[2];
+            UserProfile.InfoDungeon.JobId = jobId;
             Scene.Instance.EnterDungeon(DungeonId);
             Close();
         }
@@ -116,15 +114,37 @@ namespace TaleofMonsters.Forms
             e.Graphics.DrawImage(backImage, xOff, yOff, 324, 244);
 
             font = new Font("黑体", 12 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            e.Graphics.DrawString(string.Format("进度：{0}/{1}",gismoGet,gismoList.Count), font, Brushes.White, xOff + 200, yOff + 220);
+            e.Graphics.DrawString(string.Format("进度：{0}/{1}",gismoGet,gismoList.Count), font, Brushes.White, xOff + 10, yOff + 220);
             font.Dispose();
 
             vRegion.Draw(e.Graphics);
+
+            if (jobId > 0)
+            {
+                JobConfig jobConfig = ConfigDatas.ConfigData.GetJobConfig(jobId);
+                Image body = PicLoader.Read("Hero", string.Format("{0}.JPG", jobConfig.JobIndex));
+                var destR = new Rectangle(340, 44, 100, 310);
+                e.Graphics.DrawImage(body, destR, body.Width/2 - 60, 10, 120, body.Height - 10, GraphicsUnit.Pixel);
+                body.Dispose();
+            }
         }
 
         private void bitmapButtonClose_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            var dungeonConfig = ConfigData.GetDungeonConfig(DungeonId);
+            if (radioButton1.Checked)
+                jobId = dungeonConfig.Jobs[0];
+            else if (radioButton2.Checked)
+                jobId = dungeonConfig.Jobs[1];
+            else if (radioButton3.Checked)
+                jobId = dungeonConfig.Jobs[2];
+            SoundManager.Play("System", "Thunder.mp3");
+            Invalidate();
         }
     }
 }
