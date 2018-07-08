@@ -116,7 +116,7 @@ namespace TaleofMonsters.Forms.Items.Regions
                 }
                 else if (type == PictureRegionCellType.SceneQuest)
                 {
-                    img = SceneQuestBook.GetSceneQuestImage(nid);
+                    img = SceneQuestBook.GetSceneQuestImageScene(nid);
                 }
                 else if (type == PictureRegionCellType.DungeonItem)
                 {

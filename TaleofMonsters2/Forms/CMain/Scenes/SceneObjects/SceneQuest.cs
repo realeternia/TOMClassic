@@ -66,7 +66,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects
             {
                 g.DrawImage(markQuest, destRect, 0, 0, markQuest.Width, markQuest.Height, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
                 if(config != null)
-                g.DrawImage(SceneQuestBook.GetSceneQuestImage(config.Id), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
+                g.DrawImage(SceneQuestBook.GetSceneQuestImageScene(config.Id), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel, HSImageAttributes.ToGray);
             }
             else
             {
@@ -75,7 +75,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects
                 {
                     if (MapSetting || HasFlag(ScenePosFlagType.Detected))
                     {
-                        g.DrawImage(SceneQuestBook.GetSceneQuestImage(EventId), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel);
+                        g.DrawImage(SceneQuestBook.GetSceneQuestImageScene(EventId), new Rectangle(X, Y - Width / 2 + Height / 2, Width / 2, Width / 2), 0, 0, 180, 180, GraphicsUnit.Pixel);
 
                         if (config != null)
                         {

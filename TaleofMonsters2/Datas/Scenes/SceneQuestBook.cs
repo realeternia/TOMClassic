@@ -33,12 +33,22 @@ namespace TaleofMonsters.Datas.Scenes
             return questId;
         }
 
-        public static Image GetSceneQuestImage(int id)
+        public static Image GetSceneQuestImageScene(int id)
         {
-            string fname = string.Format("SceneQuest/{0}.PNG", ConfigData.SceneQuestDict[id].Figue);
+            string fname = string.Format("SceneQuest/{0}.PNG", ConfigData.SceneQuestDict[id].FigueScene);
             if (!ImageManager.HasImage(fname))
             {
-                Image image = PicLoader.Read("SceneQuest", string.Format("{0}.JPG", ConfigData.SceneQuestDict[id].Figue));
+                Image image = PicLoader.Read("SceneQuest", string.Format("{0}.JPG", ConfigData.SceneQuestDict[id].FigueScene));
+                ImageManager.AddImage(fname, image);
+            }
+            return ImageManager.GetImage(fname);
+        }
+        public static Image GetSceneQuestImageBig(int id)
+        {
+            string fname = string.Format("SceneQuest/{0}.PNG", ConfigData.SceneQuestDict[id].FigueBig);
+            if (!ImageManager.HasImage(fname))
+            {
+                Image image = PicLoader.Read("SceneQuest", string.Format("{0}.JPG", ConfigData.SceneQuestDict[id].FigueBig));
                 ImageManager.AddImage(fname, image);
             }
             return ImageManager.GetImage(fname);

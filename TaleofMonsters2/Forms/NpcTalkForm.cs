@@ -312,7 +312,7 @@ namespace TaleofMonsters.Forms
                 e.Graphics.DrawString(string.Format("{0}(Lv{1})({2})",config.Name, eventLevel, config.Script), font2, Brushes.White, Width / 2 - 40, 8);
                 font2.Dispose();
 
-                e.Graphics.DrawImage(SceneQuestBook.GetSceneQuestImage(config.Id), 20, 60, 300, 300);
+                e.Graphics.DrawImage(SceneQuestBook.GetSceneQuestImageBig(config.Id), 20, 60, 300, 300);
                 Image border = PicLoader.Read("Border", "scenequestbg.PNG"); //边框
                 e.Graphics.DrawImage(border, 20, 60, 300, 300);
                 border.Dispose();
