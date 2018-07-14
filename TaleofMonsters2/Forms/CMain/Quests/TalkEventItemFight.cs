@@ -37,7 +37,9 @@ namespace TaleofMonsters.Forms.CMain.Quests
             if (config.EnemyName == "check")//特殊处理标记
                 enemyId = UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.SceneQuestRandPeopleId);
             else if (config.EnemyName == "fight")//特殊处理标记
-                enemyId = SceneBook.GetRandomEnemy(UserProfile.InfoBasic.MapId);
+                enemyId = SceneBook.GetRandomEnemy(UserProfile.InfoBasic.MapId, false);
+            else if (config.EnemyName == "fighte")//特殊处理标记
+                enemyId = SceneBook.GetRandomEnemy(UserProfile.InfoBasic.MapId, true);
             else
                 enemyId = PeopleBook.GetPeopleId(config.EnemyName);
             int fightLevel = Math.Max(1, level + hardness + BlessManager.FightLevelChange);

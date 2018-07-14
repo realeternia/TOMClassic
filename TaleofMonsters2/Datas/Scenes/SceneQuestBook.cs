@@ -117,29 +117,31 @@ namespace TaleofMonsters.Datas.Scenes
             var config = ConfigData.GetSceneConfig(mapId);
             List<RLIdValue> datas = new List<RLIdValue>();
             if (config.QPortal > 0)//地磁反转
-                datas.Add(new RLIdValue { Id = 42000002, Value = config.QPortal });
+                datas.Add(new RLIdValue { Id = GetSceneQuestByName("magnet"), Value = config.QPortal });
             if (config.QCardChange > 0)//卡牌商人
-                datas.Add(new RLIdValue { Id = 42000003, Value = config.QCardChange });
+                datas.Add(new RLIdValue { Id = GetSceneQuestByName("collect"), Value = config.QCardChange });
             if (config.QPiece > 0)//素材商人
-                datas.Add(new RLIdValue { Id = 42000004, Value = config.QPiece });
+                datas.Add(new RLIdValue { Id = GetSceneQuestByName("piecer"), Value = config.QPiece });
             if (config.QDoctor > 0)//医生
-                datas.Add(new RLIdValue { Id = 42000005, Value = config.QDoctor });
+                datas.Add(new RLIdValue { Id = GetSceneQuestByName("cure"), Value = config.QDoctor });
             if (config.QAngel > 0)//天使
-                datas.Add(new RLIdValue { Id = 42000006, Value = config.QAngel });
+                datas.Add(new RLIdValue { Id = GetSceneQuestByName("angel"), Value = config.QAngel });
             if (config.QRes > 0)//期货
-                datas.Add(new RLIdValue { Id = 42000009, Value = config.QRes });
+                datas.Add(new RLIdValue { Id = GetSceneQuestByName("resmerchant"), Value = config.QRes });
             if (config.QItemDrug > 0 && MathTool.GetRandom(0d,1) < config.QItemDrug)//草药
-                datas.Add(new RLIdValue { Id = 42000010, Value = 1 });
+                datas.Add(new RLIdValue { Id = GetSceneQuestByName("brushwood"), Value = 1 });
             if (config.QItemFish > 0 && MathTool.GetRandom(0d, 1) < config.QItemFish)//鱼
-                datas.Add(new RLIdValue { Id = 42000011, Value = 1 });
+                datas.Add(new RLIdValue { Id = GetSceneQuestByName("fishpool"), Value = 1 });
             if (config.QItemOre > 0 && MathTool.GetRandom(0d, 1) < config.QItemOre)//矿石
-                datas.Add(new RLIdValue { Id = 42000012, Value = 1 });
+                datas.Add(new RLIdValue { Id = GetSceneQuestByName("orehole"), Value = 1 });
             if (config.QItemMushroom > 0 && MathTool.GetRandom(0d, 1) < config.QItemMushroom)//蘑菇
-                datas.Add(new RLIdValue { Id = 42000013, Value = 1 });
+                datas.Add(new RLIdValue { Id = GetSceneQuestByName("mushroom"), Value = 1 });
             if (config.QItemWood > 0 && MathTool.GetRandom(0d, 1) < config.QItemWood)//木材
-                datas.Add(new RLIdValue { Id = 42000014, Value = 1 });
+                datas.Add(new RLIdValue { Id = GetSceneQuestByName("oldtree"), Value = 1 });
             if (config.QEnemy > 0) //普通敌人
-                datas.Add(new RLIdValue {Id = 42000015, Value = config.QEnemy});
+                datas.Add(new RLIdValue {Id = GetSceneQuestByName("fight"), Value = config.QEnemy});
+            if (config.QElite > 0) //精英敌人
+                datas.Add(new RLIdValue {Id = GetSceneQuestByName("fighte"), Value = config.QElite});
 
             if (!string.IsNullOrEmpty(config.Quest))
             {
@@ -194,7 +196,9 @@ namespace TaleofMonsters.Datas.Scenes
             if (config.QItemWood > 0)//枯树
                 questCount += (float)config.QItemWood;
             if (config.QEnemy > 0)//敌人
-                questCount += (float)config.QEnemy;
+                questCount += config.QEnemy;
+            if (config.QElite > 0)//敌人
+                questCount += config.QElite;
 
             if (!string.IsNullOrEmpty(config.Quest))
             {

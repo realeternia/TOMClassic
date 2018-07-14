@@ -14,11 +14,30 @@ namespace TaleofMonsters.Datas.Scenes
 {
     internal static class SceneBook
     {
-        public static int GetRandomEnemy(int sceneId)
+        public static int GetEnemyGroupIdByName(string f)
         {
-            var sceneConfig = ConfigData.GetSceneConfig(sceneId);
-            return sceneConfig.EnemyIds[MathTool.GetRandom(sceneConfig.EnemyIds.Length)];
+            foreach (var enemyData in ConfigData.SceneEnemyGroupDict.Values)
+            {
+                if (enemyData.Ename == f)
+                    return enemyData.Id;
+            }
+
+            return 0;
         }
+
+        public static int GetRandomEnemy(int mapId, bool isElite)
+        {
+            var groupId = GetEnemyGroupIdByName(ConfigData.GetSceneConfig(mapId).EnemyGroup);
+            if (groupId > 0)
+            {
+                var enemyGroupConfig = ConfigData.GetSceneEnemyGroupConfig(groupId);
+                if(!isElite)
+                    return enemyGroupConfig.EnemyIds[MathTool.GetRandom(enemyGroupConfig.EnemyIds.Length)];
+                return enemyGroupConfig.EliteIds[MathTool.GetRandom(enemyGroupConfig.EliteIds.Length)];
+            }
+            return 0;
+        }
+
         public static SceneInfo LoadSceneFile(int id, int mapWidth, int mapHeight, Random r)
         {
             var filePath = ConfigData.GetSceneConfig(id).TilePath;
