@@ -138,11 +138,9 @@ namespace TaleofMonsters.Datas.Scenes
                 datas.Add(new RLIdValue { Id = GetSceneQuestByName("mushroom"), Value = 1 });
             if (config.QItemWood > 0 && MathTool.GetRandom(0d, 1) < config.QItemWood)//木材
                 datas.Add(new RLIdValue { Id = GetSceneQuestByName("oldtree"), Value = 1 });
-            if (config.QEnemy > 0) //普通敌人
-                datas.Add(new RLIdValue {Id = GetSceneQuestByName("fight"), Value = config.QEnemy});
-            if (config.QElite > 0) //精英敌人
-                datas.Add(new RLIdValue {Id = GetSceneQuestByName("fighte"), Value = config.QElite});
 
+            int enemyCount = 0;
+            int eliteCount = 0;
             if (!string.IsNullOrEmpty(config.Quest))
             {
                 string[] infos = config.Quest.Split('|');
@@ -151,6 +149,14 @@ namespace TaleofMonsters.Datas.Scenes
                     string[] questData = info.Split(';');
                     int qid = GetSceneQuestByName(questData[0]);
                     datas.Add(new RLIdValue { Id = qid, Value = int.Parse(questData[1]) });
+                    var sceneQuestConfig = ConfigData.GetSceneQuestConfig(qid);
+                    if (!string.IsNullOrEmpty(sceneQuestConfig.EnemyName))
+                    {
+                        if (sceneQuestConfig.Danger <= 1)
+                            enemyCount++;
+                        else
+                            eliteCount++;
+                    }
                 }
             }
             if (!string.IsNullOrEmpty(config.QuestRandom))
@@ -162,6 +168,10 @@ namespace TaleofMonsters.Datas.Scenes
                     datas.Add(new RLIdValue { Id = qid, Value = 1 });
                 }
             }
+            if (config.QEnemy - enemyCount > 0) //普通敌人
+                datas.Add(new RLIdValue { Id = GetSceneQuestByName("fight"), Value = config.QEnemy - enemyCount });
+            if (config.QElite - eliteCount > 0) //精英敌人
+                datas.Add(new RLIdValue { Id = GetSceneQuestByName("fighte"), Value = config.QElite - eliteCount });
 
             return datas;
         }
@@ -206,6 +216,11 @@ namespace TaleofMonsters.Datas.Scenes
                 foreach (var info in infos)
                 {
                     string[] questData = info.Split(';');
+                    int qid = GetSceneQuestByName(questData[0]);
+                    var sceneQuestConfig = ConfigData.GetSceneQuestConfig(qid);
+                    if (!string.IsNullOrEmpty(sceneQuestConfig.EnemyName))
+                        continue; //怪物的数据已经算过了
+
                     questCount += int.Parse(questData[1]);
                 }
             }
