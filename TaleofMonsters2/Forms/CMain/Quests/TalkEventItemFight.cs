@@ -39,6 +39,8 @@ namespace TaleofMonsters.Forms.CMain.Quests
             else
                 enemyId = PeopleBook.GetPeopleId(config.EnemyName);
             int fightLevel = Math.Max(1, level + hardness + BlessManager.FightLevelChange);
+            if (config.Danger >= 2)
+                fightLevel += 3;
             var peopleConfig = ConfigData.GetPeopleConfig(enemyId);
 
             PeopleBook.Fight(enemyId, peopleConfig.BattleMap, fightLevel, parm, winCallback, failCallback, failCallback);

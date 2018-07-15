@@ -41,7 +41,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             LimitLp = jobConfig.EnergyLimit[0];
             LimitPp = jobConfig.EnergyLimit[1];
             LimitMp = jobConfig.EnergyLimit[2];
-            GainEpRate += peopleConfig.EpSlow;
+            GainEpRate = peopleConfig.EpRecoverRate;
         }
         
         public void SetRate(int[] rateChange, int jobId)
