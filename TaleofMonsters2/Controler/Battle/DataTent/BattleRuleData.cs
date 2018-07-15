@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players;
-using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Peoples;
 using TaleofMonsters.Datas.User;
 
@@ -27,15 +26,6 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                     p.Lp = initialPoint;
                     p.Pp = initialPoint;
                 }
-                else
-                {
-                    if (Parm.RuleAddon == PeopleFightRuleAddon.Energy)
-                    {
-                        p.Mp += Parm.RuleLevel;
-                        p.Pp += Parm.RuleLevel;
-                        p.Lp += Parm.RuleLevel;
-                    }
-                }
             }
         }
 
@@ -48,23 +38,20 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                     if (UserProfile.InfoBasic.HealthPoint < 60)
                         lm.AddHpRate(Math.Max(1.0, UserProfile.InfoBasic.HealthPoint)/60 - 1);
                 }
-                else
-                {
-                    if (Parm.RuleAddon == PeopleFightRuleAddon.TowerHp)
-                        lm.MaxHp = lm.MaxHp*(Parm.RuleLevel*40)/100;
-                }
             }
         }
 
 
         public void CheckInitialMonster(Player p, List<int> list, int[] addon)
         {
+            if (addon == null || addon.Length == 0)
+                return;
+
             if (Parm.Reason == PeopleFightReason.SceneQuest)
             {
                 if (!p.IsLeft)
                 {
-                    if (Parm.RuleAddon == PeopleFightRuleAddon.AddUnit)
-                        list.AddRange(addon);
+                    list.AddRange(addon);
                 }
             }
         }
@@ -75,8 +62,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             {
                 if (!p.IsLeft)
                 {
-                    if (Parm.RuleAddon == PeopleFightRuleAddon.Card)
-                        p.DrawNextNCard(null, Parm.RuleLevel, AddCardReasons.InitCard);
+
                 }
             }
         }

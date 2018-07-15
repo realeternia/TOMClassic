@@ -10,7 +10,7 @@
 					a很好
 						ereward|exp
 	a用烟熏
-		efight|Energy|1
+		efight
 			r0
 				s虫群的威力超出你的想象，你只好落荒而逃。
 					a继续

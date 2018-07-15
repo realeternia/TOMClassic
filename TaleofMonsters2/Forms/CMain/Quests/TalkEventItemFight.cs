@@ -28,11 +28,7 @@ namespace TaleofMonsters.Forms.CMain.Quests
             HsActionCallback failCallback = OnFail;
             var parm = new PeopleFightParm();
             parm.Reason = PeopleFightReason.SceneQuest;
-            if (evt.ParamList.Count > 1)
-            {
-                parm.RuleAddon = (PeopleFightRuleAddon)Enum.Parse(typeof(PeopleFightRuleAddon), evt.ParamList[0]);
-                parm.RuleLevel = int.Parse(evt.ParamList[1]);
-            }
+
             int enemyId = 0;
             if (config.EnemyName == "check")//特殊处理标记
                 enemyId = UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.SceneQuestRandPeopleId);
