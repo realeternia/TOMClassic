@@ -58,12 +58,12 @@ namespace TaleofMonsters.Controler.Battle.Components
             
             for (int i = 0; i < BattleManager.Instance.RelicHolder.RelicList.Count; i++)
             {
-                var trapInfo = BattleManager.Instance.RelicHolder.RelicList[i];
+                var relicInfo = BattleManager.Instance.RelicHolder.RelicList[i];
                 var rect = new Rectangle(6 + 35 * i, 35, 30, 30);
-                if (trapInfo.Owner.IsLeft)
+                if (relicInfo.Owner.IsLeft)
                 {
                     Pen colorPen = new Pen(Color.Red, 3);
-                    e.Graphics.DrawImage(CardAssistant.GetCardImage(trapInfo.SpellId, 30, 30), rect);
+                    e.Graphics.DrawImage(CardAssistant.GetCardImage(relicInfo.SpellId, 30, 30), rect);
                     e.Graphics.DrawRectangle(colorPen, rect);
                     colorPen.Dispose();
                 }

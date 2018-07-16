@@ -9,7 +9,6 @@ using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Cards;
-using TaleofMonsters.Datas.Cards.Spells;
 using TaleofMonsters.Datas.Decks;
 using TaleofMonsters.Datas.HeroPowers;
 
@@ -87,17 +86,6 @@ namespace TaleofMonsters.Controler.Battle.Components
             }
         }
 
-        private class TrapUseInfo : CardInfo
-        {
-            public override void Draw(Graphics g)
-            {
-                var img = HSIcons.GetIconsByEName("rot2");
-                g.DrawImage(img, X, 2, ItemWidth, ItemWidth);
-                Pen p = new Pen(IsLeft ? Brushes.Red : Brushes.Blue, 1);
-                g.DrawRectangle(p, X, 2, ItemWidth, ItemWidth);
-                p.Dispose();
-            }
-        }
         private class MonsterDieInfo : CardInfo
         {
             public override void Draw(Graphics g)
@@ -110,26 +98,6 @@ namespace TaleofMonsters.Controler.Battle.Components
             }
         }
 
-        private class TrapItem : IFlowItem
-        {
-            public bool IsLeft { get; set; }
-            public int X { get; set; }
-            public int Id { get; set; }
-
-            public Image ShowTip()
-            {
-                return DrawTool.GetImageByString("这是一个陷阱!!", 100);
-            }
-
-            public void Draw(Graphics g)
-            {
-                var img = HSIcons.GetIconsByEName("rot9");
-                g.DrawImage(img, X, 2, ItemWidth, ItemWidth);
-                Pen p = new Pen(IsLeft ? Brushes.Red : Brushes.Blue, 1);
-                g.DrawRectangle(p, X, 2, ItemWidth, ItemWidth);
-                p.Dispose();
-            }
-        }
         #endregion
 
         private const int ItemWidth = 20;
@@ -202,36 +170,7 @@ namespace TaleofMonsters.Controler.Battle.Components
         public void OnPlayerUseCard(int cardId, int level, bool isLeft)
         {
             IFlowItem item = null;
-            if (SpellBook.IsTrap(cardId))
-            {
-                item = new TrapItem
-                {
-                    IsLeft = isLeft,
-                    X = 0,
-                    Id = CardIndex++
-                };
-
-            }
-            else
-            {
-                item = new CardInfo
-                {
-                    CardId = cardId,
-                    Level = level,
-                    IsLeft = isLeft,
-                    X = 0,
-                    Id = CardIndex++
-                };
-            }
-            if (cardList.Count > 0)
-                item.X = Math.Min(0, cardList[cardList.Count - 1].X - ItemWidth);
-            cardList.Add(item);
-            Invalidate();
-        }
-
-        public void OnPlayerTrapTriggered(int cardId, int level, bool isLeft)
-        {
-            var item = new TrapUseInfo
+            item = new CardInfo
             {
                 CardId = cardId,
                 Level = level,
@@ -243,6 +182,11 @@ namespace TaleofMonsters.Controler.Battle.Components
                 item.X = Math.Min(0, cardList[cardList.Count - 1].X - ItemWidth);
             cardList.Add(item);
             Invalidate();
+        }
+
+        public void OnPlayerRelicTriggered(int cardId, int level, bool isLeft)
+        {
+
         }
 
         public void OnPlayerKillMonster(int cardId, int level, bool isLeft)

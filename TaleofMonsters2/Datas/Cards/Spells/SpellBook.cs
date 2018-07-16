@@ -40,13 +40,6 @@ namespace TaleofMonsters.Datas.Cards.Spells
             return "";
         }
 
-        public static bool IsTrap(int id)
-        {
-            if (ConfigIdManager.GetCardType(id) != CardTypes.Spell)
-                return false;
-            return ConfigData.GetSpellConfig(id).Remark.Contains("陷阱");
-        }
-
         public static Image GetSpellImage(int id, int width, int height)
         {
             SpellConfig spellConfig = ConfigData.GetSpellConfig(id);

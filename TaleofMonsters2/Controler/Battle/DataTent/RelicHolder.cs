@@ -18,7 +18,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
     {
         public List<Relic> RelicList { get; private set; }
 
-        public event Player.PlayerUseCardEventHandler OnTrapRemove;
+        public event Player.PlayerUseCardEventHandler OnRelicRemove;
 
         public RelicHolder()
         {
@@ -44,13 +44,13 @@ namespace TaleofMonsters.Controler.Battle.DataTent
 
         public void RemoveRandomRelic(Player target)
         {
-            var myTrapList = RelicList.FindAll(trap => trap.Owner.IsLeft == target.IsLeft);
-            if (myTrapList.Count > 0)
+            var myRelicList = RelicList.FindAll(relic => relic.Owner.IsLeft == target.IsLeft);
+            if (myRelicList.Count > 0)
             {
-                var trap = myTrapList[MathTool.GetRandom(myTrapList.Count)];
-                RelicList.Remove(trap);
-                if (OnTrapRemove != null)
-                    OnTrapRemove(trap.SpellId, trap.Level, target.IsLeft);
+                var relic = myRelicList[MathTool.GetRandom(myRelicList.Count)];
+                RelicList.Remove(relic);
+                if (OnRelicRemove != null)
+                    OnRelicRemove(relic.SpellId, relic.Level, target.IsLeft);
             }
         }
 
@@ -59,26 +59,26 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             if (MathTool.GetRandom(100) >= relic.Rate)
                 relic.Owner.AddMp(-config.ManaCost);
             RelicList.RemoveAll(s => s.Id == relic.Id);
-            if (OnTrapRemove != null)
-                OnTrapRemove(relic.SpellId, relic.Level, relic.Owner.IsLeft);
+            if (OnRelicRemove != null)
+                OnRelicRemove(relic.SpellId, relic.Level, relic.Owner.IsLeft);
         }
 
         public bool CheckOnUseCard(ActiveCard selectCard, Point location, IPlayer targetPlayer)
         {
-            foreach (var trap in RelicList)
+            foreach (var relic in RelicList)
             {
-                if (trap.Owner.IsLeft == targetPlayer.IsLeft)
+                if (relic.Owner.IsLeft == targetPlayer.IsLeft)
                     continue;
 
-                var relicConfig = ConfigData.GetRelicConfig(trap.Id);
+                var relicConfig = ConfigData.GetRelicConfig(relic.Id);
                 if (relicConfig.EffectUse != null)
                 {
-                    if (trap.Owner.Mp >= relicConfig.ManaCost &&
-                        relicConfig.EffectUse(trap.Owner, targetPlayer, trap, selectCard.CardId,
+                    if (relic.Owner.Mp >= relicConfig.ManaCost &&
+                        relicConfig.EffectUse(relic.Owner, targetPlayer, relic, selectCard.CardId,
                             (int) selectCard.CardType))
                     {
-                        RemoveRelic(trap, relicConfig);
-                        NLog.Debug("CheckOnUseCard id={0} cardId={1}", trap.Id, selectCard.CardId);
+                        RemoveRelic(relic, relicConfig);
+                        NLog.Debug("CheckOnUseCard id={0} cardId={1}", relic.Id, selectCard.CardId);
                         BattleManager.Instance.EffectQueue.Add(
                             new MonsterBindEffect(EffectBook.GetEffect(relicConfig.UnitEffect), location, false));
 
