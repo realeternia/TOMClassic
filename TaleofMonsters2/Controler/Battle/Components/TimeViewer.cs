@@ -4,8 +4,6 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
-using TaleofMonsters.Core.Loader;
-using TaleofMonsters.Datas.Cards;
 
 namespace TaleofMonsters.Controler.Battle.Components
 {
@@ -55,34 +53,8 @@ namespace TaleofMonsters.Controler.Battle.Components
 
             if (!isShow)
                 return;
-            
-            for (int i = 0; i < BattleManager.Instance.RelicHolder.RelicList.Count; i++)
-            {
-                var relicInfo = BattleManager.Instance.RelicHolder.RelicList[i];
-                var rect = new Rectangle(6 + 35 * i, 35, 30, 30);
-                if (relicInfo.Owner.IsLeft)
-                {
-                    Pen colorPen = new Pen(Color.Red, 3);
-                    e.Graphics.DrawImage(CardAssistant.GetCardImage(relicInfo.Id, 30, 30), rect);
-                    e.Graphics.DrawRectangle(colorPen, rect);
-                    colorPen.Dispose();
-                }
-                else
-                {
-                    Pen colorPen = new Pen(Color.Blue, 3);
-                    e.Graphics.DrawImage(HSIcons.GetIconsByEName("rot9"), rect);
-                    e.Graphics.DrawRectangle(colorPen, rect);
-                    colorPen.Dispose();
-                }
-            }
 
-            var bgImg = PicLoader.Read("System", "w0.JPG");
-            for (int i = BattleManager.Instance.RelicHolder.RelicList.Count; i < GameConstants.MaxRelicCount; i++)
-            {
-                var rect = new Rectangle(6 + 35 * i, 35, 30, 30);
-                e.Graphics.DrawImage(bgImg, rect);
-            }
-            bgImg.Dispose();
+            BattleManager.Instance.RelicHolder.Draw(e.Graphics);
         }
     }
 }

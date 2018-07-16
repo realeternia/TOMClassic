@@ -144,7 +144,6 @@
     <Compile Include="Controler\Battle\Data\MemMonster\Component\BuffManager.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\Component\HpBar.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\Component\SkillManager.cs" />
-    <Compile Include="Controler\Battle\Data\MemWeapon\Relic.cs" />
     <Compile Include="Controler\Battle\Data\MonsterAuro.cs" />
     <Compile Include="Controler\Battle\Data\MemCard\ActiveCard.cs" />
     <Compile Include="Controler\Battle\Data\MemFlow\FlowItemInfo.cs" />

@@ -57,7 +57,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 
         public void RemoveRandomTrap()
         {
-            BattleManager.Instance.RelicHolder.RemoveRandomRelic(self);
         }
 
         public void AddSpellMissile(IMonster target, ISpell spell, Point mouse, string effect)

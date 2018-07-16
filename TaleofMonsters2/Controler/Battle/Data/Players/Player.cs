@@ -299,8 +299,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             AddPp(-selectCard.Pp);
 
             var rival = Rival as Player;
-            if (BattleManager.Instance.RelicHolder.CheckOnUseCard(selectCard, location, rival))
-                return false;
+            BattleManager.Instance.RelicHolder.CheckOnUseCard(selectCard, location, rival);
 
             SpikeManager.OnUseCard(selectCard.CardType);
             BattleManager.Instance.MonsterQueue.OnPlayerUseCard(this, (int)selectCard.CardType, selectCard.Level);
@@ -402,7 +401,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 var weaponConfig = ConfigData.GetWeaponConfig(card.CardId);
                 if (weaponConfig.RelicId > 0)
                 {
-                    BattleManager.Instance.RelicHolder.AddRelic(this, weaponConfig.RelicId, card.Level);
+                    BattleManager.Instance.RelicHolder.AddRelic(this, weaponConfig.RelicId, card.Level, weaponConfig.Dura);
                 }
                 else
                 {

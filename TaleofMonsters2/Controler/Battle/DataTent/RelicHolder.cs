@@ -2,13 +2,13 @@
 using System.Drawing;
 using ConfigDatas;
 using NarlonLib.Log;
-using NarlonLib.Math;
 using TaleofMonsters.Controler.Battle.Data.MemCard;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
-using TaleofMonsters.Controler.Battle.Data.MemWeapon;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Loader;
+using TaleofMonsters.Datas.Cards;
 using TaleofMonsters.Datas.Effects;
 using TaleofMonsters.Datas.Effects.Facts;
 
@@ -16,50 +16,48 @@ namespace TaleofMonsters.Controler.Battle.DataTent
 {
     internal class RelicHolder
     {
-        public List<Relic> RelicList { get; private set; }
+        internal class Relic : IRelic
+        {
+            public Player Owner { get; set; }
+            public int Id { get; set; }//weapon表id
+            public int Level { get; set; }//技能的等级
+            public int Life { get; set; }
+        }
 
-        public event Player.PlayerUseCardEventHandler OnRelicRemove;
+        private List<Relic> relicList;
 
         public RelicHolder()
         {
-            RelicList = new List<Relic>();
+            relicList = new List<Relic>();
         }
 
-        public void AddRelic(Player owner, int id, int lv)
+        public void AddRelic(Player owner, int id, int lv, int life)
         {
-            if (RelicList.Count >= GameConstants.MaxRelicCount)
-                return;
-
-            RelicList.Add(new Relic
+            relicList.Insert(0, new Relic
             {
                 Owner = owner,
                 Id = id,
                 Level = lv,
+                Life = life
             });
-        }
 
-        public void RemoveRandomRelic(Player target)
-        {
-            var myRelicList = RelicList.FindAll(relic => relic.Owner.IsLeft == target.IsLeft);
-            if (myRelicList.Count > 0)
+            if (relicList.Count > GameConstants.MaxRelicCount)
             {
-                var relic = myRelicList[MathTool.GetRandom(myRelicList.Count)];
-                RelicList.Remove(relic);
-                if (OnRelicRemove != null)
-                    OnRelicRemove(relic.Id, relic.Level, target.IsLeft);
+                relicList.RemoveAt(relicList.Count);
             }
+
         }
 
-        private void RemoveRelic(Relic relic)
+        private void TriggerRelic(Relic relic)
         {
-            RelicList.RemoveAll(s => s.Id == relic.Id);
-            if (OnRelicRemove != null)
-                OnRelicRemove(relic.Id, relic.Level, relic.Owner.IsLeft);
+            relic.Life--;
+            if (relic.Life <= 0)
+                relicList.Remove(relic);
         }
 
-        public bool CheckOnUseCard(ActiveCard selectCard, Point location, IPlayer targetPlayer)
+        public void CheckOnUseCard(ActiveCard selectCard, Point location, IPlayer targetPlayer)
         {
-            foreach (var relic in RelicList)
+            foreach (var relic in relicList)
             {
                 if (relic.Owner.IsLeft == targetPlayer.IsLeft)
                     continue;
@@ -71,22 +69,20 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                     relicConfig.EffectUse(relic.Owner, targetPlayer, relic, selectCard.CardId, (int) selectCard.CardType, ref result);
                     if (result)
                     {
-                        RemoveRelic(relic);
+                        TriggerRelic(relic);
                         NLog.Debug("CheckOnUseCard id={0} cardId={1}", relic.Id, selectCard.CardId);
                         BattleManager.Instance.EffectQueue.Add(
                             new MonsterBindEffect(EffectBook.GetEffect(relicConfig.RelicEffect), location, false));
 
-                        return true;
+                        return;
                     }
                 }
             }
-
-            return false;
         }
 
         public void CheckOnSummon(IMonster mon, IPlayer targetPlayer)
         {
-            foreach (var relic in RelicList)
+            foreach (var relic in relicList)
             {
                 if (relic.Owner.IsLeft == targetPlayer.IsLeft)
                     continue;
@@ -98,7 +94,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                     relicConfig.EffectSummon(relic.Owner, targetPlayer, relic, mon, relic.Level, ref result);
                     if (result)
                     {
-                        RemoveRelic(relic);
+                        TriggerRelic(relic);
                         NLog.Debug("CheckOnSummon id={0} cardId={1}", relic.Id, mon.Id);
                         BattleManager.Instance.EffectQueue.Add(
                             new MonsterBindEffect(EffectBook.GetEffect(relicConfig.RelicEffect), mon as LiveMonster, false));
@@ -106,6 +102,28 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                     }
                 }
             }
+        }
+
+        public void Draw(Graphics g)
+        {
+            for (int i = 0; i < relicList.Count; i++)
+            {
+                var relicInfo = relicList[i];
+                var rect = new Rectangle(6 + 35 * i, 35, 30, 30);
+                g.DrawImage(CardAssistant.GetCardImage(relicInfo.Id, 30, 30), rect);
+
+                Pen colorPen = new Pen(relicInfo.Owner.IsLeft ? Color.Red : Color.Blue, 3);
+                g.DrawRectangle(colorPen, rect);
+                colorPen.Dispose();
+            }
+
+            var bgImg = PicLoader.Read("System", "w0.JPG");
+            for (int i = relicList.Count; i < GameConstants.MaxRelicCount; i++)
+            {
+                var rect = new Rectangle(6 + 35 * i, 35, 30, 30);
+                g.DrawImage(bgImg, rect);
+            }
+            bgImg.Dispose();
         }
     }
 }

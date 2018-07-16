@@ -154,7 +154,6 @@ namespace TaleofMonsters.Controler.Battle
             BattleManager.Instance.PlayerManager.LeftPlayer.OnShowCardSelector += LeftPlayerShowCardSelector;
             BattleManager.Instance.PlayerManager.LeftPlayer.OnUseCard += cardFlow1.OnPlayerUseCard;
             BattleManager.Instance.PlayerManager.RightPlayer.OnUseCard += cardFlow1.OnPlayerUseCard;
-            BattleManager.Instance.RelicHolder.OnRelicRemove += cardFlow1.OnPlayerRelicTriggered;
             BattleManager.Instance.PlayerManager.LeftPlayer.OnKillEnemy += cardFlow1.OnPlayerKillMonster;
             BattleManager.Instance.PlayerManager.RightPlayer.OnKillEnemy += cardFlow1.OnPlayerKillMonster;
             BattleManager.Instance.MemMap = new MemRowColumnMap(mapName, 0);

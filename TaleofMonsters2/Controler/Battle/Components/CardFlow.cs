@@ -184,11 +184,6 @@ namespace TaleofMonsters.Controler.Battle.Components
             Invalidate();
         }
 
-        public void OnPlayerRelicTriggered(int cardId, int level, bool isLeft)
-        {
-
-        }
-
         public void OnPlayerKillMonster(int cardId, int level, bool isLeft)
         {
             var item = new MonsterDieInfo
