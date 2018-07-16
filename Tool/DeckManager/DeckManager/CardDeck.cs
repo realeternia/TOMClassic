@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Net;
 using ConfigDatas;
 
 namespace DeckManager
@@ -26,6 +27,8 @@ namespace DeckManager
                 if (Id > 0)
                 {
                     var img = ImageCache.GetImage(Id);
+                    if (img == null) //可能是老卡
+                        return;
                     g.DrawImage(img, x, y, wid, het);
                     var cardConfig = CardConfigManager.GetCardConfig(Id);
                     var brush = new SolidBrush(Color.FromName(HSTypes.I2QualityColor((int)cardConfig.Quality)));

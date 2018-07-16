@@ -77,7 +77,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             }
 
             var bgImg = PicLoader.Read("System", "w0.JPG");
-            for (int i = BattleManager.Instance.RelicHolder.RelicList.Count; i < GameConstants.MaxTrapCount; i++)
+            for (int i = BattleManager.Instance.RelicHolder.RelicList.Count; i < GameConstants.MaxRelicCount; i++)
             {
                 var rect = new Rectangle(6 + 35 * i, 35, 30, 30);
                 e.Graphics.DrawImage(bgImg, rect);

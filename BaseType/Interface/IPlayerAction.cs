@@ -33,8 +33,6 @@ namespace ConfigDatas
         void ExchangeMonster(IMonster target, int lv);
         void AddResource(int type, int number);
 
-        bool CanUseTrap();
-        void AddTrap(int id, int spellId, int lv, double rate, int dam, double help);
         void RemoveRandomTrap();
         void AddSpellMissile(IMonster target, ISpell spell, System.Drawing.Point mouse, string effect);
         void AddSpellRowMissile(ISpell spell, int count, System.Drawing.Point mouse, string effect);

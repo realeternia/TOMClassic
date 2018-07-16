@@ -14,6 +14,8 @@ namespace DeckManager
                 return cacheDict[cardId];
 
             var cardConfig = CardConfigManager.GetCardConfig(cardId);
+            if (cardConfig.Id == 0)
+                return null;
             var img = Image.FromFile(string.Format("{0}{1}/{2}.JPG", pathParent, cardConfig.GetImageFolderName(), cardConfig.Icon));
             cacheDict[cardId] = img;
             return img;

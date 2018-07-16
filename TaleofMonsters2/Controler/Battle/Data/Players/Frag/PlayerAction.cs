@@ -55,18 +55,6 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             target.Action.Transform(MonsterBook.GetRandMonsterId());
         }
 
-        public bool CanUseTrap()
-        {
-            if (BattleManager.Instance.RelicHolder.RelicList.Count >= GameConstants.MaxTrapCount)
-                return false;
-            return true;
-        }
-
-        public void AddTrap(int id, int spellId, int lv, double rate, int damage, double help)
-        {
-            BattleManager.Instance.RelicHolder.AddRelic(self, id, spellId, lv, rate, damage, help);
-        }
-
         public void RemoveRandomTrap()
         {
             BattleManager.Instance.RelicHolder.RemoveRandomRelic(self);

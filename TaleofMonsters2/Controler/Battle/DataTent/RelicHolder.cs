@@ -27,7 +27,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
 
         public void AddRelic(Player owner, int id, int spellId, int lv, double rate, int damage, double help)
         {
-            if (RelicList.Count >= GameConstants.MaxTrapCount)
+            if (RelicList.Count >= GameConstants.MaxRelicCount)
                 return;
 
             RelicList.Add(new Relic
