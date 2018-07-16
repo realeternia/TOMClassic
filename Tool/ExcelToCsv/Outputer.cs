@@ -219,13 +219,13 @@ namespace ExcelToCsv
                 {
                     result = datas[i].ToString() == ""
                                   ? "null"
-                                  : string.Format("delegate(IPlayer p, IPlayer r, IRelic t, int cid, int type){{{0}}}", datas[i]);
+                                  : string.Format("delegate(IPlayer p, IPlayer r, IRelic t, int cid, int type,ref bool result){{{0}}}", datas[i]);
                 }
                 else if (typeStr == "RelicSummonDelegate")
                 {
                     result = datas[i].ToString() == ""
                                   ? "null"
-                                  : string.Format("delegate(IPlayer p, IPlayer r, IRelic t, IMonster m,int lv){{{0}}}", datas[i]);
+                                  : string.Format("delegate(IPlayer p, IPlayer r, IRelic t, IMonster m,int lv,ref bool result){{{0}}}", datas[i]);
                 }
                 else if (typeStr == "EquipMonsterPickDelegate")
                 {

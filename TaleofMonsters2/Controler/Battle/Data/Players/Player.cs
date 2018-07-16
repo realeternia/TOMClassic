@@ -399,14 +399,22 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
             try
             {
-                Weapon wpn = new Weapon(card.CardId);
-                wpn.UpgradeToLevel(card.Level);
+                var weaponConfig = ConfigData.GetWeaponConfig(card.CardId);
+                if (weaponConfig.RelicId > 0)
+                {
+                    BattleManager.Instance.RelicHolder.AddRelic(this, weaponConfig.RelicId, card.Level);
+                }
+                else
+                {
+                    Weapon wpn = new Weapon(card.CardId);
+                    wpn.UpgradeToLevel(card.Level);
 
-                var tWeapon = new TrueWeapon(lm, card.Level, wpn);
-                lm.AddWeapon(tWeapon, true);
+                    var tWeapon = new TrueWeapon(lm, card.Level, wpn);
+                    lm.AddWeapon(tWeapon, true);
 
-                if (wpn.Luk != 0)
-                    AddLuk(lm, wpn.Luk);
+                    if (wpn.Luk != 0)
+                        AddLuk(lm, wpn.Luk);
+                }
             }
             catch (Exception e)
             {

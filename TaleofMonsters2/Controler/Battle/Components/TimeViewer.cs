@@ -63,7 +63,7 @@ namespace TaleofMonsters.Controler.Battle.Components
                 if (relicInfo.Owner.IsLeft)
                 {
                     Pen colorPen = new Pen(Color.Red, 3);
-                    e.Graphics.DrawImage(CardAssistant.GetCardImage(relicInfo.SpellId, 30, 30), rect);
+                    e.Graphics.DrawImage(CardAssistant.GetCardImage(relicInfo.Id, 30, 30), rect);
                     e.Graphics.DrawRectangle(colorPen, rect);
                     colorPen.Dispose();
                 }

@@ -318,8 +318,11 @@ namespace TaleofMonsters.Controler.Battle
                         var pos = new Point(mouseX/cardSize*cardSize, mouseY/cardSize*cardSize);
                         pickPlayer.UseMonster(leftSelectCard, pos);
                     }
-                    else if (myCursor.Name == "equip" && lm != null)
+                    else if (myCursor.Name == "equip")
                     {
+                        var weaponConfig = ConfigData.GetWeaponConfig(leftSelectCard.CardId);
+                        if(weaponConfig.RelicId == 0 && lm == null)
+                            return;
                         pickPlayer.UseWeapon(lm, leftSelectCard);
                     }
                     else if (myCursor.Name == "sidekick" && lm != null)
@@ -398,24 +401,29 @@ namespace TaleofMonsters.Controler.Battle
                 }
                 else if (leftSelectCard.CardType == CardTypes.Weapon)
                 {
-                    LiveMonster lm = BattleLocationManager.GetPlaceMonster(mouseX, mouseY);
-                    if (lm != null && lm.CanAddWeapon() && lm.IsLeft)
+                    var weaponConfig = ConfigData.GetWeaponConfig(leftSelectCard.CardId);
+                    if (weaponConfig.RelicId <= 0)
+                    {
+                        LiveMonster lm = BattleLocationManager.GetPlaceMonster(mouseX, mouseY);
+                        if (lm != null && lm.CanAddWeapon() && lm.IsLeft)
+                            cursorname = "equip";
+                    }
+                    else
+                    {//神器随便用
                         cursorname = "equip";
+                    }
                 }
                 else if (leftSelectCard.CardType == CardTypes.Spell)
                 {
-                    if (mouseX > 0)
+                    SpellConfig spellConfig = ConfigData.GetSpellConfig(leftSelectCard.CardId);
+                    if (BattleLocationManager.IsPlaceCanCast(mouseX, mouseY, spellConfig.Target))
                     {
-                        SpellConfig spellConfig = ConfigData.GetSpellConfig(leftSelectCard.CardId);
-                        if (BattleLocationManager.IsPlaceCanCast(mouseX, mouseY, spellConfig.Target))
-                        {
-                            magicRegion.Active = true;
-                            cursorname ="cast";
-                        }
-                        else
-                        {
-                            cursorname = "nocast";
-                        }
+                        magicRegion.Active = true;
+                        cursorname = "cast";
+                    }
+                    else
+                    {
+                        cursorname = "nocast";
                     }
                 }
             }

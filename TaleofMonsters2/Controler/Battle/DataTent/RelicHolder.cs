@@ -25,7 +25,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             RelicList = new List<Relic>();
         }
 
-        public void AddRelic(Player owner, int id, int spellId, int lv, double rate, int damage, double help)
+        public void AddRelic(Player owner, int id, int lv)
         {
             if (RelicList.Count >= GameConstants.MaxRelicCount)
                 return;
@@ -34,11 +34,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             {
                 Owner = owner,
                 Id = id,
-                SpellId = spellId,
                 Level = lv,
-                Rate = rate,
-                Damage = damage,
-                Help = help
             });
         }
 
@@ -50,17 +46,15 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 var relic = myRelicList[MathTool.GetRandom(myRelicList.Count)];
                 RelicList.Remove(relic);
                 if (OnRelicRemove != null)
-                    OnRelicRemove(relic.SpellId, relic.Level, target.IsLeft);
+                    OnRelicRemove(relic.Id, relic.Level, target.IsLeft);
             }
         }
 
-        private void RemoveRelic(Relic relic, RelicConfig config)
+        private void RemoveRelic(Relic relic)
         {
-            if (MathTool.GetRandom(100) >= relic.Rate)
-                relic.Owner.AddMp(-config.ManaCost);
             RelicList.RemoveAll(s => s.Id == relic.Id);
             if (OnRelicRemove != null)
-                OnRelicRemove(relic.SpellId, relic.Level, relic.Owner.IsLeft);
+                OnRelicRemove(relic.Id, relic.Level, relic.Owner.IsLeft);
         }
 
         public bool CheckOnUseCard(ActiveCard selectCard, Point location, IPlayer targetPlayer)
@@ -70,17 +64,17 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 if (relic.Owner.IsLeft == targetPlayer.IsLeft)
                     continue;
 
-                var relicConfig = ConfigData.GetRelicConfig(relic.Id);
+                var relicConfig = ConfigData.GetWeaponConfig(relic.Id);
                 if (relicConfig.EffectUse != null)
                 {
-                    if (relic.Owner.Mp >= relicConfig.ManaCost &&
-                        relicConfig.EffectUse(relic.Owner, targetPlayer, relic, selectCard.CardId,
-                            (int) selectCard.CardType))
+                    bool result = false;
+                    relicConfig.EffectUse(relic.Owner, targetPlayer, relic, selectCard.CardId, (int) selectCard.CardType, ref result);
+                    if (result)
                     {
-                        RemoveRelic(relic, relicConfig);
+                        RemoveRelic(relic);
                         NLog.Debug("CheckOnUseCard id={0} cardId={1}", relic.Id, selectCard.CardId);
                         BattleManager.Instance.EffectQueue.Add(
-                            new MonsterBindEffect(EffectBook.GetEffect(relicConfig.UnitEffect), location, false));
+                            new MonsterBindEffect(EffectBook.GetEffect(relicConfig.RelicEffect), location, false));
 
                         return true;
                     }
@@ -97,16 +91,17 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 if (relic.Owner.IsLeft == targetPlayer.IsLeft)
                     continue;
 
-                var relicConfig = ConfigData.GetRelicConfig(relic.Id);
+                var relicConfig = ConfigData.GetWeaponConfig(relic.Id);
                 if (relicConfig.EffectSummon != null)
                 {
-                    if (relic.Owner.Mp >= relicConfig.ManaCost &&
-                        relicConfig.EffectSummon(relic.Owner, targetPlayer, relic, mon, relic.Level))
+                    bool result = false;
+                    relicConfig.EffectSummon(relic.Owner, targetPlayer, relic, mon, relic.Level, ref result);
+                    if (result)
                     {
-                        RemoveRelic(relic, relicConfig);
+                        RemoveRelic(relic);
                         NLog.Debug("CheckOnSummon id={0} cardId={1}", relic.Id, mon.Id);
                         BattleManager.Instance.EffectQueue.Add(
-                            new MonsterBindEffect(EffectBook.GetEffect(relicConfig.UnitEffect), mon as LiveMonster, false));
+                            new MonsterBindEffect(EffectBook.GetEffect(relicConfig.RelicEffect), mon as LiveMonster, false));
                         return;
                     }
                 }
