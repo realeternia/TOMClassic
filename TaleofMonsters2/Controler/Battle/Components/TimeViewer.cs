@@ -56,9 +56,9 @@ namespace TaleofMonsters.Controler.Battle.Components
             if (!isShow)
                 return;
             
-            for (int i = 0; i < BattleManager.Instance.TrapHolder.TrapList.Count; i++)
+            for (int i = 0; i < BattleManager.Instance.RelicHolder.RelicList.Count; i++)
             {
-                var trapInfo = BattleManager.Instance.TrapHolder.TrapList[i];
+                var trapInfo = BattleManager.Instance.RelicHolder.RelicList[i];
                 var rect = new Rectangle(6 + 35 * i, 35, 30, 30);
                 if (trapInfo.Owner.IsLeft)
                 {
@@ -77,7 +77,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             }
 
             var bgImg = PicLoader.Read("System", "w0.JPG");
-            for (int i = BattleManager.Instance.TrapHolder.TrapList.Count; i < GameConstants.MaxTrapCount; i++)
+            for (int i = BattleManager.Instance.RelicHolder.RelicList.Count; i < GameConstants.MaxTrapCount; i++)
             {
                 var rect = new Rectangle(6 + 35 * i, 35, 30, 30);
                 e.Graphics.DrawImage(bgImg, rect);

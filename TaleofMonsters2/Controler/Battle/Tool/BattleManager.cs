@@ -32,7 +32,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
         public MissileQueue MissileQueue { get; private set; }
         public ArticleQueue ArticleQueue { get; private set; } //场景物件
         public MemRowColumnMap MemMap { get; set; }
-        public TrapHolder TrapHolder { get; private set; }
+        public RelicHolder RelicHolder { get; private set; }
 
         public bool IsNight;
         public int RoundMark;//目前一个roundmark代表0.05s
@@ -53,7 +53,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
             PlayerManager = new PlayerManager();
             MissileQueue = new MissileQueue();
             ArticleQueue = new ArticleQueue();
-            TrapHolder = new TrapHolder();
+            RelicHolder = new RelicHolder();
             IsNight = false;
         }
 

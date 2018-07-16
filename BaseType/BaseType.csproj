@@ -62,7 +62,7 @@
     <Compile Include="Interface\IPlayerAction.cs" />
     <Compile Include="Interface\IBuff.cs" />
     <Compile Include="Interface\ISkill.cs" />
-    <Compile Include="Interface\ITrap.cs" />
+    <Compile Include="Interface\IRelic.cs" />
     <Compile Include="Interface\IMonster.cs" />
     <Compile Include="Interface\IMap.cs" />
     <Compile Include="Interface\IPlayer.cs" />

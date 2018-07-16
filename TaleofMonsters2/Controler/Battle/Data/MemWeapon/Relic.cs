@@ -1,9 +1,9 @@
 ﻿using ConfigDatas;
 using TaleofMonsters.Controler.Battle.Data.Players;
 
-namespace TaleofMonsters.Controler.Battle.Data.MemSpell
+namespace TaleofMonsters.Controler.Battle.Data.MemWeapon
 {
-    internal class Trap : ITrap
+    internal class Relic : IRelic
     {
         public Player Owner { get; set; }
         public int Id { get; set; }//配置表id

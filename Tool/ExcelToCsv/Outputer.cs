@@ -215,17 +215,17 @@ namespace ExcelToCsv
                                   ? "null"
                                   : string.Format("delegate(ISpell spl, IPlayer p, IMonster t){{if({0})return true;return false;}}", datas[i]);
                 }
-                else if (typeStr == "SpellTrapAddCardDelegate")
+                else if (typeStr == "RelicAddCardDelegate")
                 {
                     result = datas[i].ToString() == ""
                                   ? "null"
-                                  : string.Format( "delegate(IPlayer p, IPlayer r, ITrap t, int cid, int type){{{0}}}", datas[i]);
+                                  : string.Format("delegate(IPlayer p, IPlayer r, IRelic t, int cid, int type){{{0}}}", datas[i]);
                 }
-                else if (typeStr == "SpellTrapSummonDelegate")
+                else if (typeStr == "RelicSummonDelegate")
                 {
                     result = datas[i].ToString() == ""
                                   ? "null"
-                                  : string.Format( "delegate(IPlayer p, IPlayer r, ITrap t, IMonster m,int lv){{{0}}}", datas[i]);
+                                  : string.Format("delegate(IPlayer p, IPlayer r, IRelic t, IMonster m,int lv){{{0}}}", datas[i]);
                 }
                 else if (typeStr == "EquipMonsterPickDelegate")
                 {

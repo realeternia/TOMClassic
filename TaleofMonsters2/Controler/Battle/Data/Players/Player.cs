@@ -299,7 +299,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             AddPp(-selectCard.Pp);
 
             var rival = Rival as Player;
-            if (BattleManager.Instance.TrapHolder.CheckTrapOnUseCard(selectCard, location, rival))
+            if (BattleManager.Instance.RelicHolder.CheckOnUseCard(selectCard, location, rival))
                 return false;
 
             SpikeManager.OnUseCard(selectCard.CardType);
@@ -377,7 +377,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 NLog.Debug("UseMonster pid={0} cid={1}", PeopleId, card.CardId);
 
                 var rival = Rival as Player;
-                BattleManager.Instance.TrapHolder.CheckTrapOnSummon(newMon, rival);
+                BattleManager.Instance.RelicHolder.CheckOnSummon(newMon, rival);
                 if (HolyBook.HasWord("holyman"))
                     newMon.BuffManager.AddBuff(BuffConfig.Indexer.HolyShield, 1, 99);
                 if (mon.Luk != 0)

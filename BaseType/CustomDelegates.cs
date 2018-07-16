@@ -14,8 +14,8 @@ namespace ConfigDatas
     public delegate bool SpellCheckDelegate(ISpell spell, IPlayer player, IMonster target);
     public delegate void SpellEffectDelegate(ISpell spell, IMap map, IPlayer player, IPlayer rival, IMonster target, System.Drawing.Point mouse);
 
-    public delegate bool SpellTrapAddCardDelegate(IPlayer player, IPlayer rival, ITrap trap, int cardId, int cardType);
-    public delegate bool SpellTrapSummonDelegate(IPlayer player, IPlayer rival, ITrap trap, IMonster mon, int level);
+    public delegate bool RelicAddCardDelegate(IPlayer player, IPlayer rival, IRelic relic, int cardId, int cardType);
+    public delegate bool RelicSummonDelegate(IPlayer player, IPlayer rival, IRelic relic, IMonster mon, int level);
 
     public delegate bool EquipMonsterPickDelegate(IMonster src);
 

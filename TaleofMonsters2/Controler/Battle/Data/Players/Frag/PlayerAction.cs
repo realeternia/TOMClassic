@@ -57,19 +57,19 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 
         public bool CanUseTrap()
         {
-            if (BattleManager.Instance.TrapHolder.TrapList.Count >= GameConstants.MaxTrapCount)
+            if (BattleManager.Instance.RelicHolder.RelicList.Count >= GameConstants.MaxTrapCount)
                 return false;
             return true;
         }
 
         public void AddTrap(int id, int spellId, int lv, double rate, int damage, double help)
         {
-            BattleManager.Instance.TrapHolder.AddTrap(self, id, spellId, lv, rate, damage, help);
+            BattleManager.Instance.RelicHolder.AddRelic(self, id, spellId, lv, rate, damage, help);
         }
 
         public void RemoveRandomTrap()
         {
-            BattleManager.Instance.TrapHolder.RemoveRandomTrap(self);
+            BattleManager.Instance.RelicHolder.RemoveRandomRelic(self);
         }
 
         public void AddSpellMissile(IMonster target, ISpell spell, Point mouse, string effect)

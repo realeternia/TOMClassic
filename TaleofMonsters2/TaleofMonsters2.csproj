@@ -134,7 +134,7 @@
     <Compile Include="Controler\Battle\Data\Players\Frag\PlayerAction.cs" />
     <Compile Include="Controler\Battle\Data\Players\Frag\PlayerSpecialAttr.cs" />
     <Compile Include="Controler\Battle\Data\Players\Frag\SpikeManager.cs" />
-    <Compile Include="Controler\Battle\DataTent\TrapHolder.cs" />
+    <Compile Include="Controler\Battle\DataTent\RelicHolder.cs" />
     <Compile Include="Controler\Battle\Tool\BattleManager.cs" />
     <Compile Include="Datas\Decks\IMemCardData.cs" />
     <Compile Include="Datas\Effects\Facts\BaseEffect.cs" />
@@ -144,7 +144,7 @@
     <Compile Include="Controler\Battle\Data\MemMonster\Component\BuffManager.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\Component\HpBar.cs" />
     <Compile Include="Controler\Battle\Data\MemMonster\Component\SkillManager.cs" />
-    <Compile Include="Controler\Battle\Data\MemSpell\Trap.cs" />
+    <Compile Include="Controler\Battle\Data\MemWeapon\Relic.cs" />
     <Compile Include="Controler\Battle\Data\MonsterAuro.cs" />
     <Compile Include="Controler\Battle\Data\MemCard\ActiveCard.cs" />
     <Compile Include="Controler\Battle\Data\MemFlow\FlowItemInfo.cs" />
