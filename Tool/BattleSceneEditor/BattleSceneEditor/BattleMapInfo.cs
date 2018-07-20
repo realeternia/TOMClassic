@@ -5,20 +5,17 @@ using System.IO;
 
 namespace BattleSceneEditor
 {
-    internal struct BattleMap
+    internal struct BattleMapInfo
     {
         public int XCount;
         public int YCount;
         public int[,] Cells;
         public Dictionary<string, string> Attrs;
 
-        public BattleMapUnitInfo[] LeftUnits;
-        public BattleMapUnitInfo[] RightUnits;
-
-        public static BattleMap GetMapFromFile(string name)
+        public static BattleMapInfo GetMapFromFile(string name)
         {
             StreamReader sr = new StreamReader(name);
-            BattleMap map = new BattleMap();
+            BattleMapInfo map = new BattleMapInfo();
             var datas = sr.ReadLine().Split('\t');
             map.XCount = int.Parse(datas[0]);
             map.YCount = int.Parse(datas[1]);
@@ -36,6 +33,7 @@ namespace BattleSceneEditor
                 }
             }
 
+            map.Attrs = new Dictionary<string, string>();
             string ln;
             while ((ln = sr.ReadLine()) != null)
             {

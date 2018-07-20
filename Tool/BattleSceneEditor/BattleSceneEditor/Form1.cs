@@ -9,7 +9,7 @@ namespace BattleSceneEditor
     {
         private string path;
 
-        private BattleMap map;
+        private BattleMapInfo map;
         private List<BattleMapUnitInfo> addonUnits = new List<BattleMapUnitInfo>();
 
         public Form1()
@@ -35,7 +35,7 @@ namespace BattleSceneEditor
             path = txt;
             try
             {
-                map = BattleMap.GetMapFromFile(txt);
+                map = BattleMapInfo.GetMapFromFile(txt);
                 Invalidate();
             }
             catch (Exception e)
@@ -58,26 +58,41 @@ namespace BattleSceneEditor
                 for (int j = 0; j < map.YCount; j++)
                 {
                     var cell = map.Cells[i, j];
-                    e.Graphics.FillRectangle(cell == 9 ? Brushes.Green : Brushes.Black, i* cellWidth, j * cellHeight, cellWidth, cellHeight);
+                    var brush = Brushes.Green;
+                    if (Array.IndexOf(map.ColumnCompete, i) >= 0)
+                        brush = Brushes.DarkOrange;
+                    if (Array.IndexOf(map.ColumnMiddle, i) >= 0)
+                        brush = Brushes.IndianRed;
+                    e.Graphics.FillRectangle(brush, i* cellWidth, j * cellHeight, cellWidth, cellHeight);
                     e.Graphics.DrawRectangle(Pens.DarkRed, i * cellWidth, j * cellHeight, cellWidth, cellHeight);
                     e.Graphics.DrawString(string.Format("{0}:{1}",i,j), ft, Brushes.DarkGray, i * cellWidth, j * cellHeight);
                 }
             }
             ft.Dispose();
 
-            string pathParent = "../../PicResource/";
-            //foreach (var unit in map.LeftUnits)
-            //{
-            //    var img = Image.FromFile(string.Format("{0}Monsters/{1}.JPG", pathParent, unit.UnitId % 1000000));
-            //    e.Graphics.DrawImage(img, unit.X * cellWidth, unit.Y * cellHeight, cellWidth, cellHeight);
-            //    img.Dispose();
-            //}
-            //foreach (var unit in map.RightUnits)
-            //{
-            //    var img = Image.FromFile(string.Format("{0}Monsters/{1}.JPG", pathParent, unit.UnitId % 1000000));
-            //    e.Graphics.DrawImage(img, unit.X * cellWidth, unit.Y * cellHeight, cellWidth, cellHeight);
-            //    img.Dispose();
-            //}
+              string pathParent = "../../PicResource/";
+            for (int i = 0; i < map.LeftMon.Length; i += 3)
+            {
+                var unitId = map.LeftMon[i];
+                var xPos = map.LeftMon[i + 1];
+                var yPos = map.LeftMon[i + 2];
+
+                var img = Image.FromFile(string.Format("{0}Monsters/{1}.JPG", pathParent, unitId % 1000000));
+                e.Graphics.DrawImage(img, xPos * cellWidth, yPos * cellHeight, cellWidth, cellHeight);
+                img.Dispose();
+                e.Graphics.DrawRectangle(Pens.Red, xPos * cellWidth, yPos * cellHeight, cellWidth, cellHeight);
+            }
+            for (int i = 0; i < map.RightMon.Length; i += 3)
+            {
+                var unitId = map.RightMon[i];
+                var xPos = map.RightMon[i + 1];
+                var yPos = map.RightMon[i + 2];
+
+                var img = Image.FromFile(string.Format("{0}Monsters/{1}.JPG", pathParent, unitId % 1000000));
+                e.Graphics.DrawImage(img, xPos * cellWidth, yPos * cellHeight, cellWidth, cellHeight);
+                img.Dispose();
+                e.Graphics.DrawRectangle(Pens.Red, xPos * cellWidth, yPos * cellHeight, cellWidth, cellHeight);
+            }
             foreach (var unit in addonUnits)
             {
                 var img = Image.FromFile(string.Format("{0}Monsters/{1}.JPG", pathParent, unit.UnitId % 1000000));
