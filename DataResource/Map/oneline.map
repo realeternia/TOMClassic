@@ -4,3 +4,8 @@
 9	9	9	9	9	9	9	9	9	9	9
 9	9	9	9	9	9	9	9	9	9	9
 9	9	9	9	9	9	9	9	9	9	9
+LeftMon=51018001;0;2
+RightMon=51018001;10;2
+TowerStar=3
+ColumnMiddle=5
+ColumnCompete=3;4;5;6;7

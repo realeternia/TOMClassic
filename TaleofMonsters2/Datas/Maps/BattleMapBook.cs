@@ -21,16 +21,6 @@ namespace TaleofMonsters.Datas.Maps
             return mapType[name];
         }
 
-        public static BattleMapConfig GetMapConfig(string mapName)
-        {
-            foreach (var mapConfig in ConfigData.BattleMapDict.Values)
-            {
-                if (mapConfig.Name == mapName)
-                    return mapConfig;
-            }
-            return null;
-        }
-
         private static BattleMapInfo GetMapFromFile(string name)
         {
             StreamReader sr = new StreamReader(DataLoader.Read("Map", name));
@@ -48,6 +38,16 @@ namespace TaleofMonsters.Datas.Maps
                     for (int j = 0; j < mapInfo.XCount; j++)
                         mapInfo.Cells[j, i] = int.Parse(mapinfos[j]);
                 }
+            }
+
+            mapInfo.Attrs = new Dictionary<string, string>();
+            string ln;
+            while ((ln = sr.ReadLine()) != null)
+            {
+                datas = ln.Split('=');
+                if (datas.Length != 2)
+                    continue;
+                mapInfo.Attrs[datas[0]] = datas[1];
             }
             sr.Close();
             return mapInfo;

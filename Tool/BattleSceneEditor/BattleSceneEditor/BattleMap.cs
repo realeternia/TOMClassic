@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 
 namespace BattleSceneEditor
@@ -8,6 +10,8 @@ namespace BattleSceneEditor
         public int XCount;
         public int YCount;
         public int[,] Cells;
+        public Dictionary<string, string> Attrs;
+
         public BattleMapUnitInfo[] LeftUnits;
         public BattleMapUnitInfo[] RightUnits;
 
@@ -31,33 +35,68 @@ namespace BattleSceneEditor
                     }
                 }
             }
-            //var unitCount = int.Parse(sr.ReadLine());//左边单位布置
-            //map.LeftUnits = new BattleMapUnitInfo[unitCount];
-            //for (int i = 0; i < unitCount; i++)
-            //{
-            //    string[] unitinfos = sr.ReadLine().Split('\t');
-            //    map.LeftUnits[i] = new BattleMapUnitInfo
-            //    {
-            //        X = int.Parse(unitinfos[0]),
-            //        Y = int.Parse(unitinfos[1]),
-            //        UnitId = int.Parse(unitinfos[2])
-            //    };
-            //}
 
-            //unitCount = int.Parse(sr.ReadLine());//右边单位布置
-            //map.RightUnits = new BattleMapUnitInfo[unitCount];
-            //for (int i = 0; i < unitCount; i++)
-            //{
-            //    string[] unitinfos = sr.ReadLine().Split('\t');
-            //    map.RightUnits[i] = new BattleMapUnitInfo
-            //    {
-            //        X = int.Parse(unitinfos[0]),
-            //        Y = int.Parse(unitinfos[1]),
-            //        UnitId = int.Parse(unitinfos[2])
-            //    };
-            //}
+            string ln;
+            while ((ln = sr.ReadLine()) != null)
+            {
+                datas = ln.Split('=');
+                if (datas.Length != 2)
+                    continue;
+                map.Attrs[datas[0]] = datas[1];
+            }
             sr.Close();
             return map;
+        }
+
+        public int[] LeftMon
+        {
+            get
+            {
+                if (!Attrs.ContainsKey("LeftMon"))
+                    return new int[0];
+                return ToIntArray(Attrs["LeftMon"]);
+            }
+        }
+        public int[] RightMon
+        {
+            get
+            {
+                if (!Attrs.ContainsKey("RightMon"))
+                    return new int[0];
+                return ToIntArray(Attrs["RightMon"]);
+            }
+        }
+        public int[] ColumnMiddle
+        {
+            get
+            {
+                if (!Attrs.ContainsKey("ColumnMiddle"))
+                    return new int[0];
+                return ToIntArray(Attrs["ColumnMiddle"]);
+            }
+        }
+        public int[] ColumnCompete
+        {
+            get
+            {
+                if (!Attrs.ContainsKey("ColumnCompete"))
+                    return new int[0];
+                return ToIntArray(Attrs["ColumnCompete"]);
+            }
+        }
+        public int TowerStar
+        {
+            get
+            {
+                if (!Attrs.ContainsKey("TowerStar"))
+                    return 0;
+                return int.Parse(Attrs["TowerStar"]);
+            }
+        }
+        private int[] ToIntArray(string s)
+        {
+            var datas = s.Split(';');
+            return Array.ConvertAll(datas, s1 => int.Parse(s1));
         }
     }
 

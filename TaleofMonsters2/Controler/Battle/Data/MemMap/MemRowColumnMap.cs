@@ -26,12 +26,10 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         private bool isDirty;
         private Image cachImage;
         private BattleMapInfo bMapInfo;
-        private BattleMapConfig mapConfig;
 
         public MemRowColumnMap(string map, int tile)
         {
             bMapInfo = BattleMapBook.GetMap(map);
-            mapConfig = BattleMapBook.GetMapConfig(map);
             CardSize = StageWidth/bMapInfo.XCount;
             RowCount = bMapInfo.YCount;
             ColumnCount = bMapInfo.XCount;
@@ -58,7 +56,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
 
         public void InitUnit(Player player)
         {
-            var unitsPos = player.IsLeft ? mapConfig.LeftMon : mapConfig.RightMon;
+            var unitsPos = player.IsLeft ? bMapInfo.LeftMon : bMapInfo.RightMon;
             for (int i = 0; i < unitsPos.Length; i+=3)
             {
                 var unitId = unitsPos[i];
@@ -84,7 +82,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
                             }
                         }
                     }
-                    towerData.Star = mapConfig.TowerStar;
+                    towerData.Star = bMapInfo.TowerStar;
                 }
 
                 var level = ConfigData.GetLevelExpConfig(player.Level).TowerLevel;
@@ -134,7 +132,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             var cellIdList = new List<int>();
             foreach (var pickCell in Cells)
             {
-                if (Array.IndexOf(mapConfig.ColumnMiddle, pickCell.Xid) >= 0)
+                if (Array.IndexOf(bMapInfo.ColumnMiddle, pickCell.Xid) >= 0)
                     cellIdList.Add(pickCell.Id);
             }
 
@@ -145,7 +143,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             var cellIdList = new List<int>();
             foreach (var pickCell in Cells)
             {
-                if (Array.IndexOf(mapConfig.ColumnCompete, pickCell.Xid) >= 0)
+                if (Array.IndexOf(bMapInfo.ColumnCompete, pickCell.Xid) >= 0)
                     cellIdList.Add(pickCell.Id);
             }
 
