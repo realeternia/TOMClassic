@@ -31,31 +31,31 @@ namespace BattleSceneEditor
                     }
                 }
             }
-            var unitCount = int.Parse(sr.ReadLine());//左边单位布置
-            map.LeftUnits = new BattleMapUnitInfo[unitCount];
-            for (int i = 0; i < unitCount; i++)
-            {
-                string[] unitinfos = sr.ReadLine().Split('\t');
-                map.LeftUnits[i] = new BattleMapUnitInfo
-                {
-                    X = int.Parse(unitinfos[0]),
-                    Y = int.Parse(unitinfos[1]),
-                    UnitId = int.Parse(unitinfos[2])
-                };
-            }
+            //var unitCount = int.Parse(sr.ReadLine());//左边单位布置
+            //map.LeftUnits = new BattleMapUnitInfo[unitCount];
+            //for (int i = 0; i < unitCount; i++)
+            //{
+            //    string[] unitinfos = sr.ReadLine().Split('\t');
+            //    map.LeftUnits[i] = new BattleMapUnitInfo
+            //    {
+            //        X = int.Parse(unitinfos[0]),
+            //        Y = int.Parse(unitinfos[1]),
+            //        UnitId = int.Parse(unitinfos[2])
+            //    };
+            //}
 
-            unitCount = int.Parse(sr.ReadLine());//右边单位布置
-            map.RightUnits = new BattleMapUnitInfo[unitCount];
-            for (int i = 0; i < unitCount; i++)
-            {
-                string[] unitinfos = sr.ReadLine().Split('\t');
-                map.RightUnits[i] = new BattleMapUnitInfo
-                {
-                    X = int.Parse(unitinfos[0]),
-                    Y = int.Parse(unitinfos[1]),
-                    UnitId = int.Parse(unitinfos[2])
-                };
-            }
+            //unitCount = int.Parse(sr.ReadLine());//右边单位布置
+            //map.RightUnits = new BattleMapUnitInfo[unitCount];
+            //for (int i = 0; i < unitCount; i++)
+            //{
+            //    string[] unitinfos = sr.ReadLine().Split('\t');
+            //    map.RightUnits[i] = new BattleMapUnitInfo
+            //    {
+            //        X = int.Parse(unitinfos[0]),
+            //        Y = int.Parse(unitinfos[1]),
+            //        UnitId = int.Parse(unitinfos[2])
+            //    };
+            //}
             sr.Close();
             return map;
         }

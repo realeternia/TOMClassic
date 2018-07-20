@@ -61,9 +61,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
             var unitsPos = player.IsLeft ? mapConfig.LeftMon : mapConfig.RightMon;
             for (int i = 0; i < unitsPos.Length; i+=3)
             {
-                var xPos = unitsPos[i];
-                var yPos = unitsPos[i+1];
-                var unitId = unitsPos[i+2];
+                var unitId = unitsPos[i];
+                var xPos = unitsPos[i+1];
+                var yPos = unitsPos[i+2];
                 var oldTowerConfig = ConfigData.GetMonsterConfig(unitId);
                 var isKingTower = oldTowerConfig.Type == (int) CardTypeSub.KingTower;
                 var towerData = new Monster(unitId);
