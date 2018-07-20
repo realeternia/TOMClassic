@@ -121,7 +121,7 @@ namespace TaleofMonsters.Datas.Scenes
             if (config.QCardChange > 0)//卡牌商人
                 datas.Add(new RLIdValue { Id = GetSceneQuestByName("collect"), Value = config.QCardChange });
             if (config.QPiece > 0)//素材商人
-                datas.Add(new RLIdValue { Id = GetSceneQuestByName("piecer"), Value = config.QPiece });
+                datas.Add(new RLIdValue { Id = GetSceneQuestByName("piece"), Value = config.QPiece });
             if (config.QDoctor > 0)//医生
                 datas.Add(new RLIdValue { Id = GetSceneQuestByName("cure"), Value = config.QDoctor });
             if (config.QAngel > 0)//天使
