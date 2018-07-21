@@ -30,7 +30,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMap
         public MemRowColumnMap(string map, int tile)
         {
             bMapInfo = BattleMapBook.GetMap(map);
-            CardSize = StageWidth/bMapInfo.XCount;
+            CardSize = Math.Min(StageWidth/bMapInfo.XCount, StageHeight/bMapInfo.YCount);
             RowCount = bMapInfo.YCount;
             ColumnCount = bMapInfo.XCount;
             

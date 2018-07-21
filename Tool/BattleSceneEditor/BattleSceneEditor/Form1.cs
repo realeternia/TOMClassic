@@ -36,72 +36,11 @@ namespace BattleSceneEditor
             try
             {
                 map = BattleMapInfo.GetMapFromFile(txt);
-                Invalidate();
+                splitContainer1.Panel1.Invalidate();
             }
             catch (Exception e)
             {
                 MessageBox.Show("错误的文件格式" + e, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void Form1_Paint(object sender, PaintEventArgs e)
-        {
-            if (map.XCount <= 0)
-                return;
-
-            int cellWidth = 900/map.XCount;
-            int cellHeight = 400 / map.YCount;
-
-            Font ft = new Font("宋体", 9);
-            for (int i = 0; i < map.XCount; i++)
-            {
-                for (int j = 0; j < map.YCount; j++)
-                {
-                    var cell = map.Cells[i, j];
-                    var brush = Brushes.Green;
-                    if (Array.IndexOf(map.ColumnCompete, i) >= 0)
-                        brush = Brushes.DarkOrange;
-                    if (Array.IndexOf(map.ColumnMiddle, i) >= 0)
-                        brush = Brushes.IndianRed;
-                    e.Graphics.FillRectangle(brush, i* cellWidth, j * cellHeight, cellWidth, cellHeight);
-                    e.Graphics.DrawRectangle(Pens.DarkRed, i * cellWidth, j * cellHeight, cellWidth, cellHeight);
-                    e.Graphics.DrawString(string.Format("{0}:{1}",i,j), ft, Brushes.DarkGray, i * cellWidth, j * cellHeight);
-                }
-            }
-            ft.Dispose();
-
-              string pathParent = "../../PicResource/";
-            for (int i = 0; i < map.LeftMon.Length; i += 3)
-            {
-                var unitId = map.LeftMon[i];
-                var xPos = map.LeftMon[i + 1];
-                var yPos = map.LeftMon[i + 2];
-
-                var img = Image.FromFile(string.Format("{0}Monsters/{1}.JPG", pathParent, unitId % 1000000));
-                e.Graphics.DrawImage(img, xPos * cellWidth, yPos * cellHeight, cellWidth, cellHeight);
-                img.Dispose();
-                e.Graphics.DrawRectangle(Pens.Red, xPos * cellWidth, yPos * cellHeight, cellWidth, cellHeight);
-            }
-            for (int i = 0; i < map.RightMon.Length; i += 3)
-            {
-                var unitId = map.RightMon[i];
-                var xPos = map.RightMon[i + 1];
-                var yPos = map.RightMon[i + 2];
-
-                var img = Image.FromFile(string.Format("{0}Monsters/{1}.JPG", pathParent, unitId % 1000000));
-                e.Graphics.DrawImage(img, xPos * cellWidth, yPos * cellHeight, cellWidth, cellHeight);
-                img.Dispose();
-                e.Graphics.DrawRectangle(Pens.Red, xPos * cellWidth, yPos * cellHeight, cellWidth, cellHeight);
-            }
-            foreach (var unit in addonUnits)
-            {
-                var img = Image.FromFile(string.Format("{0}Monsters/{1}.JPG", pathParent, unit.UnitId % 1000000));
-                e.Graphics.DrawImage(img, unit.X * cellWidth, unit.Y * cellHeight, cellWidth, cellHeight);
-                img.Dispose();
-
-                var p = new Pen(unit.Color);
-                e.Graphics.DrawRectangle(p, unit.X * cellWidth, unit.Y * cellHeight, cellWidth, cellHeight);
-                p.Dispose();
             }
         }
 
@@ -154,7 +93,80 @@ namespace BattleSceneEditor
             {
                 MessageBox.Show("错误的文件格式" + ex, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            Invalidate();
+            splitContainer1.Panel1.Invalidate();
+        }
+
+        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
+        {
+            if (map.XCount <= 0)
+                return;
+
+            int cellWidth = splitContainer1.Panel1.Width / map.XCount;
+            int cellHeight = splitContainer1.Panel1.Height / map.YCount;
+            if (cellWidth < cellHeight)
+                cellHeight = cellWidth;
+            if (cellWidth > cellHeight)
+                cellWidth = cellHeight;
+
+            Font ft = new Font("宋体", 11, FontStyle.Bold);
+            for (int i = 0; i < map.XCount; i++)
+            {
+                for (int j = 0; j < map.YCount; j++)
+                {
+                    var cell = map.Cells[i, j];
+                    var brush = Brushes.Green;
+                    if (Array.IndexOf(map.ColumnCompete, i) >= 0)
+                        brush = Brushes.DarkOrange;
+                    if (Array.IndexOf(map.ColumnMiddle, i) >= 0)
+                        brush = Brushes.IndianRed;
+                    if (cell != 9)
+                        brush = Brushes.Black;
+                    e.Graphics.FillRectangle(brush, i * cellWidth, j * cellHeight, cellWidth, cellHeight);
+                    e.Graphics.DrawRectangle(Pens.DarkRed, i * cellWidth, j * cellHeight, cellWidth, cellHeight);
+                    e.Graphics.DrawString(string.Format("{0}:{1}", i, j), ft, Brushes.Black, i * cellWidth+1, j * cellHeight+1);
+                    e.Graphics.DrawString(string.Format("{0}:{1}", i, j), ft, Brushes.DarkGray, i * cellWidth, j * cellHeight);
+                }
+            }
+            ft.Dispose();
+
+            string pathParent = "../../PicResource/";
+            for (int i = 0; i < map.LeftMon.Length; i += 3)
+            {
+                var unitId = map.LeftMon[i];
+                var xPos = map.LeftMon[i + 1];
+                var yPos = map.LeftMon[i + 2];
+
+                var img = Image.FromFile(string.Format("{0}Monsters/{1}.JPG", pathParent, unitId % 1000000));
+                e.Graphics.DrawImage(img, xPos * cellWidth, yPos * cellHeight, cellWidth, cellHeight);
+                img.Dispose();
+
+                var p = new Pen(Color.Red, 3);
+                e.Graphics.DrawRectangle(p, xPos * cellWidth, yPos * cellHeight, cellWidth, cellHeight);
+                p.Dispose();
+            }
+            for (int i = 0; i < map.RightMon.Length; i += 3)
+            {
+                var unitId = map.RightMon[i];
+                var xPos = map.RightMon[i + 1];
+                var yPos = map.RightMon[i + 2];
+
+                var img = Image.FromFile(string.Format("{0}Monsters/{1}.JPG", pathParent, unitId % 1000000));
+                e.Graphics.DrawImage(img, xPos * cellWidth, yPos * cellHeight, cellWidth, cellHeight);
+                img.Dispose();
+                var p = new Pen(Color.Blue, 3);
+                e.Graphics.DrawRectangle(p, xPos * cellWidth, yPos * cellHeight, cellWidth, cellHeight);
+                p.Dispose();
+            }
+            foreach (var unit in addonUnits)
+            {
+                var img = Image.FromFile(string.Format("{0}Monsters/{1}.JPG", pathParent, unit.UnitId % 1000000));
+                e.Graphics.DrawImage(img, unit.X * cellWidth, unit.Y * cellHeight, cellWidth, cellHeight);
+                img.Dispose();
+
+                var p = new Pen(unit.Color, 3);
+                e.Graphics.DrawRectangle(p, unit.X * cellWidth, unit.Y * cellHeight, cellWidth, cellHeight);
+                p.Dispose();
+            }
         }
     }
 }
