@@ -65,17 +65,12 @@ namespace TaleofMonsters.Controler.Battle
                 goldDrop = (uint)(goldDrop * (100 + statisticData.GoldRatePlus)/100);
                 exp = exp*(100 + (uint)statisticData.ExpRatePlus)/100;
 
-                if (isWin)
-                {
-                    var dropItemId = drop.GetDropItem();//获胜可以获得掉落物
-                    if (dropItemId != 0)
-                        statisticData.Items.Insert(0, dropItemId);
-                }
-                else
+                if (!isWin)
                 {
                     goldDrop /= 5;
                     exp /= 4;
                 }
+
                 //resource[0] = 10;  //todo 测试使用
                 //for (int i = 0; i < 10; i++)
                 //{
