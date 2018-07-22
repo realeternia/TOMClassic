@@ -18,7 +18,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
     {
         internal class Relic : IRelic
         {
-            public Player Owner { get; set; }
+            public IPlayer Owner { get; set; }
             public int Id { get; set; }//weapon表id
             public int Level { get; set; }//技能的等级
             public int Life { get; set; }
@@ -89,7 +89,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                     if (relicConfig.RelicType == (int)type)
                     {
                         bool result = false;
-                        relicConfig.RelicUseEffect(relic.Owner, targetPlayer, relic, selectCard.CardId, (int)selectCard.CardType, null, ref result);
+                        relicConfig.RelicUseEffect(targetPlayer, relic, selectCard.CardId, (int)selectCard.CardType, null, ref result);
                         if (result)
                         {
                             TriggerRelic(relic);
@@ -108,7 +108,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                     if (relicConfig.RelicType == (int)type)
                     {
                         bool result = false;
-                        relicConfig.RelicUseEffect(relic.Owner, targetPlayer, relic, 0, 0, mon, ref result);
+                        relicConfig.RelicUseEffect(targetPlayer, relic, 0, 0, mon, ref result);
                         if (result)
                         {
                             TriggerRelic(relic);

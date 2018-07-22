@@ -299,8 +299,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             AddLp(-selectCard.Lp);
             AddPp(-selectCard.Pp);
 
-            var rival = Rival as Player;
-            BattleManager.Instance.EventMsgQueue.Pubscribe(EventMsgQueue.EventMsgTypes.UseCard, selectCard, location, null, rival);
+            BattleManager.Instance.EventMsgQueue.Pubscribe(EventMsgQueue.EventMsgTypes.UseCard, selectCard, location, null, this);
 
             SpikeManager.OnUseCard(selectCard.CardType);
             BattleManager.Instance.MonsterQueue.OnPlayerUseCard(this, (int)selectCard.CardType, selectCard.Level);
@@ -376,8 +375,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 BattleManager.Instance.MonsterQueue.Add(newMon);
                 NLog.Debug("UseMonster pid={0} cid={1}", PeopleId, card.CardId);
 
-                var rival = Rival as Player;
-                BattleManager.Instance.EventMsgQueue.Pubscribe(EventMsgQueue.EventMsgTypes.Summon, null, Point.Empty, newMon, rival);
+                BattleManager.Instance.EventMsgQueue.Pubscribe(EventMsgQueue.EventMsgTypes.Summon, null, Point.Empty, newMon, this);
                 if (HolyBook.HasWord("holyman"))
                     newMon.BuffManager.AddBuff(BuffConfig.Indexer.HolyShield, 1, 99);
                 if (mon.Luk != 0)
@@ -394,7 +392,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
         public void UseWeapon(LiveMonster lm, ActiveCard card)
         {
-            if (!BeforeUseCard(card, lm.Position))
+            if (!BeforeUseCard(card, lm == null ? Point.Empty : lm.Position))
                 return;
 
             try

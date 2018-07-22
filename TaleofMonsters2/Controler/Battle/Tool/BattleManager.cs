@@ -41,7 +41,6 @@ namespace TaleofMonsters.Controler.Battle.Tool
 
         public BattleManager()
         {
-            Init();
         }
 
         public void Init()
