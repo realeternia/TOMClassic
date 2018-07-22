@@ -15,6 +15,7 @@ using NarlonLib.Log;
 using TaleofMonsters.Controler.Battle.Components.CardSelect;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
 using TaleofMonsters.Controler.Battle.Data.Players.AIs;
+using TaleofMonsters.Controler.Battle.DataTent;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Cards.Monsters;
@@ -299,7 +300,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             AddPp(-selectCard.Pp);
 
             var rival = Rival as Player;
-            BattleManager.Instance.RelicHolder.CheckOnUseCard(selectCard, location, rival);
+            BattleManager.Instance.EventMsgQueue.Pubscribe(EventMsgQueue.EventMsgTypes.UseCard, selectCard, location, null, rival);
 
             SpikeManager.OnUseCard(selectCard.CardType);
             BattleManager.Instance.MonsterQueue.OnPlayerUseCard(this, (int)selectCard.CardType, selectCard.Level);
@@ -376,7 +377,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 NLog.Debug("UseMonster pid={0} cid={1}", PeopleId, card.CardId);
 
                 var rival = Rival as Player;
-                BattleManager.Instance.RelicHolder.CheckOnSummon(newMon, rival);
+                BattleManager.Instance.EventMsgQueue.Pubscribe(EventMsgQueue.EventMsgTypes.Summon, null, Point.Empty, newMon, rival);
                 if (HolyBook.HasWord("holyman"))
                     newMon.BuffManager.AddBuff(BuffConfig.Indexer.HolyShield, 1, 99);
                 if (mon.Luk != 0)
@@ -399,9 +400,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             try
             {
                 var weaponConfig = ConfigData.GetWeaponConfig(card.CardId);
-                if (weaponConfig.RelicId > 0)
+                if (weaponConfig.RelicType > 0)
                 {
-                    BattleManager.Instance.RelicHolder.AddRelic(this, weaponConfig.RelicId, card.Level, weaponConfig.Dura);
+                    BattleManager.Instance.RelicHolder.AddRelic(this, weaponConfig.Id, card.Level, weaponConfig.Dura);
                 }
                 else
                 {

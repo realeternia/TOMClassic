@@ -23,6 +23,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
             }
         }
 
+        public EventMsgQueue EventMsgQueue { get; private set; }
         public EffectQueue EffectQueue { get; private set; }
         public FlowWordQueue FlowWordQueue { get; private set; }
         public MonsterQueue MonsterQueue { get; private set; }
@@ -45,6 +46,7 @@ namespace TaleofMonsters.Controler.Battle.Tool
 
         public void Init()
         {
+            EventMsgQueue= new EventMsgQueue();
             EffectQueue = new EffectQueue();
             FlowWordQueue = new FlowWordQueue();
             MonsterQueue = new MonsterQueue();

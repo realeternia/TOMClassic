@@ -14,7 +14,7 @@ using TaleofMonsters.Datas.Effects.Facts;
 
 namespace TaleofMonsters.Controler.Battle.DataTent
 {
-    internal class RelicHolder
+    internal class RelicHolder : ISubscribeUser
     {
         internal class Relic : IRelic
         {
@@ -29,6 +29,8 @@ namespace TaleofMonsters.Controler.Battle.DataTent
         public RelicHolder()
         {
             relicList = new List<Relic>();
+
+            BattleManager.Instance.EventMsgQueue.Subscribe(this);
         }
 
         public void AddRelic(Player owner, int id, int lv, int life)
@@ -55,55 +57,6 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 relicList.Remove(relic);
         }
 
-        public void CheckOnUseCard(ActiveCard selectCard, Point location, IPlayer targetPlayer)
-        {
-            foreach (var relic in relicList)
-            {
-                if (relic.Owner.IsLeft == targetPlayer.IsLeft)
-                    continue;
-
-                var relicConfig = ConfigData.GetWeaponConfig(relic.Id);
-                if (relicConfig.EffectUse != null)
-                {
-                    bool result = false;
-                    relicConfig.EffectUse(relic.Owner, targetPlayer, relic, selectCard.CardId, (int) selectCard.CardType, ref result);
-                    if (result)
-                    {
-                        TriggerRelic(relic);
-                        NLog.Debug("CheckOnUseCard id={0} cardId={1}", relic.Id, selectCard.CardId);
-                        BattleManager.Instance.EffectQueue.Add(
-                            new MonsterBindEffect(EffectBook.GetEffect(relicConfig.RelicEffect), location, false));
-
-                        return;
-                    }
-                }
-            }
-        }
-
-        public void CheckOnSummon(IMonster mon, IPlayer targetPlayer)
-        {
-            foreach (var relic in relicList)
-            {
-                if (relic.Owner.IsLeft == targetPlayer.IsLeft)
-                    continue;
-
-                var relicConfig = ConfigData.GetWeaponConfig(relic.Id);
-                if (relicConfig.EffectSummon != null)
-                {
-                    bool result = false;
-                    relicConfig.EffectSummon(relic.Owner, targetPlayer, relic, mon, relic.Level, ref result);
-                    if (result)
-                    {
-                        TriggerRelic(relic);
-                        NLog.Debug("CheckOnSummon id={0} cardId={1}", relic.Id, mon.Id);
-                        BattleManager.Instance.EffectQueue.Add(
-                            new MonsterBindEffect(EffectBook.GetEffect(relicConfig.RelicEffect), mon as LiveMonster, false));
-                        return;
-                    }
-                }
-            }
-        }
-
         public void Draw(Graphics g)
         {
             for (int i = 0; i < relicList.Count; i++)
@@ -124,6 +77,48 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 g.DrawImage(bgImg, rect);
             }
             bgImg.Dispose();
+        }
+
+        public void OnMessage(EventMsgQueue.EventMsgTypes type, ActiveCard selectCard, Point location, IMonster mon, IPlayer targetPlayer)
+        {
+            if (type == EventMsgQueue.EventMsgTypes.UseCard)
+            {
+                foreach (var relic in relicList)
+                {
+                    var relicConfig = ConfigData.GetWeaponConfig(relic.Id);
+                    if (relicConfig.RelicType == (int)type)
+                    {
+                        bool result = false;
+                        relicConfig.RelicUseEffect(relic.Owner, targetPlayer, relic, selectCard.CardId, (int)selectCard.CardType, null, ref result);
+                        if (result)
+                        {
+                            TriggerRelic(relic);
+                            NLog.Debug("OnMessage id={0} cardId={1}", relic.Id, selectCard.CardId);
+                            BattleManager.Instance.EffectQueue.Add(
+                                new MonsterBindEffect(EffectBook.GetEffect(relicConfig.RelicEffect), location, false));
+                        }
+                    }
+                }
+            }
+            if (type == EventMsgQueue.EventMsgTypes.Summon)
+            {
+                foreach (var relic in relicList)
+                {
+                    var relicConfig = ConfigData.GetWeaponConfig(relic.Id);
+                    if (relicConfig.RelicType == (int)type)
+                    {
+                        bool result = false;
+                        relicConfig.RelicUseEffect(relic.Owner, targetPlayer, relic, 0, 0, mon, ref result);
+                        if (result)
+                        {
+                            TriggerRelic(relic);
+                            NLog.Debug("OnMessage id={0} cardId={1}", relic.Id, mon.Id);
+                            BattleManager.Instance.EffectQueue.Add(
+                                new MonsterBindEffect(EffectBook.GetEffect(relicConfig.RelicEffect), mon as LiveMonster, false));
+                        }
+                    }
+                }
+            }
         }
     }
 }

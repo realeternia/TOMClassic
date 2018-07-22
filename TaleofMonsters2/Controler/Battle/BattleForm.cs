@@ -320,7 +320,7 @@ namespace TaleofMonsters.Controler.Battle
                     else if (myCursor.Name == "equip")
                     {
                         var weaponConfig = ConfigData.GetWeaponConfig(leftSelectCard.CardId);
-                        if(weaponConfig.RelicId == 0 && lm == null)
+                        if(weaponConfig.RelicType == 0 && lm == null)
                             return;
                         pickPlayer.UseWeapon(lm, leftSelectCard);
                     }
@@ -401,7 +401,7 @@ namespace TaleofMonsters.Controler.Battle
                 else if (leftSelectCard.CardType == CardTypes.Weapon)
                 {
                     var weaponConfig = ConfigData.GetWeaponConfig(leftSelectCard.CardId);
-                    if (weaponConfig.RelicId <= 0)
+                    if (weaponConfig.RelicType == 0)
                     {
                         LiveMonster lm = BattleLocationManager.GetPlaceMonster(mouseX, mouseY);
                         if (lm != null && lm.CanAddWeapon() && lm.IsLeft)
