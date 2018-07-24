@@ -2,8 +2,12 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using ControlPlus;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
+using TaleofMonsters.Datas;
+using TaleofMonsters.Datas.Cards;
+using TaleofMonsters.Datas.Decks;
 
 namespace TaleofMonsters.Controler.Battle.Components
 {
@@ -12,6 +16,8 @@ namespace TaleofMonsters.Controler.Battle.Components
         private float time;//当前的虚拟时间
         private float round;//当前的回合数，超过固定值就可以抽牌
         private bool isShow;
+        private ImageToolTip tooltip = new ImageToolTip();
+        private bool mouseIn;
 
         public TimeViewer()
         {
@@ -55,6 +61,37 @@ namespace TaleofMonsters.Controler.Battle.Components
                 return;
 
             BattleManager.Instance.RelicHolder.Draw(e.Graphics);
+        }
+
+        private void TimeViewer_MouseMove(object sender, MouseEventArgs e)
+        {
+            var relic = BattleManager.Instance.RelicHolder.GetRelic(e.X, e.Y);
+            if (relic != null)
+            {
+                if (!mouseIn)
+                {
+                    var card = CardAssistant.GetCard(relic.Id);
+                    DeckCard dc = new DeckCard(relic.Id, (byte) relic.Level, 0);
+                    card.SetData(dc);
+                    var img = card.GetPreview(CardPreviewType.Normal, new uint[0]);
+                    tooltip.Show(img, this, e.X, e.Y + 20);
+                    mouseIn = true;
+                }
+            }
+            else if(mouseIn)
+            {
+                tooltip.Hide(this);
+                mouseIn = false;
+            }
+        }
+
+        private void TimeViewer_MouseLeave(object sender, EventArgs e)
+        {
+            if (mouseIn)
+            {
+                tooltip.Hide(this);
+                mouseIn = false;
+            }
         }
     }
 }

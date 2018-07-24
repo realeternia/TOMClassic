@@ -142,7 +142,6 @@ namespace TaleofMonsters.Controler.Battle
             // timeViewer1
             // 
             this.timeViewer1.BackColor = System.Drawing.Color.Black;
-            this.timeViewer1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.timeViewer1.Location = new System.Drawing.Point(407, 38);
             this.timeViewer1.Name = "timeViewer1";
             this.timeViewer1.Size = new System.Drawing.Size(117, 66);

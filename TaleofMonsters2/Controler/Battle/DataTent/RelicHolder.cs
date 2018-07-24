@@ -25,10 +25,14 @@ namespace TaleofMonsters.Controler.Battle.DataTent
         }
 
         private List<Relic> relicList;
+        private Rectangle[] rects;
 
         public RelicHolder()
         {
             relicList = new List<Relic>();
+            rects = new Rectangle[3];
+            for (int i = 0; i < rects.Length; i++)
+                rects[i] = new Rectangle(6 + 35 * i, 35, 30, 30);
 
             BattleManager.Instance.EventMsgQueue.Subscribe(this);
         }
@@ -57,26 +61,43 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 relicList.Remove(relic);
         }
 
+        public Relic GetRelic(int mx, int my)
+        {
+            for (int i = 0; i < rects.Length; i++)
+            {
+                if (rects[i].Contains(new Point(mx, my)))
+                {
+                    if (i < relicList.Count)
+                    {
+                        return relicList[i];
+                    }
+                }
+            }
+            return null;
+        }
+
         public void Draw(Graphics g)
         {
-            for (int i = 0; i < relicList.Count; i++)
-            {
-                var relicInfo = relicList[i];
-                var rect = new Rectangle(6 + 35 * i, 35, 30, 30);
-                g.DrawImage(CardAssistant.GetCardImage(relicInfo.Id, 30, 30), rect);
-
-                Pen colorPen = new Pen(relicInfo.Owner.IsLeft ? Color.Red : Color.Blue, 3);
-                g.DrawRectangle(colorPen, rect);
-                colorPen.Dispose();
-            }
-
             var bgImg = PicLoader.Read("System", "w0.JPG");
-            for (int i = relicList.Count; i < GameConstants.MaxRelicCount; i++)
+            Font ft1 = new Font("宋体", 11*1.33f, FontStyle.Bold, GraphicsUnit.Pixel);
+            for (int i = 0; i < rects.Length; i++)
             {
-                var rect = new Rectangle(6 + 35 * i, 35, 30, 30);
-                g.DrawImage(bgImg, rect);
+                g.DrawImage(bgImg, rects[i]);
+
+                if (i < relicList.Count)
+                {
+                    var relicInfo = relicList[i];
+                    var rect = new Rectangle(6 + 35 * i, 35, 30, 30);
+                    g.DrawImage(CardAssistant.GetCardImage(relicInfo.Id, 30, 30), rect);
+
+                    g.DrawString(relicInfo.Life.ToString(), ft1, Brushes.White, rect.X, rect.Y);
+                    Pen colorPen = new Pen(relicInfo.Owner.IsLeft ? Color.Red : Color.Blue, 3);
+                    g.DrawRectangle(colorPen, rect);
+                    colorPen.Dispose();
+                }
             }
             bgImg.Dispose();
+            ft1.Dispose();
         }
 
         public void OnMessage(EventMsgQueue.EventMsgTypes type, ActiveCard selectCard, Point location, IMonster mon, IPlayer targetPlayer)

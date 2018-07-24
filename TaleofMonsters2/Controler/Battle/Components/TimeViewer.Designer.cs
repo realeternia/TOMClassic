@@ -38,6 +38,8 @@
             this.Name = "TimeViewer";
             this.Size = new System.Drawing.Size(117, 66);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.TimeViewer_Paint);
+            this.MouseLeave += new System.EventHandler(this.TimeViewer_MouseLeave);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TimeViewer_MouseMove);
             this.ResumeLayout(false);
 
         }
