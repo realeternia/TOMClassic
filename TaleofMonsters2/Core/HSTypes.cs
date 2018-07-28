@@ -27,6 +27,7 @@ namespace TaleofMonsters.Core
                 case 101: return "卷轴";
                 case 102: return "防具";
                 case 103: return "饰品";
+                case 104: return "神器";
 
                 case 200: return "单体法术";
                 case 201: return "群体法术";

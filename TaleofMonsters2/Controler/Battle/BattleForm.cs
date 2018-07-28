@@ -299,7 +299,7 @@ namespace TaleofMonsters.Controler.Battle
             int cardSize = BattleManager.Instance.MemMap.CardSize;
             if (e.Button == MouseButtons.Left)
             {
-                if (leftSelectCard != null && (myCursor.Name == "summon" || myCursor.Name == "equip" || myCursor.Name == "cast" || myCursor.Name == "sidekick"))
+                if (leftSelectCard != null && (myCursor.Name == "summon" || myCursor.Name == "equip" || myCursor.Name == "relic" || myCursor.Name == "cast" || myCursor.Name == "sidekick"))
                 {
                     int result;
                     if ((result = pickPlayer.CheckUseCard(leftSelectCard, BattleManager.Instance.PlayerManager.LeftPlayer, BattleManager.Instance.PlayerManager.RightPlayer)) != ErrorConfig.Indexer.OK)
@@ -319,9 +319,12 @@ namespace TaleofMonsters.Controler.Battle
                     }
                     else if (myCursor.Name == "equip")
                     {
-                        var weaponConfig = ConfigData.GetWeaponConfig(leftSelectCard.CardId);
-                        if(weaponConfig.RelicType == 0 && lm == null)
+                        if (lm == null)
                             return;
+                        pickPlayer.UseWeapon(lm, leftSelectCard);
+                    }
+                    else if (myCursor.Name == "relic")
+                    {
                         pickPlayer.UseWeapon(lm, leftSelectCard);
                     }
                     else if (myCursor.Name == "sidekick" && lm != null)
@@ -401,7 +404,7 @@ namespace TaleofMonsters.Controler.Battle
                 else if (leftSelectCard.CardType == CardTypes.Weapon)
                 {
                     var weaponConfig = ConfigData.GetWeaponConfig(leftSelectCard.CardId);
-                    if (weaponConfig.RelicType == 0)
+                    if (string.IsNullOrEmpty(weaponConfig.RelicType))
                     {
                         LiveMonster lm = BattleLocationManager.GetPlaceMonster(mouseX, mouseY);
                         if (lm != null && lm.CanAddWeapon() && lm.IsLeft)
@@ -409,7 +412,7 @@ namespace TaleofMonsters.Controler.Battle
                     }
                     else
                     {//神器随便用
-                        cursorname = "equip";
+                        cursorname = "relic";
                     }
                 }
                 else if (leftSelectCard.CardType == CardTypes.Spell)

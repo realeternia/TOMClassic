@@ -262,6 +262,10 @@ namespace TaleofMonsters.Datas.Cards.Weapons
                     des += ConfigData.GetBuffConfig(skillConfig.DescriptBuffId).GetDescript(card.Level);
                 tipData.AddTextLines(des, "White", 15, false);
             }
+            if (!string.IsNullOrEmpty(weapon.WeaponConfig.Descript))
+            {
+                tipData.AddTextLines(weapon.WeaponConfig.Descript, "Cyan", 15, true);
+            }
             if (type == CardPreviewType.Shop)
             {
                 tipData.AddLine();

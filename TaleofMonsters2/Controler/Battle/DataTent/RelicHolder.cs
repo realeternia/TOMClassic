@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
 using NarlonLib.Log;
@@ -68,12 +69,23 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 if (rects[i].Contains(new Point(mx, my)))
                 {
                     if (i < relicList.Count)
-                    {
                         return relicList[i];
-                    }
                 }
             }
             return null;
+        }
+
+        public Rectangle GetRelicRect(int mx, int my)
+        {
+            for (int i = 0; i < rects.Length; i++)
+            {
+                if (rects[i].Contains(new Point(mx, my)))
+                {
+                    if (i < relicList.Count)
+                        return rects[i];
+                }
+            }
+            return new Rectangle();
         }
 
         public void Draw(Graphics g)
@@ -87,7 +99,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 if (i < relicList.Count)
                 {
                     var relicInfo = relicList[i];
-                    var rect = new Rectangle(6 + 35 * i, 35, 30, 30);
+                    var rect = rects[i];
                     g.DrawImage(CardAssistant.GetCardImage(relicInfo.Id, 30, 30), rect);
 
                     g.DrawString(relicInfo.Life.ToString(), ft1, Brushes.White, rect.X, rect.Y);
@@ -107,7 +119,8 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 foreach (var relic in relicList)
                 {
                     var relicConfig = ConfigData.GetWeaponConfig(relic.Id);
-                    if (relicConfig.RelicType == (int)type)
+                    var typeV = (EventMsgQueue.EventMsgTypes)Enum.Parse(typeof (EventMsgQueue.EventMsgTypes), relicConfig.RelicType);
+                    if (typeV == type)
                     {
                         bool result = false;
                         relicConfig.RelicUseEffect(targetPlayer, relic, selectCard.CardId, (int)selectCard.CardType, null, ref result);
@@ -126,7 +139,8 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 foreach (var relic in relicList)
                 {
                     var relicConfig = ConfigData.GetWeaponConfig(relic.Id);
-                    if (relicConfig.RelicType == (int)type)
+                    var typeV = (EventMsgQueue.EventMsgTypes)Enum.Parse(typeof(EventMsgQueue.EventMsgTypes), relicConfig.RelicType);
+                    if (typeV == type)
                     {
                         bool result = false;
                         relicConfig.RelicUseEffect(targetPlayer, relic, 0, 0, mon, ref result);

@@ -260,7 +260,7 @@ namespace TaleofMonsters.Core.Config
             raceCardDict = new Dictionary<int, CardInfoList>();
             for (int i = 0; i <= 16; i++)
                 raceCardDict[i] = new CardInfoList();
-            for (int i = 100; i <= 103; i++) //weapon
+            for (int i = 100; i <= 104; i++) //weapon
                 raceCardDict[i] = new CardInfoList();
             for (int i = 200; i <= 203; i++)//spell
                 raceCardDict[i] = new CardInfoList();

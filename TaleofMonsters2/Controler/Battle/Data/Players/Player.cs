@@ -398,7 +398,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             try
             {
                 var weaponConfig = ConfigData.GetWeaponConfig(card.CardId);
-                if (weaponConfig.RelicType > 0)
+                if (!string.IsNullOrEmpty(weaponConfig.RelicType))
                 {
                     BattleManager.Instance.RelicHolder.AddRelic(this, weaponConfig.Id, card.Level, weaponConfig.Dura);
                 }
