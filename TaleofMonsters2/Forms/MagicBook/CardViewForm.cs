@@ -92,7 +92,7 @@ namespace TaleofMonsters.Forms.MagicBook
                 case "-细分":
                     comboBoxValue.Items.AddRange(new object[] { "全部", "恶魔","机械","精灵","昆虫","龙","鸟",
                         "爬行","人类","兽人","亡灵","野兽","鱼","元素","植物","地精","石像",
-                        "Red|武器","Red|卷轴","Red|防具", "Red|饰品",
+                        "Red|武器","Red|卷轴","Red|防具", "Red|饰品", "Red|神器",
                         "DodgerBlue|单体法术","DodgerBlue|群体法术","DodgerBlue|基本法术","DodgerBlue|地形变化" }); break;
                 case "品质":
                     comboBoxValue.Items.AddRange(new object[] { "全部", "普通", "Green|良好", "DodgerBlue|优秀", "Violet|史诗", "Orange|传说" }); break;
@@ -237,7 +237,7 @@ namespace TaleofMonsters.Forms.MagicBook
 
             if (cards.Count > 0)
                 cardDetail.SetInfo(cards[0]);
-            Invalidate(new Rectangle(65, 110, cardWidth * xCount, cardHeight * yCount));
+            Invalidate();
         }
 
         private void UpdateButtonState()

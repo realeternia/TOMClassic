@@ -95,5 +95,26 @@ namespace TaleofMonsters.Datas.Skills
             }
             return ImageManager.GetImage(fname);
         }
+
+        public static Image GetSkillImageSpecial(string name)
+        {
+            var width = 64;
+            var height = 64;
+            string fname = string.Format("Skill/{0}{1}x{2}", name, width, height);
+            if (!ImageManager.HasImage(fname))
+            {
+                Image image = PicLoader.Read("Skill", string.Format("{0}.JPG", name));
+                if (image == null)
+                {
+                    NLog.Error("GetSkillImage {0} {1} not found", name, fname);
+                    return null;
+                }
+
+                if (image.Width != width || image.Height != height)
+                    image = image.GetThumbnailImage(width, height, null, new IntPtr(0));
+                ImageManager.AddImage(fname, image);
+            }
+            return ImageManager.GetImage(fname);
+        }
     }
 }

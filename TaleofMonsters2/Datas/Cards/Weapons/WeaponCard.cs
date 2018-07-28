@@ -4,6 +4,7 @@ using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
+using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas.Decks;
 using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Datas.Skills;
@@ -190,6 +191,24 @@ namespace TaleofMonsters.Datas.Cards.Weapons
                 skillQBrush.Dispose();
                 
                 PaintTool.DrawStringMultiLine(g, fontsong2, sb, offX + 10 + 43, basel + 221 + 14, 14, 12, skillData.Descript);
+            }
+            if (!string.IsNullOrEmpty(weapon.WeaponConfig.Descript))
+            {
+                g.DrawImage(SkillBook.GetSkillImageSpecial("relic"), offX + 10, basel + 221, 40, 40);
+
+                var pen = new Pen(Color.FromName(HSTypes.I2QualityColorD(3)), 4);//使用暗色
+                g.DrawRectangle(pen, offX + 10, basel + 221, 40, 40);
+                pen.Dispose();
+
+                Skill skillData = new Skill(weapon.WeaponConfig.SkillId);
+                skillData.UpgradeToLevel(card.Level);
+                var des = "神器";
+
+                var skillQBrush = new SolidBrush(Color.FromName(HSTypes.I2QualityColorD(3)));//使用暗色
+                g.DrawString(des, fontsong2, skillQBrush, offX + 10 + 43, basel + 221);
+                skillQBrush.Dispose();
+
+                PaintTool.DrawStringMultiLine(g, fontsong2, sb, offX + 10 + 43, basel + 221 + 14, 14, 12, weapon.WeaponConfig.Descript);
             }
             fontblack.Dispose();
             fontsong.Dispose();

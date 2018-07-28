@@ -390,7 +390,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             AfterUseCard(card);
         }
 
-        public void UseWeapon(LiveMonster lm, ActiveCard card)
+        public void UseWeapon(LiveMonster lm, ActiveCard card, Point p)
         {
             if (!BeforeUseCard(card, lm == null ? Point.Empty : lm.Position))
                 return;
@@ -401,6 +401,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 if (!string.IsNullOrEmpty(weaponConfig.RelicType))
                 {
                     BattleManager.Instance.RelicHolder.AddRelic(this, weaponConfig.Id, card.Level, weaponConfig.Dura);
+                    BattleManager.Instance.EffectQueue.Add(new StaticUIEffect(EffectBook.GetEffect("blueflash"), new Point(p.X-50,p.Y-50), new Size(100,100)));
                 }
                 else
                 {
@@ -409,6 +410,8 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
 
                     var tWeapon = new TrueWeapon(lm, card.Level, wpn);
                     lm.AddWeapon(tWeapon, true);
+
+                    BattleManager.Instance.EffectQueue.Add(new MonsterBindEffect(EffectBook.GetEffect("equip"), lm, true));
 
                     if (wpn.Luk != 0)
                         AddLuk(lm, wpn.Luk);

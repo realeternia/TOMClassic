@@ -50,6 +50,7 @@
         Scroll = 101,
         Armor = 102,
         Ring = 103,
+        Relic=104,
 
         Single = 200,
         Multi = 201,

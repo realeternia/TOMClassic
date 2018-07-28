@@ -30,7 +30,10 @@ namespace TaleofMonsters.Datas.Cards.Weapons
         public Weapon(int id)
         {
             WeaponConfig = ConfigData.GetWeaponConfig(id);
-            Dura = (int)(WeaponConfig.Dura*1.67);
+            if ((CardTypeSub) WeaponConfig.Type != CardTypeSub.Relic)
+                Dura = (int) (WeaponConfig.Dura*1.67);
+            else
+                Dura = WeaponConfig.Dura;
             Range = WeaponConfig.Range; 
             Def = WeaponConfig.Def;
             Spd = WeaponConfig.Spd;

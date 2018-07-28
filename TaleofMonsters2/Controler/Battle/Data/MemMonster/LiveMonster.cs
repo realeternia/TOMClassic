@@ -351,9 +351,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 Weapon.CheckWeaponEffect(this, false);
             Weapon = weapon;
             Weapon.CheckWeaponEffect(this, true);
-
-            if (isAdd)
-                BattleManager.Instance.EffectQueue.Add(new MonsterBindEffect(EffectBook.GetEffect("equip"), this, true));
         }
 
         public void DeleteWeapon(bool toGrave)

@@ -123,7 +123,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.AIs
                 LiveMonster target = GetWeaponTarget();
                 if (target != null)
                 {
-                    Self.UseWeapon(target, selectCard);
+                    Self.UseWeapon(target, selectCard, target.Position);
                     return true;
                 }
             }

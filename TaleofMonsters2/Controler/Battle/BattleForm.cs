@@ -321,11 +321,11 @@ namespace TaleofMonsters.Controler.Battle
                     {
                         if (lm == null)
                             return;
-                        pickPlayer.UseWeapon(lm, leftSelectCard);
+                        pickPlayer.UseWeapon(lm, leftSelectCard, e.Location);
                     }
                     else if (myCursor.Name == "relic")
                     {
-                        pickPlayer.UseWeapon(lm, leftSelectCard);
+                        pickPlayer.UseWeapon(lm, leftSelectCard, e.Location);
                     }
                     else if (myCursor.Name == "sidekick" && lm != null)
                     {

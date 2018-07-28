@@ -47,6 +47,7 @@ namespace TaleofMonsters.Core
                 case 101: return "--每次命中敌人消耗耐久";
                 case 102: return "--每次抵御伤害消耗耐久";
                 case 103: return "--每回合消耗耐久";
+                case 104: return "--影响整个战场的强力道具";
 
                 case 200: return "单体法术";
                 case 201: return "群体法术";
