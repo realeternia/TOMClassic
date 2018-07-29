@@ -41,5 +41,6 @@ namespace ConfigDatas
         void AddSpellVibrate(double rate);
 
         void RefreshEp();
+        void SetLastEp(int type);
     }
 }

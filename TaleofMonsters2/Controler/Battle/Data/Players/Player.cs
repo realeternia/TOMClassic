@@ -110,7 +110,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             IsLeft = isLeft;
             IsAlive = true;
             HandCards = new CardHandBundle(this);
-            EnergyGenerator = new EnergyGenerator();
+            EnergyGenerator = new EnergyGenerator(this);
             SpikeManager = new SpikeManager(this);
             Modifier = new EquipModifier();
             Action = new PlayerAction(this);

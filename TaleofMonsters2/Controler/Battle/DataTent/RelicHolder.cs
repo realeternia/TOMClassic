@@ -114,43 +114,22 @@ namespace TaleofMonsters.Controler.Battle.DataTent
 
         public void OnMessage(EventMsgQueue.EventMsgTypes type, ActiveCard selectCard, Point location, IMonster mon, IPlayer targetPlayer)
         {
-            if (type == EventMsgQueue.EventMsgTypes.UseCard)
+            foreach (var relic in relicList)
             {
-                foreach (var relic in relicList)
+                var relicConfig = ConfigData.GetWeaponConfig(relic.Id);
+                var typeV = (EventMsgQueue.EventMsgTypes)Enum.Parse(typeof(EventMsgQueue.EventMsgTypes), relicConfig.RelicType);
+                if (typeV == type)
                 {
-                    var relicConfig = ConfigData.GetWeaponConfig(relic.Id);
-                    var typeV = (EventMsgQueue.EventMsgTypes)Enum.Parse(typeof (EventMsgQueue.EventMsgTypes), relicConfig.RelicType);
-                    if (typeV == type)
+                    bool result = false;
+                    if(selectCard == null)
+                        selectCard = new ActiveCard();
+                    relicConfig.RelicUseEffect(targetPlayer, relic, selectCard.CardId, (int)selectCard.CardType, mon, ref result);
+                    if (result)
                     {
-                        bool result = false;
-                        relicConfig.RelicUseEffect(targetPlayer, relic, selectCard.CardId, (int)selectCard.CardType, null, ref result);
-                        if (result)
-                        {
-                            TriggerRelic(relic);
-                            NLog.Debug("OnMessage id={0} cardId={1}", relic.Id, selectCard.CardId);
-                            BattleManager.Instance.EffectQueue.Add(
-                                new MonsterBindEffect(EffectBook.GetEffect(relicConfig.RelicEffect), location, false));
-                        }
-                    }
-                }
-            }
-            if (type == EventMsgQueue.EventMsgTypes.Summon)
-            {
-                foreach (var relic in relicList)
-                {
-                    var relicConfig = ConfigData.GetWeaponConfig(relic.Id);
-                    var typeV = (EventMsgQueue.EventMsgTypes)Enum.Parse(typeof(EventMsgQueue.EventMsgTypes), relicConfig.RelicType);
-                    if (typeV == type)
-                    {
-                        bool result = false;
-                        relicConfig.RelicUseEffect(targetPlayer, relic, 0, 0, mon, ref result);
-                        if (result)
-                        {
-                            TriggerRelic(relic);
-                            NLog.Debug("OnMessage id={0} cardId={1}", relic.Id, mon.Id);
-                            BattleManager.Instance.EffectQueue.Add(
-                                new MonsterBindEffect(EffectBook.GetEffect(relicConfig.RelicEffect), mon as LiveMonster, false));
-                        }
+                        TriggerRelic(relic);
+                        NLog.Debug("OnMessage id={0}", relic.Id);
+                        if(mon != null)
+                            BattleManager.Instance.EffectQueue.Add(new MonsterBindEffect(EffectBook.GetEffect(relicConfig.RelicEffect), mon as LiveMonster, false));
                     }
                 }
             }

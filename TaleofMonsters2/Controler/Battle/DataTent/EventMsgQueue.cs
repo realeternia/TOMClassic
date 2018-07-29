@@ -14,7 +14,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
     {
         public enum EventMsgTypes
         {
-            UseCard=1, Summon
+            UseCard=1, Summon, EpRecover
         }
 
         private List<ISubscribeUser> users = new List<ISubscribeUser>();

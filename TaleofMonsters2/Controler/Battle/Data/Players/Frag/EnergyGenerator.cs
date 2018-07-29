@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using ConfigDatas;
 using NarlonLib.Math;
+using TaleofMonsters.Controler.Battle.DataTent;
+using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
 
 namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 {
     internal class EnergyGenerator
     {
+        private Player self;
         public PlayerManaTypes NextAimMana { get { return manaList[0]; } }
 
         public List<PlayerManaTypes> QueuedMana { get { return manaList.GetRange(1,4); } }
@@ -24,8 +28,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
 
         public double GainEpRate { get; private set; } //收集能量的速度倍率
 
-        public EnergyGenerator()
+        public EnergyGenerator(Player p)
         {
+            self = p;
             GainEpRate = 1;
         }
 
@@ -72,8 +77,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                     manaList.Add(PlayerManaTypes.All);
                     continue;
                 }
-
-                manaList.Add(GetNextManaType());
+                var nextType = GetNextManaType();
+                manaList.Add(nextType);
+                BattleManager.Instance.EventMsgQueue.Pubscribe(EventMsgQueue.EventMsgTypes.EpRecover, null, Point.Empty, null, self);
             }
         }
 
@@ -99,6 +105,14 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             for (int i = 0; i < manaCount; i++)
             {
                 manaList.Add(GetNextManaType());
+            }
+        }
+
+        public void SetLast(int type)
+        {
+            if (manaList.Count > 0)
+            {
+                manaList[manaList.Count - 1] = (PlayerManaTypes) type;
             }
         }
     }

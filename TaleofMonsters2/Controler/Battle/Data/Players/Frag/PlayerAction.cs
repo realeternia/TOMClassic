@@ -225,6 +225,11 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
             self.EnergyGenerator.Refresh();
         }
 
+        public void SetLastEp(int type)
+        {
+            self.EnergyGenerator.SetLast(type);
+        }
+
         public void AddSpike(int id)
         {
             self.SpikeManager.AddSpike(id);
