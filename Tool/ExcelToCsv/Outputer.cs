@@ -161,47 +161,17 @@ namespace ExcelToCsv
                                   ? "null"
                                   : string.Format("delegate(IBuff buf, IMonster o){{{0}}}", datas[i]);
                 }
-                else if (typeStr == "SkillInitialEffectDelegate")
-                {
-                    result = datas[i].ToString() == ""
-                                  ? "null"
-                                  : string.Format("delegate(ISkill skl,IMonster s){{{0}}}", datas[i]);
-                }
-                else if (typeStr == "SkillHitEffectDelegate")
-                {
-                    result = datas[i].ToString() == ""
-                                  ? "null"
-                                  : string.Format("delegate(ISkill skl,IMonster s,IMonster d,ref int hit){{{0}}}", datas[i]);
-                }
-                else if (typeStr == "SkillDamageEffectDelegate")
-                {
-                    result = datas[i].ToString() == ""
-                                  ? "null"
-                                  : string.Format("delegate(ISkill skl,IMonster s,IMonster d,bool isActive,HitDamage damage, ref bool nodef){{{0}}}", datas[i]);
-                }
-                else if (typeStr == "SkillAfterHitEffectDelegate")
-                {
-                    result = datas[i].ToString() == ""
-                                  ? "null"
-                                  : string.Format("delegate(ISkill skl,IMonster s,IMonster d,HitDamage damage){{{0}}}", datas[i]);
-                }
                 else if (typeStr == "SkillBurstCheckDelegate")
                 {
                     result = datas[i].ToString() == ""
                                   ? "null"
                                   : string.Format("delegate(IMonster s,IMonster d,bool isMelee){{if({0})return true;return false;}}", datas[i]);
                 }
-                else if (typeStr == "SkillTimelyEffectDelegate")
+                else if (typeStr == "SkillEventDelegate")
                 {
                     result = datas[i].ToString() == ""
                                   ? "null"
-                                  : string.Format("delegate(ISkill skl,IMonster s){{{0}}}", datas[i]);
-                }
-                else if (typeStr == "SkillUseCardHandleDelegate")
-                {
-                    result = datas[i].ToString() == ""
-                                  ? "null"
-                                  : string.Format("delegate(ISkill skl,IMonster s, IPlayer p, int type, int lv, ref bool eff){{{0}}}", datas[i]);
+                                  : string.Format("delegate(ISkill skl,IPlayer p,IMonster s,IMonster d,HitDamage damage, int type, int lv,ref int hit, ref bool nodef, ref bool result){{{0}}}", datas[i]);
                 }
                 else if (typeStr == "SpellEffectDelegate")
                 {
