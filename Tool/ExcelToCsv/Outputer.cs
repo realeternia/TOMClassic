@@ -171,7 +171,7 @@ namespace ExcelToCsv
                 {
                     result = datas[i].ToString() == ""
                                   ? "null"
-                                  : string.Format("delegate(ISkill skl,IPlayer p,IMonster s,IMonster d,HitDamage damage, int type, int lv,ref int hit, ref bool nodef, ref bool result){{{0}}}", datas[i]);
+                                  : string.Format("delegate(ISkill skl,IPlayer p,IMonster s,IMonster d,HitDamage damage, int type, int lv,ref bool result){{{0}}}", datas[i]);
                 }
                 else if (typeStr == "SpellEffectDelegate")
                 {

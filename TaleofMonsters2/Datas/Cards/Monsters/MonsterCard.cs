@@ -168,8 +168,6 @@ namespace TaleofMonsters.Datas.Cards.Monsters
                 g.DrawRectangle(pen, offX + 10, basel + 221 + 45 * skillindex, 40, 40);
                 pen.Dispose();
 
-                Skill skillData = new Skill(skillId);
-                skillData.UpgradeToLevel(card.Level);
                 var des = skillConfig.Name;
                 if (skill.Value < 100)
                     des = string.Format("{0}-{1}%", skillConfig.Name, skill.Value);
@@ -178,7 +176,7 @@ namespace TaleofMonsters.Datas.Cards.Monsters
                 g.DrawString(des, fontsong2, skillQBrush, offX + 10 + 43, basel + 221 + 45 * skillindex);
                 skillQBrush.Dispose();
 
-                PaintTool.DrawStringMultiLine(g, fontsong2, sb, offX + 10 + 43, basel + 221 + 45 * skillindex + 14, 14, 12, skillData.Descript);
+                PaintTool.DrawStringMultiLine(g, fontsong2, sb, offX + 10 + 43, basel + 221 + 45 * skillindex + 14, 14, 12, SkillBook.GetSkillDes(skillId, 1));
                 skillindex++;
             }
 

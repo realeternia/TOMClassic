@@ -155,12 +155,6 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             toAdd.Clear();
         }
 
-        public void OnPlayerUseCard(IPlayer caster, int cardType, int lv)
-        {
-            foreach (var pickMon in monsters)
-                pickMon.SkillManager.CheckUseCard(caster, cardType, lv);
-        }
-
         public void Clear()
         {
             monsters.Clear();

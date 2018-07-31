@@ -246,10 +246,11 @@ namespace TaleofMonsters.Forms.MagicBook
 
             if (tar != -1)
             {
-                Skill skill = new Skill(skills[tar]);
-                skillDesStr = string.Format("{0}:{1}", skill.SkillConfig.Name, skill.Descript);
+                var skillId = skills[tar];
+                var skillDes = SkillBook.GetSkillDes(skillId, 1);
+                skillDesStr = string.Format("{0}:{1}", ConfigData.GetSkillConfig(skillId).Name, skillDes);
                 nlClickLabel1.ClearLabel();
-                foreach (int mid in MonsterBook.GetSkillMids(skill.Id))
+                foreach (int mid in MonsterBook.GetSkillMids(skillId))
                 {
                     var cardConfig = ConfigData.GetMonsterConfig(mid);
                     var colorName = HSTypes.I2QualityColor(cardConfig.Quality);
@@ -257,7 +258,7 @@ namespace TaleofMonsters.Forms.MagicBook
                         colorName = "DarkGray";
                     nlClickLabel1.AddLabel(cardConfig.Name, mid, Color.FromName(colorName));
                 }
-                foreach (int wid in WeaponBook.GetSkillWids(skill.Id))
+                foreach (int wid in WeaponBook.GetSkillWids(skillId))
                 {
                     var cardConfig = ConfigData.GetWeaponConfig(wid);
                     var colorName = HSTypes.I2QualityColor(cardConfig.Quality);

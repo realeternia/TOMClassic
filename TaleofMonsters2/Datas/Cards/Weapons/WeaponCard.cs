@@ -180,8 +180,6 @@ namespace TaleofMonsters.Datas.Cards.Weapons
                 g.DrawRectangle(pen, offX + 10, basel + 221, 40, 40);
                 pen.Dispose();
 
-                Skill skillData = new Skill(weapon.WeaponConfig.SkillId);
-                skillData.UpgradeToLevel(card.Level);
                 var des = skillConfig.Name;
                 if (weapon.WeaponConfig.Percent < 100)
                     des = string.Format("{0}-{1}%", skillConfig.Name, weapon.WeaponConfig.Percent);
@@ -190,7 +188,7 @@ namespace TaleofMonsters.Datas.Cards.Weapons
                 g.DrawString(des, fontsong2, skillQBrush, offX + 10 + 43, basel + 221);
                 skillQBrush.Dispose();
                 
-                PaintTool.DrawStringMultiLine(g, fontsong2, sb, offX + 10 + 43, basel + 221 + 14, 14, 12, skillData.Descript);
+                PaintTool.DrawStringMultiLine(g, fontsong2, sb, offX + 10 + 43, basel + 221 + 14, 14, 12, SkillBook.GetSkillDes(weapon.WeaponConfig.SkillId, 1));
             }
             if (!string.IsNullOrEmpty(weapon.WeaponConfig.Descript))
             {
@@ -200,10 +198,7 @@ namespace TaleofMonsters.Datas.Cards.Weapons
                 g.DrawRectangle(pen, offX + 10, basel + 221, 40, 40);
                 pen.Dispose();
 
-                Skill skillData = new Skill(weapon.WeaponConfig.SkillId);
-                skillData.UpgradeToLevel(card.Level);
                 var des = "神器";
-
                 var skillQBrush = new SolidBrush(Color.FromName(HSTypes.I2QualityColorD(3)));//使用暗色
                 g.DrawString(des, fontsong2, skillQBrush, offX + 10 + 43, basel + 221);
                 skillQBrush.Dispose();

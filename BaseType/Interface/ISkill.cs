@@ -4,5 +4,6 @@
     {
         int Id { get; }
         int Level { get; }
+        IMonster Owner { get; }
     }
 }

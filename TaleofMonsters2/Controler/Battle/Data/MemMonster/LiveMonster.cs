@@ -11,6 +11,7 @@ using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Core;
 using TaleofMonsters.Controler.Battle.Data.MemWeapon;
+using TaleofMonsters.Controler.Battle.DataTent;
 using TaleofMonsters.Core.Config;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas;
@@ -264,7 +265,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
 
         public virtual void OnDie()
         {
-            SkillManager.DeathSkill(); // 亡语
+            var killer = BattleManager.Instance.MonsterQueue.GetMonsterByUniqueId(lastDamagerId);
+            BattleManager.Instance.EventMsgQueue.Pubscribe(EventMsgQueue.EventMsgTypes.MonsterDie, Owner, this, killer, null, Position, 0, 0, 0);
 
             GhostTime = 0.01f;//开始死亡
             BattleManager.Instance.MemMap.UpdateCellOwner(Position, -Id);

@@ -1,5 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using ConfigDatas;
+using NarlonLib.Log;
+using TaleofMonsters.Controler.Battle.Data.MemCard;
+using TaleofMonsters.Controler.Battle.DataTent;
 using TaleofMonsters.Controler.Battle.Tool;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Cards.Monsters;
@@ -9,7 +14,7 @@ using TaleofMonsters.Datas.Skills;
 
 namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
 {
-    internal class SkillManager
+    internal class SkillManager : ISubscribeUser
     {
         public List<MemBaseSkill> SkillList { get; private set; }
         private LiveMonster self;
@@ -21,6 +26,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         {
             SkillList = new List<MemBaseSkill>();
             self = lm;
+
+            BattleManager.Instance.EventMsgQueue.Subscribe(this);
         }
 
         public bool HasSkill(int sid)
@@ -44,7 +51,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             foreach (var skill in MonsterBook.GetSkillList(self.Avatar.MonsterConfig.Id))
             {
                 int monLevel = self.Level;
-                Skill skillData = new Skill(skill.Id);
+                Skill skillData = new Skill(self, skill.Id);
                 skillData.UpgradeToLevel(monLevel);
                 MemBaseSkill baseSkill = new MemBaseSkill(self, skillData, skill.Value, monLevel, SkillSourceTypes.Monster);
                 skills.Add(baseSkill);
@@ -57,7 +64,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         {
             foreach (var skillInfo in skills)
             {
-                Skill skill = new Skill(skillInfo.Id);
+                Skill skill = new Skill(self, skillInfo.Id);
                 skill.UpgradeToLevel(self.Level);
                 MemBaseSkill skillbase = new MemBaseSkill(self, skill, skillInfo.Value, self.Level, type);
                 SkillList.Add(skillbase);
@@ -76,7 +83,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 }
             }
 
-            skill1Data = new Skill(sid);
+            skill1Data = new Skill(self, sid);
             skill1Data.UpgradeToLevel(slevel);
             MemBaseSkill skillbase = new MemBaseSkill(self, skill1Data, rate, slevel, type);
             skillbase.CheckInitialEffect();
@@ -99,7 +106,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         public void Silent()
         {
             IsSilent = true;
-            CheckSilentEffect();
+            CheckRemoveEffect();
         }
 
         public void CheckCover(List<MonsterBindEffect> coverEffectList)
@@ -130,12 +137,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 skill.CheckRemoveEffect();
         }
 
-        public void CheckSilentEffect()
-        {
-            foreach (var skill in SkillList.ToArray())
-                skill.CheckSilentEffect();
-        }
-
         public bool CheckSpecial(float pastRound)
         {
             if (self.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
@@ -150,31 +151,6 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                     return true;
             }
             return false;
-        }
-
-        public void CheckUseCard(IPlayer caster, int cardType, int lv)
-        {
-            if (self.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
-                return;
-
-            foreach (var skill in SkillList.ToArray())
-            {
-                if (IsSilent && skill.Type != SkillSourceTypes.Weapon)
-                    continue;
-
-                skill.OnUseCard(caster, cardType, lv);
-            }
-        }
-
-        public void DeathSkill()
-        {
-            foreach (var skill in SkillList.ToArray())
-            {
-                if (IsSilent && skill.Type != SkillSourceTypes.Weapon)
-                    continue;
-
-                skill.DeathSkill();
-            }
         }
 
         /// <summary>
@@ -199,14 +175,13 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         /// </summary>
         /// <param name="src">攻击者</param>
         /// <param name="dest">受击者</param>
-        /// <param name="rhit">命中</param>
-        public void CheckHit(LiveMonster src, LiveMonster dest, ref int rhit)
+        public void CheckHit(LiveMonster src, LiveMonster dest)
         {
             foreach (var skill in SkillList.ToArray())
             {
                 var key = MemBaseSkill.GetBurstKey(src.Id, dest.Id);
                 if (skill.IsBurst(key))
-                    skill.CheckHit(src, dest, ref rhit, key);
+                    skill.CheckHit(src, dest, key);
             }
         }
 
@@ -217,14 +192,13 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         /// <param name="dest">受击者</param>
         /// <param name="isActive">是否主动</param>
         /// <param name="damage">伤害值</param>
-        /// <param name="nodef">无视防御</param>
-        public void CheckDamage(LiveMonster src, LiveMonster dest, bool isActive, HitDamage damage, ref bool nodef)
+        public void CheckDamage(LiveMonster src, LiveMonster dest, bool isActive, HitDamage damage)
         {
             foreach (var skill in SkillList.ToArray())
             {
                 var key = MemBaseSkill.GetBurstKey(src.Id, dest.Id);
                 if (skill.IsBurst(key))
-                    skill.CheckDamage(src, dest, isActive, damage, ref nodef, key);
+                    skill.CheckDamage(src, dest, isActive, damage, key);
             }
         }
 
@@ -253,6 +227,24 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                     return round;
             }
             return 0;
+        }
+
+        public void OnMessage(EventMsgQueue.EventMsgTypes type, IPlayer p, IMonster src, IMonster dest, HitDamage damage, Point l, int cardId, int cardType, int cardLevel)
+        {
+            if (self.BuffManager.HasBuff(BuffEffectTypes.NoSkill) || IsSilent)
+                return;
+
+            foreach (var skill in SkillList)
+            {
+                var skillConfig = ConfigData.GetSkillConfig(skill.SkillId);
+                if(string.IsNullOrEmpty(skillConfig.EventType))
+                    continue;
+                var typeV = (EventMsgQueue.EventMsgTypes)Enum.Parse(typeof(EventMsgQueue.EventMsgTypes), skillConfig.EventType);
+                if (typeV == type)
+                {
+                    skill.CheckEvent(p, src, dest, damage, cardId, cardType, cardLevel);
+                }
+            }
         }
     }
 }

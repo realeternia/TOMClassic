@@ -79,7 +79,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players.Frag
                 }
                 var nextType = GetNextManaType();
                 manaList.Add(nextType);
-                BattleManager.Instance.EventMsgQueue.Pubscribe(EventMsgQueue.EventMsgTypes.EpRecover, null, Point.Empty, null, self);
+                BattleManager.Instance.EventMsgQueue.Pubscribe(EventMsgQueue.EventMsgTypes.EpRecover, self, null, null, null, Point.Empty, 0,0,0);
             }
         }
 

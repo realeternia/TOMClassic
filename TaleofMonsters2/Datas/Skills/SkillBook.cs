@@ -34,7 +34,7 @@ namespace TaleofMonsters.Datas.Skills
             switch (info)
             {
                 case "type": return skillConfig.Type;
-                case "des": return new Skill(id).Descript;
+                case "des": return GetSkillDes(id, 1);
             }
             return "";
         }
@@ -115,6 +115,15 @@ namespace TaleofMonsters.Datas.Skills
                 ImageManager.AddImage(fname, image);
             }
             return ImageManager.GetImage(fname);
+        }
+
+        public static string GetSkillDes(int skillId, int level)
+        {
+            var skillConfig = ConfigData.GetSkillConfig(skillId);
+            if (skillConfig.DescriptBuffId > 0)
+                return skillConfig.GetDescript(level) +
+                       ConfigDatas.ConfigData.GetBuffConfig(skillConfig.DescriptBuffId).GetDescript(level);
+            return skillConfig.GetDescript(level);
         }
     }
 }

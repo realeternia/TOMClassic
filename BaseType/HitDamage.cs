@@ -5,6 +5,7 @@ namespace ConfigDatas
         public int Value { get; private set; }//伤害值
         public int NoDefenceValue { get; private set; }//无视防御的伤害值
         public bool IsCrt { get; set; }//是否暴击
+        public bool IsNoDef { get; set; }//是否无视防御
 
         public int Element { get; private set; }
 

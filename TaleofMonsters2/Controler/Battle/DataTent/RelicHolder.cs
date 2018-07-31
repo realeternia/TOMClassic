@@ -112,7 +112,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             ft1.Dispose();
         }
 
-        public void OnMessage(EventMsgQueue.EventMsgTypes type, ActiveCard selectCard, Point location, IMonster mon, IPlayer targetPlayer)
+        public void OnMessage(EventMsgQueue.EventMsgTypes type, IPlayer p, IMonster src, IMonster dest, HitDamage damage, Point l, int cardId, int cardType, int cardLevel)
         {
             foreach (var relic in relicList)
             {
@@ -121,15 +121,13 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 if (typeV == type)
                 {
                     bool result = false;
-                    if(selectCard == null)
-                        selectCard = new ActiveCard();
-                    relicConfig.RelicUseEffect(targetPlayer, relic, selectCard.CardId, (int)selectCard.CardType, mon, ref result);
+                    relicConfig.RelicUseEffect(p, relic, cardId, cardType, src, ref result);
                     if (result)
                     {
                         TriggerRelic(relic);
                         NLog.Debug("OnMessage id={0}", relic.Id);
-                        if(mon != null)
-                            BattleManager.Instance.EffectQueue.Add(new MonsterBindEffect(EffectBook.GetEffect(relicConfig.RelicEffect), mon as LiveMonster, false));
+                        if (src != null)
+                            BattleManager.Instance.EffectQueue.Add(new MonsterBindEffect(EffectBook.GetEffect(relicConfig.RelicEffect), src as LiveMonster, false));
                     }
                 }
             }

@@ -54,5 +54,7 @@ namespace ConfigDatas
         void OnSpellDamage(double damage, int element);
         void OnSpellDamage(double damage, int element, double vibrate);
         void ClearTarget();
+
+        bool IsAlive { get; }
     }
 }

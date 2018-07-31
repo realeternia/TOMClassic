@@ -12,14 +12,16 @@ namespace TaleofMonsters.Datas.Skills
         }
 
         public int Level { get; set; }
+        public IMonster Owner { get; private set; }
 
         public string Name
         {
             get { return SkillConfig.Name; }
         }
 
-        public Skill(int id)
+        public Skill(IMonster p, int id)
         {
+            Owner = p;
             SkillConfig = ConfigData.GetSkillConfig(id);
             Level = 1;
         }

@@ -299,10 +299,9 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
             AddLp(-selectCard.Lp);
             AddPp(-selectCard.Pp);
 
-            BattleManager.Instance.EventMsgQueue.Pubscribe(EventMsgQueue.EventMsgTypes.UseCard, selectCard, location, null, this);
+            BattleManager.Instance.EventMsgQueue.Pubscribe(EventMsgQueue.EventMsgTypes.UseCard, this, null, null, null, location, selectCard.CardId, (int)selectCard.CardType, selectCard.Level);
 
             SpikeManager.OnUseCard(selectCard.CardType);
-            BattleManager.Instance.MonsterQueue.OnPlayerUseCard(this, (int)selectCard.CardType, selectCard.Level);
             if (OnUseCard != null)
                 OnUseCard(selectCard.CardId, selectCard.Level, IsLeft);
             
@@ -375,7 +374,7 @@ namespace TaleofMonsters.Controler.Battle.Data.Players
                 BattleManager.Instance.MonsterQueue.Add(newMon);
                 NLog.Debug("UseMonster pid={0} cid={1}", PeopleId, card.CardId);
 
-                BattleManager.Instance.EventMsgQueue.Pubscribe(EventMsgQueue.EventMsgTypes.Summon, null, Point.Empty, newMon, this);
+                BattleManager.Instance.EventMsgQueue.Pubscribe(EventMsgQueue.EventMsgTypes.Summon, this, newMon, null, null, Point.Empty, 0,0,0);
                 if (HolyBook.HasWord("holyman"))
                     newMon.BuffManager.AddBuff(BuffConfig.Indexer.HolyShield, 1, 99);
                 if (mon.Luk != 0)

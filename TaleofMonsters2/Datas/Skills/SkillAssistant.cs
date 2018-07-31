@@ -20,9 +20,9 @@ namespace TaleofMonsters.Datas.Skills
         {
             int rhit = GameConstants.DefaultHitRate + (src.RealHit - dest.RealDHit)*GameConstants.HitToRate;
             if (!src.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
-                src.SkillManager.CheckHit(src, dest, ref rhit);
+                src.SkillManager.CheckHit(src, dest);
             if (!dest.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
-                dest.SkillManager.CheckHit(src, dest, ref rhit);
+                dest.SkillManager.CheckHit(src, dest);
             return Math.Max(rhit, 0);
         }
 
@@ -58,11 +58,10 @@ namespace TaleofMonsters.Datas.Skills
             }
             damage.IsCrt = isCrt;
 
-            bool nodef = false; //Œﬁ ”∑¿”˘
             if (!src.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
-                src.SkillManager.CheckDamage(src, dest, true, damage, ref nodef);
+                src.SkillManager.CheckDamage(src, dest, true, damage);
             if (!dest.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
-                dest.SkillManager.CheckDamage(src, dest, false, damage, ref nodef);
+                dest.SkillManager.CheckDamage(src, dest, false, damage);
 
             damage.SetDamage(DamageTypes.All, damage.Value);
             return damage;
