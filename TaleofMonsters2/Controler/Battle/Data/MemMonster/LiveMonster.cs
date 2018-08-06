@@ -239,7 +239,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             int hitrate = SkillAssistant.GetHit(src, this);
             if (hitrate > MathTool.GetRandom(100))
             {
-                HitDamage damage = SkillAssistant.GetDamage(src, this);
+                DamageData damage = SkillAssistant.GetDamage(src, this);
                 CheckDamageBuffEffect(src, damage);
 
                 HpBar.OnDamage(damage);
@@ -330,7 +330,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
         }
 
-        public void CheckMagicDamage(HitDamage damage)
+        public void CheckMagicDamage(DamageData damage)
         {
             if (antiMagic[damage.Element] > 0)
                 damage.SetDamage(DamageTypes.Magic, Math.Max(damage.Value*(100 - antiMagic[damage.Element])/100, 0));
@@ -367,7 +367,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
             }
         }
 
-        private void CheckDamageBuffEffect(LiveMonster src, HitDamage dam)
+        private void CheckDamageBuffEffect(LiveMonster src, DamageData dam)
         {
             if (dam.Dtype == DamageTypes.Physical)
             {
@@ -441,7 +441,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
         {
             lastDamagerId = source == null ? 0 : source.Id;
             var damValue = damage * (1 - FormulaBook.GetMagDefRate(RealMag));
-            var dam = new HitDamage((int)damValue, (int)damValue, element, DamageTypes.Magic);
+            var dam = new DamageData((int)damValue, (int)damValue, element, DamageTypes.Magic);
             CheckMagicDamage(dam);
             HpBar.OnDamage(dam);
         }
@@ -459,7 +459,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster
                 damage = damage*(1 + MathTool.GetRandom(-vibrate + vAddon*vibrate*2, vibrate));
             }
             var damValue = damage * (1 - FormulaBook.GetMagDefRate(RealMag));
-            var dam = new HitDamage((int)damValue, (int)damValue, element, DamageTypes.Magic);
+            var dam = new DamageData((int)damValue, (int)damValue, element, DamageTypes.Magic);
             CheckMagicDamage(dam);
             HpBar.OnDamage(dam);
         }

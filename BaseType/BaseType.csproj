@@ -56,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomTypes.cs" />
-    <Compile Include="HitDamage.cs" />
+    <Compile Include="IHitDamage.cs" />
     <Compile Include="Interface\IMonsterAction.cs" />
     <Compile Include="Interface\IMonsterAuro.cs" />
     <Compile Include="Interface\IPlayerAction.cs" />

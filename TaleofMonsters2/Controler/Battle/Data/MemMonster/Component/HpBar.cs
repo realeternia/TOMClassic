@@ -90,7 +90,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             }
         }
 
-        public void OnDamage(HitDamage damage)
+        public void OnDamage(DamageData damage)
         {
             BattleManager.Instance.StatisticData.GetPlayer(!self.IsLeft).DamageTotal += damage.Value;
 

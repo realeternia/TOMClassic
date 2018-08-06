@@ -91,6 +91,8 @@
   <ItemGroup>
     <Compile Include="Controler\Battle\DataTent\ArticleQueue.cs" />
     <Compile Include="Controler\Battle\DataTent\EventMsgQueue.cs" />
+    <Compile Include="Controler\Battle\Data\HitData.cs" />
+    <Compile Include="Controler\Battle\Data\DamageData.cs" />
     <Compile Include="Controler\Battle\Data\MemArticle\Article.cs" />
     <Compile Include="Controler\Battle\Data\MemFlow\FlowLukInfo.cs" />
     <Compile Include="Controler\Battle\Data\Players\AIs\AIStateImpl.cs" />

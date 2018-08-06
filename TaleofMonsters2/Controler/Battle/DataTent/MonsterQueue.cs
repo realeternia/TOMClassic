@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Log;
+using TaleofMonsters.Controler.Battle.Data;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
@@ -106,7 +107,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
                 var directDam = rival.SpecialAttr.DirectDamage;
                 if (directDam > 0)
                 {
-                    HitDamage damage = new HitDamage(directDam, directDam, 0, DamageTypes.Magic);
+                    var damage = new DamageData(directDam, directDam, 0, DamageTypes.Magic);
                     pickMon.HpBar.OnDamage(damage);
                 }
                 if (!pickMon.IsAlive)

@@ -1,32 +1,34 @@
-namespace ConfigDatas
+ï»¿using ConfigDatas;
+
+namespace TaleofMonsters.Controler.Battle.Data
 {
-    public class HitDamage
+    internal class DamageData : IHitDamage
     {
-        public int Value { get; private set; }//ÉËº¦Öµ
-        public int NoDefenceValue { get; private set; }//ÎŞÊÓ·ÀÓùµÄÉËº¦Öµ
-        public bool IsCrt { get; set; }//ÊÇ·ñ±©»÷
-        public bool IsNoDef { get; set; }//ÊÇ·ñÎŞÊÓ·ÀÓù
+        public int Value { get; private set; }//ä¼¤å®³å€¼
+        public int SourceValue { get; private set; }//æ— è§†é˜²å¾¡çš„ä¼¤å®³å€¼
+        public bool IsCrt { get; set; }//æ˜¯å¦æš´å‡»
+        public bool UseSource { get; set; }//æ˜¯å¦æ— è§†é˜²å¾¡
 
         public int Element { get; private set; }
 
         public DamageTypes Dtype { get; private set; }
 
-        public HitDamage(int damage, int noDefDamage, int element, DamageTypes type)
+        public DamageData(int damage, int noDefDamage, int element, DamageTypes type)
         {
             Value = damage;
-            NoDefenceValue = noDefDamage;
+            SourceValue = noDefDamage;
             Element = element;
             Dtype = type;
         }
-        
+
         public bool AddPDamage(double damage)
         {
-            return	AddDamage(DamageTypes.Physical,(int)damage);
+            return AddDamage(DamageTypes.Physical, (int)damage);
         }
-                
+
         public bool AddMDamage(double damage)
         {
-            return	AddDamage(DamageTypes.Magic,(int)damage);
+            return AddDamage(DamageTypes.Magic, (int)damage);
         }
 
         public bool AddDamage(DamageTypes type, int damage)
@@ -38,15 +40,15 @@ namespace ConfigDatas
             }
             return false;
         }
-                
+
         public bool SetPDamageRate(double rate)
         {
-            return	SetDamage(DamageTypes.Physical,(int)(Value*rate));
-        }    
-                    
+            return SetDamage(DamageTypes.Physical, (int)(Value * rate));
+        }
+
         public bool SetMDamageRate(double rate)
         {
-            return	SetDamage(DamageTypes.Magic,(int)(Value*rate));
+            return SetDamage(DamageTypes.Magic, (int)(Value * rate));
         }
 
         public bool SetDamage(DamageTypes type, int damage)
@@ -57,6 +59,12 @@ namespace ConfigDatas
                 return true;
             }
             return false;
+        }
+
+        public void FinalCheck()
+        {
+            if (UseSource)
+                Value = SourceValue;
         }
     }
 }

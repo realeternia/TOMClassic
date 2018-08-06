@@ -117,16 +117,16 @@ namespace TaleofMonsters.Controler.Battle.Data
             }
         }
 
-        public void CheckHit(LiveMonster src, LiveMonster dest, int key)
+        public void CheckHit(LiveMonster src, LiveMonster dest, HitData hit, int key)
         {
             if (SkillInfo.SkillConfig.CheckHit == null)
                 return;
             bool result = false;
-            SkillInfo.SkillConfig.CheckHit(SkillInfo, src.Owner, src, dest, null, 0, 0, ref result);
+            SkillInfo.SkillConfig.CheckHit(SkillInfo, src.Owner, src, dest, hit, 0, 0, ref result);
             SendSkillIcon(key);
         }
 
-        public void CheckDamage(LiveMonster src, LiveMonster dest, bool isActive, HitDamage damage, int key)
+        public void CheckDamage(LiveMonster src, LiveMonster dest, bool isActive, DamageData damage, int key)
         {
             if (SkillInfo.SkillConfig.CheckDamage == null)
                 return;
@@ -135,7 +135,7 @@ namespace TaleofMonsters.Controler.Battle.Data
             SendSkillIcon(key);
         }
 
-        public void CheckHitEffectAfter(LiveMonster src, LiveMonster dest, HitDamage damage, int key)
+        public void CheckHitEffectAfter(LiveMonster src, LiveMonster dest, DamageData damage, int key)
         {
             if (SkillInfo.SkillConfig.AfterHit != null)
             {
@@ -174,7 +174,7 @@ namespace TaleofMonsters.Controler.Battle.Data
             return true;
         }
 
-        public void CheckEvent(IPlayer p, IMonster src, IMonster dest, HitDamage damage, int cardId, int cardType, int cardLevel)
+        public void CheckEvent(IPlayer p, IMonster src, IMonster dest, DamageData damage, int cardId, int cardType, int cardLevel)
         {
             if (!CheckBurst(Self, null, true, false))
                 return;

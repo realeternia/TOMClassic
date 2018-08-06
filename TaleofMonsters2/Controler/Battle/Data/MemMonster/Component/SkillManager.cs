@@ -175,13 +175,14 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         /// </summary>
         /// <param name="src">攻击者</param>
         /// <param name="dest">受击者</param>
-        public void CheckHit(LiveMonster src, LiveMonster dest)
+        /// <param name="hit">命中信息</param>
+        public void CheckHit(LiveMonster src, LiveMonster dest, HitData hit)
         {
             foreach (var skill in SkillList.ToArray())
             {
                 var key = MemBaseSkill.GetBurstKey(src.Id, dest.Id);
                 if (skill.IsBurst(key))
-                    skill.CheckHit(src, dest, key);
+                    skill.CheckHit(src, dest, hit, key);
             }
         }
 
@@ -192,7 +193,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         /// <param name="dest">受击者</param>
         /// <param name="isActive">是否主动</param>
         /// <param name="damage">伤害值</param>
-        public void CheckDamage(LiveMonster src, LiveMonster dest, bool isActive, HitDamage damage)
+        public void CheckDamage(LiveMonster src, LiveMonster dest, bool isActive, DamageData damage)
         {
             foreach (var skill in SkillList.ToArray())
             {
@@ -208,7 +209,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
         /// <param name="src">攻击者</param>
         /// <param name="dest">受击者</param>
         /// <param name="damage">伤害值</param>
-        public void CheckHitEffectAfter(LiveMonster src, LiveMonster dest, HitDamage damage)
+        public void CheckHitEffectAfter(LiveMonster src, LiveMonster dest, DamageData damage)
         {
             foreach (var skill in SkillList.ToArray())
             {
@@ -229,7 +230,7 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             return 0;
         }
 
-        public void OnMessage(EventMsgQueue.EventMsgTypes type, IPlayer p, IMonster src, IMonster dest, HitDamage damage, Point l, int cardId, int cardType, int cardLevel)
+        public void OnMessage(EventMsgQueue.EventMsgTypes type, IPlayer p, IMonster src, IMonster dest, DamageData damage, Point l, int cardId, int cardType, int cardLevel)
         {
             if (self.BuffManager.HasBuff(BuffEffectTypes.NoSkill) || IsSilent)
                 return;

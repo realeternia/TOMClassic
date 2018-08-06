@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
+using TaleofMonsters.Controler.Battle.Data;
 
 namespace TaleofMonsters.Controler.Battle.DataTent
 {
     internal interface ISubscribeUser
     {
-        void OnMessage(EventMsgQueue.EventMsgTypes type, IPlayer p, IMonster src, IMonster dest, HitDamage damage, Point l, int cardId, int cardType, int cardLevel);
+        void OnMessage(EventMsgQueue.EventMsgTypes type, IPlayer p, IMonster src, IMonster dest, DamageData damage, Point l, int cardId, int cardType, int cardLevel);
     }
 
     internal class EventMsgQueue
@@ -27,7 +28,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             users.Remove(user);
         }
 
-        public void Pubscribe(EventMsgTypes type, IPlayer p, IMonster src, IMonster dest, HitDamage damage, Point l, int cardId, int cardType, int cardLevel)
+        public void Pubscribe(EventMsgTypes type, IPlayer p, IMonster src, IMonster dest, DamageData damage, Point l, int cardId, int cardType, int cardLevel)
         {
             foreach (var subscribeUser in users)
             {

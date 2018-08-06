@@ -6,7 +6,7 @@ namespace ConfigDatas
 
     public delegate bool SkillBurstCheckDelegate(IMonster src, IMonster dest, bool isMelee);
 
-    public delegate void SkillEventDelegate(ISkill skl, IPlayer p, IMonster src, IMonster dest, HitDamage damage, int cardType, int cardLevel, ref bool success);
+    public delegate void SkillEventDelegate(ISkill skl, IPlayer p, IMonster src, IMonster dest, IHitDamage damage, int cardType, int cardLevel, ref bool success);
 
     public delegate bool SpellCheckDelegate(ISpell spell, IPlayer player, IMonster target);
     public delegate void SpellEffectDelegate(ISpell spell, IMap map, IPlayer player, IPlayer rival, IMonster target, System.Drawing.Point mouse);

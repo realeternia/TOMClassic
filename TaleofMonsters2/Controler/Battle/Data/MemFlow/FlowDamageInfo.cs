@@ -7,8 +7,8 @@ namespace TaleofMonsters.Controler.Battle.Data.MemFlow
 {
     internal class FlowDamageInfo : FlowWord
     {
-        private HitDamage damage;
-        public FlowDamageInfo(HitDamage dam, Point point) 
+        private DamageData damage;
+        public FlowDamageInfo(DamageData dam, Point point) 
             : base("", point, 3, "Coral", 0, -10, 0, 2, 30)
         {
             damage = dam;

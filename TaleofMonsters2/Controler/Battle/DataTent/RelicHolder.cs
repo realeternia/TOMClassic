@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
 using NarlonLib.Log;
-using TaleofMonsters.Controler.Battle.Data.MemCard;
+using TaleofMonsters.Controler.Battle.Data;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Controler.Battle.Data.Players;
 using TaleofMonsters.Controler.Battle.Tool;
@@ -112,7 +112,7 @@ namespace TaleofMonsters.Controler.Battle.DataTent
             ft1.Dispose();
         }
 
-        public void OnMessage(EventMsgQueue.EventMsgTypes type, IPlayer p, IMonster src, IMonster dest, HitDamage damage, Point l, int cardId, int cardType, int cardLevel)
+        public void OnMessage(EventMsgQueue.EventMsgTypes type, IPlayer p, IMonster src, IMonster dest, DamageData damage, Point l, int cardId, int cardType, int cardLevel)
         {
             foreach (var relic in relicList)
             {

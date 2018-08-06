@@ -1,6 +1,7 @@
 using System;
 using ConfigDatas;
 using NarlonLib.Math;
+using TaleofMonsters.Controler.Battle.Data;
 using TaleofMonsters.Controler.Battle.Data.MemMonster;
 using TaleofMonsters.Core;
 using TaleofMonsters.Datas.Cards.Monsters;
@@ -18,17 +19,17 @@ namespace TaleofMonsters.Datas.Skills
 
         public static int GetHit(LiveMonster src, LiveMonster dest)
         {
-            int rhit = GameConstants.DefaultHitRate + (src.RealHit - dest.RealDHit)*GameConstants.HitToRate;
+            HitData hit = new HitData(GameConstants.DefaultHitRate + (src.RealHit - dest.RealDHit) * GameConstants.HitToRate);
             if (!src.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
-                src.SkillManager.CheckHit(src, dest);
+                src.SkillManager.CheckHit(src, dest, hit);
             if (!dest.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
-                dest.SkillManager.CheckHit(src, dest);
-            return Math.Max(rhit, 0);
+                dest.SkillManager.CheckHit(src, dest, hit);
+            return Math.Max(hit.Value, 0);
         }
 
-        public static HitDamage GetDamage(LiveMonster src, LiveMonster dest)
+        public static DamageData GetDamage(LiveMonster src, LiveMonster dest)
         {
-            HitDamage damage;
+            DamageData damage;
             double attrRateOn = 1; //属性相克的伤害修正
             bool isCrt = false;
             if (dest.Avatar.MonsterConfig.AttrDef != null)
@@ -48,12 +49,12 @@ namespace TaleofMonsters.Datas.Skills
             {
                 var damValue = Math.Max(1, (int)(src.RealAtk*(1 - FormulaBook.GetPhyDefRate(dest.RealDef)) * attrRateOn));//至少有1点伤害
                 var noDefDamValue = (int)(src.RealAtk * attrRateOn);
-                damage = new HitDamage(damValue, noDefDamValue, 0, DamageTypes.Physical);
+                damage = new DamageData(damValue, noDefDamValue, 0, DamageTypes.Physical);
             }
             else
             {
                 var damValue = (int)(src.RealAtk * (1 + src.RealMag * GameConstants.MagToRate) * (1 - FormulaBook.GetMagDefRate(dest.RealMag)) * attrRateOn);
-                damage = new HitDamage(damValue, damValue, realAttackType, DamageTypes.Magic);
+                damage = new DamageData(damValue, damValue, realAttackType, DamageTypes.Magic);
                 dest.CheckMagicDamage(damage);
             }
             damage.IsCrt = isCrt;
@@ -63,11 +64,11 @@ namespace TaleofMonsters.Datas.Skills
             if (!dest.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
                 dest.SkillManager.CheckDamage(src, dest, false, damage);
 
-            damage.SetDamage(DamageTypes.All, damage.Value);
+            damage.FinalCheck();
             return damage;
         }
 
-        public static void CheckHitEffectAfter(LiveMonster src, LiveMonster dest, HitDamage dam)
+        public static void CheckHitEffectAfter(LiveMonster src, LiveMonster dest, DamageData dam)
         {
             if (!src.BuffManager.HasBuff(BuffEffectTypes.NoSkill))
                 src.SkillManager.CheckHitEffectAfter(src, dest, dam);
