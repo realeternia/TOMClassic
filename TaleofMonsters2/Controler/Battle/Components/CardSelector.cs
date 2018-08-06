@@ -83,7 +83,7 @@ namespace TaleofMonsters.Controler.Battle.Components
             var card = CardAssistant.GetCard(cards[id - 1].ACard.CardId);
             DeckCard dc = new DeckCard(card.CardId, (byte) cards[id - 1].ACard.Level, 0);
             card.SetData(dc);
-            var img = card.GetPreview(CardPreviewType.Normal, new uint[0]);
+            var img = card.GetPreview(null);
             tooltip.Show(img, this, x, y);
         }
 

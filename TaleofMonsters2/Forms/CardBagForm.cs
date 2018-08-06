@@ -148,7 +148,7 @@ namespace TaleofMonsters.Forms
                 var pickCardId = cardOpenArray[id - 1];
                 if (pickCardId > 0)
                 {
-                    Image image = CardAssistant.GetCard(pickCardId).GetPreview(CardPreviewType.Normal, new uint[] { });
+                    Image image = CardAssistant.GetCard(pickCardId).GetPreview(null);
                     tooltip.Show(image, this, x, y);
                 }
                 else

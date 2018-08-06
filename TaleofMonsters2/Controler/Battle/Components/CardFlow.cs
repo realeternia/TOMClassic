@@ -61,7 +61,7 @@ namespace TaleofMonsters.Controler.Battle.Components
                 var card = CardAssistant.GetCard(CardId);
                 DeckCard dc = new DeckCard(CardId, (byte)Level, 0);
                 card.SetData(dc);
-                return card.GetPreview(CardPreviewType.Normal, new uint[0]);
+                return card.GetPreview(null);
             }
 
             public virtual void Draw(Graphics g)

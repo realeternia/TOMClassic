@@ -8,13 +8,14 @@ namespace ControlPlus
 {
     public class TipImage
     {
-        public delegate Color GetTalkColorDelegegate(string cname);
+        public delegate Color GetTalkColorDelegate(string cname);
+        public delegate void TipOwnerDrawDelegate(TipImage tip);
 
         private List<LineInfo> datas = new List<LineInfo>();
         private List<ImageInfo> imgs = new List<ImageInfo>();
-        public GetTalkColorDelegegate ColorMethod;
+        public GetTalkColorDelegate ColorMethod;
 
-        public TipImage(GetTalkColorDelegegate cm)
+        public TipImage(GetTalkColorDelegate cm)
         {
             ColorMethod = cm;
         }

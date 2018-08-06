@@ -96,12 +96,12 @@ namespace TaleofMonsters.Forms.Items
         {
             if (info == 1 && changeInfo.Id1 != 0)
             {
-                Image image = CardAssistant.GetCard(changeInfo.Id1).GetPreview(CardPreviewType.Normal, new uint[] { });
+                Image image = CardAssistant.GetCard(changeInfo.Id1).GetPreview(null);
                 tooltip.Show(image, parent, mx, my, changeInfo.Id1);
             }
             else if (info == 2 && changeInfo.Id2 != 0)
             {
-                Image image = CardAssistant.GetCard(changeInfo.Id2).GetPreview(CardPreviewType.Normal, new uint[] { });
+                Image image = CardAssistant.GetCard(changeInfo.Id2).GetPreview(null);
                 tooltip.Show(image, parent, mx, my, changeInfo.Id2);
             }
         }

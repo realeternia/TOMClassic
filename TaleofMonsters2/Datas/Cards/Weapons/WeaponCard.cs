@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using ConfigDatas;
+using ControlPlus;
 using NarlonLib.Math;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Config;
@@ -216,7 +217,7 @@ namespace TaleofMonsters.Datas.Cards.Weapons
             return val > 0 ? string.Format("+{0,3:D}", val) : string.Format("-{0,3:D}", Math.Abs(val));
         }
 
-        public override Image GetPreview(CardPreviewType type, uint[] parms)
+        public override Image GetPreview(TipImage.TipOwnerDrawDelegate ownerDraw)
         {
             const string stars = "★★★★★★★★★★";
             ControlPlus.TipImage tipData = new ControlPlus.TipImage(PaintTool.GetTalkColor);
@@ -280,20 +281,8 @@ namespace TaleofMonsters.Datas.Cards.Weapons
             {
                 tipData.AddTextLines(weapon.WeaponConfig.Descript, "Cyan", 15, true);
             }
-            if (type == CardPreviewType.Shop)
-            {
-                tipData.AddLine();
-                tipData.AddTextNewLine("价格", "White");
-                for (int i = 0; i < 7; i++)
-                {
-                    if (parms[i] > 0)
-                    {
-                        tipData.AddText(" " + parms[i].ToString(), HSTypes.I2ResourceColor(i));
-                        tipData.AddImage(HSIcons.GetIconsByEName("res" + (i + 1)));
-                    }
-                }
-            }
-
+            if (ownerDraw != null)
+                ownerDraw(tipData);
             return tipData.Image;
         }
     }

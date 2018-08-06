@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using ControlPlus;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas.Decks;
 
@@ -63,7 +64,7 @@ namespace TaleofMonsters.Datas.Cards
         {
         }
 
-        public override Image GetPreview(CardPreviewType type, uint[] parms)
+        public override Image GetPreview(TipImage.TipOwnerDrawDelegate ownerDraw)
         {
             return null;
         }

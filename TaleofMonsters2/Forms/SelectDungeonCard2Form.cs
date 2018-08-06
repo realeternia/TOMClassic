@@ -96,7 +96,7 @@ namespace TaleofMonsters.Forms
         {
             if (id > 0)
             {
-                Image image = CardAssistant.GetCard(key).GetPreview(CardPreviewType.Normal, new uint[] { });
+                Image image = CardAssistant.GetCard(key).GetPreview(null);
                 tooltip.Show(image, this, x, y, key);
             }
         }

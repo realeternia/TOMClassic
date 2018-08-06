@@ -196,12 +196,6 @@
         Gem
     }
 
-    internal enum CardPreviewType
-    {
-        Normal,
-        Shop
-    }
-
     internal enum QuestionTypes
     {
         MonsterInfo = 1,

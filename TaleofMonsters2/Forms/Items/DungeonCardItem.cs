@@ -73,7 +73,7 @@ namespace TaleofMonsters.Forms.Items
         {
             if (info == 1 && card.BaseId > 0)
             {
-                Image image = CardAssistant.GetCard(card.BaseId).GetPreview(CardPreviewType.Normal, new uint[0]);
+                Image image = CardAssistant.GetCard(card.BaseId).GetPreview(null);
                 tooltip.Show(image, parent, mx, my, card.BaseId);
             }
         }

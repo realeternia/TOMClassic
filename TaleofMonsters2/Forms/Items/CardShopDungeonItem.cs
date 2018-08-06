@@ -67,8 +67,23 @@ namespace TaleofMonsters.Forms.Items
         {
             if (info == 1 && product.Id > 0)
             {
-                Image image = CardAssistant.GetCard(product.Cid).GetPreview(CardPreviewType.Shop, GetPrice().ToArray());
+                Image image = CardAssistant.GetCard(product.Cid).GetPreview(ShowSellInfo);
                 tooltip.Show(image, parent, mx, my, product.Id);
+            }
+        }
+
+        private void ShowSellInfo(TipImage tipData)
+        {
+            tipData.AddLine();
+            tipData.AddTextNewLine("价格", "White");
+            var resData = GetPrice().ToArray();
+            for (int i = 0; i < 7; i++)
+            {
+                if (resData[i] > 0)
+                {
+                    tipData.AddText(" " + resData[i].ToString(), HSTypes.I2ResourceColor(i));
+                    tipData.AddImage(HSIcons.GetIconsByEName("res" + (i + 1)));
+                }
             }
         }
 
