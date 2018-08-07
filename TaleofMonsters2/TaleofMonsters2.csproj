@@ -534,7 +534,6 @@
     <Compile Include="Datas\User\InfoWorld.cs" />
     <Compile Include="Controler\Battle\Data\MemBaseBuff.cs" />
     <Compile Include="Datas\User\Db\DbCardProduct.cs" />
-    <Compile Include="Datas\Skills\MonsterSkill.cs" />
     <Compile Include="Datas\Tournaments\TournamentBook.cs" />
     <Compile Include="Datas\Cards\Weapons\Weapon.cs" />
     <Compile Include="Forms\Items\Core\BorderPainter.cs" />

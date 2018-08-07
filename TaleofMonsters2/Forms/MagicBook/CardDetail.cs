@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
 using TaleofMonsters.Core;
 using ConfigDatas;
 using ControlPlus;
@@ -12,7 +11,6 @@ using TaleofMonsters.Datas.Cards.Monsters;
 using TaleofMonsters.Datas.Decks;
 using TaleofMonsters.Datas.Effects;
 using TaleofMonsters.Datas.Effects.Facts;
-using TaleofMonsters.Datas.Skills;
 using TaleofMonsters.Forms.CMain;
 using TaleofMonsters.Forms.Items;
 using TaleofMonsters.Forms.Items.Regions;
@@ -22,6 +20,20 @@ namespace TaleofMonsters.Forms.MagicBook
 {
     internal class CardDetail
     {
+        private class MonsterSkillInfo
+        {
+            private int SkillId { get; set; }
+            private int Level { get; set; }
+            private int Percent { get; set; }
+
+            public MonsterSkillInfo(int sid, int percent, int level)
+            {
+                Level = level;
+                SkillId = sid;
+                Percent = percent;
+            }
+        }
+
         public int X { get; set; }
         public int Y { get; set; }
         public int Width { get; set; }
@@ -32,7 +44,7 @@ namespace TaleofMonsters.Forms.MagicBook
         private int level;
         private ImageToolTip tooltip = SystemToolTip.Instance;
         private Card card;
-        private List<MonsterSkill> skills;
+        private List<MonsterSkillInfo> skills;
         private StaticUIEffect coverEffect;
         private VirtualRegion vRegion;
         public DeckCardRegion.InvalidateRegion Invalidate;
@@ -56,11 +68,16 @@ namespace TaleofMonsters.Forms.MagicBook
             vRegion.RegionLeft += new VirtualRegion.VRegionLeftEventHandler(virtualRegion_RegionLeft);
         }
 
+        public void SetInfo(int id)
+        {
+            SetInfo(new DeckCard(id, 1, 0));
+        }
+
         public void SetInfo(DeckCard dcard)
         {
             cid = dcard.CardId;
             level = dcard.Level;
-            skills = new List<MonsterSkill>();
+            skills = new List<MonsterSkillInfo>();
             string effectName = "";
             if (cid > 0)
             {
@@ -109,8 +126,8 @@ namespace TaleofMonsters.Forms.MagicBook
             foreach (var skill in MonsterBook.GetSkillList(monsterConfig.Id))
             {
                 int skillId = skill.Id;
-                MonsterSkill monsterSkill = new MonsterSkill(skillId, skill.Value, 0);
-                skills.Add(monsterSkill);
+                MonsterSkillInfo monsterSkillInfo = new MonsterSkillInfo(skillId, skill.Value, 0);
+                skills.Add(monsterSkillInfo);
                 SkillConfig skillConfig = ConfigData.GetSkillConfig(skillId);
                 if (!string.IsNullOrEmpty(skillConfig.Cover))
                     effectPath = skillConfig.Cover;
@@ -119,10 +136,15 @@ namespace TaleofMonsters.Forms.MagicBook
                 effectPath = monsterConfig.Cover;
         }
 
-        public void SetInfo(int id)            
+        public void OnFrame()
         {
-            SetInfo(new DeckCard(id, 1, 0));
+            if (coverEffect != null)
+            {
+                if (coverEffect.Next())
+                    parent.Invalidate(new Rectangle(X + 20, Y + 20, 160, 180));
+            }
         }
+
 
         public void Draw(Graphics g)
         {
@@ -137,14 +159,6 @@ namespace TaleofMonsters.Forms.MagicBook
             }
         }
 
-        public void OnFrame()
-        {
-            if (coverEffect != null)
-            {
-                if (coverEffect.Next())
-                    parent.Invalidate(new Rectangle(X + 20, Y + 20, 160, 180));
-            }
-        }
 
         private Image GetAttrImage(int monType, double[] attrDef, double[] buffDef)
         {
