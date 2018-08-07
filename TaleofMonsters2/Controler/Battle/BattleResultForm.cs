@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using ConfigDatas;
 using ControlPlus;
+using NarlonLib.Math;
 using TaleofMonsters.Core;
 using TaleofMonsters.Forms;
 using TaleofMonsters.Forms.Items.Core;
@@ -25,12 +26,12 @@ namespace TaleofMonsters.Controler.Battle
         private bool isWin;
         private int leftId;
         private int rightId;
-
-        private uint goldDrop;
-        private uint exp;
+        
         private ImageToolTip tooltip = SystemToolTip.Instance;
         private VirtualRegion vRegion;
 
+        private uint rewardGold;
+        private uint rewardExp;
         private List<int> rewardItemList = new List<int>();
 
         private int cellIndex;
@@ -56,19 +57,20 @@ namespace TaleofMonsters.Controler.Battle
             leftId = BattleManager.Instance.PlayerManager.LeftPlayer.PeopleId;
             if (leftId == 0)
             {
-                BattleStatisticData statisticData = BattleManager.Instance.StatisticData;
-                PeopleDrop drop = new PeopleDrop(rightId);
-                goldDrop = drop.Gold;
                 PeopleConfig peopleConfig = ConfigData.GetPeopleConfig(rightId);
-                exp = GameResourceBook.InExpFight(UserProfile.InfoBasic.Level, peopleConfig.Level);
+              
+                uint goldExpect = GameResourceBook.InGoldFight(peopleConfig.Level, PeopleBook.IsPeople(rightId));
+                rewardGold = (uint)MathTool.GetRandom((int)(goldExpect * 7 / 10), (int)(goldExpect * 13 / 10) + 1);
+                rewardExp = GameResourceBook.InExpFight(UserProfile.InfoBasic.Level, peopleConfig.Level);
 
-                goldDrop = (uint)(goldDrop * (100 + statisticData.GoldRatePlus)/100);
-                exp = exp*(100 + (uint)statisticData.ExpRatePlus)/100;
+                BattleStatisticData statisticData = BattleManager.Instance.StatisticData;
+                rewardGold = (uint)(rewardGold * (100 + statisticData.GoldRatePlus)/100);
+                rewardExp = rewardExp*(100 + (uint)statisticData.ExpRatePlus)/100;
 
                 if (!isWin)
                 {
-                    goldDrop /= 5;
-                    exp /= 4;
+                    rewardGold /= 5;
+                    rewardExp /= 4;
                 }
 
                 //resource[0] = 10;  //todo 测试使用
@@ -85,7 +87,7 @@ namespace TaleofMonsters.Controler.Battle
             }
             else
             {
-                goldDrop = 0;
+                rewardGold = 0;
             }
             show = true;
             Reward();
@@ -110,21 +112,21 @@ namespace TaleofMonsters.Controler.Battle
                 UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.ContinueWin, 0);
             }
 
-            if (goldDrop > 0)
+            if (rewardGold > 0)
             {
-                UserProfile.InfoBag.AddResource(GameResourceType.Gold, goldDrop);
+                UserProfile.InfoBag.AddResource(GameResourceType.Gold, rewardGold);
 
                 var pos = GetCellPosition();
-                var pictureRegion = ComplexRegion.GetResShowRegion(cellIndex, pos, 45, ImageRegionCellType.Gold, (int)goldDrop);
+                var pictureRegion = ComplexRegion.GetResShowRegion(cellIndex, pos, 45, ImageRegionCellType.Gold, (int)rewardGold);
                 vRegion.AddRegion(pictureRegion);
             }
 
-            if (exp > 0)
+            if (rewardExp > 0)
             {
-                UserProfile.InfoBasic.AddExp((int)exp);
+                UserProfile.InfoBasic.AddExp((int)rewardExp);
 
                 var pos = GetCellPosition();
-                var pictureRegion = ComplexRegion.GetResShowRegion(cellIndex, pos, 45, ImageRegionCellType.Exp, (int)exp);
+                var pictureRegion = ComplexRegion.GetResShowRegion(cellIndex, pos, 45, ImageRegionCellType.Exp, (int)rewardExp);
                 vRegion.AddRegion(pictureRegion);
 
                 if (isWin) //获胜了才有建筑能量

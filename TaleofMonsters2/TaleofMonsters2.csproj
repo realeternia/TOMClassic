@@ -755,7 +755,6 @@
     </Compile>
     <Compile Include="Datas\Scenes\SceneBook.cs" />
     <Compile Include="Datas\Peoples\PeopleBook.cs" />
-    <Compile Include="Datas\Peoples\PeopleDrop.cs" />
     <Compile Include="Controler\Battle\Data\Players\AIPlayer.cs" />
     <Compile Include="Controler\Battle\Data\Players\HumanPlayer.cs" />
     <Compile Include="Controler\Battle\Data\Players\Frag\EquipModifier.cs" />
