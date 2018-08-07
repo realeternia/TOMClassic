@@ -43,7 +43,7 @@
         void CureRandomAlien(double rate);
         void EatTomb(IMonster tomb);
         void Silent();
-        IMonsterAuro AddAuro(int buff, int lv, string tar);
+        IMonsterAuro AddAuro(ISkill skill);
         void AddPArmor(double val);
         void AddMArmor(double val);
         int GetPArmor();

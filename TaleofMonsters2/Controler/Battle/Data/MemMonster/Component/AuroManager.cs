@@ -24,9 +24,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
                 auro.CheckAuroState();
         }
 
-        public IMonsterAuro AddAuro(int buff, int lv, string tar)
+        public IMonsterAuro AddAuro(ISkill skill)
         {
-            var auro = new MonsterAuro(self, buff, lv, tar);
+            var auro = new MonsterAuro(self, skill);
             auroList.Add(auro);
             return auro;
         }

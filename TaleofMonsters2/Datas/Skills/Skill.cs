@@ -45,8 +45,8 @@ namespace TaleofMonsters.Datas.Skills
         {
             get
             {
-                if (SkillConfig.DescriptBuffId > 0)
-                    return SkillConfig.GetDescript(Level) + ConfigDatas.ConfigData.GetBuffConfig(SkillConfig.DescriptBuffId).GetDescript(Level);
+                if (SkillConfig.RelatedBuffId > 0)
+                    return SkillConfig.GetDescript(Level) + ConfigDatas.ConfigData.GetBuffConfig(SkillConfig.RelatedBuffId).GetDescript(Level);
                 return SkillConfig.GetDescript(Level);
             }
         }

@@ -241,8 +241,8 @@ namespace TaleofMonsters.Datas.Cards.Monsters
                     tipData.AddText(tp, HSTypes.I2QualityColor(quality));
 
                     string des = skillConfig.GetDescript(card.Level);
-                    if (skillConfig.DescriptBuffId > 0)
-                        des += ConfigData.GetBuffConfig(skillConfig.DescriptBuffId).GetDescript(card.Level);
+                    if (skillConfig.RelatedBuffId > 0)
+                        des += ConfigData.GetBuffConfig(skillConfig.RelatedBuffId).GetDescript(card.Level);
                     tipData.AddTextLines(des, "White", 15, false);
                 }
             }

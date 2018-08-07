@@ -120,9 +120,9 @@ namespace TaleofMonsters.Datas.Skills
         public static string GetSkillDes(int skillId, int level)
         {
             var skillConfig = ConfigData.GetSkillConfig(skillId);
-            if (skillConfig.DescriptBuffId > 0)
+            if (skillConfig.RelatedBuffId > 0)
                 return skillConfig.GetDescript(level) +
-                       ConfigDatas.ConfigData.GetBuffConfig(skillConfig.DescriptBuffId).GetDescript(level);
+                       ConfigDatas.ConfigData.GetBuffConfig(skillConfig.RelatedBuffId).GetDescript(level);
             return skillConfig.GetDescript(level);
         }
     }

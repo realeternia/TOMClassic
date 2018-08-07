@@ -344,9 +344,9 @@ namespace TaleofMonsters.Controler.Battle.Data.MemMonster.Component
             self.RemoveAllAttrModify();
         }
 
-        public IMonsterAuro AddAuro(int buff, int lv, string tar)
+        public IMonsterAuro AddAuro(ISkill skill)
         {
-            return self.AuroManager.AddAuro(buff, lv, tar);
+            return self.AuroManager.AddAuro(skill);
         }
 
         public void AddPArmor(double val)
