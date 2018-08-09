@@ -50,6 +50,8 @@ namespace TaleofMonsters.Datas.Cards.Spells
         {
             get
             {
+                if (SpellConfig.GetDescript == null)
+                    return "";
                 return string.Format(SpellConfig.GetDescript, Damage, Cure, Time, Help, Rate, Atk);
             }
         }

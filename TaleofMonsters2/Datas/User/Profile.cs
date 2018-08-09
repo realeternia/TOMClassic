@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Tools;
 using TaleofMonsters.Controler.World;
 using TaleofMonsters.Core;
+using TaleofMonsters.Core.Config;
 using TaleofMonsters.Datas.Blesses;
 using TaleofMonsters.Rpc;
 
@@ -81,6 +83,19 @@ namespace TaleofMonsters.Datas.User
             if (TimeManager.IsDifferDay(InfoBasic.LastLoginTime, TimeTool.DateTimeToUnixTime(DateTime.Now)))
                 OnNewDay();                
             InfoBasic.LastLoginTime = TimeTool.DateTimeToUnixTime(DateTime.Now);
+
+            //删除过时卡牌支持
+            var toRemoveList = new List<int>();
+            foreach (var dbDeckCard in InfoCard.Cards)
+            {
+                if (CardConfigManager.GetCardConfig(dbDeckCard.Key).Id <= 0)
+                    toRemoveList.Add(dbDeckCard.Key);
+            }
+            foreach (var oldCardId in toRemoveList)
+            {
+                InfoCard.Cards.Remove(oldCardId);
+                InfoCard.Newcards.Remove(oldCardId);
+            }
         }
 
         public void OnLogout()
