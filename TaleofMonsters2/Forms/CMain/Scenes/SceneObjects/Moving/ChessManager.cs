@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Drawing;
+using ConfigDatas;
 using TaleofMonsters.Core;
 
 namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
@@ -13,11 +14,15 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
             ChessList.Add(new ChessItemPlayer()); //玩家自己
         }
 
-        public void OnChangeMap()
+        public void OnChangeMap(int mapId)
         {
             if (ChessList.Count > 1)
-                ChessList.RemoveAt(1);
-            ChessList.Add(new ChessItem { PeopleId = 1, CellId = Scene.Instance.SceneInfo.GetRandom(0, false) }); //把一个机器人放到随机位置
+                ChessList.RemoveRange(1, ChessList.Count-1);
+            foreach (var pConfig in ConfigData.PeopleDict.Values)
+            {
+                if (pConfig.BornSceneId == mapId)
+                    ChessList.Add(new ChessItem { PeopleId = pConfig.Id, CellId = Scene.Instance.SceneInfo.GetRandom(0, false) }); //把一个机器人放到随机位置
+            }
         }
 
         public void OnChessPlayerMoved()
@@ -28,7 +33,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
                 if (chessItem.PeopleId == 0)
                     continue;
 
-                SetChessState(chessItem.PeopleId, chessItem.CellId, Scene.Instance.SceneInfo.GetRandom(0, false));
+                SetChessState(chessItem.PeopleId, chessItem.CellId, Scene.Instance.SceneInfo.GetNearRandom(chessItem.CellId, chessItem.FormerDestId));
 
                 index++;
             }
@@ -53,17 +58,19 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
             var destP = new Point(dest.X - drawWidth/2 + dest.Width/8, dest.Y - drawHeight + dest.Height/3);
 
             var myChess = ChessList.Find(cs => cs.PeopleId == peopleId);
-            if (myChess != null)
+            if (myChess == null)
             {
-                myChess.Time = ChessItem.ChessMoveAnimTime;
-                myChess.Source = srcP;
-                myChess.Dest = destP;
-                myChess.DestId = dest.Id;
+                myChess = new ChessItem
+                {
+                    PeopleId = peopleId,
+                };
+                ChessList.Add(myChess);
             }
-            else
-            {
-                ChessList.Add(new ChessItem {PeopleId = peopleId, Source = srcP, Dest = destP, DestId = dest.Id, Time = ChessItem.ChessMoveAnimTime });
-            }
+            myChess.Time = ChessItem.ChessMoveAnimTime;
+            myChess.Source = srcP;
+            myChess.Dest = destP;
+            myChess.DestId = dest.Id;
+            myChess.FormerDestId = start;
         }
         
         public void Draw(Graphics g)

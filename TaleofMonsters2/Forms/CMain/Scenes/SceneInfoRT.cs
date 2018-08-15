@@ -114,6 +114,26 @@ namespace TaleofMonsters.Forms.CMain.Scenes
             }
         }
 
+        public int GetNearRandom(int cellId, int formerId)
+        {
+            List<int> possibleTargets = new List<int>();
+            for (int i = 0; i < Items.Count; i++)
+            {
+                var pickItem = Items[i];
+                if (pickItem.Id == cellId)
+                    continue;
+                if (!SceneManager.CanPlayerMove(pickItem.Id, cellId, 1))
+                    continue;
+                possibleTargets.Add(pickItem.Id);
+            }
+            if (possibleTargets.Count == 1)
+                return possibleTargets[0];
+            possibleTargets.Remove(formerId);
+            if (possibleTargets.Count == 1)
+                return possibleTargets[0];
+            return possibleTargets[MathTool.GetRandom(possibleTargets.Count)];
+        }
+
         public SceneObject GetCell(int id)
         {
             foreach (var sceneObject in Items)

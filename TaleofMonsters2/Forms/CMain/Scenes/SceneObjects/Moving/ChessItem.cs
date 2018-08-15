@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using ConfigDatas;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas.User;
@@ -17,6 +18,8 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
         public Point Dest { get; set; } //移动目标
 
         public virtual int CellId { get; set; } //当前所在的id
+
+        public int FormerDestId { get; set; } //前一步动作
         public int DestId { get; set; }
 
         public float MoveDelay { get; set; } //移动延迟，主要是npc需要
@@ -99,7 +102,8 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
 
         protected virtual void DrawIcon(Graphics g, int realX, int realY, int drawWidth, int drawHeight)
         {
-            Image head = PicLoader.Read("People", string.Format("{0}.PNG", "humartrom"));
+            var peopleConfig = ConfigData.GetPeopleConfig(PeopleId);
+            Image head = PicLoader.Read("People", string.Format("{0}.PNG", peopleConfig.Figue));
             var rect = new RectangleF(realX + drawWidth * 0.16f, realY + drawHeight * 0.3f, drawWidth * 0.6f, drawHeight * 0.6f);
             g.FillRectangle(Brushes.Black, rect);
             g.DrawImage(head, rect);

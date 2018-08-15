@@ -143,7 +143,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes
             TimeMinutes = (int)DateTime.Now.TimeOfDay.TotalMinutes;
             Rule.Init(mapid, TimeMinutes);
             SceneInfo = SceneManager.RefreshSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, isWarp ? SceneFreshReason.Warp : SceneFreshReason.Load);
-            chessManager.OnChangeMap();
+            chessManager.OnChangeMap(UserProfile.InfoBasic.MapId);
 
             if (UserProfile.InfoBasic.Position == 0 && SceneInfo.Items.Count > 0)//兜底处理
                 UserProfile.InfoBasic.Position = SceneInfo.Items[0].Id;
