@@ -25,17 +25,30 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
             }
         }
 
-        public void OnChessPlayerMoved()
+        public int GetPeopleIdOnCell(int playerCellId)
         {
-            int index = 1;
             foreach (var chessItem in ChessList)
             {
                 if (chessItem.PeopleId == 0)
                     continue;
 
-                SetChessState(chessItem.PeopleId, chessItem.CellId, Scene.Instance.SceneInfo.GetNearRandom(chessItem.CellId, chessItem.FormerDestId));
+                if (chessItem.CellId == playerCellId)
+                    return chessItem.PeopleId;
+            }
+            return 0;
+        }
 
-                index++;
+        public void OnChessPlayerMoved(int playerCellId)
+        {
+            foreach (var chessItem in ChessList)
+            {
+                if (chessItem.PeopleId == 0)
+                    continue;
+
+                if(chessItem.CellId == playerCellId) //和玩家在同一格子就不动了
+                    continue;
+
+                SetChessState(chessItem.PeopleId, chessItem.CellId, Scene.Instance.SceneInfo.GetNearRandom(chessItem.CellId, chessItem.FormerDestId));
             }
         }
 

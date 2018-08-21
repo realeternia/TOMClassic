@@ -239,7 +239,8 @@ namespace TaleofMonsters.Forms.CMain.Scenes
                 var targetCell = SceneInfo.GetCell(playerChecss.DestId);
                 MoveTo(targetCell.Id);
                 TimelyCheck(targetCell);
-                chessManager.OnChessPlayerMoved();
+
+                chessManager.OnChessPlayerMoved(playerChecss.DestId);
             }
 
             if (UserProfile.Profile != null)
@@ -258,11 +259,25 @@ namespace TaleofMonsters.Forms.CMain.Scenes
             }
         }
 
-        private static void CheckALiveAndQuestState(SceneObject o)
+        private void CheckALiveAndQuestState(SceneObject o)
         {
             try //因为这一步会被invoke，所以单独套一层try
             {
-                o.MoveEnd();
+                var peopleId = chessManager.GetPeopleIdOnCell(o.Id);
+                if (peopleId > 0)//如果有npc，只触发npc事件
+                {
+                    var peopleConfig = ConfigData.GetPeopleConfig(peopleId);
+                    if (!string.IsNullOrEmpty(peopleConfig.BindQuest))
+                    {
+                        var questId = SceneQuestBook.GetSceneQuestByName(peopleConfig.BindQuest);
+                        PanelManager.DealPanel(new NpcTalkForm { EventId = questId, CellId = o.Id });
+                    }
+                }
+                else
+                {
+                    o.MoveEnd();
+                }
+                
                 SoundManager.Play("System", "Move.mp3");
             }
             catch (Exception e)
