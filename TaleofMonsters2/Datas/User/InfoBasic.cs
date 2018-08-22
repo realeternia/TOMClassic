@@ -21,9 +21,10 @@ namespace TaleofMonsters.Datas.User
         [FieldIndex(Index = 21)] public int DungeonRandomSeed;
         [FieldIndex(Index = 22)] public int LastRival; //上一个peopleview的对手id
         [FieldIndex(Index = 23)] public int Position;
-        [FieldIndex(Index = 27)] public int LastPosition;
         [FieldIndex(Index = 24)] public uint HealthPoint; //健康度
         [FieldIndex(Index = 25)] public uint MentalPoint; //精神
+        [FieldIndex(Index = 26)] public int MoveCount; //总移动次数
+        [FieldIndex(Index = 27)] public int LastPosition;
 
         public InfoBasic()
         {

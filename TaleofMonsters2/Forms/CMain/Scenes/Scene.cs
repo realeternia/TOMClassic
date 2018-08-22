@@ -217,14 +217,14 @@ namespace TaleofMonsters.Forms.CMain.Scenes
             foreach (var sceneObject in SceneInfo.Items)
                 sceneObject.OnTick();
 
-            ChessItem playerChecss = null;
+            ChessItem playerChess = null;
             foreach (var chessItem in chessManager.ChessList)
             {
                 bool needUpdate;
                 if (chessItem.TimeGo(timePast, out needUpdate))
                 {
                     if (chessItem.PeopleId == 0) // is player
-                        playerChecss = chessItem;
+                        playerChess = chessItem;
                //     parent.Invalidate();
                 }
                 if (needUpdate)
@@ -234,13 +234,13 @@ namespace TaleofMonsters.Forms.CMain.Scenes
                 }
             }
 
-            if (playerChecss != null)
+            if (playerChess != null)
             {
-                var targetCell = SceneInfo.GetCell(playerChecss.DestId);
+                var targetCell = SceneInfo.GetCell(playerChess.DestId);
                 MoveTo(targetCell.Id);
                 TimelyCheck(targetCell);
 
-                chessManager.OnChessPlayerMoved(playerChecss.DestId);
+                chessManager.OnChessPlayerMoved(playerChess.DestId);
             }
 
             if (UserProfile.Profile != null)
@@ -266,10 +266,10 @@ namespace TaleofMonsters.Forms.CMain.Scenes
                 var peopleId = chessManager.GetPeopleIdOnCell(o.Id);
                 if (peopleId > 0)//如果有npc，只触发npc事件
                 {
-                    var peopleConfig = ConfigData.GetPeopleConfig(peopleId);
-                    if (!string.IsNullOrEmpty(peopleConfig.BindQuest))
+                    var chessConfig = ConfigData.GetPeopleChessConfig(peopleId);
+                    if (!string.IsNullOrEmpty(chessConfig.BindQuest))
                     {
-                        var questId = SceneQuestBook.GetSceneQuestByName(peopleConfig.BindQuest);
+                        var questId = SceneQuestBook.GetSceneQuestByName(chessConfig.BindQuest);
                         PanelManager.DealPanel(new NpcTalkForm { EventId = questId, CellId = o.Id });
                     }
                 }
@@ -692,6 +692,8 @@ namespace TaleofMonsters.Forms.CMain.Scenes
         {
             UserProfile.InfoBasic.LastPosition = UserProfile.InfoBasic.Position;
             UserProfile.InfoBasic.Position = target;
+            UserProfile.InfoBasic.MoveCount ++;
+
             parent.Invalidate();
         }
 

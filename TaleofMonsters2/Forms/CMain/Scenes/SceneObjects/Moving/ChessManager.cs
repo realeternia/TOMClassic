@@ -2,10 +2,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
 using TaleofMonsters.Core;
+using TaleofMonsters.Datas.User;
 
 namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
 {
-    public class ChessManager
+    internal class ChessManager
     {
         public List<ChessItem> ChessList = new List<ChessItem>();
 
@@ -18,10 +19,32 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
         {
             if (ChessList.Count > 1)
                 ChessList.RemoveRange(1, ChessList.Count-1);
-            foreach (var pConfig in ConfigData.PeopleDict.Values)
+            var totalSteps = UserProfile.InfoBasic.MoveCount;
+            foreach (var chessConfig in ConfigData.PeopleChessDict.Values)
             {
-                if (pConfig.BornSceneId == mapId)
-                    ChessList.Add(new ChessItem { PeopleId = pConfig.Id, CellId = Scene.Instance.SceneInfo.GetRandom(0, false) }); //把一个机器人放到随机位置
+                if (chessConfig.BornSceneId == null || chessConfig.BornSceneId.Length == 0)
+                    continue;
+
+                int sum = 0;
+                foreach (var i in chessConfig.BornSceneChecker)
+                    sum += i;
+
+                int adder = 0;
+                for (int i = 0; i < chessConfig.BornSceneId.Length; i++)
+                {
+                    if (chessConfig.BornSceneId[i] == mapId)
+                    {
+                        var minor = (totalSteps + 1000 - chessConfig.BornSceneBeginer)%sum;
+                        if (minor < chessConfig.BornSceneChecker[i] && minor >= adder) 
+                            ChessList.Add(new ChessItem
+                            {
+                                PeopleId = chessConfig.Id,
+                                CellId = Scene.Instance.SceneInfo.GetRandom(0, false)
+                            }); //把一个机器人放到随机位置
+                    }
+
+                    adder += chessConfig.BornSceneChecker[i];
+                }
             }
         }
 
