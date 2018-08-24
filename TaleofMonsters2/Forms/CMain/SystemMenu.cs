@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 using TaleofMonsters.Forms.Items.Core;
 using TaleofMonsters.Rpc;
@@ -22,6 +23,8 @@ namespace TaleofMonsters.Forms.CMain
         private void buttonLogin_Click(object sender, EventArgs e)
         {
             TalePlayer.Save();
+            TalePlayer.Oneloop(); //保证存档可以成功
+            Thread.Sleep(300);
             TalePlayer.Close();
             MainForm.Instance.ChangePage(0);
             Close();

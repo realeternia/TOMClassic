@@ -15,36 +15,52 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
             ChessList.Add(new ChessItemPlayer()); //玩家自己
         }
 
-        public void OnChangeMap(int mapId)
+        public void OnChangeMap(int mapId, bool isWarp)
         {
-            if (ChessList.Count > 1)
-                ChessList.RemoveRange(1, ChessList.Count-1);
-            var totalSteps = UserProfile.InfoBasic.MoveCount;
-            foreach (var chessConfig in ConfigData.PeopleChessDict.Values)
+            if (!isWarp) //读档
             {
-                if (chessConfig.BornSceneId == null || chessConfig.BornSceneId.Length == 0)
-                    continue;
-
-                int sum = 0;
-                foreach (var i in chessConfig.BornSceneChecker)
-                    sum += i;
-
-                int adder = 0;
-                for (int i = 0; i < chessConfig.BornSceneId.Length; i++)
+                foreach (var chessPo in UserProfile.Profile.InfoWorld.ChessPos)
                 {
-                    if (chessConfig.BornSceneId[i] == mapId)
+                    ChessList.Add(new ChessItem
                     {
-                        var minor = (totalSteps + 1000 - chessConfig.BornSceneBeginer)%sum;
-                        if (minor < chessConfig.BornSceneChecker[i] && minor >= adder) 
-                            ChessList.Add(new ChessItem
-                            {
-                                PeopleId = chessConfig.Id,
-                                CellId = Scene.Instance.SceneInfo.GetRandom(0, false)
-                            }); //把一个机器人放到随机位置
-                    }
-
-                    adder += chessConfig.BornSceneChecker[i];
+                        PeopleId = chessPo.Key,
+                        CellId = chessPo.Value
+                    });
                 }
+            }
+            else
+            {
+                if (ChessList.Count > 1)
+                    ChessList.RemoveRange(1, ChessList.Count - 1);
+                var totalSteps = UserProfile.InfoBasic.MoveCount;
+                foreach (var chessConfig in ConfigData.PeopleChessDict.Values)
+                {
+                    if (chessConfig.BornSceneId == null || chessConfig.BornSceneId.Length == 0)
+                        continue;
+
+                    int sum = 0;
+                    foreach (var i in chessConfig.BornSceneChecker)
+                        sum += i;
+
+                    int adder = 0;
+                    var minor = (totalSteps + 1000 - chessConfig.BornSceneBeginer) % sum;
+                    for (int i = 0; i < chessConfig.BornSceneId.Length; i++)
+                    {
+                        if (chessConfig.BornSceneId[i] == mapId)
+                        {
+                            if (minor < chessConfig.BornSceneChecker[i] + adder && minor >= adder)
+                                ChessList.Add(new ChessItem
+                                {
+                                    PeopleId = chessConfig.Id,
+                                    CellId = Scene.Instance.SceneInfo.GetRandom(0, false)
+                                }); //把一个机器人放到随机位置
+                        }
+
+                        adder += chessConfig.BornSceneChecker[i];
+                    }
+                }
+
+                UserProfile.Profile.InfoWorld.SaveChessData(ChessList);
             }
         }
 
@@ -73,6 +89,9 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
 
                 SetChessState(chessItem.PeopleId, chessItem.CellId, Scene.Instance.SceneInfo.GetNearRandom(chessItem.CellId, chessItem.FormerDestId));
             }
+
+            
+            UserProfile.Profile.InfoWorld.SaveChessData(ChessList);
         }
 
         public bool IsChessMoving()

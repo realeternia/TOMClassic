@@ -15,6 +15,7 @@ using TaleofMonsters.Datas.Others;
 using TaleofMonsters.Datas.Peoples;
 using TaleofMonsters.Datas.Tournaments;
 using TaleofMonsters.Datas.User.Db;
+using TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving;
 using TaleofMonsters.Forms.TourGame;
 
 namespace TaleofMonsters.Datas.User
@@ -25,12 +26,14 @@ namespace TaleofMonsters.Datas.User
         [FieldIndex(Index = 4)] public Dictionary<int, DbTournamentData> Tournaments;
         [FieldIndex(Index = 5)] public Dictionary<int, int> Ranks;
         [FieldIndex(Index = 6)] public List<DbMergeData> MergeMethods;
-        [FieldIndex(Index = 7)] public List<DbSceneSpecialPosData> PosInfos; //记录当前场景随机后的格子信息
         [FieldIndex(Index = 8)] public Dictionary<int, int> Blesses;
         [FieldIndex(Index = 9)] public List<int> BlessShopItems;
         [FieldIndex(Index = 10)] public List<int> SavedDungeonQuests;
         [FieldIndex(Index = 11)] public List<int> DailyCardData;
         [FieldIndex(Index = 12)] public Dictionary<int, DbEquipComposeData> EquipComposes;
+
+        [FieldIndex(Index = 7)] public List<DbSceneSpecialPosData> PosInfos; //记录当前场景随机后的格子信息
+        [FieldIndex(Index = 13)] public Dictionary<int, int> ChessPos; //旗子的信息
 
         public InfoWorld()
         {
@@ -44,6 +47,7 @@ namespace TaleofMonsters.Datas.User
             SavedDungeonQuests = new List<int>();
             DailyCardData = new List<int>();
             EquipComposes = new Dictionary<int, DbEquipComposeData>();
+            ChessPos = new Dictionary<int, int>();
         }
 
         internal DbCardProduct[] GetCardProductsByType(CardTypes type)
@@ -410,6 +414,16 @@ namespace TaleofMonsters.Datas.User
             }
 
             return EquipComposes[eid];
+        }
+
+        public void SaveChessData(List<ChessItem> chessList)
+        {
+            UserProfile.Profile.InfoWorld.ChessPos.Clear();
+            foreach (var chessItem in chessList)
+            {
+                if (chessItem.PeopleId > 0)
+                    UserProfile.Profile.InfoWorld.ChessPos[chessItem.PeopleId] = chessItem.CellId;
+            }
         }
     }
 }
