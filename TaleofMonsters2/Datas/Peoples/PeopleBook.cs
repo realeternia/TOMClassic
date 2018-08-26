@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
 using NarlonLib.Log;
@@ -45,6 +46,20 @@ namespace TaleofMonsters.Datas.Peoples
                     ids.Add(peopleData.Id);
             }
             return ids[MathTool.GetRandom(ids.Count)];
+        }
+
+        public static List<int> GetPeopleChessesOnScene(int sceneId)
+        {
+            List<int> chessList = new List<int>();
+            foreach (var chessConfig in ConfigData.PeopleChessDict.Values)
+            {
+                if (chessConfig.BornSceneId == null || chessConfig.BornSceneId.Length == 0)
+                    continue;
+
+                if (Array.IndexOf(chessConfig.BornSceneId, sceneId) >= 0)
+                    chessList.Add(chessConfig.Id);
+            }
+            return chessList;
         }
 
         public static Image GetPreview(int id)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Datas;
@@ -134,6 +135,38 @@ namespace TaleofMonsters.Forms.CMain.Scenes
             return possibleTargets[MathTool.GetRandom(possibleTargets.Count)];
         }
 
+        public int GetRandomWarp()
+        {
+            List<int> cellList = new List<int>();
+            foreach (var sceneObject in Items)
+            {
+                if (sceneObject is SceneWarp)
+                    cellList.Add(sceneObject.Id);
+            }
+            if (cellList.Count == 0)
+                return 0;
+            return cellList[MathTool.GetRandom(cellList.Count)];
+        }
+
+        public int GetNearWarp(int myCellId)
+        {
+            int dis = 999;
+            int cellId = 0;
+            foreach (var sceneObject in Items)
+            {
+                if (sceneObject is SceneWarp)
+                {
+                    var dis2 = Math.Abs((sceneObject.Id%1000) - (myCellId% 1000)) + Math.Abs((sceneObject.Id / 1000) - (myCellId / 1000));
+                    if (dis2 < dis)
+                    {
+                        dis = dis2;
+                        cellId = sceneObject.Id;
+                    }
+                }
+            }
+            return cellId;
+        }
+
         public SceneObject GetCell(int id)
         {
             foreach (var sceneObject in Items)
@@ -158,6 +191,14 @@ namespace TaleofMonsters.Forms.CMain.Scenes
                 }
             }
             return 0;
+        }
+
+        public List<int> GetCellIdList()
+        {
+            List<int> itemList = new List<int>();
+            foreach (var sceneObject in Items)
+                itemList.Add(sceneObject.Id);
+            return itemList;
         }
 
         public void OpenHidden(string eventName)

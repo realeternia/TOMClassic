@@ -86,6 +86,9 @@
     <Compile Include="Core\NLPair.cs" />
     <Compile Include="Core\NLTimeCoroutine.cs" />
     <Compile Include="Core\NLPointF.cs" />
+    <Compile Include="Math\Vector2.cs" />
+    <Compile Include="Math\Vector3.cs" />
+    <Compile Include="Tools\AStar.cs" />
     <Compile Include="Tools\StringTool.cs" />
     <Compile Include="Core\SimpleSet.cs" />
     <Compile Include="Core\NLPriorityQueue.cs" />

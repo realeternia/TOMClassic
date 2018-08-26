@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using ConfigDatas;
+using NarlonLib.Math;
+using NarlonLib.Tools;
 using TaleofMonsters.Core;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas.User;
@@ -24,6 +27,11 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
 
         public float MoveDelay { get; set; } //移动延迟，主要是npc需要
         protected float jumpHeight;
+
+        public bool IsEscaping { get; set; } //决定离开场景
+        private List<int> movePathList = new List<int>();
+
+        public int StepLeft { get { return movePathList.Count; } }
 
         public virtual bool IsMoving
         {
@@ -89,6 +97,34 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
             return new Point(realX, realY);
         }
 
+        public int NextMove()
+        {
+            if (movePathList.Count == 0)
+            {
+                var target = Scene.Instance.SceneInfo.GetRandom(CellId, false);
+                var path = AStar.FindPath(Scene.Instance.SceneInfo.GetCellIdList().ConvertAll(i => I2Vector2(i)),//todo 考虑可以把地图点列表缓存起来
+                    I2Vector2(CellId), I2Vector2(target));
+                movePathList = path.ConvertAll(v => v.Y*1000 + v.X);
+            }
+            var rtVal = movePathList[0];
+            movePathList.RemoveAt(0);
+            return rtVal;
+        }
+
+        public void Escape()
+        {
+            var warpId = Scene.Instance.SceneInfo.GetNearWarp(CellId);
+            IsEscaping = true;
+            var path = AStar.FindPath(Scene.Instance.SceneInfo.GetCellIdList().ConvertAll(i => I2Vector2(i)), //todo 考虑可以把地图点列表缓存起来
+                I2Vector2(CellId), I2Vector2(warpId));
+            movePathList = path.ConvertAll(v => v.Y * 1000 + v.X);
+        }
+
+        private Vector2 I2Vector2(int i)
+        {
+            return new Vector2(i%1000,i/1000);
+        }
+
         public void Draw(Graphics g)
         {
             var possessCell = Scene.Instance.SceneInfo.GetCell(CellId);
@@ -106,8 +142,11 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
             Image head = PicLoader.Read("People", string.Format("{0}.PNG", peopleConfig.Figue));
             var rect = new RectangleF(realX + drawWidth * 0.16f, realY + drawHeight * 0.3f, drawWidth * 0.6f, drawHeight * 0.6f);
             g.FillRectangle(Brushes.Black, rect);
-            g.DrawImage(head, rect);
-            head.Dispose();
+            if (head != null)
+            {
+                g.DrawImage(head, rect);
+                head.Dispose();
+            }
 
             Image token = PicLoader.Read("Border", "npcbg.PNG");
             g.DrawImage(token, rect);
