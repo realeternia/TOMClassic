@@ -130,7 +130,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
                 {
                     PeopleId = pid,
                     CellId = Scene.Instance.SceneInfo.GetRandomWarp()
-                }); //把一个机器人放到随机位置
+                }); //把一个机器人放到随机传送门
             }
             foreach (var pid in toRemove)
             {
