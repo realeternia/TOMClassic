@@ -33,7 +33,7 @@ namespace TaleofMonsters.Datas.User
         [FieldIndex(Index = 12)] public Dictionary<int, DbEquipComposeData> EquipComposes;
 
         [FieldIndex(Index = 7)] public List<DbSceneSpecialPosData> PosInfos; //记录当前场景随机后的格子信息
-        [FieldIndex(Index = 13)] public Dictionary<int, int> ChessPos; //旗子的信息
+        [FieldIndex(Index = 13)] public List<DbChessData> ChessPos; //旗子的信息
 
         public InfoWorld()
         {
@@ -47,7 +47,7 @@ namespace TaleofMonsters.Datas.User
             SavedDungeonQuests = new List<int>();
             DailyCardData = new List<int>();
             EquipComposes = new Dictionary<int, DbEquipComposeData>();
-            ChessPos = new Dictionary<int, int>();
+            ChessPos = new List<DbChessData>();
         }
 
         internal DbCardProduct[] GetCardProductsByType(CardTypes type)
@@ -421,8 +421,15 @@ namespace TaleofMonsters.Datas.User
             UserProfile.Profile.InfoWorld.ChessPos.Clear();
             foreach (var chessItem in chessList)
             {
-                if (chessItem.PeopleId > 0)
-                    UserProfile.Profile.InfoWorld.ChessPos[chessItem.PeopleId] = chessItem.CellId;
+                if (chessItem.PeopleId <= 0)
+                    continue;
+                var chessData = new DbChessData
+                {
+                    PeopleId = chessItem.PeopleId,
+                    Pos = chessItem.CellId,
+                    MeetCount = chessItem.MeetCount
+                };
+                UserProfile.Profile.InfoWorld.ChessPos.Add(chessData);
             }
         }
     }

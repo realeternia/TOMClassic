@@ -173,6 +173,7 @@
     <Compile Include="Controler\GM\GmScript.cs" />
     <Compile Include="Datas\Others\ArticleBook.cs" />
     <Compile Include="Datas\User\Db\DbEquipComposeData.cs" />
+    <Compile Include="Datas\User\Db\DbChessData.cs" />
     <Compile Include="Forms\CardShopDungeonViewForm.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -21,6 +21,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
         public Point Dest { get; set; } //移动目标
 
         public virtual int CellId { get; set; } //当前所在的id
+        public uint MeetCount { get; set; }
 
         public int FormerDestId { get; set; } //前一步动作
         public int DestId { get; set; }

@@ -269,6 +269,9 @@ namespace TaleofMonsters.Forms.CMain.Scenes
                     var chessConfig = ConfigData.GetPeopleChessConfig(peopleId);
                     if (!string.IsNullOrEmpty(chessConfig.BindQuest))
                     {
+                        var chess = chessManager.GetChess(peopleId);
+                        chess.MeetCount ++;
+
                         var questId = SceneQuestBook.GetSceneQuestByName(chessConfig.BindQuest);
                         PanelManager.DealPanel(new NpcTalkForm { EventId = questId, CellId = o.Id });
                     }

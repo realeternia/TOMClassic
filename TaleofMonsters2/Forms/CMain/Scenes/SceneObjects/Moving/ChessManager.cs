@@ -29,8 +29,9 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
                 {
                     ChessList.Add(new ChessItem
                     {
-                        PeopleId = chessPo.Key,
-                        CellId = chessPo.Value
+                        PeopleId = chessPo.PeopleId,
+                        CellId = chessPo.Pos,
+                        MeetCount = chessPo.MeetCount
                     });
                 }
             }
@@ -50,6 +51,19 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
 
                 UserProfile.Profile.InfoWorld.SaveChessData(ChessList);
             }
+        }
+
+        public ChessItem GetChess(int peopleId)
+        {
+            foreach (var chessItem in ChessList)
+            {
+                if (chessItem.PeopleId == 0)
+                    continue;
+
+                if (chessItem.PeopleId == peopleId)
+                    return chessItem;
+            }
+            return null;
         }
 
         private List<int> GetNowPeopleList()
