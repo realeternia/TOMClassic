@@ -65,8 +65,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes
 
         private VirtualRegion vRegion;
         private ImageToolTip tooltip = SystemToolTip.Instance;
-        private ChessManager chessManager = new ChessManager();
-
+        public ChessManager ChessManager { get; private set; }
 
         private bool allEventFinished; //所有的事件都完成了
 
@@ -100,6 +99,8 @@ namespace TaleofMonsters.Forms.CMain.Scenes
             vRegion.RegionEntered += virtualRegion_RegionEntered;
             vRegion.RegionLeft += virtualRegion_RegionLeft;
             vRegion.CellDrawAfter += VRegion_CellDraw;
+
+            ChessManager = new ChessManager();
         }
 
         public void Init()
@@ -143,7 +144,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes
             TimeMinutes = (int)DateTime.Now.TimeOfDay.TotalMinutes;
             Rule.Init(mapid, TimeMinutes);
             SceneInfo = SceneManager.RefreshSceneObjects(UserProfile.InfoBasic.MapId, width, height - 35, isWarp ? SceneFreshReason.Warp : SceneFreshReason.Load);
-            chessManager.OnChangeMap(UserProfile.InfoBasic.MapId, isWarp);
+            ChessManager.OnChangeMap(UserProfile.InfoBasic.MapId, isWarp);
 
             if (UserProfile.InfoBasic.Position == 0 && SceneInfo.Items.Count > 0)//兜底处理
                 UserProfile.InfoBasic.Position = SceneInfo.Items[0].Id;
@@ -218,7 +219,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes
                 sceneObject.OnTick();
 
             ChessItem playerChess = null;
-            foreach (var chessItem in chessManager.ChessList)
+            foreach (var chessItem in ChessManager.ChessList)
             {
                 bool needUpdate;
                 if (chessItem.TimeGo(timePast, out needUpdate))
@@ -240,7 +241,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes
                 MoveTo(targetCell.Id);
                 TimelyCheck(targetCell);
 
-                chessManager.OnChessPlayerMoved(playerChess.DestId);
+                ChessManager.OnChessPlayerMoved(playerChess.DestId);
             }
 
             if (UserProfile.Profile != null)
@@ -263,13 +264,13 @@ namespace TaleofMonsters.Forms.CMain.Scenes
         {
             try //因为这一步会被invoke，所以单独套一层try
             {
-                var peopleId = chessManager.GetPeopleIdOnCell(o.Id);
+                var peopleId = ChessManager.GetPeopleIdOnCell(o.Id);
                 if (peopleId > 0)//如果有npc，只触发npc事件
                 {
                     var chessConfig = ConfigData.GetPeopleChessConfig(peopleId);
                     if (!string.IsNullOrEmpty(chessConfig.BindQuest))
                     {
-                        var chess = chessManager.GetChess(peopleId);
+                        var chess = ChessManager.GetChess(peopleId);
                         chess.MeetCount ++;
 
                         var questId = SceneQuestBook.GetSceneQuestByName(chessConfig.BindQuest);
@@ -330,7 +331,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes
         
         public void CheckMouseMove(int x, int y)
         {
-            if(chessManager.IsChessMoving())
+            if(ChessManager.IsChessMoving())
                 return;
 
             int nTemp = -1;
@@ -349,13 +350,13 @@ namespace TaleofMonsters.Forms.CMain.Scenes
         public void CheckMouseClick()
         {
             if (cellTar == -1) return;
-            if (chessManager.IsChessMoving())
+            if (ChessManager.IsChessMoving())
                 return;
 
             SceneObject dest = SceneInfo.GetCell(cellTar);
             if (dest != null && dest.OnClick())
             {
-                chessManager.SetChessState(0, UserProfile.InfoBasic.Position, cellTar);
+                ChessManager.SetChessState(0, UserProfile.InfoBasic.Position, cellTar);
                 parent.Invalidate();
             }
         }
@@ -575,7 +576,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes
             if (selectTarget != null)
                 selectTarget.Draw(g, true);
 
-            chessManager.Draw(g);
+            ChessManager.Draw(g);
         }
 
         public int GetDisableEventCount(int eid)

@@ -165,6 +165,14 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
                     Disabled = !UserProfile.InfoBasic.HasDna(dnaId);
                 }
             }
+            else if (parms[0] == "chessmet")
+            {
+                int count = int.Parse(parms[1]);
+                var peopleId = PeopleBook.GetPeopleId(config.EnemyName);
+                var peopleChess = Scene.Instance.ChessManager.GetChess(peopleId);
+
+                Disabled = peopleChess == null || peopleChess.MeetCount > count;
+            }
         }
 
         private float GetWinRate(float myData, float needData)
