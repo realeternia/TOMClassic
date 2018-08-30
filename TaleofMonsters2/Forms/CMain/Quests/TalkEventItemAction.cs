@@ -2,6 +2,7 @@
 using System.Drawing;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Others;
+using TaleofMonsters.Datas.Peoples;
 using TaleofMonsters.Datas.Scenes;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain.Blesses;
@@ -53,6 +54,8 @@ namespace TaleofMonsters.Forms.CMain.Quests
                     int fightLevel = Math.Max(1, level + BlessManager.FightLevelChange);
                     var cost = GameResourceBook.OutCarbuncleBribe(UserProfile.InfoBasic.Level, fightLevel);
                     UserProfile.InfoBag.SubResource(GameResourceType.Carbuncle, cost); break;
+                case "unlock":
+                    UserProfile.InfoRival.SetRivalAvail(PeopleBook.GetPeopleId(config.EnemyName)); break;
             }
 
             if (evt.Children.Count > 0)

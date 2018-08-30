@@ -8,6 +8,7 @@ using ControlPlus.Drawing;
 using TaleofMonsters.Core.Loader;
 using TaleofMonsters.Datas;
 using TaleofMonsters.Datas.Others;
+using TaleofMonsters.Datas.Peoples;
 using TaleofMonsters.Datas.Quests;
 using TaleofMonsters.Datas.Scenes;
 using TaleofMonsters.Datas.User;
@@ -256,6 +257,22 @@ namespace TaleofMonsters.Forms
                         questBlock.Prefix = "addon";
                         ModifyQuestState(questBlock, questConfig);
                         answerList.Add(questBlock);
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(config.EnemyName))
+                {
+                    var peopleId = PeopleBook.GetPeopleId(config.EnemyName);
+                    if (PeopleBook.IsPeople(peopleId)) //是否要结交新英雄 todo 还要判定是不是已经有了
+                    {
+                        var peopleConfig = ConfigData.GetPeopleConfig(peopleId);
+                        var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockunlock");
+                        if (!questBlock.Disabled)
+                        {
+                            questBlock.Script = peopleConfig.Name + "(结识)";
+                            questBlock.Prefix = "fight";
+                            answerList.Add(questBlock);
+                        }
                     }
                 }
             }

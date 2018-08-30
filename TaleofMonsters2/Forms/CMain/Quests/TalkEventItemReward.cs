@@ -48,7 +48,6 @@ namespace TaleofMonsters.Forms.CMain.Quests
             DoReward(ref index, "intl", 1, RewardIntl);
             DoReward(ref index, "perc", 1, RewardPerc);
             DoReward(ref index, "endu", 1, RewardEndu);
-            DoReward(ref index, "rival", 1, RewardRival);
             DoReward(ref index, "bless", 1, RewardBless);
             DoReward(ref index, "item", 1, RewardItem);
 
@@ -189,23 +188,6 @@ namespace TaleofMonsters.Forms.CMain.Quests
                 BlessManager.AddBless(blessId);
                 vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1) * 70, pos.Y + 3 + 25,
                                                        60, 60, PictureRegionCellType.Bless, blessId));
-                index++;
-            }
-        }
-
-        private void RewardRival(ref int index)
-        {
-            if (!string.IsNullOrEmpty(config.UnlockRival))
-            {
-                var rivalId = 0;
-                if (config.UnlockRival == "check")
-                    rivalId = UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.SceneQuestRandPeopleId);
-                else
-                    rivalId = PeopleBook.GetPeopleId(config.UnlockRival);
-
-                UserProfile.InfoRival.SetRivalAvail(rivalId);
-                vRegion.AddRegion(new PictureRegion(index, pos.X + 3 + 20 + (index - 1)*70, pos.Y + 3 + 25,
-                                                    60, 60, PictureRegionCellType.People, rivalId));
                 index++;
             }
         }
