@@ -112,6 +112,11 @@ namespace TaleofMonsters.Forms.CMain.Scenes
             miniBack = PicLoader.Read("System", "MiniBack.PNG");
         }
 
+        public void Reset()
+        {
+            ChessManager.Reset();
+        }
+
         public void ChangeMap(int mapid, bool isWarp, SwitchMapAction action = null)
         {
             if (backPicture != null)

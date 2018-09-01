@@ -16,6 +16,12 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneObjects.Moving
         
         public ChessManager()
         {
+        }
+
+        public void Reset()
+        {
+            chessIdList.Clear();
+            ChessList.Clear();
             ChessList.Add(new ChessItemPlayer()); //Íæ¼Ò×Ô¼º
         }
 

@@ -62,6 +62,7 @@ namespace TaleofMonsters
                         return;
                 }
                 MainTipManager.Refresh();
+                Scene.Instance.Reset();
                 Scene.Instance.ChangeMap(UserProfile.InfoBasic.MapId, isNewUser);
                 UserProfile.Profile.OnLogin();
 

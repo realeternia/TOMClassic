@@ -263,19 +263,42 @@ namespace TaleofMonsters.Forms
                 if (!string.IsNullOrEmpty(config.EnemyName))
                 {
                     var peopleId = PeopleBook.GetPeopleId(config.EnemyName);
-                    if (PeopleBook.IsPeople(peopleId)) //是否要结交新英雄 todo 还要判定是不是已经有了
+                    if (PeopleBook.IsPeople(peopleId) && !UserProfile.Profile.InfoRival.GetRivalAvail(peopleId)) //是否要结交新英雄
                     {
                         var peopleConfig = ConfigData.GetPeopleConfig(peopleId);
-                        var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockunlock");
-                        if (!questBlock.Disabled)
+                        string reason;
+                        var result = GetRivalActivateResult(peopleConfig, out reason);
+                        SceneQuestBlock questBlock;
+                        if (result)
                         {
-                            questBlock.Script = peopleConfig.Name + "(结识)";
-                            questBlock.Prefix = "fight";
-                            answerList.Add(questBlock);
+                            questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockunlock");
+                            //questBlock.Script = peopleConfig.Name + "(结识)";
+                            // questBlock.Prefix = "fight";
                         }
+                        else
+                        {
+                            questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockunlockfail");
+                            questBlock.Script = questBlock.Script + reason;
+                        }
+                        answerList.Add(questBlock);
                     }
                 }
             }
+        }
+
+        private bool GetRivalActivateResult(PeopleConfig peopleConfig, out string reason)
+        {
+            reason = "";
+            if (peopleConfig.RivalDefeat > 0)
+            {
+                var winCount = UserProfile.InfoRival.GetRivalWin(peopleConfig.Id);
+                if (winCount < peopleConfig.RivalDefeat)
+                {
+                    reason = string.Format("(击败次数{0}/{1})", winCount, peopleConfig.RivalDefeat);
+                    return false;
+                }
+            }
+            return true;
         }
 
         private void ModifyQuestState(SceneQuestBlock sb, QuestConfig questConfig)

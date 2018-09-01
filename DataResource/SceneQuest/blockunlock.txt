@@ -1,10 +1,4 @@
-﻿a|chessmet-1|我想挑战你。
-	efight
-		r0
-			s你还是再花一些时间练练，哈哈哈。
-				a继续
-					end
-		r1
-			s由于一些运气的成分，你击败了对方。
-				a继续
-					eunlock
+﻿a可以加入我的对战吗？
+	s没问题
+		a太棒了
+			eunlock

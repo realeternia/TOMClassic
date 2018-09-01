@@ -48,11 +48,11 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
 
             if (parms[0] == "rivalavail")
             {
-                Disabled = !UserProfile.InfoRival.GetRivalState(PeopleBook.GetPeopleId(config.EnemyName)).Avail;
+                Disabled = !UserProfile.InfoRival.GetRivalAvail(PeopleBook.GetPeopleId(config.EnemyName));
             }
             else if (parms[0] == "rivalavailno")
             {
-                Disabled = UserProfile.InfoRival.GetRivalState(PeopleBook.GetPeopleId(config.EnemyName)).Avail;
+                Disabled = UserProfile.InfoRival.GetRivalAvail(PeopleBook.GetPeopleId(config.EnemyName));
             }
             else if (parms[0] == "eventcount")
             {
@@ -113,7 +113,7 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
             else if (parms[0] == "hasrival")
             {
                 int pid = PeopleBook.GetRandomPeopleId(level - 3, level + 3);
-                Disabled = UserProfile.InfoRival.GetRivalState(pid).Avail;
+                Disabled = UserProfile.InfoRival.GetRivalAvail(pid);
                 UserProfile.InfoRecord.SetRecordById((int) MemPlayerRecordTypes.SceneQuestRandPeopleId, pid);
                 Script = string.Format("偶遇了{0}，我们来切磋一下吧", ConfigData.GetPeopleConfig(pid).Name);
             }

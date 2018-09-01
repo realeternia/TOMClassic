@@ -14,7 +14,7 @@ namespace TaleofMonsters.Datas.User
             Rivals = new Dictionary<int, DbRivalState>();
         }
 
-        public DbRivalState GetRivalState(int id)
+        private DbRivalState GetRivalState(int id)
         {
             DbRivalState result = null;
             if (Rivals.TryGetValue(id, out result))
@@ -49,15 +49,13 @@ namespace TaleofMonsters.Datas.User
                 state.Avail = true;
         }
 
-        public int GetRivalAvailCount()
+        public bool GetRivalAvail(int id)
         {
-            int count = 0;
-            foreach (var state in Rivals.Values)
-            {
-                if (state.Avail)
-                    count++;
-            }
-            return count;
+            return GetRivalState(id).Avail;
+        }
+        public int GetRivalWin(int id)
+        {
+            return GetRivalState(id).Win;
         }
     }
 }
