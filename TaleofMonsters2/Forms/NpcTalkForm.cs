@@ -279,6 +279,7 @@ namespace TaleofMonsters.Forms
                         {
                             questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockunlockfail");
                             questBlock.Script = questBlock.Script + reason;
+                            questBlock.Prefix = "rival";
                         }
                         answerList.Add(questBlock);
                     }
