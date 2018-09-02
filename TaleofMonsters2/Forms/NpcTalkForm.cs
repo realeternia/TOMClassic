@@ -273,7 +273,7 @@ namespace TaleofMonsters.Forms
                         {
                             questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockunlock");
                             //questBlock.Script = peopleConfig.Name + "(结识)";
-                            // questBlock.Prefix = "fight";
+                             questBlock.Prefix = "rival";
                         }
                         else
                         {
@@ -295,6 +295,16 @@ namespace TaleofMonsters.Forms
                 if (winCount < peopleConfig.RivalDefeat)
                 {
                     reason = string.Format("(击败次数{0}/{1})", winCount, peopleConfig.RivalDefeat);
+                    return false;
+                }
+            }
+            else if (!string.IsNullOrEmpty(peopleConfig.RivalQuest))
+            {
+                var questId = QuestBook.GetQuestIdByName(peopleConfig.RivalQuest);
+                if (!UserProfile.InfoQuest.IsQuestFinish(questId))
+                {
+                    var questConfig = ConfigData.GetQuestConfig(questId);
+                    reason = string.Format("(前置任务{0})", questConfig.Name);
                     return false;
                 }
             }
