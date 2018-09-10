@@ -66,7 +66,7 @@ namespace TaleofMonsters.Forms
 
         private void buttonOk_Click(object sender, EventArgs e)
         {
-            UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastQuestionTime, TimeTool.DateTimeToUnixTime(DateTime.Now) + GameConstants.QuestionCooldownDura);
+            UserProfile.InfoRecord.SetStateById(MemPlayerStateTypes.LastQuestionTime, TimeTool.DateTimeToUnixTime(DateTime.Now) + GameConstants.QuestionCooldownDura);
             if (result == guess)
             {
                 UserProfile.InfoBag.AddResource(GameResourceType.Gold, 20);

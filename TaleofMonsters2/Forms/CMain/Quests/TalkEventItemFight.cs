@@ -31,7 +31,7 @@ namespace TaleofMonsters.Forms.CMain.Quests
 
             int enemyId = 0;
             if (config.EnemyName == "check")//特殊处理标记
-                enemyId = UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.SceneQuestRandPeopleId);
+                enemyId = UserProfile.InfoRecord.GetStateById(MemPlayerStateTypes.SceneQuestRandPeopleId);
             else if (config.EnemyName == "fight")//特殊处理标记
                 enemyId = SceneBook.GetRandomEnemy(UserProfile.InfoBasic.MapId, false);
             else if (config.EnemyName == "fighte")//特殊处理标记

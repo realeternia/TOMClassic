@@ -114,7 +114,7 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
             {
                 int pid = PeopleBook.GetRandomPeopleId(level - 3, level + 3);
                 Disabled = UserProfile.InfoRival.GetRivalAvail(pid);
-                UserProfile.InfoRecord.SetRecordById((int) MemPlayerRecordTypes.SceneQuestRandPeopleId, pid);
+                UserProfile.InfoRecord.SetStateById(MemPlayerStateTypes.SceneQuestRandPeopleId, pid);
                 Script = string.Format("偶遇了{0}，我们来切磋一下吧", ConfigData.GetPeopleConfig(pid).Name);
             }
             else if (parms[0] == "cantest")

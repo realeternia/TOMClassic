@@ -18,7 +18,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneRules
             mapId = id;
             if (UserProfile.InfoWorld.SavedDungeonQuests.Count == 0 && UserProfile.InfoDungeon.DungeonId > 0)
             {
-                UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.DungeonQuestOffside, 0);
+                UserProfile.InfoRecord.SetStateById(MemPlayerStateTypes.DungeonQuestOffside, 0);
                 foreach (var questData in SceneQuestBook.GetDungeonQuestConfigData(UserProfile.InfoDungeon.DungeonId))
                     for (int j = 0; j < questData.Value; j++)
                         UserProfile.InfoWorld.SavedDungeonQuests.Add(questData.Id);
@@ -66,7 +66,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneRules
                 }
             }
 
-            int offset = UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.DungeonQuestOffside);
+            int offset = UserProfile.InfoRecord.GetStateById(MemPlayerStateTypes.DungeonQuestOffside);
             while (randQuestList.Count < questCellCount)
             {
                 if (offset < UserProfile.InfoWorld.SavedDungeonQuests.Count - 1)
@@ -83,7 +83,7 @@ namespace TaleofMonsters.Forms.CMain.Scenes.SceneRules
                     continue;
                 randQuestList.Add(qid);
             }
-            UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.DungeonQuestOffside, offset);
+            UserProfile.InfoRecord.SetStateById(MemPlayerStateTypes.DungeonQuestOffside, offset);
             ArraysUtils.RandomShuffle(randQuestList);
         }
 

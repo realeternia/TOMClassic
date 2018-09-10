@@ -53,11 +53,12 @@ namespace TaleofMonsters.Datas.User
         internal DbCardProduct[] GetCardProductsByType(CardTypes type)
         {
             int time = TimeTool.DateTimeToUnixTime(DateTime.Now);
-            if (CardProducts == null || UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastCardShopTime) < time - GameConstants.CardShopDura)
+            if (CardProducts == null || UserProfile.InfoRecord.GetStateById(MemPlayerStateTypes.LastCardShopTime) < time - GameConstants.CardShopDura)
             {
                 CardProducts = new List<DbCardProduct>();
                 ReinstallCardProducts();
-                UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastCardShopTime, TimeManager.GetTimeOnNextInterval(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastCardShopTime), time, GameConstants.CardShopDura));
+                UserProfile.InfoRecord.SetStateById(MemPlayerStateTypes.LastCardShopTime, 
+                    TimeManager.GetTimeOnNextInterval(UserProfile.InfoRecord.GetStateById(MemPlayerStateTypes.LastCardShopTime), time, GameConstants.CardShopDura));
             }
 
             List<DbCardProduct> pros = new List<DbCardProduct>();
@@ -225,7 +226,7 @@ namespace TaleofMonsters.Datas.User
         public DbMergeData[] GetAllMergeData()
         {
             int time = TimeTool.DateTimeToUnixTime(DateTime.Now);
-            if (MergeMethods == null || UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastMergeTime) < time - GameConstants.MergeWeaponDura)
+            if (MergeMethods == null || UserProfile.InfoRecord.GetStateById(MemPlayerStateTypes.LastMergeTime) < time - GameConstants.MergeWeaponDura)
             {
                 int[] ids = EquipBook.GetCanMergeId(UserProfile.InfoBasic.Level);
                 List<int> newids = new List<int>(ids);
@@ -233,7 +234,7 @@ namespace TaleofMonsters.Datas.User
                 MergeMethods = new List<DbMergeData>();
                 for (int i = 0; i < 8; i++)
                     MergeMethods.Add(CreateMergeMethod(newids[i]));
-                UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastMergeTime, TimeManager.GetTimeOnNextInterval(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastMergeTime), time, GameConstants.MergeWeaponDura));
+                UserProfile.InfoRecord.SetStateById(MemPlayerStateTypes.LastMergeTime, TimeManager.GetTimeOnNextInterval(UserProfile.InfoRecord.GetStateById(MemPlayerStateTypes.LastMergeTime), time, GameConstants.MergeWeaponDura));
             }
 
             return MergeMethods.ToArray();
@@ -363,7 +364,7 @@ namespace TaleofMonsters.Datas.User
         public List<int> GetBlessShopData()
         {
             int time = TimeTool.DateTimeToUnixTime(DateTime.Now);
-            if (BlessShopItems == null || UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastBlessShopTime) < time - GameConstants.BlessShopDura)
+            if (BlessShopItems == null || UserProfile.InfoRecord.GetStateById(MemPlayerStateTypes.LastBlessShopTime) < time - GameConstants.BlessShopDura)
             {
                 BlessShopItems = new List<int>();
 
@@ -375,7 +376,7 @@ namespace TaleofMonsters.Datas.User
                 }
                 ArraysUtils.RandomShuffle(BlessShopItems);
                 BlessShopItems = BlessShopItems.GetRange(0, 5);
-                UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastBlessShopTime, TimeManager.GetTimeOnNextInterval(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastBlessShopTime), time, GameConstants.BlessShopDura));
+                UserProfile.InfoRecord.SetStateById(MemPlayerStateTypes.LastBlessShopTime, TimeManager.GetTimeOnNextInterval(UserProfile.InfoRecord.GetStateById(MemPlayerStateTypes.LastBlessShopTime), time, GameConstants.BlessShopDura));
             }
 
             return BlessShopItems;
@@ -384,7 +385,7 @@ namespace TaleofMonsters.Datas.User
         public List<int> GetDailyCardData()
         {
             int time = TimeTool.DateTimeToUnixTime(DateTime.Now);
-            if (DailyCardData == null || TimeManager.IsDifferDay(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastDailyCardTime) ,time))
+            if (DailyCardData == null || TimeManager.IsDifferDay(UserProfile.InfoRecord.GetStateById(MemPlayerStateTypes.LastDailyCardTime) ,time))
             {
                 DailyCardData = new List<int>();
 
@@ -394,7 +395,7 @@ namespace TaleofMonsters.Datas.User
                 DailyCardData.Add(HItemBook.GetRandRareItemIdWithGroup(HItemRandomGroups.Fight, MathTool.GetRandom(1, 5)));
                 DailyCardData.Add(HItemBook.GetRandRareItemIdWithGroup(HItemRandomGroups.Shopping, 2));
                 DailyCardData.Add(CardConfigManager.GetRandomCard(0, MathTool.GetRandom(1, 4)));
-                UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastDailyCardTime, time);
+                UserProfile.InfoRecord.SetRecordById((int)MemPlayerStateTypes.LastDailyCardTime, time);
             }
 
             return DailyCardData;

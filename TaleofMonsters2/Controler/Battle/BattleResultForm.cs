@@ -98,18 +98,18 @@ namespace TaleofMonsters.Controler.Battle
             if (leftId > 0)
                 return;
 
-            UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.FightAttend, 1);
+            UserProfile.InfoRecord.AddRecordById(RecordInfoConfig.Indexer.FightAttend, 1);
             if (isWin)
             {
                 UserProfile.InfoRival.AddRivalState(rightId, true);
-                UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalWin, 1);
-                UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.ContinueWin, 1);
+                UserProfile.InfoRecord.AddRecordById(RecordInfoConfig.Indexer.TotalWin, 1);
+                UserProfile.InfoRecord.AddRecordById(RecordInfoConfig.Indexer.ContinueWin, 1);
              //   UserProfile.InfoTask.UpdateTaskAddonWin(rightId, BattleManager.Instance.PlayerManager.RightPlayer.Level, 1);
             }
             else
             {
                 UserProfile.InfoRival.AddRivalState(rightId, false);
-                UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.ContinueWin, 0);
+                UserProfile.InfoRecord.SetRecordById(RecordInfoConfig.Indexer.ContinueWin, 0);
             }
 
             if (rewardGold > 0)

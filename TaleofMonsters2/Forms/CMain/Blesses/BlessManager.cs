@@ -27,9 +27,9 @@ namespace TaleofMonsters.Forms.CMain.Blesses
             UserProfile.InfoWorld.AddBless(id, time);
 
             if (blessConfig.Type == (int)BlessTypes.Negative)
-                UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.AddCurse, 1);
+                UserProfile.InfoRecord.AddRecordById(RecordInfoConfig.Indexer.AddCurse, 1);
             else
-                UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.AddBless, 1);
+                UserProfile.InfoRecord.AddRecordById(RecordInfoConfig.Indexer.AddBless, 1);
 
             if (Update != null)
                 Update();

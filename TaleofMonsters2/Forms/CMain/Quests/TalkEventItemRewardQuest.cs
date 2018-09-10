@@ -133,7 +133,7 @@ namespace TaleofMonsters.Forms.CMain.Quests
             {
                 var rivalId = 0;
                 if (questConfig.UnlockRival == "check")
-                    rivalId = UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.SceneQuestRandPeopleId);
+                    rivalId = UserProfile.InfoRecord.GetStateById(MemPlayerStateTypes.SceneQuestRandPeopleId);
                 else
                     rivalId = PeopleBook.GetPeopleId(questConfig.UnlockRival);
 

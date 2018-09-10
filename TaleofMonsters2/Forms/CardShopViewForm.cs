@@ -95,7 +95,7 @@ namespace TaleofMonsters.Forms
             {
                 if (UserProfile.InfoBag.PayDiamond(10))
                 {
-                    UserProfile.InfoRecord.SetRecordById((int)MemPlayerRecordTypes.LastCardShopTime, 0);
+                    UserProfile.InfoRecord.SetStateById(MemPlayerStateTypes.LastCardShopTime, 0);
                     ChangeShop(shelf);
 
                     var effect = new StaticUIEffect(EffectBook.GetEffect("redflash"), new Point(Width / 2 - 50, Height / 2 - 50), new Size(100, 100));
@@ -132,7 +132,7 @@ namespace TaleofMonsters.Forms
 
             if ((tick % 6) == 0)
             {
-                TimeSpan span = TimeTool.UnixTimeToDateTime(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastCardShopTime) + GameConstants.CardShopDura) - DateTime.Now;
+                TimeSpan span = TimeTool.UnixTimeToDateTime(UserProfile.InfoRecord.GetStateById(MemPlayerStateTypes.LastCardShopTime) + GameConstants.CardShopDura) - DateTime.Now;
                 if (span.TotalSeconds > 0)
                 {
                     timeText = string.Format("更新剩余 {0}:{1:00}:{2:00}", span.Hours, span.Minutes, span.Seconds);

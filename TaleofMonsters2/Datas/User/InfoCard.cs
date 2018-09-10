@@ -67,13 +67,13 @@ namespace TaleofMonsters.Datas.User
             if (Newcards.Count > 10)
                 Newcards.RemoveAt(0);
 
-            UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.CardGet, 1);
+            UserProfile.InfoRecord.AddRecordById(RecordInfoConfig.Indexer.CardGet, 1);
             if (cardData.Type == CardTypes.Monster)
-                UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.MonsterGet, 1);
+                UserProfile.InfoRecord.AddRecordById(RecordInfoConfig.Indexer.MonsterGet, 1);
             else if (cardData.Type == CardTypes.Weapon)
-                UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.WeaponGet, 1);
+                UserProfile.InfoRecord.AddRecordById(RecordInfoConfig.Indexer.WeaponGet, 1);
             else
-                UserProfile.InfoRecord.AddRecordById((int)MemPlayerRecordTypes.SpellGet, 1);
+                UserProfile.InfoRecord.AddRecordById(RecordInfoConfig.Indexer.SpellGet, 1);
             MainTipManager.AddTip(string.Format("|获得卡片-|{0}|{1}", HSTypes.I2QualityColor((int)cardData.Quality), cardData.Name), "White");
 
             return card;

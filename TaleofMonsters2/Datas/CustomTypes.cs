@@ -289,37 +289,8 @@
     {
         None, Tile, Quest, Warp
     }
-    internal enum MemPlayerRecordTypes
+    internal enum MemPlayerStateTypes
     {
-        TotalWin = 1,
-        TotalEvent = 2,
-
-        TotalDie = 4,
-        TotalKill = 5,
-        TotalSummon = 6,
-        TotalWeapon = 7,
-        TotalSpell = 8,
-        ContinueWin = 9,
-        FightAttend = 10, //参加战斗
-        AddBless = 11,
-        AddCurse = 12,
-        CardGet = 13,
-        ItemGet = 14,
-        EquipGet = 15,
-        GismoGet = 16,
-        QuestFinish = 17,
-        MonsterGet = 18,
-        WeaponGet = 19,
-        SpellGet = 20,
-
-        TotalUseAttr = 100, //6
-        TotalUseRace = 200, //16
-        TotalUseLevel = 300, //9
-
-        TotalKillAttr = 400, // size 6
-        TotalKillRace = 500, //16
-        TotalKillLevel = 600, //9
-
         LastCardShopTime = 1000,
         LastMergeTime = 1001,
         LastBlessShopTime = 1002,

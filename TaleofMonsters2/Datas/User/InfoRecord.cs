@@ -8,9 +8,12 @@ namespace TaleofMonsters.Datas.User
         [FieldIndex(Index = 1)] public Dictionary<int, int> Records;
         [FieldIndex(Index = 2)] public uint[] Flags; //标记值10x32
 
+        [FieldIndex(Index = 3)] public Dictionary<int, int> States;
+
         public InfoRecord()
         {
             Records = new Dictionary<int, int>();
+            States = new Dictionary<int, int>();
             Flags = new uint[10];
         }
 
@@ -35,6 +38,21 @@ namespace TaleofMonsters.Datas.User
                 Records[id] += value;
             else
                 Records.Add(id, value);
+        }
+
+        internal int GetStateById(MemPlayerStateTypes id)
+        {
+            if (States.ContainsKey((int)id))
+                return States[(int)id];
+            return 0;
+        }
+
+        internal void SetStateById(MemPlayerStateTypes id, int value)
+        {
+            if (States.ContainsKey((int)id))
+                States[(int)id] = value;
+            else
+                States.Add((int)id, value);
         }
 
         public bool CheckFlag(uint id)

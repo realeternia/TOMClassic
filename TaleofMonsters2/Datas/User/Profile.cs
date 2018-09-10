@@ -57,25 +57,23 @@ namespace TaleofMonsters.Datas.User
 
         public void OnKillMonster(int tlevel, int trace, int tattr)
         {
-            InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalKillAttr + tattr, 1);
-            InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalKillRace + trace, 1);
-            InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalKillLevel + tlevel, 1);
-            InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalKill, 1);
+            InfoRecord.AddRecordById(RecordInfoConfig.Indexer.TotalKillAttr + tattr, 1);
+            InfoRecord.AddRecordById(RecordInfoConfig.Indexer.TotalKillRace + trace, 1);
+            InfoRecord.AddRecordById(RecordInfoConfig.Indexer.TotalKill, 1);
         }
 
         internal void OnUseCard(CardTypes type, int tlevel, int trace, int tattr)
         {
-            InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalUseAttr + tattr, 1);
-            InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalUseLevel + tlevel, 1);
+            InfoRecord.AddRecordById(RecordInfoConfig.Indexer.TotalUseAttr + tattr, 1);
             if (type == CardTypes.Monster)
             {
-                InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalUseRace + trace, 1);
-                InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalSummon, 1);
+                InfoRecord.AddRecordById(RecordInfoConfig.Indexer.TotalUseRace + trace, 1);
+                InfoRecord.AddRecordById(RecordInfoConfig.Indexer.TotalSummon, 1);
             }
             if (type == CardTypes.Weapon)
-                InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalWeapon, 1);
+                InfoRecord.AddRecordById(RecordInfoConfig.Indexer.TotalWeapon, 1);
             else
-                InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalSpell, 1);
+                InfoRecord.AddRecordById(RecordInfoConfig.Indexer.TotalSpell, 1);
         }
 
         public void OnLogin()
@@ -122,7 +120,7 @@ namespace TaleofMonsters.Datas.User
             InfoBasic.MentalPoint = 50;
             InfoBag.SubResource(GameResourceType.Gold, (uint)Math.Ceiling((double)InfoBag.Resource.Gold/5));
 
-            InfoRecord.AddRecordById((int)MemPlayerRecordTypes.TotalDie, 1);
+            InfoRecord.AddRecordById(RecordInfoConfig.Indexer.TotalDie, 1);
         }
     }
 }

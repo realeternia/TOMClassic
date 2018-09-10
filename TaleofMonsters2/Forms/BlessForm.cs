@@ -50,7 +50,7 @@ namespace TaleofMonsters.Forms
             base.OnFrame(tick, timePass);
             if ((tick % 6) == 0)
             {
-                TimeSpan span = TimeTool.UnixTimeToDateTime(UserProfile.InfoRecord.GetRecordById((int)MemPlayerRecordTypes.LastBlessShopTime) + GameConstants.BlessShopDura) - DateTime.Now;
+                TimeSpan span = TimeTool.UnixTimeToDateTime(UserProfile.InfoRecord.GetStateById(MemPlayerStateTypes.LastBlessShopTime) + GameConstants.BlessShopDura) - DateTime.Now;
                 if (span.TotalSeconds > 0)
                 {
                     timeText = string.Format("更新剩余 {0}:{1:00}:{2:00}", span.Hours, span.Minutes, span.Seconds);
