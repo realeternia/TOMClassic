@@ -308,6 +308,9 @@
         EquipGet = 15,
         GismoGet = 16,
         QuestFinish = 17,
+        MonsterGet = 18,
+        WeaponGet = 19,
+        SpellGet = 20,
 
         TotalUseAttr = 100, //6
         TotalUseRace = 200, //16

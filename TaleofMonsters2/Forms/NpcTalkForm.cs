@@ -309,6 +309,14 @@ namespace TaleofMonsters.Forms
                     return false;
                 }
             }
+            else if (peopleConfig.RivalRecordId > 0)
+            {
+                if (UserProfile.InfoRecord.GetRecordById(peopleConfig.RivalRecordId) < peopleConfig.RivalRecordValue)
+                {
+                    reason = string.Format("(需求{0}>={1})", peopleConfig.RivalRecordId, peopleConfig.RivalRecordValue);
+                    return false;
+                }
+            }
             return true;
         }
 
