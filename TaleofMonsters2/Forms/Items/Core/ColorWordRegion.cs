@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using NarlonLib.Log;
 using NarlonLib.Math;
+using TaleofMonsters.Core;
 using TaleofMonsters.Tools;
 
 namespace TaleofMonsters.Forms.Items.Core
@@ -15,7 +16,15 @@ namespace TaleofMonsters.Forms.Items.Core
             Normal, Jump, Shake, Lovely, Random, Stripe, UpDown, UpdownUniform, LeftRightUniform
         }
 
-        internal class ColorTextCompt
+        internal interface IRegionCompt
+        {
+            bool LookSame(Color c, TextDanceTypes t, int yOff);
+            void Addpend(string s, float wd);
+            bool NeedUpdate { get; }
+            Rectangle GetRefreshRegion();
+            void Draw(Graphics g, int tick);
+        }
+        internal class ColorTextCompt : IRegionCompt
         {
             private float x, y;
             private float width, height;
@@ -98,6 +107,70 @@ StringFormat.GenericTypographic); break;
                 sb.Dispose();
             }
         }
+        internal class IconCompt : IRegionCompt
+        {
+            private float x, y;
+            private float width, height;
+            private string icon;
+            private Color fcolor;
+            private Font font;
+            private TextDanceTypes danceType;
+
+            public IconCompt(float x, float y, float width, float height, string icon, TextDanceTypes danceType)
+            {
+                this.x = x;
+                this.y = y;
+                this.width = width;
+                this.height = height;
+                this.icon = icon;
+                this.danceType = danceType;
+            }
+
+            public bool LookSame(Color c, TextDanceTypes t, int yOff)
+            {
+                return false;
+            }
+
+            public void Addpend(string s, float wd)
+            {
+            }
+
+            public bool NeedUpdate
+            {
+                get { return danceType != TextDanceTypes.Normal; }
+            }
+
+            public Rectangle GetRefreshRegion()
+            {
+                return new Rectangle((int)x - 6, (int)y - 6, (int)width + 12, (int)height + 12);
+            }
+
+            public void Draw(Graphics g, int tick)
+            {
+                var img = HSIcons.GetIconsByEName(this.icon);
+                switch (danceType)
+                {
+                    case TextDanceTypes.Normal:
+                        g.DrawImage(img, x, y, width, width); break;
+                    case TextDanceTypes.Jump:
+                        g.DrawImage(img, x, y + (int)(Math.Sin((double)(tick) / 2) * 5), width, width); break;
+                    case TextDanceTypes.Shake:
+                        g.DrawImage(img, x + (int)(Math.Sin((double)(tick)) * 5), y + (float)(MathTool.GetRandom(0f, 1) * 2), width, width); break;
+                    case TextDanceTypes.Lovely:
+                        g.DrawImage(img, x, y + (int)(Math.Sin(Math.Tan((double)(tick) / 2)) * 3), width, width); break;
+                    case TextDanceTypes.Random:
+                        var rd = MathTool.GetRandom(0, 16);g.DrawImage(img, x + (rd / 4) - 2, y + (rd % 4) - 2, width, width); break;
+                    case TextDanceTypes.Stripe:
+                        g.DrawImage(img, x + (int)(Math.Sin((double)(tick) / 2) * 5), y + (int)(Math.Sin((double)(tick) / 2) * 5), width, width); break;
+                    case TextDanceTypes.UpDown:
+                        g.DrawImage(img, x, y + (int)(Math.Sin((double)(tick) / 3) * 5), width, width); break;
+                    case TextDanceTypes.UpdownUniform:
+                        g.DrawImage(img, x, y + (int)(Math.Sin((double)(tick) / 3) * 5), width, width); break;
+                    case TextDanceTypes.LeftRightUniform:
+                        g.DrawImage(img, x + (int)(Math.Sin((double)(tick) / 3) * 5), y, width, width); break;
+                }
+            }
+        }
 
         private int x;
         private int y;
@@ -108,7 +181,7 @@ StringFormat.GenericTypographic); break;
         private float chapterOffset = 25;
         private int tickTime;
 
-        private List<ColorTextCompt> textList;
+        private List<IRegionCompt> textList;
 
         public ColorWordRegion(int x, int y, int width, Font ft, Color fcolor)
         {
@@ -119,7 +192,7 @@ StringFormat.GenericTypographic); break;
             this.fcolor = fcolor;
 
             chapterOffset = font.Size * 2;
-            textList = new List<ColorTextCompt>();
+            textList = new List<IRegionCompt>();
         }
 
         public void UpdateRect(Rectangle r)
@@ -163,26 +236,35 @@ StringFormat.GenericTypographic); break;
         private void AppendSub(Graphics g, string s, Color color, TextDanceTypes danceType, ref int line, ref float linewid)
         {
             var itemHeight = font.Height + 2;
-            for (int i = 0; i < s.Length; i++)
+            if (s.StartsWith("icon.")) //图标的情况
             {
-                string schr = s.Substring(i, 1);
-                float textwid = TextRenderer.MeasureText(g, schr, font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
-                if (linewid + textwid > width - 4)
-                {
-                    line++;
-                    linewid = 0;
-
-                    textList.Add(new ColorTextCompt((int)linewid + 2 + x, line * itemHeight + y, textwid, itemHeight, schr, font, color, danceType));
-                }
-                else
-                {
-                    if (textList.Count == 0 || !textList[textList.Count - 1].LookSame(color, danceType, line * itemHeight + y))
-                        textList.Add(new ColorTextCompt((int)linewid + 2 + x, line * itemHeight + y, textwid, itemHeight, schr, font, color, danceType));
-                    else
-                        textList[textList.Count - 1].Addpend(schr, textwid);
-                }
-
+                float textwid = itemHeight;
+                textList.Add(new IconCompt((int)linewid + 2 + x, line * itemHeight + y, textwid, itemHeight, s.Substring(5), danceType));
                 linewid += textwid;
+            }
+            else
+            {
+                for (int i = 0; i < s.Length; i++)
+                {
+                    string schr = s.Substring(i, 1);
+                    float textwid = TextRenderer.MeasureText(g, schr, font, new Size(0, 0), TextFormatFlags.NoPadding).Width;
+                    if (linewid + textwid > width - 4)
+                    {
+                        line++;
+                        linewid = 0;
+
+                        textList.Add(new ColorTextCompt((int)linewid + 2 + x, line * itemHeight + y, textwid, itemHeight, schr, font, color, danceType));
+                    }
+                    else
+                    {
+                        if (textList.Count == 0 || !textList[textList.Count - 1].LookSame(color, danceType, line * itemHeight + y))
+                            textList.Add(new ColorTextCompt((int)linewid + 2 + x, line * itemHeight + y, textwid, itemHeight, schr, font, color, danceType));
+                        else
+                            textList[textList.Count - 1].Addpend(schr, textwid);
+                    }
+
+                    linewid += textwid;
+                }
             }
         }
 

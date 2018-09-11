@@ -19,7 +19,7 @@
 				s你交出一个道具
 					a这个给你吧
 						end
-	a#hasditem#交出东西
+	a#hasditem#|icon.rac2||交出东西
 		eremoveditem
 			sbalala
 				a好吧
@@ -41,7 +41,7 @@
 				s你赢了
 					a好啊
 						end
-	a#hasdna#DNA特殊。
+	a#hasdna#|icon.oth14||DNA特殊。
 		etest|2
 			s你挂了
 				a好啊

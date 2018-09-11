@@ -14,7 +14,6 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
 
         public int Line { get; private set; } //行号
 
-        public string Prefix { get; set; } //前缀
         public string Script { get; protected set; } //文本
 
         public int Depth { get; private set; } //tab数量

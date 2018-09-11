@@ -39,10 +39,6 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
                     if (Disabled)
                         return; //有一个条件不满足就结束
                 }
-                if (infos.Length > 1)
-                {
-                    Prefix = infos[1];
-                }
             }
 
             SetScript(Script);
@@ -141,12 +137,12 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
                     if (UserProfile.InfoDungeon.DungeonId > 0 && UserProfile.InfoDungeon.GetAttrByStr(testType) >= 0)
                     {
                         var attrNeed = UserProfile.InfoDungeon.GetRequireAttrByStr(testType, biasData);
-                        Script = string.Format("进行{0}考验(判定{1} {2:0.0}%胜率)", GetTestAttrStr(testType), attrNeed, 
+                        Script = string.Format("|icon.oth1||进行{0}考验(判定{1} {2:0.0}%胜率)", GetTestAttrStr(testType), attrNeed, 
                             GetWinRate(UserProfile.InfoDungeon.GetAttrByStr(testType) +0.5f, attrNeed));
                     }
                     else //因为convert了
                     {
-                        Script = string.Format("进行运气考验(判定{0} {1:0.0}%胜率)", 3 + biasData, 
+                        Script = string.Format("|icon.oth1||进行运气考验(判定{0} {1:0.0}%胜率)", 3 + biasData, 
                             GetWinRate(3.5f, 3 + biasData));
                     }
                 }
@@ -168,7 +164,7 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
                         dnaId |= (int)Math.Pow(2, nowId);
                         dnaStr += ConfigData.GetPlayerDnaConfig(nowId).Name + " ";
                     }
-                    Script = string.Format("{0}(DNA限定{1})", Script, dnaStr);
+                    Script = string.Format("|icon.oth14||{0}(DNA限定{1})", Script, dnaStr);
                     Disabled = !UserProfile.InfoBasic.HasDna(dnaId);
                 }
             }
@@ -236,35 +232,7 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
 
         public override void Draw(Graphics g)
         {
-            if (!string.IsNullOrEmpty(Prefix))
-            {
-                var icon = GetItemIcon(this);
-                if (icon != "")
-                    g.DrawImage(HSIcons.GetIconsByEName(icon), Rect.X + 10, Rect.Y + 2, 18, 18);
-            }
-
             colorWord.Draw(g);
-        }
-
-        private static string GetItemIcon(SceneQuestBlock word)
-        {
-            string icon = "";
-            if (word.Prefix.StartsWith("questfin")) icon = "npc3";
-            else if (word.Prefix.StartsWith("quest")) icon = "npc1";
-            else if (word.Prefix.StartsWith("rival")) icon = "tsk1";
-            else if (word.Prefix.StartsWith("npc")) icon = "abl5";
-            else if (word.Prefix.StartsWith("addon")) icon = "tsk5";
-            else if (word.Prefix.StartsWith("cantest")) icon = "oth1";
-            else if (word.Prefix.StartsWith("bribe")) icon = "res5";
-            else if (word.Prefix.StartsWith("fight")) icon = "abl1";
-            else if (word.Prefix.StartsWith("roll")) icon = "oth15";
-            else if (word.Prefix.StartsWith("hasditem")) icon = "rac2";
-            else if (word.Prefix.StartsWith("hasdna")) icon = "oth14";
-            else if (word.Prefix.EndsWith("food")) icon = "oth7";
-            else if (word.Prefix.EndsWith("health")) icon = "buf0";
-            else if (word.Prefix.EndsWith("mental")) icon = "buf1";
-            else if (word.Prefix.StartsWith("cantrade")) icon = "tsk3";
-            return icon;
         }
     }
 }

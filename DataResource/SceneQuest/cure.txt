@@ -1,7 +1,7 @@
 ﻿s你走进了礼拜堂。$wheat.upd|“需要我的帮助吗？”||，牧师关切的询问道。$你觉得可以试试，也许会有所帮助。
-	a#cantrade-2-food#我需要一些食物
+	a#cantrade-2-food#|icon.oth7||我需要一些食物
 		etrade|2|food
-	a#cantrade-2-health#我需要一些药品
+	a#cantrade-2-health#|icon.buf0||我需要一些药品
 		etrade|2|health
 	a我不需要
 		end
