@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 using ConfigDatas;
 using NarlonLib.Math;
 using TaleofMonsters.Core;
@@ -11,22 +12,26 @@ using TaleofMonsters.Datas.Scenes;
 using TaleofMonsters.Datas.User;
 using TaleofMonsters.Forms.CMain.Blesses;
 using TaleofMonsters.Forms.CMain.Scenes;
+using TaleofMonsters.Forms.Items.Core;
 
 namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
 {
     internal class SceneQuestAnswer : SceneQuestBlock
     {
-        public SceneQuestAnswer(int eid, int lv, string s, int depth, int line)
-            : base(eid, lv, s, depth, line)
+        private ColorWordRegion colorWord;//问题区域
+
+        public SceneQuestAnswer(Control p, int eid, int lv, string s, int depth, int line)
+            : base(p, eid, lv, s, depth, line)
         {
-            CheckScript();
+            colorWord = new ColorWordRegion(0, 0, 400, new Font("微软雅黑", 11 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel), Color.White);
+            CheckScript(p);
         }
 
-        private void CheckScript()
+        private void CheckScript(Control p)
         {
-            if (Script[0] == '|')
+            if (Script[0] == '#')
             {
-                string[] infos = Script.Split('|');
+                string[] infos = Script.Split('#');
                 Script = infos[infos.Length - 1];
                 for (int i = 1; i < infos.Length-1; i++)
                 {
@@ -39,6 +44,8 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
                     Prefix = infos[1];
                 }
             }
+
+            SetScript(Script);
         }
 
         private void CheckCondition(string info)
@@ -208,22 +215,35 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
             return "未知";
         }
 
-        public override void Draw(Graphics g, int xOff, int yOff, int width)
+        public override void SetRect(Rectangle r)
         {
-            int textOff = xOff + 10;
+            base.SetRect(r);
+
+            colorWord.UpdateRect(r);
+            SetScript(savedStr); //刷新一次
+        }
+
+        private string savedStr;
+        public override void SetScript(string s)
+        {
+            base.SetScript(s);
+
+            savedStr = Script;
+            Graphics g = parent.CreateGraphics();
+            colorWord.UpdateText(Script, g);
+            g.Dispose();
+        }
+
+        public override void Draw(Graphics g)
+        {
             if (!string.IsNullOrEmpty(Prefix))
             {
                 var icon = GetItemIcon(this);
                 if (icon != "")
-                {
-                    g.DrawImage(HSIcons.GetIconsByEName(icon), textOff, yOff + 2, 18, 18);
-                    textOff += 20;
-                }
+                    g.DrawImage(HSIcons.GetIconsByEName(icon), Rect.X + 10, Rect.Y + 2, 18, 18);
             }
 
-            Font font = new Font("微软雅黑", 11 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            g.DrawString(Script, font, Brushes.Wheat, textOff, yOff + 2);
-            font.Dispose();
+            colorWord.Draw(g);
         }
 
         private static string GetItemIcon(SceneQuestBlock word)

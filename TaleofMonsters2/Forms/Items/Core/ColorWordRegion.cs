@@ -122,6 +122,13 @@ StringFormat.GenericTypographic); break;
             textList = new List<ColorTextCompt>();
         }
 
+        public void UpdateRect(Rectangle r)
+        {
+            x = r.X;
+            y = r.Y;
+            //width = r.Width;
+        }
+
         public void UpdateText(string info, Graphics g)
         {
             textList.Clear();
@@ -140,13 +147,9 @@ StringFormat.GenericTypographic); break;
                     for (int i = 0; i < infos.Length; i++)
                     {
                         if ((i % 2) == 0)
-                        {
                             color = GetLineInfo(infos[i], out danceType);
-                        }
                         else
-                        {
                             AppendSub(g, infos[i], color, danceType, ref line, ref linewid);
-                        }
                     }
                 }
                 else
@@ -174,13 +177,9 @@ StringFormat.GenericTypographic); break;
                 else
                 {
                     if (textList.Count == 0 || !textList[textList.Count - 1].LookSame(color, danceType, line * itemHeight + y))
-                    {
                         textList.Add(new ColorTextCompt((int)linewid + 2 + x, line * itemHeight + y, textwid, itemHeight, schr, font, color, danceType));
-                    }
                     else
-                    {
                         textList[textList.Count - 1].Addpend(schr, textwid);
-                    }
                 }
 
                 linewid += textwid;
@@ -235,7 +234,7 @@ StringFormat.GenericTypographic); break;
             return color;
         }
 
-        public static TextDanceTypes GetTextDance(string cname)
+        private static TextDanceTypes GetTextDance(string cname)
         {
             switch (cname)
             {

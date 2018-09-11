@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
 {
@@ -7,8 +8,8 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
         public string Type { get; set; }
         public List<string> ParamList { get; set; }
 
-        public SceneQuestEvent(int eid,int lv, string s, int depth, int line)
-            : base(eid, lv, s, depth, line)
+        public SceneQuestEvent(Control c, int eid,int lv, string s, int depth, int line)
+            : base(c, eid, lv, s, depth, line)
         {
             string[] datas = Script.Split('|');
             Type = datas[0];

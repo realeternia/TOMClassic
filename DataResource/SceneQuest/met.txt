@@ -3,7 +3,7 @@
 		s他回过头来，和你打了招呼
 			a不去理睬，还有事情要做
 				end
-			a|hasrival|我想挑战你
+			a#hasrival#我想挑战你
 				efight
 					r0
 						s这么多次了，你仍然不是对手。

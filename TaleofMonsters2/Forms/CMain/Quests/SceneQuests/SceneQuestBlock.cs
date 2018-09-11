@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
 {
@@ -14,14 +15,18 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
         public int Line { get; private set; } //行号
 
         public string Prefix { get; set; } //前缀
-        public string Script { get; set; } //文本
+        public string Script { get; protected set; } //文本
 
         public int Depth { get; private set; } //tab数量
 
         public bool Disabled { get; set; }
 
-        protected SceneQuestBlock(int eid, int lv, string s, int depth, int line)
+        public Rectangle Rect { get; private set; }
+        protected Control parent;
+
+        protected SceneQuestBlock(Control p, int eid, int lv, string s, int depth, int line)
         {
+            parent = p;
             eventId = eid;
             level = lv;
             Script = s;
@@ -35,7 +40,17 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
             return Script;
         }
 
-        public virtual void Draw(Graphics g, int xOff, int yOff, int width)
+        public virtual void SetRect(Rectangle r)
+        {
+            Rect = r;
+        }
+
+        public virtual void SetScript(string s)
+        {
+            Script = s;
+        }
+
+        public virtual void Draw(Graphics g)
         {
         }
     }

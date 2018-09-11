@@ -97,7 +97,7 @@ namespace TaleofMonsters.Forms
                     }
                 }
             }
-            interactBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, config.Script);
+            interactBlock = SceneQuestBook.GetQuestData(this, EventId, eventLevel, config.Script);
             answerList = new List<SceneQuestBlock>();
             SetupQuestItem();
         }
@@ -117,8 +117,8 @@ namespace TaleofMonsters.Forms
                     else if (interactBlock == null)
                     {
                         answerList.Clear();
-                        var block = new SceneQuestAnswer(EventId, eventLevel, "结束", 999, 999);
-                        answerList.Add(block);
+                        var block = new SceneQuestAnswer(this, EventId, eventLevel, "结束", 999, 999);
+                        AddBlockAnswer(block);
                     }
                 }
                 Invalidate();
@@ -191,7 +191,7 @@ namespace TaleofMonsters.Forms
             {
                 if (sceneQuestBlock.Disabled)
                     continue;
-                answerList.Add(sceneQuestBlock);
+                AddBlockAnswer(sceneQuestBlock);
 
                 if (sceneQuestBlock.Children != null)
                 {
@@ -205,10 +205,10 @@ namespace TaleofMonsters.Forms
                             var cost = GameResourceBook.OutCarbuncleBribe(UserProfile.InfoBasic.Level, fightLevel);
                             if (UserProfile.InfoBag.HasResource(GameResourceType.Carbuncle, cost))
                             {
-                                var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockbribe");
+                                var questBlock = SceneQuestBook.GetQuestData(this, EventId, eventLevel, "blockbribe");
                                 questBlock.Prefix = "bribe";
                                 questBlock.Children[0].Children[0].Children[0] = sceneQuestBlock.Children[0].Children[1].Children[0].Children[0];//找到成功的结果
-                                answerList.Add(questBlock);
+                                AddBlockAnswer(questBlock);
                             }
                         }
                     }
@@ -232,31 +232,31 @@ namespace TaleofMonsters.Forms
                     {
                         if (UserProfile.InfoQuest.IsQuestCanReceive(questConfig.Id))
                         {
-                            var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockquest");
-                            questBlock.Script = string.Format("【{0}】{1}", questConfig.TypeR == 0 ? "主线" : "支线", questConfig.Name);
+                            var questBlock = SceneQuestBook.GetQuestData(this, EventId, eventLevel, "blockquest");
+                            questBlock.SetScript(string.Format("【{0}】{1}", questConfig.TypeR == 0 ? "主线" : "支线", questConfig.Name));
                             questBlock.Prefix = "quest";
-                            questBlock.Children[0].Script = questConfig.Descript + "$$|报酬:" + QuestBook.GetRewardStr(questConfig.Id, eventLevel);
+                            questBlock.Children[0].SetScript(questConfig.Descript + "$$|报酬:" + QuestBook.GetRewardStr(questConfig.Id, eventLevel));
                             (questBlock.Children[0].Children[0].Children[0] as SceneQuestEvent).ParamList[0] = questConfig.Id.ToString();
-                            answerList.Add(questBlock);
+                            AddBlockAnswer(questBlock);
                         }
                     }
                     if (questConfig.EndNpcId == EventId || questConfig.EndNpcId == 0 && questConfig.StartNpcId == EventId) //如果end=0，则使用startnpc作为奖励npc
                     {
                         if (UserProfile.InfoQuest.IsQuestCanReward(questConfig.Id))
                         {
-                            var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockquestfin");
-                            questBlock.Script = questConfig.Name + "(提交)";
+                            var questBlock = SceneQuestBook.GetQuestData(this, EventId, eventLevel, "blockquestfin");
+                            questBlock.SetScript(questConfig.Name + "(提交)");
                             questBlock.Prefix = "questfin";
                             (questBlock.Children[0] as SceneQuestEvent).ParamList[0] = questConfig.Id.ToString();
-                            answerList.Add(questBlock);
+                            AddBlockAnswer(questBlock);
                         }
                     }
                     if (questConfig.CheckSceneQuest == config.Ename && UserProfile.InfoQuest.IsQuestCanProgress(questConfig.Id))
                     {//增加一个选项的任务
-                        var questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, questConfig.QuestScript);
+                        var questBlock = SceneQuestBook.GetQuestData(this, EventId, eventLevel, questConfig.QuestScript);
                         questBlock.Prefix = "addon";
                         ModifyQuestState(questBlock, questConfig);
-                        answerList.Add(questBlock);
+                        AddBlockAnswer(questBlock);
                     }
                 }
 
@@ -271,19 +271,31 @@ namespace TaleofMonsters.Forms
                         SceneQuestBlock questBlock;
                         if (result)
                         {
-                            questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockunlock");
+                            questBlock = SceneQuestBook.GetQuestData(this, EventId, eventLevel, "blockunlock");
                             //questBlock.Script = peopleConfig.Name + "(结识)";
                              questBlock.Prefix = "rival";
                         }
                         else
                         {
-                            questBlock = SceneQuestBook.GetQuestData(EventId, eventLevel, "blockunlockfail");
-                            questBlock.Script = questBlock.Script + reason;
+                            questBlock = SceneQuestBook.GetQuestData(this, EventId, eventLevel, "blockunlockfail");
+                            questBlock.SetScript(questBlock.Script + reason);
                             questBlock.Prefix = "rival";
                         }
-                        answerList.Add(questBlock);
+                        AddBlockAnswer(questBlock);
                     }
                 }
+            }
+        }
+
+        private void AddBlockAnswer(SceneQuestBlock block)
+        {
+            answerList.Add(block);
+            int id = 0;
+            foreach (var sceneQuestBlock in answerList) //所有位置重算
+            {
+                var yoff = id * 30 + Height - 10 - answerList.Count * 30;
+                sceneQuestBlock.SetRect(new Rectangle(360 + 10, yoff, 400, 400));
+                id++;
             }
         }
 
@@ -404,14 +416,14 @@ namespace TaleofMonsters.Forms
                     var bgCommon = PicLoader.Read("System", "WordBack2.PNG");
                     foreach (var word in answerList)
                     {
-                        var yoff = id*30 + Height - 10 - answerList.Count*30;
-
+                        var rect = word.Rect;
+                        var bgRect = new Rectangle(rect.X - 10, rect.Y, rect.Width - 20, 24);
                         if (id == tar)
-                            e.Graphics.DrawImage(bgTarget, 360, yoff, 400 - 20, 24);
+                            e.Graphics.DrawImage(bgTarget, bgRect);
                         else
-                            e.Graphics.DrawImage(bgCommon, 360, yoff, 400 - 20, 24);
+                            e.Graphics.DrawImage(bgCommon, bgRect);
 
-                        word.Draw(e.Graphics, 360+10, yoff, 400);
+                        word.Draw(e.Graphics);
                         id++;
                     }
                     bgTarget.Dispose();

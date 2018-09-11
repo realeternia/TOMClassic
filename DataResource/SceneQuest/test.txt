@@ -19,7 +19,7 @@
 				s你交出一个道具
 					a这个给你吧
 						end
-	a|hasditem|交出东西
+	a#hasditem#交出东西
 		eremoveditem
 			sbalala
 				a好吧
@@ -31,7 +31,7 @@
 			s但是
 				a很好
 					enpc|cards
-	a|cantest-1|能力鉴定。
+	a#cantest-1#能力鉴定。
 		etest|1
 			r0
 				s你挂了
@@ -41,7 +41,7 @@
 				s你赢了
 					a好啊
 						end
-	a|hasdna|DNA特殊。
+	a#hasdna#DNA特殊。
 		etest|2
 			s你挂了
 				a好啊
