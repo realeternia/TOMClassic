@@ -117,7 +117,7 @@ namespace TaleofMonsters.Forms
                     else if (interactBlock == null)
                     {
                         answerList.Clear();
-                        var block = new SceneQuestBlock(EventId, eventLevel, "结束", 999, 999);
+                        var block = new SceneQuestAnswer(EventId, eventLevel, "结束", 999, 999);
                         answerList.Add(block);
                     }
                 }
@@ -311,9 +311,10 @@ namespace TaleofMonsters.Forms
             }
             else if (peopleConfig.RivalRecordId > 0)
             {
-                if (UserProfile.InfoRecord.GetRecordById(peopleConfig.RivalRecordId) < peopleConfig.RivalRecordValue)
+                var myVal = UserProfile.InfoRecord.GetRecordById(peopleConfig.RivalRecordId);
+                if (myVal < peopleConfig.RivalRecordValue)
                 {
-                    reason = string.Format("(需求{0}>={1})", peopleConfig.RivalRecordId, peopleConfig.RivalRecordValue);
+                    reason = string.Format("(需求{0}(已有{1})>={2})", ConfigData.GetRecordInfoConfig(peopleConfig.RivalRecordId).Cname, myVal, peopleConfig.RivalRecordValue);
                     return false;
                 }
             }

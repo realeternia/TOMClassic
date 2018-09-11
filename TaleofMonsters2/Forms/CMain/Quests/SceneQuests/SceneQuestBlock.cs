@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
 {
-    internal class SceneQuestBlock
+    internal abstract class SceneQuestBlock
     {
         protected int eventId;
 
@@ -20,7 +20,7 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
 
         public bool Disabled { get; set; }
 
-        public SceneQuestBlock(int eid, int lv, string s, int depth, int line)
+        protected SceneQuestBlock(int eid, int lv, string s, int depth, int line)
         {
             eventId = eid;
             level = lv;
@@ -37,9 +37,6 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
 
         public virtual void Draw(Graphics g, int xOff, int yOff, int width)
         {
-            Font font = new Font("微软雅黑", 11 * 1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
-            g.DrawString(Script, font, Brushes.Wheat, xOff + 10, yOff + 2);
-            font.Dispose();
         }
     }
 }
