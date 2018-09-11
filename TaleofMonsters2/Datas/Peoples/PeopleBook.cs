@@ -19,6 +19,7 @@ namespace TaleofMonsters.Datas.Peoples
     internal static class PeopleBook
     {
         private static Dictionary<string, int> itemNameIdDict;
+
         public static int GetPeopleId(string ename)
         {
             if (itemNameIdDict == null)
@@ -34,7 +35,9 @@ namespace TaleofMonsters.Datas.Peoples
                     itemNameIdDict[peopleConfig.Ename] = peopleConfig.Id;
                 }
             }
-            return itemNameIdDict[ename];
+            if (itemNameIdDict.ContainsKey(ename))
+                return itemNameIdDict[ename];
+            return 0;
         }
 
         public static int GetRandomPeopleId(int levelMin, int levelMax)

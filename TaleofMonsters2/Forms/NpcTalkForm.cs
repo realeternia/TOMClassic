@@ -252,7 +252,7 @@ namespace TaleofMonsters.Forms
                 if (!string.IsNullOrEmpty(config.EnemyName))
                 {
                     var peopleId = PeopleBook.GetPeopleId(config.EnemyName);
-                    if (PeopleBook.IsPeople(peopleId) && !UserProfile.Profile.InfoRival.GetRivalAvail(peopleId)) //是否要结交新英雄
+                    if (peopleId > 0 && PeopleBook.IsPeople(peopleId) && !UserProfile.Profile.InfoRival.GetRivalAvail(peopleId)) //是否要结交新英雄
                     {
                         var peopleConfig = ConfigData.GetPeopleConfig(peopleId);
                         string reason;
