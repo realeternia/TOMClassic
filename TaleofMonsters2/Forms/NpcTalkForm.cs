@@ -206,6 +206,7 @@ namespace TaleofMonsters.Forms
                             if (UserProfile.InfoBag.HasResource(GameResourceType.Carbuncle, cost))
                             {
                                 var questBlock = SceneQuestBook.GetQuestData(this, EventId, eventLevel, "blockbribe");
+                                questBlock.SetScript(string.Format("|icon.res5||{0}|lime|(消耗{1})", questBlock.Script, cost));
                                 questBlock.Children[0].Children[0].Children[0] = sceneQuestBlock.Children[0].Children[1].Children[0].Children[0];//找到成功的结果
                                 AddBlockAnswer(questBlock);
                             }
@@ -215,7 +216,7 @@ namespace TaleofMonsters.Forms
 
             }
 
-            if (interactBlock!=null && interactBlock.Depth==0)
+            if (interactBlock != null && interactBlock.Depth == 0)
             {//额外的任务目标
                 foreach (var questConfig in ConfigData.QuestDict.Values)
                 {
@@ -235,7 +236,7 @@ namespace TaleofMonsters.Forms
                         if (UserProfile.InfoQuest.IsQuestCanReward(questConfig.Id))
                         {
                             var questBlock = SceneQuestBook.GetQuestData(this, EventId, eventLevel, "blockquestfin");
-                            questBlock.SetScript(string.Format("|icon.npc3||{0}(提交)", questConfig.Name));
+                            questBlock.SetScript(string.Format("|icon.npc3||{0}|lime|(提交)", questConfig.Name));
                             (questBlock.Children[0] as SceneQuestEvent).ParamList[0] = questConfig.Id.ToString();
                             AddBlockAnswer(questBlock);
                         }

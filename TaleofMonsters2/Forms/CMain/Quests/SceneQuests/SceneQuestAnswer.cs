@@ -68,7 +68,7 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
                 if (parms.Length > 2)
                     type = parms[2];
                 double multiNeed = multi*MathTool.Clamp(1 + BlessManager.TradeNeedRate, 0.2, 5);
-                double multiGet = multi * MathTool.Clamp(1 + BlessManager.TradeAddRate, 0.2, 5);
+                double multiGet = multi*MathTool.Clamp(1 + BlessManager.TradeAddRate, 0.2, 5);
                 uint goldNeed = 0;
                 if (config.TradeGold < 0)
                     goldNeed = GameResourceBook.OutGoldSceneQuest(level, (int)(-config.TradeGold* multiNeed), true);
@@ -137,12 +137,12 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
                     if (UserProfile.InfoDungeon.DungeonId > 0 && UserProfile.InfoDungeon.GetAttrByStr(testType) >= 0)
                     {
                         var attrNeed = UserProfile.InfoDungeon.GetRequireAttrByStr(testType, biasData);
-                        Script = string.Format("|icon.oth1||进行{0}考验(判定{1} {2:0.0}%胜率)", GetTestAttrStr(testType), attrNeed, 
+                        Script = string.Format("|icon.oth1||进行{0}考验|lime|(判定{1} {2:0.0}%胜率)", GetTestAttrStr(testType), attrNeed, 
                             GetWinRate(UserProfile.InfoDungeon.GetAttrByStr(testType) +0.5f, attrNeed));
                     }
                     else //因为convert了
                     {
-                        Script = string.Format("|icon.oth1||进行运气考验(判定{0} {1:0.0}%胜率)", 3 + biasData, 
+                        Script = string.Format("|icon.oth1||进行运气考验|lime|(判定{0} {1:0.0}%胜率)", 3 + biasData, 
                             GetWinRate(3.5f, 3 + biasData));
                     }
                 }
@@ -164,7 +164,7 @@ namespace TaleofMonsters.Forms.CMain.Quests.SceneQuests
                         dnaId |= (int)Math.Pow(2, nowId);
                         dnaStr += ConfigData.GetPlayerDnaConfig(nowId).Name + " ";
                     }
-                    Script = string.Format("|icon.oth14||{0}(DNA限定{1})", Script, dnaStr);
+                    Script = string.Format("|icon.oth14||{0}|lime|(DNA限定{1})", Script, dnaStr);
                     Disabled = !UserProfile.InfoBasic.HasDna(dnaId);
                 }
             }
