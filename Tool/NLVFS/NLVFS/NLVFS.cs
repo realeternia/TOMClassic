@@ -14,6 +14,12 @@ namespace NLVFS
         private static void MakeCach(string vfsPath)
         {
             FileStream fs = new FileStream(vfsPath, FileMode.OpenOrCreate);
+            MakeCach(fs);
+            fs.Close();
+        }
+
+        private static void MakeCach(Stream fs)
+        {
             BinaryReader br = new BinaryReader(fs);
             int baseOff = br.ReadInt32();
 
@@ -36,12 +42,15 @@ namespace NLVFS
             }
 
             br.Close();
-            fs.Close();
         }
 
         public static void LoadVfsFile(string vfsPath)
         {
             MakeCach(vfsPath);
+        }
+        public static void LoadVfsFile(Stream vStream)
+        {
+            MakeCach(vStream);
         }
 
         public static byte[] LoadFile(string filePath)
