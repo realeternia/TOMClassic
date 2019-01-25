@@ -14,10 +14,15 @@ namespace ControlPlus
         private List<LineInfo> datas = new List<LineInfo>();
         private List<ImageInfo> imgs = new List<ImageInfo>();
         public GetTalkColorDelegate ColorMethod;
+        private int minWidth = 80;
 
         public TipImage(GetTalkColorDelegate cm)
         {
             ColorMethod = cm;
+        }
+        public TipImage(int width)
+        {
+            minWidth = width;
         }
 
         public void AddTextNewLine(string data, string color, int height)
@@ -193,7 +198,7 @@ namespace ControlPlus
         {
             get
             {
-                int wid = 80, heg = 0;
+                int wid = minWidth, heg = 0;
                 Bitmap bmp = new Bitmap(300, 300);
                 Graphics g = Graphics.FromImage(bmp);
                 Font fontTitle = new Font("宋体", 10*1.33f, FontStyle.Regular, GraphicsUnit.Pixel);
